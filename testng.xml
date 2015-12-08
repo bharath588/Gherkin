@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.utils.TestListener"/>
+    </listeners>
+    <test name="suite">
+        <classes>
+            <class name="app.pptweb.testcases.logintestcases">
+                <methods>
+                    <exclude name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
