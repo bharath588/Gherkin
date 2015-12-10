@@ -19,7 +19,7 @@ public class Globals {
 //        public static final String GC_TC_INFO="INFO";
           
        //SpreadSheet
-          public static final String GC_CONFIGFILEANDSHEETNAME = "testexecutionconfig";
+          public static final String GC_CONFIGFILEANDSHEETNAME = "TestExecutionConfig";
           public static final String GC_DATASHEET_ERR = "Sheet not found";
           public static final String GC_TESTCASERUNORDERPREFIX = "runorder_";
           public static final String GC_TESTDATAPREFIX = "testdata_";
