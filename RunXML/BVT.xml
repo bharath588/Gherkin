@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.utils.TestListener"/>
+    </listeners>
+    <test name="testXML">
+        <classes>
+            <class name="app.pptweb.testcases.authenticationtestcases">
+                <methods>
+                    <exclude name="SF01_TC01_SendActivationCodeThroughLoginFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

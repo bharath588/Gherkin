@@ -87,8 +87,11 @@
 					<threadCount>1</threadCount>
 					<reuseForks>false</reuseForks>
 					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+					<properties>
+						<testFile>${TestSuite}</testFile>
+					</properties>
 					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
+						<suiteXmlFile>RunXML/${TestSuite}</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
