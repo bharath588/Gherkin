@@ -75,7 +75,7 @@ public class registrationtestcases {
 			if (headerText == null) {
 				Reporter.logEvent(Status.FAIL, "Verify Account Lookup Header block text", "Header text block is not displayed on the page", false);
 			} else {
-				common.VerifyText("Let’s look up your account\nEnter the information below to set up your account.", headerText, true);
+				common.VerifyText("Lets look up your account Enter the information below to set up your account.", headerText, true);
 			}
 			
 			//Step 4 - Verify default tab opened is "I do not have a PIN"
@@ -336,7 +336,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Account Lookup Header block text","Header text block is not displayed on the page", false);
 			} else {
-				common.VerifyText("Let’s look up your account\nEnter the information below to set up your account.",headerText, false);
+				common.VerifyText("Lets look up your account\nEnter the information below to set up your account.",headerText, false);
 			}
 
 			// Step 4 - Verify default tab opened is "I do not have a PIN"

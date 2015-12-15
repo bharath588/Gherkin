@@ -20,11 +20,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	private LoadableComponent<?> parent;
 	
 	//Objects and locators declaration
-	//@FindBy(xpath=".//*[text()[normalize-space()='Let’s look up your account']]/..") private WebElement lblAccLookupHeaderTextBlock;
 	@FindBy(xpath=".//*[text()[normalize-space()='Registration account lookup']]/..") private WebElement lblAccLookupHeaderTextBlock;
-	//@FindBy(xpath=".//*[text()[normalize-space()='I do not have a PIN']]") private WebElement tabIDoNotHaveaPIN;
 	@FindBy(linkText="I do not have a PIN") private WebElement tabIDoNotHaveaPIN;
-	//@FindBy(xpath=".//*[text()[normalize-space()='I have a PIN']]") private WebElement tabIHaveaPIN;
 	@FindBy(linkText="I have a PIN") private WebElement tabIHaveaPIN;
 	@FindBy(linkText="I have a group account password") private WebElement tabIHaveaGroupAccPassword;
 	@FindBy(id="ssnInput") private WebElement txtSSN;
@@ -41,7 +38,6 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Date of Birth')]") private WebElement lblDOBErrMsg;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Street Address')]") private WebElement lblStrAddrErrMsg;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'PIN')]") private WebElement lblPINErrMsg;
-	//@FindBy(xpath=".//*[@class='form-group has-error ng-scope']") private WebElement lblMainErrMsg;
 	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'] | .//*[@class='form-group has-error']") private WebElement lblMainErrMsg;
 	
 	/** Empty args constructor
