@@ -92,7 +92,7 @@
 							<testFile>${TestSuite}</testFile>
 						</properties>
 						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/${TestSuite}</suiteXmlFile>
+							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>
