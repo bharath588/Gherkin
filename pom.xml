@@ -96,7 +96,7 @@
 							</resource>
 						</resources>
 						<suiteXmlFiles>
-							<suiteXmlFile>src/test/resources/Sanity.xml</suiteXmlFile>
+							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>
