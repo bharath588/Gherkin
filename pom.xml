@@ -7,6 +7,7 @@
 	<groupId>MavenDemo</groupId>
 	<artifactId>MavenDemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -77,7 +78,7 @@
 	<build>
 		<pluginManagement>
 			<!-- Source directory configuration -->
-			
+
 			<plugins>
 				<!-- Following plugin executes the testng tests -->
 				<plugin>
@@ -88,8 +89,14 @@
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+						<resources>
+							<resource>
+								<directory>src/test/resources</directory>
+								<filtering>true</filtering>
+							</resource>
+						</resources>
 						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/resources/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
 					</configuration>
 				</plugin>
@@ -102,36 +109,36 @@
 					<configuration>
 						<source>1.7</source>
 						<target>1.7</target>
-						
+
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.9.1</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>src/test/java</source>
-								<source>src/main/java</source>																								
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        
-      </plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.9.1</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>src/test/java</source>
+									<source>src/main/java</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
