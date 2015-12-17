@@ -89,12 +89,6 @@
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-						<resources>
-							<resource>
-								<directory>src/test/resources</directory>
-								<filtering>true</filtering>
-							</resource>
-						</resources>
 						<suiteXmlFiles>
 							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
@@ -128,6 +122,7 @@
 								<sources>
 									<source>src/test/java</source>
 									<source>src/main/java</source>
+
 								</sources>
 							</configuration>
 						</execution>
