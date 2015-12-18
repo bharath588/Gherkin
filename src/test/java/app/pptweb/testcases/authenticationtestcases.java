@@ -10,15 +10,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import app.pptweb.common.Reporter;
-import app.pptweb.common.common;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.landingpage.LandingPage;
-import app.pptweb.pageobjects.login.ForgotPassword;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.pageobjects.login.TwoStepVerification;
+import pageobjects.landingpage.LandingPage;
+import pageobjects.login.ForgotPassword;
+import pageobjects.login.LoginPage;
+import pageobjects.login.TwoStepVerification;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
 import core.framework.Globals;
-
 import core.utils.Stock;
 
 public class authenticationtestcases {

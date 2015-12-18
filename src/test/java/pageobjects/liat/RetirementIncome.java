@@ -1,5 +1,5 @@
 
-package app.pptweb.pageobjects.liat;
+package pageobjects.liat;
 
 
 
@@ -9,11 +9,16 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 
-import app.pptweb.common.common;
-import app.pptweb.pageobjects.landingpage.LandingPage;
+
+
+import app.common.common;
+
+
 
 
 import org.testng.Assert;
+
+import pageobjects.landingpage.LandingPage;
 
 public class RetirementIncome extends LoadableComponent<RetirementIncome> {
 

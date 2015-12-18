@@ -1,4 +1,4 @@
-package app.pptweb.pageobjects.login;
+package pageobjects.login;
 
 import java.awt.event.KeyEvent;
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import app.pptweb.common.common;
+import app.common.common;
 import core.utils.Stock;
 
 public class LoginPage extends LoadableComponent<LoginPage>{

@@ -10,17 +10,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import app.pptweb.common.Reporter;
-import app.pptweb.common.common;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.landingpage.LandingPage;
-import app.pptweb.pageobjects.liat.HealthCareCosts;
-import app.pptweb.pageobjects.liat.HowDoICompare;
-import app.pptweb.pageobjects.liat.RetirementIncome;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.pageobjects.login.TwoStepVerification;
+import pageobjects.landingpage.LandingPage;
+import pageobjects.liat.HealthCareCosts;
+import pageobjects.liat.HowDoICompare;
+import pageobjects.liat.RetirementIncome;
+import pageobjects.login.LoginPage;
+import pageobjects.login.TwoStepVerification;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
 import core.framework.Globals;
-
 import core.utils.Stock;
 
 public class liattestcases {

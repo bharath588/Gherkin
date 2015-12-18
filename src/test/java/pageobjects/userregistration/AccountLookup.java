@@ -1,18 +1,21 @@
 
-package app.pptweb.pageobjects.userregistration;
+package pageobjects.userregistration;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.pptweb.common.Reporter;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.common.common;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
+
+
 
 
 import org.testng.Assert;
+
+import pageobjects.login.LoginPage;
 
 public class AccountLookup extends LoadableComponent<AccountLookup> {
 

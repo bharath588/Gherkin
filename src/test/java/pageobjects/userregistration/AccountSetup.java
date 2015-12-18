@@ -1,4 +1,4 @@
-package app.pptweb.pageobjects.userregistration;
+package pageobjects.userregistration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,14 +9,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.pptweb.common.DBUtils;
-import app.pptweb.common.Reporter;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.common.common;
+import app.common.DBUtils;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
 import core.utils.Stock;
 
 import org.testng.Assert;
+
+import pageobjects.login.LoginPage;
 
 
 public class AccountSetup extends LoadableComponent<AccountSetup>{

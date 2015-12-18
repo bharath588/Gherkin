@@ -1,5 +1,5 @@
 
-package app.pptweb.pageobjects.beneficiaries;
+package pageobjects.beneficiaries;
 
 
 
@@ -10,12 +10,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.pptweb.common.DBUtils;
-import app.pptweb.common.common;
-import app.pptweb.pageobjects.LeftNavigationBar;
+import app.common.DBUtils;
+import app.common.common;
 import core.utils.Stock;
 
 import org.testng.Assert;
+
+import pageobjects.LeftNavigationBar;
 
 
 

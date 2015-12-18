@@ -10,17 +10,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import app.pptweb.common.Reporter;
-import app.pptweb.common.common;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.LeftNavigationBar;
-import app.pptweb.pageobjects.MyAccountsPage;
-import app.pptweb.pageobjects.beneficiaries.MyBeneficiaries;
-import app.pptweb.pageobjects.landingpage.LandingPage;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.pageobjects.login.TwoStepVerification;
+import pageobjects.LeftNavigationBar;
+import pageobjects.MyAccountsPage;
+import pageobjects.beneficiaries.MyBeneficiaries;
+import pageobjects.landingpage.LandingPage;
+import pageobjects.login.LoginPage;
+import pageobjects.login.TwoStepVerification;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
 import core.framework.Globals;
-
 import core.utils.Stock;
 
 public class beneficiaries {

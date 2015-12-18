@@ -10,14 +10,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import app.pptweb.common.Reporter;
-import app.pptweb.common.common;
-import app.pptweb.common.Reporter.Status;
-import app.pptweb.pageobjects.login.LoginPage;
-import app.pptweb.pageobjects.userregistration.AccountLookup;
-import app.pptweb.pageobjects.userregistration.AccountSetup;
+import pageobjects.login.LoginPage;
+import pageobjects.userregistration.AccountLookup;
+import pageobjects.userregistration.AccountSetup;
+import app.common.Reporter;
+import app.common.common;
+import app.common.Reporter.Status;
 import core.framework.Globals;
-
 import core.utils.Stock;
 
 
