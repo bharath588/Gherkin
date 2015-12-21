@@ -1,14 +1,15 @@
 package pageobjects.liat;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import pageobjects.landingpage.LandingPage;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 
 
 
@@ -29,7 +30,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		public HowDoICompare()
 		{
 			this.parent=new LandingPage();
-			PageFactory.initElements(common.webdriver, this);
+			PageFactory.initElements(lib.Web.webdriver, this);
 		}
 		
 		
@@ -40,12 +41,12 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		public HowDoICompare(LoadableComponent<?> parent)
 		{
 			this.parent=parent;
-			PageFactory.initElements(common.webdriver, this);
+			PageFactory.initElements(lib.Web.webdriver, this);
 		}
 		
 		@Override
 		protected void isLoaded() throws Error {
-			if (!common.isWebElementDisplayed(lblHwDoCmpOthrPplLikMe,HowDoICompare.waitforLoad)) {
+			if (!Web.isWebElementDisplayed(lblHwDoCmpOthrPplLikMe,HowDoICompare.waitforLoad)) {
 				HowDoICompare.waitforLoad = true;
 				throw new Error("'How Do I Compare ' page is not loaded");
 			}else{
@@ -74,8 +75,8 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(common.isWebElementDisplayed(this.btnViewDetails));
-			if (common.isWebElementDisplayed(this.btnViewDetails)) {
+			System.out.println(Web.isWebElementDisplayed(this.btnViewDetails));
+			if (Web.isWebElementDisplayed(this.btnViewDetails)) {
 				
 				this.btnViewDetails.click();
 				if (this.lblAdditionalContribution.getText().contains("Additional Contributions:")) {

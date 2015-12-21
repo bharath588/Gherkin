@@ -6,15 +6,16 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import lib.DB;
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.DBUtils;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.utils.Stock;
 
 import org.testng.Assert;
@@ -50,7 +51,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public TwoStepVerification() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/**Constructor taking parent as input
@@ -59,13 +60,13 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public TwoStepVerification(LoadableComponent<?> parent){
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	public TwoStepVerification(String username, String password){
 		this.username = username;
 		this.password = password;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Getter for isPageMandatory flag
@@ -86,7 +87,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	
 	@Override
     protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(lstDeliveryOption));
+		Assert.assertTrue(Web.isWebElementDisplayed(lstDeliveryOption));
 //	    if (!WebActions.isWebElementDisplayed(lstDeliveryOption)) {
 //	        if (isMandatoryAfterLoad) {
 //	            throw new AssertionError("Two-step Verification (2 of 3) Page is not loaded");
@@ -128,7 +129,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		//ALREADY HAVE A CODE?
 		if (fieldName.trim().equalsIgnoreCase("ALREADY HAVE A CODE?")) {
 			
-			if (common.isWebElementDisplayed(lblLoginHelp)) {
+			if (Web.isWebElementDisplayed(lblLoginHelp)) {
 				return this.lnkAlreadyHaveCodeFogotPsw;
 			} else {
 				return this.lnkAlreadyHaveCodeMFA;
@@ -180,7 +181,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				//do nothing
 			}
 			
-			if (common.isWebElementDisplayed(lblLoginHelp)) {
+			if (Web.isWebElementDisplayed(lblLoginHelp)) {
 				
 				this.lnkAlreadyHaveCodeFogotPsw.click();;
 			} else {
@@ -199,7 +200,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				// do nothing
 			}
 			
-			if (common.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " ")) == false) {
+			if (Web.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " ")) == false) {
 				throw new Error("Unable to select verification code delivery option: " + deliveryOption.replaceAll("_", " "));
 			}
 		}
@@ -238,12 +239,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 					|| (!rememberDevice && this.chkRememberDevice.isSelected())) //OR if rememberDevice = false and CheckBoxIsChecked = true
 				this.chkRememberDevice.click();
 		}
-		else if (common.isWebElementDisplayed(chkRememberDevice)) {
+		else if (Web.isWebElementDisplayed(chkRememberDevice)) {
 			Reporter.logEvent(Status.FAIL, "Check if 'Remember this device' checkbox is displayed", 
 					"Verification failed.\n\tExpected: Checkbox IS NOT displayed\n\tActual: Checkbox IS displayed", true);
 		}
 		
-		if (common.isWebElementDisplayed(lblLoginHelp)) {
+		if (Web.isWebElementDisplayed(lblLoginHelp)) {
 			this.btnContinueFogotPsw.click();;
 		} else {
 			this.btnSignIn.click();
@@ -285,9 +286,9 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				return verificationCode;
 			}
 			
-			ResultSet recSet = DBUtils.executeQuery(sqlQuery[0], sqlQuery[1]);
+			ResultSet recSet = DB.executeQuery(sqlQuery[0], sqlQuery[1]);
 			
-			if (DBUtils.getRecordSetCount(recSet) > 0) {
+			if (DB.getRecordSetCount(recSet) > 0) {
 				try {
 					recSet.first();
 					verificationCode = recSet.getString(1);
@@ -325,12 +326,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			
 			e1.printStackTrace();
 		}
-		ResultSet rSet = DBUtils.executeQuery(sqlQuery[0], sqlQuery[1],
+		ResultSet rSet = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				(codeDeliveryOption.trim().equalsIgnoreCase("TEXT_ME")? "TEXT":
 					(codeDeliveryOption.trim().equalsIgnoreCase("CALL_ME")? "VOICE" : "EMAIL")),
 				month.format(dt), day.format(dt),dtTime.format(dt));
 		
-		if (DBUtils.getRecordSetCount(rSet) == 1) {
+		if (DB.getRecordSetCount(rSet) == 1) {
 			isGenerated = true;
 		}
 		

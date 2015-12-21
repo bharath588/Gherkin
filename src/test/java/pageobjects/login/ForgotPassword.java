@@ -1,14 +1,13 @@
 package pageobjects.login;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
-
 import org.testng.Assert;
 
 public class ForgotPassword extends LoadableComponent<ForgotPassword> {
@@ -43,7 +42,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 */
 	public ForgotPassword(){
 		this.parent = new LoginPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as input
@@ -52,13 +51,13 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 */
 	public ForgotPassword(LoadableComponent<?> parent){
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(lblLoginHelp));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelp));
 //		iselementDisplayed = WebActions.isWebElementDisplayed(lblLoginHelp);
 //		if (!iselementDisplayed) {
 //			throw new AssertionError("Forgot Password Page is not loaded.");
@@ -105,7 +104,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 * @return <b>String value</b> if specified field is displayed with some text. <b>Null</b> otherwise.
 	 */
 	public String isLoginHelptxtDisplayed(){
-		iselementDisplayed = common.isWebElementDisplayed(lblLoginHelpTxr);
+		iselementDisplayed = Web.isWebElementDisplayed(lblLoginHelpTxr);
 		if (iselementDisplayed) {
 			return this.lblLoginHelpTxr.getText();
 		}else{
@@ -121,32 +120,32 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 */
 	public boolean validateFieldNames(){
 		iselementDisplayed = true;
-		if (common.isWebElementDisplayed(this.lblSSN)) {
+		if (Web.isWebElementDisplayed(this.lblSSN)) {
 			if (!this.lblSSN.getText().equalsIgnoreCase("SOCIAL SECURITY NUMBER")) {
 				iselementDisplayed = false;
 			}
 			
 		} 
 		
-		if (common.isWebElementDisplayed(this.lblZipCode)) {
+		if (Web.isWebElementDisplayed(this.lblZipCode)) {
 			if (!this.lblZipCode.getText().equalsIgnoreCase("ZIP CODE")) {
 				iselementDisplayed = false;
 			}
 		} 
 		
-		if (common.isWebElementDisplayed(this.lblLastName)) {
+		if (Web.isWebElementDisplayed(this.lblLastName)) {
 			if (!this.lblLastName.getText().equalsIgnoreCase("LAST NAME")) {
 				iselementDisplayed = false;
 			}
 		} 
 		
-		if (common.isWebElementDisplayed(this.lblDateofBirth)) {
+		if (Web.isWebElementDisplayed(this.lblDateofBirth)) {
 			if (!this.lblDateofBirth.getText().equalsIgnoreCase("DATE OF BIRTH")) {
 				iselementDisplayed = false;
 			}
 		}
 		
-		if (common.isWebElementDisplayed(this.lblStreetAddress)) {
+		if (Web.isWebElementDisplayed(this.lblStreetAddress)) {
 			if (!this.lblStreetAddress.getText().equalsIgnoreCase("NUMERIC PORTION OF STREET ADDRESS OR P.O. BOX")) {
 				iselementDisplayed = false;
 			}
@@ -193,7 +192,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	public String getMainErrorMsg() {
 		String errMsg = "";
 		
-			if (common.isWebElementDisplayed(this.lblErrorMessage)) {
+			if (Web.isWebElementDisplayed(this.lblErrorMessage)) {
 				errMsg = this.lblErrorMessage.getText();
 			}
 		
@@ -211,7 +210,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 			
 			this.lnkNeedHelpWithPassword.click();
 			try {
-				common.waitForElement(this.lblRecoverYourAccount);
+				Web.waitForElement(this.lblRecoverYourAccount);
 			} catch (Exception e) {
 				//do nothing
 			}

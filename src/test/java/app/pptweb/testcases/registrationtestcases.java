@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -13,9 +17,6 @@ import org.testng.annotations.Test;
 import pageobjects.login.LoginPage;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -30,7 +31,7 @@ public class registrationtestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -74,7 +75,7 @@ public class registrationtestcases {
 			if (headerText == null) {
 				Reporter.logEvent(Status.FAIL, "Verify Account Lookup Header block text", "Header text block is not displayed on the page", false);
 			} else {
-				common.VerifyText("Lets look up your account Enter the information below to set up your account.", headerText, true);
+				Web.VerifyText("Lets look up your account Enter the information below to set up your account.", headerText, true);
 			}
 			
 			//Step 4 - Verify default tab opened is "I do not have a PIN"
@@ -114,7 +115,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message 'Social Security Number must be numeric.' is displayed", 
 						"No error message displayed for Social Security number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,"Social Security Number must be numeric.",true)) {
+				if (Web.VerifyText(actualErrMsg,"Social Security Number must be numeric.",true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message 'Social Security Number must be numeric.' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -134,7 +135,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for Social Security number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -170,7 +171,7 @@ public class registrationtestcases {
 						"No error message displayed for PIN.", false);
 			} else {
 				//Common.VerifyText(actualErrMsg,"PIN must be numeric",true);
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -190,7 +191,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for PIN number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -223,7 +224,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for Social Security number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -243,7 +244,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for PIN number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -262,7 +263,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for Social Security number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -276,7 +277,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '" + expectedErrMsg + "' is displayed", 
 						"No error message displayed for Social Security number.", false);
 			} else {
-				if (common.VerifyText(actualErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(actualErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -335,7 +336,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Account Lookup Header block text","Header text block is not displayed on the page", false);
 			} else {
-				common.VerifyText("Lets look up your account\nEnter the information below to set up your account.",headerText, false);
+				Web.VerifyText("Lets look up your account\nEnter the information below to set up your account.",headerText, false);
 			}
 
 			// Step 4 - Verify default tab opened is "I do not have a PIN"
@@ -403,7 +404,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL,"Verify error message 'Social Security Number must be numeric.' is displayed",
 						"No error message displayed for Social Security number.",false);
 			} else {
-				if (common.VerifyText(txtActErrMsg,"Social Security Number must be numeric.",true)) {
+				if (Web.VerifyText(txtActErrMsg,"Social Security Number must be numeric.",true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message 'Social Security Number must be numeric.' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -424,7 +425,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify error message '"+ expectedErrMsg + "' is displayed",
 						"No error message displayed for Social Security number.",false);
 			} else {
-				if (common.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -463,7 +464,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL,"ZIP CODE error Verification for alpha numberic char",
 						"Error message 'Please enter valid ZIP Code.' is not displayed",false);
 			} else {
-				if (common.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -504,7 +505,7 @@ public class registrationtestcases {
 				Reporter.logEvent(Status.FAIL,"Date of Birth error Verification for alpha numberic char",
 						"Verify error message 'Date of Birth must be numeric.' is displayed",false);
 			} else {
-				if (common.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
+				if (Web.VerifyText(txtActErrMsg,expectedErrMsg,true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message '" + expectedErrMsg + "' is displayed", 
 							"Error message is displayed.", false);
 				} else {
@@ -659,7 +660,7 @@ public class registrationtestcases {
 			if (ActErrMessage.length() == 0) {
 				Reporter.logEvent(Status.FAIL, "Verify error message displayed", "No error message is displayed on the page", true);
 			} else {
-				if (common.VerifyText(testdata.get("ExpectedErrorMsg"), ActErrMessage, true)) {
+				if (Web.VerifyText(testdata.get("ExpectedErrorMsg"), ActErrMessage, true)) {
 					Reporter.logEvent(Status.PASS, "Verify error message after submitting invalid details", "Expected error message is displayed.\nExpected: " + testdata.get("ExpectedErrorMsg"), true);
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify error message after submitting invalid details", 
@@ -744,7 +745,7 @@ public class registrationtestcases {
 					Reporter.logEvent(Status.FAIL, "Verify error message for User Lock - try 1'" + actErrMsg , 
 							"No error message displayed on account lookup page.", false);
 				} else {
-					blnTempVar = common.VerifyText(actErrMsg,expWithPinUsrLckmsgOne,true);
+					blnTempVar = Web.VerifyText(actErrMsg,expWithPinUsrLckmsgOne,true);
 					if (blnTempVar) {
 						Reporter.logEvent(Status.PASS, "Verify error message for User Lock - try 1'" + actErrMsg , 
 								"Error message displayed as Expected.", true);
@@ -766,7 +767,7 @@ public class registrationtestcases {
 					Reporter.logEvent(Status.FAIL, "Verify error message for User Lock - try 2'" + actErrMsg , 
 							"No error message displayed on account lookup page.", false);
 				} else {
-					blnTempVar = common.VerifyText(actErrMsg,expWithPinUsrLckmsgTwo,true);
+					blnTempVar = Web.VerifyText(actErrMsg,expWithPinUsrLckmsgTwo,true);
 					if (blnTempVar) {
 						Reporter.logEvent(Status.PASS, "Verify error message for User Lock - try 2'" + actErrMsg , 
 								"Error message displayed as Expected.", true);
@@ -819,7 +820,7 @@ public class registrationtestcases {
 					Reporter.logEvent(Status.FAIL, "Verify error message for User Lock - try 1'" + actErrMsg , 
 							"No error message displayed on account lookup page.", false);
 				} else {
-					blnTempVar = common.VerifyText(actErrMsg,expNoPinUsrLckmsgOne,true);
+					blnTempVar = Web.VerifyText(actErrMsg,expNoPinUsrLckmsgOne,true);
 					if (blnTempVar) {
 						Reporter.logEvent(Status.PASS, "Verify error message for User Lock - try 1'" + actErrMsg , 
 								"Error message displayed as Expected.", true);
@@ -852,7 +853,7 @@ public class registrationtestcases {
 					Reporter.logEvent(Status.FAIL, "Verify error message for User Lock - try 2'" + actErrMsg , 
 							"No error message displayed on account lookup page.", false);
 				} else {
-					blnTempVar = common.VerifyText(actErrMsg,expNoPinUsrLockmsgTwo,true);
+					blnTempVar = Web.VerifyText(actErrMsg,expNoPinUsrLockmsgTwo,true);
 					if (blnTempVar) {
 						Reporter.logEvent(Status.PASS, "Verify error message for User Lock - try 2'" + actErrMsg , 
 								"Error message displayed as Expected.", true);
@@ -1009,7 +1010,7 @@ public class registrationtestcases {
 			if (hdrBlockText == null) {
 				Reporter.logEvent(Status.FAIL, "Verify Account setup Header block text", "Header text block is not displayed on the page", true);
 			} else {
-				common.VerifyText("We found you!\nTo continue, provide your contact information and create a username and password.", hdrBlockText, true);
+				Web.VerifyText("We found you!\nTo continue, provide your contact information and create a username and password.", hdrBlockText, true);
 				Reporter.logEvent(Status.PASS, "Navigate to Account setup page", "user successfully navigated to the Account Setup page", true);
 			}
 		}
@@ -1040,7 +1041,7 @@ public class registrationtestcases {
 	
 	@AfterClass
 	public void cleanupSessions() {
-		common.webdriver.close();
-		common.webdriver.quit();
+		lib.Web.webdriver.close();
+		lib.Web.webdriver.quit();
 	}
 }

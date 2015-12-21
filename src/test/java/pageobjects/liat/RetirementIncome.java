@@ -3,6 +3,8 @@ package pageobjects.liat;
 
 
 
+import lib.Web;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -11,7 +13,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 
 
-import app.common.common;
+
+
 
 
 
@@ -85,7 +88,7 @@ private LoadableComponent<?> parent;
  */
 public RetirementIncome() {
 	this.parent = new LandingPage();
-	PageFactory.initElements(common.webdriver, this);
+	PageFactory.initElements(lib.Web.webdriver, this);
 }
 
 /** Constructor taking parent as input
@@ -94,12 +97,12 @@ public RetirementIncome() {
  */
 public RetirementIncome(LoadableComponent<?> parent) {
 	this.parent = parent;
-	PageFactory.initElements(common.webdriver, this);
+	PageFactory.initElements(lib.Web.webdriver, this);
 }
 
 @Override
 protected void isLoaded() throws Error {
-	Assert.assertTrue(common.isWebElementDisplayed(lnkRetirementIncome));
+	Assert.assertTrue(Web.isWebElementDisplayed(lnkRetirementIncome));
 }
 
 
@@ -256,39 +259,39 @@ public float getProjectedIncome(){
 	
 	this.lnkRetirementIncome.click();
 	try {
-		common.waitForElement(lblRetirementIncome);
+		Web.waitForElement(lblRetirementIncome);
 	} catch (Exception e) {
 		//
 	}
 		
 	
-	common.clickOnElement(btnViewDetails);
+	Web.clickOnElement(btnViewDetails);
 	
-	if(common.isWebElementDisplayed(lblCurentSavings)){
-		currentSavingsAmount = common.getIntegerCurrency(this.lblCurentSavings.getText());
+	if(Web.isWebElementDisplayed(lblCurentSavings)){
+		currentSavingsAmount = Web.getIntegerCurrency(this.lblCurentSavings.getText());
 		System.out.println("current savings"+this.lblCurentSavings.getText());
 	}
-	if(common.isWebElementDisplayed(lblFutureSavings)){
-		futureSavingsAmount = common.getIntegerCurrency(this.lblFutureSavings.getText());
+	if(Web.isWebElementDisplayed(lblFutureSavings)){
+		futureSavingsAmount = Web.getIntegerCurrency(this.lblFutureSavings.getText());
 		System.out.println("future savings:"+this.lblFutureSavings.getText());
 	}
 	
-	if(common.isWebElementDisplayed(lblEmployerPastContribution)){
-		employerPastContributionAmount = common.getIntegerCurrency(this.lblEmployerPastContribution.getText());
+	if(Web.isWebElementDisplayed(lblEmployerPastContribution)){
+		employerPastContributionAmount = Web.getIntegerCurrency(this.lblEmployerPastContribution.getText());
 		System.out.println(this.lblEmployerPastContribution.getText());
 	}
-	if(common.isWebElementDisplayed(lblEmployerFutureContribution)){
-		employerFutureContributionAmount = common.getIntegerCurrency(this.lblEmployerFutureContribution.getText());
+	if(Web.isWebElementDisplayed(lblEmployerFutureContribution)){
+		employerFutureContributionAmount = Web.getIntegerCurrency(this.lblEmployerFutureContribution.getText());
 		System.out.println(this.lblEmployerFutureContribution.getText());
 	}
 	
-	if(common.isWebElementDisplayed(lblSocialSecurity)){
-		socialsecurityAmount = common.getIntegerCurrency(this.lblSocialSecurity.getText());
+	if(Web.isWebElementDisplayed(lblSocialSecurity)){
+		socialsecurityAmount = Web.getIntegerCurrency(this.lblSocialSecurity.getText());
 		System.out.println(this.lblSocialSecurity.getText());
 	}
 	
-	if(common.isWebElementDisplayed(lblOtherAssets)){
-		otherAssetsAmount = common.getIntegerCurrency(this.lblOtherAssets.getText());
+	if(Web.isWebElementDisplayed(lblOtherAssets)){
+		otherAssetsAmount = Web.getIntegerCurrency(this.lblOtherAssets.getText());
 		System.out.println(this.lblOtherAssets.getText());
 	}
 	projectedIncome = currentSavingsAmount+futureSavingsAmount+employerFutureContributionAmount+employerPastContributionAmount+socialsecurityAmount+otherAssetsAmount;
@@ -309,7 +312,7 @@ public boolean isFieldDisplayed(String fieldName) {
 	if (element == null) {
 		return false;
 	} else {
-		return common.isWebElementDisplayed(element);
+		return Web.isWebElementDisplayed(element);
 	}
 }
 
@@ -325,7 +328,7 @@ public String getContributionValueFromViewDetails(String contributionType){
 	
 	WebElement element = this.getWebElement(contributionType);
 	
-	if(common.isWebElementDisplayed(element)){
+	if(Web.isWebElementDisplayed(element)){
 		contributionValue=element.getText();
 	}
 	System.out.println(contributionValue);
@@ -341,7 +344,7 @@ public String getContributionValueFromViewDetails(String contributionType){
 
 public boolean verifyViewDetailsLink(){
 	boolean issuccess = false;
-	if(common.isWebElementDisplayed(this.btnViewDetails)){
+	if(Web.isWebElementDisplayed(this.btnViewDetails)){
 		this.btnViewDetails.click();
 		issuccess = true;
 	}
@@ -362,7 +365,7 @@ public boolean verifyViewDetailsLink(){
 public boolean verifyViewDetailsCloseLink(){
 	System.out.println("inside close button");
 	boolean issuccess = false;
-	if(common.isWebElementDisplayed(this.lnkCloseViewDetails)){
+	if(Web.isWebElementDisplayed(this.lnkCloseViewDetails)){
 		this.lnkCloseViewDetails.click();
 		issuccess = true;
 	}
@@ -392,31 +395,31 @@ public boolean navigateToTabAndVerify(String tabName) {
 	WebElement element = this.getWebElement(tabName);
 	
 	if (tabName.trim().equalsIgnoreCase("Help Me Do It")) {
-		if(common.isWebElementDisplayed(element)){
+		if(Web.isWebElementDisplayed(element)){
 			element.click();
-			if(common.isWebElementDisplayed(lblTargetDateFunds))
+			if(Web.isWebElementDisplayed(lblTargetDateFunds))
 				isSuccess=true;
 		}
 	}
 	else if(tabName.trim().equalsIgnoreCase("Do It Myself")) {
-		if(common.isWebElementDisplayed(element)){
+		if(Web.isWebElementDisplayed(element)){
 			element.click();
-			if(common.isWebElementDisplayed(sliderInvestmentMix))
+			if(Web.isWebElementDisplayed(sliderInvestmentMix))
 				isSuccess=true;
 		}
 	}
 	else if(tabName.trim().equalsIgnoreCase("Plan Savings")) {
-		if(common.isWebElementDisplayed(element)){
+		if(Web.isWebElementDisplayed(element)){
 			element.click();
-			if(common.isWebElementDisplayed(lblInvestment))
+			if(Web.isWebElementDisplayed(lblInvestment))
 				isSuccess=true;
 		}
 	}
 	
 	else if(tabName.trim().equalsIgnoreCase("Do It For Me")) {
-		if(common.isWebElementDisplayed(element)){
+		if(Web.isWebElementDisplayed(element)){
 			element.click();
-			if(common.isWebElementDisplayed(lnkEnrollInManagedAccounts))
+			if(Web.isWebElementDisplayed(lnkEnrollInManagedAccounts))
 				isSuccess=true;
 		}
 	}
@@ -438,7 +441,7 @@ public boolean navigateToTabAndVerify(String tabName) {
 public boolean verifyIfSliderPresent(String sliderName){
 	boolean isSuccess = false;
 	WebElement element = this.getWebElement(sliderName);
-	if(common.isWebElementDisplayed(element))
+	if(Web.isWebElementDisplayed(element))
 		isSuccess = true;
 	
 	return isSuccess;
@@ -458,16 +461,16 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 	String modalHeader =null;
 	WebElement element = this.getWebElement(retirementIncomeView);
 
-	common.clickOnElement(this.myGoalPercent);
+	Web.clickOnElement(this.myGoalPercent);
 	Thread.sleep(3000);
-		if(common.isWebElementDisplayed(element)){
+		if(Web.isWebElementDisplayed(element)){
 			if(!element.isSelected()){
 				element.click();
 			}
 			modalHeader = txtMyGoalPercent.getText();
 		}
 	
-	if (common.isWebElementDisplayed(lnkCancelGoalSetup)) {
+	if (Web.isWebElementDisplayed(lnkCancelGoalSetup)) {
 		this.lnkCancelGoalSetup.click();
 	}
 	

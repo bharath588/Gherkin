@@ -5,15 +5,19 @@ import java.sql.ResultSet;
 
 
 
+
+
+
+import lib.DB;
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.DBUtils;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.utils.Stock;
 
 import org.testng.Assert;
@@ -49,7 +53,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
      */
     public LandingPage() {
     	this.parent = new TwoStepVerification();
-    	PageFactory.initElements(common.webdriver, this);
+    	PageFactory.initElements(lib.Web.webdriver, this);
     }
     
     /** Constructor taking parent as input
@@ -59,12 +63,12 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	public LandingPage(LoadableComponent<?> parent){
 		//this.driver = DriveSuite.webDriver;
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(lblRetirementIncome));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
 		
 	}
 
@@ -73,7 +77,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		TwoStepVerification mfaScreen = (TwoStepVerification) this.parent;
 		this.parent.get();
 		
-		if (!common.isWebElementDisplayed(this.lnkHome)) {
+		if (!Web.isWebElementDisplayed(this.lnkHome)) {
 			mfaScreen.selectCodeDeliveryOption("ALREADY_HAVE_CODE");
 			try {
 				mfaScreen.submitVerificationCode(Stock.globalParam.get("defaultActivationCode"), true, false);
@@ -83,15 +87,15 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			}
 		}
 		
-		if (common.isWebElementDisplayed(this.btnCloseTutorial, true)) {
+		if (Web.isWebElementDisplayed(this.btnCloseTutorial, true)) {
 			this.btnCloseTutorial.click();
 		}
 		
-		if (common.isWebElementDisplayed(lnkDismiss)) {
+		if (Web.isWebElementDisplayed(lnkDismiss)) {
 			this.lnkDismiss.click();
 		}
 		
-		if (common.isWebElementDisplayed(this.lnkCancelGoalSetup)) {
+		if (Web.isWebElementDisplayed(this.lnkCancelGoalSetup)) {
 			this.lnkCancelGoalSetup.click();
 		}
 		
@@ -119,8 +123,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			e.printStackTrace();
 		}
 		
-		ResultSet recSet = DBUtils.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
-		int	noOfPlans = DBUtils.getRecordSetCount(recSet);
+		ResultSet recSet = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
+		int	noOfPlans = DB.getRecordSetCount(recSet);
 		
 		return noOfPlans;
 	}
@@ -200,7 +204,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
      * @param bLogoutAfterExecution - <b>true</b> to logout from application. <b>false</b> otherwise
      */
 	public void logout(boolean bLogoutAfterExecution) {
-		if (bLogoutAfterExecution && common.isWebElementDisplayed(this.lnkLogout))
+		if (bLogoutAfterExecution && Web.isWebElementDisplayed(this.lnkLogout))
 			this.lnkLogout.click();
 	}
 
@@ -210,7 +214,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	 * @param cancelGoalSetup - <b>false</b> if goal setup pop up need to be closed. <b>false</b> otherwise
 	 */
 	public void dismissPopUps(boolean closeTutorial, boolean cancelGoalSetup) {
-		if (closeTutorial && common.isWebElementDisplayed(this.btnCloseTutorial, true)) {
+		if (closeTutorial && Web.isWebElementDisplayed(this.btnCloseTutorial, true)) {
 			this.btnCloseTutorial.click();
 		}
 		
@@ -220,7 +224,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			// Do nothing
 		}
 		
-		if (common.isWebElementDisplayed(lnkDismiss)) {
+		if (Web.isWebElementDisplayed(lnkDismiss)) {
 			this.lnkDismiss.click();
 		}
 		
@@ -230,7 +234,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			// Do nothing
 		}
 		
-		if (cancelGoalSetup && common.isWebElementDisplayed(this.lnkCancelGoalSetup)) {
+		if (cancelGoalSetup && Web.isWebElementDisplayed(this.lnkCancelGoalSetup)) {
 			this.lnkCancelGoalSetup.click();
 		}
 		

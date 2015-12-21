@@ -1,13 +1,15 @@
 package pageobjects.liat;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
+
 
 
 
@@ -45,7 +47,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	public HealthCareCosts()
 	{
 		this.parent=new LandingPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Parameter Constructor
@@ -54,12 +56,12 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	 */
 	public HealthCareCosts(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(btnPersonalize));
+		Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
 	}
 
 	@Override
@@ -119,19 +121,19 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 //	}
 	
 	public void verifyHealthCostFromUI(float estMonthlyIncome){
-        float doctorAndTestsPartABCost = common.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
-        float prescriptionDrugsPartDCost = common.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
-        float medicareSupplementalCost = common.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
-        float dentalInsuranceCost = common.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
-        float hearingAndVisionCost = common.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
-        float prescriptionDrugsCost = common.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
-        float dentalCost = common.getIntegerCurrency(this.lblDentalCost.getText());
-        float doctorsAndTestsCost = common.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
+        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
+        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
+        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
+        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
+        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
+        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
+        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
+        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
         
         float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
                                                         + dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
                                                         doctorsAndTestsCost;
-        float projectedHealthCareCost = common.getIntegerCurrency(this.lblProjectedHlthCareCost.getText());
+        float projectedHealthCareCost = Web.getIntegerCurrency(this.lblProjectedHlthCareCost.getText());
         
         float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
         
@@ -150,7 +152,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
      * @return - void
      */
 	public void verifyPieChart(){
-		if (common.isWebElementDisplayed(this.lblPieChart,false)) {
+		if (Web.isWebElementDisplayed(this.lblPieChart,false)) {
 			Reporter.logEvent(Status.PASS, "Verify Pie Chart Exists", "Pie chart is visible as expected", true);			
 		}else{
 			Reporter.logEvent(Status.FAIL, "Verify Pie Chart Exists", "Pie chart is Not visible as expected", true);
@@ -164,7 +166,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
      */
 	public void verifyAttainedAgeSlide(){
 		
-		if (common.isWebElementDisplayed(this.sliderAttainedAge,false)) {
+		if (Web.isWebElementDisplayed(this.sliderAttainedAge,false)) {
 			Reporter.logEvent(Status.PASS, "Verify Attained Age Slide bar Exists", "Attained Age Slide bar is visible as expected", true);			
 		}else{
 			Reporter.logEvent(Status.FAIL, "Verify Attained Age Slide bar Exists", "Attained Age Slide bar is Not visible as expected", true);
@@ -177,7 +179,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 */
 	public void verifyPersonalizeBtn() {							
 			this.btnPersonalize.click();				
-			if (common.isWebElementDisplayed(this.btnUpdate, false)) {
+			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 		}else {
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);

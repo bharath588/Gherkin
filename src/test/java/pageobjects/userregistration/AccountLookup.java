@@ -1,14 +1,16 @@
 
 package pageobjects.userregistration;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
+
 
 
 
@@ -48,7 +50,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public AccountLookup() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as input
@@ -57,12 +59,12 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public AccountLookup(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(lblAccLookupHeaderTextBlock));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblAccLookupHeaderTextBlock));
 	}
 
 	@Override
@@ -267,7 +269,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public String getAccountLookupHeaderBlockText() {
 		
-		boolean isHeaderPresent = common.isWebElementDisplayed(this.lblAccLookupHeaderTextBlock);
+		boolean isHeaderPresent = Web.isWebElementDisplayed(this.lblAccLookupHeaderTextBlock);
 		String headerText = "";
 		
 		if (isHeaderPresent) {
@@ -293,11 +295,11 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			// Do Nothing
 		}
 
-		if (common.getParent(this.tabIDoNotHaveaPIN).getAttribute("class").toUpperCase().contains("ACTIVE")) {
+		if (Web.getParent(this.tabIDoNotHaveaPIN).getAttribute("class").toUpperCase().contains("ACTIVE")) {
 			activeTab = "I do not have a PIN";
-		} else if (common.getParent(this.tabIHaveaPIN).getAttribute("class").toUpperCase().contains("ACTIVE")) {
+		} else if (Web.getParent(this.tabIHaveaPIN).getAttribute("class").toUpperCase().contains("ACTIVE")) {
 			activeTab = "I have a PIN";
-		} else if (common.getParent(this.tabIHaveaGroupAccPassword).getAttribute("class").toUpperCase().contains("ACTIVE")) {
+		} else if (Web.getParent(this.tabIHaveaGroupAccPassword).getAttribute("class").toUpperCase().contains("ACTIVE")) {
 			activeTab = "I have a group account password";
 		} else {
 			activeTab = "";
@@ -346,7 +348,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (element == null) {
 			return false;
 		} else {
-			return common.isWebElementDisplayed(element);
+			return Web.isWebElementDisplayed(element);
 		}
 	}
 
@@ -360,7 +362,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public String setTextToFields(String fieldName, CharSequence... valueToSet) {
 		WebElement element = this.getWebElement(fieldName);
-		return common.setTextToTextBox(element, valueToSet);
+		return Web.setTextToTextBox(element, valueToSet);
 	}
 	
 	/** Method to click on specified field element.
@@ -370,7 +372,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public boolean clickOnFields(String fieldName) {
 		WebElement element = this.getWebElement(fieldName);
-		return common.clickOnElement(element);
+		return Web.clickOnElement(element);
 	}
 
 	/**<pre> Method to return error message displayed for the corresponding field.
@@ -394,7 +396,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (element == null) {
 			errMsg = "";
 		} else {
-			if (common.isWebElementDisplayed(element)) {
+			if (Web.isWebElementDisplayed(element)) {
 				errMsg = element.getText();
 			} else {
 				errMsg = "";
@@ -407,7 +409,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	public String getMainErrorMsg() {
 		String errMsg = "";
 		
-			if (common.isWebElementDisplayed(this.lblMainErrMsg)) {
+			if (Web.isWebElementDisplayed(this.lblMainErrMsg)) {
 				errMsg = this.lblMainErrMsg.getText();
 			}
 		

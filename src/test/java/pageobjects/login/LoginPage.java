@@ -2,13 +2,14 @@ package pageobjects.login;
 
 import java.awt.event.KeyEvent;
 
+import lib.Web;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import app.common.common;
 import core.utils.Stock;
 
 public class LoginPage extends LoadableComponent<LoginPage>{
@@ -31,19 +32,19 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 	public LoginPage(){
 		//this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
 	public LoginPage(String username,String password) {
 		this.username = username;
 		this.password = password;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
 
-		Assert.assertTrue(common.isWebElementDisplayed(txtPassword));;
+		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword));;
 	}
 
 	@Override
@@ -54,22 +55,22 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block              
 		}
-		common.robot.keyPress(KeyEvent.VK_ESCAPE);
-		common.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
-		common.webdriver.get(Stock.globalParam.get("AppURL"));
+		lib.Web.webdriver.get(Stock.globalParam.get("AppURL"));
 
-		common.robot.keyPress(KeyEvent.VK_ESCAPE);
-		common.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
-		common.webdriver.manage().window().maximize();
+		lib.Web.webdriver.manage().window().maximize();
 
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block              
 		}
-		boolean isElementPresent = common.isWebElementDisplayed(lnkDismiss,true);
+		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
 		if (isElementPresent)
 			lnkDismiss.click();
 
@@ -130,8 +131,8 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		//		this.txtUserName.setTextToTextBox(userName);		
 		//		this.txtPassword.sendKeys(password);
 
-		common.setTextToTextBox(this.txtUserName, userName);
-		common.setTextToTextBox(this.txtPassword, password);
+		Web.setTextToTextBox(this.txtUserName, userName);
+		Web.setTextToTextBox(this.txtPassword, password);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
@@ -139,7 +140,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			e1.printStackTrace();
 		}
 
-		boolean isElementPresent = common.isWebElementDisplayed(lnkDismiss);
+		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss);
 
 		if (isElementPresent)
 		{
@@ -163,7 +164,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	 * @return String - Displayed error message
 	 */
 	public String isValidCredentials(){
-		boolean isElementPresent = common.isWebElementDisplayed(this.weHelpBlock);
+		boolean isElementPresent = Web.isWebElementDisplayed(this.weHelpBlock);
 
 		if (isElementPresent)
 			return this.weHelpBlock.getText();

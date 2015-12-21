@@ -5,13 +5,14 @@ package pageobjects.beneficiaries;
 
 import java.util.List;
 
+import lib.DB;
+import lib.Web;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.DBUtils;
-import app.common.common;
 import core.utils.Stock;
 
 import org.testng.Assert;
@@ -75,7 +76,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public MyBeneficiaries() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as input
@@ -84,12 +85,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public MyBeneficiaries(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(lblDesignateBeneficiary));
+		Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
 //		if (!(common.isWebElementDisplayed(lblMyBeneficiaries,MyBeneficiaries.waitforLoad) || common.isWebElementDisplayed(lblDesignateBeneficiary,MyBeneficiaries.waitforLoad))) {
 //			MyBeneficiaries.waitforLoad = true;
 //			throw new Error("'My beneficiaries' page is not loaded");
@@ -181,7 +182,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (element == null) {
 			return false;
 		} else {
-			return common.isWebElementDisplayed(element);
+			return Web.isWebElementDisplayed(element);
 		}
 	}
 	
@@ -199,19 +200,19 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		} catch (InterruptedException e) {
 			
 		}
-		if(common.isWebElementDisplayed(lblDesignateBeneficiary))
+		if(Web.isWebElementDisplayed(lblDesignateBeneficiary))
 			maritalstatus.click();
 		
 		else{
-			common.clickOnElement(this.btnAddAnotherBeneficiary);
+			Web.clickOnElement(this.btnAddAnotherBeneficiary);
 			if(beneficiaryType.equalsIgnoreCase("Primary"))
-				common.clickOnElement(this.btnPrimary);
+				Web.clickOnElement(this.btnPrimary);
 			else
-				common.clickOnElement(this.btnContingent);
+				Web.clickOnElement(this.btnContingent);
 		}
 			
 		
-		common.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
+		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
 		this.enterBeneficiaryDetails();
 //		if(useMyAddress.equalsIgnoreCase("Yes")){
 //			if(!this.chkUseMyAddressForBen.isSelected())
@@ -222,7 +223,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 //				this.chkUseMyAddressForBen.click();
 //			this.enterAddressDetails();
 //		}
-		common.clickOnElement(this.btnSave);
+		Web.clickOnElement(this.btnSave);
 
 		
 		if(Stock.globalTestdata.get("IterationNumber").equalsIgnoreCase("2")){
@@ -296,44 +297,44 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		String beneficiaryName = Stock.globalTestdata.get("FirstName")+" "+Stock.globalTestdata.get("MiddleName")+" "+Stock.globalTestdata.get("LastName");
 		try {
 			Thread.sleep(10000);
-			common.waitForElement(this.lblConfirmation);
+			Web.waitForElement(this.lblConfirmation);
 		} catch (Exception e) {
 			
 		}
 		
-		if(common.isWebElementDisplayed(this.lblConfirmation)){
+		if(Web.isWebElementDisplayed(this.lblConfirmation)){
 			
 				if(attribute.equalsIgnoreCase("Confirmation number"))
 					if(lstTblConfirmationDetails.get(0).getText().split(":")[1] != null)
 						return isSuccess;
 				if(attribute.equalsIgnoreCase("Marital status"))
-					return common.VerifyText("Marital Status: "+Stock.globalTestdata.get("Marital Status"), lstTblConfirmationDetails.get(1).getText(), true);
+					return Web.VerifyText("Marital Status: "+Stock.globalTestdata.get("Marital Status"), lstTblConfirmationDetails.get(1).getText(), true);
 			
 			
 			for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
 				if(lstTablePrimaryBeneficiary.get(i).getText().contains(beneficiaryName)){
 						
 					if(attribute.equalsIgnoreCase("Name"))
-						return common.VerifyText("Name: "+beneficiaryName+", "+Stock.globalTestdata.get("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
+						return Web.VerifyText("Name: "+beneficiaryName+", "+Stock.globalTestdata.get("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
 					
 					if(attribute.equalsIgnoreCase("Allocation"))	
-						return common.VerifyText("Allocation: "+Stock.globalTestdata.get("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
+						return Web.VerifyText("Allocation: "+Stock.globalTestdata.get("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
 					
 					if(attribute.equalsIgnoreCase("Relationship"))	
-						return common.VerifyText("Relationship: "+Stock.globalTestdata.get("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
+						return Web.VerifyText("Relationship: "+Stock.globalTestdata.get("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-						return common.VerifyText("SSN (LAST FOUR): "+Stock.globalTestdata.get("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.globalTestdata.get("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){	
-						return common.VerifyText("DATE OF BIRTH: "+Stock.globalTestdata.get("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						return Web.VerifyText("DATE OF BIRTH: "+Stock.globalTestdata.get("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
 					}
 					if(attribute.equalsIgnoreCase("Phone Number"))	
-						return common.VerifyText("PHONE NUMBER: "+Stock.globalTestdata.get("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
+						return Web.VerifyText("PHONE NUMBER: "+Stock.globalTestdata.get("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
 						String address= Stock.globalTestdata.get("AddressOne")+" "+Stock.globalTestdata.get("Country")+", "+Stock.globalTestdata.get("Zipcode").split("\\.")[0];
-						return common.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8], true);
+						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8], true);
 					}
 				}
 				
@@ -369,10 +370,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.txtAddressTwo.sendKeys(Stock.globalTestdata.get("AddressTwo"));
 		this.txtCity.clear();
 		this.txtCity.sendKeys(Stock.globalTestdata.get("City"));
-		common.selectDropDownOption(this.selState,Stock.globalTestdata.get("State"));
+		Web.selectDropDownOption(this.selState,Stock.globalTestdata.get("State"));
 		this.txtZipCode.clear();
 		this.txtZipCode.sendKeys(Stock.globalTestdata.get("Zipcode").split("\\.")[0]);
-		common.selectDropDownOption(this.selCountry,Stock.globalTestdata.get("Country"));
+		Web.selectDropDownOption(this.selCountry,Stock.globalTestdata.get("Country"));
 	}
 	
 
@@ -387,7 +388,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public void deleteBeneficiariesFromDB(String ssn, String firstName) throws Exception{
 		String[] sqlQuery;
 		sqlQuery = Stock.getTestQuery("deleteBeneficiary");
-		DBUtils.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
 		
 	}
 }

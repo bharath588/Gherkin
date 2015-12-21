@@ -2,14 +2,16 @@ package pageobjects;
 
 import java.util.List;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
+
 
 
 
@@ -32,7 +34,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 */
 	public MyAccountsPage() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as arg
@@ -41,12 +43,12 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 */
 	public MyAccountsPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(hdrMyAccounts));
+		Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
 //		boolean isDisplayed = common.isWebElementDisplayed(this.hdrMyAccounts,MyAccountsPage.waitforLoad);
 //		if (!isDisplayed) {
 //			MyAccountsPage.waitforLoad=true;
@@ -62,7 +64,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		
 		this.parent.get();
 		((LandingPage) this.parent).dismissPopUps(true,true);
-		common.clickOnElement(land, "MY ACCOUNTS");
+		Web.clickOnElement(land, "MY ACCOUNTS");
 		
 		try {
 			Thread.sleep(3000);

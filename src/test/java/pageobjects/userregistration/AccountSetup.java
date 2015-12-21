@@ -3,16 +3,17 @@ package pageobjects.userregistration;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import lib.DB;
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import app.common.DBUtils;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.utils.Stock;
 
 import org.testng.Assert;
@@ -53,7 +54,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	 */
 	public AccountSetup() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as input
@@ -62,12 +63,12 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	 */
 	public AccountSetup(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(hrdSetUpYourAccount));
+		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount));
 	}
 	
 	@Override
@@ -201,7 +202,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		if (element == null) {
 			errMsg = "";
 		} else {
-			if (common.isWebElementDisplayed(element)) {
+			if (Web.isWebElementDisplayed(element)) {
 				errMsg = element.getText();
 			} else {
 				errMsg = "";
@@ -227,7 +228,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		
 		Thread.sleep(5000);
 	
-		boolean isHeaderPresent = common.isWebElementDisplayed(this.hrdSetUpYourAccount);
+		boolean isHeaderPresent = Web.isWebElementDisplayed(this.hrdSetUpYourAccount);
 		String headerText = "";
 		
 		if (isHeaderPresent) {
@@ -283,7 +284,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		Reporter.logEvent(Status.INFO, "", "", true);
 		
 		//Verify "Contact Information" header is displayed
-		isMatching = common.VerifyText("Provide contact information", this.lblContactInformation.getText(), true);
+		isMatching = Web.VerifyText("Provide contact information", this.lblContactInformation.getText(), true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS, "Verify 'Contact Information' header is displayed", "Header is displayed", false);
 		} else {
@@ -291,14 +292,14 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		}
 		
 		//Verify 'Email Address' field is displayed
-		if (common.isWebElementDisplayed(this.txtEmail)) {
+		if (Web.isWebElementDisplayed(this.txtEmail)) {
 			Reporter.logEvent(Status.PASS, "Verify 'Email Address' text field is displayed", "'Email Address' field is displayed", false);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verify 'Email Address' text field is displayed", "'Email Address' is not displayed", false);
 		}
 		
 		//Verify 'Mobile Phone Number' field is displayed
-		if (common.isWebElementDisplayed(this.txtPhone)) {
+		if (Web.isWebElementDisplayed(this.txtPhone)) {
 			Reporter.logEvent(Status.PASS, "Verify 'Mobile Phone Number' text field is displayed", "'Email Address' field is displayed", false);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verify 'Mobile Phone Number' text field is displayed", "'Email Address' is not displayed", false);
@@ -308,7 +309,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		// TODO Update below code to fetch correct query and parameters
 		sqlQuery = Stock.getTestQuery("fetchContactInformation");
 		//queryParameters = new String[] {"'" + validSSN + "'"};
-		recordSet = DBUtils.executeQuery(sqlQuery[0], sqlQuery[1], validSSN);
+		recordSet = DB.executeQuery(sqlQuery[0], sqlQuery[1], validSSN);
 		
 		try {
 			
@@ -327,7 +328,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 			
 			
 			//Validate pre-populated email address
-			isMatching = common.VerifyText(expEmailAddress, actEmailAddress, true);
+			isMatching = Web.VerifyText(expEmailAddress, actEmailAddress, true);
 			if (isMatching) {
 				Reporter.logEvent(Status.PASS, "Verify pre-populated Email Address", 
 						"Expected: " + expEmailAddress + "\nActual: " + actEmailAddress, false);
@@ -338,10 +339,10 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 			
 			//Validate pre-populated mobile phone number
 			if (expMobileNumber.trim().length() > 0) {
-				isMatching = common.VerifyText("(" + expMobileNumberAreaCode + ") " + expMobileNumber,
+				isMatching = Web.VerifyText("(" + expMobileNumberAreaCode + ") " + expMobileNumber,
 						actMobileNumber, true);
 			} else {
-				isMatching = common.VerifyText("", actMobileNumber, true);
+				isMatching = Web.VerifyText("", actMobileNumber, true);
 			}
 			
 			if (isMatching) {
@@ -369,9 +370,9 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		//Leave Email Address field empty and then move the cursor out of the field - Email Address is required error message is required
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys(Keys.TAB);
-		if (common.isWebElementDisplayed(this.lblEmailErrMsg)) {
+		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = this.lblEmailErrMsg.getText();
-			isMatching = common.VerifyText("Email is required", actualErrorText, true);
+			isMatching = Web.VerifyText("Email is required", actualErrorText, true);
 			if (isMatching) {
 				Reporter.logEvent(Status.PASS, "Verify error message is displayed when email field is left blank.", 
 						"Expected: Email is required\nActual: " + actualErrorText, true);
@@ -388,10 +389,10 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys("Test@test");
 		this.txtEmail.sendKeys(Keys.TAB);
-		if (common.isWebElementDisplayed(this.lblEmailErrMsg)) {
+		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = "";
 			actualErrorText = this.lblEmailErrMsg.getText();
-			isMatching = common.VerifyText("Please enter a valid email address", actualErrorText, true);
+			isMatching = Web.VerifyText("Please enter a valid email address", actualErrorText, true);
 			if (isMatching) {
 				Reporter.logEvent(Status.PASS, "Verify error message is displayed when invalid email address is entered.", 
 						"Expected: Please enter a valid email address\nActual: " + actualErrorText, true);
@@ -408,7 +409,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys("Test@test.com");
 		this.txtEmail.sendKeys(Keys.TAB);
-		if (common.isWebElementDisplayed(this.lblEmailErrMsg)) {
+		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = "";
 			actualErrorText = this.lblEmailErrMsg.getText();
 			Reporter.logEvent(Status.FAIL, "Verify no error message is displayed when valid email address is entered.", 
@@ -427,7 +428,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		Reporter.logEvent(Status.INFO, "", "", true);
 		
 		//Verify "Username and Password" header is displayed
-		isMatching = common.VerifyText("Username and Password", this.lblUsernameAndPassword.getText(), true);
+		isMatching = Web.VerifyText("Username and Password", this.lblUsernameAndPassword.getText(), true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS, "Verify 'Username and Password' header is displayed", "Header is displayed", false);
 		} else {
@@ -435,21 +436,21 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		}
 		
 		//Verify 'Username' field is displayed
-		if (common.isWebElementDisplayed(this.txtUserName)) {
+		if (Web.isWebElementDisplayed(this.txtUserName)) {
 			Reporter.logEvent(Status.PASS, "Verify 'Username' text field is displayed", "'Username' field is displayed", false);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verify 'Username' text field is displayed", "'Username' is not displayed", false);
 		}
 		
 		//Verify 'Password' field is displayed
-		if (common.isWebElementDisplayed(this.txtPassword)) {
+		if (Web.isWebElementDisplayed(this.txtPassword)) {
 			Reporter.logEvent(Status.PASS, "Verify 'Password' text field is displayed", "'Password' field is displayed", false);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verify 'Password' text field is displayed", "'Password' is not displayed", false);
 		}
 		
 		//Verify 'Re-Enter Password' field is displayed
-		if (common.isWebElementDisplayed(this.txtConfirmPassword)) {
+		if (Web.isWebElementDisplayed(this.txtConfirmPassword)) {
 			Reporter.logEvent(Status.PASS, "Verify 'Re-Enter Password' text field is displayed", "'Re-Enter Password' field is displayed", false);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Verify 'Re-Enter Password' text field is displayed", "'Re-Enter Password' is not displayed", false);
@@ -551,7 +552,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		//Enter valid Username and verify no error message is displayed. And 'Valid Username' messge is displayed
 		this.txtUserName.clear();
 		this.txtUserName.sendKeys("8253256ABC");
-		if(common.isWebElementDisplayed(this.lblValidUsername)) {
+		if(Web.isWebElementDisplayed(this.lblValidUsername)) {
 			Reporter.logEvent(Status.PASS, "Enter valid username and verify displayed message", 
 					"Expected: Valid Username\nActual: Valid Username", true);
 		} else {
@@ -563,7 +564,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtUserName.sendKeys(Keys.BACK_SPACE);
 		actErrorText = "";
 		actErrorText = this.lblUserNameErrMsg.getText();
-		isMatching = common.VerifyText("At least three letters", actErrorText, true);
+		isMatching = Web.VerifyText("At least three letters", actErrorText, true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS, "Delete last letter from valid username (8253256ABC) and verify error displayed", 
 					"Expected: At least three letters\nActual: " + actErrorText, true);
@@ -709,7 +710,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtPassword.clear();
 		
 		this.txtPassword.sendKeys("Test@1234");
-		if(common.isWebElementDisplayed(this.lblStrongPassword)) {
+		if(Web.isWebElementDisplayed(this.lblStrongPassword)) {
 			Reporter.logEvent(Status.PASS, "Enter valid Password and verify displayed message", 
 					"Expected: Strong Password\nActual: Strong Password", true);
 		} else {
@@ -745,7 +746,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		} catch (InterruptedException e1) {
 		}
 		
-		if(common.isWebElementDisplayed(this.lblConfirmPwdErrMsg)) {
+		if(Web.isWebElementDisplayed(this.lblConfirmPwdErrMsg)) {
 			Reporter.logEvent(Status.FAIL, "Enter valid Password and verify no error message is displayed", 
 					"Expected: No message displayed\nActual: " + this.lblConfirmPwdErrMsg.getText(), true);
 		} else {

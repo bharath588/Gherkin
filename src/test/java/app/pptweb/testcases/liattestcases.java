@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -16,9 +20,6 @@ import pageobjects.liat.HowDoICompare;
 import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -32,7 +33,7 @@ public class liattestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -198,7 +199,7 @@ public class liattestcases {
 			
 			
 			if (testdata.get("Do It Myself").trim().equalsIgnoreCase("Y")) {
-				common.clickOnElement(retirement, "Do It Myself");
+				Web.clickOnElement(retirement, "Do It Myself");
 				if(retirement.verifyIfSliderPresent("Investment mix slider"))
 					Reporter.logEvent(Status.PASS, "Verify Investment mix slider", "Investment mix slider displayed", false);
 				else
@@ -217,13 +218,13 @@ public class liattestcases {
 			
 			//verify if we are able to navigate to Help Me Do It Tab
 			if (testdata.get("Help Me Do It").trim().equalsIgnoreCase("Y")) {
-				if(common.clickOnElement(retirement,"Help Me Do It"))
+				if(Web.clickOnElement(retirement,"Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab", "Able to navigate to Help Me Do It tab", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify help Me Do It tab", "Not Able to navigate to Help Me Do It tab", true);
 			}
 			else  {
-				if(!common.clickOnElement(retirement,"Help Me Do It"))
+				if(!Web.clickOnElement(retirement,"Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab", "Help Me DO it tab is not displayed", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify help Me Do It tab", "Help Me Do It tab is displayed", true);
@@ -231,13 +232,13 @@ public class liattestcases {
 			
 			//verify if we are able to navigate to Do It For Me Tab
 			if (testdata.get("Do It For Me").trim().equalsIgnoreCase("Y")) {
-				if(common.clickOnElement(retirement,"Do It For Me"))
+				if(Web.clickOnElement(retirement,"Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab", "Able to navigate to Do It For Me It tab", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Do It For Me tab", "Not Able to navigate to Do It For Me tab", true);
 			}
 			else  {
-				if(!common.clickOnElement(retirement,"Do It For Me"))
+				if(!Web.clickOnElement(retirement,"Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab", "Do It For Me tab is not displayed", false);
 				else
 				
@@ -246,13 +247,13 @@ public class liattestcases {
 			
 			//verify if we are able to navigate to Do It Myself Tab
 			if (testdata.get("Do It Myself").trim().equalsIgnoreCase("Y")) {
-				if(common.clickOnElement(retirement,"Do It Myself"))
+				if(Web.clickOnElement(retirement,"Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab", "Able to navigate to Do It Myself tab", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Do It Myself tab", "Not Able to navigate to Do It Myself tab", true);
 			}
 			else {
-				if(!common.clickOnElement(retirement,"Do It Myself"))
+				if(!Web.clickOnElement(retirement,"Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab", "Do It Myself tab is not displayed", false);
 				else
 				
@@ -299,14 +300,14 @@ public class liattestcases {
 				
 			}
 			//Verifying if Retirement Income Page is loaded.
-			if(common.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
+			if(Web.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
 			{
 			Reporter.logEvent(Status.PASS, "Navigate to 'Retirement Income Page", 
 					"Navigation succeeded", true);
-			common.clickOnElement(retirementIncome, "Social Security Tab");		
+			Web.clickOnElement(retirementIncome, "Social Security Tab");		
 			
 			//Verify if Social Security Tab is loaded
-			if(common.isWebElementDisplayed(retirementIncome, "Social Security Administration"))			
+			if(Web.isWebElementDisplayed(retirementIncome, "Social Security Administration"))			
 					Reporter.logEvent(Status.PASS, "Verify if Social Security Page is Loaded", "Social Security page is loaded", true);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify if Social Security Page is Loaded", "Social Security page is not loaded", true);									
@@ -358,14 +359,14 @@ public class liattestcases {
 				
 			}			
 			//Verifying if Retirement Income Page is loaded.
-			if(common.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
+			if(Web.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
 			{
 			Reporter.logEvent(Status.PASS, "Navigate to 'Retirement Income Page", 
 					"Navigation succeeded", true);			
-			common.clickOnElement(retirementIncome, "Other Assets Tab");
+			Web.clickOnElement(retirementIncome, "Other Assets Tab");
 			
 			//Verifying if Other Assets page is loaded 
-			if(common.isWebElementDisplayed(retirementIncome, "Add an Account"))				
+			if(Web.isWebElementDisplayed(retirementIncome, "Add an Account"))				
 					Reporter.logEvent(Status.PASS, "Verify if Other Assets Page is Loaded", "Other Assets page is loaded", true);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify if Other AssetsPage is Loaded", "Other Assets page is not loaded", true);				
@@ -416,14 +417,14 @@ public class liattestcases {
 				
 			}
 			//Verify if Retirement Income Page is loaded
-			if(common.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
+			if(Web.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
 			{
 			Reporter.logEvent(Status.PASS, "Navigate to 'Retirement Income Page", 
 					"Navigation succeeded", true);	
-			common.clickOnElement(retirementIncome, "Income Gap Tab");
+			Web.clickOnElement(retirementIncome, "Income Gap Tab");
 
 			//Verify if Income Gap Page is loaded
-			if(common.isWebElementDisplayed(retirementIncome, "Catch up Contributions"))					
+			if(Web.isWebElementDisplayed(retirementIncome, "Catch up Contributions"))					
 					Reporter.logEvent(Status.PASS, "Verify if Income Gap Page is Loaded", "Income Gap page is loaded", true);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify if Income Gap Page is Loaded", "Income Gap page is not loaded", true);						
@@ -522,7 +523,7 @@ public class liattestcases {
 			healthCareCost.get();
 			
 			projectedIncome = retirementIncome.getProjectedIncome();
-			common.clickOnElement(healthCareCost, "Health-care costs");
+			Web.clickOnElement(healthCareCost, "Health-care costs");
 			healthCareCost.verifyAttainedAgeSlide();
 			healthCareCost.verifyPieChart();
 			healthCareCost.verifyHealthCostFromUI(projectedIncome);
@@ -588,8 +589,8 @@ public class liattestcases {
 		
 	@AfterClass
 	public void cleanupSessions() {
-		common.webdriver.close();
-		common.webdriver.quit();
+		lib.Web.webdriver.close();
+		lib.Web.webdriver.quit();
 	}
 	}
 

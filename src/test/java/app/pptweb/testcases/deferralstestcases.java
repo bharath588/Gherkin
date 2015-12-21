@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -15,9 +19,6 @@ import pageobjects.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -31,7 +32,7 @@ public class deferralstestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -74,13 +75,13 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try {
-				common.waitForElement(deferrals,"Table Header Contribution");
+				Web.waitForElement(deferrals,"Table Header Contribution");
 			} catch (Exception e) {			
 				e.printStackTrace();
 			}
 			
 			//Navigating to  My Contributions Page
-			if(common.isWebElementDisplayed(deferrals, "My Contributions"))
+			if(Web.isWebElementDisplayed(deferrals, "My Contributions"))
 			{
 				Reporter.logEvent(Status.PASS, "Navigate to My Contributions Page", 
 						"Navigation succeeded", true);
@@ -140,13 +141,13 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try {
-				common.waitForElement(deferrals,"Table Header Contribution");
+				Web.waitForElement(deferrals,"Table Header Contribution");
 			} catch (Exception e) {			
 				e.printStackTrace();
 			}
 			
 			//Navigating to  My Contributions Page
-					if(common.isWebElementDisplayed(deferrals, "My Contributions"))
+					if(Web.isWebElementDisplayed(deferrals, "My Contributions"))
 					{
 						Reporter.logEvent(Status.PASS, "Navigate to My Contributions Page", 
 								"Navigation succeeded", true);
@@ -209,13 +210,13 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try {
-				common.waitForElement(deferrals,"Table Header Contribution");
+				Web.waitForElement(deferrals,"Table Header Contribution");
 			} catch (Exception e) {			
 				e.printStackTrace();
 			}
 			
 			//Navigating to  My Contributions Page
-					if(common.isWebElementDisplayed(deferrals, "My Contributions"))
+					if(Web.isWebElementDisplayed(deferrals, "My Contributions"))
 					{
 						Reporter.logEvent(Status.PASS, "Navigate to My Contributions Page", 
 								"Navigation succeeded", true);

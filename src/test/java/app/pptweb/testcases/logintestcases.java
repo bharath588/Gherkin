@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -13,9 +17,6 @@ import org.testng.annotations.Test;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -30,7 +31,7 @@ public class logintestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -72,7 +73,7 @@ public class logintestcases {
 						"An error message is displayed as expected", true);
 			}
 			
-			common.VerifyText(testdata.get("ExpectedErrorMessage"), 
+			Web.VerifyText(testdata.get("ExpectedErrorMessage"), 
 								errMsg, true);
 
 			
@@ -120,11 +121,11 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		// TODO Add code to verify text displayed on Two step verification page
 		
 		// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have a code?' exists
-		common.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:");
-		common.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:");
-		common.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:");
+		Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:");
+		Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:");
+		Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:");
 		
-		if (common.isWebElementDisplayed(twoStepVerification, "Already have a code?")) {
+		if (Web.isWebElementDisplayed(twoStepVerification, "Already have a code?")) {
 			Reporter.logEvent(Status.PASS, "Verify 'Already have a code?' link is displayed", 
 					"Link is displayed", false);
 		} else {
@@ -167,7 +168,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		
 		//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
 		//LandingPage landingPage = new LandingPage(twoStepVerification);
-		if (common.isWebElementDisplayed(landingPage, "Log out")) {
+		if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 			Reporter.logEvent(Status.PASS, "Verify landing page is displayed", 
 					"Landing page is displayed", true);
 		} else {
@@ -205,7 +206,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 	
 	@AfterClass
 	public void cleanupSessions() {
-		common.webdriver.close();
-		common.webdriver.quit();
+		lib.Web.webdriver.close();
+		lib.Web.webdriver.quit();
 	}
 }

@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -14,9 +18,6 @@ import pageobjects.landingpage.LandingPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -29,7 +30,7 @@ public class authenticationtestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -65,7 +66,7 @@ public class authenticationtestcases {
 			//Navigate to verification code options selection page
 			twoStepVerification.setPageMandatory(true);
 			twoStepVerification.get();
-			isDisplayed = common.isWebElementDisplayed(twoStepVerification, "Choose delivery method");
+			isDisplayed = Web.isWebElementDisplayed(twoStepVerification, "Choose delivery method");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.INFO, "Navigate to verification code delivery option selection page", 
 						"Navigation succeeded", true);
@@ -77,7 +78,7 @@ public class authenticationtestcases {
 			}
 			
 			//Validate drop down box option 'Text Me:' is displayed
-			isDisplayed = common.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Text Me:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Text Me:");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Text Me:' is available", "'Text Me:' option available", false);
 			} else {
@@ -85,7 +86,7 @@ public class authenticationtestcases {
 			}
 			
 			//Validate drop down box option 'Call Me:' is displayed
-			isDisplayed = common.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Call Me:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Call Me:");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Call Me:' is available", "'Call Me:' option available", false);
 			} else {
@@ -93,7 +94,7 @@ public class authenticationtestcases {
 			}
 			
 			//Validate drop down box option 'Email:' is displayed
-			isDisplayed = common.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Email:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Email:");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Email:' is available", "'Email:' option available", false);
 			} else {
@@ -101,7 +102,7 @@ public class authenticationtestcases {
 			}
 			
 			//Verify 'Already have a code?' link is displayed
-			isDisplayed = common.isWebElementDisplayed(twoStepVerification, "Already have a code?");
+			isDisplayed = Web.isWebElementDisplayed(twoStepVerification, "Already have a code?");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify that 'Aready have a code?' link is displayed", 
 						"Link displayed", true);
@@ -140,7 +141,7 @@ public class authenticationtestcases {
 				twoStepVerification.submitVerificationCode(verificationCode, true, false);
 				
 				//Verify user is on landing page (Check label 'Retirement income' is displayed on the page)
-				isDisplayed = common.isWebElementDisplayed(landingPage, "Log out") && common.isWebElementDisplayed(landingPage, "Retirement income");
+				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out") && Web.isWebElementDisplayed(landingPage, "Retirement income");
 				if (isDisplayed) {
 					Reporter.logEvent(Status.PASS, "Verify user is on landing page", "user is on landing page", true);
 				} else {
@@ -205,7 +206,7 @@ public class authenticationtestcases {
 			
 			
 			expLoginHelptxt = objForgotPsw.isLoginHelptxtDisplayed();
-			isMatching = common.VerifyText(expLoginHelptxt, actLoginHelptxt, true);
+			isMatching = Web.VerifyText(expLoginHelptxt, actLoginHelptxt, true);
 			if (isMatching) {
 				Reporter.logEvent(Status.PASS, "Forgot Password header Text Verification", "Header text verification was successful", false);
 			} else {
@@ -284,7 +285,7 @@ public class authenticationtestcases {
 	
 	@AfterClass
 	public void cleanupSessions() {
-		common.webdriver.close();
-		common.webdriver.quit();
+		lib.Web.webdriver.close();
+		lib.Web.webdriver.quit();
 	}
 }

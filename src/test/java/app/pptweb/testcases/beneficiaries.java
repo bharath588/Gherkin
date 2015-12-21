@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -16,9 +20,6 @@ import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
 import core.framework.Globals;
 import core.utils.Stock;
 
@@ -32,7 +33,7 @@ public class beneficiaries {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		common.webdriver = common.getWebDriver(Stock.globalParam.get("BROWSER"));
+		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 
 	@DataProvider
@@ -99,7 +100,7 @@ public class beneficiaries {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
 			//click on continue and confirm button
-			if(common.clickOnElement(beneficiary, "ContinueAndConfirm"))
+			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
@@ -216,7 +217,7 @@ public class beneficiaries {
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
 			
 			//click on continue and confirm button
-			if(common.clickOnElement(beneficiary, "ContinueAndConfirm"))
+			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
@@ -292,7 +293,8 @@ public class beneficiaries {
 
 	@AfterClass
 	public void cleanupSessions() {
-		common.webdriver.close();
-		common.webdriver.quit();
+		lib.Web.webdriver.close();
+		lib.Web.webdriver.quit();
+
 	}
 }

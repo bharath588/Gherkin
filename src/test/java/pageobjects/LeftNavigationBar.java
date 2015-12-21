@@ -2,16 +2,15 @@ package pageobjects;
 
 import java.util.List;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import app.common.Reporter;
-import app.common.common;
-import app.common.Reporter.Status;
-
 import org.testng.Assert;
 
 public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
@@ -30,7 +29,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public LeftNavigationBar() {
 		this.parent = new MyAccountsPage();
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 	/** Constructor taking parent as input
@@ -39,13 +38,13 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public LeftNavigationBar(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(common.webdriver, this);
+		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 	
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(common.isWebElementDisplayed(weLeftNavSection));
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection));
 //		if (!common.isWebElementDisplayed(this.weLeftNavSection,LeftNavigationBar.waitforLoad)) {
 //			LeftNavigationBar.waitforLoad = true;
 //			throw new Error("Left navigation menu bar is not displayed");
