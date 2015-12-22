@@ -1,4 +1,4 @@
-package app.common;
+package lib;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.List;
 import core.utils.Stock;
 import oracle.jdbc.pool.OracleDataSource;
 
-public class DBUtils {
+public class DB {
 
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
@@ -26,7 +26,7 @@ public class DBUtils {
 		try {
 					
 
-			stmt = DBUtils.getPreparedStatement(dbName, query, queryParameterValues);
+			stmt = DB.getPreparedStatement(dbName, query, queryParameterValues);
 			
 			tempRecordSet = stmt.executeQuery();
 			masterRecordSet.add(tempRecordSet);
@@ -46,7 +46,7 @@ public class DBUtils {
 
 		try {
 		
-			stmt = DBUtils.getPreparedStatement(dbName, query, queryParameterValues);
+			stmt = DB.getPreparedStatement(dbName, query, queryParameterValues);
 			recordsUpdated = stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new Error("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());

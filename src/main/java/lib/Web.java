@@ -1,4 +1,4 @@
-package app.common;
+package lib;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -8,6 +8,8 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.awt.AWTException;
 import java.awt.Robot;
+
+import lib.Reporter.Status;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -28,9 +30,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import core.framework.Globals;
 import core.utils.Stock;
-import app.common.Reporter.Status;
 
-public class common {
+public class Web {
 	public static WebDriver webdriver;
 	public static Exception exception;
 	private static Select objSelect;
@@ -56,7 +57,7 @@ public class common {
 			try {
 				if (waitForElement.length > 0) {
 					if (waitForElement[0] == true) {
-						common.waitForElement(element);
+						Web.waitForElement(element);
 					}
 				}
 
@@ -89,7 +90,7 @@ public class common {
 			WebElement displayedElement = getPageObjectFields(pageClassObj,
 					fieldName);
 			try {
-				common.waitForElement(displayedElement);
+				Web.waitForElement(displayedElement);
 			} catch (Exception e) {
 				// Do Nothing
 			}
@@ -123,7 +124,7 @@ public class common {
 		if (textBoxFieldName != null) {
 			WebElement textBoxElement = getPageObjectFields(pageClassObj,
 					textBoxFieldName);
-			if (common.isWebElementDisplayed(textBoxElement)) {
+			if (Web.isWebElementDisplayed(textBoxElement)) {
 				textBoxElement.clear();
 				textBoxElement.sendKeys(valueToSet);
 				fieldTextValue = textBoxElement.getAttribute("value");
@@ -157,7 +158,7 @@ public class common {
 	public static String setTextToTextBox(WebElement textBoxField,
 			CharSequence... valueToSet) {
 		String fieldTextValue = "";
-		if (common.isWebElementDisplayed(textBoxField)) {
+		if (Web.isWebElementDisplayed(textBoxField)) {
 			textBoxField.clear();
 			textBoxField.sendKeys(valueToSet);
 			textBoxField.click();
@@ -181,7 +182,7 @@ public class common {
 		if (webElementName != null) {
 			WebElement clickableElement = getPageObjectFields(pageClassObj,
 					webElementName);
-			if (common.isWebElementDisplayed(clickableElement)) {
+			if (Web.isWebElementDisplayed(clickableElement)) {
 				clickableElement.click();
 				success = true;
 			}
@@ -198,7 +199,7 @@ public class common {
 	 */
 	public static boolean clickOnElement(WebElement clickableElement) {
 		boolean success = false;
-		if (common.isWebElementDisplayed(clickableElement)) {
+		if (Web.isWebElementDisplayed(clickableElement)) {
 			clickableElement.click();
 			success = true;
 		}
@@ -245,7 +246,7 @@ public class common {
 	 * @throws Exception
 	 */
 	public static void waitForElement(WebElement element) throws Exception {
-		(new WebDriverWait(common.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
+		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(element));
 	}
 
@@ -259,7 +260,7 @@ public class common {
 			throws Exception {
 		WebElement presentElement = getPageObjectFields(pageClassObj,
 				webElementName);
-		(new WebDriverWait(common.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
+		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(presentElement));
 	}
 
@@ -373,7 +374,7 @@ public class common {
 	private static void initDropDownObj(Object pageClassObj,String dropDownElementName){
 		try {
 			WebElement dropDownElement = getPageObjectFields(pageClassObj,dropDownElementName);
-			if (common.isWebElementDisplayed(dropDownElement)) {
+			if (Web.isWebElementDisplayed(dropDownElement)) {
 				objSelect = new Select(dropDownElement);			
 			}else {
 				throw new NoSuchElementException("Unable to locate the drop down object " + dropDownElementName);
@@ -388,7 +389,7 @@ public class common {
 	 */
 	private static void initDropDownObj(WebElement dropDownElement){
 		try {
-			if (common.isWebElementDisplayed(dropDownElement)) {
+			if (Web.isWebElementDisplayed(dropDownElement)) {
 				objSelect = new Select(dropDownElement);			
 			}else {
 				throw new NoSuchElementException("Unable to locate the drop down object " + dropDownElement.toString());
@@ -633,7 +634,7 @@ public class common {
 
 			//			File scrFile = ((TakesScreenshot) DriveSuite.webDriver)
 			//					.getScreenshotAs(OutputType.FILE);
-			File scrFile = ((TakesScreenshot) common.webdriver)
+			File scrFile = ((TakesScreenshot) Web.webdriver)
 					.getScreenshotAs(OutputType.FILE);
 
 			//			fileName = ReadProperties.getEnvVariableValue("currTestCaseName")

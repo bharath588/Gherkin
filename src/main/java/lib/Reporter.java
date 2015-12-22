@@ -1,4 +1,4 @@
-package app.common;
+package lib;
 
 
 import java.util.Random;
@@ -246,11 +246,11 @@ public class Reporter {
 	public static void logEvent(Reporter.Status logStatus, String Step, String Details, boolean attachScreenshot) {
 		if (Step.trim().length() == 0 && Details.trim().length() == 0 && attachScreenshot) {
 //			Reporter.objReport.attachScreenshot(WebActions.captureScreenshot());
-			Reporter.objReport.attachScreenshot(common.captureScreenshot());
+			Reporter.objReport.attachScreenshot(Web.captureScreenshot());
 //		} else if (Step.trim().length() == 0 && attachScreenshot) {
 //			Reporter.objReport.attachScreenshot(WebActions.captureScreenshot(), Details);
 		} else if (Step.trim().length() == 0 && attachScreenshot) {
-			Reporter.objReport.attachScreenshot(common.captureScreenshot(), Details);
+			Reporter.objReport.attachScreenshot(Web.captureScreenshot(), Details);
 		} else {
 			LogStatus tmpLogStatus;
 			String stackTrace = "";
@@ -304,7 +304,7 @@ public class Reporter {
 			
 			if (attachScreenshot) {
 //				Reporter.objReport.log(tmpLogStatus, Step, Details, WebActions.captureScreenshot());
-				Reporter.objReport.log(tmpLogStatus, Step, Details, common.captureScreenshot());
+				Reporter.objReport.log(tmpLogStatus, Step, Details, Web.captureScreenshot());
 			} else {
 				Reporter.objReport.log(tmpLogStatus, Step, Details);
 			}
