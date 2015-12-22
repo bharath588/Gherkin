@@ -1,4 +1,4 @@
-package core.utils;
+package lib;
 
 import org.apache.log4j.Logger;
 import core.framework.Globals;

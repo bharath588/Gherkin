@@ -1,6 +1,9 @@
-package core.utils;
+package core.framework;
 
 import java.util.HashMap;
+
+import lib.Stock;
+
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;

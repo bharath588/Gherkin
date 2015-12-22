@@ -1,13 +1,15 @@
-package core.utils;
+package lib;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lib.Log.Level;
 import core.framework.Globals;
-import core.utils.Log.Level;
-import core.utils.ThrowException.TYPE;
+import core.framework.ThrowException;
+import core.framework.ThrowException.TYPE;
 
 public class Stock {
 	public static Map<String, String> globalParam = new LinkedHashMap<String, String>();

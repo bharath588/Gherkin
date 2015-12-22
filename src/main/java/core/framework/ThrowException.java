@@ -1,10 +1,11 @@
-package core.utils;
+package core.framework;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import core.framework.Globals;
-import core.utils.Log.Level;
+
+import lib.Log;
+import lib.Log.Level;
 
 public class ThrowException  {
 

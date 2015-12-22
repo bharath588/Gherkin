@@ -29,7 +29,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import core.framework.Globals;
-import core.utils.Stock;
 
 public class Web {
 	public static WebDriver webdriver;
