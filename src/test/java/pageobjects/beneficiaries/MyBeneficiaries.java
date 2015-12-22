@@ -17,7 +17,7 @@ import core.utils.Stock;
 
 import org.testng.Assert;
 
-import pageobjects.LeftNavigationBar;
+import pageobjects.general.LeftNavigationBar;
 
 
 

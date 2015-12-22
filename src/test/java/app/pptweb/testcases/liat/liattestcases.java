@@ -1,4 +1,4 @@
-package app.pptweb.testcases;
+package app.pptweb.testcases.liat;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;

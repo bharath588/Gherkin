@@ -1,15 +1,9 @@
-package pageobjects;
+package pageobjects.deferrals;
 
 import java.util.List;
 
 
 
-
-
-
-import lib.Reporter;
-import lib.Web;
-import lib.Reporter.Status;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,8 +13,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 
 
-
-
+import pageobjects.general.LeftNavigationBar;
+import lib.Reporter;
+import lib.Reporter.Status;
+import lib.Web;
 import core.utils.Stock;
 
 public class Deferrals extends LoadableComponent<Deferrals> {
@@ -104,7 +100,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			if (!Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
+			if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 				Deferrals.waitforLoad = true;
 				throw new Error("'My contributions' page is not loaded");
 			}else{
@@ -144,9 +140,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		{
 			boolean sliderValue;
 			this.lnkMoreOptions.click();
-			if(Web.isWebElementDisplayed(btnAddorEditAfterTax, false)) {
+			if(lib.Web.isWebElementDisplayed(btnAddorEditAfterTax, false)) {
 					this.btnAddorEditAfterTax.click();										
-			} else if(Web.isWebElementDisplayed(btnEditAfterTax, false)) {
+			} else if(lib.Web.isWebElementDisplayed(btnEditAfterTax, false)) {
 					this.btnEditAfterTax.click();							
 			} else 		
 				throw new Error("Add or Edit button for After Tax is not displayed");				   
@@ -154,7 +150,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Thread.sleep(1000); }
 				catch (InterruptedException e) {	 }		
 						
-			if(Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
+			if(lib.Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
 				Reporter.logEvent(Status.PASS, "Click on Add or Edit Button", "Add After Tax Contribution Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add or Edit Button", "Add After Tax Contribution Page is not displayed", false);
@@ -169,7 +165,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			//System.out.println(lnksliderValue.getText()); 
 			
 			//Verify Accuracy of My Contribution
-			sliderValue=Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
+			sliderValue=lib.Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution After Tax", "My Contribution value is matching", true);
 			else
@@ -179,11 +175,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			try {
 			Thread.sleep(1000);
 			} catch (Exception e) { }			
-			if(Web.isWebElementDisplayed(this.lnkAfterTaxAutoIncrease, false))
+			if(lib.Web.isWebElementDisplayed(this.lnkAfterTaxAutoIncrease, false))
 			{
 			Reporter.logEvent(Status.PASS, "Check Add Auto Increase link for After Tax", "Add Auto Increase link is displayed", false);
 			this.lnkAfterTaxAutoIncrease.click();							
-			if(Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
+			if(lib.Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
 				Reporter.logEvent(Status.PASS, "Click on Add Auto Increase for After Tax", "Add Auto Increase pop up for Afterax is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for After Tax", "Add Auto Increase pop up for AfterTax is not displayed", true);
@@ -191,9 +187,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.txtAutoIncreaseMyContributionPercent.sendKeys(Stock.globalTestdata.get("Auto Increase Contribution Percent"));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
 			this.txtAutoIncreaseUntilItReachesPercent.sendKeys(Stock.globalTestdata.get("Auto Increases Until Reaches Percent"));
-			Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, Stock.globalTestdata.get("Auto Increase Period"));											
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, Stock.globalTestdata.get("Auto Increase Period"));											
 			this.btnSaveAddAutoIncreaseModal.click();								
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Save button", "My Contributions Page is displayed with Auto Increase Details", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Save button", "My Contributions Page is not displayed with Auto Increase Details", false);
@@ -202,12 +198,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Check Add Auto Increase link for After Tax", "Add Auto Increase link is not displayed", false);
 				
 			this.btnConfirmAndContinue.click();
-			if(Web.isWebElementDisplayed(lblContributionDetails, true))
+			if(lib.Web.isWebElementDisplayed(lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Confirm and Continue button", "My Contributions Confirmations Page is not displayed", true);								
 			this.btnMyContributions.click();							
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on My Contributions button", "My Contributions Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on My Contributions button", "My Contributions Page is not displayed", true);
@@ -223,9 +219,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void addOrEditBeforeTaxContribution() 		
 		{
 		this.lnkMoreOptions.click();
-			if(Web.isWebElementDisplayed(btnAddOrEditStandard, true)) {
+			if(lib.Web.isWebElementDisplayed(btnAddOrEditStandard, true)) {
 				this.btnAddOrEditStandard.click();											
-			} else if(Web.isWebElementDisplayed(btnEditStandard, true)) {
+			} else if(lib.Web.isWebElementDisplayed(btnEditStandard, true)) {
 				this.btnEditStandard.click();					
 			} else {			
 				throw new Error("Add or Edit button for Before tax is not displayed");	
@@ -234,7 +230,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			catch (InterruptedException e) { }					
 			
 			//verify if Add/Edit Standard Page is displayed
-			if(Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
+			if(lib.Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
 				Reporter.logEvent(Status.PASS, "Click on Add or Edit Button", "Add a Standard Contribution Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add or Edit Button", "Add a Standard Contribution Page is not displayed", false);
@@ -250,29 +246,29 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			//System.out.println(lnksliderValue.getText()); 						
 			
 			//Verify Accuracy of My Contribution
-			boolean sliderValue=Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
+			boolean sliderValue=lib.Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is matching", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is not matching", true);	
 			this.btnContinue.click();				
-			if(Web.isWebElementDisplayed(lnkPlanRules, true))
+			if(lib.Web.isWebElementDisplayed(lnkPlanRules, true))
 				Reporter.logEvent(Status.PASS, "Click on Continue button", "Before Tax Select Contribution Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Continue button", "Before Tax Select Contribution Page is not displayed", false);
 			
 			this.lstradioBeforeTaxContibutionsSplit.get(0).click();
 			this.btnContinueBeforeTaxSplitContribution.click();			
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Continue button", "My Contributions Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Continue button", "My Contributions Page is not displayed", false);
 			
-			if(Web.isWebElementDisplayed(this.lnkBeforeTaxAutoIncrease, false))
+			if(lib.Web.isWebElementDisplayed(this.lnkBeforeTaxAutoIncrease, false))
 			{
 				Reporter.logEvent(Status.PASS, "Check Add Auto Increase link for Before Tax", "Add Auto Increase link is displayed", false);	
 			this.lnkBeforeTaxAutoIncrease.click();
-			if(Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
+			if(lib.Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
 				Reporter.logEvent(Status.PASS, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is not displayed", false);
@@ -280,9 +276,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.globalTestdata.get("Auto Increase Contribution Percent")));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
 			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.globalTestdata.get("Auto Increases Until Reaches Percent")));
-			Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));							
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));							
 			this.btnSaveAddAutoIncreaseModal.click();				
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Save button", "My Contributions Page is displayed with Auto Increase Details", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Save button", "My Contributions Page is not displayed with Auto Increase Details", true);
@@ -290,14 +286,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Check Add Auto Increase link for After Tax", "Add Auto Increase link is not displayed", false);				
 			}			
 			this.btnConfirmAndContinue.click();
-			if(Web.isWebElementDisplayed(lblContributionDetails, true))
+			if(lib.Web.isWebElementDisplayed(lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Confirm and Continue button", "My Contributions Confirmations Page is not displayed", true);
 				
 			this.btnMyContributions.click();
 			
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on My Contributions button", "My Contributions Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on My Contributions button", "My Contributions Page is not displayed", true);
@@ -313,15 +309,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void addOrEditBeforeTaxSplitContribution() 
 		{
 			this.lnkMoreOptions.click();			
-			if(Web.isWebElementDisplayed(btnAddOrEditStandard, true)) {
+			if(lib.Web.isWebElementDisplayed(btnAddOrEditStandard, true)) {
 				this.btnAddOrEditStandard.click();											
-		} else if(Web.isWebElementDisplayed(btnEditStandard, true)) {
+		} else if(lib.Web.isWebElementDisplayed(btnEditStandard, true)) {
 				this.btnEditStandard.click();					
 		} else {			
 				throw new Error("Add or Edit button for Before tax is not displayed");	
 			   } 						
 			//verify if Add/Edit Standard Page is displayed
-			if(Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
+			if(lib.Web.isWebElementDisplayed(radioSelectAnotherContributionRate, true))
 				Reporter.logEvent(Status.PASS, "Click on Add or Edit Button", "Add a Standard Contribution Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add or Edit Button", "Add a Standard Contribution Page is not displayed", false);
@@ -337,14 +333,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			System.out.println(lnksliderValue.getText()); 						
 			
 			//Verify Accuracy of My Contribution
-			boolean sliderValue=Web.VerifyText((Stock.globalTestdata.get("Contribution Rate")), lnksliderValue.getText());
+			boolean sliderValue=lib.Web.VerifyText((Stock.globalTestdata.get("Contribution Rate")), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is matching", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is not matching", true);
 	
 			this.btnContinue.click();					
-			if(Web.isWebElementDisplayed(lnkPlanRules, true))
+			if(lib.Web.isWebElementDisplayed(lnkPlanRules, true))
 				Reporter.logEvent(Status.PASS, "Click on Continue button", "Before Tax Select Contribution Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Continue button", "Before Tax Select Contribution Page is not displayed", true);
@@ -356,15 +352,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.txtSplitRothTax.sendKeys((Stock.globalTestdata.get("Split Roth Tax")));					
 			this.btnContinueBeforeTaxSplitContribution.click();
 			
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Continue button", "My Contributions Page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Continue button", "My Contributions Page is not displayed", false);	
-		if(Web.isWebElementDisplayed(this.lnkBeforeTaxAutoIncrease, false))
+		if(lib.Web.isWebElementDisplayed(this.lnkBeforeTaxAutoIncrease, false))
 			{				
 				Reporter.logEvent(Status.PASS, "Check Add Auto Increase link for Before Tax Split", "Add Auto Increase link is displayed", false);
 			this.lnkBeforeTaxAutoIncrease.click();
-			if(Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
+			if(lib.Web.isWebElementDisplayed(btnSaveAddAutoIncreaseModal, true))
 				Reporter.logEvent(Status.PASS, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is not displayed", true);
@@ -372,13 +368,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.globalTestdata.get("Auto Increase Contribution Percent")));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
 			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.globalTestdata.get("Auto Increases Until Reaches Percent")));
-			Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));
 			try {
 				Thread.sleep(1000);
 				} catch (Exception e) {
 				}		
 			this.btnSaveAddAutoIncreaseModal.click();				
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Save button", "My Contributions Page is displayed with Auto Increase Details", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Save button", "My Contributions Page is not displayed with Auto Increase Details", false);
@@ -388,13 +384,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				
 			this.btnConfirmAndContinue.click();
 			
-			if(Web.isWebElementDisplayed(lblContributionDetails, true))
+			if(lib.Web.isWebElementDisplayed(lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Confirm and Continue button", "My Contributions Confirmations Page is not displayed", true);
 				
 			this.btnMyContributions.click();
-			if(Web.isWebElementDisplayed(tblhdrlblContribution, true))
+			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on My Contributions button", "My Contributions Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on My Contributions button", "My Contributions Page is not displayed", true);

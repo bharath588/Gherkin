@@ -1,4 +1,4 @@
-package app.pptweb.testcases;
+package app.pptweb.testcases.deferrals;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
@@ -13,9 +13,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.Deferrals;
-import pageobjects.LeftNavigationBar;
-import pageobjects.MyAccountsPage;
+import pageobjects.deferrals.Deferrals;
+import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
