@@ -102,7 +102,7 @@ public class Stock {
 							for (int iColCnt = itrColNo + 1; iColCnt <= XL.getColCount(iSelIndx - 1,
 									modName); iColCnt++) {
 								if (!XL.getCellData(modName, itcPointer + 1, iColCnt).trim().equals(Globals.GC_EMPTY)) {
-									mapData.put(XL.getCellData(modName, itcPointer + 1, iColCnt).trim(),
+									mapData.put(XL.getCellData(modName, itcPointer + 1, iColCnt).trim().toUpperCase(),
 											XL.getCellData(modName, iSelIndx, iColCnt).trim());
 									Log.Report(Level.DEBUG,
 											"test data mapped for index " + itrNo + " with key "
@@ -202,6 +202,20 @@ public class Stock {
 			}
 		}
 
+	}
+	
+	public static String GetParameterValue(String strParamName){
+		String value = null;
+		if (globalTestdata.containsKey(strParamName.toUpperCase().trim())){
+			if (globalTestdata.get(strParamName.toUpperCase().trim()).length() > 0)
+				value = globalTestdata.get(strParamName.trim().toUpperCase());
+		}	
+		else {
+			//System.out.println("Parameter '" + strParamName + "' does not exist in Test data!");
+			throw new Error("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
+		}
+		
+		return value;
 	}
 	
 	public static String[] getTestQuery(String queryName) throws Exception
