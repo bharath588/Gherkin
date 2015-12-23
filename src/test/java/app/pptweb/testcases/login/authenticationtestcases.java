@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -19,7 +20,6 @@ import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import core.framework.Globals;
-import core.utils.Stock;
 
 public class authenticationtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
@@ -112,20 +112,20 @@ public class authenticationtestcases {
 			}
 			
 			//Select code delivery option and click continue
-			twoStepVerification.selectCodeDeliveryOption(testdata.get("codeDeliveryOption"));
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
 //			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue", "Done", true);
 			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue", 
 					"Done", true);
 			
 			//Get verification code from database
 			String verificationCode = "";
-			if(testdata.get("codeDeliveryOption").trim().equalsIgnoreCase("Already_Have_Code")) {
+			if(lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("Already_Have_Code")) {
 				verificationCode = twoStepVerification.getVerificationCode(true);
 			} else {
-				if (testdata.get("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
 					verificationCode = twoStepVerification.getVerificationCode(false);
 				} else {
-					if (twoStepVerification.isActivationCodeGenerated(testdata.get("codeDeliveryOption"))) {
+					if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("codeDeliveryOption"))) {
 						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
 					} else {
 						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
@@ -215,23 +215,23 @@ public class authenticationtestcases {
 			
 			//Step 4 - Enter corresponding details for following fields and click Continue button. - User is redirected to Login help (2 of 3) page
 			
-			objForgotPsw.enterForgotPasswordDetails(testdata.get("SSN"), 
-					testdata.get("zipCode"), 
-					testdata.get("LastName"), 
-					testdata.get("DOB"), 
-					testdata.get("StreetAddress"));
+			objForgotPsw.enterForgotPasswordDetails(lib.Stock.GetParameterValue("SSN"), 
+					lib.Stock.GetParameterValue("ZIPCODE"), 
+					lib.Stock.GetParameterValue("LASTNAME"), 
+					lib.Stock.GetParameterValue("DOB"), 
+					lib.Stock.GetParameterValue("STREETADDRESS"));
 				
 			//Step 5 - Click on "Already have a code?" link
-			objAuth.selectCodeDeliveryOption(testdata.get("codeDeliveryOption"));
+			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
 			
 			//Step 6 and 7 - Enter verification code into "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue" button
-			if (testdata.get("codeDeliveryOption").equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+			if (lib.Stock.GetParameterValue("codeDeliveryOption").equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 				verificationCode = objAuth.getVerificationCode(true);
 			} else {
-				if (testdata.get("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
 					verificationCode = objAuth.getVerificationCode(false);
 				} else {
-					if (objAuth.isActivationCodeGenerated(testdata.get("codeDeliveryOption"))) {
+					if (objAuth.isActivationCodeGenerated(lib.Stock.GetParameterValue("codeDeliveryOption"))) {
 						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
 					} else {
 						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
@@ -243,7 +243,7 @@ public class authenticationtestcases {
 			objAuth.submitVerificationCode(verificationCode, false, false);
 			
 			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
-			objForgotPsw.helpResetMyPassword(testdata.get("password"), testdata.get("reEnterPassword"));
+			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
 			
 			//verify if the user is on the landing page
 			/*try {

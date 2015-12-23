@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -18,7 +19,6 @@ import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import core.framework.Globals;
-import core.utils.Stock;
 
 public class retirementincometestcases {
 
@@ -199,7 +199,7 @@ public class retirementincometestcases {
 			
 			
 			
-			if (testdata.get("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				Web.clickOnElement(retirement, "Do It Myself");
 				if(retirement.verifyIfSliderPresent("Investment mix slider"))
 					Reporter.logEvent(Status.PASS, "Verify Investment mix slider", "Investment mix slider displayed", false);
@@ -218,7 +218,7 @@ public class retirementincometestcases {
 			
 			
 			//verify if we are able to navigate to Help Me Do It Tab
-			if (testdata.get("Help Me Do It").trim().equalsIgnoreCase("Y")) {
+			if (Stock.GetParameterValue("Help Me Do It").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab", "Able to navigate to Help Me Do It tab", false);
 				else
@@ -232,7 +232,7 @@ public class retirementincometestcases {
 			}
 			
 			//verify if we are able to navigate to Do It For Me Tab
-			if (testdata.get("Do It For Me").trim().equalsIgnoreCase("Y")) {
+			if (Stock.GetParameterValue("Do It For Me").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab", "Able to navigate to Do It For Me It tab", false);
 				else
@@ -247,7 +247,7 @@ public class retirementincometestcases {
 			}
 			
 			//verify if we are able to navigate to Do It Myself Tab
-			if (testdata.get("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab", "Able to navigate to Do It Myself tab", false);
 				else

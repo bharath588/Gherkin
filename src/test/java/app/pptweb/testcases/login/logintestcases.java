@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -18,7 +19,6 @@ import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import core.framework.Globals;
-import core.utils.Stock;
 
 
 public class logintestcases {
@@ -60,7 +60,7 @@ public class logintestcases {
 			Reporter.initializeReportForTC(itr, "SF01_TC01_Verify_invalid_Userid_and_Password");
 			login = new LoginPage().get();
 			String errMsg = "";
-			login.submitLoginCredentials(testdata.get("username"),testdata.get("password"));
+			login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {
@@ -73,7 +73,7 @@ public class logintestcases {
 						"An error message is displayed as expected", true);
 			}
 			
-			Web.VerifyText(testdata.get("ExpectedErrorMessage"), 
+			Web.VerifyText(lib.Stock.GetParameterValue("ExpectedErrorMessage"), 
 								errMsg, true);
 
 			
@@ -134,16 +134,16 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		}
 		
 		//Select code delivery option and click continue
-		twoStepVerification.selectCodeDeliveryOption(testdata.get("deliveryOption"));
+		twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("deliveryOption"));
 		
 		//Get verification code
-		if (testdata.get("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+		if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 			verificationCode = twoStepVerification.getVerificationCode(true);
 		} else {
-			if (testdata.get("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+			if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
 				verificationCode = twoStepVerification.getVerificationCode(false);
 			} else {
-				if (twoStepVerification.isActivationCodeGenerated(testdata.get("deliveryOption"))) {
+				if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("deliveryOption"))) {
 					Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
@@ -160,7 +160,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		//Submit verification code
 		Thread.sleep(5000);
 		twoStepVerification.submitVerificationCode(verificationCode, true, 
-				Boolean.parseBoolean(testdata.get("rememberDevice")));
+				Boolean.parseBoolean(lib.Stock.GetParameterValue("rememberDevice")));
 		
 		//Dismiss pop ups if displayed
 		LandingPage landingPage = new LandingPage(twoStepVerification);

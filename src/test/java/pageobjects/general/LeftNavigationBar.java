@@ -74,7 +74,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 //			
 //			if (paramFlag==true) {
 //				((MyAccountsPage) this.parent).clickPlanNameByGAID(
-//						Stock.globalTestdata.get("groupAccountID"));
+//						Stock.GetParameterValue("groupAccountID"));
 //			} else {
 				((MyAccountsPage) this.parent).clickPlanNameByGAID();
 				try {

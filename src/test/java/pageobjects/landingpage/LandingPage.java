@@ -8,8 +8,10 @@ import java.sql.ResultSet;
 
 
 
+
 import lib.DB;
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -17,9 +19,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import core.utils.Stock;
-
 import org.testng.Assert;
 
 import pageobjects.login.TwoStepVerification;

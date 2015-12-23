@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -18,7 +19,6 @@ import pageobjects.login.LoginPage;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
 import core.framework.Globals;
-import core.utils.Stock;
 
 
 public class registrationtestcases {
@@ -617,37 +617,37 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page", "Navigation succeeded", true);
 			
 			//Step 3 - Click on "I have a PIN" or "I do not have a PIN" tab
-			accLookup.clickOnFields(testdata.get("TabName"));
+			accLookup.clickOnFields(Stock.GetParameterValue("TabName"));
 			
 			//Step 4 - Verify user is on opted tab
-			if (accLookup.getActiveTabName().trim().equalsIgnoreCase(testdata.get("TabName"))) {
-				Reporter.logEvent(Status.PASS, "Verify user is on \"" + testdata.get("TabName") + "\" tab", 
-						"User is on \"" + testdata.get("TabName") + "\" tab", true);
+			if (accLookup.getActiveTabName().trim().equalsIgnoreCase(Stock.GetParameterValue("TabName"))) {
+				Reporter.logEvent(Status.PASS, "Verify user is on \"" + Stock.GetParameterValue("TabName") + "\" tab", 
+						"User is on \"" + Stock.GetParameterValue("TabName") + "\" tab", true);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Verify user is on \"" + testdata.get("TabName") + "\" tab", 
-						"User is not on \"" + testdata.get("TabName") + "\" tab", true);
+				Reporter.logEvent(Status.FAIL, "Verify user is on \"" + Stock.GetParameterValue("TabName") + "\" tab", 
+						"User is not on \"" + Stock.GetParameterValue("TabName") + "\" tab", true);
 			}
 			
 			//Step 5 - Enter a valid participant details and click continue
-			if (testdata.get("TabName").trim().equalsIgnoreCase("I have a PIN")) {
+			if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I have a PIN")) {
 				//Enter SSN
-				accLookup.setTextToFields("SSN", testdata.get("SSN"));
+				accLookup.setTextToFields("SSN", Stock.GetParameterValue("SSN"));
 				//Enter PIN
-				accLookup.setTextToFields("PIN", testdata.get("PIN"));
+				accLookup.setTextToFields("PIN", Stock.GetParameterValue("PIN"));
 				
-			} else if (testdata.get("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
+			} else if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
 				//Enter SSN
-				accLookup.setTextToFields("Social Security Number", testdata.get("SSN"));
+				accLookup.setTextToFields("Social Security Number", Stock.GetParameterValue("SSN"));
 				//Enter Zip Code
-				accLookup.setTextToFields("Zip Code", testdata.get("ZipCode"));
+				accLookup.setTextToFields("Zip Code", Stock.GetParameterValue("ZipCode"));
 				//Enter Last Name
 				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				System.out.println(testdata.get("LastName"));
-				accLookup.setTextToFields("Last Name", testdata.get("LastName"));
+				System.out.println(Stock.GetParameterValue("LastName"));
+				accLookup.setTextToFields("Last Name", Stock.GetParameterValue("LastName"));
 				//Enter Date of Birth
-				accLookup.setTextToFields("Date of Birth", testdata.get("DOB"));
+				accLookup.setTextToFields("Date of Birth", Stock.GetParameterValue("DOB"));
 				//Enter Street Address
-				accLookup.setTextToFields("Street Address", testdata.get("StreetAddress"));
+				accLookup.setTextToFields("Street Address", Stock.GetParameterValue("StreetAddress"));
 			}
 			
 			//Click on Continue button
@@ -660,17 +660,17 @@ public class registrationtestcases {
 			if (ActErrMessage.length() == 0) {
 				Reporter.logEvent(Status.FAIL, "Verify error message displayed", "No error message is displayed on the page", true);
 			} else {
-				if (Web.VerifyText(testdata.get("ExpectedErrorMsg"), ActErrMessage, true)) {
-					Reporter.logEvent(Status.PASS, "Verify error message after submitting invalid details", "Expected error message is displayed.\nExpected: " + testdata.get("ExpectedErrorMsg"), true);
+				if (Web.VerifyText(Stock.GetParameterValue("ExpectedErrorMsg"), ActErrMessage, true)) {
+					Reporter.logEvent(Status.PASS, "Verify error message after submitting invalid details", "Expected error message is displayed.\nExpected: " + Stock.GetParameterValue("ExpectedErrorMsg"), true);
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify error message after submitting invalid details", 
-							"Expected error message is not displayed.\nExpected: " + testdata.get("ExpectedErrorMsg") + "\n"
+							"Expected error message is not displayed.\nExpected: " + Stock.GetParameterValue("ExpectedErrorMsg") + "\n"
 							+ ActErrMessage, true);
 				}
 			}
 			
 			//Switch to other tab - to help continuation for other iterations if any
-			if (testdata.get("TabName").trim().equalsIgnoreCase("I have a PIN")) {
+			if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I have a PIN")) {
 				accLookup.navigateToTab("I do not have a PIN");
 			} else {
 				accLookup.navigateToTab("I have a PIN");
@@ -721,13 +721,13 @@ public class registrationtestcases {
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.", "Account lookup page is displayed", false);
 			
-			objAccountLookup.clickOnFields(testdata.get("TabName"));
+			objAccountLookup.clickOnFields(Stock.GetParameterValue("TabName"));
 			
 			
 					
 					
 					
-			if (testdata.get("TabName").trim().equalsIgnoreCase("I have a PIN")) {
+			if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I have a PIN")) {
 				
 				//Verify if the user is on the 'I have a Pin' tab
 				activeTab = objAccountLookup.getActiveTabName();
@@ -738,7 +738,7 @@ public class registrationtestcases {
 		        }
 				
 		        //verify the first error message that the user gets on entering invalid pin
-				objAccountLookup.registrationWithPIN(testdata.get("SSN"), "4231");
+				objAccountLookup.registrationWithPIN(Stock.GetParameterValue("SSN"), "4231");
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -760,7 +760,7 @@ public class registrationtestcases {
 				objAccountLookup.clickOnFields("I have a PIN");
 				
 				//verify the second error message that the user gets on entering invalid pin
-				objAccountLookup.registrationWithPIN(testdata.get("SSN"), "4231");
+				objAccountLookup.registrationWithPIN(Stock.GetParameterValue("SSN"), "4231");
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -781,7 +781,7 @@ public class registrationtestcases {
 				objAccountLookup.clickOnFields("I have a PIN");
 				
 				//verify the final error message that the user gets on entering invalid pin,where the user is locked
-				objAccountLookup.registrationWithPIN(testdata.get("SSN"), "4231");
+				objAccountLookup.registrationWithPIN(Stock.GetParameterValue("SSN"), "4231");
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -798,7 +798,7 @@ public class registrationtestcases {
 				}
 				
 					
-			} else if (testdata.get("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
+			} else if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
 				
 				//Verify if the user is on the 'I do not have a Pin' tab
 				activeTab = objAccountLookup.getActiveTabName();
@@ -809,11 +809,11 @@ public class registrationtestcases {
 		        }
 		        
 		      //verify the first error message that the user gets on entering invalid pin
-				objAccountLookup.registerWithoutPIN(testdata.get("SSN"), 
-						testdata.get("ZipCode"),  
-						testdata.get("LastName"), 
-						testdata.get("DOB"), 
-						testdata.get("StreetAddress"));
+				objAccountLookup.registerWithoutPIN(Stock.GetParameterValue("SSN"), 
+						Stock.GetParameterValue("ZipCode"),  
+						Stock.GetParameterValue("LastName"), 
+						Stock.GetParameterValue("DOB"), 
+						Stock.GetParameterValue("StreetAddress"));
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -842,11 +842,11 @@ public class registrationtestcases {
 				objAccountLookup.clickOnFields("I do not have a PIN");
 				
 				//verify the second error message that the user gets on entering invalid pin
-				objAccountLookup.registerWithoutPIN(testdata.get("SSN"), 
-						testdata.get("ZipCode"),  
-						testdata.get("LastName"), 
-						testdata.get("DOB"), 
-						testdata.get("StreetAddress"));
+				objAccountLookup.registerWithoutPIN(Stock.GetParameterValue("SSN"), 
+						Stock.GetParameterValue("ZipCode"),  
+						Stock.GetParameterValue("LastName"), 
+						Stock.GetParameterValue("DOB"), 
+						Stock.GetParameterValue("StreetAddress"));
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -867,11 +867,11 @@ public class registrationtestcases {
 				objAccountLookup.clickOnFields("I do not have a PIN");
 				
 				//verify the final error message that the user gets on entering invalid pin,where the user is locked
-				objAccountLookup.registerWithoutPIN(testdata.get("SSN"), 
-						testdata.get("ZipCode"),  
-						testdata.get("LastName"), 
-						testdata.get("DOB"), 
-						testdata.get("StreetAddress"));
+				objAccountLookup.registerWithoutPIN(Stock.GetParameterValue("SSN"), 
+						Stock.GetParameterValue("ZipCode"),  
+						Stock.GetParameterValue("LastName"), 
+						Stock.GetParameterValue("DOB"), 
+						Stock.GetParameterValue("StreetAddress"));
 				
 				actErrMsg = objAccountLookup.getMainErrorMsg();
 				if (actErrMsg.length() == 0) {
@@ -922,8 +922,8 @@ public class registrationtestcases {
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage);
 			AccountSetup objAccountSetup = new AccountSetup(objAccountLookup).get();
 			
-			if (testdata.get("FunctionalityType").trim().equalsIgnoreCase("contactinformation")) {
-				objAccountSetup.validateContactInformationUI(testdata.get("SSN"));
+			if (Stock.GetParameterValue("FunctionalityType").trim().equalsIgnoreCase("contactinformation")) {
+				objAccountSetup.validateContactInformationUI(Stock.GetParameterValue("SSN"));
 			} else {
 				objAccountSetup.validateUserNameAndPasswordUI();
 			}
@@ -969,35 +969,35 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page", "Navigation succeeded", true);
 			
 			//Step 3 - Click on "I have a PIN" or "I do not have a PIN" tab
-			accLookup.clickOnFields(testdata.get("TabName"));
+			accLookup.clickOnFields(Stock.GetParameterValue("TabName"));
 			
 			//Step 4 - Verify user is on opted tab
-			if (accLookup.getActiveTabName().trim().equalsIgnoreCase(testdata.get("TabName"))) {
-				Reporter.logEvent(Status.PASS, "Verify user is on \"" + testdata.get("TabName") + "\" tab", 
-						"User is on \"" + testdata.get("TabName") + "\" tab", true);
+			if (accLookup.getActiveTabName().trim().equalsIgnoreCase(Stock.GetParameterValue("TabName"))) {
+				Reporter.logEvent(Status.PASS, "Verify user is on \"" + Stock.GetParameterValue("TabName") + "\" tab", 
+						"User is on \"" + Stock.GetParameterValue("TabName") + "\" tab", true);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Verify user is on \"" + testdata.get("TabName") + "\" tab", 
-						"User is not on \"" + testdata.get("TabName") + "\" tab", true);
+				Reporter.logEvent(Status.FAIL, "Verify user is on \"" + Stock.GetParameterValue("TabName") + "\" tab", 
+						"User is not on \"" + Stock.GetParameterValue("TabName") + "\" tab", true);
 			}
 			
 			//Step 5 - Enter a valid participant details and click continue
-			if (testdata.get("TabName").trim().equalsIgnoreCase("I have a PIN")) {
+			if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I have a PIN")) {
 				//Enter SSN
-				accLookup.setTextToFields("SSN", testdata.get("SSN"));
+				accLookup.setTextToFields("SSN", Stock.GetParameterValue("SSN"));
 				//Enter PIN
-				accLookup.setTextToFields("PIN", testdata.get("PIN"));
+				accLookup.setTextToFields("PIN", Stock.GetParameterValue("PIN"));
 				
-			} else if (testdata.get("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
+			} else if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I do not have a PIN")) {
 				//Enter SSN
-				accLookup.setTextToFields("Social Security Number", testdata.get("SSN"));
+				accLookup.setTextToFields("Social Security Number", Stock.GetParameterValue("SSN"));
 				//Enter Zip Code
-				accLookup.setTextToFields("Zip Code", testdata.get("ZipCode"));
+				accLookup.setTextToFields("Zip Code", Stock.GetParameterValue("ZipCode"));
 				//Enter Last Name
-				accLookup.setTextToFields("Last Name", testdata.get("LastName"));
+				accLookup.setTextToFields("Last Name", Stock.GetParameterValue("LastName"));
 				//Enter Date of Birth
-				accLookup.setTextToFields("Date of Birth", testdata.get("DOB"));
+				accLookup.setTextToFields("Date of Birth", Stock.GetParameterValue("DOB"));
 				//Enter Street Address
-				accLookup.setTextToFields("Street Address", testdata.get("StreetAddress"));
+				accLookup.setTextToFields("Street Address", Stock.GetParameterValue("StreetAddress"));
 			}
 			
 			//Click on Continue button

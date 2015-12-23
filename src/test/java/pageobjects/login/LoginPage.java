@@ -2,6 +2,7 @@ package pageobjects.login;
 
 import java.awt.event.KeyEvent;
 
+import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.WebElement;
@@ -9,8 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
-import core.utils.Stock;
 
 public class LoginPage extends LoadableComponent<LoginPage>{
 

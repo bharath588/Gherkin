@@ -6,15 +6,13 @@ package pageobjects.beneficiaries;
 import java.util.List;
 
 import lib.DB;
+import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import core.utils.Stock;
-
 import org.testng.Assert;
 
 import pageobjects.general.LeftNavigationBar;
@@ -226,15 +224,15 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Web.clickOnElement(this.btnSave);
 
 		
-		if(Stock.globalTestdata.get("IterationNumber").equalsIgnoreCase("2")){
+		if(Stock.GetParameterValue("IterationNumber").equalsIgnoreCase("2")){
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				
 			}
 			this.txtAllocationBeneficiary1.clear();
-			this.txtAllocationBeneficiary1.sendKeys(Stock.globalTestdata.get("Allocation"));
-			this.txtAllocationBeneficiary2.sendKeys(Stock.globalTestdata.get("Allocation"));
+			this.txtAllocationBeneficiary1.sendKeys(Stock.GetParameterValue("Allocation"));
+			this.txtAllocationBeneficiary2.sendKeys(Stock.GetParameterValue("Allocation"));
 		}
 	}
 	
@@ -294,7 +292,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public boolean verifyBeneficiaryDetails(String attribute){
 
 		boolean isSuccess = false;
-		String beneficiaryName = Stock.globalTestdata.get("FirstName")+" "+Stock.globalTestdata.get("MiddleName")+" "+Stock.globalTestdata.get("LastName");
+		String beneficiaryName = Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName");
 		try {
 			Thread.sleep(10000);
 			Web.waitForElement(this.lblConfirmation);
@@ -308,32 +306,32 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					if(lstTblConfirmationDetails.get(0).getText().split(":")[1] != null)
 						return isSuccess;
 				if(attribute.equalsIgnoreCase("Marital status"))
-					return Web.VerifyText("Marital Status: "+Stock.globalTestdata.get("Marital Status"), lstTblConfirmationDetails.get(1).getText(), true);
+					return Web.VerifyText("Marital Status: "+Stock.GetParameterValue("Marital Status"), lstTblConfirmationDetails.get(1).getText(), true);
 			
 			
 			for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
 				if(lstTablePrimaryBeneficiary.get(i).getText().contains(beneficiaryName)){
 						
 					if(attribute.equalsIgnoreCase("Name"))
-						return Web.VerifyText("Name: "+beneficiaryName+", "+Stock.globalTestdata.get("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
+						return Web.VerifyText("Name: "+beneficiaryName+", "+Stock.GetParameterValue("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
 					
 					if(attribute.equalsIgnoreCase("Allocation"))	
-						return Web.VerifyText("Allocation: "+Stock.globalTestdata.get("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
+						return Web.VerifyText("Allocation: "+Stock.GetParameterValue("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
 					
 					if(attribute.equalsIgnoreCase("Relationship"))	
-						return Web.VerifyText("Relationship: "+Stock.globalTestdata.get("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
+						return Web.VerifyText("Relationship: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.globalTestdata.get("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){	
-						return Web.VerifyText("DATE OF BIRTH: "+Stock.globalTestdata.get("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
 					}
 					if(attribute.equalsIgnoreCase("Phone Number"))	
-						return Web.VerifyText("PHONE NUMBER: "+Stock.globalTestdata.get("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
+						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
-						String address= Stock.globalTestdata.get("AddressOne")+" "+Stock.globalTestdata.get("Country")+", "+Stock.globalTestdata.get("Zipcode").split("\\.")[0];
+						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
 						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8], true);
 					}
 				}
@@ -349,13 +347,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 *.</pre>
 	 */
 	public void enterBeneficiaryDetails(){
-		this.txtFirstName.sendKeys(Stock.globalTestdata.get("FirstName"));
-		this.txtMiddleName.sendKeys(Stock.globalTestdata.get("MiddleName"));
-		this.txtLastName.sendKeys(Stock.globalTestdata.get("LastName"));
-		this.txtSuffix.sendKeys(Stock.globalTestdata.get("Prefix"));
-		this.txtDateOfBirth.sendKeys(Stock.globalTestdata.get("DOB"));
-		this.txtSSN.sendKeys(Stock.globalTestdata.get("SSN"));
-		this.txtPhoneNumber.sendKeys(Stock.globalTestdata.get("PhoneNumber"));
+		this.txtFirstName.sendKeys(Stock.GetParameterValue("FirstName"));
+		this.txtMiddleName.sendKeys(Stock.GetParameterValue("MiddleName"));
+		this.txtLastName.sendKeys(Stock.GetParameterValue("LastName"));
+		this.txtSuffix.sendKeys(Stock.GetParameterValue("Prefix"));
+		this.txtDateOfBirth.sendKeys(Stock.GetParameterValue("DOB"));
+		this.txtSSN.sendKeys(Stock.GetParameterValue("SSN"));
+		this.txtPhoneNumber.sendKeys(Stock.GetParameterValue("PhoneNumber"));
 	
 	}
 	
@@ -365,15 +363,15 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public void enterAddressDetails(){
 		this.txtAddressOne.clear();
-		this.txtAddressOne.sendKeys(Stock.globalTestdata.get("AddressOne"));
+		this.txtAddressOne.sendKeys(Stock.GetParameterValue("AddressOne"));
 		this.txtAddressTwo.clear();
-		this.txtAddressTwo.sendKeys(Stock.globalTestdata.get("AddressTwo"));
+		this.txtAddressTwo.sendKeys(Stock.GetParameterValue("AddressTwo"));
 		this.txtCity.clear();
-		this.txtCity.sendKeys(Stock.globalTestdata.get("City"));
-		Web.selectDropDownOption(this.selState,Stock.globalTestdata.get("State"));
+		this.txtCity.sendKeys(Stock.GetParameterValue("City"));
+		Web.selectDropDownOption(this.selState,Stock.GetParameterValue("State"));
 		this.txtZipCode.clear();
-		this.txtZipCode.sendKeys(Stock.globalTestdata.get("Zipcode").split("\\.")[0]);
-		Web.selectDropDownOption(this.selCountry,Stock.globalTestdata.get("Country"));
+		this.txtZipCode.sendKeys(Stock.GetParameterValue("Zipcode").split("\\.")[0]);
+		Web.selectDropDownOption(this.selCountry,Stock.GetParameterValue("Country"));
 	}
 	
 

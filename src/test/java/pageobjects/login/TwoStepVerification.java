@@ -8,6 +8,7 @@ import java.util.Date;
 
 import lib.DB;
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -15,9 +16,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import core.utils.Stock;
-
 import org.testng.Assert;
 
 
@@ -102,7 +100,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		LoginPage login = (LoginPage) this.parent;
 		this.parent.get();
 		
-		login.submitLoginCredentials(Stock.globalTestdata.get("username"),Stock.globalTestdata.get("password"));
+		login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 		if (!isPageMandatory)
             isMandatoryAfterLoad = false;
 	}

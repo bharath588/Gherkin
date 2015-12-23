@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -21,7 +22,6 @@ import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import core.framework.Globals;
-import core.utils.Stock;
 
 public class beneficiariestestcases {
 	
@@ -80,7 +80,7 @@ public class beneficiariestestcases {
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			
 			// add a beneficiary
-			beneficiary.addBeneficiary(testdata.get("Marital Status"), testdata.get("Beneficiary Relation"), testdata.get("Use Current Address"), testdata.get("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
 			
 			try {
 				Thread.sleep(5000);
@@ -135,7 +135,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
 			
 			//verify beneficiary new address
-			if(testdata.get("Use Current Address").equalsIgnoreCase("No")){
+			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
@@ -143,7 +143,7 @@ public class beneficiariestestcases {
 			}
 			
 			//delete beneficiary from Database
-			beneficiary.deleteBeneficiariesFromDB(testdata.get("Participant ssn"), testdata.get("Participant first name")+"%");
+			beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 		
 		}
 		catch(Exception e)
@@ -196,7 +196,7 @@ public class beneficiariestestcases {
 			
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(testdata.get("Marital Status"), testdata.get("Beneficiary Relation"), testdata.get("Use Current Address"), testdata.get("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
 			
 			try {
 				Thread.sleep(5000);
@@ -253,7 +253,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
 			
 			//verify beneficiary new address
-			if(testdata.get("Use Current Address").equalsIgnoreCase("No")){
+			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
@@ -261,8 +261,8 @@ public class beneficiariestestcases {
 			}
 			
 			//delete beneficiary from Database
-			if(testdata.get("IterationNumber").equalsIgnoreCase("2"))
-				beneficiary.deleteBeneficiariesFromDB(testdata.get("Participant ssn"), testdata.get("Participant first name")+"%");
+			if(Stock.GetParameterValue("IterationNumber").equalsIgnoreCase("2"))
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 		
 		}
 		catch(Exception e)

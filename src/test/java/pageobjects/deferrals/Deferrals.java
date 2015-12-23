@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,11 +14,12 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 
 
+
 import pageobjects.general.LeftNavigationBar;
 import lib.Reporter;
+import lib.Stock;
 import lib.Reporter.Status;
 import lib.Web;
-import core.utils.Stock;
 
 public class Deferrals extends LoadableComponent<Deferrals> {
 	
@@ -160,12 +162,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.lnkPercent.click();
 			this.lnkContributionRate.click();			
 			this.txtcontributionRateSlider.clear();
-			this.txtcontributionRateSlider.sendKeys(Stock.globalTestdata.get("Contribution Rate"));
+			this.txtcontributionRateSlider.sendKeys(Stock.GetParameterValue("Contribution Rate"));
 			this.btnDone.click();
 			//System.out.println(lnksliderValue.getText()); 
 			
 			//Verify Accuracy of My Contribution
-			sliderValue=lib.Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
+			sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution After Tax", "My Contribution value is matching", true);
 			else
@@ -184,10 +186,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for After Tax", "Add Auto Increase pop up for AfterTax is not displayed", true);
 			this.txtAutoIncreaseMyContributionPercent.clear();
-			this.txtAutoIncreaseMyContributionPercent.sendKeys(Stock.globalTestdata.get("Auto Increase Contribution Percent"));
+			this.txtAutoIncreaseMyContributionPercent.sendKeys(Stock.GetParameterValue("Auto Increase Contribution Percent"));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
-			this.txtAutoIncreaseUntilItReachesPercent.sendKeys(Stock.globalTestdata.get("Auto Increases Until Reaches Percent"));
-			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, Stock.globalTestdata.get("Auto Increase Period"));											
+			this.txtAutoIncreaseUntilItReachesPercent.sendKeys(Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, Stock.GetParameterValue("Auto Increase Period"));											
 			this.btnSaveAddAutoIncreaseModal.click();								
 			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Save button", "My Contributions Page is displayed with Auto Increase Details", false);
@@ -241,12 +243,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.lnkPercent.click();
 			this.lnkContributionRate.click();			
 			this.txtcontributionRateSlider.clear();			
-			this.txtcontributionRateSlider.sendKeys(Stock.globalTestdata.get("Contribution Rate"));
+			this.txtcontributionRateSlider.sendKeys(Stock.GetParameterValue("Contribution Rate"));
 			this.btnDone.click();
 			//System.out.println(lnksliderValue.getText()); 						
 			
 			//Verify Accuracy of My Contribution
-			boolean sliderValue=lib.Web.VerifyText(Stock.globalTestdata.get("Contribution Rate"), lnksliderValue.getText());
+			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is matching", true);
 			else
@@ -273,10 +275,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is not displayed", false);
 			this.txtAutoIncreaseMyContributionPercent.clear();
-			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.globalTestdata.get("Auto Increase Contribution Percent")));
+			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.GetParameterValue("Auto Increase Contribution Percent")));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
-			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.globalTestdata.get("Auto Increases Until Reaches Percent")));
-			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));							
+			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.GetParameterValue("Auto Increases Until Reaches Percent")));
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));							
 			this.btnSaveAddAutoIncreaseModal.click();				
 			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
 				Reporter.logEvent(Status.PASS, "Click on Save button", "My Contributions Page is displayed with Auto Increase Details", true);
@@ -328,12 +330,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.lnkPercent.click();
 			this.lnkContributionRate.click();			
 			this.txtcontributionRateSlider.clear();
-			this.txtcontributionRateSlider.sendKeys((Stock.globalTestdata.get("Contribution Rate")));
+			this.txtcontributionRateSlider.sendKeys((Stock.GetParameterValue("Contribution Rate")));
 			this.btnDone.click();
 			System.out.println(lnksliderValue.getText()); 						
 			
 			//Verify Accuracy of My Contribution
-			boolean sliderValue=lib.Web.VerifyText((Stock.globalTestdata.get("Contribution Rate")), lnksliderValue.getText());
+			boolean sliderValue=lib.Web.VerifyText((Stock.GetParameterValue("Contribution Rate")), lnksliderValue.getText());
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution for Before Tax", "My Contribution value is matching", true);
 			else
@@ -347,9 +349,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			this.radioSplitContribution.click();
 			this.txtSplitBeforeTax.clear();
-			this.txtSplitBeforeTax.sendKeys((Stock.globalTestdata.get("Split Before Tax")));
+			this.txtSplitBeforeTax.sendKeys((Stock.GetParameterValue("Split Before Tax")));
 			this.txtSplitRothTax.clear();
-			this.txtSplitRothTax.sendKeys((Stock.globalTestdata.get("Split Roth Tax")));					
+			this.txtSplitRothTax.sendKeys((Stock.GetParameterValue("Split Roth Tax")));					
 			this.btnContinueBeforeTaxSplitContribution.click();
 			
 			if(lib.Web.isWebElementDisplayed(tblhdrlblContribution, true))
@@ -365,10 +367,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Add Auto Increase for Before Tax", "Add Auto Increase pop up for BeforeTax is not displayed", true);
 			this.txtAutoIncreaseMyContributionPercent.clear();
-			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.globalTestdata.get("Auto Increase Contribution Percent")));
+			this.txtAutoIncreaseMyContributionPercent.sendKeys((Stock.GetParameterValue("Auto Increase Contribution Percent")));
 			this.txtAutoIncreaseUntilItReachesPercent.clear();
-			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.globalTestdata.get("Auto Increases Until Reaches Percent")));
-			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.globalTestdata.get("Auto Increase Period")));
+			this.txtAutoIncreaseUntilItReachesPercent.sendKeys((Stock.GetParameterValue("Auto Increases Until Reaches Percent")));
+			lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 			try {
 				Thread.sleep(1000);
 				} catch (Exception e) {

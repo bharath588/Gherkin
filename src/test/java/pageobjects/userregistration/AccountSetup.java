@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import lib.DB;
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -13,9 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import core.utils.Stock;
-
 import org.testng.Assert;
 
 import pageobjects.login.LoginPage;
@@ -77,23 +75,23 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		
 		this.parent.get();
 		
-		if (Stock.globalTestdata.get("TabName").trim().equalsIgnoreCase("I DO NOT HAVE A PIN")) {
-			System.out.println(Stock.globalTestdata.get("SSN"));
-			System.out.println(Stock.globalTestdata.get("zipCode"));
-			System.out.println(Stock.globalTestdata.get("LastName"));
-			System.out.println(Stock.globalTestdata.get("DOB"));
-			System.out.println(Stock.globalTestdata.get("StreetAddress"));
+		if (Stock.GetParameterValue("TabName").trim().equalsIgnoreCase("I DO NOT HAVE A PIN")) {
+			System.out.println(Stock.GetParameterValue("SSN"));
+			System.out.println(Stock.GetParameterValue("zipCode"));
+			System.out.println(Stock.GetParameterValue("LastName"));
+			System.out.println(Stock.GetParameterValue("DOB"));
+			System.out.println(Stock.GetParameterValue("StreetAddress"));
 			
-			accLookup.registerWithoutPIN(Stock.globalTestdata.get("SSN"), 
-					Stock.globalTestdata.get("zipCode"),
-					Stock.globalTestdata.get("LastName"),
-					Stock.globalTestdata.get("DOB"),
-					Stock.globalTestdata.get("StreetAddress"));
+			accLookup.registerWithoutPIN(Stock.GetParameterValue("SSN"), 
+					Stock.GetParameterValue("zipCode"),
+					Stock.GetParameterValue("LastName"),
+					Stock.GetParameterValue("DOB"),
+					Stock.GetParameterValue("StreetAddress"));
 		}
 		else {
 			try {
-				accLookup.registrationWithPIN(Stock.globalTestdata.get("SSN"),
-						Stock.globalTestdata.get("PIN"));
+				accLookup.registrationWithPIN(Stock.GetParameterValue("SSN"),
+						Stock.GetParameterValue("PIN"));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
