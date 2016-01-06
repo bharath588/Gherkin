@@ -2,16 +2,25 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.utils.TestListener"/>
+        <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="suite">
-        <classes>
-            <class name="app.pptweb.testcases.logintestcases">
-                <methods>
-                    <exclude name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+   	<test name = "SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+   		<classes>
+   			<class name = "app.pptweb.testcases.deferrals.deferralstestcases">
+   				<methods>
+   					<include name = "SIT_PPTWEB_Deferral_001_AfterTax_Select_Another_Contribution_Rate"/>
+   				</methods>
+   			</class>
+   		</classes>
+   	</test>
+   	
+   	<test name = "SIT_PPTWEB_Deferral_015_Regular_BEFORE-Select Another contribution rate_Sanity">
+   		<classes>
+   			<class name = "app.pptweb.testcases.deferrals.deferralstestcases">
+   				<methods>
+   					<include name = "SIT_PPTWEB_Deferral_013_Regular_BEFORE_Maximize_To_Company_Match"/>
+   				</methods>
+   			</class>
+   		</classes>
+   	</test>
 </suite>

@@ -39,7 +39,10 @@ public class deferralstestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getName(), testCase.getName());
+		System.out.println("Begin Debug with manual TC  :" + Globals.GC_MANUAL_TC_NAME);
+		//this.testData = Stock.getTestData(this.getClass().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getName(), Globals.GC_MANUAL_TC_NAME);
+		System.out.println(this.testData);
 	}
 	
 	@BeforeMethod
@@ -59,12 +62,14 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+			/*if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
 				 leftmenu = new LeftNavigationBar(homePage);			
 			else {
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
 				leftmenu = new LeftNavigationBar(accountPage);
-			}
+			}*/
+			MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			leftmenu = new LeftNavigationBar(accountPage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try { lib.Web.waitForElement(deferrals,"Table Header Contribution"); }
