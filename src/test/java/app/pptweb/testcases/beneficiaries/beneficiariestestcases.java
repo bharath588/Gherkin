@@ -43,7 +43,7 @@ public class beneficiariestestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
 	}
 	
 	@BeforeMethod

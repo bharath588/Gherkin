@@ -39,10 +39,7 @@ public class deferralstestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		System.out.println("Begin Debug with manual TC  :" + Globals.GC_MANUAL_TC_NAME);
-		//this.testData = Stock.getTestData(this.getClass().getName(), testCase.getName());
-		this.testData = Stock.getTestData(this.getClass().getName(), Globals.GC_MANUAL_TC_NAME);
-		System.out.println(this.testData);
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
 	@BeforeMethod
