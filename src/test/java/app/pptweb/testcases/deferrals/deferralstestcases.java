@@ -50,7 +50,7 @@ public class deferralstestcases {
 	
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_001_AfterTax_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		//Stock.globalTestdata = testdata;
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
@@ -59,7 +59,7 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 				 leftmenu = new LeftNavigationBar(homePage);			
 			else {
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -116,7 +116,7 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 				 leftmenu = new LeftNavigationBar(homePage);			
 			else {
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -175,7 +175,7 @@ public class deferralstestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);	
 			
-			if(homePage.getNoOfPlansFromDB(testdata.get("Participant ssn")) <= 2)
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Participant ssn")) <= 2)
 				 leftmenu = new LeftNavigationBar(homePage);
 			else{
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -200,16 +200,16 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
 			
-			if(testdata.get("Standard_Contribution").equalsIgnoreCase("Maximize to company match"))
+			if(lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Maximize to company match"))
 				deferrals.click_MaximizeToCompanyMatch();
-			if(testdata.get("Standard_Contribution").equalsIgnoreCase("Maximize to irs limit"))
+			if(lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.click_Maximize_IRS_Limit("Standard");
-			if(testdata.get("Standard_Contribution").equalsIgnoreCase("Select another contribution"))
+			if(lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 			
 			
-			deferrals.select_ContributionType_Standard(testdata.get("Contribution_type"));
-			deferrals.add_Auto_Increase(testdata.get("Add_auto_increase_type"));
+			deferrals.select_ContributionType_Standard(lib.Stock.GetParameterValue("Contribution_type"));
+			deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();			
 			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
@@ -245,7 +245,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -296,7 +296,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -354,7 +354,7 @@ public class deferralstestcases {
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);		
 //			
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2){			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2){			
 //				 leftmenu = new LeftNavigationBar(homePage);
 //			}
 //			else{
@@ -419,7 +419,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -470,7 +470,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -528,7 +528,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -587,7 +587,7 @@ public class deferralstestcases {
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);		
 //			
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2){			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2){			
 //				 leftmenu = new LeftNavigationBar(homePage);
 //			}
 //			else{
@@ -650,7 +650,7 @@ public class deferralstestcases {
 //			LoginPage login = new LoginPage();
 //			TwoStepVerification mfaPage = new TwoStepVerification(login);
 //			LandingPage homePage = new LandingPage(mfaPage);
-//			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //				 leftmenu = new LeftNavigationBar(homePage);			
 //			else {
 //				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -703,7 +703,7 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 				 leftmenu = new LeftNavigationBar(homePage);			
 			else {
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
@@ -723,16 +723,16 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Catch up contribution page", "Catch up Contributions page is not displayed", true);
 			
-			if(testdata.get("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
+			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.click_Maximize_IRS_Limit("Catch Up");
-			if(testdata.get("Catchup_Contribution").equalsIgnoreCase("Select another contribution"))
+			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 				
-			deferrals.select_ContributionType_Standard(testdata.get("Contribution_type"));
-			if(testdata.get("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
+			deferrals.select_ContributionType_Standard(lib.Stock.GetParameterValue("Contribution_type"));
+			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.catchup_maximize_to_irs();
 			else
-				deferrals.add_Auto_Increase(testdata.get("Add_auto_increase_type"));
+				deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();		
 		}
 		catch(Exception e)

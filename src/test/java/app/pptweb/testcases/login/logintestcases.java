@@ -41,7 +41,7 @@ public class logintestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
 	@BeforeMethod
@@ -53,11 +53,9 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_invalid_Userid_and_Password(int itr, Map<String, String> testdata){
 		
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC01_Verify_invalid_Userid_and_Password");
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			login = new LoginPage().get();
 			String errMsg = "";
 			login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
