@@ -15,6 +15,7 @@ public class Stock {
 	public static Map<String, String> globalParam = new LinkedHashMap<String, String>();
 	private static int dataProviderIterations;
 	public static Map<String, String> globalTestdata;
+	public static String globalManualTCName;
 
 	public static Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
 		// Converting Map to Object[][] to handle @DataProvider
@@ -56,7 +57,8 @@ public class Stock {
 
 		try {
 			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + appName + ".xls");
-			int tcColNo = XL.getColNum(modName, 0, Globals.GC_TESTDATATCCOLNAME);
+			//int tcColNo = XL.getColNum(modName, 0, Globals.GC_TESTDATATCCOLNAME);
+			int tcColNo = XL.getColNum(modName, 0, Globals.GC_COL_MANUAL_TC);
 			int itrColNo = XL.getColNum(modName, 0, Globals.GC_ITRCCOLNAME);
 			int itcPointer = 0;
 

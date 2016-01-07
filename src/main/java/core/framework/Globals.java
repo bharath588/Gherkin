@@ -80,6 +80,8 @@ public class Globals {
           public static final String GC_XML_ATTR_VERBOSE = "verbose";
           public static final String GC_XML_ATTR_VAL_SUITE = "testsuite";
           public static final String GC_XML_ATTR_VAL_TEST = "testXML";
+          public static String GC_MANUAL_TC_NAME ;
+          public static final String GC_COL_MANUAL_TC = "ManualTestCaseName";
           
         //LOGGER
           public static final String GC_LOG_DEBUG = "debug";
