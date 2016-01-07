@@ -62,14 +62,13 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			/*if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
+			if(homePage.getNoOfPlansFromDB(testdata.get("Particicpant_ssn")) <= 2)			
 				 leftmenu = new LeftNavigationBar(homePage);			
 			else {
 				MyAccountsPage accountPage = new MyAccountsPage(homePage);
 				leftmenu = new LeftNavigationBar(accountPage);
-			}*/
-			MyAccountsPage accountPage = new MyAccountsPage(homePage);
-			leftmenu = new LeftNavigationBar(accountPage);
+			}
+			
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try { lib.Web.waitForElement(deferrals,"Table Header Contribution"); }
