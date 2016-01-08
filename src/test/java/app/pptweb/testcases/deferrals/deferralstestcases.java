@@ -15,6 +15,7 @@ import lib.Reporter.Status;
 import pageobjects.general.*;
 import pageobjects.login.*;
 import pageobjects.deferrals.Deferrals;
+import pageobjects.deferrals.PriorPlanContributions;
 import pageobjects.landingpage.LandingPage;
 import core.framework.Globals;
 import lib.Stock;
@@ -54,7 +55,7 @@ public class deferralstestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_001_AfterTax_Select_Another_Contribution_Rate");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -111,7 +112,7 @@ public class deferralstestcases {
 		Stock.globalTestdata = testdata;
 //      Globals.GBL_CurrentIterationNumber = itr;
 		try{
-			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_004_Bonus_Select_Another_Contribution_Rate");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -169,7 +170,7 @@ public class deferralstestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_013_Regular_BEFORE_Maximize_To_Company_Match");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -698,7 +699,7 @@ public class deferralstestcases {
 		Stock.globalTestdata = testdata;
 //      Globals.GBL_CurrentIterationNumber = itr;
 		try{
-			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_009_Catch_up_Maximize_to_the_IRS_limit up_Maximize to the IRS limit");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -751,6 +752,91 @@ public class deferralstestcases {
 	    try { Reporter.finalizeTCReport(); }
 	    catch (Exception e1) { e1.printStackTrace(); } 
 	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void SIT_PPTWEB_Deferral_006_Previous_Contributions_Participant_hired_in_prior_year(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_006_Previous_Contributions_Participant_hired_in_current_year");
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+				 leftmenu = new LeftNavigationBar(homePage);			
+			else {
+				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+				leftmenu = new LeftNavigationBar(accountPage);
+			}
+			PriorPlanContributions priorContributions = new PriorPlanContributions(leftmenu);
+			priorContributions.get();
+			
+			if(priorContributions.verifyParticipantsHiredInPriorYear())
+				Reporter.logEvent(Status.PASS, "Verify if Participant was hired in previous year", "Participant hired in previous year", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify if Participant was hired in previous year", "Participant not hired in previous year", true);
+		}
+		catch(Exception e)
+	    {
+	        e.printStackTrace();
+	        Globals.exception = e;
+	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+	    }
+		catch(AssertionError ae)
+	    {
+	        ae.printStackTrace();
+	        Globals.assertionerror = ae;
+	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	        //throw ae;
+	    }
+		finally { }
+	    try { Reporter.finalizeTCReport(); }
+	    catch (Exception e1) { e1.printStackTrace(); } 
+		}
+	
+	
+	@Test(dataProvider = "setData")
+	public void SIT_PPTWEB_Deferral_016_Multiple_Create_contribution_rate_for_multiple_deferral_type_split_contribution(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_009_Catch_up_Maximize_to_the_IRS_limit up_Maximize to the IRS limit");
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+				 leftmenu = new LeftNavigationBar(homePage);			
+			else {
+				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+				leftmenu = new LeftNavigationBar(accountPage);
+			}
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			
+			
+		}
+			catch(Exception e)
+		    {
+		        e.printStackTrace();
+		        Globals.exception = e;
+		        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		    }
+		catch(AssertionError ae)
+	    {
+	        ae.printStackTrace();
+	        Globals.assertionerror = ae;
+	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	        //throw ae;
+	    }
+		finally { }
+	    try { Reporter.finalizeTCReport(); }
+	    catch (Exception e1) { e1.printStackTrace(); } 
+		}
+			
 	
 	
 	@AfterClass

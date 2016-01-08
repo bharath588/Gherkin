@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import pageobjects.landingpage.LandingPage;
+
 public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	
 	
@@ -58,11 +60,13 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		//boolean paramFlag = false;
 		
 		this.parent.get();
-//		if(new LandingPage().getNoOfPlansFromDB()<=2){
-//			System.out.println("inside");
-//			((LandingPage) this.parent).dismissPopUps(true,true);
-//			WebActions.clickOnElement(new LandingPage(), "MY ACCOUNTS");
-//		}
+		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
+			System.out.println("inside");
+			((LandingPage) this.parent).dismissPopUps(true,true);
+			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+		}
+		else
+			((MyAccountsPage) this.parent).clickPlanNameByGAID();
 //		else{
 //			Set<String> paramNames = TestDataContainer.getParameterNames();
 //			
@@ -71,19 +75,19 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 //					paramFlag = true;
 //				}
 //			}
-//			
+			
 //			if (paramFlag==true) {
 //				((MyAccountsPage) this.parent).clickPlanNameByGAID(
 //						Stock.GetParameterValue("groupAccountID"));
 //			} else {
-				((MyAccountsPage) this.parent).clickPlanNameByGAID();
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-//			}
+//				((MyAccountsPage) this.parent).clickPlanNameByGAID();
+//				try {
+//					Thread.sleep(5000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+			
 		}
 		
 		
