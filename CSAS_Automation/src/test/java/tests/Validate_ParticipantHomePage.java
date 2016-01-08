@@ -7,6 +7,8 @@ import java.util.Map;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -23,6 +25,7 @@ public class Validate_ParticipantHomePage {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
+		System.out.println("==========="+Globals.GBL_SuiteName);
 		Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 	
@@ -38,12 +41,18 @@ public class Validate_ParticipantHomePage {
 	
 	@BeforeMethod
 	public void getTCName(Method tc) {
-	       tcName = tc.getName();       
+	       tcName = tc.getName(); 
+	       System.out.println("get TCname");
 	}
 	
 	@Test(dataProvider = "setData")
   public void f(int itr, Map<String, String> testdata) {
 	  ParticipantHome ph = new ParticipantHome();
 	  System.out.println("This is a sample test - f()!");
+	  
   }
+	@AfterTest
+	public void tear(){
+		Web.teatDown();
+	}
 }
