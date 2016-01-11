@@ -48,15 +48,16 @@ public class DriverScript {
 		new DriverScript();		
 	}
 	
-	DriverScript() throws Exception{
+	public DriverScript() throws Exception{
 		Log.Report(Level.INFO,Globals.GC_LOG_INIT_MSG);
 		testConfigPath = Globals.GC_TESTCONFIGLOC+Globals.GC_CONFIGFILEANDSHEETNAME+".xls";	
 		ReadTestConfig();
 		if(globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
 		   globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){
 		   BuildTestNGXML();
-		}		
-		RunTestNG();	
+		}
+		//Commenting the run part of the testng xml since the run can be initiated by the individual project POM
+		//RunTestNG();	
 	}
 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			ReadTestConfig()	
