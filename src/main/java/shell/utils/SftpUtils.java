@@ -90,8 +90,7 @@ public class SftpUtils {
     	 {
     		 try {
     			 sftp = (ChannelSftp) sftpChannel;    			
-    			 sftp.put(srcFilePath,sftp.getHome()+dstFolderPath);
-    			 //System.out.println("File upload successfull");    			  			
+    			 sftp.put(srcFilePath,sftp.getHome()+dstFolderPath);    			     			  			
     		 }
     		 catch(SftpException e) { e.printStackTrace(); }
     	 }
@@ -114,8 +113,7 @@ public class SftpUtils {
     		  try{
     			  sftp = (ChannelSftp) sftpChannel;
     			  File remoteFile=new File(srcFolderPath);
-    			  File downloadFile=null;
-    			  System.out.println(sftp.getHome() + srcFolderPath);
+    			  File downloadFile=null;    			  
     			  sftp.cd(sftp.getHome() + srcFolderPath);
     			  File[] listOfFiles = remoteFile.listFiles(new FileFilter() {          
     				  public boolean accept(File file) {
@@ -126,9 +124,7 @@ public class SftpUtils {
     					  downloadFile = file;								
     			  }    			  
     			  sftp.get(sftp.getHome() + srcFolderPath+downloadFile.getName(), dstFolderPath); 
-    			  //System.out.println("File download successfull");
-
-    		  }
+       		  }
     		  catch(SftpException e)
     		  {
     			  e.printStackTrace();

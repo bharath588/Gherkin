@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
 
 public class DB {
@@ -110,7 +111,8 @@ public class DB {
 			
 			try {
 				dataSource = new OracleDataSource();
-				jdbcUrl = Stock.globalParam.get(DBName);
+				//jdbcUrl = Stock.globalParam.get(DBName);
+				jdbcUrl = Globals.databaseConnectionStrings.get(DBName);
 				dbuserid = Stock.globalParam.get("DBUSERID");
 				dbpassword = Stock.globalParam.get("DBPASSWORD");
 				
