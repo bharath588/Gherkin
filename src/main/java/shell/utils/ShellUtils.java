@@ -74,15 +74,15 @@ public class ShellUtils {
 	 }
 
 	 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
-			               	FUNCTION:			runAndWriteShellCommandsToFile(String command)
-			                DESCRIPTION:	    Runs the shell Command and write details to a File
-			                PARAMETERS: 		String shell command
-			                RETURNS:		    void
-			                EXAMPLE:	        runAndWriteShellCommandsToFile( shell command)	
-			                REVISION HISTORY: 
-			                ------------------------------------------------------------------------------------------------------------------------------------------------------------
-			                Author : Janani     Date : 04-11-2015       
-			                ------------------------------------------------------------------------------------------------------------------------------------------------------------
+       	FUNCTION:			runAndWriteShellCommandsToFile(String command)
+        DESCRIPTION:	    Runs the shell Command and write details to a File
+        PARAMETERS: 		String shell command
+        RETURNS:		    void
+        EXAMPLE:	        runAndWriteShellCommandsToFile( shell command)	
+        REVISION HISTORY: 
+        ------------------------------------------------------------------------------------------------------------------------------------------------------------
+        Author : Janani     Date : 04-11-2015       
+		----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	  */ public static void runAndWriteShellCommandsToFile(String command)
 	  {
 		  establishShellConnection();
@@ -105,14 +105,14 @@ public class ShellUtils {
 	  }
 
 	  /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
-			               	FUNCTION:			runAndWriteShellCommandsToFile(String integerArgument)
-			                DESCRIPTION:	    Runs the shell Command and write details to a File
-			                PARAMETERS: 		Integer command
-			                RETURNS:		    void
-			                EXAMPLE:	        runAndWriteShellCommandsToFile(1)	
-			                REVISION HISTORY: 
-			                ------------------------------------------------------------------------------------------------------------------------------------------------------------
-			                Author : Janani     Date : 06-11-2015       
+       	FUNCTION:			runAndWriteShellCommandsToFile(String integerArgument)
+        DESCRIPTION:	    Runs the shell Command and write details to a File
+        PARAMETERS: 		Integer command
+        RETURNS:		    void
+        EXAMPLE:	        runAndWriteShellCommandsToFile(1)	
+        REVISION HISTORY: 
+        ------------------------------------------------------------------------------------------------------------------------------------------------------------
+        Author : Janani     Date : 06-11-2015       
 			                ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	   */ public static void runAndWriteShellCommandsToFile(int integerArgument)
 	   {

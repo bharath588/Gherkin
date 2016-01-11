@@ -1,5 +1,8 @@
 package core.framework;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 
 public class Globals {
        
@@ -119,6 +122,24 @@ public class Globals {
     	  public static final String GC_ENROLLCANCEL_FILE_NAMEPATTERN="ma_fei_enrll_";
     	  public static final String GC_TRANSACTION_INPUT_FILE_NAMEPATTERN="ma_fei_txnpr_"; 
     	  public static final String GC_FILE_TYPE=".xml";
+    	  public static final String GC_Database_Prefix="D_";
           
-                 
+    	  public static final Map<String, String> databaseConnectionStrings;
+    	  static
+    	  {
+  	    	databaseConnectionStrings = new Hashtable<String, String>();
+  	    	databaseConnectionStrings.put("D_INST", "jdbc:oracle:thin:@DINSTDB:1521/dinstmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_PNP", "jdbc:oracle:thin:@dpnpdb:1521/dpnpmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_ISIS", "jdbc:oracle:thin:@disisdb:1521/disisbatch.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_QASI", "jdbc:oracle:thin:@gp-qdb:1521:D_QASI");
+  	    	databaseConnectionStrings.put("D_QASK", "jdbc:oracle:thin:@dqaskdb:1521/dqaskmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_IN02", "jdbc:oracle:thin:@din02db:1521/din02java.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_CMNM", "jdbc:oracle:thin:@fsxd01dbad02:1521/dcmnmmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_QAS2", "jdbc:oracle:thin:@gp-qdb:1521:D_QAS2");
+  	    	databaseConnectionStrings.put("Q_CMNM", "jdbc:oracle:thin:@fsxq01dbad02:1521/q_cmnm.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_AMA", "jdbc:oracle:thin:@Damadb:1521/damamain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_QAMA", "jdbc:oracle:thin:@gp-ddb2:1521:D_QAMA");
+  	    	databaseConnectionStrings.put("D_MISC", "jdbc:oracle:thin:@gp-pdb2:1521/D_MISC.ISIS.GWL.COM");   	    	
+
+  	    	}
 }
