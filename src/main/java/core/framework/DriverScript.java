@@ -109,182 +109,179 @@ REVISION HISTORY:
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Author : Souvik     Date : 09-10-2015       
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-*/	private void BuildTestNGXML() throws Exception{
-		String autName = Globals.GC_EMPTY;
-		String runOrderPath = Globals.GC_EMPTY;
-		String testType = Globals.GC_EMPTY;
-		try{
-			autName = globalParam.get(Globals.GC_KEYAUT).toLowerCase();
-			if(autName.isEmpty()){ throw new Exception("Application name is not provided in TestExecutionConfig sheet");}
-			runOrderPath = Globals.GC_TESTCASESLOC+Globals.GC_TESTCASERUNORDERPREFIX+autName+".xls"; 
-			Log.Report(Level.INFO,"building TestNG XML to execute automation tests for application : "
-		               +autName);
-			
-			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.newDocument();
-			
-			//Initializing TestNG XML nodes
-			Element suite = doc.createElement(Globals.GC_XML_SUITE);
-			Log.Report(Level.DEBUG,"Initialize SUITE node to build TestNG XML ");
-			Element listeners = doc.createElement(Globals.GC_XML_LISTENERS);
-			Log.Report(Level.DEBUG,"Initialize LISTENRS node to build TestNG XML ");
-			Element test = doc.createElement(Globals.GC_XML_TEST);
-			Log.Report(Level.DEBUG,"Initialize TEST node to build TestNG XML ");
-			Element classes = doc.createElement(Globals.GC_XML_CLASSES);
-			Log.Report(Level.DEBUG,"Initialize CLASSES node to build TestNG XML ");
-			Element listener = doc.createElement(Globals.GC_XML_LISTENER);
-			
-			Log.Report(Level.DEBUG,"Initialize LISTENER node to build TestNG XML ");
-			
-			doc.appendChild(suite);
-			suite.setAttribute(Globals.GC_XML_ATTR_NAME,Globals.GC_XML_ATTR_VAL_SUITE);
-			Log.Report(Level.DEBUG,"Setting attribute to SUITE node ("+Globals.GC_XML_ATTR_NAME+"--"+
-			           Globals.GC_XML_ATTR_VAL_SUITE+") to build TestNG XML");
-			suite.setAttribute(Globals.GC_XML_ATTR_VERBOSE,"1");
-			suite.appendChild(listeners);
-			Log.Report(Level.DEBUG,"Append child node LISTENERS to SUITE node to build TestNG XML ");
-			listeners.appendChild(listener);
-
-			Log.Report(Level.DEBUG,"Append child node LISTENER to LISTENERS node to build TestNG XML ");
-			listener.setAttribute(Globals.GC_XML_ATTR_CLASSNAME, Globals.GC_LISTENERS_CLASSNAME);		
-			Log.Report(Level.DEBUG,"Setting attribute to LISTENER node ("+Globals.GC_XML_ATTR_NAME+"--"+
-		            Globals.GC_LISTENERS_CLASSNAME+") to build TestNG XML");
-									
-			suite.appendChild(test);
-			Log.Report(Level.DEBUG,"Append child node TEST to SUITE node to build TestNG XML ");
-			
-			test.setAttribute(Globals.GC_XML_ATTR_NAME,Globals.GC_XML_ATTR_VAL_TEST);
-			Log.Report(Level.DEBUG,"Setting attribute to TEST node ("+Globals.GC_XML_ATTR_NAME+"--"+
-			            Globals.GC_XML_ATTR_VAL_TEST+") to build TestNG XML");
-			test.appendChild(classes);
-			Log.Report(Level.DEBUG,"Append child node CLASSES to TEST node to build TestNG XML ");
-			
-			//Read Run Order
-			ReadRunOrder(runOrderPath);	
-						
-			//Building testNG XML
-			xlRW = new XL_ReadWrite(runOrderPath);
-			for (Map.Entry<String, String> moduleName : runOrderDet.entrySet()){	
-				Element clazz = doc.createElement(Globals.GC_XML_CLASS);
-				if(moduleName.getValue().equalsIgnoreCase(Globals.GC_RUNSTATUS_YES)){					
-					Log.Report(Level.DEBUG,moduleName.getKey()+" module test cases are included as RUN STATUS = YES");
-
-					classes.appendChild(clazz);
-					Log.Report(Level.DEBUG,"append child node CLASS to CLASSES node to build TestNG XML ");
-					
-					clazz.setAttribute(Globals.GC_XML_ATTR_NAME,Globals.GC_APP_RELPATH+autName+Globals.GC_TESTCASE_RELPATH+
-							           moduleName.getKey().toLowerCase());
-					Log.Report(Level.DEBUG,"setting attribute to CLASS node ("+Globals.GC_XML_ATTR_NAME+"--"+
-							autName+Globals.GC_TESTCASE_RELPATH+moduleName.getKey().toLowerCase()+") to build TestNG XML");
-					Element methods = doc.createElement(Globals.GC_XML_METHODS);
-					Log.Report(Level.DEBUG,"initialize METHODS node to build TestNG XML ");
-					
-					clazz.appendChild(methods);
-					Log.Report(Level.DEBUG,"append child node METHODS to CLASS node to build TestNG XML ");
-					if(xlRW.isSheetExist(moduleName.getKey())){						
-					
-						//Setting test dependency for each module						
-						Map<Integer,String> depdItr = SetTestCaseDependency(xlRW,moduleName.getKey());
-							
-						// Map sort to provide testcase prioritization 	
-						Map<Integer, String> treeMap = new TreeMap<Integer, String>();											
-						for(int iModuleLoop=0;iModuleLoop<xlRW.getRowCount(moduleName.getKey())-1;iModuleLoop++){
-							if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-						       Globals.GC_COLNAME_RUNSTATUS).equalsIgnoreCase(Globals.GC_RUNSTATUS_YES)){	
-							   
-							   //Checking if TCs not getting duplicated								
-							   if(!depdItr.containsValue(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-								       Globals.GC_COLNAME_TESTCASES))){
-								       treeMap.put(Integer.valueOf(xlRW.getCellData(moduleName.getKey(),
-										       iModuleLoop+1,Globals.GC_COLNAME_SETPRIORITY)),
-										       xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-										       Globals.GC_COLNAME_TESTCASES));										   
-							   }	
-							   
-							}else if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-								Globals.GC_COLNAME_RUNSTATUS).equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
-								Element exclude = doc.createElement(Globals.GC_XML_EXCLUDE);
-								Log.Report(Level.DEBUG,"initialize EXCLUDE node to build TestNG XML ");
-								methods.appendChild(exclude);
-								Log.Report(Level.DEBUG,"append child node EXCLUDE to METHODS node to build TestNG XML ");
-								exclude.setAttribute(Globals.GC_XML_ATTR_NAME,
-								xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_TESTCASES));	
-								
-								Log.Report(Level.DEBUG,"setting attribute to EXCLUDE node ("+Globals.GC_XML_ATTR_NAME+"--"+
-										   xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_TESTCASES)+") to build TestNG XML");								
-							}							
-						}
-						
-						//Loop for non dependent TCs
-						for(Entry<Integer, String> includeTC : treeMap.entrySet()){
-							 Element include = doc.createElement(Globals.GC_XML_INCLUDE);
-							 Log.Report(Level.DEBUG,"initialize INCLUDE node to build TestNG XML ");
-							 
-							 methods.appendChild(include);
-							 Log.Report(Level.DEBUG,"append child node INCLUDE to METHODS node to build TestNG XML ");
-							 include.setAttribute(Globals.GC_XML_ATTR_NAME, includeTC.getValue());
-							 Log.Report(Level.DEBUG,"setting attribute to INCLUDE node ("+Globals.GC_XML_ATTR_NAME+"--"+
-									 includeTC.getValue()+") to build TestNG XML");							
-						}	
-						//Loop for dependent TCs as testNG dependency dosnt guarantee prioritization
-						for(Entry<Integer, String> includeTC : depdItr.entrySet()){
-							 Element include = doc.createElement(Globals.GC_XML_INCLUDE);
-							 Log.Report(Level.DEBUG,"initialize INCLUDE node to build TestNG XML ");
-							 
-							 methods.appendChild(include);
-							 Log.Report(Level.DEBUG,"append child node INCLUDE to METHODS node to build TestNG XML ");
-							 include.setAttribute(Globals.GC_XML_ATTR_NAME, includeTC.getValue());
-							 Log.Report(Level.DEBUG,"setting attribute to INCLUDE node ("+Globals.GC_XML_ATTR_NAME+"--"+
-									 includeTC.getValue()+") to build TestNG XML");							
-						}						
-					}
-				}else if(moduleName.getValue().equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
-					Log.Report(Level.DEBUG,moduleName.getKey()+" module test cases are skipped as RUN STATUS = NO");
-				}
-			}
-			xlRW.saveXL();			
-			xlRW.clearXL();
-			
-			// Transforming to XML			
-			Transformer docTransformer = TransformerFactory.newInstance().newTransformer();
-			Log.Report(Level.DEBUG,"initialize document transformer to create TestNG XML");
-			docTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			docTransformer.setOutputProperty(OutputKeys.METHOD, "xml");
-			docTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");	
-			docTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-			DOMImplementation domImpl = doc.getImplementation();
-			DocumentType doctype = domImpl.createDocumentType("suite","SYSTEM","http://testng.org/testng-1.0.dtd");
-			docTransformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctype.getPublicId());
-			docTransformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
-			
-			DOMSource source = new DOMSource(doc);
-			SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyy_HHmmss");
-			Date date = Calendar.getInstance().getTime();	
-			File file = new File(Globals.GC_TESTNG_XML_PATH);
-			Log.Report(Level.DEBUG,"verify if "+file.getPath()+" exists to store TestNG XML");
-			if (!file.exists()) {
-				file.mkdir();
-				Log.Report(Level.DEBUG,"created directory : "+file.getPath()+ " to store TestNG XML");
-			}
-			if(globalParam.get(Globals.GC_KEYTESTTYPE).equals(Globals.GC_EMPTY)){
-				testType=Globals.GC_DEFAULTTESTTYPE;
-				
-			}else{
-				testType = globalParam.get(Globals.GC_KEYTESTTYPE);
-			}
-							
-			RunXMLFileName = testType+"_"+dateFormat.format(date)+".xml";
-			Log.Report(Level.DEBUG,"finalizing TestNG XML file name : "+RunXMLFileName);
-			
-			StreamResult result = new StreamResult(new File(Globals.GC_TESTNG_XML_PATH+"\\"+RunXMLFileName));			
-			docTransformer.transform(source, result);
-			Log.Report(Level.DEBUG,"created "+Globals.GC_TESTNG_XML_PATH+"\\"+RunXMLFileName);
-		
-		}catch(Exception e){
-			ThrowException.Report(TYPE.EXCEPTION, "Exception occurred while building TestNG XML : " + e.getMessage());
+*/	private void BuildTestNGXML() throws Exception {
+	String autName = Globals.GC_EMPTY;
+	String runOrderPath = Globals.GC_EMPTY;
+	String testType = Globals.GC_EMPTY;
+	String manualTCName = Globals.GC_EMPTY;
+	try {
+		autName = globalParam.get(Globals.GC_KEYAUT).toLowerCase();
+		if (autName.isEmpty()) {
+			throw new Exception("Application name is not provided in TestExecutionConfig sheet");
 		}
+		runOrderPath = Globals.GC_TESTCASESLOC + Globals.GC_TESTCASERUNORDERPREFIX + autName + ".xls";
+		Log.Report(Level.INFO, "building TestNG XML to execute automation tests for application : " + autName);
+
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		Document doc = docBuilder.newDocument();
+
+		// Initializing TestNG XML nodes
+		Element suite = doc.createElement(Globals.GC_XML_SUITE);
+		Log.Report(Level.DEBUG, "Initialize SUITE node to build TestNG XML ");
+		Element listeners = doc.createElement(Globals.GC_XML_LISTENERS);
+		Log.Report(Level.DEBUG, "Initialize LISTENRS node to build TestNG XML ");
+		Element listener = doc.createElement(Globals.GC_XML_LISTENER);
+		Log.Report(Level.DEBUG, "Initialize LISTENER node to build TestNG XML ");
+		
+		doc.appendChild(suite);
+		suite.setAttribute(Globals.GC_XML_ATTR_NAME, Globals.GC_XML_ATTR_VAL_SUITE);
+		Log.Report(Level.DEBUG, "Setting attribute to SUITE node (" + Globals.GC_XML_ATTR_NAME + "--"
+				+ Globals.GC_XML_ATTR_VAL_SUITE + ") to build TestNG XML");
+		suite.setAttribute(Globals.GC_XML_ATTR_VERBOSE, "1");
+		suite.appendChild(listeners);
+		Log.Report(Level.DEBUG, "Append child node LISTENERS to SUITE node to build TestNG XML ");
+		listeners.appendChild(listener);
+
+		Log.Report(Level.DEBUG, "Append child node LISTENER to LISTENERS node to build TestNG XML ");
+		listener.setAttribute(Globals.GC_XML_ATTR_CLASSNAME, Globals.GC_LISTENERS_CLASSNAME);
+		Log.Report(Level.DEBUG, "Setting attribute to LISTENER node (" + Globals.GC_XML_ATTR_NAME + "--"
+				+ Globals.GC_LISTENERS_CLASSNAME + ") to build TestNG XML");
+
+		// Read Run Order
+		ReadRunOrder(runOrderPath);
+
+		// Building testNG XML
+		xlRW = new XL_ReadWrite(runOrderPath);
+		for (Map.Entry<String, String> moduleName : runOrderDet.entrySet()) {				
+			if (moduleName.getValue().equalsIgnoreCase(Globals.GC_RUNSTATUS_YES)) {
+				if (xlRW.isSheetExist(moduleName.getKey())) { // check if the sheet exist
+					
+					 // Setting test dependency for each module
+					 Map<Integer, String> depdItr = SetTestCaseDependency(xlRW, moduleName.getKey());
+					 // Map sort to provide testcase prioritization
+					 Map<Integer, String> treeMap = new TreeMap<Integer, String>();
+
+					 // Looping through Test
+					 for (int iModuleLoop=0;iModuleLoop<xlRW.getRowCount(moduleName.getKey())- 1;iModuleLoop++){
+						  manualTCName = xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+								         Globals.GC_XML_ATTR_VAL_TEST_COL_NM);
+						  //Creating Methods Tags
+						  Element methods = doc.createElement(Globals.GC_XML_METHODS);
+						  
+							if (!manualTCName.equals(Globals.GC_EMPTY)) {
+								// Creating Test Tags
+								Element test = doc.createElement(Globals.GC_XML_TEST);
+								Log.Report(Level.DEBUG,
+										"Initialize TEST node to build TestNG XML for TC :" + manualTCName);
+								// Creating Classes Tags
+								Element classes = doc.createElement(Globals.GC_XML_CLASSES);
+								Log.Report(Level.DEBUG,
+										"Initialize CLASSES node to build TestNG XML for TC :" + manualTCName);
+								suite.appendChild(test);
+								Log.Report(Level.DEBUG, "Append child node TEST to SUITE node to build TestNG XML ");
+
+								test.setAttribute(Globals.GC_XML_ATTR_NAME, manualTCName);
+								Log.Report(Level.DEBUG, "Setting attribute to TEST node (" + Globals.GC_XML_ATTR_NAME
+										+ "--" + manualTCName + ") to build TestNG XML");
+								test.appendChild(classes);
+								Log.Report(Level.DEBUG, "Append child node CLASSES to TEST node to build TestNG XML ");
+
+								// Creating class tags	
+								Element clazz = doc.createElement(Globals.GC_XML_CLASS);
+								classes.appendChild(clazz);
+								Log.Report(Level.DEBUG, "append child node CLASS to CLASSES node to build TestNG XML ");
+								clazz.setAttribute(Globals.GC_XML_ATTR_NAME, xlRW
+										.getCellData(moduleName.getKey(), iModuleLoop + 1, Globals.GC_COLNAME_CLASSPATH)
+										.toLowerCase());
+								Log.Report(Level.DEBUG, "setting attribute to CLASS node : " + xlRW
+										.getCellData(moduleName.getKey(), iModuleLoop + 1, Globals.GC_COLNAME_CLASSPATH)
+										.toLowerCase());
+
+								Log.Report(Level.DEBUG, "initialize METHODS node to build TestNG XML ");
+								//Appending Methods as Child for Class
+								clazz.appendChild(methods);
+
+							} else {
+								Log.Report(Level.INFO,
+										"Manual Test case name not provided for Test Case :" + xlRW.getCellData(
+												moduleName.getKey(), iModuleLoop + 1, Globals.GC_COLNAME_TESTCASES));
+							}	
+							//Creating Including/Excluding Tags
+							if (xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_RUNSTATUS)
+							    .equalsIgnoreCase(Globals.GC_RUNSTATUS_YES)) {
+								 Element include = doc.createElement(Globals.GC_XML_INCLUDE);
+								 Log.Report(Level.DEBUG,"initialize INCLUDE node to build TestNG XML ");
+								 methods.appendChild(include);
+								 include.setAttribute(Globals.GC_XML_ATTR_NAME,
+										 xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+										 Globals.GC_COLNAME_TESTCASES));
+								 Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+										 Globals.GC_COLNAME_TESTCASES)+" included for execution");
+								 
+							}else if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_RUNSTATUS)
+								    .equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
+								 
+								 Element exclude = doc.createElement(Globals.GC_XML_EXCLUDE);
+								 Log.Report(Level.DEBUG,"initialize EXCLUDE node to build TestNG XML ");
+								 methods.appendChild(exclude);
+								 exclude.setAttribute(Globals.GC_XML_ATTR_NAME,
+										 xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+										 Globals.GC_COLNAME_TESTCASES));
+								 Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+										 Globals.GC_COLNAME_TESTCASES)+" exclude from execution");
+								 
+							}
+					 }
+				}else{
+					ThrowException.Report(TYPE.EXCEPTION,"Valid module does not exist");
+				}
+			} else if (moduleName.getValue().equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)) {
+				Log.Report(Level.DEBUG, moduleName.getKey() + " module test cases are skipped as RUN STATUS = NO");
+			}
+		}
+		xlRW.saveXL();
+		xlRW.clearXL();
+
+		// Transforming to XML
+		Transformer docTransformer = TransformerFactory.newInstance().newTransformer();
+		Log.Report(Level.DEBUG, "initialize document transformer to create TestNG XML");
+		docTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		docTransformer.setOutputProperty(OutputKeys.METHOD, "xml");
+		docTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+		docTransformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+		DOMImplementation domImpl = doc.getImplementation();
+		DocumentType doctype = domImpl.createDocumentType("suite", "SYSTEM", "http://testng.org/testng-1.0.dtd");
+		docTransformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctype.getPublicId());
+		docTransformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctype.getSystemId());
+
+		DOMSource source = new DOMSource(doc);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyy_HHmmss");
+		Date date = Calendar.getInstance().getTime();
+		File file = new File(Globals.GC_TESTNG_XML_PATH);
+		Log.Report(Level.DEBUG, "verify if " + file.getPath() + " exists to store TestNG XML");
+		if (!file.exists()) {
+			file.mkdir();
+			Log.Report(Level.DEBUG, "created directory : " + file.getPath() + " to store TestNG XML");
+		}
+		if (globalParam.get(Globals.GC_KEYTESTTYPE).equals(Globals.GC_EMPTY)) {
+			testType = Globals.GC_DEFAULTTESTTYPE;
+
+		} else {
+			testType = globalParam.get(Globals.GC_KEYTESTTYPE);
+		}
+
+		RunXMLFileName = testType + "_" + dateFormat.format(date) + ".xml";
+		Log.Report(Level.DEBUG, "finalizing TestNG XML file name : " + RunXMLFileName);
+
+		StreamResult result = new StreamResult(new File(Globals.GC_TESTNG_XML_PATH + "\\" + RunXMLFileName));
+		docTransformer.transform(source, result);
+		Log.Report(Level.DEBUG, "created " + Globals.GC_TESTNG_XML_PATH + "\\" + RunXMLFileName);
+
+	} catch (Exception e) {
+		ThrowException.Report(TYPE.EXCEPTION, "Exception occurred while building TestNG XML : " + e.getMessage());
 	}
+}
 
 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			SetTestCaseDependency()
