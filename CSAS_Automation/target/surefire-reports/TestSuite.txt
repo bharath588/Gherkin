@@ -1,9 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: TestSuite
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 1, Errors: 0, Skipped: 1, Time elapsed: 1.999 sec <<< FAILURE! - in TestSuite
-InitTest(tests.Validate_ParticipantHomePage)  Time elapsed: 1.731 sec  <<< FAILURE!
-java.lang.NullPointerException: null
-	at lib.Web.getWebDriver(Web.java:288)
-	at tests.Validate_ParticipantHomePage.InitTest(Validate_ParticipantHomePage.java:26)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 44.914 sec - in TestSuite

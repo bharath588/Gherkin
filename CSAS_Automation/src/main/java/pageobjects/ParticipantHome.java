@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class ParticipantHome extends LoadableComponent<ParticipantHome> {
-
 	@FindBy(name = "username")
 	private WebElement userNameField;
 
@@ -15,7 +14,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement passWordField;
 
 	// Account Balance..
-	
+
 	@FindBy(css = "td.colTitle.balance")
 	private WebElement tdParticipantBalance;
 
@@ -33,7 +32,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(xpath = "//table[@class = 'compactDataTable']//td[contains(text(),'Current Balance')]")
 	private WebElement tbCurrentBal;
-	
+
 	// Required List implementaions..
 
 	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(2)>td")
@@ -120,45 +119,41 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "table[name = 'pptinfo'] tr:nth-of-type(13)>td.data")
 	private WebElement participantSecFoundationSts;
 
-//Order PIN..	
-	
+	// Order PIN..
+
 	@FindBy(css = "table.compactDataTable tr:nth-of-type(7) a:nth-of-type(2)")
 	private WebElement lnkOrderPIN;
 
 	@FindBy(css = "table#table_popupLayout tr:nth-of-type(2) span.titleShadow")
 	private WebElement OrderPINTitle;
-	
+
 	@FindBy(css = "input[value = 'Mail Existing PIN']")
 	private WebElement btnOPMailExistingPIN;
-	
+
 	@FindBy(css = "input[value = 'Order Temp PIN']")
 	private WebElement btnOPOrderTempPin;
-	
+
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(8)")
 	private WebElement EmploymentStatusLabel;
 
-//implement List...	
+	// implement List...
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(8)>a")
 	private WebElement lnkEmploymentStatus;
-	
+
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(9)")
 	private WebElement PDILabel;
 
-//implement List...	
+	// implement List...
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(9)")
 	private WebElement PDIStatus;
-	
+
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(10)")
 	private WebElement InstanceLabel;
 
-//implement List...	
+	// implement List...
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(10)")
 	private WebElement InstanceStatus;
-	
-	
-	
-	
-	
+
 	@Override
 	protected void isLoaded() throws Error {
 

@@ -13,9 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import core.framework.Globals;
-import pageobjects.ParticipantHome;
 
 public class Validate_ParticipantHomePage {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
@@ -25,7 +23,6 @@ public class Validate_ParticipantHomePage {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		System.out.println("==========="+Globals.GBL_SuiteName);
 		Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
 	}
 	
@@ -47,12 +44,8 @@ public class Validate_ParticipantHomePage {
 	
 	@Test(dataProvider = "setData")
   public void f(int itr, Map<String, String> testdata) {
-	  ParticipantHome ph = new ParticipantHome();
+	  
 	  System.out.println("This is a sample test - f()!");
 	  
   }
-	@AfterTest
-	public void tear(){
-		Web.teatDown();
-	}
 }

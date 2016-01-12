@@ -1,1 +1,3 @@
 pageobjects\ParticipantHome.class
+pageobjects\MoneyTypeBalance.class
+framework\util\BuildXML.class
