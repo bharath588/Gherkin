@@ -12,6 +12,7 @@ public class BuildXML
     public static void main( String[] args ) throws Exception
     {    	
 		try {
+			@SuppressWarnings("unused")
 			DriverScript driver = new DriverScript();
 			
 		} catch (Exception e) {			
