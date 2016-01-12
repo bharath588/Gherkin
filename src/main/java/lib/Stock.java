@@ -58,13 +58,13 @@ public class Stock {
 		try {
 			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + appName + ".xls");
 			//int tcColNo = XL.getColNum(modName, 0, Globals.GC_TESTDATATCCOLNAME);
-			int tcColNo = XL.getColNum(modName, 0, Globals.GC_COL_MANUAL_TC);
+			int manualTCColNo = XL.getColNum(modName, 0, Globals.GC_COL_MANUAL_TC);
 			int itrColNo = XL.getColNum(modName, 0, Globals.GC_ITRCCOLNAME);
 			int itcPointer = 0;
 
 			// Finding the TC in given TestData sheet
 			for (; itcPointer <= XL.getRowCount(modName); itcPointer++) {
-				if (XL.getCellData(modName, itcPointer, tcColNo).trim().equalsIgnoreCase(tcName)) {
+				if (XL.getCellData(modName, itcPointer, manualTCColNo).trim().equalsIgnoreCase(tcName)) {
 					Log.Report(Level.DEBUG, tcName + " found in " + modName + " sheet for row : " + itcPointer);
 					ifTCFound = true;
 					break;
@@ -78,9 +78,10 @@ public class Stock {
 				if (strLoopPattern.equals(Globals.GC_EMPTY)
 						|| strLoopPattern.equalsIgnoreCase(Globals.GC_VAL_RUNALLITR)) {
 					for (int iLoop = itcPointer; iLoop <= XL.getRowCount(modName); iLoop++) {
-						if (XL.getCellData(modName, iLoop + 2, itrColNo - 1).trim().equals(tcName)) {
+						if (XL.getCellData(modName, iLoop + 2, manualTCColNo).trim().equals(tcName)) {
 							counter = counter + 1;
-						} else if (XL.getCellData(modName, iLoop + 2, itrColNo - 1).trim().equals(Globals.GC_EMPTY)) {
+						} else if (XL.getCellData(modName, iLoop + 2, manualTCColNo).trim().equals(Globals.GC_EMPTY)) {
+							//breaking out after all row count
 							break;
 						}
 					}
