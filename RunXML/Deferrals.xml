@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.utils.TestListener"/>
+    </listeners>
+    <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+        <classes>
+            <class name="com.pptweb.testcases.deferrals">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_001_AfterTax_Select_Another_Contribution_Rate"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_015_Regular_BEFORE-Select Another contribution rate_Sanity">
+        <classes>
+            <class name="com.pptweb.testcases.deferrals">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_015_Regular_BEFORE_Select_Another_Contribution_Rate"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT- Select Another contributiont rate_Sanity">
+        <classes>
+            <class name="com.pptweb.testcases.deferrals">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_019_Regular_SPLIT_Select_Another_Contribution_Rate"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
