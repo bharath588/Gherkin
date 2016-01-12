@@ -6,8 +6,8 @@
 	</properties>
 
 
-	<groupId>MavenDemo</groupId>
-	<artifactId>MavenDemo</artifactId>
+	<groupId>ParticipantWebAuto</groupId>
+	<artifactId>pptwebAuto</artifactId>
 	<version>0.0.1-PPTWebSNAPSHOT</version>
 	<packaging>jar</packaging>
 
