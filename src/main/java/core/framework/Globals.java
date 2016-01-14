@@ -42,8 +42,8 @@ public class Globals {
           public static final String GC_COLNAME_CLASSPATH = "ClassPath";
           
     //FileLocations
-          public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+"\\testcases\\";
-          public static final String GC_TESTDATALOC = System.getProperty("user.dir")+"\\testdata\\";
+          public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+"\\RunOrderSheets\\";
+          public static final String GC_TESTDATALOC = System.getProperty("user.dir")+"\\TestData\\";
           public static final String GC_TESTNG_XML_PATH = System.getProperty("user.dir")+"\\RunXML";
           public static final String GC_PROJECT_BIN_DIR = System.getProperty("user.dir")+"\\bin";         
           public static final String GC_TESTCASE_RELPATH =  ".testcases.";
