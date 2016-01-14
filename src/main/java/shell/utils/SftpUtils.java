@@ -13,9 +13,12 @@ import java.util.Arrays;
 //import java.util.Collections;
 //import java.util.Vector;
 
+
 import lib.ReadProperties;
 
 //import org.apache.commons.io.FileUtils;
+
+import lib.Stock;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -29,8 +32,8 @@ import core.framework.Globals;
 public class SftpUtils {
 
 	 //Common Declarations               
-    public static String userName = ReadProperties.getEnvVariableValue("userid");
-    public static String password = ReadProperties.getEnvVariableValue("password");
+    public static String userName = Globals.GC_EMPTY;
+    public static String password = Globals.GC_EMPTY;
                      
     //Declarations for SFTP  Connections   
     private static JSch sftpJsch = null;
@@ -55,10 +58,13 @@ public class SftpUtils {
         {
         return isSFTPConnected;
         }else{    
-        try {                                                          
+        try {  
+        	Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
         	java.util.Properties config = new java.util.Properties();
             config.put("StrictHostKeyChecking", "no"); 
-            sftpJsch=new JSch();
+            sftpJsch=new JSch();            
+			userName = Stock.globalParam.get("SystemUserID");
+			password =  Stock.globalParam.get("SystemPassword");
             sftpSession = sftpJsch.getSession(userName, Globals.GC_SHELL_HOST_NAME, Globals.GC_SHELL_PORT_NUMBER);
             sftpSession.setConfig(config);
             sftpSession.setPassword(password);
@@ -69,7 +75,8 @@ public class SftpUtils {
             sftpChannel.connect();
             isSFTPConnected=true;                  
         	}                             
-        	catch(JSchException e){ e.printStackTrace(); }                
+        	catch(JSchException e){ e.printStackTrace(); }  
+        	catch(Exception e) {e.printStackTrace(); }
         }          
     	return isSFTPConnected;                                               
     }
