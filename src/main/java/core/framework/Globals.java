@@ -38,6 +38,8 @@ public class Globals {
           public static final String GC_RUNSTATUS_YES = "YES";
           public static final String GC_RUNSTATUS_NO = "NO";
           public static final String GC_RUNXML_DEFAULT = "SelectXML";
+          public static final String GC_XML_ATTR_VAL_TEST_COL_NM = "ManualTestcases";
+          public static final String GC_COLNAME_CLASSPATH = "ClassPath";
           
     //FileLocations
           public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+"\\testcases\\";
