@@ -1,15 +1,14 @@
 package shell.utils;
 
 import java.io.*;
-//import java.util.Collections;
-//import java.util.Vector;
-
 
 import lib.ReadProperties;
 
 //import org.apache.commons.io.FileUtils;
 //import org.apache.commons.io.input.ReaderInputStream;
 
+
+import lib.Stock;
 
 import com.jcraft.jsch.Channel;
 //import com.jcraft.jsch.ChannelSftp;
@@ -19,14 +18,16 @@ import com.jcraft.jsch.Session;
 //import com.jcraft.jsch.SftpException;
 
 
+
+
 import core.framework.Globals;
 
 public class ShellUtils {
-
+		
 	//Common Declarations               
-	public static String userName = ReadProperties.getEnvVariableValue("userid");
-	public static String password = ReadProperties.getEnvVariableValue("password");
 
+	public static String userName =  Globals.GC_EMPTY;
+	public static String password =  Globals.GC_EMPTY;
 
 	//Declarations for Running Shell Commands
 	private static JSch shellJsch = null;
@@ -54,6 +55,9 @@ public class ShellUtils {
 			 return isShellConnected;
 		 else {                  
 			 try {
+				 Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
+				 userName = Stock.globalParam.get("SystemUserID");
+				 password =  Stock.globalParam.get("SystemPassword");
 				 shellJsch=new JSch();
 				 shellSession = shellJsch.getSession(userName, Globals.GC_SHELL_HOST_NAME, Globals.GC_SHELL_PORT_NUMBER);
 				 shellSession.setPassword(password);                                             
@@ -69,7 +73,8 @@ public class ShellUtils {
 				 isShellConnected=true; }
 			 catch(JSchException e) { System.out.println(e.getMessage()); }                                                           
 			 catch(IOException e){ e.printStackTrace(); }
-		 }
+			 catch(Exception e) { e.printStackTrace(); }
+			 		 }
 		 return isShellConnected; 
 	 }
 
