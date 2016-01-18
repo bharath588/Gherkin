@@ -41,7 +41,7 @@ public class registrationtestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
 	@BeforeMethod
@@ -56,7 +56,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC01_User_has_PIN");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String headerText;
 			String activeTab;
 			String actualValue;
@@ -317,7 +317,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC02_User_does_not_have_PIN");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			boolean blnIsElePresent;
 			String txtActErrMsg;
 			String headerText;
@@ -606,7 +606,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC03_NegativeFlow_WithAndWithoutPINTabs");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -641,8 +641,6 @@ public class registrationtestcases {
 				//Enter Zip Code
 				accLookup.setTextToFields("Zip Code", Stock.GetParameterValue("ZipCode"));
 				//Enter Last Name
-				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				System.out.println(Stock.GetParameterValue("LastName"));
 				accLookup.setTextToFields("Last Name", Stock.GetParameterValue("LastName"));
 				//Enter Date of Birth
 				accLookup.setTextToFields("Date of Birth", Stock.GetParameterValue("DOB"));
@@ -705,7 +703,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC05_UserLock_WithAndWithoutPIN");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String activeTab;
 			String actErrMsg;
 			boolean blnTempVar;
@@ -917,7 +915,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF03_TC01_AccountSetup");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage objloginPage = new LoginPage();
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage);
 			AccountSetup objAccountSetup = new AccountSetup(objAccountLookup).get();
@@ -957,7 +955,7 @@ public class registrationtestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "SF04_TC01_AccountLookup_PositiveFlow");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String hdrBlockText;
 			LoginPage loginPage = new LoginPage();
 			AccountLookup accLookup = new AccountLookup(loginPage);

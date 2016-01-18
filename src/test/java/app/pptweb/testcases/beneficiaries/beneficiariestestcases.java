@@ -43,7 +43,7 @@ public class beneficiariestestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
 	@BeforeMethod
@@ -58,7 +58,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, "Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -176,7 +176,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, "Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);

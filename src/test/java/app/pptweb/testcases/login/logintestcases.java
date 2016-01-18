@@ -31,7 +31,7 @@ public class logintestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		
 	}
 
 	@DataProvider
@@ -47,6 +47,7 @@ public class logintestcases {
 	@BeforeMethod
     public void getTCName(Method tc) {
            tcName = tc.getName();       
+           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
     }
 	
 	

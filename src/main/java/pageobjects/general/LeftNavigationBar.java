@@ -21,7 +21,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	//Declarations
 	LoadableComponent<?> parent;
 	private String strLinkText = "";
-//	private static boolean waitforLoad = false;
+	@FindBy(xpath=".//a[text()[normalize-space()='Prior plan contributions']]") private WebElement lnkPriorPlanContributions;
 	
 	@FindBy(xpath=".//*[@role='navigation' and .//h3]") private WebElement weLeftNavSection;
 	private By lnkLeftNavItem;
@@ -90,7 +90,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			
 		}
 		
-		
+
+	
+			@SuppressWarnings("unused")
+			private WebElement getWebElement(String fieldName) {
+
+				if (fieldName.trim().equalsIgnoreCase("Prior plan contributions")) {
+					return this.lnkPriorPlanContributions;
+				}			
+				
+				return null;
+				}
 	
 	
 	/** Method to click on the specified link in Left navigation bar
@@ -111,7 +121,10 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "Loans & Withdrawals";
 		} else if (linkName.trim().equalsIgnoreCase("PLAN INFORMATION")) {
 			strLinkText = "Plan Information";
-		} else {
+		} else if (linkName.trim().equalsIgnoreCase("PRIOR PLAN CONTRIBUTIONS")){
+			strLinkText = "Prior plan contributions";
+		}
+		else {
 			strLinkText = linkName.trim();
 		}
 		
