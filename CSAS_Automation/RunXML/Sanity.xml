@@ -14,11 +14,11 @@
 
 		<classes>
 
-			<class name="tests.Validate_ParticipantHomePage">
+			<class name="app.csas.testcases.participanthomepage.Validate_ParticipantHomePage">
 
 				<methods>
 
-					<include name="f" />
+					<include name="ValidateEmploymentStatusAsActiveOrTerminated" />
 
 				</methods>
 

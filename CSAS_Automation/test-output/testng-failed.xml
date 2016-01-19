@@ -3,13 +3,12 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)" preserve-order="true">
     <classes>
-      <class name="tests.Validate_ParticipantHomePage">
+      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
         <methods>
-          <include name="f"/>
           <include name="InitTest"/>
-          <include name="tear"/>
+          <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
         </methods>
-      </class> <!-- tests.Validate_ParticipantHomePage -->
+      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

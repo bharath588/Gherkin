@@ -1,12 +1,83 @@
 package pageobjects;
 
+import java.util.List;
+
+import lib.Reporter;
 import lib.Web;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
+
+import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
+
+import lib.Reporter.Status;
+import lib.Stock;
 
 public class ParticipantHome extends LoadableComponent<ParticipantHome> {
+
+	// CSAS Login..
+
+	@FindBy(xpath = "//span[contains(text(),'CLIENT SERVICE ACCESS SYSTEM USER LOGON')]")
+	private WebElement CSASLoginHome;
+
+	@FindBy(css = "input[name = 'username']")
+	private WebElement CSASUserNameField;
+
+	@FindBy(css = "input[name = 'password']")
+	private WebElement CSASPwdField;
+
+	@FindBy(css = "input[value='Log In']")
+	private WebElement CSASLoginBtn;
+
+	// Participant Plan Search..
+
+	@FindBy(xpath = "//span[contains(text(),'PARTICIPANT/PLAN SEARCH')]")
+	private WebElement participantPlanSearchPage;
+
+	@FindBy(css = "input[name = 'searchPartId']")
+	private WebElement PPTIdfield;
+
+	@FindBy(id = "submitPpt")
+	private WebElement SubmitPPTIdBtn;
+
+	@FindBy(xpath = "//span[contains(text(),'PARTICIPANT HOME PAGE')]")
+	private WebElement PPTHomePageTitle;
+
+	// Menu items..
+
+	@FindBy(css = "div#oCMenu_315")
+	private WebElement menuParticipantInfo;
+
+	@FindBy(css = "div#oCMenu_316")
+	private WebElement menuParticipantChanges;
+
+	@FindBy(css = "div#oCMenu_317")
+	private WebElement menuPlanInfo;
+
+	@FindBy(css = "div#oCMenu_318")
+	private WebElement menuAddtlResources;
+
+	@FindBy(css = "div#oCMenu_319")
+	private WebElement menuSearch;
+
+	@FindBy(css = "div#oCMenu_320")
+	private WebElement menuContactReason;
+
+	@FindBy(css = "div#oCMenu_15000")
+	private WebElement menuIRA;
+
+	@FindBy(css = "div#oCMenu_20519")
+	private WebElement menuPlanSetup;
+
+	@FindBy(css = "div#oCMenu_5555")
+	private WebElement menuTestPages;
+
+	@FindBy(css = "oCMenu_15483")
+	private WebElement menuAdmin;
+
 	@FindBy(name = "username")
 	private WebElement userNameField;
 
@@ -154,14 +225,108 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(10)")
 	private WebElement InstanceStatus;
 
+	LoadableComponent<?> parent;
+	/*-----------------------------------------------------------------*/
+
+	private List<String> getFooterLinkList = null;
+
+	public ParticipantHome() {
+		PageFactory.initElements(Web.webdriver, this);
+	}
+
 	@Override
 	protected void isLoaded() throws Error {
-
+		Assert.assertEquals(Web.webdriver.getTitle(), "CSAS v12.03.2");
 	}
 
 	@Override
 	protected void load() {
-		// TODO Auto-generated method stub
+		this.parent = parent;
+		Web.webdriver.get(Stock.globalParam.get("AppURL"));
+	}
+
+	/**
+	 * Method to enter user credentials and click on Sign In button
+	 * 
+	 * @param userName
+	 * @param password
+	 * @throws Exception
+	 */
+	public void submitLoginCredentials(String username, String password) {
+
+		boolean isElementDisplayed = false;
+		try {
+			Thread.sleep(5000);
+			System.out.println(username+"   "+password);
+			Web.setTextToTextBox(CSASUserNameField, username);
+			Thread.sleep(2000);
+			Web.setTextToTextBox(CSASPwdField, password);
+			Web.clickOnElement(CSASLoginBtn);
+
+			Web.waitForElement(participantPlanSearchPage);
+			isElementDisplayed = Web.isWebElementDisplayed(
+					this.participantPlanSearchPage, true);
+
+			if (isElementDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if the user logged in to Participant/plan search page",
+						"User is successfully logged in to Participant/plan search page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check if the user logged in to Participant/plan search page",
+						"User is not logged in to Participant/plan search page",
+						false);
+			}
+
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Method to enter participant ID and click on Sign In button
+	 * 
+	 * @param ppt_id
+	 * @throws Exception
+	 */
+	public void search_PPT_Plan_With_PPT_ID(String ppt_id) {
+
+		boolean isElementDisplayed = false;
+
+		Web.setTextToTextBox(this.PPTIdfield, ppt_id);
+		Web.clickOnElement(this.SubmitPPTIdBtn);
+		try {
+			Web.waitForElement(this.PPTHomePageTitle);
+			isElementDisplayed = Web.isWebElementDisplayed(
+					this.PPTHomePageTitle, true);
+
+			if (isElementDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Participant Home Page with all the details should display",
+						"Participant Home Page with all the details is displayed successfully",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Participant Home Page with all the details should not display",
+						"Participant Home Page with all the details is not displayed",
+						false);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
