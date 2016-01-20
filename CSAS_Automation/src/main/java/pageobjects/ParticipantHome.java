@@ -1,11 +1,31 @@
 package pageobjects;
 
+import java.nio.file.StandardCopyOption;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Web;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -17,6 +37,9 @@ import lib.Reporter.Status;
 import lib.Stock;
 
 public class ParticipantHome extends LoadableComponent<ParticipantHome> {
+
+	private ArrayList<String> hireTermDateList;
+	private boolean isElementDisplayed_Flag = false;
 
 	// CSAS Login..
 
@@ -209,7 +232,23 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	// implement List...
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(8)>a")
-	private WebElement lnkEmploymentStatus;
+	// "//a[.//table[@id = '#']]"
+	private List<WebElement> lnkEmploymentStatus;
+
+	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td.data:nth-of-type(4)")
+	private List<WebElement> PlanNumber;
+
+	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td.data:nth-of-type(7)")
+	private List<WebElement> IndID_List;
+
+	@FindBy(css = "#table_employmentStatusFDiv>tbody>tr:nth-of-type(1)>td:nth-of-type(2)")
+	private List<WebElement> HireDate_List;
+
+	@FindBy(css = "#table_employmentStatusFDiv>tbody>tr:nth-of-type(2)>td:nth-of-type(2)")
+	private List<WebElement> TermDate_List;
+
+	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td.data:nth-of-type(7)")
+	private WebElement Individual_ID;
 
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(9)")
 	private WebElement PDILabel;
@@ -221,9 +260,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(10)")
 	private WebElement InstanceLabel;
 
-	// implement List...
-	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(10)")
-	private WebElement InstanceStatus;
+	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'data centered']:nth-of-type(10)")
+	private List<WebElement> InstanceValue_List;
 
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
@@ -257,7 +295,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		boolean isElementDisplayed = false;
 		try {
 			Thread.sleep(5000);
-			System.out.println(username+"   "+password);
+			System.out.println(username + "   " + password);
 			Web.setTextToTextBox(CSASUserNameField, username);
 			Thread.sleep(2000);
 			Web.setTextToTextBox(CSASPwdField, password);
@@ -327,6 +365,207 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			e.printStackTrace();
 		}
 
+	}
+
+	/*
+	 * Retrieve data from db & verify
+	 * 
+	 * @PARAMETER = ppt_id
+	 */
+	public void verify_HireDate_TermDate(String ppt_id) {
+		List<String> HireDate_TermDate_List;
+		WebElement empStatus = null;
+		Date date;
+
+		try {
+			Thread.sleep(100);
+			for (int i = 0; i < PlanNumber.size(); i++) {
+				String planNum = PlanNumber.get(i).getText();
+				String ind_id = IndID_List.get(i).getText();
+				planNum = planNum.substring(0, planNum.indexOf('-'));
+				HireDate_TermDate_List = getDataFromDB(
+						Stock.getTestQuery("getHireDateAndTerminationDate"),
+						planNum, ind_id, i);
+
+				empStatus = lnkEmploymentStatus.get(i);
+				if (empStatus.getText().equalsIgnoreCase("ACTIVE")
+						&& HireDate_TermDate_List.get(1) == null) {
+
+					Web.mouseHover(empStatus);
+
+					System.out.println("==== " + i + "th plan");
+
+					System.out.println("status:   "
+							+ lnkEmploymentStatus.get(i).getText());
+
+					System.out.println("Hire date from DB:"
+							+ HireDate_TermDate_List.get(0));
+
+				/*	String string = HireDate_TermDate_List.get(0).substring(0,HireDate_TermDate_List.get(0).indexOf(" ")).trim();
+					SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy") ;
+					 System.out.println(sfd.parse(string));
+					 */
+					System.out.println("Hire Date from Web:   "
+							+ HireDate_List.get(i).getText());
+
+					if (HireDate_TermDate_List.get(0).contains(
+							HireDate_List.get(i).getText()))
+
+						Reporter.logEvent(Status.PASS,
+								"Check if Employment status is ACTIVE and Hire date: "
+										+ HireDate_TermDate_List.get(0),
+								"Employment status is ACTIVE and the Hire Date is:  "
+										+ HireDate_List.get(i).getText(), true);
+					else
+						Reporter.logEvent(Status.FAIL,
+								"Check if Employment status is not ACTIVE and Hire date: "
+										+ HireDate_TermDate_List.get(0),
+								"Employment status is not ACTIVE and the Hire Date is:  "
+										+ HireDate_List.get(i).getText(), false);
+				} else {
+					if (lnkEmploymentStatus.get(i).getText()
+							.equalsIgnoreCase("TERMINATED")
+							&& HireDate_TermDate_List.get(0) == HireDate_List
+									.get(i).getText()
+							&& HireDate_TermDate_List.get(1) == TermDate_List
+									.get(i).getText())
+						Reporter.logEvent(Status.PASS,
+								"Check if Employment status is TERMINATED and Hire date: "
+										+ HireDate_TermDate_List.get(0)
+										+ "Termination date is : "
+										+ HireDate_TermDate_List.get(1),
+								"Employment status is TERMINATED and Hire Date is:  "
+										+ HireDate_List.get(i).getText()
+										+ "Termination date is : "
+										+ TermDate_List.get(i).getText(), true);
+					else
+						Reporter.logEvent(Status.FAIL,
+								"Check if Employment status is not TERMINATED and Hire date: "
+										+ HireDate_TermDate_List.get(0)
+										+ "Termination date is : "
+										+ HireDate_TermDate_List.get(1),
+								"Employment status is not TERMINATED and Hire Date is:  "
+										+ HireDate_List.get(i).getText()
+										+ "Termination date is : "
+										+ TermDate_List.get(i).getText(), false);
+
+				}
+
+			}
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public ArrayList<String> getDataFromDB(
+
+	String[] getHireDateAndTerminationDate, String planNum, String indID,
+			int index) {
+
+		ResultSet resultset;
+
+		hireTermDateList = new ArrayList();
+
+		resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
+				getHireDateAndTerminationDate[1], indID, planNum);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+			
+					String hireDate = resultset.getString("hire_date");
+					String termDate = resultset.getString("emp_termdate");
+					hireTermDateList.add(hireDate);
+					hireTermDateList.add(termDate);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return hireTermDateList;
+	}
+
+	/*
+	 * verify page instance against db
+	 */
+	public void verify_Page_Instance() {
+
+		String instance_DB;
+		String instance_Web;
+		String ind_id;
+		boolean flag ;
+		flag = Web
+				.isWebElementDisplayed(InstanceLabel, true);
+
+		if (flag) {
+
+			Reporter.logEvent(Status.PASS,
+					"Check if Instance label is present ",
+					"Instance Label is present", true);
+			for (int i = 0; i < InstanceValue_List.size(); i++) {
+				instance_Web = InstanceValue_List.get(i).getText();
+				ind_id = IndID_List.get(i).getText();
+				try {
+					instance_DB = getInstanceFromDB(
+							Stock.getTestQuery("getPageInstanceFromInd_id"),
+							ind_id);
+					if (instance_Web.equalsIgnoreCase(instance_DB)) {
+
+						Reporter.logEvent(Status.PASS,
+								"Check if database name for individual ID:  "
+										+ ind_id + "  is: " + instance_DB,
+								"Check if database name for individual ID :"
+										+ ind_id + "  is: " + instance_Web,
+								true);
+					} else {
+
+						Reporter.logEvent(
+								Status.FAIL,
+								"Check if database name for individual ID:  "
+										+ ind_id + "  is not : " + instance_DB,
+								"Check if database name for individual ID :"
+										+ ind_id + "  is not : " + instance_Web,
+								false);
+					}
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		} else
+			Reporter.logEvent(Status.FAIL,
+					"Check if Instance label is not present ",
+					"Instance Label is not present", false);
+
+	}
+
+	public String getInstanceFromDB(String[] getPageInstanceFromInd_id,
+			String ind_id) {
+
+		ResultSet resultset;
+		String instance = null;
+
+		resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
+				getPageInstanceFromInd_id[1], ind_id);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					instance = resultset.getString("database_instance");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return instance;
 	}
 
 }

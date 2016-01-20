@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]">
-  <test name="Default test(failed)" preserve-order="true">
+<suite name="Failed suite [testsuite]">
+  <listeners>
+    <listener class-name="core.framework.TestListener"/>
+  </listeners>
+  <test name="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE(failed)" preserve-order="true">
     <classes>
       <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
         <methods>
           <include name="InitTest"/>
-          <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
+          <include name="Validate_Employment_Status_As_Active_Or_Terminated" invocation-numbers="0"/>
+          <include name="cleanUpSession"/>
         </methods>
       </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE(failed) -->
+</suite> <!-- Failed suite [testsuite] -->

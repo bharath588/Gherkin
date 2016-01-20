@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Instance">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_PPT_Home_Page_Instance"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

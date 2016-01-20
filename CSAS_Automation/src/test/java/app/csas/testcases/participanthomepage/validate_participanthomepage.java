@@ -15,9 +15,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageobjects.ParticipantHome;
 import lib.Reporter;
 import lib.Reporter.Status;
-import pageobjects.ParticipantHome;
 import core.framework.Globals;
 
 public class validate_participanthomepage {
@@ -46,6 +46,12 @@ public class validate_participanthomepage {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
+	/*
+	 * Verify Employee status as either active or terminated
+	 * 
+	 * @Author:Ranjan
+	 */
+
 	@Test(dataProvider = "setData")
 	public void Validate_Employment_Status_As_Active_Or_Terminated(int itr,
 			Map<String, String> testdata) {
@@ -55,27 +61,67 @@ public class validate_participanthomepage {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			Reporter.logEvent(
-					Status.PASS,
+			Reporter.logEvent(Status.PASS,
 					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully",
-					true);
-			participantHomeObj.submitLoginCredentials(Stock.GetParameterValue("username"),
-					                                  Stock.GetParameterValue("password"));
+					"CSAS log in page launhced successfully", true);
+			participantHomeObj.submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
 
-		// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID(Stock.GetParameterValue("ppt_id"));
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID(Stock
+					.GetParameterValue("ppt_id"));
 
-			
+			// Step3:Search for the HireDate & Termination Date based on plan
+			participantHomeObj.verify_HireDate_TermDate(Stock
+					.GetParameterValue("ppt_id"));
+			;
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
+
+	/*
+	 * Verify page instance on ppt home page
+	 * 
+	 * @Author:Ranjan
+	 */
+
+	@Test(dataProvider = "setData")
+	public void Validate_PPT_Home_Page_Instance(int itr,
+			Map<String, String> testdata) {
+
+		// Step1:Launch and logged into CSAS application..
+		participantHomeObj = new ParticipantHome().get();
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.PASS,
+					"Check if the CSAS Log in page open",
+					"CSAS log in page launhced successfully", true);
+			participantHomeObj.submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
+
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID(Stock
+					.GetParameterValue("ppt_id"));
+
+			// Step3:Verify page instance against database..
+			participantHomeObj.verify_Page_Instance();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@AfterClass
-	public void cleanUpSession(){
+	public void cleanUpSession() {
 		Web.webdriver.close();
 		Web.webdriver.quit();
 	}
