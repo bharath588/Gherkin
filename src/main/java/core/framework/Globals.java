@@ -47,7 +47,7 @@ public class Globals {
           public static final String GC_TESTNG_XML_PATH = System.getProperty("user.dir")+"\\RunXML";
           public static final String GC_PROJECT_BIN_DIR = System.getProperty("user.dir")+"\\bin";         
           public static final String GC_TESTCASE_RELPATH =  ".testcases.";
-          public static final String GC_LISTENERS_CLASSNAME =  "core.utils.TestListener";      
+          public static final String GC_LISTENERS_CLASSNAME =  "core.framework.TestListener";      
           public static final String GC_APP_RELPATH =  "app.";
           public static final String GC_PROJECT_DIR = System.getProperty("user.dir")+"\\";
           public static final String GC_TESTCONFIGLOC = GC_PROJECT_DIR;
