@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -20,20 +19,16 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import lib.Log;
 import lib.Stock;
 import lib.XL_ReadWrite;
 import lib.Log.Level;
-
 import org.testng.TestNG;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
-
 import com.google.common.collect.Lists;
-
 import core.framework.ThrowException.TYPE;
 
 public class DriverScript {
@@ -170,7 +165,13 @@ Author : Souvik     Date : 09-10-2015
 						  //Creating Methods Tags
 						  Element methods = doc.createElement(Globals.GC_XML_METHODS);
 						  
-							if (!manualTCName.equals(Globals.GC_EMPTY)) {
+						  // Not including Run Status NO scenarios as
+						  // exclude tag in not allowing to update
+						  // Globals.GC_MANUAL_TC_NAME for following include tags, this leads to 
+						  // incorrect data setup for the TC
+							if (!manualTCName.equals(Globals.GC_EMPTY) & 
+							     !xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+							     Globals.GC_COLNAME_RUNSTATUS).equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)) {
 								// Creating Test Tags
 								Element test = doc.createElement(Globals.GC_XML_TEST);
 								Log.Report(Level.DEBUG,
@@ -220,10 +221,10 @@ Author : Souvik     Date : 09-10-2015
 								 Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
 										 Globals.GC_COLNAME_TESTCASES)+" included for execution");
 								 
-							}else if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_RUNSTATUS)
-								    .equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
+							}   //else if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_RUNSTATUS)
+								//    .equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
 								//========================================================================
-								// Commenting out this section as we exclude tag in not allowing to update
+								// Commenting out this section as exclude tag in not allowing to update
 								// Globals.GC_MANUAL_TC_NAME for following include tags, this leads to 
 								// incorrect data setup for the TC
 								//========================================================================
@@ -235,7 +236,7 @@ Author : Souvik     Date : 09-10-2015
 								//		 Globals.GC_COLNAME_TESTCASES));
 								//Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
 								//		 Globals.GC_COLNAME_TESTCASES)+" exclude from execution");								
-							}
+							    //}
 					 }
 				}else{
 					ThrowException.Report(TYPE.EXCEPTION,"Valid module does not exist");
