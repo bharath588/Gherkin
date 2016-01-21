@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on origin/master
 package framework.util;
 
 import java.text.DateFormat;
@@ -30,3 +31,20 @@ public class CommonLib {
 	}
 	
 }
+=======
+package framework.util;
+
+import lib.Web;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
+public class CommonLib {
+
+	  public static void mouseHover(WebElement webElement){
+          Actions actions;
+          actions = new Actions(Web.webdriver);
+          actions.moveToElement(webElement);
+          actions.build().perform();
+	  }
+}
+>>>>>>> 0619d8f Commiting CommonLib initial

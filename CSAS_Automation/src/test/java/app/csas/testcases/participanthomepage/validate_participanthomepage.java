@@ -32,7 +32,9 @@ public class validate_participanthomepage {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC
 				+ Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		if(Web.webdriver.toString().contains("null")){
+			Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		}		
 	}
 
 	@DataProvider
@@ -120,6 +122,7 @@ public class validate_participanthomepage {
 
 	}
 	
+<<<<<<< Upstream, based on origin/master
 	
 	
 
@@ -162,7 +165,32 @@ public class validate_participanthomepage {
 	
 	
 		
+=======
+	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+>>>>>>> 0619d8f Commiting CommonLib initial
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+			// throw ae;
+		} finally {
+		}
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+		
 	@AfterClass
 	public void cleanUpSession() {
 		Web.webdriver.close();
