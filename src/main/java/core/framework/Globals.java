@@ -61,7 +61,6 @@ public class Globals {
           public static final String GC_TEST_REPORT_IMG_RESOURCE = GC_TEST_REPORT_RESOURCE+"IMG";
           public static String GBL_SuiteName = "";
           
-          
           public static String GBL_REPLACE_EXISTING_HTML_REPORT = "true";
           public static String GBL_TestCaseName = "";
           public static int GBL_CurrentIterationNumber = 1;

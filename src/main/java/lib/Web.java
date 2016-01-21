@@ -31,7 +31,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import core.framework.Globals;
 
 public class Web {
-	public static WebDriver webdriver;
+	public static WebDriver webdriver = null;
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
@@ -660,10 +660,12 @@ public class Web {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return Globals.GBL_strScreenshotsFolderPath + "\\" + fileName;
 	}
-
-
-
+	
+	public static void QuitDriver(){
+		webdriver.close();
+		webdriver.quit();
+		webdriver =  null;
+	}
 }
