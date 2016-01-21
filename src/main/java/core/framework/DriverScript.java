@@ -222,16 +222,19 @@ Author : Souvik     Date : 09-10-2015
 								 
 							}else if(xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,Globals.GC_COLNAME_RUNSTATUS)
 								    .equalsIgnoreCase(Globals.GC_RUNSTATUS_NO)){
-								 
-								 Element exclude = doc.createElement(Globals.GC_XML_EXCLUDE);
-								 Log.Report(Level.DEBUG,"initialize EXCLUDE node to build TestNG XML ");
-								 methods.appendChild(exclude);
-								 exclude.setAttribute(Globals.GC_XML_ATTR_NAME,
-										 xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-										 Globals.GC_COLNAME_TESTCASES));
-								 Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
-										 Globals.GC_COLNAME_TESTCASES)+" exclude from execution");
-								 
+								//========================================================================
+								// Commenting out this section as we exclude tag in not allowing to update
+								// Globals.GC_MANUAL_TC_NAME for following include tags, this leads to 
+								// incorrect data setup for the TC
+								//========================================================================
+								//Element exclude = doc.createElement(Globals.GC_XML_EXCLUDE);
+								//Log.Report(Level.DEBUG,"initialize EXCLUDE node to build TestNG XML ");
+								//methods.appendChild(exclude);
+								//exclude.setAttribute(Globals.GC_XML_ATTR_NAME,
+								//		 xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+								//		 Globals.GC_COLNAME_TESTCASES));
+								//Log.Report(Level.DEBUG,xlRW.getCellData(moduleName.getKey(),iModuleLoop+1,
+								//		 Globals.GC_COLNAME_TESTCASES)+" exclude from execution");								
 							}
 					 }
 				}else{

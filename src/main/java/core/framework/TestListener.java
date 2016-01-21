@@ -22,12 +22,12 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onStart(ITestContext test) {
-		Globals.GC_MANUAL_TC_NAME = test.getName();
-		
+		Globals.GC_MANUAL_TC_NAME = test.getName();		
 	}
 
 	
 	public void onTestStart(ITestResult result) {
+		
 	}
 
 	
