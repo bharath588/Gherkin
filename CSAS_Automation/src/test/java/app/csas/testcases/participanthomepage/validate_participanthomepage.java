@@ -4,20 +4,17 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Reporter;
+import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
 
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageobjects.ParticipantHome;
-import lib.Reporter;
-import lib.Reporter.Status;
 import core.framework.Globals;
 
 public class validate_participanthomepage {
@@ -27,16 +24,6 @@ public class validate_participanthomepage {
 	ParticipantHome participantHomeObj;
 	boolean isPageDisplayed;
 
-	@BeforeClass
-	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC
-				+ Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
-		Globals.GBL_SuiteName = this.getClass().getName();
-		if(Web.webdriver.toString().contains("null")){
-			Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
-		}		
-	}
-
 	@DataProvider
 	public Object[][] setData(Method tc) throws Exception {
 		prepTestData(tc);
@@ -44,10 +31,10 @@ public class validate_participanthomepage {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+		Globals.GBL_SuiteName = this.getClass().getName();
 	}
-
+	
 	/*
 	 * Verify Employee status as either active or terminated
 	 * 
@@ -123,6 +110,7 @@ public class validate_participanthomepage {
 	}
 	
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 	
 	
 
@@ -167,10 +155,38 @@ public class validate_participanthomepage {
 		
 =======
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr, Map<String, String> testdata) {
+=======
+	
+	@Test(dataProvider = "setData")
+	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr, 
+			                            Map<String, String> testdata) {
+>>>>>>> 2c4ef67 Implemented Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+<<<<<<< Upstream, based on origin/master
 >>>>>>> 0619d8f Commiting CommonLib initial
 
+=======
+			
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			if(Web.appLoginStatus==false){				
+				Reporter.logEvent(Status.PASS,
+						"Check if the CSAS Log in page open",
+						"CSAS log in page launhced successfully", true);
+				participantHomeObj.submitLoginCredentials(
+						Stock.GetParameterValue("username"),
+						Stock.GetParameterValue("password"));
+			}
+			
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID(Stock
+					.GetParameterValue("ppt_id"));
+			
+			// Step3: Verify Mail existing PIN and Order Temp PIN message
+			participantHomeObj.verifyPIN_ExistingOrTemp(Stock.GetParameterValue("pin_type"));
+			
+>>>>>>> 2c4ef67 Implemented Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -180,21 +196,20 @@ public class validate_participanthomepage {
 			ae.printStackTrace();
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
-			// throw ae;
+					"Assertion Failed!!", true);			
 		} finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			e1.printStackTrace();
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
-		
-	@AfterClass
+	
+	
+	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.QuitDriver();		
 	}
 
 }
