@@ -3,6 +3,7 @@ package core.framework;
 import java.util.HashMap;
 
 import lib.Stock;
+import lib.Web;
 
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
@@ -17,11 +18,24 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onStart(ISuite suite) {
-
+		try{
+			Stock.getParam(Globals.GC_TESTCONFIGLOC+
+			Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 
-	
-	public void onStart(ITestContext test) {
+	public void onStart(ITestContext test) {	
+		try{	
+			if(!Web.webdriver.getWindowHandle().isEmpty()){
+				System.out.println("WebDriver not null");
+			}
+		}catch(Exception e){	
+			System.out.println("Initiating WebDriver");
+			Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+			Web.appLoginStatus = false; 
+		}		
 		Globals.GC_MANUAL_TC_NAME = test.getName();		
 	}
 
@@ -78,7 +92,6 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 	// This belongs to IInvokedMethodListener and will execute before every
 	// method including @Before @After @Test
 	@SuppressWarnings("unchecked")
-	
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 		if (method.getTestMethod().isTest()) {
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult.getParameters()[1];

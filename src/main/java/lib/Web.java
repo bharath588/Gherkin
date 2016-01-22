@@ -35,6 +35,7 @@ public class Web {
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
+	public static boolean appLoginStatus = false; 
 
 	/**
 	 * <pre>
