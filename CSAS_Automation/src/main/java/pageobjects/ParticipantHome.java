@@ -4,6 +4,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +34,7 @@ import org.testng.Assert;
 
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
+//import framework.util.CommonLib;
 import lib.Reporter.Status;
 import lib.Stock;
 
@@ -40,6 +42,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	private ArrayList<String> hireTermDateList;
 	private boolean isElementDisplayed_Flag = false;
+	private ArrayList<String> personalDataDB;
 
 	// CSAS Login..
 
@@ -63,14 +66,32 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "input[name = 'searchPartId']")
 	private WebElement PPTIdfield;
 
+	public WebElement getPPTIdfield() {
+		return PPTIdfield;
+	}
+
+	public void setPPTIdfield(WebElement pPTIdfield) {
+		PPTIdfield = pPTIdfield;
+	}
+
 	@FindBy(id = "submitPpt")
 	private WebElement SubmitPPTIdBtn;
 
 	@FindBy(xpath = "//span[contains(text(),'PARTICIPANT HOME PAGE')]")
 	private WebElement PPTHomePageTitle;
 
-	// Menu items..
+	@FindBy(css = "input[name = 'searchPartSsn']")
+	private WebElement SSNfield;
 
+	public WebElement getSSNfield() {
+		return SSNfield;
+	}
+
+	public void setSSNfield(WebElement sSNfield) {
+		SSNfield = sSNfield;
+	}
+
+	// Menu items..
 	@FindBy(css = "div#oCMenu_315")
 	private WebElement menuParticipantInfo;
 
@@ -152,6 +173,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	// Personal Data...
 	// Required list implementation..
+
+	@FindBy(css = "table[name = 'pptinfo'] tr>td.data")
+	private List<WebElement> personalData_On_PPT_Home_List;
 
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Name:')]")
 	private WebElement participantNameLabel;
@@ -335,11 +359,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @param ppt_id
 	 * @throws Exception
 	 */
-	public void search_PPT_Plan_With_PPT_ID(String ppt_id) {
+	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String ppt_id,
+			WebElement searchField) {
 
 		boolean isElementDisplayed = false;
 
-		Web.setTextToTextBox(this.PPTIdfield, ppt_id);
+		Web.setTextToTextBox(searchField, ppt_id);
 		Web.clickOnElement(this.SubmitPPTIdBtn);
 		try {
 			Web.waitForElement(this.PPTHomePageTitle);
@@ -375,7 +400,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	public void verify_HireDate_TermDate(String ppt_id) {
 		List<String> HireDate_TermDate_List;
 		WebElement empStatus = null;
-		Date date;
 
 		try {
 			Thread.sleep(100);
@@ -383,33 +407,20 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				String planNum = PlanNumber.get(i).getText();
 				String ind_id = IndID_List.get(i).getText();
 				planNum = planNum.substring(0, planNum.indexOf('-'));
-				HireDate_TermDate_List = getDataFromDB(
+				HireDate_TermDate_List = get_Hire_Term_Date_From_DB(
 						Stock.getTestQuery("getHireDateAndTerminationDate"),
 						planNum, ind_id, i);
 
 				empStatus = lnkEmploymentStatus.get(i);
+
 				if (empStatus.getText().equalsIgnoreCase("ACTIVE")
 						&& HireDate_TermDate_List.get(1) == null) {
 
 					Web.mouseHover(empStatus);
 
-					System.out.println("==== " + i + "th plan");
-
-					System.out.println("status:   "
-							+ lnkEmploymentStatus.get(i).getText());
-
-					System.out.println("Hire date from DB:"
-							+ HireDate_TermDate_List.get(0));
-
-				/*	String string = HireDate_TermDate_List.get(0).substring(0,HireDate_TermDate_List.get(0).indexOf(" ")).trim();
-					SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy") ;
-					 System.out.println(sfd.parse(string));
-					 */
-					System.out.println("Hire Date from Web:   "
-							+ HireDate_List.get(i).getText());
-
-					if (HireDate_TermDate_List.get(0).contains(
-							HireDate_List.get(i).getText()))
+					if (compareDB_Date_With_Web_Date(
+							HireDate_TermDate_List.get(0), HireDate_List.get(i)
+									.getText()))
 
 						Reporter.logEvent(Status.PASS,
 								"Check if Employment status is ACTIVE and Hire date: "
@@ -422,13 +433,21 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ HireDate_TermDate_List.get(0),
 								"Employment status is not ACTIVE and the Hire Date is:  "
 										+ HireDate_List.get(i).getText(), false);
+					Web.clickOnElement(PPTHomePageTitle);
+					Thread.sleep(100);
+
 				} else {
+
+					Web.mouseHover(empStatus);
+
 					if (lnkEmploymentStatus.get(i).getText()
-							.equalsIgnoreCase("TERMINATED")
-							&& HireDate_TermDate_List.get(0) == HireDate_List
-									.get(i).getText()
-							&& HireDate_TermDate_List.get(1) == TermDate_List
-									.get(i).getText())
+							.contains("TERMINATED")
+							&& compareDB_Date_With_Web_Date(
+									HireDate_TermDate_List.get(0),
+									HireDate_List.get(i).getText())
+							&& compareDB_Date_With_Web_Date(
+									HireDate_TermDate_List.get(1),
+									TermDate_List.get(i).getText()))
 						Reporter.logEvent(Status.PASS,
 								"Check if Employment status is TERMINATED and Hire date: "
 										+ HireDate_TermDate_List.get(0)
@@ -449,6 +468,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ "Termination date is : "
 										+ TermDate_List.get(i).getText(), false);
 
+					Web.clickOnElement(PPTHomePageTitle);
+					Thread.sleep(100);
+
 				}
 
 			}
@@ -463,7 +485,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	}
 
-	public ArrayList<String> getDataFromDB(
+	public ArrayList<String> get_Hire_Term_Date_From_DB(
 
 	String[] getHireDateAndTerminationDate, String planNum, String indID,
 			int index) {
@@ -477,7 +499,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (resultset != null) {
 			try {
 				while (resultset.next()) {
-			
+
 					String hireDate = resultset.getString("hire_date");
 					String termDate = resultset.getString("emp_termdate");
 					hireTermDateList.add(hireDate);
@@ -499,9 +521,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		String instance_DB;
 		String instance_Web;
 		String ind_id;
-		boolean flag ;
-		flag = Web
-				.isWebElementDisplayed(InstanceLabel, true);
+		boolean flag;
+		flag = Web.isWebElementDisplayed(InstanceLabel, true);
 
 		if (flag) {
 
@@ -512,7 +533,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				instance_Web = InstanceValue_List.get(i).getText();
 				ind_id = IndID_List.get(i).getText();
 				try {
-					instance_DB = getInstanceFromDB(
+					instance_DB = get_Page_Instance_From_DB(
 							Stock.getTestQuery("getPageInstanceFromInd_id"),
 							ind_id);
 					if (instance_Web.equalsIgnoreCase(instance_DB)) {
@@ -547,8 +568,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	}
 
-	public String getInstanceFromDB(String[] getPageInstanceFromInd_id,
-			String ind_id) {
+	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
+
+	String ind_id) {
 
 		ResultSet resultset;
 		String instance = null;
@@ -566,6 +588,164 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}
 		return instance;
+	}
+
+	/*
+	 * Validate Personal Data on PPT home page..
+	 * 
+	 * @PARAMETER = SSN
+	 */
+
+	public void validate_Personal_Data_On_PPT_Home(String ssn) {
+
+		ArrayList<String> personal_Data_From_DB;
+		try {
+
+			personal_Data_From_DB = get_Personal_Data_From_DB(
+					Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
+
+			// Personal data validation..
+
+			String FullName_DB = personal_Data_From_DB.get(0) + " "
+					+ personal_Data_From_DB.get(1);
+
+			if (personalData_On_PPT_Home_List.get(0).getText()
+					.equalsIgnoreCase(FullName_DB)
+					&& personalData_On_PPT_Home_List.get(1).getText()
+							.equalsIgnoreCase(personal_Data_From_DB.get(2))
+					&& compareDB_Date_With_Web_Date(
+							personalData_On_PPT_Home_List.get(2).getText(),
+							(personal_Data_From_DB.get(3)))
+					&& personalData_On_PPT_Home_List.get(3).getText()
+							.equalsIgnoreCase(personal_Data_From_DB.get(4))) {
+
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n"
+								+ FullName_DB
+								+ "\n"
+								+ personal_Data_From_DB.get(2)
+								+ "\n"
+								+ personal_Data_From_DB.get(3)
+								+ "\n"
+								+ personal_Data_From_DB.get(4),
+						"Name,SSN,Date Of Birth and Gender in database in database & web is same \n"
+								+ personalData_On_PPT_Home_List.get(0)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(1)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(2)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(3)
+										.getText() + "\n", true);
+			} else {
+
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n"
+								+ FullName_DB
+								+ "\n"
+								+ personal_Data_From_DB.get(2)
+								+ "\n"
+								+ personal_Data_From_DB.get(3)
+								+ "\n"
+								+ personal_Data_From_DB.get(4),
+						"Name,SSN,Date Of Birth and Gender in database in database & web is not same \n"
+								+ personalData_On_PPT_Home_List.get(0)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(1)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(2)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(3)
+										.getText() + "\n", false);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/*
+	 * Method to validate personal data
+	 * 
+	 * @PARAMETER = getPersonalDataOnPPTHomePage
+	 * 
+	 * @PARAMETER = ind_id
+	 */
+	public ArrayList<String> get_Personal_Data_From_DB(
+			String[] getPersonalDataOnPPTHomePage,
+
+			String ind_id) {
+
+		ResultSet resultset;
+		personalDataDB = new ArrayList<String>();
+
+		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0], ind_id);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					personalDataDB.add(resultset.getString("first_name"));
+					personalDataDB.add(resultset.getString("last_name"));
+					personalDataDB.add(resultset.getString("ssn"));
+					personalDataDB.add(resultset.getString("birth_date"));
+					personalDataDB.add(resultset.getString("sex"));
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return personalDataDB;
+	}
+
+	/*
+	 * Compare data base date and web date
+	 * 
+	 * @PARAMETER = dbDate
+	 * 
+	 * @PARAMETER = webDate
+	 * 
+	 * @Author: Ranjan
+	 */
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,
+			String webDate) {
+
+		boolean isDateEqual_Flag = false;
+
+		Date date;
+
+		try {
+
+			date = new Date();
+
+			dbDate = dbDate.substring(0, dbDate.indexOf(" "));
+
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+			date = df.parse(dbDate);
+
+			SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy");
+
+			String strDate = sfd.format(date);
+
+			if (strDate.equalsIgnoreCase(webDate))
+				isDateEqual_Flag = true;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return isDateEqual_Flag;
 	}
 
 }
