@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+     <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
+        <classes>
+            <class name="app.pptweb.testcases.login.logintestcases">
+                <methods>
+                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+</suite>

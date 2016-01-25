@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.utils.TestListener"/>
+    </listeners>
+    <test name="SIT_PPTWEB_Beneficiary_01_TC07_Married_with_Spouse_One_beneficiary_use_address_on_record">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_01_TC06_Married_with_Spouse_One_beneficiary_new_address">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name=".Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_04_TC06_UnMarried_One_Individual_beneficiary_use_address_on_record">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_04_TC05_UnMarried_One_Individual_beneficiary_new_address">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_04_TC02_UnMarried_Multiple_Individual_beneficiary">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_04_TC01_UnMarried_Multiple_Entity_beneficiary">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Beneficiary_04_TC01_UnMarried_Multiple_Entity_beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
