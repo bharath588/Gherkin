@@ -4,10 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
@@ -192,7 +197,34 @@ public class DB {
 		}
 		
 	}
-	
+
+	/*
+	 * Compare data base date and web date
+	 * 
+	 * @PARAMETER = dbDate
+	 * 
+	 * @PARAMETER = webDate
+	 * 
+	 * @Author: Ranjan
+	 */
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,
+			String webDate) {
+
+		boolean isDateEqual_Flag = false;
+		Date date;
+		try {
+			date = new Date();
+			dbDate = dbDate.substring(0, dbDate.indexOf(" "));
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			date = df.parse(dbDate);
+			SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy");
+			String strDate = sfd.format(date);
+			if (strDate.equalsIgnoreCase(webDate))
+				isDateEqual_Flag = true;
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		return isDateEqual_Flag;
+	}
+
 }
-
-

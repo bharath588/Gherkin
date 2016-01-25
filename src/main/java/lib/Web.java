@@ -1,13 +1,13 @@
 package lib;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.awt.AWTException;
-import java.awt.Robot;
 
 import lib.Reporter.Status;
 
@@ -23,6 +23,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -262,6 +263,19 @@ public class Web {
 				webElementName);
 		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(presentElement));
+	}
+	
+	/**
+	 * Method to return WebElement using Page Object as reference
+	 * 
+	 * @param webElememnt
+	 * @throws Exception
+	 */
+	public static WebElement returnElement(Object pageClassObj, String webElementName)
+			throws Exception {
+		WebElement presentElement = getPageObjectFields(pageClassObj,
+				webElementName);
+		return presentElement;
 	}
 
 	/**
@@ -663,10 +677,18 @@ public class Web {
 		}
 		return Globals.GBL_strScreenshotsFolderPath + "\\" + fileName;
 	}
-	
-	public static void QuitDriver(){
-		webdriver.close();
-		webdriver.quit();
-		webdriver =  null;
+
+	/*
+	 * Method to Mouse hover on specific web element
+	 * 
+	 * @PARAMETER = WebElement
+	 * 
+	 * @Author:Ranjan
+	 */
+	public static void mouseHover(WebElement webElement) {
+		Actions actions;
+		actions = new Actions(Web.webdriver);
+		actions.moveToElement(webElement);
+		actions.build().perform();
 	}
 }
