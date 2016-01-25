@@ -1,5 +1,6 @@
 <<<<<<< Upstream, based on origin/master
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 package pageobjects;
 
 import java.nio.file.StandardCopyOption;
@@ -757,54 +758,39 @@ package pageobjects;
 import java.nio.file.StandardCopyOption;
 =======
 		package pageobjects;
+=======
+package pageobjects;
+>>>>>>> 6974fad Commit
 		
+<<<<<<< Upstream, based on origin/master
 		import java.nio.file.StandardCopyOption;
 >>>>>>> 2c4ef67 Implemented Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
+=======
+>>>>>>> 6974fad Commit
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-		
-
-		import lib.DB;
+import lib.DB;
 import lib.Reporter;
 import lib.Web;
-		
-
-		import org.openqa.selenium.By;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-		
-
-		import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
-		
-
-		import core.framework.Globals;
+import core.framework.Globals;
 import framework.util.CommonLib;
 import lib.Reporter.Status;
 import lib.Stock;
 		
-		public class ParticipantHome extends LoadableComponent<ParticipantHome> {
+public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		
-			private ArrayList<String> hireTermDateList;
-			private boolean isElementDisplayed_Flag = false;
+		private ArrayList<String> hireTermDateList;
+	
 		
-			// CSAS Login..
+		// CSAS Login..
 		
 		@FindBy(xpath = "//span[contains(text(),'CLIENT SERVICE ACCESS SYSTEM USER LOGON')]")
 		private WebElement CSASLoginHome;
@@ -828,12 +814,15 @@ import lib.Stock;
 		
 		@FindBy(css = "input[name = 'searchPartId']")
 		private WebElement PPTIdfield;
-		
+			
 		@FindBy(id = "submitPpt")
 		private WebElement SubmitPPTIdBtn;
 		
 		@FindBy(xpath = "//span[contains(text(),'PARTICIPANT HOME PAGE')]")
 		private WebElement PPTHomePageTitle;
+		
+		@FindBy(css = "input[name = 'searchPartSsn']")
+		private WebElement SSNfield;
 		
 		// Menu items..
 		
@@ -919,6 +908,9 @@ import lib.Stock;
 		// Personal Data...
 		// Required list implementation..
 		
+		@FindBy(css = "table[name = 'pptinfo'] tr>td.data")
+		private List<WebElement> personalData_On_PPT_Home_List;
+	
 		@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Name:')]")
 		private WebElement participantNameLabel;
 		
@@ -1040,7 +1032,6 @@ import lib.Stock;
 		LoadableComponent<?> parent;
 		/*-----------------------------------------------------------------*/
 		
-		private List<String> getFooterLinkList = null;
 		
 		public ParticipantHome() {
 			PageFactory.initElements(Web.webdriver, this);
@@ -1058,6 +1049,33 @@ import lib.Stock;
 			Web.webdriver.get(Stock.globalParam.get("AppURL"));
 		}
 		
+		/** <pre> Method to return WebElement object corresponding to specified field name
+		 * Elements available for fields:
+		 * 	LOG OUT Or LOGOUT - [Link]
+		 * 	HOME - [Link]
+		 * 	MY ACCOUNTS - [Link]
+		 * 	RETIREMENT INCOME - [Label]
+		 * </pre>
+		 * @param fieldName
+		 * @return
+		 */
+		@SuppressWarnings("unused")
+		private WebElement getWebElement(String fieldName) {
+			
+			if (fieldName.trim().equalsIgnoreCase("PPT_ID")) {
+				return this.PPTIdfield;
+			}
+			
+			if (fieldName.trim().equalsIgnoreCase("SSN")) {
+				return this.SSNfield;
+			}
+			
+			Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
+					"No WebElement mapped for this field\nPage: <b>" + this.getClass().getName() + "</b>", false);
+			
+			return null;
+		}
+		
 		/**
 		 * Method to enter user credentials and click on Sign In button
 		 * 
@@ -1065,12 +1083,11 @@ import lib.Stock;
 		 * @param password
 		 * @throws Exception
 		 */
-		public void submitLoginCredentials(String username, String password) {		
-			boolean isElementDisplayed = false;
-			try {
+		public void submitLoginCredentials(String username, String password) throws Exception {		
+			boolean isElementDisplayed = false;			
 				Web.waitForElement(CSASUserNameField);
 				Web.setTextToTextBox(CSASUserNameField, username);
-				// Thread.sleep(2000);
+			
 				Web.setTextToTextBox(CSASPwdField, password);
 				Web.clickOnElement(CSASLoginBtn);
 		
@@ -1091,15 +1108,7 @@ import lib.Stock;
 							"Check if the user logged in to Participant/plan search page",
 							"User is not logged in to Participant/plan search page",
 							false);
-				}
-				
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
+				}				
 		}
 		
 		/**
@@ -1108,249 +1117,394 @@ import lib.Stock;
 		 * @param ppt_id
 		 * @throws Exception
 		 */
-		public void search_PPT_Plan_With_PPT_ID(String ppt_id) throws Exception {
-		
+	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String PPT_Or_SSN_Value,WebElement searchField) throws Exception {
 			boolean isElementDisplayed = false;
-		
 			Web.waitForElement(this.menuSearch);
 			Web.clickOnElement(this.menuSearch);
-			Web.setTextToTextBox(this.PPTIdfield, ppt_id);
+			Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);			
 			Web.clickOnElement(this.SubmitPPTIdBtn);
-			try {
-				Web.waitForElement(this.PPTHomePageTitle);
-				isElementDisplayed = Web.isWebElementDisplayed(
-						this.PPTHomePageTitle, true);
-		
-				if (isElementDisplayed) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Participant Home Page with all the details should display",
-							"Participant Home Page with all the details is displayed successfully",
-							true);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Participant Home Page with all the details should not display",
-							"Participant Home Page with all the details is not displayed",
-							false);
-				}
-		
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	
+			Web.waitForElement(this.PPTHomePageTitle);
+			isElementDisplayed = Web.isWebElementDisplayed(this.PPTHomePageTitle,
+					true);
+			if (isElementDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Participant Home Page with all the details should display",
+						"Participant Home Page with all the details is displayed successfully",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Participant Home Page with all the details should not display",
+						"Participant Home Page with all the details is not displayed",
+						false);
 			}
-		
-		}
+
+	}
 		
 		/*
 		 * Retrieve data from db & verify
 		 * 
 		 * @PARAMETER = ppt_id
 		 */
-		public void verify_HireDate_TermDate(String ppt_id) {
+	public void verify_HireDate_TermDate(String ppt_id, String emp_Status) {
 			List<String> HireDate_TermDate_List;
 			WebElement empStatus = null;
-			Date date;		
+
 			try {
 				Thread.sleep(100);
 				for (int i = 0; i < PlanNumber.size(); i++) {
 					String planNum = PlanNumber.get(i).getText();
 					String ind_id = IndID_List.get(i).getText();
 					planNum = planNum.substring(0, planNum.indexOf('-'));
-					HireDate_TermDate_List = getDataFromDB(
+				HireDate_TermDate_List = get_Hire_Term_Date_From_DB(
 							Stock.getTestQuery("getHireDateAndTerminationDate"),
 							planNum, ind_id, i);
 		
 					empStatus = lnkEmploymentStatus.get(i);
+				switch (emp_Status) {
+				case "ACTIVE":
 					if (empStatus.getText().equalsIgnoreCase("ACTIVE")
 							&& HireDate_TermDate_List.get(1) == null) {
 		
-						CommonLib.mouseHover(empStatus);
-		
-						System.out.println("==== " + i + "th plan");
-		
-						System.out.println("status:   "
-								+ lnkEmploymentStatus.get(i).getText());
-		
-						System.out.println("Hire date from DB:"
-								+ HireDate_TermDate_List.get(0));
-		
-						/*
-						 * String string =
-						 * HireDate_TermDate_List.get(0).substring(0,
-						 * HireDate_TermDate_List.get(0).indexOf(" ")).trim();
-						 * SimpleDateFormat sfd = new
-						 * SimpleDateFormat("dd-MMM-yyyy") ;
-						 * System.out.println(sfd.parse(string));
-						 */
-						System.out.println("Hire Date from Web:   "
-								+ HireDate_List.get(i).getText());
-		
-						if (HireDate_TermDate_List.get(0).contains(
-								HireDate_List.get(i).getText()))
-		
+						Web.mouseHover(empStatus);
+
+						if (DB.compareDB_Date_With_Web_Date(
+								HireDate_TermDate_List.get(0), HireDate_List
+										.get(i).getText()))
+
 							Reporter.logEvent(Status.PASS,
 									"Check if Employment status is ACTIVE and Hire date: "
 											+ HireDate_TermDate_List.get(0),
 									"Employment status is ACTIVE and the Hire Date is:  "
-											+ HireDate_List.get(i).getText(), true);
+											+ HireDate_List.get(i).getText(),
+									true);
 						else
 							Reporter.logEvent(Status.FAIL,
 									"Check if Employment status is not ACTIVE and Hire date: "
 											+ HireDate_TermDate_List.get(0),
 									"Employment status is not ACTIVE and the Hire Date is:  "
-											+ HireDate_List.get(i).getText(), false);
-					} else {
-						if (lnkEmploymentStatus.get(i).getText()
-								.equalsIgnoreCase("TERMINATED")
-								&& HireDate_TermDate_List.get(0) == HireDate_List
-										.get(i).getText()
-								&& HireDate_TermDate_List.get(1) == TermDate_List
-										.get(i).getText())
-							Reporter.logEvent(Status.PASS,
-									"Check if Employment status is TERMINATED and Hire date: "
-											+ HireDate_TermDate_List.get(0)
-											+ "Termination date is : "
-											+ HireDate_TermDate_List.get(1),
-									"Employment status is TERMINATED and Hire Date is:  "
-											+ HireDate_List.get(i).getText()
-											+ "Termination date is : "
-											+ TermDate_List.get(i).getText(), true);
-						else
-							Reporter.logEvent(Status.FAIL,
-									"Check if Employment status is not TERMINATED and Hire date: "
-											+ HireDate_TermDate_List.get(0)
-											+ "Termination date is : "
-											+ HireDate_TermDate_List.get(1),
-									"Employment status is not TERMINATED and Hire Date is:  "
-											+ HireDate_List.get(i).getText()
-											+ "Termination date is : "
-											+ TermDate_List.get(i).getText(), false);
-		
-					}
-		
-				}
-		
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		}
-		
-		public ArrayList<String> getDataFromDB(
-		
-		String[] getHireDateAndTerminationDate, String planNum, String indID,
-				int index) {
-		
-			ResultSet resultset;
-		
-			hireTermDateList = new ArrayList();
-		
-			resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
-					getHireDateAndTerminationDate[1], indID, planNum);
-			if (resultset != null) {
-				try {
-					while (resultset.next()) {
-		
-						String hireDate = resultset.getString("hire_date");
-						String termDate = resultset.getString("emp_termdate");
-						hireTermDateList.add(hireDate);
-						hireTermDateList.add(termDate);
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return hireTermDateList;
-		}
-		
-		/*
-		 * verify page instance against db
-		 */
-		public void verify_Page_Instance() {
-		
-			String instance_DB;
-			String instance_Web;
-			String ind_id;
-			boolean flag;
-			flag = Web.isWebElementDisplayed(InstanceLabel, true);
-		
-			if (flag) {
-		
-				Reporter.logEvent(Status.PASS,
-						"Check if Instance label is present ",
-						"Instance Label is present", true);
-				for (int i = 0; i < InstanceValue_List.size(); i++) {
-					instance_Web = InstanceValue_List.get(i).getText();
-					ind_id = IndID_List.get(i).getText();
-					try {
-						instance_DB = getInstanceFromDB(
-								Stock.getTestQuery("getPageInstanceFromInd_id"),
-								ind_id);
-						if (instance_Web.equalsIgnoreCase(instance_DB)) {
-		
-							Reporter.logEvent(Status.PASS,
-									"Check if database name for individual ID:  "
-											+ ind_id + "  is: " + instance_DB,
-									"Check if database name for individual ID :"
-											+ ind_id + "  is: " + instance_Web,
-									true);
-						} else {
-		
-							Reporter.logEvent(
-									Status.FAIL,
-									"Check if database name for individual ID:  "
-											+ ind_id + "  is not : " + instance_DB,
-									"Check if database name for individual ID :"
-											+ ind_id + "  is not : " + instance_Web,
+											+ HireDate_List.get(i).getText(),
 									false);
-						}
-		
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Web.clickOnElement(PPTHomePageTitle);
+						Thread.sleep(100);
+
 					}
+					break;
+
+				case "TERMINATED":
+
+					Web.mouseHover(empStatus);
+
+					if (lnkEmploymentStatus.get(i).getText()
+							.contains("TERMINATED")
+							&& DB.compareDB_Date_With_Web_Date(
+									HireDate_TermDate_List.get(0),
+									HireDate_List.get(i).getText())
+							&& DB.compareDB_Date_With_Web_Date(
+									HireDate_TermDate_List.get(1),
+									TermDate_List.get(i).getText()))
+						Reporter.logEvent(Status.PASS,
+								"Check if Employment status is TERMINATED and Hire date: "
+										+ HireDate_TermDate_List.get(0)
+										+ "Termination date is : "
+										+ HireDate_TermDate_List.get(1),
+								"Employment status is TERMINATED and Hire Date is:  "
+										+ HireDate_List.get(i).getText()
+										+ "Termination date is : "
+										+ TermDate_List.get(i).getText(), true);
+					else
+						Reporter.logEvent(Status.FAIL,
+								"Check if Employment status is not TERMINATED and Hire date: "
+										+ HireDate_TermDate_List.get(0)
+										+ "Termination date is : "
+										+ HireDate_TermDate_List.get(1),
+								"Employment status is not TERMINATED and Hire Date is:  "
+										+ HireDate_List.get(i).getText()
+										+ "Termination date is : "
+										+ TermDate_List.get(i).getText(), false);
+
+					Web.clickOnElement(PPTHomePageTitle);
+					Thread.sleep(100);
+
+					break;
+
+				default:
+					break;
 				}
-		
-			} else
-				Reporter.logEvent(Status.FAIL,
-						"Check if Instance label is not present ",
-						"Instance Label is not present", false);
-		
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+			// throw ae;
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
-		
-		public String getInstanceFromDB(String[] getPageInstanceFromInd_id,
-				String ind_id) {
-		
-			ResultSet resultset;
-			String instance = null;
-		
-			resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
-					getPageInstanceFromInd_id[1], ind_id);
-			if (resultset != null) {
+	}
+
+	public ArrayList<String> get_Hire_Term_Date_From_DB(
+
+	String[] getHireDateAndTerminationDate, String planNum, String indID,
+			int index) {
+
+		ResultSet resultset;
+
+		hireTermDateList = new ArrayList<String>();
+
+		resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
+				getHireDateAndTerminationDate[1], indID, planNum);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+
+					String hireDate = resultset.getString("hire_date");
+					String termDate = resultset.getString("emp_termdate");
+					hireTermDateList.add(hireDate);
+					hireTermDateList.add(termDate);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return hireTermDateList;
+	}
+
+	/*
+	 * verify page instance against db
+	 */
+	public void verify_Page_Instance() {
+
+		String instance_DB;
+		String instance_Web;
+		String ind_id;
+		boolean flag;
+		flag = Web.isWebElementDisplayed(InstanceLabel, true);
+
+		if (flag) {
+
+			Reporter.logEvent(Status.PASS,
+					"Check if Instance label is present ",
+					"Instance Label is present", true);
+			for (int i = 0; i < InstanceValue_List.size(); i++) {
+				instance_Web = InstanceValue_List.get(i).getText();
+				ind_id = IndID_List.get(i).getText();
 				try {
-					while (resultset.next()) {
-						instance = resultset.getString("database_instance");
+					instance_DB = get_Page_Instance_From_DB(
+							Stock.getTestQuery("getPageInstanceFromInd_id"),
+							ind_id);
+					if (instance_Web.equalsIgnoreCase(instance_DB)) {
+
+						Reporter.logEvent(Status.PASS,
+								"Check if database name for individual ID:  "
+										+ ind_id + "  is: " + instance_DB,
+								"Check if database name for individual ID :"
+										+ ind_id + "  is: " + instance_Web,
+								true);
+					} else {
+
+						Reporter.logEvent(
+								Status.FAIL,
+								"Check if database name for individual ID:  "
+										+ ind_id + "  is not : " + instance_DB,
+								"Check if database name for individual ID :"
+										+ ind_id + "  is not : " + instance_Web,
+								false);
 					}
-				} catch (SQLException e) {
+
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			return instance;
+
+		} else
+			Reporter.logEvent(Status.FAIL,
+					"Check if Instance label is not present ",
+					"Instance Label is not present", false);
+
+	}
+
+	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
+
+	String ind_id) {
+
+		ResultSet resultset;
+		String instance = null;
+
+		resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
+				getPageInstanceFromInd_id[1], ind_id);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					instance = resultset.getString("database_instance");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return instance;
+	}
+
+	/*
+	 * Validate Personal Data on PPT home page..
+	 * 
+	 * @PARAMETER = SSN
+	 */
+
+	public void validate_Personal_Data_On_PPT_Home(String ssn) {
+
+		ArrayList<String> personal_Data_From_DB;
+		try {
+
+			System.out.println("I am here");
+			personal_Data_From_DB = get_Personal_Data_From_DB(
+					Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
+			// Personal data validation..
 		
-		public void verifyPIN_ExistingOrTemp(String pinType) throws Exception {
+			String FullName_DB = personal_Data_From_DB.get(0) + " "
+					+ personal_Data_From_DB.get(1);
+
+			String SSN = personalData_On_PPT_Home_List.get(1).getText();
+			String[] splitedStr = SSN.split("-");
+
+			String concatenated_SSN = null;
+
+			concatenated_SSN = splitedStr[0] + splitedStr[1] + splitedStr[2];
+
+			if (personalData_On_PPT_Home_List.get(0).getText()
+					.equalsIgnoreCase(FullName_DB)
+					&& DB.compareDB_Date_With_Web_Date(
+							personal_Data_From_DB.get(3),
+							personalData_On_PPT_Home_List.get(2).getText())
+					&& concatenated_SSN.equalsIgnoreCase(personal_Data_From_DB
+							.get(2))
+					&& personalData_On_PPT_Home_List.get(3).getText()
+							.contains(personal_Data_From_DB.get(4))) {
+
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
+								+ FullName_DB
+								+ "\n"
+								+ personal_Data_From_DB.get(2)
+								+ "\n"
+								+ personal_Data_From_DB.get(3)
+								+ "\n"
+								+ personal_Data_From_DB.get(4),
+						"Name,SSN,Date Of Birth and Gender in database in database & web is same \n"
+								+ personalData_On_PPT_Home_List.get(0)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(1)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(2)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(3)
+										.getText() + "\n", true);
+			} else {
+
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
+								+ FullName_DB
+								+ "\n"
+								+ personal_Data_From_DB.get(2)
+								+ "\n"
+								+ personal_Data_From_DB.get(3)
+								+ "\n"
+								+ personal_Data_From_DB.get(4),
+						"Name,SSN,Date Of Birth and Gender in database in database & web is not same \n"
+								+ personalData_On_PPT_Home_List.get(0)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(1)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(2)
+										.getText()
+								+ "\n"
+								+ personalData_On_PPT_Home_List.get(3)
+										.getText() + "\n", false);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+			// throw ae;
+		} finally {
+		}
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	/*
+	 * Method to validate personal data
+	 * 
+	 * @PARAMETER = getPersonalDataOnPPTHomePage
+	 * 
+	 * @PARAMETER = ssn
+	 */
+	public ArrayList<String> get_Personal_Data_From_DB(
+			String[] getPersonalDataOnPPTHomePage,
+
+			String ssn) {
+
+		ArrayList<String> personalDataDB ;
+		ResultSet resultset;
+		personalDataDB = new ArrayList<String>();
+
+		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0],
+				getPersonalDataOnPPTHomePage[1], ssn);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					personalDataDB.add(resultset.getString("first_name"));
+					personalDataDB.add(resultset.getString("last_name"));
+					personalDataDB.add(resultset.getString("ssn"));
+					personalDataDB.add(resultset.getString("birth_date"));
+					personalDataDB.add(resultset.getString("sex"));
+
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return personalDataDB;
+	}
+	
+	public void verifyPIN_ExistingOrTemp(String pinType) throws Exception {
 			String parentWindow = Globals.GC_EMPTY;
 			String getMessage = Globals.GC_EMPTY;
 			String getOrderPINMsgA = Globals.GC_EMPTY;
 			String getOrderPINMsgB = Globals.GC_EMPTY;
-		
 			Web.waitForElement(lnkOrderPIN);
 			Web.clickOnElement(lnkOrderPIN);
 			parentWindow = Web.webdriver.getWindowHandle();
@@ -1416,6 +1570,6 @@ import lib.Stock;
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 		}
-		
+
 }
 >>>>>>> 0619d8f Commiting CommonLib initial
