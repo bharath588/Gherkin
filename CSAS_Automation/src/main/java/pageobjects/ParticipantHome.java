@@ -1521,7 +1521,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				if (pinType.equalsIgnoreCase("Existing")) {
 					Web.clickOnElement(btnOPMailExistingPIN);
 					getMessage = txtExistingAndOrderPINMessage.getText()
-							.replaceAll("\\d", "").replace("•", "").trim();
+							.replaceAll("\\d", "").replace("?", "").trim();
 		
 					// Checking if all the characters are present excluding " "
 					if (getMessage.replace(" ", "").equals(
@@ -1541,10 +1541,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Web.clickOnElement(btnOPOrderTempPin);
 					getOrderPINMsgA = txtExistingAndOrderPINMessage
 							.findElement(By.xpath("//tbody/tr/td[2]/div[2]"))
-							.getText().replace("•", "");
+							.getText().replace("?", "");
 					getOrderPINMsgB = txtExistingAndOrderPINMessage
 							.findElement(By.xpath("//tbody/tr/td[2]/div[4]"))
-							.getText().replaceAll("\\d", "").replace("•", "");
+							.getText().replaceAll("\\d", "").replace("?", "");
 					if (getOrderPINMsgA.replace(" ", "").equals(
 							(CommonLib.OrderTempPINMsgA).replace(" ", ""))
 							& getOrderPINMsgB.replace(" ", "").equals(
@@ -1571,5 +1571,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Web.webdriver.switchTo().window(parentWindow);
 		}
 
+<<<<<<< Upstream, based on origin/master
 }
 >>>>>>> 0619d8f Commiting CommonLib initial
+=======
+}
+>>>>>>> f78ec6b commit to master

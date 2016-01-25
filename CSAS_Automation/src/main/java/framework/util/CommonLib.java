@@ -48,13 +48,6 @@ public class CommonLib {
 	  public static final String OrderTempPINMsgA= "Note: this VRU PIN (or web passcode) is a single use PIN (passcode) "
 	  											 + "that must be re-set after first use. Please direct participant accordingly.";
 	  public static final String OrderTempPINMsgB= "The temporary PIN number is";
-
-	  public static void mouseHover(WebElement webElement){
-          Actions actions;
-          actions = new Actions(Web.webdriver);
-          actions.moveToElement(webElement);
-          actions.build().perform();
-	  }
 	  	 
 }
 >>>>>>> 0619d8f Commiting CommonLib initial
