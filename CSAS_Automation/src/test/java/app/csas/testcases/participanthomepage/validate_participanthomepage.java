@@ -3,13 +3,17 @@ package app.csas.testcases.participanthomepage;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-import org.testng.annotations.AfterClass;
+
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import pageobjects.ParticipantHome;
 import core.framework.Globals;
 
@@ -19,7 +23,12 @@ public class validate_participanthomepage {
 	String tcName;
 	ParticipantHome participantHomeObj;
 	boolean isPageDisplayed;
-
+	
+	@BeforeClass
+	public void ReportInit(){
+		Globals.GBL_SuiteName = this.getClass().getName();
+	}
+	
 	@DataProvider
 	public Object[][] setData(Method tc) throws Exception {
 		prepTestData(tc);
@@ -28,8 +37,7 @@ public class validate_participanthomepage {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
-		Globals.GBL_SuiteName = this.getClass().getName();
+				.getName(), Globals.GC_MANUAL_TC_NAME);	
 	}
 
 	/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -252,7 +260,7 @@ public class validate_participanthomepage {
 		}
 	}
 
-	@AfterClass
+	@AfterSuite
 	public void cleanUpSession() {
 		Web.webdriver.close();
 		Web.webdriver.quit();
