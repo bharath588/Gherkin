@@ -34,6 +34,7 @@ public class validate_participanthomepage {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 		Globals.GBL_SuiteName = this.getClass().getName();
 	}
+<<<<<<< Upstream, based on origin/master
 	
 	/*
 	 * Verify Employee status as either active or terminated
@@ -157,6 +158,9 @@ public class validate_participanthomepage {
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr, Map<String, String> testdata) {
 =======
 	
+=======
+		
+>>>>>>> 1084f0e PPTHomePage Commit for Merging Ranjans code
 	@Test(dataProvider = "setData")
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr, 
 			                            Map<String, String> testdata) {
