@@ -27,7 +27,7 @@
 	<modules>
 		<module>pptwebauto_pom.xml</module>
 	</modules>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3</version>
+			<version>11.2.0.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jcraft</groupId>
@@ -96,10 +96,10 @@
 		</dependency>
 
 	</dependencies>
-	
+
 	<build>
 		<pluginManagement>
-			
+
 			<plugins>
 				<!-- Following plugin executes the testng tests -->
 				<plugin>
