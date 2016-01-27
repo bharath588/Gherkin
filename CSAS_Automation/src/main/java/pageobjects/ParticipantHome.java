@@ -777,15 +777,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 			if (pinType.equalsIgnoreCase("Existing")) {
 				Web.clickOnElement(btnOPMailExistingPIN);
-				
-				
-				getMessage = txtExistingAndOrderPINMessage.getText()
-						.replaceAll("\\d", "").trim();
-
+												
+				getMessage = new StringBuilder(txtExistingAndOrderPINMessage.getText()).
+						                                  delete(0,1).toString().trim();				
+			
 				// Checking if all the characters are present excluding " "
-				if (getMessage.toString().replace(" ", "").equals(
-						(CommonLib.MailExistingPINMsg).replace(" ", ""))
-						& Web.isWebElementDisplayed(imgInfoMsg)) {
+				if (getMessage.matches(".*\\d+.*") 					
+					& getMessage.replaceAll("\\d","").replace(" ", "").
+					  equals((CommonLib.MailExistingPINMsg).replace(" ", ""))
+					& Web.isWebElementDisplayed(imgInfoMsg) ) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Validate information message for Mail Existing PIN",
@@ -798,16 +798,18 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				}
 			} else if (pinType.equalsIgnoreCase("Temporary")) {
 				Web.clickOnElement(btnOPOrderTempPin);
-				getOrderPINMsgA = txtExistingAndOrderPINMessage
-						.findElement(By.xpath("//tbody/tr/td[2]/div[2]"))
-						.getText().replace(" ", "");
-				getOrderPINMsgB = txtExistingAndOrderPINMessage
-						.findElement(By.xpath("//tbody/tr/td[2]/div[4]"))
-						.getText().replaceAll("\\d", "").replace(" ", "");
-				if (getOrderPINMsgA.replace(" ", "").equals(
-						(CommonLib.OrderTempPINMsgA).replace(" ", ""))
-						& getOrderPINMsgB.replace(" ", "").equals(
-								(CommonLib.OrderTempPINMsgB).replace(" ", ""))
+				
+				getOrderPINMsgA = new StringBuilder(txtExistingAndOrderPINMessage
+						              .findElement(By.xpath("//tbody/tr/td[2]/div[2]"))
+						              .getText()).delete(0,1).toString();
+				getOrderPINMsgB = new StringBuilder(txtExistingAndOrderPINMessage.
+						              findElement(By.xpath("//tbody/tr/td[2]/div[4]")).
+						              getText()).delete(0,1).toString().trim();
+								
+				if (getOrderPINMsgA.replace(" ", "").equals((CommonLib.OrderTempPINMsgA).replace(" ", ""))
+						& getOrderPINMsgB.matches(".*\\d+.*")
+						& getOrderPINMsgB.replaceAll("\\d","").replace(" ", "").equals(
+						  (CommonLib.OrderTempPINMsgB).replace(" ", ""))
 						& Web.isWebElementDisplayed(imgInfoMsg)) {
 					Reporter.logEvent(
 							Status.PASS,
