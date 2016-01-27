@@ -49,11 +49,11 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	@Override
 	protected void load() {
 
-		try {
+		/*try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block              
-		}
+		}*/
 		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
@@ -64,11 +64,11 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		lib.Web.webdriver.manage().window().maximize();
 
-		try {
+		/*try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block              
-		}
+		}*/
 		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
 		if (isElementPresent)
 			lnkDismiss.click();
@@ -126,16 +126,12 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	 * @param password
 	 */
 	public void submitLoginCredentials(String userName, String password){
-		//	
-		//		this.txtUserName.setTextToTextBox(userName);		
-		//		this.txtPassword.sendKeys(password);
 
 		Web.setTextToTextBox(this.txtUserName, userName);
 		Web.setTextToTextBox(this.txtPassword, password);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -178,7 +174,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		this.btnRegister.click();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -192,7 +188,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		this.lnkForgotPassword.click();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

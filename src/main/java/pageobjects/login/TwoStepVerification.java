@@ -86,13 +86,6 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@Override
     protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lstDeliveryOption));
-//	    if (!WebActions.isWebElementDisplayed(lstDeliveryOption)) {
-//	        if (isMandatoryAfterLoad) {
-//	            throw new AssertionError("Two-step Verification (2 of 3) Page is not loaded");
-//	        }
-//	        else
-//	        	isMandatoryAfterLoad = true;
-//	    }
     }
 	
 	@Override
@@ -207,7 +200,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		
 		this.btnSendMeACode.click();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -224,10 +217,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 * @param rememberDevice
 	 */
 	public void submitVerificationCode(String verificationCode, boolean OptionDisplayed_rememberDevice, boolean rememberDevice) throws Exception{
-		System.out.println("inside submit");
-		
-//		common.waitForElement(this.txtCodeInput);
-		Thread.sleep(5000);
+			
+		Thread.sleep(2000);
 		this.txtCodeInput.sendKeys(verificationCode);
 		Reporter.logEvent(Status.INFO, "Enter Verification Code", "Verification code ["+ verificationCode +"] has been entered", true);
 		
@@ -249,7 +240,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 		
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
