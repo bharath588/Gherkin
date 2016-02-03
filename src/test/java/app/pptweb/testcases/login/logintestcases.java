@@ -29,7 +29,7 @@ public class logintestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
+		//Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
 		
 	}
@@ -44,12 +44,12 @@ public class logintestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
-	@BeforeMethod
+/*	@BeforeMethod
     public void getTCName(Method tc) {
-           tcName = tc.getName();       
-           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+         //  tcName = tc.getName();       
+         //  lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
     }
-	
+	*/
 	
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_invalid_Userid_and_Password(int itr, Map<String, String> testdata){
@@ -57,9 +57,17 @@ public class logintestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
-			login = new LoginPage().get();
+			login = new LoginPage();
+			
+			if (Web.appLoginStatus==false) {
+				login.get();
+				login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
+			}else{
+				login.get();
+			}
+			
 			String errMsg = "";
-			login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
+			//login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {

@@ -54,13 +54,13 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block              
 		}*/
-		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
-
+		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
+		
 		lib.Web.webdriver.get(Stock.globalParam.get("AppURL"));
 
-		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
 
 		lib.Web.webdriver.manage().window().maximize();
 
@@ -69,9 +69,10 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block              
 		}*/
-		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
+		//currently not beeing seen
+		/*boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
 		if (isElementPresent)
-			lnkDismiss.click();
+			lnkDismiss.click();*/
 
 	}
 
