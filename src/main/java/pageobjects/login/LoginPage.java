@@ -54,13 +54,24 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block              
 		}*/
+<<<<<<< Upstream, based on origin/master
 		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
 		
+=======
+//		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+//		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+
+>>>>>>> 1f9ed31 1
 		lib.Web.webdriver.get(Stock.globalParam.get("AppURL"));
 
+<<<<<<< Upstream, based on origin/master
 		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
+=======
+//		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+//		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+>>>>>>> 1f9ed31 1
 
 		lib.Web.webdriver.manage().window().maximize();
 
@@ -69,11 +80,17 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block              
 		}*/
+<<<<<<< Upstream, based on origin/master
 		//currently not beeing seen
 		/*boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
 		if (isElementPresent)
 			lnkDismiss.click();*/
 
+=======
+//		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
+//		if (isElementPresent)
+//			lnkDismiss.click();
+>>>>>>> 1f9ed31 1
 	}
 
 	/** <pre> Method to return WebElement object corresponding to specified field name
