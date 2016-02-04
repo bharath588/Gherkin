@@ -57,7 +57,7 @@ public class authenticationtestcases {
 
 
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, "SF01_TC01_SendActivationCodeThroughLoginFlow");
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -177,7 +177,7 @@ public class authenticationtestcases {
 		Stock.globalTestdata = testdata;
 		//      Globals.GBL_CurrentIterationNumber = itr;
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, "SF04_TC01_SendActivationCode_ForgotPasswordFlow");
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
