@@ -212,6 +212,12 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		this.txtDateOfBirth.sendKeys(dateOfBirth);
 		this.txtStreetAddress.sendKeys(streetAddress);
 		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		this.btnContinue.click();
 		try {
 			Thread.sleep(3000);
@@ -237,6 +243,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		this.txtSSN.sendKeys(socialSecurityNumber);
 		this.txtPINInput.sendKeys(verificatinPIN);
 		
+		Thread.sleep(5000);
 		this.btnContinue.click();
 		try {
 			Thread.sleep(3000);

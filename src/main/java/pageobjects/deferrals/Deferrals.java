@@ -3,6 +3,7 @@ package pageobjects.deferrals;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -302,13 +303,22 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				e.printStackTrace();
 			}
 			
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			
+//			Actions ob = new Actions(lib.Web.webdriver);
+//			ob.moveToElement(this.btnConfirmAndContinue).click().build().perform();
+//			ob.clickAndHold(btnConfirmAndContinue);
+//			ob.release(btnConfirmAndContinue);
 			
 			
 			lib.Web.clickOnElement(this.btnConfirmAndContinue); 
-			if(!lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
-				lib.Web.clickOnElement(this.btnConfirmAndContinue1); 
+//			if(!lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
+//				lib.Web.clickOnElement(this.btnConfirmAndContinue1); 
 			
 			if(lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);

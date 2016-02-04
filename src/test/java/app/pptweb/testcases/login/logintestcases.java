@@ -113,7 +113,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 //  Globals.GBL_CurrentIterationNumber = itr;
 	
 	try{
-		Reporter.initializeReportForTC(itr, "SF01_TC02_Verify_login_Successfully_into_unregistered_Device");
+		Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 		String verificationCode = "";
 		
 		TwoStepVerification twoStepVerification = new TwoStepVerification(new LoginPage());
