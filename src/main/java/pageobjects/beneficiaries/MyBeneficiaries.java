@@ -27,7 +27,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@FindBy(xpath=".//*[text()='My Beneficiaries']") private WebElement lblMyBeneficiaries;
 	@FindBy(id="btn-add-beneficiary") private WebElement btnAddAnotherBeneficiary;
-	@FindBy(id="btn-continue") private WebElement btnContinue;
+//	@FindBy(id="btn-continue") private WebElement btnContinue;
+	@FindBy(id="btn-continue submit") private WebElement btnContinue;
 	@FindBy(xpath=".//span[text()='Contingent']") private WebElement btnContingent;
 	@FindBy(xpath=".//span[text()='Primary']") private WebElement btnPrimary;
 	@FindBy(id="btn-cancel") private WebElement btnCancel;
@@ -224,7 +225,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Web.clickOnElement(this.btnSave);
 
 		
-		if(Stock.GetParameterValue("IterationNumber").equalsIgnoreCase("2")){
+		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes")){
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -352,7 +353,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.txtLastName.sendKeys(Stock.GetParameterValue("LastName"));
 		this.txtSuffix.sendKeys(Stock.GetParameterValue("Prefix"));
 		this.txtDateOfBirth.sendKeys(Stock.GetParameterValue("DOB"));
-		this.txtSSN.sendKeys(Stock.GetParameterValue("SSN"));
+		System.out.println("SSn : "+Stock.GetParameterValue("SSN"));
+//		this.txtSSN.sendKeys(Stock.GetParameterValue("SSN"));
+		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("SSN"));
 		this.txtPhoneNumber.sendKeys(Stock.GetParameterValue("PhoneNumber"));
 	
 	}

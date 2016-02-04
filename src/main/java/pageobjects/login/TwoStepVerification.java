@@ -40,7 +40,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(id="deliveryOptionsContinue") private WebElement btnSendMeACode;
 	@FindBy(id="verification_codeInput") private WebElement txtCodeInput;
 	@FindBy(id="remember_deviceInput") private WebElement chkRememberDevice;
-	@FindBy(xpath=".//*[@id='submit' and @value='Sign in']") private WebElement btnSignIn;
+//	@FindBy(xpath=".//*[@id='submit' and @value='Sign in']") private WebElement btnSignIn;
+	@FindBy(id="signin") private WebElement btnSignIn;
 	@FindBy(linkText="Didn't receive the code?") private WebElement lnkDidntReceiveCode;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login Help']]") private WebElement lblLoginHelp;
 	
@@ -85,6 +86,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	
 	@Override
     protected void isLoaded() throws Error {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Assert.assertTrue(Web.isWebElementDisplayed(lstDeliveryOption));
     }
 	
@@ -177,6 +184,13 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				this.lnkAlreadyHaveCodeFogotPsw.click();;
 			} else {
 				this.lnkAlreadyHaveCodeMFA.click();
+//				try {
+//					Thread.sleep(10000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				this.lnkAlreadyHaveCodeMFA.click();
 			}
 			
 			Reporter.logEvent(Status.INFO, "Select verification code delivery option", 

@@ -33,7 +33,7 @@ public class liattestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		
 	}
 
 	@DataProvider
@@ -43,12 +43,13 @@ public class liattestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
 	@BeforeMethod
     public void getTCName(Method tc) {
            tcName = tc.getName();       
+           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
     }
 	
 	
@@ -58,7 +59,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC003_To_verify_Retirement_Income_tab");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -164,7 +165,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -198,7 +199,7 @@ public class liattestcases {
 			
 			
 			
-			if (Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				Web.clickOnElement(retirement, "Do It Myself");
 				if(retirement.verifyIfSliderPresent("Investment mix slider"))
 					Reporter.logEvent(Status.PASS, "Verify Investment mix slider", "Investment mix slider displayed", false);
@@ -217,7 +218,7 @@ public class liattestcases {
 			
 			
 			//verify if we are able to navigate to Help Me Do It Tab
-			if (Stock.GetParameterValue("Help Me Do It").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Help Me Do It").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab", "Able to navigate to Help Me Do It tab", false);
 				else
@@ -231,7 +232,7 @@ public class liattestcases {
 			}
 			
 			//verify if we are able to navigate to Do It For Me Tab
-			if (Stock.GetParameterValue("Do It For Me").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It For Me").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab", "Able to navigate to Do It For Me It tab", false);
 				else
@@ -246,7 +247,7 @@ public class liattestcases {
 			}
 			
 			//verify if we are able to navigate to Do It Myself Tab
-			if (Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				if(Web.clickOnElement(retirement,"Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab", "Able to navigate to Do It Myself tab", false);
 				else
@@ -288,7 +289,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -347,7 +348,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -405,7 +406,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -462,7 +463,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -513,7 +514,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "HCC_TC009_To_verify_Health_care_costs");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			float projectedIncome;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -557,7 +558,7 @@ public class liattestcases {
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
-			Reporter.initializeReportForTC(itr, "HDIC_TC010_To_verify_How_do_I_compare_tab");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);

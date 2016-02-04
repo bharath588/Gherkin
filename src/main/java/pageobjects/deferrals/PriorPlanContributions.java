@@ -21,14 +21,18 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//h1[text()='Prior Plan Contributions']") private WebElement lblPriorContributions;
 	@FindBy(xpath="//input[@id='radioPreviousContributionYes']") private WebElement radioYes;
 	@FindBy(xpath="//input[@id='radioPreviousContributionNo']") private WebElement radioNo;
-	@FindBy(xpath="//button[@id='btnSubmit']") private WebElement btnsubmit;
+//	@FindBy(xpath="//button[@id='btnSubmit']") private WebElement btnsubmit;
+	@FindBy(xpath="//button[@id='btnSubmit submit']") private WebElement btnsubmit;
 	@FindBy(xpath="//button[@id='btnContinue']") private WebElement btnContinue;
-	@FindBy(xpath="//div[@class='page-title ng-scope']/p']") private WebElement txtPriorContribution;
+//	@FindBy(xpath="//div[@class='page-title ng-scope']/p']") private WebElement txtPriorContribution;
+	@FindBy(xpath="//p[@class='ng-binding']") private WebElement txtPriorContribution;
 	@FindBy(xpath="//input[@id='regular']") private WebElement txtYearToDateContribution;
 	@FindBy(xpath="//input[@id='catchup']") private WebElement txtCatchupContribution;
 	@FindBy(xpath="//h2[text()='Confirmation Details']") private WebElement lblConfirmationDetails;
-	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[0]/td") private WebElement lblYearToDateContribution;
-	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
+//	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[0]/td") private WebElement lblYearToDateContribution;
+	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblYearToDateContribution;
+//	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
+	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[2]/td") private WebElement lblCatchupContribution;
 	
 	/**
 	 * Default Constructor
@@ -104,6 +108,12 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	
 	public boolean verifyConfirmationDetails(String value, String type){
 		Boolean success = false;
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if(type.equalsIgnoreCase("Year To Date"))
 			success = lib.Web.VerifyText("$"+value+".00", lblYearToDateContribution.getText(), true);
 		

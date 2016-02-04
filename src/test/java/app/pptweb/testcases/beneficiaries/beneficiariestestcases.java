@@ -33,7 +33,7 @@ public class beneficiariestestcases {
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		
 	}
 
 	@DataProvider
@@ -49,6 +49,7 @@ public class beneficiariestestcases {
 	@BeforeMethod
     public void getTCName(Method tc) {
            tcName = tc.getName();       
+           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
     }
 	
 	@Test(dataProvider = "setData")
@@ -64,15 +65,14 @@ public class beneficiariestestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			
-//			if(homePage.getNoOfPlansFromDB() <= 2){
-//				System.out.println("inside1");
-//				 leftmenu = new LeftNavigationBar(homePage);
-//			}
-//			else{
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-//			}
-				MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//			leftmenu = new LeftNavigationBar(homePage);			
+//		else {
+//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//			leftmenu = new LeftNavigationBar(accountPage);
+//		}
+			leftmenu = new LeftNavigationBar(homePage);
+			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
 			
@@ -182,15 +182,15 @@ public class beneficiariestestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			
-//			if(homePage.getNoOfPlansFromDB() <= 2){
-//				System.out.println("inside1");
-//				 leftmenu = new LeftNavigationBar(homePage);
-//			}
-//			else{
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-//			}
-				MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+						
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//			leftmenu = new LeftNavigationBar(homePage);			
+//		else {
+//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//			leftmenu = new LeftNavigationBar(accountPage);
+//		}
+			leftmenu = new LeftNavigationBar(homePage);
+			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
 			
@@ -261,9 +261,12 @@ public class beneficiariestestcases {
 			}
 			
 			//delete beneficiary from Database
-			if(Stock.GetParameterValue("IterationNumber").equalsIgnoreCase("2"))
+//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
+//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("Yes"))
 				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
-		
+			
+			
 		}
 		catch(Exception e)
         {

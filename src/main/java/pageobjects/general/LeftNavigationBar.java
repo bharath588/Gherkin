@@ -46,6 +46,12 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 
 	@Override
 	protected void isLoaded() throws Error {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection));
 //		if (!common.isWebElementDisplayed(this.weLeftNavSection,LeftNavigationBar.waitforLoad)) {
 //			LeftNavigationBar.waitforLoad = true;
@@ -60,13 +66,16 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		//boolean paramFlag = false;
 		
 		this.parent.get();
-		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
-			System.out.println("inside");
-			((LandingPage) this.parent).dismissPopUps(true,true);
+//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
+//			System.out.println("inside");
+//			((LandingPage) this.parent).dismissPopUps(true,true);
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
-		}
-		else
-			((MyAccountsPage) this.parent).clickPlanNameByGAID();
+//		}
+//		else
+//			((MyAccountsPage) this.parent).clickPlanNameByGAID();
+			
+			
+			
 //		else{
 //			Set<String> paramNames = TestDataContainer.getParameterNames();
 //			

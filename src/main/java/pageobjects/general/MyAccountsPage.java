@@ -26,7 +26,8 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	private LoadableComponent<?> parent;
 	//private static boolean waitforLoad = false;
 	
-	@FindBy(xpath=".//h1[text()='My Accounts']") private WebElement hdrMyAccounts;
+//	@FindBy(xpath=".//h1[text()='My Accounts']") private WebElement hdrMyAccounts;
+	@FindBy(xpath=".//h1[text()='Account Overview']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//*[@class='plan']/*[starts-with(@id,'ga_')]") private List<WebElement> lstLnkPlanName;
 	
 	/** Empty args constructor

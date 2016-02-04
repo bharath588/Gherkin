@@ -67,7 +67,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
+		
+		Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
 		
 	}
 
