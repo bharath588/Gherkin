@@ -142,7 +142,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
 
-			deferrals.select_ContributionType_Standard("After");
+			deferrals.select_ContributionType(lib.Stock.GetParameterValue("After"));
 			deferrals.add_Auto_Increase("Bonus Add Auto Increase");
 			deferrals.myContributions_Confirmation_Page();			
 		}
@@ -208,8 +208,7 @@ public class deferralstestcases {
 			if(lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-
-			deferrals.select_ContributionType_Standard(lib.Stock.GetParameterValue("Contribution_type"));
+			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
 			deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();			
 			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
@@ -729,7 +728,8 @@ public class deferralstestcases {
 			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-			deferrals.select_ContributionType_Standard(lib.Stock.GetParameterValue("Contribution_type"));
+			
+			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
 			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.catchup_maximize_to_irs();
 			else
