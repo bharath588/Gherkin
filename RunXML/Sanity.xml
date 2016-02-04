@@ -58,13 +58,5 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC0012_To verify Retirement Income tab_Plan Savings">
-        <classes>
-            <class name="app.pptweb.testcases.liat.liattestcases">
-                <methods>
-                    <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    
 </suite>
