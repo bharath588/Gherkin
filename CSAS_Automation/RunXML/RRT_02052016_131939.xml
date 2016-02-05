@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Enrolled">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Managed_Account_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_UnEnrolled">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Managed_Account_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
