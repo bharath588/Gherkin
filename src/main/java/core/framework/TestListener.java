@@ -86,7 +86,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onFinish(ISuite suite) {
-		  	  
+		Web.webdriver.quit();  	  
 	}
 
 	// This belongs to IInvokedMethodListener and will execute before every
