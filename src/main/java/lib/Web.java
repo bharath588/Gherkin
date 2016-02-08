@@ -633,8 +633,10 @@ public class Web {
 			//					+ ReadProperties.getEnvVariableValue("currTestCaseName")
 			//							.replaceAll(" ", "_") + "\\Screenshots";
 
-			Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
-					+ "/"
+//			Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
+//					+ "/"
+//					+ Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots";
+			Globals.GBL_strScreenshotsFolderPath = "./TestReport/"
 					+ Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots";
 
 			//			File screenShotDir = new File(WebActions.strScreenshotsFolderPath);
