@@ -3,25 +3,24 @@ package pageobjects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
+import lib.Reporter.Status;
+import lib.Stock;
 import lib.Web;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import com.relevantcodes.extentreports.LogStatus;
-
 import core.framework.Globals;
 import framework.util.CommonLib;
-import lib.Reporter.Status;
-import lib.Stock;
 
 public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
@@ -220,13 +219,31 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement OrderPINTitle;
 
 	@FindBy(css = "input[value = 'Mail Existing PIN']")
-	private WebElement btnOPMailExistingPIN;
+	private WebElement btnMailExistingPIN;
+	
+	@FindBy(css = "input[value = 'Order Temp PIN']")
+	private WebElement btnOrderTempPin;
+	
+	@FindBy(css = "input[value = 'Mail Existing VRU PIN and Web Passcode']")
+	private WebElement btnMailExstngVRUPINandWebPscd;
+	
+	@FindBy(css = "input[value = 'Mail Existing Web Passcode']")
+	private WebElement btnMailExstngWebPscd;
+	
+	@FindBy(css = "input[value = 'Mail Existing VRU PIN']")
+	private WebElement btnMailExstngVRUPIN;
+	
+	@FindBy(css = "input[value = 'Order Temp VRU PIN and Web Passcode']")
+	private WebElement btnOrderTempPINandWebPscd;	
+
+	@FindBy(css = "input[value = 'Order Temp Web Passcode']")
+	private WebElement btnOrderTempWebPscd;
+	
+	@FindBy(css = "input[value = 'Order Temp VRU PIN']")
+	private WebElement btnOrderTempVRUPIN;
 
 	@FindBy(css = "table[id='table_messageHandlerMessage'] div[class='messageContent']")
-	private WebElement txtExistingAndOrderPINMessage;
-
-	@FindBy(css = "input[value = 'Order Temp PIN']")
-	private WebElement btnOPOrderTempPin;
+	private List<WebElement> txtExistingAndOrderPINMessage;
 
 	@FindBy(xpath = "//*[@id='table_messageHandlerMessage']/tbody/tr/td[1]/img")
 	private WebElement imgInfoMsg;
@@ -266,9 +283,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'data centered']:nth-of-type(10)")
 	private List<WebElement> InstanceValue_List;
+	
+	@FindBy(css="table[id='table_messageHandlerMessage']")
+	private 
 
 	LoadableComponent<?> parent;
-
+	
 	/*-----------------------------------------------------------------*/
 
 	public ParticipantHome() {
@@ -310,7 +330,39 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (fieldName.trim().equalsIgnoreCase("SSN")) {
 			return this.SSNfield;
 		}
-
+		
+		if(fieldName.trim().equalsIgnoreCase("Mail Existing PIN")){
+			return this.btnMailExistingPIN;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Order Temp PIN")){
+			return this.btnOrderTempPin;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN and Web Passcode")){
+			return this.btnMailExstngVRUPINandWebPscd;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Mail Existing Web Passcode")){
+			return this.btnMailExstngWebPscd;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN")){
+			return this.btnMailExstngVRUPIN;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN and Web Passcode")){
+			return this.btnOrderTempPINandWebPscd;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Order Temp Web Passcode")){
+			return this.btnOrderTempWebPscd;
+		}
+		
+		if(fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN")){
+			return this.btnOrderTempVRUPIN;
+		}
+		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -318,6 +370,31 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 		return null;
 	}
+	
+	public String getPPTID(String WebRegStatus) throws Exception {		
+		ResultSet resultset = null;
+		String pptID = Globals.GC_EMPTY;
+		if(WebRegStatus.equalsIgnoreCase("Registered")){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
+					                    Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
+			if (resultset != null) {
+				while (resultset.next()) {
+					   pptID = resultset.getString("ID");
+				}
+			}
+		}
+		if(WebRegStatus.equalsIgnoreCase("NonRegistered")){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPPTIDforWebNonRegStatus")[0],
+                    					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
+			if (resultset != null) {
+				while (resultset.next()) {
+				   pptID = resultset.getString("ID");
+				}
+			}
+		}		
+		return pptID;
+	}
+
 
 	/**
 	 * Method to enter user credentials and click on Sign In button
@@ -367,8 +444,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(this.menuSearch);
 		Web.clickOnElement(this.menuSearch);
 		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
+		Reporter.logEvent(Status.INFO,"Performing search using PPT ID", "PPT ID : "+PPT_Or_SSN_Value , true);
 		Web.clickOnElement(this.SubmitPPTIdBtn);
-
+		
+		
 		Web.waitForElement(this.PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(this.PPTHomePageTitle,
 				true);
@@ -520,7 +599,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (resultset != null) {
 			try {
 				while (resultset.next()) {
-
 					String hireDate = resultset.getString("hire_date");
 					String termDate = resultset.getString("emp_termdate");
 					hireTermDateList.add(hireDate);
@@ -757,79 +835,66 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return personalDataDB;
 	}
 
-	public void verifyPIN_ExistingOrTemp(String pinType) throws Exception {
+	public void verifyPIN_ExistingOrTemp() throws Throwable {
 		String parentWindow = Globals.GC_EMPTY;
-		String getMessage = null;
-		String getOrderPINMsgA = Globals.GC_EMPTY;
-		String getOrderPINMsgB = Globals.GC_EMPTY;
-		Web.waitForElement(lnkOrderPIN);
-		Web.clickOnElement(lnkOrderPIN);
-		parentWindow = Web.webdriver.getWindowHandle();
-		for (String childWindow : Web.webdriver.getWindowHandles()) {
-			Web.webdriver.switchTo().window(childWindow);
-		}
-		if (Web.isWebElementDisplayed(btnOPMailExistingPIN)
-				& Web.isWebElementDisplayed(btnOPOrderTempPin)) {
-			Reporter.logEvent(Status.PASS,
-					"Validate if both PIN buttons display",
-					"Successfully validated that both Mail Existing and"
-							+ " Temporary PIN buttons are displayed", false);
-
-			if (pinType.equalsIgnoreCase("Existing")) {
-				Web.clickOnElement(btnOPMailExistingPIN);
-												
-				getMessage = new StringBuilder(txtExistingAndOrderPINMessage.getText()).
-						                                  delete(0,1).toString().trim();				
-			
-				// Checking if all the characters are present excluding " "
-				if (getMessage.matches(".*\\d+.*") 					
-					& getMessage.replaceAll("\\d","").replace(" ", "").
-					  equals((CommonLib.MailExistingPINMsg).replace(" ", ""))
-					& Web.isWebElementDisplayed(imgInfoMsg) ) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Validate information message for Mail Existing PIN",
-							"Message validated successfully", false);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Validate information message for Mail Existing PIN",
-							"Message validation failed", true);
-				}
-			} else if (pinType.equalsIgnoreCase("Temporary")) {
-				Web.clickOnElement(btnOPOrderTempPin);
-				
-				getOrderPINMsgA = new StringBuilder(txtExistingAndOrderPINMessage
-						              .findElement(By.xpath("//tbody/tr/td[2]/div[2]"))
-						              .getText()).delete(0,1).toString();
-				getOrderPINMsgB = new StringBuilder(txtExistingAndOrderPINMessage.
-						              findElement(By.xpath("//tbody/tr/td[2]/div[4]")).
-						              getText()).delete(0,1).toString().trim();
-								
-				if (getOrderPINMsgA.replace(" ", "").equals((CommonLib.OrderTempPINMsgA).replace(" ", ""))
-						& getOrderPINMsgB.matches(".*\\d+.*")
-						& getOrderPINMsgB.replaceAll("\\d","").replace(" ", "").equals(
-						  (CommonLib.OrderTempPINMsgB).replace(" ", ""))
-						& Web.isWebElementDisplayed(imgInfoMsg)) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Validate information message for Order Temporary PIN",
-							"Message validated successfully", false);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Validate information message for Order Temporary PIN",
-							"Message validation failed", true);
-				}
+		Map<String,String> getMessage = new LinkedHashMap<String,String>();
+		int iEleIndex=0;
+		CommonLib cl = new CommonLib();
+		String msgVarName = Stock.GetParameterValue("ValidateMsgVarNm");
+		if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
+			Web.waitForElement(lnkOrderPIN);
+			Web.clickOnElement(lnkOrderPIN);			
+			parentWindow = Web.webdriver.getWindowHandle();		
+			for (String childWindow : Web.webdriver.getWindowHandles()) {
+				Web.webdriver.switchTo().window(childWindow);
 			}
-		} else {
-			Reporter.logEvent(Status.FAIL,
-					"Validate if both PIN buttons display",
-					"Either of Mail Existing or"
-							+ " Temporary PIN button is not displayed", true);
 		}
-		Web.webdriver.close();
-		Web.webdriver.switchTo().window(parentWindow);
+	 
+		if(Web.isWebElementDisplayed(getWebElement(Stock.GetParameterValue("btnName")))){
+			   getWebElement(Stock.GetParameterValue("btnName")).click();
+			   if(!msgVarName.contains(",")){msgVarName=msgVarName+", ";}
+			   for(String str : msgVarName.split(",")){
+				   if(!str.trim().equals(Globals.GC_EMPTY)){getMessage.put(str.trim(),(String) cl.getVarByName(str));}	
+			   }
+			   if(getMessage.size()>0 & txtExistingAndOrderPINMessage.size()>0){
+					   for (Map.Entry<String, String> expectedMsg : getMessage.entrySet()) {
+						   String getObjText = new StringBuilder(txtExistingAndOrderPINMessage.get(iEleIndex)
+								                                .getText()).delete(0,1).toString().trim();
+						   if(!expectedMsg.getKey().contains("Note")){
+							  if(getObjText.matches(".*\\d+.*") 
+							    & getObjText.replaceAll("\\d","").replaceAll(" ","").equals(expectedMsg.getValue().replaceAll(" ",""))
+							    & Web.isWebElementDisplayed(imgInfoMsg)){
+								Reporter.logEvent(Status.PASS,"Validate info message for button "
+							                      +expectedMsg.getKey(),"Info message successfully validated",false);
+							 }else{
+								 Reporter.logEvent(Status.FAIL,"Validate info message for button "
+							                      +expectedMsg.getKey(),"Info message validation failed",true);
+							 }   
+						   }else{
+							  if(getObjText.replaceAll(" ","").equals(expectedMsg.getValue().replaceAll(" ",""))){
+								  Reporter.logEvent(Status.PASS,"Validate info message for button "
+					                      +expectedMsg.getKey(),"Info message successfully validated",false);
+							  }else{
+								  Reporter.logEvent(Status.FAIL,"Validate info message for button "
+					                      +expectedMsg.getKey(),"Info message validation failed",true);
+							  }
+						   }
+						   iEleIndex++;
+					   }    
+			   }else{
+				   Reporter.logEvent(Status.FAIL,"Validate if respective info message for the button is displayed",
+						             "Info message for button :" +Stock.GetParameterValue("btnName")
+						             + " is not displayed",true);
+			   }
+		}else{
+			Reporter.logEvent(Status.FAIL,"Validate if respective info message for the button is displayed",
+		             "Info message for button :" +Stock.GetParameterValue("btnName")
+		             + " is not displayed",true);
+		}	
+		if(Stock.GetParameterValue("closeChildBrowser").equalsIgnoreCase("TRUE")){
+			Web.webdriver.close();
+			Web.webdriver.switchTo().window(parentWindow);
+		}
 	}
 
 }

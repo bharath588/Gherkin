@@ -65,8 +65,8 @@ public class validate_participanthomepage {
 				participantHomeObj.submitLoginCredentials(
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password"));
-			}
-
+			}			
+			
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
 					Stock.GetParameterValue("ppt_id"),
@@ -122,7 +122,7 @@ public class validate_participanthomepage {
 				participantHomeObj.submitLoginCredentials(
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password"));
-			}
+			}			
 			
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
@@ -177,7 +177,7 @@ public class validate_participanthomepage {
 							Stock.GetParameterValue("username"),
 							Stock.GetParameterValue("password"));
 				}
-
+			
 			// Step2:Search with PPT ID..
 			   participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
 					Stock.GetParameterValue("ssn"),
@@ -218,7 +218,8 @@ public class validate_participanthomepage {
 	------------------------------------------------------------------------------------------------------------------------------------------------------------
 */	@Test(dataProvider = "setData")
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr,
-			Map<String, String> testdata) {
+			Map<String, String> testdata) throws Throwable {
+		String pptID = Globals.GC_EMPTY;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 
@@ -232,14 +233,16 @@ public class validate_participanthomepage {
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password"));
 			}
-
+			
 			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ppt_id"),
-					                                Web.returnElement(participantHomeObj,"PPT_ID"));
-
+			if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
+				pptID = participantHomeObj.getPPTID(Stock.GetParameterValue("web_reg_status"));
+	
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
+			}
+			
 			// Step3: Verify Mail existing PIN and Order Temp PIN message
-			participantHomeObj.verifyPIN_ExistingOrTemp(Stock
-					.GetParameterValue("pin_type"));
+			participantHomeObj.verifyPIN_ExistingOrTemp();
 
 		} catch (Exception e) {
 			e.printStackTrace();
