@@ -3,17 +3,14 @@ package app.csas.testcases.participanthomepage;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import pageobjects.ParticipantHome;
 import core.framework.Globals;
 
@@ -62,6 +59,7 @@ public class validate_participanthomepage {
 				Reporter.logEvent(Status.PASS,
 						"Check if the CSAS Log in page open",
 						"CSAS log in page launhced successfully", true);
+				
 				participantHomeObj.submitLoginCredentials(
 						Stock.GetParameterValue("username"),
 						Stock.GetParameterValue("password"));
@@ -263,6 +261,105 @@ public class validate_participanthomepage {
 		}
 	}
 
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+TESTCASE:			Validate_Registration_Status_On_PPT_Home_Page
+DESCRIPTION:	    Validate Registration status on PPT home page
+PARAMETERS: 		int itr, Map<String, String> testdata
+RETURNS:		    VOID	
+REVISION HISTORY: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Author : Ranjan     Date : 02-02-16      
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/	@Test(dataProvider = "setData")
+	public void Validate_Registration_Status_On_PPT_Home_Page(int itr,
+		Map<String, String> testdata) {
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+
+		// Step1:Launch and logged into CSAS application..
+		participantHomeObj = new ParticipantHome().get();
+		if (Web.appLoginStatus == false) {
+			Reporter.logEvent(Status.PASS,
+					"Check if the CSAS Log in page open",
+					"CSAS log in page launhced successfully", true);
+			participantHomeObj.submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
+		}
+
+		// Step2:Search with PPT ID..
+		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ppt_id"),
+				                                Web.returnElement(participantHomeObj,"PPT_ID"));
+
+		// Step3: Verify Registration status
+		participantHomeObj.verify_Registration_Status(Stock
+				.GetParameterValue("reg_status"));
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				"Exception Occured", true);
+	} catch (AssertionError ae) {
+		ae.printStackTrace();
+		Globals.assertionerror = ae;
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+				"Assertion Failed!!", true);
+	} finally {
+			try {
+			Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+			e1.printStackTrace();
+			}
+		}
+	}
+
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+TESTCASE:			Validate_Registration_Status_On_PPT_Home_Page
+DESCRIPTION:	    Validate Registration status on PPT home page
+PARAMETERS: 		int itr, Map<String, String> testdata
+RETURNS:		    VOID	
+REVISION HISTORY: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Author : Ranjan     Date : 02-02-16      
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/	@Test(dataProvider = "setData")
+	public void Validate_Managed_Account_Status_On_PPT_Home_Page(int itr,
+		Map<String, String> testdata) {
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+
+		// Step1:Launch and logged into CSAS application..
+		participantHomeObj = new ParticipantHome().get();
+		if (Web.appLoginStatus == false) {
+			Reporter.logEvent(Status.PASS,
+					"Check if the CSAS Log in page open",
+					"CSAS log in page launhced successfully", true);
+			participantHomeObj.submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
+		}
+		// Step2: Verify Registration status
+		participantHomeObj.verify_Managed_Account_Status(Stock
+				.GetParameterValue("managed_acc_status"));
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				"Exception Occured", true);
+	} catch (AssertionError ae) {
+		ae.printStackTrace();
+		Globals.assertionerror = ae;
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+				"Assertion Failed!!", true);
+	} finally {
+			try {
+			Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+			e1.printStackTrace();
+			}
+		}
+	}
 	@AfterSuite
 	public void cleanUpSession() {
 		Web.webdriver.close();

@@ -6,19 +6,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
 import core.framework.Globals;
 import framework.util.CommonLib;
 
@@ -26,6 +24,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	private ArrayList<String> hireTermDateList;
 	ArrayList<String> personalDataDB;
+	ArrayList<String> plan_And_Participant_List;
 
 	// CSAS Login..
 
@@ -40,6 +39,18 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "input[value='Log In']")
 	private WebElement CSASLoginBtn;
+	
+	@FindBy(xpath = "//a[contains(text(),'Registered')]//td[@class = 'colTitle rightJust']")
+	private WebElement Reg_Status_UserName_Label;
+	
+	@FindBy(xpath = "//a[contains(text(),'Registered')]//td[@class = 'data']")
+	private WebElement Reg_Status_UserName_data;
+	
+	@FindBy(css = "table#partList")
+	private WebElement partList_Tab;
+	
+	@FindBy(css = "table#partList tr>td:nth-of-type(15)")
+	private List<WebElement> PlanNoOnPartList_Link;
 
 	// Participant Plan Search..
 
@@ -698,8 +709,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 		ArrayList<String> personal_Data_From_DB;
 		try {
-
-			System.out.println("I am here");
 			personal_Data_From_DB = get_Personal_Data_From_DB(
 					Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
 		
@@ -895,6 +904,377 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 		}
+	}
+	
+	/**
+	 * Method to verify registration status
+	 * 
+	 * @param =reg_status
+	 * @author rnjbdn
+	 */
+	public void verify_Registration_Status(String reg_status) {
+
+		String reg_status_On_Web;
+		try {
+			Web.waitForElement(participantRegStatusLabel);
+			if (Web.isWebElementDisplayed(participantRegStatusLabel)
+					&& Web.isWebElementDisplayed(participantRegStatus)) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Validate Web registration status label and reg status on ppt homepage",
+						"Web registration status label and reg status on ppt homepage displayed successfully",
+						false);
+				switch (reg_status) {
+				case "Registered":
+					reg_status_On_Web = participantRegStatus.getText();
+					if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
+						Reporter.logEvent(Status.PASS,
+								"Validate Web registration on ppt homepage is : "
+										+ reg_status,
+								"Web registration status on PPT homepage is: "
+										+ reg_status_On_Web, false);
+						Web.mouseHover(participantRegStatus);
+						String userName_label = Reg_Status_UserName_Label
+								.getText();
+						String userName = Reg_Status_UserName_data.getText();
+
+						if (userName.matches("[0-9a-zA-Z]+")) {
+							Reporter.logEvent(
+									Status.PASS,
+									"Validate on hover Username display with number on ppt homepage",
+									"On hover Username displayed succefully with number on ppt homepage:\n\n"
+											+ userName_label + ":  " + userName,
+									false);
+						} else {
+							Reporter.logEvent(
+									Status.FAIL,
+									"Validate on hover Username display with number on ppt homepage",
+									"On hover Username didn't display with number on ppt homepage:\n\n"
+											+ userName_label + ":  " + userName,
+									false);
+						}
+					} else {
+
+						Reporter.logEvent(Status.FAIL,
+								"Validate Web registration on ppt homepage is : "
+										+ reg_status,
+								"Web registration status on PPT homepage is not : "
+										+ reg_status_On_Web, false);
+					}
+					break;
+				case "Not Registered":
+
+					break;
+				}
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Validate Web registration status label and reg status on ppt homepage",
+						"Web registration status label and reg status on ppt homepage didn't display successfully",
+						false);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to verify managed account status
+	 * 
+	 * @param managed_Acc_Status
+	 * @author rnjbdn
+	 */
+	public void verify_Managed_Account_Status(String managed_Acc_Status) {
+
+		ArrayList<String> plan_And_Participant_ID_From_DB;
+		String plan_Num_DB = null;
+		String part_id = null;
+		try {
+			switch (managed_Acc_Status) {
+			case "ENROLLED":
+
+				// Get data from db for Enrolled participant
+				plan_And_Participant_ID_From_DB = get_Participant_ID_From_DB_For_Managed_Acc_Status(
+						Stock.getTestQuery("get_Particiant_ID_From_Part_Services"),
+						managed_Acc_Status);
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(
+						plan_And_Participant_ID_From_DB.get(0), PPTIdfield);
+				// Verify managed account message
+				if (plan_And_Participant_ID_From_DB.get(1).equalsIgnoreCase(
+						"ENROLLED")) {
+					verify_Managed_Account_Message(Stock
+							.GetParameterValue("expected_msg"));
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"As per the effective date participant status has been changed",
+							"As per the effective date participant status has been changed please look for other participant",
+							false);
+				}
+				break;
+			case "UNENROLLED":
+				// Get data from db for Enrolled participant
+				plan_And_Participant_ID_From_DB = get_Participant_ID_From_DB_For_Managed_Acc_Status(
+						Stock.getTestQuery("get_Particiant_ID_From_Part_Services"),
+						managed_Acc_Status);
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(
+						plan_And_Participant_ID_From_DB.get(0), PPTIdfield);
+				// Verify managed account message
+				if (plan_And_Participant_ID_From_DB.get(1).equalsIgnoreCase(
+						"UNENROLLED")) {
+					verify_Managed_Account_Message(Stock
+							.GetParameterValue("expected_msg"));
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"As per the effective date participant status has been changed",
+							"As per the effective date participant status has been changed please look for other participant",
+							false);
+				}
+				break;
+			case "Plan Not Offered":
+				// Get data from db for Enrolled participant
+				// plan_Num_DB = get_Plan_number_From_DB(
+				// Stock.getTestQuery("get_Plan_Number_From_DB"));
+
+				part_id = get_Participant_Id_From_DB(
+						Stock.getTestQuery("get_Part_ID_From_DB"), "331883-01");
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(part_id, PPTIdfield);
+
+				// Verify managed account message
+				verify_Managed_Account_Message(Stock
+						.GetParameterValue("expected_msg"));
+				break;
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to retrieve managed account status from d_isis DB
+	 * 
+	 * @param get_IndID_PlanID_FromPartService
+	 *            ,managed_Acc_Status
+	 * @return ArrayList
+	 * @author rnjbdn
+	 */
+	public ArrayList<String> get_Participant_ID_From_DB_For_Managed_Acc_Status(
+			String[] get_IndID_PlanID_FromPartService, String managed_Acc_Status) {
+
+		ResultSet resultset;
+		plan_And_Participant_List = new ArrayList<String>();
+		String ind_id = null;
+		String status_reason_code = null;
+		resultset = DB.executeQuery(get_IndID_PlanID_FromPartService[0],
+				get_IndID_PlanID_FromPartService[1], managed_Acc_Status);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					ind_id = resultset.getString("ind_id");
+					status_reason_code = resultset
+							.getString("status_reason_code");
+					plan_And_Participant_List.add(ind_id);
+					plan_And_Participant_List.add(status_reason_code);
+
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return plan_And_Participant_List;
+	}
+
+	/**
+	 * Method to retrieve plan Number from d_isis DB
+	 * 
+	 * @param get_Plan_Num_From_PartService
+	 * @return ArrayList
+	 * @author rnjbdn
+	 */
+	public String get_Plan_number_From_DB(String[] get_Plan_Num_From_PartService) {
+
+		ResultSet resultset;
+		String plan_Num = null;
+		System.out.println(get_Plan_Num_From_PartService[0] + "   "
+				+ get_Plan_Num_From_PartService[1]);
+		resultset = DB.executeQuery(get_Plan_Num_From_PartService[0],
+				get_Plan_Num_From_PartService[1]);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					plan_Num = resultset.getString("ga_id");
+					System.out.println(plan_Num + "-------");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return plan_Num;
+	}
+
+	/**
+	 * Method to retrieve participant ID from d_isis DB
+	 * 
+	 * @param get_Part_ID_From_DB
+	 *            ,planNum
+	 * @return ArrayList
+	 * @author rnjbdn
+	 */
+	public String get_Participant_Id_From_DB(String[] get_Part_ID_From_DB,
+			String planNum) {
+
+		ResultSet resultset;
+		String part_ID = null;
+		resultset = DB.executeQuery(get_Part_ID_From_DB[0],
+				get_Part_ID_From_DB[1], planNum);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					part_ID = resultset.getString("ind_id");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return part_ID;
+	}
+
+	/**
+	 * Method to click on the first plan while an ind_id shows multiple SSN
+	 * 
+	 * @param plan_Number_DB
+	 * @author rnjbdn
+	 */
+	public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB) {
+
+		String plan_No_Web = null;
+		boolean isElementDisplayed;
+		try {
+			Web.waitForElement(partList_Tab);
+			if (Web.isWebElementDisplayed(partList_Tab)) {
+				Reporter.logEvent(Status.PASS,
+						"Participant table should display",
+						"Participant table is displayed successfully", false);
+				for (int i = 1; i < PlanNoOnPartList_Link.size(); i++) {
+					plan_No_Web = PlanNoOnPartList_Link.get(0).getText();
+					System.out.println(plan_No_Web + "  : " + plan_Number_DB);
+					if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)) {
+
+						Web.webdriver.findElement(
+								By.xpath("//table[@id = 'partList']//tr[" + i
+										+ "]/td[1]/a")).click();
+
+						Web.waitForElement(this.PPTHomePageTitle);
+						isElementDisplayed = Web.isWebElementDisplayed(
+								this.PPTHomePageTitle, true);
+						if (isElementDisplayed) {
+							Reporter.logEvent(
+									Status.PASS,
+									"Participant Home Page with all the details should display",
+									"Participant Home Page with all the details is displayed successfully",
+									true);
+							break;
+						} else {
+							Reporter.logEvent(
+									Status.FAIL,
+									"Participant Home Page with all the details should not display",
+									"Participant Home Page with all the details is not displayed",
+									false);
+						}
+					}
+				}
+
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Participant table should display",
+						"Participant table is displayed successfully", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Method to verify Managed account message
+	 * 
+	 * @param managed_Acc_Status
+	 * @author rnjbdn
+	 */
+	public void verify_Managed_Account_Message(String managed_Acc_Status) {
+
+		try {
+			if (Web.isWebElementDisplayed(participantMngAccStsLabel, true)
+					&& Web.isWebElementDisplayed(participantMngAccSts)) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Validate Managed Account status label and managed account status on ppt homepage",
+						"Managed Account status label and managed account status on ppt homepage displayed successfully",
+						false);
+
+				if (participantMngAccSts.getText().trim()
+						.contains(managed_Acc_Status)) {
+					Reporter.logEvent(Status.PASS,
+							"Verify the Participant's Managed Account Status - for "
+									+ managed_Acc_Status,
+							"The Participant's Managed Account Status: "
+									+ participantMngAccSts.getText(), false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify the Participant's Managed Account Status - for "
+									+ managed_Acc_Status,
+							"The Participant's Managed Account Status: "
+									+ participantMngAccSts.getText(), false);
+				}
+
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Validate Managed Account status label & managed account status on ppt homepage",
+						"Managed Account status label and managed account status on ppt homepage displayed successfully",
+						false);
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to enter participant ID and click on Sign In button on QAA
+	 * 
+	 * @param ppt_id
+	 * @throws Exception
+	 */
+	public void search_PPT_Plan_With_PPT_ID_OR_SSN_On_QAA(
+			String PPT_Or_SSN_Value, WebElement searchField) throws Exception {
+		boolean isElementDisplayed = false;
+		Web.waitForElement(menuSearch);
+		Web.clickOnElement(menuSearch);
+		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
+		Web.clickOnElement(SubmitPPTIdBtn);
+		isElementDisplayed = Web.isWebElementDisplayed(partList_Tab, true);
+		if (isElementDisplayed) {
+			Reporter.logEvent(Status.PASS,
+					"Search should display list of participant",
+					"Search displayed with list of participant successfully",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Search should display list of participant",
+					"Search didn't display with list of participant successfully",
+					false);
+		}
+
 	}
 
 }

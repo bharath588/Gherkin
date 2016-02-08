@@ -3,8 +3,8 @@ package framework.util;
 import java.lang.reflect.Field;
 
 public class CommonLib {
-	  	
-	  public final String MailExistingPINMsg = "Combined verification and pin letter generated: doc_id = "
+
+	 public final String MailExistingPINMsg = "Combined verification and pin letter generated: doc_id = "
 	  		              + " If a PIN confirmation letter doc id is displayed then a reminder PIN letter will be"
 	  		              + " sent to the participant.  If \"No document to generate.\" displays then a"
 	  		              + " reminder PIN letter will not be sent until PIN has been system generated."
@@ -23,12 +23,29 @@ public class CommonLib {
 	  public  final String OrderTempWebPsCd = "The temporary web passcode number is";
 	  
 	  public  final String OrderTempVRUPIN = "The temporary VRU PIN number is";
-	
+	  
 	  public  Object getVarByName(String fieldName) throws Throwable {
 	        Field field = this.getClass().getDeclaredField(fieldName);
 	        return field.get(this);
 	  }
+	
+	  public static long startTime;
+	  public static long finishTime;
+	  public static long totalTime;
+	  public static double totalTimeTaken_Sec;
 
-	  
-	  
+	/**
+	 * Method to calculate Total time taken to launch application
+	 * 
+	 * @param startTime
+	 * @return double
+	 */
+	  public double total_Time_Taken_To_Launch_Page(long startTime) {
+		finishTime = System.currentTimeMillis();
+		totalTime = finishTime - startTime;
+		totalTimeTaken_Sec = totalTime / 1000;
+
+		return totalTimeTaken_Sec;
+	  }
+
 }
