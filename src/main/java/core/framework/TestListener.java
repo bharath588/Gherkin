@@ -86,7 +86,13 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onFinish(ISuite suite) {
-		Web.webdriver.quit();  	  
+		try {
+			if (Web.webdriver.getWindowHandles().size() >= 0)
+				Web.webdriver.quit();
+		} catch (Exception e) {
+			//Do Nothing
+		}
+		
 	}
 
 	// This belongs to IInvokedMethodListener and will execute before every
