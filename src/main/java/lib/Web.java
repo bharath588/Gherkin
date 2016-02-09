@@ -293,11 +293,11 @@ public class Web {
 	public static WebDriver getWebDriver(String webBrowser) {
 		WebDriver webDriver;
 
-		try {
-			robot = new Robot();
-		} catch (AWTException e) { 
-			e.printStackTrace();
-		}
+//		try {
+//			robot = new Robot();
+//		} catch (AWTException e) { 
+//			e.printStackTrace();
+//		}
 
 
 		if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
@@ -317,14 +317,20 @@ public class Web {
 			webDriver = new ChromeDriver();
 		} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 				|| webBrowser.trim().equalsIgnoreCase("FF")) {
-			ProfilesIni profiles = new ProfilesIni();
-			FirefoxProfile ffProfile = profiles.getProfile("default");
-			ffProfile.setPreference("signon.autologin.proxy", true);
-			webDriver = new FirefoxDriver(ffProfile);
+//			ProfilesIni profiles = new ProfilesIni();
+//			FirefoxProfile ffProfile = profiles.getProfile("default");
+//			
+//			if (ffProfile == null)
+//				throw new Error("FireFox profile 'default' does not exist!");
+//			
+//			ffProfile.setPreference("signon.autologin.proxy", true);
+//			webDriver = new FirefoxDriver(ffProfile);
+			webDriver = new FirefoxDriver();
 		} else {
 			throw new Error("Unknown browser type specified: " + webBrowser);
 		}
-
+		
+		webDriver.manage().window().maximize();
 		return webDriver;
 	}
 
@@ -677,7 +683,7 @@ public class Web {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Globals.GBL_strScreenshotsFolderPath + "\\" + fileName;
+		return "./" + Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots" + "\\" + fileName;
 	}
 
 	/*
