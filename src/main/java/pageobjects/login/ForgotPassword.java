@@ -15,15 +15,14 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	private LoadableComponent<?> parent;
 	private boolean iselementDisplayed;
 	
-	@FindBy(xpath=".//*[contains(text(),'Login Help')]") private WebElement lblLoginHelp;
+	@FindBy(xpath=".//*[contains(text(),'Login help')]") private WebElement lblLoginHelp;
 	@FindBy(xpath=".//*[contains(text(),'Enter the information below to recover your username')]") private WebElement lblLoginHelpTxr;
 	@FindBy(xpath=".//*[@for='ssnInput']") private WebElement lblSSN;
 	@FindBy(xpath=".//*[@for='zipCodeInput']") private WebElement lblZipCode;
 	@FindBy(xpath=".//*[@for='lastNameInput']") private WebElement lblLastName;
 	@FindBy(xpath=".//*[@for='dateOfBirthInput']") private WebElement lblDateofBirth;
 	@FindBy(xpath=".//*[@for='streetAddressInput']") private WebElement lblStreetAddress;
-	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
-	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinue;
+	@FindBy(xpath=".//form[@name='registerForm']/.//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='ssnInput']") private WebElement txtSSN;
 	@FindBy(xpath=".//*[@id='zipCodeInput']") private WebElement txtZipCode;
 	@FindBy(xpath=".//*[@id='lastNameInput']") private WebElement txtLastName;
@@ -57,12 +56,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelp));
-//		iselementDisplayed = WebActions.isWebElementDisplayed(lblLoginHelp);
-//		if (!iselementDisplayed) {
-//			throw new AssertionError("Forgot Password Page is not loaded.");
-//		}
-		
+		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelpTxr));
 	}
 
 	@Override
@@ -219,13 +213,6 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 			this.txtPassword.sendKeys(password);
 			this.txtReEnterPassword.sendKeys(reEnterPassword);
 			this.btnContinueAccRecovery.click();
-			
-			//verify the outcome of the above operation
-			
-			
-			
-		
-		
 		
 	} 
 	

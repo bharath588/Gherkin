@@ -35,15 +35,14 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(id="deliveryOption") private WebElement lstDeliveryOption;
 	@FindBy(xpath=".//form/.//a[text()[normalize-space()='Already have a code?']][1]") private WebElement lnkAlreadyHaveCodeFogotPsw;
 	@FindBy(xpath=".//form/.//a[text()[normalize-space()='Already have a code?']][2]") private WebElement lnkAlreadyHaveCodeMFA;
-	@FindBy(className="continueBtn") private WebElement btnContinue;
+	@FindBy(id="submit") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinueFogotPsw;
 	@FindBy(id="deliveryOptionsContinue") private WebElement btnSendMeACode;
 	@FindBy(id="verification_codeInput") private WebElement txtCodeInput;
 	@FindBy(id="remember_deviceInput") private WebElement chkRememberDevice;
-//	@FindBy(xpath=".//*[@id='submit' and @value='Sign in']") private WebElement btnSignIn;
 	@FindBy(id="signin") private WebElement btnSignIn;
 	@FindBy(linkText="Didn't receive the code?") private WebElement lnkDidntReceiveCode;
-	@FindBy(xpath=".//*[text()[normalize-space()='Login Help']]") private WebElement lblLoginHelp;
+	@FindBy(xpath=".//*[text()[normalize-space()='Login help']]") private WebElement lblLoginHelp;
 	
 	/** Empty args constructor
 	 * 
@@ -184,13 +183,6 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				this.lnkAlreadyHaveCodeFogotPsw.click();;
 			} else {
 				this.lnkAlreadyHaveCodeMFA.click();
-//				try {
-//					Thread.sleep(10000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				this.lnkAlreadyHaveCodeMFA.click();
 			}
 			
 			Reporter.logEvent(Status.INFO, "Select verification code delivery option", 
@@ -210,7 +202,6 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			}
 		}
 		
-		//this.btnContinue.click();
 		
 		this.btnSendMeACode.click();
 		try {
@@ -218,7 +209,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println("clicked");
+		
 	}
 	
 	/**<pre> Method to submit verification code
@@ -273,10 +264,6 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		else {
 			// Code to fetch activation/verification code from database
 			String[] sqlQuery = null;
-//			sqlQuery = "select TAG_VALUE from WORK_EMAIL_REQUEST_DETAIL WD inner join " + 
-//						"(select ID from WORK_EMAIL_REQUEST where USER_ID like 'AC%' and PROCESSED_DATE_TIME is null " + 
-//						"order by REQUESTED_DATE_TIME desc) A " +
-//						"on WD.WER_ID = A.ID where WD.TAG_CODE = 'ACTIVATION'";
 			
 			try {
 				sqlQuery = Stock.getTestQuery("fetchActivationCode");

@@ -11,7 +11,6 @@ import lib.Reporter.Status;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -29,7 +28,6 @@ public class logintestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		//Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
 		
 	}
@@ -44,12 +42,6 @@ public class logintestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
-/*	@BeforeMethod
-    public void getTCName(Method tc) {
-         //  tcName = tc.getName();       
-         //  lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
-    }
-	*/
 	
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_invalid_Userid_and_Password(int itr, Map<String, String> testdata){
@@ -67,7 +59,6 @@ public class logintestcases {
 			}
 			
 			String errMsg = "";
-			//login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {
@@ -95,14 +86,14 @@ public class logintestcases {
                         ae.printStackTrace();
                         Globals.error = ae;
                         Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-                        //throw ae;
+                        
         }
 		finally {
         }
 		try {
             Reporter.finalizeTCReport();
 		} catch (Exception e1) {
-            // TODO Auto-generated catch block
+            
             e1.printStackTrace();
 }
 	}
@@ -110,7 +101,6 @@ public class logintestcases {
 @Test(dataProvider = "setData")
 public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
 	Stock.globalTestdata = testdata;
-//  Globals.GBL_CurrentIterationNumber = itr;
 	
 	try{
 		Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
@@ -174,7 +164,6 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		landingPage.dismissPopUps(true, true);
 		
 		//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
-		//LandingPage landingPage = new LandingPage(twoStepVerification);
 		if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 			Reporter.logEvent(Status.PASS, "Verify landing page is displayed", 
 					"Landing page is displayed", true);
@@ -198,14 +187,13 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
         ae.printStackTrace();
         Globals.assertionerror = ae;
         Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-        //throw ae;
     }
     finally {
     }
     try {
                     Reporter.finalizeTCReport();
     } catch (Exception e1) {
-                    // TODO Auto-generated catch block
+                    
                     e1.printStackTrace();
     }
 	}

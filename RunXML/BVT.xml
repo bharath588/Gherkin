@@ -2,13 +2,40 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.utils.TestListener"/>
+        <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="testXML">
+
+    <test name="SIT_xPPTWEB_Login_03_04_TC01_already have an Activation Code">
         <classes>
-            <class name="app.pptweb.testcases.authenticationtestcases">
+            <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <exclude name="SF01_TC01_SendActivationCodeThroughLoginFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text">
+        <classes>
+            <class name="app.pptweb.testcases.login.authenticationtestcases">
+                <methods>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_xPPTWEB_Login_03_04_TC03_Send Activation Code by Voice">
+        <classes>
+            <class name="app.pptweb.testcases.login.authenticationtestcases">
+                <methods>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email">
+        <classes>
+            <class name="app.pptweb.testcases.login.authenticationtestcases">
+                <methods>
                     <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
                 </methods>
             </class>

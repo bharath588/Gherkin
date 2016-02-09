@@ -11,7 +11,6 @@ import lib.Reporter.Status;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -28,9 +27,7 @@ public class authenticationtestcases {
 
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
-		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		Globals.GBL_SuiteName = this.getClass().getName();		
 	}
 
 	@DataProvider
@@ -43,21 +40,12 @@ public class authenticationtestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
-	@BeforeMethod
-	public void getTCName(Method tc) {
-		tcName = tc.getName();       
-	}
-
-
-
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
-
 
 		try{
-			Reporter.initializeReportForTC(itr, "SF01_TC01_SendActivationCodeThroughLoginFlow");
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -113,9 +101,7 @@ public class authenticationtestcases {
 
 			//Select code delivery option and click continue
 			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
-			//			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue", "Done", true);
-			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue", 
-					"Done", true);
+			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue","Done", true);
 
 			//Get verification code from database
 			String verificationCode = "";
@@ -160,14 +146,12 @@ public class authenticationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
 		}
 		finally {
 		}
 		try {
 			Reporter.finalizeTCReport();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -175,9 +159,9 @@ public class authenticationtestcases {
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+
 		try{
-			Reporter.initializeReportForTC(itr, "SF04_TC01_SendActivationCode_ForgotPasswordFlow");
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -187,8 +171,6 @@ public class authenticationtestcases {
 			LoginPage objLogin = new LoginPage();
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);
-			//LandingPage objland = new LandingPage(objAuth);	
-
 
 			Reporter.logEvent(Status.INFO, "Navigate to forgot password page.", "forgot password page is displayed", true);
 
@@ -244,7 +226,7 @@ public class authenticationtestcases {
 
 			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
 			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
-			
+
 		}
 		catch(Exception e)
 		{
@@ -257,14 +239,13 @@ public class authenticationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
+
 		}
 		finally {
 		}
 		try {
 			Reporter.finalizeTCReport();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -277,13 +258,12 @@ public class authenticationtestcases {
 		boolean isMatching;
 		boolean eleDisplayed;
 		try{
-
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			LoginPage objLogin = new LoginPage();
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);
 
 			Reporter.logEvent(Status.INFO, "Navigate to forgot password page.", "forgot password page is displayed", true);
-
 			//------------------------------------------------------------------------------------------------------------------------
 			//Step 3 - Verify following verbiage is displayed "Enter the information below to recover your username. You will have the option to change your password." 
 			//		 
@@ -345,14 +325,14 @@ public class authenticationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
+
 		}
 		finally {
 		}
 		try {
 			Reporter.finalizeTCReport();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+
 			e1.printStackTrace();
 		}
 

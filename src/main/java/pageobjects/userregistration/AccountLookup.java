@@ -34,9 +34,10 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(id="lastNameInput") private WebElement txtLastName;
 	@FindBy(id="dateOfBirthInput") private WebElement txtDateOfBirth;
 	@FindBy(id="streetAddressInput") private WebElement txtStreetAddress;
-	@FindBy(id="pinInput") private WebElement txtPINInput;
+	//@FindBy(id="pinInput") private WebElement txtPINInput;
+	@FindBy(xpath=".//*[@id='registrationContent']/.//*[@id='pinInput']") private WebElement txtPINInput;
 //	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinue;
-	@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
+	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='noPin']/a") private WebElement btnContinueOnGroupAccPasswordTab;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Social Security Number')]") private WebElement lblSSNErrMsg;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and (contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;

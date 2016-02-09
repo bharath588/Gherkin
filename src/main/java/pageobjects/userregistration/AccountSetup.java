@@ -321,9 +321,12 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 			expMobileNumber = (expMobileNumber==null)? "":expMobileNumber;
 			expMobileNumberAreaCode = (expMobileNumberAreaCode==null)? "":expMobileNumberAreaCode;
 			
+				
 			actEmailAddress = this.txtEmail.getAttribute("value");
 			actMobileNumber = this.txtPhone.getAttribute("value");
 			
+			actEmailAddress = (actEmailAddress==null)? "":actEmailAddress;
+			actMobileNumber = (actMobileNumber==null)? "":actMobileNumber;
 			
 			//Validate pre-populated email address
 			isMatching = Web.VerifyText(expEmailAddress, actEmailAddress, true);
@@ -368,6 +371,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		//Leave Email Address field empty and then move the cursor out of the field - Email Address is required error message is required
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys(Keys.TAB);
+		this.txtPhone.click();
 		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = this.lblEmailErrMsg.getText();
 			isMatching = Web.VerifyText("Email is required", actualErrorText, true);
@@ -387,6 +391,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys("Test@test");
 		this.txtEmail.sendKeys(Keys.TAB);
+		this.txtPhone.click();
 		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = "";
 			actualErrorText = this.lblEmailErrMsg.getText();
@@ -407,6 +412,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtEmail.clear();
 		this.txtEmail.sendKeys("Test@test.com");
 		this.txtEmail.sendKeys(Keys.TAB);
+		this.txtPhone.click();
 		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = "";
 			actualErrorText = this.lblEmailErrMsg.getText();
@@ -426,7 +432,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		Reporter.logEvent(Status.INFO, "", "", true);
 		
 		//Verify "Username and Password" header is displayed
-		isMatching = Web.VerifyText("Username and Password", this.lblUsernameAndPassword.getText(), true);
+		isMatching = Web.VerifyText("Create username and password", this.lblUsernameAndPassword.getText(), true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS, "Verify 'Username and Password' header is displayed", "Header is displayed", false);
 		} else {
@@ -459,30 +465,30 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtUserName.sendKeys("a");
 		actErrorText = this.lblUserNameErrMsg.getText();
 		//Verify 'At least three letters' error message is displayed
-		if (actErrorText.contains("At least three letters")) {
+		if (actErrorText.contains("Must include at least 3 letters")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least three letters\nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters \nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least three letters\nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters \nActual: " + actErrorText, true);
 		}
 		
 		//Verify 'At least one number' error message is displayed
-		if (actErrorText.contains("At least one number")) {
+		if (actErrorText.contains("Must include at least 1 number")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least one number\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 number\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least one number\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 number\nActual: " + actErrorText, true);
 		}
 		
 		//Verify 'At least six characters' error message is displayed
-		if (actErrorText.contains("At least six characters")) {
+		if (actErrorText.contains("Must be at least 6 characters")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least six characters\nActual: " + actErrorText, true);
+					"Expected: Must be at least 6 characters \nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Username and verify error message", 
-					"Expected: At least six characters\nActual: " + actErrorText, true);
+					"Expected:  Must be at least 6 characters\nActual: " + actErrorText, true);
 		}
 		
 		//Clear the Username field and move the cursor out and verify error message displayed
@@ -493,17 +499,6 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		} catch (InterruptedException e1) {
 		}
 				
-//		actErrorText = this.lblUserNameErrMsg.getText();
-//		isMatching = Common.VerifyText("Username is required", actErrorText, true);
-//		if (isMatching) {
-//			Reporter.logEvent(Status.PASS, "Clear Username field and verify error message", 
-//					"Expected: Username is required\nActual: " + actErrorText, true);
-//		} else {
-//			Reporter.logEvent(Status.FAIL, "Clear Username field and verify error message", 
-//					"Expected: Username is required\nActual: " + actErrorText, true);
-//		}
-		
-		//-----------------------------------------------------------------------------------------------------
 		actErrorText = this.lblUserNameErrMsg.getText();
 		if (actErrorText.contains("Username is required")) {
 			Reporter.logEvent(Status.PASS, "clear username and verify error message", 
@@ -513,29 +508,30 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 					"Expected: Username is required\nActual: " + actErrorText, true);
 		}
 		
+		//error message no more are bing displayed due to change in functionality - 9Feb
 		
-		if (actErrorText.contains("At least three letters")) {
+		/*if (actErrorText.contains("Must include at least 3 letters")) {
 			Reporter.logEvent(Status.PASS, "clear username and verify error message", 
-					"Expected: At least three letters \nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters \nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "clear username and verify error message", 
-					"Expected: At least three letters\nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters \nActual: " + actErrorText, true);
 		}
 		
-		if (actErrorText.contains("At least one number")) {
+		if (actErrorText.contains("Must include at least 1 number")) {
 			Reporter.logEvent(Status.PASS, "clear username and verify error message", 
-					"Expected: At least one number \nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 number \nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "clear username and verify error message", 
 					"Expected: At least one number\nActual: " + actErrorText, true);
 		}
 		
-		if (actErrorText.contains("At least six characters")) {
+		if (actErrorText.contains("Must be at least 6 characters")) {
 			Reporter.logEvent(Status.PASS, "clear username and verify error message", 
-					"Expected: At least six characters \nActual: " + actErrorText, true);
+					"Expected: Must be at least 6 characters \nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "clear username and verify error message", 
-					"Expected: At least six characters\nActual: " + actErrorText, true);
+					"Expected: Must be at least 6 characters\nActual: " + actErrorText, true);
 		}
 		
 		if (actErrorText.contains("Invalid username")) {
@@ -544,7 +540,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		} else {
 			Reporter.logEvent(Status.FAIL, "clear username and verify error message", 
 					"Expected: Invalid username\nActual: " + actErrorText, true);
-		}
+		}*/
 		//------------------------------------------------------------------------------------------------------------
 		
 		//Enter valid Username and verify no error message is displayed. And 'Valid Username' messge is displayed
@@ -560,15 +556,19 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		
 		//Delete the last letter from the username and verify error message displayed
 		this.txtUserName.sendKeys(Keys.BACK_SPACE);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+		}
 		actErrorText = "";
 		actErrorText = this.lblUserNameErrMsg.getText();
-		isMatching = Web.VerifyText("At least three letters", actErrorText, true);
+		isMatching = Web.VerifyText("Must include at least 3 letters", actErrorText, true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS, "Delete last letter from valid username (8253256ABC) and verify error displayed", 
-					"Expected: At least three letters\nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Delete last letter from valid username (8253256ABC) and verify error displayed", 
-					"Expected: At least three letters\nActual: " + actErrorText, true);
+					"Expected: Must include at least 3 letters\nActual: " + actErrorText, true);
 		}
 		
 		//--------------------Password field validation-------------------------
@@ -577,39 +577,39 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtPassword.sendKeys("a");
 		actErrorText = this.lblPasswordErrMsg.getText();
 		//Verify 'At least one number' error message is displayed
-		if (actErrorText.contains("At least one number")) {
+		if (actErrorText.contains("Must include at least 1 number")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one number\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 number\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one number\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 number\nActual: " + actErrorText, true);
 		}
 		
 		//Verify 'At least one uppercase letter' error message is displayed
-		if (actErrorText.contains("At least one uppercase letter")) {
+		if (actErrorText.contains("Must include at least 1 uppercase letter")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one uppercase letter\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 uppercase letter\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one uppercase letter\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 uppercase letter\nActual: " + actErrorText, true);
 		}
 		
 		//Verify 'At least one special character' error message is displayed
-		if (actErrorText.contains("At least one special character")) {
+		if (actErrorText.contains("Must include at least 1 special character")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one special character\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 special character\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least one special character\nActual: " + actErrorText, true);
+					"Expected: Must include at least 1 special character\nActual: " + actErrorText, true);
 		}
 		
 		//Verify 'At least eight characters' error message is displayed
-		if (actErrorText.contains("At least eight characters")) {
+		if (actErrorText.contains("Must be 8 - 16 characters")) {
 			Reporter.logEvent(Status.PASS, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least eight characters\nActual: " + actErrorText, true);
+					"Expected: Must be 8 - 16 characters\nActual: " + actErrorText, true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter letter 'a' in Password and verify error message", 
-					"Expected: At least eight characters\nActual: " + actErrorText, true);
+					"Expected: Must be 8 - 16 characters\nActual: " + actErrorText, true);
 		}
 		
 		//Clear the Password field and move the cursor out and verify error message displayed
@@ -619,19 +619,6 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
 		}
-		
-		/*actErrorText = this.lblPasswordErrMsg.getText();
-		isMatching = Common.VerifyText("Password is required", actErrorText, true);
-		if (isMatching) {
-			Reporter.logEvent(Status.PASS, "Clear Password field and verify error message", 
-					"Expected: Password is required\nActual: " + actErrorText, true);
-		} else {
-			Reporter.logEvent(Status.FAIL, "Clear Password field and verify error message", 
-					"Expected: Password is required\nActual: " + actErrorText, true);
-		}*/
-		
-		//--------------------------------------------
-		
 		
 		actErrorText = this.lblPasswordErrMsg.getText();
 		//Verify 'At least one number' error message is displayed
@@ -643,7 +630,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 					"Expected: Password is required\nActual: " + actErrorText, true);
 		}
 		
-		//Verify 'At least one uppercase letter' error message is displayed
+		//error message no more are bing displayed due to change in functionality - 9Feb
+		/*//Verify 'At least one uppercase letter' error message is displayed
 		if (actErrorText.contains("At least one number")) {
 			Reporter.logEvent(Status.PASS, "clear Password and verify error message", 
 					"Expected:At least one number\nActual: " + actErrorText, true);
@@ -684,22 +672,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		} else {
 			Reporter.logEvent(Status.FAIL, "clear  Password and verify error message", 
 					"Expected: At least eight characters\nActual: " + actErrorText, true);
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		}*/
 		
 		
 		//--------------------------------------------
@@ -708,12 +681,16 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		this.txtPassword.clear();
 		
 		this.txtPassword.sendKeys("Test@1234");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+		}
 		if(Web.isWebElementDisplayed(this.lblStrongPassword)) {
 			Reporter.logEvent(Status.PASS, "Enter valid Password and verify displayed message", 
-					"Expected: Strong Password\nActual: Strong Password", true);
+					"Expected: Valid Password\nActual: Strong Password", true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "Enter valid Password and verify displayed message", 
-					"Expected: Strong Password\nActual: Message not displayed", true);
+					"Expected: Valid Password\nActual: Message not displayed", true);
 		}
 		
 		//-------------Re-Enter Password field validation------------------

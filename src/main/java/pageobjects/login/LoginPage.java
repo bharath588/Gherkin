@@ -1,7 +1,5 @@
 package pageobjects.login;
 
-import java.awt.event.KeyEvent;
-
 import lib.Stock;
 import lib.Web;
 
@@ -20,8 +18,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	@FindBy(xpath=".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(css="a[href*='register']") private WebElement btnRegister;
 	@FindBy(id="helpBlock") private WebElement weHelpBlock;
-	@FindBy(xpath=".//*[@href='#/loginHelp' and text()='Forgot Password?']") private WebElement lnkForgotPassword;	
-
+	@FindBy(xpath=".//*[text()[normalize-space()='Login help?']]") private WebElement lnkForgotPassword;
 
 	LoadableComponent<?> parent;
 	@SuppressWarnings("unused")
@@ -75,21 +72,10 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		lib.Web.webdriver.manage().window().maximize();
 
-		/*try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block              
-		}*/
-
 		//currently not beeing seen
 		/*boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
 		if (isElementPresent)
 			lnkDismiss.click();*/
-
-
-//		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
-//		if (isElementPresent)
-//			lnkDismiss.click();
 
 	}
 
@@ -128,12 +114,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			return this.lnkForgotPassword;			
 		}
 
-
-		//		Reporter.logEvent(
-		//                    Status.WARNING,
-		//                    "Get WebElement for field '" + fieldName + "'",
-		//                    "No WebElement mapped for this field\nPage: <b> "+this.getClass().getName()+"</b>"
-		//                    );
+	
 		return null;
 	}
 
