@@ -403,7 +403,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return pptID;
 	}
 
-
 	/**
 	 * Method to enter user credentials and click on Sign In button
 	 * 
@@ -423,7 +422,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(participantPlanSearchPage);
 		isElementDisplayed = Web.isWebElementDisplayed(
 				this.participantPlanSearchPage, true);
-
 		if (isElementDisplayed) {
 			Reporter.logEvent(
 					Status.PASS,
@@ -472,15 +470,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 	}
 
-	/*
-	 * Retrieve data from db & verify
-	 * 
-	 * @PARAMETER = ppt_id
+	/**
+	 * Method to verify Employment status
+	 * @param ppt_id
+	 * @param emp_Status
 	 */
 	public void verify_HireDate_TermDate(String ppt_id, String emp_Status) {
 		List<String> HireDate_TermDate_List;
 		WebElement empStatus = null;
-
 		try {
 			Thread.sleep(100);
 			for (int i = 0; i < PlanNumber.size(); i++) {
@@ -490,18 +487,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				HireDate_TermDate_List = get_Hire_Term_Date_From_DB(
 						Stock.getTestQuery("getHireDateAndTerminationDate"),
 						planNum, ind_id, i);
-
 				empStatus = lnkEmploymentStatus.get(i);
 				switch (emp_Status) {
 				case "ACTIVE":
 					if (empStatus.getText().equalsIgnoreCase("ACTIVE")) {
 						Web.mouseHover(empStatus);
 						if (HireDate_TermDate_List.get(1) == null){
-
 							if (DB.compareDB_Date_With_Web_Date(
 									HireDate_TermDate_List.get(0),
 									HireDate_List.get(i).getText()))
-
 								Reporter.logEvent(
 										Status.PASS,
 										"Check if Employment status is ACTIVE and Hire date: "
@@ -519,17 +513,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 														.getText(), false);
 							Web.clickOnElement(PPTHomePageTitle);
 							Thread.sleep(100);
-
 						}
 					}
 					break;
-
 				case "TERMINATED":
-
 					if (lnkEmploymentStatus.get(i).getText()
 							.contains("TERMINATED")) {
 						Web.mouseHover(empStatus);
-
 						if (DB.compareDB_Date_With_Web_Date(
 								HireDate_TermDate_List.get(0), HireDate_List
 										.get(i).getText())
@@ -557,19 +547,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 											+ "Termination date is : "
 											+ TermDate_List.get(i).getText(),
 									false);
-
 						Web.clickOnElement(PPTHomePageTitle);
 						Thread.sleep(100);
 					}
-
 					break;
-
 				default:
 					break;
 				}
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -580,7 +565,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
 					"Assertion Failed!!", true);
-			// throw ae;
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -590,15 +574,19 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 	}
 
+	/**
+	 * Method to get Hire date and Termination date from DB for a participant
+	 * @param getHireDateAndTerminationDate
+	 * @param planNum
+	 * @param indID
+	 * @param index
+	 * @return
+	 */
 	public ArrayList<String> get_Hire_Term_Date_From_DB(
-
 	String[] getHireDateAndTerminationDate, String planNum, String indID,
 			int index) {
-
 		ResultSet resultset;
-
 		hireTermDateList = new ArrayList<String>();
-
 		resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
 				getHireDateAndTerminationDate[1], indID, planNum);
 		if (resultset != null) {
@@ -616,19 +604,16 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return hireTermDateList;
 	}
 
-	/*
-	 * verify page instance against db
+	/**
+	 * Method to verify page instance on Participant home page
 	 */
 	public void verify_Page_Instance() {
-
 		String instance_DB;
 		String instance_Web;
 		String ind_id;
 		boolean flag;
 		flag = Web.isWebElementDisplayed(InstanceLabel, true);
-
 		if (flag) {
-
 			Reporter.logEvent(Status.PASS,
 					"Check if Instance label is present ",
 					"Instance Label is present", true);
@@ -640,7 +625,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							Stock.getTestQuery("getPageInstanceFromInd_id"),
 							ind_id);
 					if (instance_Web.equalsIgnoreCase(instance_DB)) {
-
 						Reporter.logEvent(Status.PASS,
 								"Check if database name for individual ID:  "
 										+ ind_id + "  is: " + instance_DB,
@@ -648,7 +632,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ ind_id + "  is: " + instance_Web,
 								true);
 					} else {
-
 						Reporter.logEvent(
 								Status.FAIL,
 								"Check if database name for individual ID:  "
@@ -657,27 +640,25 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ ind_id + "  is not : " + instance_Web,
 								false);
 					}
-
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		} else
 			Reporter.logEvent(Status.FAIL,
 					"Check if Instance label is not present ",
 					"Instance Label is not present", false);
-
 	}
 
-	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
-
-	String ind_id) {
-
+	/**
+	 * Method to verify Page instance from DB
+	 * @param getPageInstanceFromInd_id
+	 * @param ind_id
+	 * @return
+	 */
+	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,	String ind_id) {
 		ResultSet resultset;
 		String instance = null;
-
 		resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
 				getPageInstanceFromInd_id[1], ind_id);
 		if (resultset != null) {
@@ -686,7 +667,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					instance = resultset.getString("database_instance");
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -698,7 +678,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * 
 	 * @PARAMETER = SSN
 	 */
-
 	public void validate_Personal_Data_On_PPT_Home(String ssn) {
 
 		ArrayList<String> personal_Data_From_DB;
@@ -815,10 +794,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					personalDataDB.add(resultset.getString("ssn"));
 					personalDataDB.add(resultset.getString("birth_date"));
 					personalDataDB.add(resultset.getString("sex"));
-
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

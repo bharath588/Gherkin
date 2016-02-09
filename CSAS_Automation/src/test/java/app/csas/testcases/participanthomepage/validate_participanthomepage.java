@@ -354,6 +354,8 @@ Author : Ranjan     Date : 09-02-16
 
 	/**
 	 * Method to cleanup all active session
+	 * 
+	 * @author rnjbdn
 	 */
 	@AfterSuite
 	public void cleanUpSession() {
