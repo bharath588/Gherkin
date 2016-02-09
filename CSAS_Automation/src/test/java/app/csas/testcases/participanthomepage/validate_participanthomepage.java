@@ -148,63 +148,6 @@ public class validate_participanthomepage {
 			}
 		}
 	}
-
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
-	TESTCASE:			Validate_Personal_Data_On_PPT_Home_Page
-	DESCRIPTION:	    Validate Personal Data on PPT home page
-	PARAMETERS: 		int itr, Map<String, String> testdata
-	RETURNS:		    VOID	
-	REVISION HISTORY: 
-	------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Author : Ranjan     Date : 25-01-16      
-	------------------------------------------------------------------------------------------------------------------------------------------------------------
-*/	@Test(dataProvider = "setData")
-	public void Validate_Personal_Data_On_PPT_Home_Page(int itr,
-			Map<String, String> testdata) {
-
-		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			
-			// Step1:Launch and logged into CSAS application..
-				participantHomeObj = new ParticipantHome().get();
-				if (Web.appLoginStatus == false) {
-					Reporter.logEvent(Status.PASS,
-							"Check if the CSAS Log in page open",
-							"CSAS log in page launhced successfully", true);
-					participantHomeObj.submitLoginCredentials(
-							Stock.GetParameterValue("username"),
-							Stock.GetParameterValue("password"));
-				}
-			
-			// Step2:Search with PPT ID..
-			   participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ssn"),
-					Web.returnElement(participantHomeObj,"SSN"));
-
-			// Step3:Validate Personal Data on PPT home page..
-			participantHomeObj.validate_Personal_Data_On_PPT_Home(Stock
-					.GetParameterValue("ssn"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
-			// throw ae;
-		} finally {
-			try {
-				Reporter.finalizeTCReport();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
-
 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	TESTCASE:			Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
 	DESCRIPTION:	    Validate Mail existing PIN and ORder Temp PIN Message Details
@@ -260,7 +203,6 @@ public class validate_participanthomepage {
 			}
 		}
 	}
-
 /**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 TESTCASE:			Validate_Registration_Status_On_PPT_Home_Page
 DESCRIPTION:	    Validate Registration status on PPT home page
@@ -314,8 +256,8 @@ Author : Ranjan     Date : 02-02-16
 	}
 
 /**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
-TESTCASE:			Validate_Registration_Status_On_PPT_Home_Page
-DESCRIPTION:	    Validate Registration status on PPT home page
+TESTCASE:			Validate_Managed_Account_Status_On_PPT_Home_Page
+DESCRIPTION:	    Validate Managed Account status on PPT home page
 PARAMETERS: 		int itr, Map<String, String> testdata
 RETURNS:		    VOID	
 REVISION HISTORY: 
@@ -360,6 +302,59 @@ Author : Ranjan     Date : 02-02-16
 			}
 		}
 	}
+
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+TESTCASE:			validate_Personal_Data_On_PPT_Home
+DESCRIPTION:	    Validate Personal data on PPT home page
+PARAMETERS: 		int itr, Map<String, String> testdata
+RETURNS:		    VOID	
+REVISION HISTORY: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Author : Ranjan     Date : 09-02-16      
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/	@Test(dataProvider = "setData")
+	public void validate_Personal_Data_On_PPT_Home(int itr,
+		Map<String, String> testdata) {
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		// Step1:Launch and logged into CSAS application..
+		participantHomeObj = new ParticipantHome().get();
+		if (Web.appLoginStatus == false) {
+			Reporter.logEvent(Status.PASS,
+					"Check if the CSAS Log in page open",
+					"CSAS log in page launhced successfully", true);
+			participantHomeObj.submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
+		}
+		// Step2:Search with SSN..
+		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ssn"),
+				                                Web.returnElement(participantHomeObj,"SSN"));
+		// Step3: Verify Registration status
+		participantHomeObj.validate_Personal_Data_On_PPT_Home(Stock
+				.GetParameterValue("ssn"));
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				"Exception Occured", true);
+	} catch (AssertionError ae) {
+		ae.printStackTrace();
+		Globals.assertionerror = ae;
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+				"Assertion Failed!!", true);
+	} finally {
+			try {
+			Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+			e1.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Method to cleanup all active session
+	 */
 	@AfterSuite
 	public void cleanUpSession() {
 		Web.webdriver.close();

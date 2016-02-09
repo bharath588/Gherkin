@@ -204,7 +204,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Web Registration Status')]")
 	private WebElement participantRegStatusLabel;
 
-	@FindBy(css = "table[name = 'pptinfo'] tr:nth-of-type(11)>td.data")
+	@FindBy(xpath = "//a[contains(text(),'Registered')]")
 	private WebElement participantRegStatus;
 
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Managed Account Status')]")
@@ -220,9 +220,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement participantSecFoundationSts;
 
 	// Order PIN..
-
-	// @FindBy(css =
-	// "table.compactDataTable tr:nth-of-type(7) a:nth-of-type(2)")
 	@FindBy(xpath = "(//div[@class='dataContainerBody'])[2]/table/tbody/tr/td[2]/table/tbody/tr[5]/td/a[2]")
 	private WebElement lnkOrderPIN;
 
@@ -444,7 +441,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	}
 
 	/**
-	 * Method to enter participant ID and click on Sign In button
+	 * Method to enter participantID or SSN and click on Sign In button
 	 * 
 	 * @param ppt_id
 	 * @throws Exception
@@ -455,10 +452,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(this.menuSearch);
 		Web.clickOnElement(this.menuSearch);
 		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
-		Reporter.logEvent(Status.INFO,"Performing search using PPT ID", "PPT ID : "+PPT_Or_SSN_Value , true);
+		Reporter.logEvent(Status.INFO,"Performing search using PPT ID/SSN", "PPT ID/SSN : "+PPT_Or_SSN_Value , true);
 		Web.clickOnElement(this.SubmitPPTIdBtn);
-		
-		
 		Web.waitForElement(this.PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(this.PPTHomePageTitle,
 				true);
@@ -475,7 +470,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Participant Home Page with all the details is not displayed",
 					false);
 		}
-
 	}
 
 	/*
@@ -712,20 +706,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			personal_Data_From_DB = get_Personal_Data_From_DB(
 					Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
 		
-			if (personal_Data_From_DB.isEmpty()) {
-				
+			if (!personal_Data_From_DB.isEmpty()) {				
 			// Personal data validation..
-
 			String FullName_DB = personal_Data_From_DB.get(0) + " "
 					+ personal_Data_From_DB.get(1);
-
 			String SSN = personalData_On_PPT_Home_List.get(1).getText();
 			String[] splitedStr = SSN.split("-");
-
 			String concatenated_SSN = null;
-
 			concatenated_SSN = splitedStr[0] + splitedStr[1] + splitedStr[2];
-
 			if (personalData_On_PPT_Home_List.get(0).getText()
 					.equalsIgnoreCase(FullName_DB)
 					&& DB.compareDB_Date_With_Web_Date(
@@ -735,7 +723,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							.get(2))
 					&& personalData_On_PPT_Home_List.get(3).getText()
 							.contains(personal_Data_From_DB.get(4))) {
-
 				Reporter.logEvent(
 						Status.PASS,
 						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
@@ -788,7 +775,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 						"Validate personal data from DB for the SSN:  "+ssn,
 						"No records found in DB", false);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -799,7 +785,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
 					"Assertion Failed!!", true);
-			// throw ae;
 		} finally {
 		try {
 			Reporter.finalizeTCReport();
@@ -809,21 +794,17 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 	}
 
-	/*
+	/**
 	 * Method to validate personal data
 	 * 
-	 * @PARAMETER = getPersonalDataOnPPTHomePage
-	 * 
-	 * @PARAMETER = ssn
+	 * @param - getPersonalDataOnPPTHomePage,ssn
 	 */
 	public ArrayList<String> get_Personal_Data_From_DB(
 			String[] getPersonalDataOnPPTHomePage,
-
 			String ssn) {
 
 		ResultSet resultset;
 		personalDataDB = new ArrayList<String>();
-
 		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0],
 				getPersonalDataOnPPTHomePage[1], ssn);
 		if (resultset != null) {
@@ -926,6 +907,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 						false);
 				switch (reg_status) {
 				case "Registered":
+					
 					reg_status_On_Web = participantRegStatus.getText();
 					if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
 						Reporter.logEvent(Status.PASS,
@@ -933,6 +915,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ reg_status,
 								"Web registration status on PPT homepage is: "
 										+ reg_status_On_Web, false);
+						Web.clickOnElement(participantRegStatus) ;
 						Web.mouseHover(participantRegStatus);
 						String userName_label = Reg_Status_UserName_Label
 								.getText();
@@ -951,7 +934,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 									"Validate on hover Username display with number on ppt homepage",
 									"On hover Username didn't display with number on ppt homepage:\n\n"
 											+ userName_label + ":  " + userName,
-									false);
+									true);
 						}
 					} else {
 
