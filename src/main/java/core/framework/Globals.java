@@ -40,6 +40,7 @@ public class Globals {
           public static final String GC_RUNXML_DEFAULT = "SelectXML";
           public static final String GC_XML_ATTR_VAL_TEST_COL_NM = "ManualTestcases";
           public static final String GC_COLNAME_CLASSPATH = "ClassPath";
+          public static String GC_OBJECT_SYNC_TIMEOUT = null ;
           
     //FileLocations
           public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+"\\RunOrderSheets\\";
@@ -106,8 +107,7 @@ public class Globals {
           public static final String GC_EXPNTYPE_ILLEGALSTATE = "illegalstateexception";
           public static final String GC_EXPNTYPE_IOEXCEPTION = "illegalstateexception";
           
-          
-          
+               
         //SHELL
           public static final String GC_COMMAND_COMPLETE_STATUS="Complete";
           public static final int GC_SHELL_PORT_NUMBER=22;

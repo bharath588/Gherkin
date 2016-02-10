@@ -194,6 +194,7 @@ public class Stock {
 							.trim();
 					val = xlRW.getCellData(Globals.GC_CONFIGFILEANDSHEETNAME, iConfLoop + 1, Globals.GC_COLNAME_VALUE)
 							.trim();
+	//key should be case insensitive TODO
 					globalParam.put(key, val);
 					Log.Report(Level.DEBUG, "setting @globalParam with key :" + key + " -- value :" + val);
 				}
@@ -237,5 +238,30 @@ public class Stock {
 				,XL.getCellData("query",queryPointer, queryColNo+2)};		
 		return queryData;
 	}
+	
+	public static String GetParameter_From_Config(String parameterName){
+		return globalParam.get(parameterName) ;
+	}
+	
+	/**
+	 * <pre>Method to set config property in globalParam map</pre>
+	 * <pre>If overWriteExisting is 
+	 * @param parameterName
+	 * @param parameterValue
+	 * @param overWriteExisting <pre><b> - true</b> to update the property value even if the property already exists.
+	 * <b> - false</b> to ignore updating value to already existing property.
+	 * Default is <b>true</b></pre>
+	 */
+	public static void set_Config_Property(String parameterName,String parameterValue,boolean... overWriteExisting) {
+		
+		if (overWriteExisting.length > 0) {
+			if (!overWriteExisting[0])
+				if (Stock.globalParam.containsKey(parameterName.toUpperCase())) {
+					return;
+				}
+		}	
+		Stock.globalParam.put(parameterName.toUpperCase(), parameterValue);
+	}
+	
 
 }
