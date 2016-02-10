@@ -11,6 +11,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import lib.Reporter;
+import lib.Web;
 import lib.Reporter.Status;
 import pageobjects.general.*;
 import pageobjects.login.*;
@@ -25,12 +26,12 @@ public class deferralstestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
-
+	
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = lib.Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		
 	}
 
 	@DataProvider
@@ -42,17 +43,15 @@ public class deferralstestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-
+	
 	@BeforeMethod
-	public void getTCName(Method tc) {
-		tcName = tc.getName();       
-	}
-
+    public void getTCName(Method tc) {
+           tcName = tc.getName();       
+           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+    }
 
 	@Test(dataProvider = "setData")
-	public void SIT_PPTWEB_Deferral_001_AfterTax_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-		//Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+	public void SIT_PPTWEB_Deferral__AfterTax(int itr, Map<String, String> testdata){
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -60,13 +59,16 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-				leftmenu = new LeftNavigationBar(homePage);			
-			else {
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
-
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			
+			
+			leftmenu = new LeftNavigationBar(homePage);
+			
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try { lib.Web.waitForElement(deferrals,"Table Header Contribution"); }
@@ -108,21 +110,22 @@ public class deferralstestcases {
 
 
 	@Test(dataProvider = "setData")
-	public void SIT_PPTWEB_Deferral_004_Bonus_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+	public void SIT_PPTWEB_Deferral__Bonus(int itr, Map<String, String> testdata){
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-				leftmenu = new LeftNavigationBar(homePage);			
-			else {
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			
+			leftmenu = new LeftNavigationBar(homePage);
+			
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try { lib.Web.waitForElement(deferrals,"Table Header Contribution"); }
@@ -142,7 +145,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
 
-			deferrals.select_ContributionType(lib.Stock.GetParameterValue("After"));
+			deferrals.select_ContributionType("After");
 			deferrals.add_Auto_Increase("Bonus Add Auto Increase");
 			deferrals.myContributions_Confirmation_Page();			
 		}
@@ -165,9 +168,7 @@ public class deferralstestcases {
 
 
 	@Test(dataProvider = "setData")
-	public void SIT_PPTWEB_Deferral_013_Regular_BEFORE_Maximize_To_Company_Match(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+	public void SIT_PPTWEB_Deferral__Regular(int itr, Map<String, String> testdata){
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -176,12 +177,15 @@ public class deferralstestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);	
 
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Participant ssn")) <= 2)
-				leftmenu = new LeftNavigationBar(homePage);
-			else{
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Participant ssn")) <= 2)
+//				leftmenu = new LeftNavigationBar(homePage);
+//			else{
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			
+			leftmenu = new LeftNavigationBar(homePage);
+			
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 
@@ -208,11 +212,14 @@ public class deferralstestcases {
 			if(lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
+
 			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
-			deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
+			if(!lib.Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Maximize to irs limit"))
+				deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
+			
 			deferrals.myContributions_Confirmation_Page();			
 			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
 
@@ -235,466 +242,17 @@ public class deferralstestcases {
 		catch (Exception e1) { e1.printStackTrace(); } 
 	}
 
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_014_Regular_BEFORE_Maximize_IRS_Limit(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_014_Regular_BEFORE_Maximize_IRS_Limit");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			deferrals.click_Maximize_IRS_Limit("Standard");	
-	//			deferrals.select_ContributionType_Standard("Before");
-	//			deferrals.add_Auto_Increase("Before Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_015_Regular_BEFORE_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_015_Regular_BEFORE_Select_Another_Contribution_Rate");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.click_Select_Your_Contribution_Rate())
-	//				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is matching", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
-	//			
-	//			deferrals.select_ContributionType_Standard("Before");
-	//			deferrals.add_Auto_Increase("Before Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_016_Regular_ROTH_Maximize_To_Company_Match(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_016_Regular_ROTH_Maximize_To_Company_Match");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);		
-	//			
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2){			
-	//				 leftmenu = new LeftNavigationBar(homePage);
-	//			}
-	//			else{
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}			
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();
-	//			
-	//			try {
-	//				common.waitForElement(deferrals,"Table Header Contribution");
-	//			} catch (Exception e) {			
-	//				e.printStackTrace();
-	//			}
-	//			
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			
-	//			deferrals.click_MaximizeToCompanyMatch();
-	//			deferrals.select_ContributionType_Standard("Roth");
-	//			deferrals.add_Auto_Increase("Roth Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//		}
-	//		catch(Exception e)
-	//        {
-	//            e.printStackTrace();
-	//            Globals.exception = e;
-	//            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-	//        }
-	//		catch(Error ae)
-	//        {
-	//                        ae.printStackTrace();
-	//                        Globals.error = ae;
-	//                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//                        //throw ae;
-	//        }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
+	
 
 
 
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_017_Regular_ROTH_Maximize_IRS_Limit(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_017_Regular_ROTH_Maximize_IRS_Limit");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			deferrals.click_Maximize_IRS_Limit("Standard");	
-	//			deferrals.select_ContributionType_Standard("Roth");
-	//			deferrals.add_Auto_Increase("Roth Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_018_Regular_ROTH_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_018_Regular_ROTH_Select_Another_Contribution_Rate");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.click_Select_Your_Contribution_Rate())
-	//				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is matching", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
-	//			
-	//			deferrals.select_ContributionType_Standard("Roth");
-	//			deferrals.add_Auto_Increase("Roth Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
+	
 
 
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_019_Regular_SPLIT_Select_Another_Contribution_Rate(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_019_Regular_SPLIT_Select_Another_Contribution_Rate");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			if(deferrals.click_Select_Your_Contribution_Rate())
-	//				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is matching", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
-	//			
-	//			deferrals.select_ContributionType_Standard("Split");
-	//			deferrals.add_Auto_Increase("Before Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-
-
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_020_Regular_SPLIT_Maximize_To_Company_Match(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_020_Regular_SPLIT_Maximize_To_Company_Match");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);		
-	//			
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2){			
-	//				 leftmenu = new LeftNavigationBar(homePage);
-	//			}
-	//			else{
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}			
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();
-	//			
-	//			try {
-	//				common.waitForElement(deferrals,"Table Header Contribution");
-	//			} catch (Exception e) {			
-	//				e.printStackTrace();
-	//			}
-	//			
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			
-	//			deferrals.click_MaximizeToCompanyMatch();
-	//			deferrals.select_ContributionType_Standard("Split");
-	//			deferrals.add_Auto_Increase("Before Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//		}
-	//		catch(Exception e)
-	//        {
-	//            e.printStackTrace();
-	//            Globals.exception = e;
-	//            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-	//        }
-	//		catch(Error ae)
-	//        {
-	//                        ae.printStackTrace();
-	//                        Globals.error = ae;
-	//                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//                        //throw ae;
-	//        }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-	//	@Test(dataProvider = "setData")
-	//	public void SIT_PPTWEB_Deferral_021_Regular_SPLIT_Maximize_IRS_Limit(int itr, Map<String, String> testdata){
-	//		Stock.globalTestdata = testdata;
-	////      Globals.GBL_CurrentIterationNumber = itr;
-	//		try{
-	//			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_021_Regular_SPLIT_Maximize_IRS_Limit");
-	//			LeftNavigationBar leftmenu;
-	//			LoginPage login = new LoginPage();
-	//			TwoStepVerification mfaPage = new TwoStepVerification(login);
-	//			LandingPage homePage = new LandingPage(mfaPage);
-	//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-	//				 leftmenu = new LeftNavigationBar(homePage);			
-	//			else {
-	//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-	//				leftmenu = new LeftNavigationBar(accountPage);
-	//			}
-	//			Deferrals deferrals = new Deferrals(leftmenu);
-	//			deferrals.get();		
-	//			try { common.waitForElement(deferrals,"Table Header Contribution"); }
-	//			catch (Exception e) {	e.printStackTrace(); }	
-	//			if(common.isWebElementDisplayed(deferrals, "Table Header Contribution"))
-	//				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-	//			
-	//			if(deferrals.clickAddEditButton("Standard Add"))
-	//				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
-	//			else
-	//				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
-	//			deferrals.click_Maximize_IRS_Limit("Standard");	
-	//			deferrals.select_ContributionType_Standard("Split");
-	//			deferrals.add_Auto_Increase("Before Add Auto Increase");
-	//			deferrals.myContributions_Confirmation_Page();			
-	//		}
-	//		catch(Exception e)
-	//	    {
-	//	        e.printStackTrace();
-	//	        Globals.exception = e;
-	//	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	//	    }catch(AssertionError ae)
-	//	    {
-	//	        ae.printStackTrace();
-	//	        Globals.assertionerror = ae;
-	//	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	//	        //throw ae;
-	//	    }
-	//		finally { }
-	//	    try { Reporter.finalizeTCReport(); }
-	//	    catch (Exception e1) { e1.printStackTrace(); } 
-	//	}
-
-
+	
 
 	@Test(dataProvider = "setData")
-	public void SIT_PPTWEB_Deferral_009_Catch_up_Maximize_to_the_IRS_limit(int itr, Map<String, String> testdata){
+	public void SIT_PPTWEB_Deferral_Catch_up(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
 		//      Globals.GBL_CurrentIterationNumber = itr;
 		try{
@@ -703,12 +261,13 @@ public class deferralstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-				leftmenu = new LeftNavigationBar(homePage);			
-			else {
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();		
 			try { lib.Web.waitForElement(deferrals,"Table Header Contribution"); }
@@ -728,13 +287,17 @@ public class deferralstestcases {
 			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-			
 			deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
-			if(lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
-				deferrals.catchup_maximize_to_irs();
-			else
+			
+			if(!lib.Stock.GetParameterValue("Catchup_Contribution").equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.add_Auto_Increase(lib.Stock.GetParameterValue("Add_auto_increase_type"));
-			deferrals.myContributions_Confirmation_Page();		
+			
+			deferrals.myContributions_Confirmation_Page();	
+			
+			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
 		}
 		catch(Exception e)
 		{
@@ -821,13 +384,13 @@ public class deferralstestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-				leftmenu = new LeftNavigationBar(homePage);			
-			else {
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
-
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
 			PriorPlanContributions priorContributions = new PriorPlanContributions(leftmenu);
 
 			//logic to verify the prior plan contribution functionality with 3 combination of manual test cases listed above in comments
@@ -856,11 +419,11 @@ public class deferralstestcases {
 							"Test data for Year to Date value DID NOT matched with test data on the confirmation page", true);
 				}
 				//verify the values for the year to date and catchup contribution value on the confirmtion page
-				if (priorContributions.verifyConfirmationDetails(lib.Stock.GetParameterValue("catchupContribution"), "Year To Date")) {
+				if (priorContributions.verifyConfirmationDetails(lib.Stock.GetParameterValue("catchupContribution"), "Catch up")) {
 					Reporter.logEvent(Status.PASS, "Verify catchup Contribution Confirmation Detials verification", 
 							"Test data for catchup Contribution value matched with test data on the confirmation page", true);
 				} else {
-					Reporter.logEvent(Status.FAIL, "Verify Year to Date Confirmation Detials verification", 
+					Reporter.logEvent(Status.FAIL, "Verify catchup Contribution Confirmation Detials verification", 
 							"Test data for catchup Contribution value DID NOT matched with test data on the confirmation page", true);
 				}				
 			}
@@ -925,7 +488,214 @@ public class deferralstestcases {
 		catch (Exception e1) { e1.printStackTrace(); } 
 	}
 
+	
+	@Test(dataProvider = "setData")
+	public void SIT_PPTWEB_Deferral_Other(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+		//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();		
+			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
+			if(deferrals.clickAddEditButton("Other Add"))
+				Reporter.logEvent(Status.PASS, "Verify Other contribution page", "Other Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Other contribution page", "Other Contributions page is not displayed", true);
+			if(deferrals.click_Select_Your_Contribution_Rate())
+				Reporter.logEvent(Status.PASS, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
+			
+			deferrals.select_ContributionType("Roth");
+			deferrals.add_Auto_Increase("Roth Add Auto Increase");
+			deferrals.myContributions_Confirmation_Page();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		}catch(AssertionError ae)
+		{
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally { }
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Participant_not_elegible_for_Bonus_type_contribution(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+		//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();		
+			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
 
+			if(deferrals.check_if_participant_eligible_for_bonus())
+				Reporter.logEvent(Status.PASS, "Check if Participant eligible for bonus type contribution", "Participant not eligible for bonus type contribution", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Check if Participant eligible for bonus type contribution", "Participant eligible for bonus type contribution", true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		}catch(AssertionError ae)
+		{
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally { }
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Regular_SPLIT_Maximize_me_always(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+		//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();		
+			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
+			if(deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
+			
+			deferrals.click_Maximize_IRS_Limit("Standard");
+			
+			if(lib.Web.isWebElementDisplayed(deferrals, "Maximize Checkbox"))
+				Reporter.logEvent(Status.PASS, "Check if Maximize me always check box is present", "Maximize me always check box is present", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Check if Maximize me always check box is present", "Maximize me always check box is not present", true);
+			
+			deferrals.regular_maximize_me_always();
+			deferrals.myContributions_Confirmation_Page();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		}catch(AssertionError ae)
+		{
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally { }
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Multiple_deferral_split_contribution(int itr, Map<String, String> testdata){
+		Stock.globalTestdata = testdata;
+		//      Globals.GBL_CurrentIterationNumber = itr;
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+//				leftmenu = new LeftNavigationBar(homePage);			
+//			else {
+//				MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//				leftmenu = new LeftNavigationBar(accountPage);
+//			}
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();		
+			if(lib.Web.isWebElementDisplayed(deferrals, "Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
+			if(deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
+			
+			
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		}catch(AssertionError ae)
+		{
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally { }
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		
+	}
 
 	@AfterClass
 	public void cleanupSessions() {

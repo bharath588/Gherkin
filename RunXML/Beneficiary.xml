@@ -4,6 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
+    
     <test name="SIT_PPTWEB_Beneficiary_01_TC07_Married_with_Spouse_One_beneficiary_use_address_on_record">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
@@ -53,7 +54,7 @@
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SIT_PPTWEB_Beneficiary_04_TC01_UnMarried_Multiple_Entity_beneficiary"/>
+                    <include name="Beneficiary_TC01_UnMarried_Multiple_Entity_beneficiary"/>
                 </methods>
             </class>
         </classes>

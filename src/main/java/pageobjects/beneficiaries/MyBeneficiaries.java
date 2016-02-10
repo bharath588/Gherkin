@@ -70,6 +70,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//input[@id='primaryBeneficiaryAllocationPercent0']") private WebElement txtAllocationBeneficiary1;
 	@FindBy(xpath="//input[@id='primaryBeneficiaryAllocationPercent1']") private WebElement txtAllocationBeneficiary2;
 	
+	@FindBy(xpath="//input[@id='beneficiaryName']") private WebElement txtBeneficiaryName;
+	@FindBy(xpath="//input[@id='dateOfTrust']") private WebElement txtDateOfTrust;
+	@FindBy(xpath="//input[@id='taxIdentificationNumber']") private WebElement txtTaxIdentificationNo;
+	
 	/** Empty args constructor
 	 * 
 	 */
@@ -89,7 +93,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
+		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("No"))
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
+		else
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
+//		Assert.assertTrue(lib.Web.isWebElementDisplayed(btnContinue));
+		
 //		if (!(common.isWebElementDisplayed(lblMyBeneficiaries,MyBeneficiaries.waitforLoad) || common.isWebElementDisplayed(lblDesignateBeneficiary,MyBeneficiaries.waitforLoad))) {
 //			MyBeneficiaries.waitforLoad = true;
 //			throw new Error("'My beneficiaries' page is not loaded");
@@ -204,24 +213,40 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 		else{
 			Web.clickOnElement(this.btnAddAnotherBeneficiary);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				
+			}
 			if(beneficiaryType.equalsIgnoreCase("Primary"))
+				
 				Web.clickOnElement(this.btnPrimary);
 			else
 				Web.clickOnElement(this.btnContingent);
 		}
-			
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 		
 		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
-		this.enterBeneficiaryDetails();
-//		if(useMyAddress.equalsIgnoreCase("Yes")){
-//			if(!this.chkUseMyAddressForBen.isSelected())
-//				this.chkUseMyAddressForBen.click();
-//		}
-//		else{
-//			if(this.chkUseMyAddressForBen.isSelected())
-//				this.chkUseMyAddressForBen.click();
-//			this.enterAddressDetails();
-//		}
+		if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
+			this.enterEntityDetails();
+		else{
+			this.enterBeneficiaryDetails();
+			if(useMyAddress.equalsIgnoreCase("Yes")){
+				if(!this.chkUseMyAddressForBen.isSelected())
+					this.chkUseMyAddressForBen.click();
+			}
+			else{
+				if(this.chkUseMyAddressForBen.isSelected())
+					this.chkUseMyAddressForBen.click();
+				this.enterAddressDetails();
+			}
+		}
+			
 		Web.clickOnElement(this.btnSave);
 
 		
@@ -323,7 +348,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("Relationship: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){	
 						return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
@@ -332,14 +358,49 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
-						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8], true);
+						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
+						System.out.println(address);
+						System.out.println(lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8]);
+						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ,true);
 					}
 				}
 				
 			}
 		}
 		
+		return false;
+	}
+	
+	public boolean verifyEntityDetails(String attribute){
+
+		boolean isSuccess = false;
+		try {
+			Thread.sleep(5000);
+			Web.waitForElement(this.lblConfirmation);
+		} catch (Exception e) {
+			
+		}
+		
+		for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
+			if(lstTablePrimaryBeneficiary.get(i).getText().contains(Stock.GetParameterValue("BeneficiaryName"))){
+				if(attribute.equalsIgnoreCase("Name"))
+					return Web.VerifyText("Name: "+Stock.GetParameterValue("BeneficiaryName"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
+				
+				if(attribute.equalsIgnoreCase("Allocation"))	
+					return Web.VerifyText("Allocation: "+Stock.GetParameterValue("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
+				
+				if(attribute.equalsIgnoreCase("Relationship"))	
+					return Web.VerifyText("Type: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
+				
+				if(attribute.equalsIgnoreCase("TIN")){
+//					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+					return Web.VerifyText("TIN (last four): "+Stock.GetParameterValue("Tax_Identification_No").substring(Stock.GetParameterValue("Tax_Identification_No").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+				}
+				if(attribute.equalsIgnoreCase("DOT")){	
+					return Web.VerifyText("DATE OF TRUST: "+Stock.GetParameterValue("Date_of_Trust"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+				}
+			}
+		}
 		return false;
 	}
 	
@@ -377,7 +438,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Web.selectDropDownOption(this.selCountry,Stock.GetParameterValue("Country"));
 	}
 	
-
+	public void enterEntityDetails(){
+		lib.Web.setTextToTextBox(this.txtBeneficiaryName, Stock.GetParameterValue("BeneficiaryName"));
+		lib.Web.setTextToTextBox(this.txtDateOfTrust, Stock.GetParameterValue("Date_of_Trust"));
+		lib.Web.setTextToTextBox(this.txtTaxIdentificationNo, Stock.GetParameterValue("Tax_Identification_No"));
+	}
 	/**<pre> Method to delete beneficiaries from DB.
 	 *.</pre>
 	 * @param ssn - Partcipant ssn
@@ -388,8 +453,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public void deleteBeneficiariesFromDB(String ssn, String firstName) throws Exception{
 		String[] sqlQuery;
-		sqlQuery = Stock.getTestQuery("deleteBeneficiary");
+		String[] sqlQuery_commit;
+		sqlQuery = Stock.getTestQuery("deleteBeneficiaries");
+		sqlQuery_commit = Stock.getTestQuery("deleteBeneficiaries_commit");
+		
 		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
+		DB.executeUpdate(sqlQuery_commit[0], sqlQuery_commit[1]);
 		
 	}
 }
