@@ -42,8 +42,7 @@ public class authenticationtestcases {
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-
+		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			boolean isDisplayed = false;
@@ -147,19 +146,15 @@ public class authenticationtestcases {
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-
+		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
@@ -241,13 +236,10 @@ public class authenticationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
@@ -327,14 +319,10 @@ public class authenticationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 
 
 

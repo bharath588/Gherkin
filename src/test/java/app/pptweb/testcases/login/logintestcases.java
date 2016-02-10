@@ -88,19 +88,14 @@ public class logintestcases {
                         Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
                         
         }
-		finally {
-        }
-		try {
-            Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-            
-            e1.printStackTrace();
-}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 @Test(dataProvider = "setData")
 public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
-	Stock.globalTestdata = testdata;
 	
 	try{
 		Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
@@ -188,14 +183,10 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
         Globals.assertionerror = ae;
         Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
     }
-    finally {
-    }
-    try {
-                    Reporter.finalizeTCReport();
-    } catch (Exception e1) {
-                    
-                    e1.printStackTrace();
-    }
+	finally { 
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		}
 	}
 	
 	

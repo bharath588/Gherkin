@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -43,8 +44,7 @@ public class registrationtestcases {
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_User_has_PIN(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-	
+			
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String headerText;
@@ -303,21 +303,16 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 			
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
+		finally { 
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
 		}
 	}
 
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC02_User_does_not_have_PIN(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-	
+			
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			boolean blnIsElePresent;
@@ -587,20 +582,15 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 			
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC03_NegativeFlow_WithAndWithoutPINTabs(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String ActErrMessage;
@@ -691,20 +681,26 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 			//throw ae;
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		finally { 
+			 
+			
+			try {
+				 String[] sqlQuery;
+				sqlQuery = Stock.getTestQuery("unlockParticipants");
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
+				DB.executeUpdate(sqlQuery[0], "Commit;");
+				
+			} catch (Exception e) {
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			}
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC05_UserLock_WithAndWithoutPIN(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-	
+			
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String activeTab;
@@ -905,20 +901,25 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
-		}
+		finally { 
+			String[] sqlQuery;
+			try {
+				sqlQuery = Stock.getTestQuery("unlockParticipants");
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
+				DB.executeUpdate(sqlQuery[0], "Commit;");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
 	public void SF03_TC01_AccountSetup(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		
+				
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage objloginPage = new LoginPage();
@@ -951,20 +952,14 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 			
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_AccountLookup_PositiveFlow(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -1043,14 +1038,10 @@ public class registrationtestcases {
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
 			
 		}
-		finally {
-		}
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
-		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 

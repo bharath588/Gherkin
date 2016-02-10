@@ -127,7 +127,6 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		
 		//LAST NAME
 		if (fieldName.trim().equalsIgnoreCase("LAST NAME")) {
-			System.out.println("inside if");
 			return this.txtLastName;
 		}
 		

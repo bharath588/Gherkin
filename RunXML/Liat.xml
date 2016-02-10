@@ -2,7 +2,7 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.utils.TestListener"/>
+        <listener class-name="core.framework.TestListener"/>
     </listeners>
     <test name="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
         <classes>

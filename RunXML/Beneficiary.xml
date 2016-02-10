@@ -2,7 +2,7 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.utils.TestListener"/>
+        <listener class-name="core.framework.TestListener"/>
     </listeners>
     <test name="SIT_PPTWEB_Beneficiary_01_TC07_Married_with_Spouse_One_beneficiary_use_address_on_record">
         <classes>
