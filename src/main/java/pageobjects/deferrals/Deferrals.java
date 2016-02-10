@@ -17,6 +17,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 	//Declarations
 			private LoadableComponent<?> parent;
 			private static boolean waitforLoad = false;	
+			private int irs_limit;
 			//My Contributions Page
 			@FindBy(xpath=".//div[@class='page-title ng-scope']/h1") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
@@ -49,13 +50,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//span[@class='valueAndEnd']") private WebElement lnksliderValue;
 			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
 //			@FindBy(xpath=".//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
-			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement lnkPercent;
+//			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement lnkPercent;
+			@FindBy(xpath="//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
 			@FindBy(xpath=".//label[text()[normalize-space()='Dollar']]") private WebElement lnkDollar;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBack;
 //			@FindBy(xpath=".//*[@id='buttonContinue' and text()[normalize-space()='Continue']]") private WebElement btnContinue;
 			@FindBy(xpath="//button[text()[normalize-space()='Continue']]") private WebElement btnContinue;
 //			@FindBy(xpath=".//*[@id='buttonContinue' and text()[normalize-space()='Confirm & Continue']]") private WebElement btnConfirmAndContinue;
 			@FindBy(xpath=".//*[text()[normalize-space()='Confirm & Continue']]") private WebElement btnConfirmAndContinue;
+			
 			@FindBy(xpath=".//*[@id='buttonContinue submit' and text()[normalize-space()='Confirm & Continue']]") private WebElement btnConfirmAndContinue1;
 			@FindBy(xpath=".//button[text()[normalize-space()='My Contributions']]") private WebElement btnMyContributions;
 			@FindBy(linkText="Plan Rules") private WebElement lnkPlanRules;
@@ -78,7 +81,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch')]/../td[3]/.//a") private WebElement lnkCatchupAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Bonus')]/../td[3]/.//a") private WebElement lnkBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'other')]/../td[3]/.//a") private WebElement lnkOtherAutoIncrease;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch')]/../td[3]/.//div") private WebElement txtCatchup;
 			@FindBy(xpath=".//div[text()[normalize-space()='Auto Increase Before-tax deferral']]")	
 			private WebElement lblAutoIncreaseBeforeTaxDeferral;
@@ -97,9 +100,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="deleteAutoIncr") private WebElement chkDeleteAutoIncrease;
 			@FindBy(xpath=".//button[text()[normalize-space()='Delete']]") private WebElement btnDeleteAddAutoIncreaseModal;
 			
-			
-			
-		
+			@FindBy(xpath="//h2[text()[normalize-space()='Bonus']]") private WebElement lblBonus;
+			@FindBy(xpath="//input[@type='checkbox']") private WebElement chkboxMaximize;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]") private WebElement txtMaximizeMeAlwaysBefore;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]") private WebElement txtMaximizeMeAlwaysRoth;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[1]") private WebElement txtBeforeTaxContributionAmt;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[1]") private WebElement txtRothContributionAmt;
 		/**
 		 * Default Constructor
 		 */
@@ -195,6 +201,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("Roth Add auto Increase")) {
 				return this.lnkRothAutoIncrease;	
 			}
+			
+			if(fieldName.trim().equalsIgnoreCase("Maximize Checkbox")) {
+				return this.chkboxMaximize;	
+			}
+			
 			return null;
 			}		
 		
@@ -265,6 +276,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void add_Auto_Increase(String deferralType)
 		{
 			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			lib.Web.clickOnElement(this.btnContinue);
 			if(lib.Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
 			{
@@ -310,15 +327,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				e.printStackTrace();
 			}
 			
-//			Actions ob = new Actions(lib.Web.webdriver);
-//			ob.moveToElement(this.btnConfirmAndContinue).click().build().perform();
-//			ob.clickAndHold(btnConfirmAndContinue);
-//			ob.release(btnConfirmAndContinue);
-			
-			
 			lib.Web.clickOnElement(this.btnConfirmAndContinue); 
-//			if(!lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
-//				lib.Web.clickOnElement(this.btnConfirmAndContinue1); 
 			
 			if(lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);
@@ -326,17 +335,6 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Click on Confirm and Continue button", "My Contributions Confirmations Page is not displayed", true);
 				this.btnMyContributions.click();
 
-			
-//			String before_tax = Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))-Integer.parseInt(Stock.GetParameterValue("Split_Tax")));
-//			String roth = Stock.GetParameterValue("Split_Tax");
-//			
-//			Reporter.logEvent(Status.PASS, "Verify Contribution percent", "Contribution % : "+Stock.GetParameterValue("Contribution Rate"), false);
-//			
-//			Reporter.logEvent(Status.PASS, "Verify Before tax/roth values", "Before tax : "+before_tax+" "+"Roth :"+roth, false);
-////			Reporter.logEvent(Status.PASS, "Verify Before tax/roth values", "Before tax : "+Stock.GetParameterValue("Contribution Rate"), false);
-////			Reporter.logEvent(Status.PASS, "Verify After tax values", "After tax : "+Stock.GetParameterValue("Contribution Rate"), false);
-//			
-//			Reporter.logEvent(Status.PASS, "Verify Auto Increase percentage", "Auto increase percentage :"+Stock.GetParameterValue("Auto Increase Contribution Percent")+" "+"Auto increase upto percent :"+Stock.GetParameterValue("Auto Increases Until Reaches Percent"), false);
 		}
 		
 		/**<pre> Method to click on maximize _to_irs radio button and verify My contributions percentage and amount.
@@ -351,6 +349,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else if(deferralType.equalsIgnoreCase("Standard"))
 			{
 				lib.Web.clickOnElement(radioMaximizeToIRSLimit);
+			
+			String irs=	txtIRSMyContribution.getText().split("%")[0];
+			irs_limit=Integer.parseInt(irs);
+			
 			if(this.txtIRSMyContribution.getText().contains("%"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions percentage ", "My Contributions percentage is  displayed", false);
 			else
@@ -368,7 +370,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		
 		public void select_ContributionType(String contributionType)
-		{				
+		{		
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			lib.Web.clickOnElement(this.btnContinue);
 			try {
 				Thread.sleep(5000);
@@ -383,8 +391,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				txtSplitBeforeTax.clear();
 				txtSplitRothTax.clear();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
-//				lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split Before Tax"));
-				lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax"));					
+				
+				
+				if(Stock.GetParameterValue("Standard_Contribution").equalsIgnoreCase("Maximize to irs limit")){
+					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
+					lib.Web.setTextToTextBox(txtSplitBeforeTax, Integer.toString(befor_tax));
+					lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+				}
+				else{
+					lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+					lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+				}
+									
 				}
 				else
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
@@ -439,6 +457,46 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions amount", "My Contributions amount is not displayed", true);
 		}
+		
+		
+		public boolean check_if_participant_eligible_for_bonus(){
+			boolean issuccess=false;
+			if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions))
+            	this.lnkMoreOptions.click();
+			if(lib.Web.isWebElementDisplayed(lblBonus));
+				issuccess=true;
+			
+			return issuccess;
+		}
+		
+		public void regular_maximize_me_always(){
+			if(!this.chkboxMaximize.isSelected())
+				this.chkboxMaximize.click();
+			lib.Web.clickOnElement(btnContinue);
+			select_ContributionType("Split");
+			lib.Web.clickOnElement(btnContinue);
+			
+			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
+				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", true);
+			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
+				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", true);
+			
+			if(lib.Web.VerifyText(Integer.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
+				Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);
+			
+			if(lib.Web.VerifyText(Stock.GetParameterValue("Split_Tax_roth")+"%", txtRothContributionAmt.getText(), true))
+				Reporter.logEvent(Status.PASS, "Verify roth contribution percent", "Roth contribution percent is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
+		}
+		
+		
 	}
 		
 		
