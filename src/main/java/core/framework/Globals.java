@@ -129,18 +129,29 @@ public class Globals {
     	  static
     	  {
   	    	databaseConnectionStrings = new Hashtable<String, String>();
+  	    	//Dev databases
   	    	databaseConnectionStrings.put("D_INST", "jdbc:oracle:thin:@DINSTDB:1521/dinstmain.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_PNP", "jdbc:oracle:thin:@dpnpdb:1521/dpnpmain.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_ISIS", "jdbc:oracle:thin:@disisdb:1521/disisbatch.isis.gwl.com");
-  	    	databaseConnectionStrings.put("D_QASI", "jdbc:oracle:thin:@gp-qdb:1521:D_QASI");
-  	    	databaseConnectionStrings.put("D_QASK", "jdbc:oracle:thin:@dqaskdb:1521/dqaskmain.isis.gwl.com");
-  	    	databaseConnectionStrings.put("D_IN02", "jdbc:oracle:thin:@din02db:1521/din02java.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_CMNM", "jdbc:oracle:thin:@fsxd01dbad02:1521/dcmnmmain.isis.gwl.com");
-  	    	databaseConnectionStrings.put("D_QAS2", "jdbc:oracle:thin:@gp-qdb:1521:D_QAS2");
-  	    	databaseConnectionStrings.put("Q_CMNM", "jdbc:oracle:thin:@fsxq01dbad02:1521/q_cmnm.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_MISC", "jdbc:oracle:thin:@gp-pdb2:1521/D_MISC.ISIS.GWL.COM");
   	    	databaseConnectionStrings.put("D_AMA", "jdbc:oracle:thin:@Damadb:1521/damamain.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_QAMA", "jdbc:oracle:thin:@gp-ddb2:1521:D_QAMA");
-  	    	databaseConnectionStrings.put("D_MISC", "jdbc:oracle:thin:@gp-pdb2:1521/D_MISC.ISIS.GWL.COM");   	    	
+  	    	
+  	    	//to be deleted once the all projects comply
+  	    	databaseConnectionStrings.put("D_QASI", "jdbc:oracle:thin:@dqasi:1521/dqasimain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_QASK", "jdbc:oracle:thin:@dqaskdb:1521/dqaskmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_IN02", "jdbc:oracle:thin:@din02db:1521/din02java.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_QAS2", "jdbc:oracle:thin:@dqas2:1521/dqas2main.isis.gwl.com");
+  	    	
+  	    	//new QA databases
+  	    	databaseConnectionStrings.put("Q_CMNM", "jdbc:oracle:thin:@qcmnmdb:1521/QCMNMMAIN.ISIS.GWL.COM");
+  	    	databaseConnectionStrings.put("Q_INST", "jdbc:oracle:thin:@qinstdb:1521/qinstmain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("Q_IN02", "jdbc:oracle:thin:@qin02db:1521/qin02main.isis.gwl.com");
+  	    	databaseConnectionStrings.put("Q_ISIS", "jdbc:oracle:thin:@qisisdb:1521/QISISMAIN.ISIS.GWL.COM");
+  	    	
+  	    	
+  	    	   	    	
 
   	    	}
 }
