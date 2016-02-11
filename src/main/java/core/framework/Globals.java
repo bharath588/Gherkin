@@ -110,7 +110,22 @@ public class Globals {
           public static final String GC_EXPNTYPE_ILLEGALSTATE = "illegalstateexception";
           public static final String GC_EXPNTYPE_IOEXCEPTION = "illegalstateexception";
           
+          
+          
+          
                
+        //AAG Managed Accounts
+          public static final String GC_LOG_FILE_VALIDATION_MESSAGE="Successful-> "+".*[1-9].*";
+          public static final String GC_PROSPECT_LOG_FILE_PATTERN="prospect_";
+          public static final String GC_MEMBER_LOG_FILE_PATTERN="member_";
+          public static final String GC_ENROLL_CANCEL_LOG_FILE_PATTERN="enroll_";
+          public static final String GC_TRANSACTION_LOG_FILE_PATTERN="transaction_";
+          public static final String GC_LOG_FILE_TYPE=".log";
+          public static final String GC_FILE_TYPE=".xml";
+    	  public static final String GC_Database_Prefix="D_";
+    	  public static final String GC_TRANSACTION_FUTURE_STATUS="FUTURE";
+    	  public static final String GC_TRANSACTION_COMPLETE_STATUS="COMPLETE";
+    	  
         //SHELL
           public static final String GC_COMMAND_COMPLETE_STATUS="Complete";
           public static final int GC_SHELL_PORT_NUMBER=22;
@@ -125,8 +140,6 @@ public class Globals {
     	  public static final String GC_MEMBER_FILE_NAMEPATTERN="ma_empower_dc_memb_";
     	  public static final String GC_ENROLLCANCEL_FILE_NAMEPATTERN="ma_fei_enrll_";
     	  public static final String GC_TRANSACTION_INPUT_FILE_NAMEPATTERN="ma_fei_txnpr_"; 
-    	  public static final String GC_FILE_TYPE=".xml";
-    	  public static final String GC_Database_Prefix="D_";
           
     	  public static final Map<String, String> databaseConnectionStrings;
     	  static
