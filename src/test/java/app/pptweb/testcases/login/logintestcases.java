@@ -62,12 +62,12 @@ public class logintestcases {
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {
-				Reporter.logEvent(Status.FAIL, "Check error message displayed on submiting invalid credentials", 
+				lib.Reporter.logEvent(Status.FAIL, "Check error message displayed on submiting invalid credentials", 
 						"No error message is displayed after submiting login credentials\nExpected error message on clicking on Sign In button", true);
 				
 				return;
 			} else {
-				Reporter.logEvent(Status.INFO, "Check error message displayed on submiting invalid credentials", 
+				lib.Reporter.logEvent(Status.INFO, "Check error message displayed on submiting invalid credentials", 
 						"An error message is displayed as expected", true);
 			}
 			

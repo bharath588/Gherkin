@@ -13,40 +13,5 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC03_Verify_login_Successfully_into_unregistered_Device_CallMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC05_Verify_login_Successfully_into_unregistered_Device_TextMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    
 </suite>
