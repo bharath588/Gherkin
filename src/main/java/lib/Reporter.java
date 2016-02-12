@@ -3,21 +3,23 @@ package lib;
 
 import java.io.File;
 import java.util.Random;
+
 import com.google.common.base.Throwables;
 import com.relevantcodes.extentreports.DisplayOrder;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.GridType;
 import com.relevantcodes.extentreports.LogStatus;
+
 import core.framework.Globals;
 
 public class Reporter {
 
 	public static String strLogFolderPath;
 	
-	public static String currIterationStatus;
-	public static final String NOT_COMPLETE = "NOT COMPLETE";
-	public static final String PASS = "PASS";
-	public static final String FAIL = "FAIL";
+//	private static String currIterationStatus;
+//	private static final String NOT_COMPLETE = "NOT COMPLETE";
+//	private static final String PASS = "PASS";
+//	private static final String FAIL = "FAIL";
 	private static int iRandTraceCntr = 0;
 	
 	public static ExtentReports objReport;
@@ -25,6 +27,43 @@ public class Reporter {
 		PASS, FAIL, WARNING, INFO
 	}
 	
+	/**  
+	 *<pre> Method to initiate 
+	 * 1) currently running test suite name (Used in HTML Report)
+	 * 2) Set users' decision of overwriting existing HTML report for the class
+	 * 3) Initiate reporter object for the module/class</pre>
+	 * 
+	 * @param className - <pre><b>Ex:</b>	this.getClass().getName()</pre> 
+	 */
+	public static void initializeModule(String className) {
+		if (!Globals.GBL_SuiteName.equalsIgnoreCase(className)) {
+			Globals.GBL_REPLACE_EXISTING_HTML_REPORT = Stock.GetParameter_From_Config("Overwrite_Existing_Report");
+			Globals.GBL_SuiteName = className;
+			
+			//Initialize reporter object
+			String reportFilePath = Globals.GC_TEST_REPORT_DIR 
+					+ Globals.GBL_SuiteName + ".html";
+			
+			Reporter.objReport = ExtentReports.get(Reporter.class);
+			if(!new File(Globals.GC_TEST_REPORT_DIR).exists()){
+				new File(Globals.GC_TEST_REPORT_DIR).mkdir();
+			}
+			
+			Reporter.objReport.init(reportFilePath, 
+					Boolean.parseBoolean(Globals.GBL_REPLACE_EXISTING_HTML_REPORT), 
+					DisplayOrder.BY_OLDEST_TO_LATEST, 
+					GridType.MASONRY);
+			
+			Globals.GBL_REPLACE_EXISTING_HTML_REPORT = "false";
+			
+			Reporter.objReport.config().documentTitle(Globals.GBL_SuiteName + ": Summary Report");
+			Reporter.objReport.config().reportHeadline("Report options");
+			Reporter.objReport.config().reportTitle("Execution summary report for [" + Globals.GBL_SuiteName + "]");
+			Reporter.objReport.config().displayCallerClass(false);
+			Reporter.objReport.config().useExtentFooter(false);
+			Reporter.objReport.config().setImageSize("10%");
+		}
+	}
 	
 	/**<pre> Method to initialize HTML Report and Local Results spreadsheet
 	 * This method has to be called before initiating each test iteration
@@ -52,27 +91,27 @@ public class Reporter {
 		Globals.GBL_CurrentIterationNumber = currentIterationNumber;
 		
 		String tmpStr1 = "", tmpStr2 = "", tmpStr3="";
-		String reportFilePath = Globals.GC_TEST_REPORT_DIR 
-				+ Globals.GBL_SuiteName + ".html";
-		
-		Reporter.objReport = ExtentReports.get(Reporter.class);
-		if(!new File(Globals.GC_TEST_REPORT_DIR).exists()){
-			new File(Globals.GC_TEST_REPORT_DIR).mkdir();
-		}
-		
-		Reporter.objReport.init(reportFilePath, 
-				Boolean.parseBoolean(Globals.GBL_REPLACE_EXISTING_HTML_REPORT), 
-				DisplayOrder.BY_OLDEST_TO_LATEST, 
-				GridType.MASONRY);
-		
-		Globals.GBL_REPLACE_EXISTING_HTML_REPORT = "false";
-		
-		Reporter.objReport.config().documentTitle(Globals.GBL_SuiteName + ": Summary Report");
-		Reporter.objReport.config().reportHeadline("Report options");
-		Reporter.objReport.config().reportTitle("Execution summary report for [" + Globals.GBL_SuiteName + "]");
-		Reporter.objReport.config().displayCallerClass(false);
-		Reporter.objReport.config().useExtentFooter(false);
-		Reporter.objReport.config().setImageSize("10%");
+//		String reportFilePath = Globals.GC_TEST_REPORT_DIR 
+//				+ Globals.GBL_SuiteName + ".html";
+//		
+//		Reporter.objReport = ExtentReports.get(Reporter.class);
+//		if(!new File(Globals.GC_TEST_REPORT_DIR).exists()){
+//			new File(Globals.GC_TEST_REPORT_DIR).mkdir();
+//		}
+//		
+//		Reporter.objReport.init(reportFilePath, 
+//				Boolean.parseBoolean(Globals.GBL_REPLACE_EXISTING_HTML_REPORT), 
+//				DisplayOrder.BY_OLDEST_TO_LATEST, 
+//				GridType.MASONRY);
+//		
+//		Globals.GBL_REPLACE_EXISTING_HTML_REPORT = "false";
+//		
+//		Reporter.objReport.config().documentTitle(Globals.GBL_SuiteName + ": Summary Report");
+//		Reporter.objReport.config().reportHeadline("Report options");
+//		Reporter.objReport.config().reportTitle("Execution summary report for [" + Globals.GBL_SuiteName + "]");
+//		Reporter.objReport.config().displayCallerClass(false);
+//		Reporter.objReport.config().useExtentFooter(false);
+//		Reporter.objReport.config().setImageSize("10%");
 		
 		if (testCaseName.length() > 50) {
 			tmpStr1 = (String) testCaseName.subSequence(0, 50);
@@ -91,7 +130,7 @@ public class Reporter {
 				(tmpStr3.length() > 0 ? ("<br>     " + tmpStr3) : "") + 
 				"<br>Iteration " + Globals.GBL_CurrentIterationNumber);
 		
-		Reporter.currIterationStatus = Reporter.NOT_COMPLETE;
+		//Reporter.currIterationStatus = Reporter.NOT_COMPLETE;
 	}
 	
 	/**<pre> Method to log steps details to HTML report
@@ -165,8 +204,8 @@ public class Reporter {
 			}
 		}
 		
-		if (logStatus == Status.FAIL)
-			Reporter.currIterationStatus = "FAIL";
+//		if (logStatus == Status.FAIL)
+//			Reporter.currIterationStatus = "FAIL";
 	}
 	
 	/**<pre> Method to finalize HTML Report and local results spreadsheet

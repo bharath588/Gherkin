@@ -262,6 +262,8 @@ public class Stock {
 		}	
 		Stock.globalParam.put(parameterName.toUpperCase(), parameterValue);
 	}
+
+	
 	
 
 }
