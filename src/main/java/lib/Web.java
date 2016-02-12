@@ -317,15 +317,18 @@ public class Web {
 			webDriver = new ChromeDriver();
 		} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 				|| webBrowser.trim().equalsIgnoreCase("FF")) {
-//			ProfilesIni profiles = new ProfilesIni();
-//			FirefoxProfile ffProfile = profiles.getProfile("default");
-//			
-//			if (ffProfile == null)
-//				throw new Error("FireFox profile 'default' does not exist!");
-//			
-//			ffProfile.setPreference("signon.autologin.proxy", true);
-//			webDriver = new FirefoxDriver(ffProfile);
-			webDriver = new FirefoxDriver();
+			ProfilesIni profiles = new ProfilesIni();
+			FirefoxProfile ffProfile = profiles.getProfile("default");
+			//ffProfile.setPreference("signon.autologin.proxy", true);
+			
+			if (ffProfile == null) {
+				System.out.println("Initiating Firefox with dynamic profile");
+				webDriver = new FirefoxDriver();
+			} else {
+				System.out.println("Initiating Firefox with default profile");
+				webDriver = new FirefoxDriver(ffProfile);
+			}
+			
 		} else {
 			throw new Error("Unknown browser type specified: " + webBrowser);
 		}
