@@ -31,7 +31,6 @@ public class beneficiariestestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
 		
 	}
@@ -46,11 +45,6 @@ public class beneficiariestestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 	
-	@BeforeMethod
-    public void getTCName(Method tc) {
-           tcName = tc.getName();       
-           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
-    }
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
@@ -105,6 +99,7 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			//verify beneficiary name
+			
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", false);
 			else
@@ -228,7 +223,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
-			
+			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 			//verify beneficiary name
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", false);
@@ -267,12 +262,6 @@ public class beneficiariestestcases {
 					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
 			}
 			
-			//delete beneficiary from Database
-//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
-//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
-			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
-			
 			
 		}
 		catch(Exception e)
@@ -289,6 +278,15 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
         }
 		try {
             Reporter.finalizeTCReport();
@@ -352,7 +350,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
-			
+			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 			//verify beneficiary name
 			if(beneficiary.verifyEntityDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", false);
@@ -408,6 +406,14 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         }
 		try {
             Reporter.finalizeTCReport();

@@ -316,7 +316,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @return - boolean
 	 */
 	public boolean verifyBeneficiaryDetails(String attribute){
-
+		
+		
 		boolean isSuccess = false;
 		String beneficiaryName = Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName");
 		try {

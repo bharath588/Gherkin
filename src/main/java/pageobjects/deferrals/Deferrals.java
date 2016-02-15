@@ -76,7 +76,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@id='irsMax']//div[@class='contribution-amount']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'AFTRTX')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch')]/../td[3]/.//a") private WebElement lnkCatchupAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Bonus')]/../td[3]/.//a") private WebElement lnkBonusAutoIncrease;
@@ -106,6 +106,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]") private WebElement txtMaximizeMeAlwaysRoth;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[1]") private WebElement txtBeforeTaxContributionAmt;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[1]") private WebElement txtRothContributionAmt;
+			
+			@FindBy(xpath="//table[@class='deferrals-breakdown ng-scope']/tbody") private WebElement tblContributionDetails;
+			@FindBy(xpath="//table[@class='responsive-tables contributions-cart']/tbody") private WebElement tblMyContributions;
 		/**
 		 * Default Constructor
 		 */
@@ -205,7 +208,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("Maximize Checkbox")) {
 				return this.chkboxMaximize;	
 			}
-			
+			if(fieldName.trim().equalsIgnoreCase("Continue button")) {
+				return this.btnContinue;	
+			}
+			if(fieldName.trim().equalsIgnoreCase("Confirm button")) {
+				return this.btnConfirmAndContinue;	
+			}
 			return null;
 			}		
 		
@@ -459,6 +467,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		}
 		
 		
+		/**<pre> Method to check if bonus deferral is available for the participant
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 */
 		public boolean check_if_participant_eligible_for_bonus(){
 			boolean issuccess=false;
 			if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions))
@@ -469,6 +482,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			return issuccess;
 		}
 		
+		/**<pre> Method to select  maximize me always option and verify if the contributions have the maximize me always option
+		 *.</pre>
+		 * 
+		 *
+		 */
 		public void regular_maximize_me_always(){
 			if(!this.chkboxMaximize.isSelected())
 				this.chkboxMaximize.click();
@@ -496,7 +514,61 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
 		}
 		
+		/**<pre> Method to verify the different contributions in the My Contributions table
+		 *.</pre>
+		 * @param percent - contribution percent
+		 * @param contrType - Contribution type like Roth,Before, After tax etc.
+		 * @param deferralsType - deferral type(Standard, Catch up, After Tax, Bonus, Other)
+		 * 
+		 * @return - boolean
+		 */
+		public boolean verifyMyContributions(String percent, String contrType, String deferralsType){
+			boolean issuccess = false;
+			try {
+				lib.Web.waitForElement(lblMyContributions);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(deferralsType.equalsIgnoreCase("Standard")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Catchup")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Aftertax")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Bonus")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Other")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			return issuccess;
+		}
 		
+		/**<pre> Method to verify the contributions in the Confirmation table
+		 *.</pre>
+		 * @param percent - contribution percent
+		 * @param type - Contribution type like Roth,Before, After tax etc.
+		 * @param autoIncreaseRate - Auto Increase rate
+		 * @param autoIncreaseUpto - Auto increase until it reaches percent
+		 * 
+		 * @return - boolean
+		 */
+		public boolean verifyContributionDetails(String percent, String type, String autoIncreaseRate, String autoIncreaseUpto){
+			
+			if(tblContributionDetails.getText().contains(percent+"% "+type+"with auto-increase "+autoIncreaseRate+"% "+"up to "+autoIncreaseUpto+"%"))
+				return true;
+			
+			return false;
+		}
 	}
 		
 		

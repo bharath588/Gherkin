@@ -31,7 +31,6 @@ public class liattestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
 		
 	}
@@ -45,7 +44,7 @@ public class liattestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-	
+
 	@BeforeMethod
     public void getTCName(Method tc) {
            tcName = tc.getName();       

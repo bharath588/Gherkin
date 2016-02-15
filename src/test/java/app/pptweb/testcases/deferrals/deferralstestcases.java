@@ -29,7 +29,6 @@ public class deferralstestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 		Globals.GBL_SuiteName = this.getClass().getName();
 		
 	}
@@ -43,12 +42,6 @@ public class deferralstestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-	
-	@BeforeMethod
-    public void getTCName(Method tc) {
-           tcName = tc.getName();       
-           lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
-    }
 
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral__AfterTax(int itr, Map<String, String> testdata){
@@ -448,47 +441,13 @@ public class deferralstestcases {
 	}
 
 
-	@Test(dataProvider = "setData")
-	public void SIT_PPTWEB_Deferral_016_Multiple_Create_contribution_rate_for_multiple_deferral_type_split_contribution(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
-		try{
-			Reporter.initializeReportForTC(itr, "SIT_PPTWEB_Deferral_009_Catch_up_Maximize_to_the_IRS_limit up_Maximize to the IRS limit");
-			LeftNavigationBar leftmenu;
-			LoginPage login = new LoginPage();
-			TwoStepVerification mfaPage = new TwoStepVerification(login);
-			LandingPage homePage = new LandingPage(mfaPage);
-			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-				leftmenu = new LeftNavigationBar(homePage);			
-			else {
-				MyAccountsPage accountPage = new MyAccountsPage(homePage);
-				leftmenu = new LeftNavigationBar(accountPage);
-			}
-			Deferrals deferrals = new Deferrals(leftmenu);
-			deferrals.get();
-
-
-
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}
-		catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
-	}
-
 	
+	/**
+	 * Thee following scripts Add Other deferral type
+	 * 
+	 * Covered Manual Test Cases:
+	 * 1.SIT_PPTWEB_Deferral_009_Other_Select another contribution rate
+	 */
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_Other(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
@@ -544,6 +503,12 @@ public class deferralstestcases {
 		
 	}
 	
+	/**
+	 * Thee following script checks if the participant is available for Bonus type deferral
+	 * 
+	 * Covered Manual Test Cases:
+	 * 1.SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution
+	 */
 	@Test(dataProvider = "setData")
 	public void Participant_not_elegible_for_Bonus_type_contribution(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
@@ -591,6 +556,12 @@ public class deferralstestcases {
 		
 	}
 	
+	/**
+	 * The participant selects the Maximize me always option for Standard deferral type
+	 * 
+	 * Covered Manual Test Cases:
+	 * 1.SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always 
+	 */
 	@Test(dataProvider = "setData")
 	public void Regular_SPLIT_Maximize_me_always(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
@@ -648,6 +619,13 @@ public class deferralstestcases {
 		
 	}
 	
+	/**
+	 * The following script adds or edits all the deferral typed and then confirm it
+	 * 
+	 * Covered Manual Test Cases:
+	 * 1.SIT_PPTWEB_Deferral_020_Multiple_Create contribution rate for multiple deferral type, split contribution 
+	 * 2.SIT_PPTWEB_Deferral_021_Multiple_Change contribution rate for multiple deferral type, split contributions
+	 */
 	@Test(dataProvider = "setData")
 	public void Multiple_deferral_split_contribution(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
@@ -671,13 +649,134 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-			if(deferrals.clickAddEditButton("Standard Add"))
-				Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
+			
+			//Creating or editing Standard deferral
+			if(Stock.GetParameterValue("CreateOrEdit").equalsIgnoreCase("Create")){
+				if(deferrals.clickAddEditButton("Standard Add"))
+					Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
+			}
+			else{
+				if(deferrals.clickAddEditButton("Standard Edit"))
+					Reporter.logEvent(Status.PASS, "Verify Standard contribution page", "Standard Contributions page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
+			}
+			deferrals.click_Select_Your_Contribution_Rate();
+			deferrals.select_ContributionType("Split");
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "ROTH deferral", "Standard"))
+				Reporter.logEvent(Status.PASS, "Verify Roth contribution percent for Standar deferral", "Roth contribution percent matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify Standard contribution page", "Standard Contributions page is not displayed", true);
+				Reporter.logEvent(Status.FAIL, "Verify Roth contribution percent for Standar deferral", "Roth contribution percent not matching", true);
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_before"), "Before-tax", "Standard"))
+				Reporter.logEvent(Status.PASS, "Verify before contribution percent for Standar deferral", "before contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify before contribution percent for Standar deferral", "before contribution percent not matching", true);
 			
+			//Create or edit Catch up deferrals
+			if(Stock.GetParameterValue("CreateOrEdit").equalsIgnoreCase("Create")){
+				if(deferrals.clickAddEditButton("Catch Up Add"))
+					Reporter.logEvent(Status.PASS, "Verify Catch up contribution page", "Standard Catch up page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Catch up contribution page", "Standard Catch up page is not displayed", true);
+			}
+			else{
+				if(deferrals.clickAddEditButton("Catch Up Edit"))
+					Reporter.logEvent(Status.PASS, "Verify Catch up contribution page", "Standard Catch up page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Catch up contribution page", "Standard Catch up page is not displayed", true);
+			}
+			deferrals.click_Select_Your_Contribution_Rate();
+			deferrals.select_ContributionType("Split");
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "Age Catch-Up Roth", "Catchup"))
+				Reporter.logEvent(Status.PASS, "Verify Roth contribution percent for Catchup deferral", "Roth contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Roth contribution percent for Catchup deferral", "Roth contribution percent not matching", true);
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_before"), "Age catch-up before tax", "Catchup"))
+				Reporter.logEvent(Status.PASS, "Verify before contribution percent for Catchup deferral", "before contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify before contribution percent for Catchup deferral", "before contribution percent not matching", true);
 			
+			//Create or edit after tax
+			if(Stock.GetParameterValue("CreateOrEdit").equalsIgnoreCase("Create")){
+				if(deferrals.clickAddEditButton("After Tax Add"))
+					Reporter.logEvent(Status.PASS, "Verify After Tax contribution page", "After Tax page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify After Tax contribution page", "After Tax page is not displayed", true);
+			}
+			else{
+				if(deferrals.clickAddEditButton("After Tax Edit"))
+					Reporter.logEvent(Status.PASS, "Verify After Tax contribution page", "After Tax page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify After Tax contribution page", "After Tax page is not displayed", true);
+			}
+			deferrals.click_Select_Your_Contribution_Rate();
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "AFTRTX", "Aftertax"))
+				Reporter.logEvent(Status.PASS, "Verify after tax contribution percent for AfterTax deferral", "after tax contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify after tax contribution percent for AfterTax deferral", "after tax contribution percent not matching", true);
 			
+			//Create or edit Bonus deferrals
+			if(Stock.GetParameterValue("CreateOrEdit").equalsIgnoreCase("Create")){
+				if(deferrals.clickAddEditButton("Bonus Add"))
+					Reporter.logEvent(Status.PASS, "Verify Bonus contribution page", "Bonus page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Bonus contribution page", "Bonus page is not displayed", true);
+			}
+			else{
+				if(deferrals.clickAddEditButton("Bonus Edit"))
+					Reporter.logEvent(Status.PASS, "Verify Bonus contribution page", "Bonus page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Bonus contribution page", "Bonus page is not displayed", true);
+			}
+			deferrals.click_Select_Your_Contribution_Rate();
+			deferrals.select_ContributionType("After");
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "After Tax Bonus ", "Bonus"))
+				Reporter.logEvent(Status.PASS, "Verify after tax contribution percent for Bonus deferral", "after tax contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify after tax contribution percent for Bonus deferral", "after tax contribution percent not matching", true);
+			
+			//create or edit other deferral
+			if(Stock.GetParameterValue("CreateOrEdit").equalsIgnoreCase("Create")){
+				if(deferrals.clickAddEditButton("Other Add"))
+					Reporter.logEvent(Status.PASS, "Verify Other contribution page", "Other page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Other contribution page", "Other page is not displayed", true);
+			}
+			else{
+				if(deferrals.clickAddEditButton("Other Edir"))
+					Reporter.logEvent(Status.PASS, "Verify Other contribution page", "Other page is  displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Other contribution page", "Other page is not displayed", true);
+			}
+			deferrals.click_Select_Your_Contribution_Rate();
+			deferrals.select_ContributionType("Split");
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "AFTRTXVR", "Other"))
+				Reporter.logEvent(Status.PASS, "Verify after tax vr contribution percent for Other deferral", "Roth contribution percent matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify after tax vr contribution percent for Other deferral", "Roth contribution percent not matching", true);
+			
+			deferrals.add_Auto_Increase("Before Add Auto Increase");
+			deferrals.add_Auto_Increase("After Add Auto Increase");
+			deferrals.add_Auto_Increase("Catch UP Add Auto Increase");
+			deferrals.add_Auto_Increase("Bonus Add Auto Increase");
+			deferrals.add_Auto_Increase("Roth Add Auto Increase");
+			
+			lib.Web.clickOnElement(deferrals, "Confirm button");
+			
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Split_Tax_before"), "Before-tax", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Split_Tax_roth"), "Roth deferral", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Split_Tax_before"), "Age catch-up before tax", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Split_Tax_roth"), " Age Catch-Up Roth", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"), "AFTRTX", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"), "After Tax Bonus", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"), "AFTRTXVR", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
 		}
 		catch(Exception e)
 		{

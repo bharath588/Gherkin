@@ -1,5 +1,8 @@
 package pageobjects.liat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lib.Reporter;
 import lib.Web;
 import lib.Reporter.Status;
@@ -40,6 +43,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(xpath=".//*[text()[normalize-space()='Doctors & Tests']]/../td[3]") private WebElement lblDoctorAndTestsCost;
 	@FindBy(id="projected-health-care-costs-income-label") private WebElement lblProjectedHlthCareCost;
 	@FindBy(id="projected-health-care-costs-chart") private WebElement lblPieChart;
+	
+	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
 	
 	/** Default constructor
 	 * 
@@ -121,14 +126,25 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 //	}
 	
 	public void verifyHealthCostFromUI(float estMonthlyIncome){
-        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
-        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
-        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
-        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
-        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
-        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
-        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
-        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
+		
+		 float medicareSupplementalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(0).getText());
+		 float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(1).getText());
+		 float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(2).getText());
+		 float dentalInsuranceCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(3).getText());
+		 float prescriptionDrugsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(4).getText());
+		 float hearingAndVisionCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(5).getText());
+		 float dentalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(6).getText());
+		 float doctorsAndTestsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(7).getText());
+		
+//		
+//        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
+//        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
+//        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
+//        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
+//        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
+//        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
+//        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
+//        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
         
         float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
                                                         + dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
