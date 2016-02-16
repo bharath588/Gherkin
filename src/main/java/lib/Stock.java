@@ -194,8 +194,8 @@ public class Stock {
 							.trim();
 					val = xlRW.getCellData(Globals.GC_CONFIGFILEANDSHEETNAME, iConfLoop + 1, Globals.GC_COLNAME_VALUE)
 							.trim();
-	//key should be case insensitive TODO
-					globalParam.put(key, val);
+
+					globalParam.put(key.trim().toUpperCase(), val);
 					Log.Report(Level.DEBUG, "setting @globalParam with key :" + key + " -- value :" + val);
 				}
 				globalParam.remove(Globals.GC_EMPTY);
@@ -240,7 +240,7 @@ public class Stock {
 	}
 	
 	public static String GetParameter_From_Config(String parameterName){
-		return globalParam.get(parameterName) ;
+		return globalParam.get(parameterName.trim().toUpperCase()) ;
 	}
 	
 	/**
@@ -256,11 +256,11 @@ public class Stock {
 		
 		if (overWriteExisting.length > 0) {
 			if (!overWriteExisting[0])
-				if (Stock.globalParam.containsKey(parameterName.toUpperCase())) {
+				if (Stock.globalParam.containsKey(parameterName.trim().toUpperCase())) {
 					return;
 				}
 		}	
-		Stock.globalParam.put(parameterName.toUpperCase(), parameterValue);
+		Stock.globalParam.put(parameterName.trim().toUpperCase(), parameterValue);
 	}
 
 	
