@@ -47,8 +47,8 @@ public class DriverScript {
 		Log.Report(Level.INFO,Globals.GC_LOG_INIT_MSG);
 		testConfigPath = Globals.GC_TESTCONFIGLOC+Globals.GC_CONFIGFILEANDSHEETNAME+".xls";	
 		ReadTestConfig();
-		if(globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
-		   globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){
+		if(Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
+		   Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){
 		   BuildTestNGXML();
 		}
 		//Commenting the run part of the testng xml since the run can be initiated by the individual project POM
@@ -65,7 +65,7 @@ Author : Souvik     Date : 09-10-2015
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 */	private void ReadTestConfig() throws Exception{
 		Stock.getParam(testConfigPath);
-		globalParam = Stock.globalParam;
+		//globalParam = Stock.globalParam;
 	}
 	
 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ Author : Souvik     Date : 09-10-2015
 	String testType = Globals.GC_EMPTY;
 	String manualTCName = Globals.GC_EMPTY;
 	try {
-		autName = globalParam.get(Globals.GC_KEYAUT).toLowerCase();
+		autName = Stock.getConfigParam(Globals.GC_KEYAUT).toLowerCase();
 		if (autName.isEmpty()) {
 			throw new Exception("Application name is not provided in TestExecutionConfig sheet");
 		}
@@ -269,11 +269,11 @@ Author : Souvik     Date : 09-10-2015
 			file.mkdir();
 			Log.Report(Level.DEBUG, "created directory : " + file.getPath() + " to store TestNG XML");
 		}
-		if (globalParam.get(Globals.GC_KEYTESTTYPE).equals(Globals.GC_EMPTY)) {
+		if (Stock.getConfigParam(Globals.GC_KEYTESTTYPE).equals(Globals.GC_EMPTY)) {
 			testType = Globals.GC_DEFAULTTESTTYPE;
 
 		} else {
-			testType = globalParam.get(Globals.GC_KEYTESTTYPE);
+			testType = Stock.getConfigParam(Globals.GC_KEYTESTTYPE);
 		}
 
 		RunXMLFileName = testType + "_" + dateFormat.format(date) + ".xml";
@@ -357,11 +357,11 @@ Author : Souvik     Date : 09-10-2015
 				keyRowNum++;
 			}
 			
-			resourcePath = globalParam.get("TESTRESOURCES")+"\\";
+			resourcePath = Stock.getConfigParam("TESTRESOURCES")+"\\";
 				
 			//setting  data validation for RunXML in test config sheet
-			if(globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
-			   globalParam.get(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){				
+			if(Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
+			   Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){				
 			   Log.Report(Level.DEBUG,"Setting data validation for RunXML in test config sheet ");
 				
 			   ArrayList<String> runXMLFileName = new ArrayList<String>();

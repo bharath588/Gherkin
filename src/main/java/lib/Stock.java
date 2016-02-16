@@ -12,7 +12,7 @@ import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
 public class Stock {
-	public static Map<String, String> globalParam = new LinkedHashMap<String, String>();
+	private static Map<String, String> globalParam = new LinkedHashMap<String, String>();
 	private static int dataProviderIterations;
 	public static Map<String, String> globalTestdata;
 	public static String globalManualTCName;
