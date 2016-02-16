@@ -65,7 +65,7 @@ public class Globals {
           public static String GBL_SuiteName = "";
           
 //          public static String GBL_REPLACE_EXISTING_HTML_REPORT = "true";
-          public static String GBL_REPLACE_EXISTING_HTML_REPORT = Stock.GetParameter_From_Config("Overwrite_Existing_Report");
+          public static String GBL_REPLACE_EXISTING_HTML_REPORT = Stock.getConfigParam("Overwrite_Existing_Report");
           public static String GBL_TestCaseName = "";
           public static int GBL_CurrentIterationNumber = 1;
           public static String GBL_strScreenshotsFolderPath = "";

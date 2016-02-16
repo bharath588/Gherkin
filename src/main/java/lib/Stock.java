@@ -239,7 +239,7 @@ public class Stock {
 		return queryData;
 	}
 	
-	public static String GetParameter_From_Config(String parameterName){
+	public static String getConfigParam(String parameterName){
 		return globalParam.get(parameterName.trim().toUpperCase()) ;
 	}
 	
@@ -252,7 +252,7 @@ public class Stock {
 	 * <b> - false</b> to ignore updating value to already existing property.
 	 * Default is <b>true</b></pre>
 	 */
-	public static void set_Config_Property(String parameterName,String parameterValue,boolean... overWriteExisting) {
+	public static void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
 		
 		if (overWriteExisting.length > 0) {
 			if (!overWriteExisting[0])

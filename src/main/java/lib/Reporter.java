@@ -37,7 +37,7 @@ public class Reporter {
 	 */
 	public static void initializeModule(String className) {
 		if (!Globals.GBL_SuiteName.equalsIgnoreCase(className)) {
-			Globals.GBL_REPLACE_EXISTING_HTML_REPORT = Stock.GetParameter_From_Config("Overwrite_Existing_Report");
+			Globals.GBL_REPLACE_EXISTING_HTML_REPORT = Stock.getConfigParam("Overwrite_Existing_Report");
 			Globals.GBL_SuiteName = className;
 			
 			//Initialize reporter object
