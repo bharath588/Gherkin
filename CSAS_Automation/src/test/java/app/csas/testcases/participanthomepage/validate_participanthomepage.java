@@ -215,6 +215,7 @@ Author : Ranjan     Date : 02-02-16
 */	@Test(dataProvider = "setData")
 	public void Validate_Registration_Status_On_PPT_Home_Page(int itr,
 		Map<String, String> testdata) {
+	String pptID = Globals.GC_EMPTY;
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 
@@ -228,10 +229,15 @@ Author : Ranjan     Date : 02-02-16
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password"));
 		}
-
 		// Step2:Search with PPT ID..
+					if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
+						pptID = participantHomeObj.getPPTID(Stock.GetParameterValue("reg_status"));
+			
+						participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
+					}
+	/*	// Step2:Search with PPT ID..
 		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ppt_id"),
-				                                Web.returnElement(participantHomeObj,"PPT_ID"));
+				                                Web.returnElement(participantHomeObj,"PPT_ID"));*/
 
 		// Step3: Verify Registration status
 		participantHomeObj.verify_Registration_Status(Stock
@@ -280,7 +286,7 @@ Author : Ranjan     Date : 02-02-16
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password"));
 		}
-		// Step2: Verify Registration status
+		// Step2: Verify Managed Account status
 		participantHomeObj.verify_Managed_Account_Status(Stock
 				.GetParameterValue("managed_acc_status"));
 		
