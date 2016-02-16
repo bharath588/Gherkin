@@ -225,7 +225,7 @@ public class Stock {
 	public static String[] getTestQuery(String queryName) throws Exception
 	{
 		String[] queryData;
-		XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + Stock.globalParam.get("AUT") + ".xls");
+		XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + Stock.getConfigParam("AUT") + ".xls");
 		int queryColNo = XL.getColNum("query", 0,"QueryName");
 		int queryPointer = 0;
 

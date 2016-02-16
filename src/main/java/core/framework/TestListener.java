@@ -33,7 +33,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			}
 		}catch(Exception e){	
 			System.out.println("Initiating WebDriver");
-			Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+			Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
 			Web.appLoginStatus = false; 
 		}		
 		Globals.GC_MANUAL_TC_NAME = test.getName();		

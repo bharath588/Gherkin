@@ -247,7 +247,7 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static void waitForElement(WebElement element) throws Exception {
-		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
+		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(element));
 	}
 
@@ -261,7 +261,7 @@ public class Web {
 			throws Exception {
 		WebElement presentElement = getPageObjectFields(pageClassObj,
 				webElementName);
-		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.globalParam.get("objectSyncTimeout"))))
+		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(presentElement));
 	}
 	
@@ -308,12 +308,12 @@ public class Web {
 			capabilities.setCapability("ignoreZoomSetting", true);
 			capabilities.setCapability("ie.ensureCleanSession", true);
 			System.setProperty("webdriver.ie.driver",
-					Stock.globalParam.get("IEDriverClassPath"));
+					Stock.getConfigParam("IEDriverClassPath"));
 			webDriver = new InternetExplorerDriver(capabilities);
 
 		} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
 			System.setProperty("webdriver.chrome.driver",
-					Stock.globalParam.get("ChromeDriverClassPath"));
+					Stock.getConfigParam("ChromeDriverClassPath"));
 			webDriver = new ChromeDriver();
 		} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 				|| webBrowser.trim().equalsIgnoreCase("FF")) {

@@ -63,8 +63,8 @@ public class SftpUtils {
         	java.util.Properties config = new java.util.Properties();
             config.put("StrictHostKeyChecking", "no"); 
             sftpJsch=new JSch();            
-			userName = Stock.globalParam.get("SystemUserID");
-			password =  Stock.globalParam.get("SystemPassword");
+			userName = Stock.getConfigParam("SystemUserID");
+			password =  Stock.getConfigParam("SystemPassword");
             sftpSession = sftpJsch.getSession(userName, Globals.GC_SHELL_HOST_NAME, Globals.GC_SHELL_PORT_NUMBER);
             sftpSession.setConfig(config);
             sftpSession.setPassword(password);

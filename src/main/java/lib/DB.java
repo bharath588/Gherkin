@@ -62,7 +62,7 @@ public class DB {
 	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues) {
 		PreparedStatement stmt = null;
 		int queryParamCnt = 0;
-		String dataBaseName = Stock.globalParam.get(dbName.trim());
+		String dataBaseName = Stock.getConfigParam(dbName.trim());
 		
 		Connection conn = getDBConnection(dataBaseName.trim());
 		
@@ -116,10 +116,10 @@ public class DB {
 			
 			try {
 				dataSource = new OracleDataSource();
-				//jdbcUrl = Stock.globalParam.get(DBName);
+				//jdbcUrl = Stock.getConfigParam(DBName);
 				jdbcUrl = Globals.databaseConnectionStrings.get(DBName);
-				dbuserid = Stock.globalParam.get("DBUSERID");
-				dbpassword = Stock.globalParam.get("DBPASSWORD");
+				dbuserid = Stock.getConfigParam("DBUSERID");
+				dbpassword = Stock.getConfigParam("DBPASSWORD");
 				
 				if (jdbcUrl.trim().length() == 0) {
 					throw new Error("No connection string found for the DB: " + DBName);
