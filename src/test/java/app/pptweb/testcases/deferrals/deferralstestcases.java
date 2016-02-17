@@ -480,8 +480,8 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify accuracy of My Contribution Rate", "My Contribution Rate value is not matching", true);
 			
-			deferrals.select_ContributionType("Roth");
-			deferrals.add_Auto_Increase("Roth Add Auto Increase");
+			deferrals.select_ContributionType(Stock.GetParameterValue("Contribution_type"));
+			deferrals.add_Auto_Increase(Stock.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
 			
 		}
@@ -532,8 +532,8 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page", "My Contributions page is  displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
-
-			if(deferrals.check_if_participant_eligible_for_bonus())
+			
+			if(deferrals.check_if_participant_eligible_for_deferral_type("Bonus"))
 				Reporter.logEvent(Status.PASS, "Check if Participant eligible for bonus type contribution", "Participant not eligible for bonus type contribution", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Check if Participant eligible for bonus type contribution", "Participant eligible for bonus type contribution", true);
@@ -597,7 +597,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Check if Maximize me always check box is present", "Maximize me always check box is not present", true);
 			
-			deferrals.regular_maximize_me_always();
+			deferrals.regular_maximize_me_always("Yes");
 			deferrals.myContributions_Confirmation_Page();
 			
 		}
@@ -749,7 +749,7 @@ public class deferralstestcases {
 					Reporter.logEvent(Status.FAIL, "Verify Other contribution page", "Other page is not displayed", true);
 			}
 			else{
-				if(deferrals.clickAddEditButton("Other Edir"))
+				if(deferrals.clickAddEditButton("Other Edit"))
 					Reporter.logEvent(Status.PASS, "Verify Other contribution page", "Other page is  displayed", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Other contribution page", "Other page is not displayed", true);
@@ -795,6 +795,162 @@ public class deferralstestcases {
 		catch (Exception e1) { e1.printStackTrace(); } 
 		
 	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral(
+		int itr, Map<String, String> testdata) {
+		Stock.globalTestdata = testdata;
+		// Globals.GBL_CurrentIterationNumber = itr;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// <= 2)
+			// leftmenu = new LeftNavigationBar(homePage);
+			// else {
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// leftmenu = new LeftNavigationBar(accountPage);
+			// }
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+	
+			deferrals.View_only_Standard_with_changes(Stock
+					.GetParameterValue("Contribution Rate"));
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+			// throw ae;
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+	
+		}
+	}
+	
+    @Test(dataProvider = "setData")
+    public void SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions(int itr, Map<String, String> testdata){
+           Stock.globalTestdata = testdata;
+           //      Globals.GBL_CurrentIterationNumber = itr;
+           try{
+                  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+                  LeftNavigationBar leftmenu;
+                  LoginPage login = new LoginPage();
+                  TwoStepVerification mfaPage = new TwoStepVerification(login);
+                  LandingPage homePage = new LandingPage(mfaPage);
+//                if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)                     
+//                      leftmenu = new LeftNavigationBar(homePage);                   
+//                else {
+//                      MyAccountsPage accountPage = new MyAccountsPage(homePage);
+//                      leftmenu = new LeftNavigationBar(accountPage);
+//                }
+                  leftmenu = new LeftNavigationBar(homePage);
+                  Deferrals deferrals = new Deferrals(leftmenu);
+                  deferrals.get();           
+                  if(deferrals.checkAftertaxOptionNotdisplayed())
+                  {
+                        Reporter.logEvent(Status.FAIL, "Check if after tax option is displayed in contributions page",
+                                      "The after tax option is displayed", true);
+                  }
+                  else
+                  {
+                        Reporter.logEvent(Status.PASS, "Check if after tax option is displayed in contributions page",
+                                      "The after tax option is not displayed", false);
+                  }
+                  
+                  
+                  if(lib.Web.isWebElementDisplayed(deferrals, "Edit Btn Aftertax"))
+                  {
+                        Reporter.logEvent(Status.FAIL, "Check if edit button is displayed for after tax with no split contributions",
+                                      "The edit button is displayed for after tax with no split contributions", true);
+                  }
+                  else
+                  {
+                        Reporter.logEvent(Status.PASS, "Check if edit button is displayed for after tax with no split contributions",
+                                      "The edit button is not displayed for after tax with no split contributions", true);
+                  }
+                  
+           }
+           catch(Exception e)
+           {
+                  e.printStackTrace();
+                  Globals.exception = e;
+                  Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+           }catch(AssertionError ae)
+           {
+                  ae.printStackTrace();
+                  Globals.assertionerror = ae;
+                  Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                  //throw ae;
+           }
+           finally { 
+           try { Reporter.finalizeTCReport(); }
+           catch (Exception e1) { e1.printStackTrace(); } 
+           
+    }
+    }
+
+
+	
+	@Test(dataProvider = "setData")
+	public void SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions(int itr, Map<String, String> testdata) {
+		Stock.globalTestdata = testdata;
+		// Globals.GBL_CurrentIterationNumber = itr;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// <= 2)
+			// leftmenu = new LeftNavigationBar(homePage);
+			// else {
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// leftmenu = new LeftNavigationBar(accountPage);
+			// }
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+ 
+			deferrals.Catchup_with_split_contributions(Stock
+					.GetParameterValue("Contribution Rate"));
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+		}catch(AssertionError ae)
+		{
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally { 
+		try { Reporter.finalizeTCReport(); }
+		catch (Exception e1) { e1.printStackTrace(); } 
+		
+	}
+	}
+	 			
 
 	@AfterClass
 	public void cleanupSessions() {
