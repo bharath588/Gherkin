@@ -547,7 +547,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", true);
 				
-				if(lib.Web.VerifyText(Integer.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
+				if(lib.Web.VerifyText(Integer.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);

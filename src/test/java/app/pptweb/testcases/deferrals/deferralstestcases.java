@@ -715,7 +715,7 @@ public class deferralstestcases {
 			}
 			deferrals.click_Select_Your_Contribution_Rate();
 			lib.Web.clickOnElement(deferrals, "Continue button");
-			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "AFTRTX", "Aftertax"))
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Contribution Rate"), "AFTRTX", "Aftertax"))
 				Reporter.logEvent(Status.PASS, "Verify after tax contribution percent for AfterTax deferral", "after tax contribution percent matching", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify after tax contribution percent for AfterTax deferral", "after tax contribution percent not matching", true);
@@ -736,7 +736,7 @@ public class deferralstestcases {
 			deferrals.click_Select_Your_Contribution_Rate();
 			deferrals.select_ContributionType("After");
 			lib.Web.clickOnElement(deferrals, "Continue button");
-			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "After Tax Bonus ", "Bonus"))
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Contribution Rate"), "After Tax Bonus ", "Bonus"))
 				Reporter.logEvent(Status.PASS, "Verify after tax contribution percent for Bonus deferral", "after tax contribution percent matching", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify after tax contribution percent for Bonus deferral", "after tax contribution percent not matching", true);
@@ -757,7 +757,7 @@ public class deferralstestcases {
 			deferrals.click_Select_Your_Contribution_Rate();
 			deferrals.select_ContributionType("Split");
 			lib.Web.clickOnElement(deferrals, "Continue button");
-			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Split_Tax_roth"), "AFTRTXVR", "Other"))
+			if(deferrals.verifyMyContributions(Stock.GetParameterValue("Contribution Rate"), "AFTRTXVR", "Other"))
 				Reporter.logEvent(Status.PASS, "Verify after tax vr contribution percent for Other deferral", "Roth contribution percent matching", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify after tax vr contribution percent for Other deferral", "Roth contribution percent not matching", true);
