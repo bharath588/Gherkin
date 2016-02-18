@@ -115,7 +115,7 @@ public class Globals {
           
                
         //AAG Managed Accounts
-          public static final String GC_LOG_FILE_VALIDATION_MESSAGE="Successful-> "+".*[1-9].*";
+          public static final String GC_LOG_FILE_VALIDATION_MESSAGE="Successful-> "+"[1-9].*";
           public static final String GC_PROSPECT_LOG_FILE_PATTERN="prospect_";
           public static final String GC_MEMBER_LOG_FILE_PATTERN="member_";
           public static final String GC_ENROLL_CANCEL_LOG_FILE_PATTERN="enroll_";
