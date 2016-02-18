@@ -29,8 +29,7 @@ public class deferralstestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Globals.GBL_SuiteName = this.getClass().getName();
-		
+		Reporter.initializeModule(this.getClass().getName());		
 	}
 
 	@DataProvider
