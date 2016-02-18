@@ -4,14 +4,12 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import lib.Reporter;
-import lib.Web;
 import lib.Reporter.Status;
 import pageobjects.general.*;
 import pageobjects.login.*;
@@ -951,7 +949,7 @@ public class deferralstestcases {
 	}
 	 			
 
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();

@@ -10,6 +10,7 @@ import lib.Web;
 import lib.Reporter.Status;
 
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -31,8 +32,7 @@ public class beneficiariestestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Globals.GBL_SuiteName = this.getClass().getName();
-		
+		Reporter.initializeModule(this.getClass().getName());		
 	}
 
 	@DataProvider
@@ -48,10 +48,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
-		
-		
+
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -173,9 +170,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
-		
+
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -300,10 +295,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC01_UnMarried_Multiple_Entity_beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
-		
-		
+	
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -426,7 +418,7 @@ public class beneficiariestestcases {
 	}
 	
 
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();
