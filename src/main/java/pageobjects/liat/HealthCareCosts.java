@@ -67,8 +67,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
-		
+				
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		
@@ -81,7 +80,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		
 		String userLogedIn = this.lblUserName.getText();
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
 		} else {
 			this.lnkLogout.click();
 		}

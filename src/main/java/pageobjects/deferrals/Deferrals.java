@@ -1,5 +1,7 @@
 package pageobjects.deferrals;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -7,7 +9,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.*;
 import lib.Reporter.Status;
@@ -122,6 +126,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(id = "BEFORE") private WebElement bfrtaxRate;
 			@FindBy(id = "ROTH") private WebElement txtRothtaxRate;
+			@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+			@FindBy(linkText="Log out") private WebElement lnkLogout;
 			
 		/**
 		 * Default Constructor
@@ -143,11 +149,28 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
-				Deferrals.waitforLoad = true;
-				throw new Error("'My contributions' page is not loaded");
-			}else{
-				Deferrals.waitforLoad = false;
+			
+			String ssn = Stock.GetParameterValue("userName");
+			ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+			
+			String userFromDatasheet = null;
+			try {
+				userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}		
+			
+			String userLogedIn = this.lblUserName.getText();
+			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
+					Deferrals.waitforLoad = true;
+					throw new Error("'My contributions' page is not loaded");
+				}else{
+					Deferrals.waitforLoad = false;
+				}
+			} else {
+				this.lnkLogout.click();
 			}
 		}
 		

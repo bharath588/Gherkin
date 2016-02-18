@@ -259,7 +259,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	public String getVerificationCode(boolean bGetDefaultCode) {
 		String verificationCode = "";
 		if (bGetDefaultCode) {
-			verificationCode =Stock.globalParam.get("defaultActivationCode");
+			verificationCode =Stock.getConfigParam("defaultActivationCode");
 		}
 		else {
 			// Code to fetch activation/verification code from database

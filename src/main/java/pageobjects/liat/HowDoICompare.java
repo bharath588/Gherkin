@@ -1,6 +1,10 @@
 package pageobjects.liat;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -8,7 +12,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
 
@@ -23,6 +29,8 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		@FindBy(xpath=".//*[text()='How do I compare to other people like me?']") private WebElement lblHwDoCmpOthrPplLikMe;
 		@FindBy(xpath="//button[@ng-click='clickViewDetailsEvent()']/span[@class='ng-binding ng-scope' and text()[normalize-space()='View Details']]") private WebElement btnViewDetails;
 		@FindBy(xpath=".//*[contains(text(),'Additional Contributions')]") private WebElement lblAdditionalContribution;
+		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		
 		/**
 		 * Default Constructor
@@ -46,12 +54,29 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			if (!Web.isWebElementDisplayed(lblHwDoCmpOthrPplLikMe,HowDoICompare.waitforLoad)) {
-				HowDoICompare.waitforLoad = true;
-				throw new Error("'How Do I Compare ' page is not loaded");
-			}else{
-				HowDoICompare.waitforLoad = false;
+			String ssn = Stock.GetParameterValue("userName");
+			ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+			
+			String userFromDatasheet = null;
+			try {
+				userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}		
+			
+			String userLogedIn = this.lblUserName.getText();
+			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+				if (!Web.isWebElementDisplayed(lblHwDoCmpOthrPplLikMe,HowDoICompare.waitforLoad)) {
+					HowDoICompare.waitforLoad = true;
+					throw new Error("'How Do I Compare ' page is not loaded");
+				}else{
+					HowDoICompare.waitforLoad = false;
+				}
+			} else {
+				this.lnkLogout.click();
 			}
+			
 		}
 
 		@Override

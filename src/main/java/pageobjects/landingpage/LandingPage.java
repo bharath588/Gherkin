@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 
 
 
+import java.sql.SQLException;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
@@ -21,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.login.TwoStepVerification;
 
 public class LandingPage extends LoadableComponent<LandingPage> {
@@ -45,7 +48,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	@FindBy(id="atAGlanceBalance") private WebElement DailyBalance;     
     @FindBy(id="atAGlanceROR") private WebElement RateOfReturn;
     @FindBy(id="atAGlanceLastContribution") private WebElement LastContributionAmount;
-
+    @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	
 	
     /** Empty args constructor
      * 
@@ -67,8 +71,24 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
+		String ssn = Stock.GetParameterValue("userName");
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		
-		Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+		String userFromDatasheet = null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+		} else {
+			this.lnkLogout.click();
+		}
+		
 		
 	}
 
@@ -80,7 +100,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (!Web.isWebElementDisplayed(this.lnkHome)) {
 			mfaScreen.selectCodeDeliveryOption("ALREADY_HAVE_CODE");
 			try {
-				mfaScreen.submitVerificationCode(Stock.globalParam.get("defaultActivationCode"), true, false);
+				mfaScreen.submitVerificationCode(Stock.getConfigParam("defaultActivationCode"), true, false);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -3,6 +3,8 @@ package pageobjects.beneficiaries;
 
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import lib.DB;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 
 
@@ -73,6 +76,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//input[@id='beneficiaryName']") private WebElement txtBeneficiaryName;
 	@FindBy(xpath="//input[@id='dateOfTrust']") private WebElement txtDateOfTrust;
 	@FindBy(xpath="//input[@id='taxIdentificationNumber']") private WebElement txtTaxIdentificationNo;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/** Empty args constructor
 	 * 
@@ -93,18 +98,27 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("No"))
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
-		else
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
-//		Assert.assertTrue(lib.Web.isWebElementDisplayed(btnContinue));
+		String ssn = Stock.GetParameterValue("userName");
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		
-//		if (!(common.isWebElementDisplayed(lblMyBeneficiaries,MyBeneficiaries.waitforLoad) || common.isWebElementDisplayed(lblDesignateBeneficiary,MyBeneficiaries.waitforLoad))) {
-//			MyBeneficiaries.waitforLoad = true;
-//			throw new Error("'My beneficiaries' page is not loaded");
-//		}else{
-//			MyBeneficiaries.waitforLoad = false;
-//		}
+		String userFromDatasheet = null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("No"))
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
+			else
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
+		} else {
+			this.lnkLogout.click();
+		}
+
 	}
 
 	@Override

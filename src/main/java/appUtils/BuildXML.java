@@ -1,4 +1,4 @@
-package framework.util;
+package appUtils;
 
 import core.framework.DriverScript;
 

@@ -1,8 +1,11 @@
 package pageobjects.general;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -18,6 +21,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
 public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
@@ -29,6 +33,8 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 //	@FindBy(xpath=".//h1[text()='My Accounts']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//h1[text()='Account Overview']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//*[@class='plan']/*[starts-with(@id,'ga_')]") private List<WebElement> lstLnkPlanName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/** Empty args constructor
 	 * 
@@ -49,14 +55,24 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
-//		boolean isDisplayed = common.isWebElementDisplayed(this.hdrMyAccounts,MyAccountsPage.waitforLoad);
-//		if (!isDisplayed) {
-//			MyAccountsPage.waitforLoad=true;
-//			throw new Error("'My Accounts' header is not displayed.\nUser is not on My Accounts page.");
-//		}else{
-//			MyAccountsPage.waitforLoad=false;
-//		}
+		
+		String ssn = Stock.GetParameterValue("userName");
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		
+		String userFromDatasheet = null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
+		} else {
+			this.lnkLogout.click();
+		}
 	}
 
 	@Override

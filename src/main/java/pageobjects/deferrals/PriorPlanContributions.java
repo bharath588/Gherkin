@@ -1,16 +1,16 @@
 package pageobjects.deferrals;
 
-import general.AppUtils;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.Reporter;
 import lib.Stock;
@@ -63,7 +63,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		
-		ResultSet strUserInfo = AppUtils.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 				
 		try {
 			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
