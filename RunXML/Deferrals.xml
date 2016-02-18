@@ -2,17 +2,9 @@
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
     <listeners>
-        <listener class-name="core.utils.TestListener"/>
+        <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__AfterTax"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    
     <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
@@ -99,6 +91,15 @@
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
                     <include name="SIT_PPTWEB_Deferral__Bonus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__AfterTax"/>
                 </methods>
             </class>
         </classes>

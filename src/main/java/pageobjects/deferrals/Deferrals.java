@@ -48,7 +48,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private WebElement lnkContributionRate;
 			@FindBy(id="contributionRateSlider-text-edit") private WebElement txtcontributionRateSlider;
 			@FindBy(xpath=".//span[@class='valueAndEnd']") private WebElement lnksliderValue;
-			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
+//			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
+			@FindBy(xpath="//button[@class='btn btn-primary reset-padding ng-binding']") private WebElement btnDone;
 //			@FindBy(xpath=".//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
 //			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement lnkPercent;
 			@FindBy(xpath="//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
@@ -76,7 +77,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@id='irsMax']//div[@class='contribution-amount']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'AFTRTX')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch')]/../td[3]/.//a") private WebElement lnkCatchupAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Bonus')]/../td[3]/.//a") private WebElement lnkBonusAutoIncrease;
@@ -106,6 +107,22 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]") private WebElement txtMaximizeMeAlwaysRoth;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[1]") private WebElement txtBeforeTaxContributionAmt;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[1]") private WebElement txtRothContributionAmt;
+			
+			@FindBy(xpath="//table[@class='deferrals-breakdown ng-scope']/tbody") private WebElement tblContributionDetails;
+			@FindBy(xpath="//table[@class='responsive-tables contributions-cart']/tbody") private WebElement tblMyContributions;
+			
+			//view only
+			@FindBy(xpath = ".//div[@class='clearfix']/.//h2") private List<WebElement> headersContrPage;
+			@FindBy(xpath = "(//td[@class='ng-scope']/button)[3]") private WebElement btnEditAftertaxNoSplit;
+			@FindBy(xpath = "//span[contains(text(),'More Options')]") private WebElement linkMoreOptions;
+			@FindBy(id = "AGERTH") private WebElement rothCatchUprate;
+			@FindBy(id = "AGEBEF") private WebElement txtCatchupRate;
+			@FindBy(xpath = ".//*[@id='splitContribution']/.//span[2]") private WebElement txtViewOnly;
+			@FindBy(xpath = "//table[@class='table-details']//th[contains(text(),'Confirmation Number')]/../td") private WebElement txtConfirmationNo;
+			
+			@FindBy(id = "BEFORE") private WebElement bfrtaxRate;
+			@FindBy(id = "ROTH") private WebElement txtRothtaxRate;
+			
 		/**
 		 * Default Constructor
 		 */
@@ -205,7 +222,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("Maximize Checkbox")) {
 				return this.chkboxMaximize;	
 			}
-			
+			if(fieldName.trim().equalsIgnoreCase("Continue button")) {
+				return this.btnContinue;	
+			}
+			if(fieldName.trim().equalsIgnoreCase("Confirm button")) {
+				return this.btnConfirmAndContinue;	
+			}
+			if(fieldName.trim().equalsIgnoreCase("Edit Btn Aftertax")) {
+				return this.btnEditAftertaxNoSplit;	
+			}
+			if(fieldName.trim().equalsIgnoreCase("Bonus")) {
+				return this.lblBonus;	
+			}
 			return null;
 			}		
 		
@@ -248,9 +276,21 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 * @return - boolean
 		 */
 		public boolean click_Select_Your_Contribution_Rate()
-		{			
+		{	
+			try {
+				lib.Web.waitForElement(radioSelectAnotherContributionRate);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
+			try {
+				lib.Web.waitForElement(lnkPercent);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			this.lnkPercent.click();			
 			this.lnkContributionRate.click();
 			try {
@@ -277,10 +317,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		{
 			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
 			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
+				lib.Web.waitForElement(btnContinue);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 			lib.Web.clickOnElement(this.btnContinue);
 			if(lib.Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
@@ -362,6 +402,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions amount", "My Contributions amount is not displayed", true);
 			}
+			
 		}
 		
 		/**<pre> Method to select contribution type.
@@ -372,15 +413,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void select_ContributionType(String contributionType)
 		{		
 			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
+				lib.Web.waitForElement(btnContinue);
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 			lib.Web.clickOnElement(this.btnContinue);
 			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
+				lib.Web.waitForElement(radioSplitContribution);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -388,8 +429,6 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
 				{				
 				this.radioSplitContribution.click();
-				txtSplitBeforeTax.clear();
-				txtSplitRothTax.clear();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
 				
 				
@@ -401,28 +440,39 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				else{
 					lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
 					lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+					
 				}
 									
 				}
 				else
-				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
+					Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
 			}
-			if(contributionType.equalsIgnoreCase("Before") || contributionType.equalsIgnoreCase("After"))
-			{
-				this.lstradioSelectContibution.get(0).click();
-				if(lib.Web.clickOnElement(this.lstradioSelectContibution.get(0)))
-					Reporter.logEvent(Status.PASS, "Verify Before/After Tax Contribution Rate radio button is clicked ", "Before/After Tax radio option is clicked", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Verify Before/After Tax Contribution Rate radio button is clicked", "Before/After Tax radio option is not clicked", true);					
-			}			
-			if(contributionType.equalsIgnoreCase("Roth"))
-			{
-					this.lstradioSelectContibution.get(1).click();
-					if(lib.Web.clickOnElement(this.lstradioSelectContibution.get(1)))
-						Reporter.logEvent(Status.PASS, "Verify Roth Tax Contribution Rate radio button is clicked ", "Roth Tax radio option is clicked", false);
-					else
-						Reporter.logEvent(Status.FAIL, "Verify Roth Tax Contribution Rate radio button is clicked", "Roth Tax radio option is not clicked", true);
+			else{
+				for(int i=0;i<lstradioSelectContibution.size();i++){
+					if(lstradioSelectContibution.get(i).getText().contains(contributionType))
+						lstradioSelectContibution.get(i).click();
+					
+					break;
+				}
 			}
+//			if(contributionType.equalsIgnoreCase("Before") || contributionType.equalsIgnoreCase("After"))
+//			{
+//				this.lstradioSelectContibution.get(0).click();
+//				if(lib.Web.clickOnElement(this.lstradioSelectContibution.get(0)))
+//					Reporter.logEvent(Status.PASS, "Verify Before/After Tax Contribution Rate radio button is clicked ", "Before/After Tax radio option is clicked", false);
+//				else
+//					Reporter.logEvent(Status.FAIL, "Verify Before/After Tax Contribution Rate radio button is clicked", "Before/After Tax radio option is not clicked", true);					
+//			}			
+//			if(contributionType.equalsIgnoreCase("Roth"))
+//			{
+//					this.lstradioSelectContibution.get(1).click();
+//					if(lib.Web.clickOnElement(this.lstradioSelectContibution.get(1)))
+//						Reporter.logEvent(Status.PASS, "Verify Roth Tax Contribution Rate radio button is clicked ", "Roth Tax radio option is clicked", false);
+//					else
+//						Reporter.logEvent(Status.FAIL, "Verify Roth Tax Contribution Rate radio button is clicked", "Roth Tax radio option is not clicked", true);
+//			}
+			
+			
 				
 		}
 		
@@ -459,46 +509,203 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		}
 		
 		
-		public boolean check_if_participant_eligible_for_bonus(){
+		/**<pre> Method to check if bonus deferral is available for the participant
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 */
+		public boolean check_if_participant_eligible_for_deferral_type(String deferralType){
 			boolean issuccess=false;
+			WebElement deferral=this.getWebElement(deferralType);
 			if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions))
             	this.lnkMoreOptions.click();
-			if(lib.Web.isWebElementDisplayed(lblBonus));
+			if(lib.Web.isWebElementDisplayed(deferral));
 				issuccess=true;
 			
 			return issuccess;
 		}
 		
-		public void regular_maximize_me_always(){
-			if(!this.chkboxMaximize.isSelected())
-				this.chkboxMaximize.click();
-			lib.Web.clickOnElement(btnContinue);
-			select_ContributionType("Split");
-			lib.Web.clickOnElement(btnContinue);
-			
-			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
-				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", true);
-			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
-				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", true);
-			
-			if(lib.Web.VerifyText(Integer.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
-				Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);
-			
-			if(lib.Web.VerifyText(Stock.GetParameterValue("Split_Tax_roth")+"%", txtRothContributionAmt.getText(), true))
-				Reporter.logEvent(Status.PASS, "Verify roth contribution percent", "Roth contribution percent is matching", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
+		/**<pre> Method to select  maximize me always option and verify if the contributions have the maximize me always option
+		 *.</pre>
+		 * 
+		 *
+		 */
+		public void regular_maximize_me_always(String maximizeMeAlways){
+			if(maximizeMeAlways.equalsIgnoreCase("Yes")){
+				if(!this.chkboxMaximize.isSelected())
+					this.chkboxMaximize.click();
+				lib.Web.clickOnElement(btnContinue);
+				select_ContributionType("Split");
+				lib.Web.clickOnElement(btnContinue);
+				
+				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for before contribution", "Maximize Me Always is displayed for before contribution", true);
+				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Roth contribution", "Maximize Me Always is displayed for Roth contribution", true);
+				
+				if(lib.Web.VerifyText(Integer.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);
+				
+				if(lib.Web.VerifyText(Stock.GetParameterValue("Split_Tax_roth")+"%", txtRothContributionAmt.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify roth contribution percent", "Roth contribution percent is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
+			}
+			else{
+				if(this.chkboxMaximize.isSelected())
+					this.chkboxMaximize.click();
+			}
 		}
 		
+		/**<pre> Method to verify the different contributions in the My Contributions table
+		 *.</pre>
+		 * @param percent - contribution percent
+		 * @param contrType - Contribution type like Roth,Before, After tax etc.
+		 * @param deferralsType - deferral type(Standard, Catch up, After Tax, Bonus, Other)
+		 * 
+		 * @return - boolean
+		 */
+		public boolean verifyMyContributions(String percent, String contrType, String deferralsType){
+			boolean issuccess = false;
+			try {
+				lib.Web.waitForElement(lblMyContributions);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(deferralsType.equalsIgnoreCase("Standard")){
+				if(tblMyContributions.getText().toUpperCase().contains(percent+"% "+contrType.toUpperCase()))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Catchup")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Aftertax")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Bonus")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			if(deferralsType.equalsIgnoreCase("Other")){
+				if(tblMyContributions.getText().contains(percent+"% "+contrType))
+					return true;
+			}
+			return issuccess;
+		}
 		
-	}
+		/**<pre> Method to verify the contributions in the Confirmation table
+		 *.</pre>
+		 * @param percent - contribution percent
+		 * @param type - Contribution type like Roth,Before, After tax etc.
+		 * @param autoIncreaseRate - Auto Increase rate
+		 * @param autoIncreaseUpto - Auto increase until it reaches percent
+		 * 
+		 * @return - boolean
+		 */
+		public boolean verifyContributionDetails(String percent, String type, String autoIncreaseRate, String autoIncreaseUpto){
+			String ConfirmationNo = this.txtConfirmationNo.getText();
+			if(ConfirmationNo!=null)
+				Reporter.logEvent(Status.INFO, "Confirmation Number", "Confirmation Number : "+ConfirmationNo, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Confirmation Number", "Confirmation Number not generated", true);
+			
+			if(tblContributionDetails.getText().contains(percent+"% "+type+"with auto-increase "+autoIncreaseRate+"% "+"up to "+autoIncreaseUpto+"%"))
+				return true;
+			
+			return false;
+		}
 		
+		public boolean checkAftertaxOptionNotdisplayed()
+		{
+			boolean isDisplayed = false;
+			lib.Web.clickOnElement(linkMoreOptions);
+			
+			for(WebElement webelement : headersContrPage)
+			{
+				if(webelement.getText().trim().contains("After tax"))
+				{
+					isDisplayed = true;
+					break;
+				}
+			}
+			
+			return isDisplayed;	
+		}
 		
+		public void Catchup_with_split_contributions(String myContRate)
+		{
+//			String rothCatchupRate="";
+//			int rothCatchupRateNum;
+			try {
+				lib.Web.waitForElement(btnEditCatchUp);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			lib.Web.clickOnElement(btnEditCatchUp);
+			click_Select_Your_Contribution_Rate();
+			lib.Web.clickOnElement(btnContinue);
+			if(lib.Web.isWebElementDisplayed(txtViewOnly))
+				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Check if view only is displayed for age roth rate", "View only is not displayed for roth catch up rate", true);
+			
+//			rothCatchupRate = rothCatchUprate.getText();
+//			rothCatchupRateNum = Integer.parseInt(rothCatchupRate);
+			//lib.Web.setTextToTextBox(txtCatchupRate, String.valueOf((Integer.valueOf(myContRate)) - rothCatchupRateNum));
+			lib.Web.setTextToTextBox(txtCatchupRate,String.valueOf(((Integer.valueOf(myContRate))-Integer.parseInt(Stock.GetParameterValue("Age_roth_Catchup_contr")))));
+			lib.Web.clickOnElement(btnContinue);
+			lib.Web.clickOnElement(btnConfirmAndContinue);
+			myContributions_Confirmation_Page();
+		}
+				
+		public void View_only_Standard_with_changes(String myContRate)
+		{
+			String rothCatchupRate="";
+			int rothCatchupRateNum;
+			try {
+				lib.Web.waitForElement(btnEditStandard);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			lib.Web.clickOnElement(btnEditStandard);
+			click_Select_Your_Contribution_Rate();
+			lib.Web.clickOnElement(btnContinue);
+			if(lib.Web.isWebElementDisplayed(txtViewOnly))
+			{
+				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL, "Check if view only is displayed for age roth rate", "View only is not displayed for roth catch up rate", true);
+			}
+//			rothCatchupRate = bfrtaxRate.getText();
+//			rothCatchupRateNum = Integer.parseInt(rothCatchupRate);
+			rothCatchupRateNum = Integer.parseInt(Stock.GetParameterValue("Age_roth_standard_contr"));
+			lib.Web.setTextToTextBox(txtRothtaxRate, String.valueOf((Integer.valueOf(myContRate)) -rothCatchupRateNum));
+			lib.Web.clickOnElement(btnContinue);
+			lib.Web.clickOnElement(btnConfirmAndContinue);
+			myContributions_Confirmation_Page();
+		}
+		
+		public void select_contribution_type(String contribution_type){
+			for(int i=0;i<lstradioSelectContibution.size();i++){
+				if(lstradioSelectContibution.get(i).getText().equalsIgnoreCase(contribution_type))
+					lstradioSelectContibution.get(i).click();
+				
+				break;
+			}
+		}
+	}		
+	
 
 
