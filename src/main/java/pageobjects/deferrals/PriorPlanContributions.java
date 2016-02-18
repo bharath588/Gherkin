@@ -1,18 +1,21 @@
 package pageobjects.deferrals;
 
-import java.util.Calendar;
-import java.util.List;
+import general.AppUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Calendar;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
 
 import pageobjects.general.LeftNavigationBar;
 import lib.Reporter;
 import lib.Stock;
 import lib.Reporter.Status;
-import lib.Web;
+
 
 public class PriorPlanContributions extends LoadableComponent<PriorPlanContributions>{
 	
@@ -33,6 +36,8 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblYearToDateContribution;
 //	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
 	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[2]/td") private WebElement lblCatchupContribution;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/**
 	 * Default Constructor
@@ -54,11 +59,30 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	
 	@Override
 	protected void isLoaded() throws Error {
-		if (!lib.Web.isWebElementDisplayed(lblPriorContributions,PriorPlanContributions.waitforLoad)) {
-			PriorPlanContributions.waitforLoad = true;
-			throw new Error("'My contributions' page is not loaded");
-		}else{
-			PriorPlanContributions.waitforLoad = false;
+		
+		String ssn = Stock.GetParameterValue("userName");
+		String userFromDatasheet = null;
+		
+		ResultSet strUserInfo = AppUtils.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+				
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
+			if (!lib.Web.isWebElementDisplayed(lblPriorContributions,PriorPlanContributions.waitforLoad)) {
+				PriorPlanContributions.waitforLoad = true;
+				throw new Error("'My contributions' page is not loaded");
+			}else{
+				PriorPlanContributions.waitforLoad = false;
+			}
+		} else {
+			this.lnkLogout.click();
 		}
 	}
 	
