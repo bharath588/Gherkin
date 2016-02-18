@@ -1,9 +1,11 @@
 package pageobjects.liat;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import lib.DB;
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
@@ -26,7 +28,6 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 
 	//Declarations
 	private LoadableComponent<?> parent;
-	//private static boolean waitforLoad = false;
 	
 	@FindBy(xpath=".//*[text()='Health-care costs']") private WebElement lblHelathCareCosts;
 	@FindBy(xpath=".//*[text()[normalize-space()='Personalize']]") private WebElement btnPersonalize;
@@ -43,8 +44,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(xpath=".//*[text()[normalize-space()='Doctors & Tests']]/../td[3]") private WebElement lblDoctorAndTestsCost;
 	@FindBy(id="projected-health-care-costs-income-label") private WebElement lblProjectedHlthCareCost;
 	@FindBy(id="projected-health-care-costs-chart") private WebElement lblPieChart;
-	
-	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/** Default constructor
 	 * 
@@ -67,26 +68,42 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
+		
+		String ssn = Stock.GetParameterValue("userName");
+		ResultSet strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		
+		String userFromDatasheet = null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
+		} else {
+			this.lnkLogout.click();
+		}
+		
 	}
 
 	@Override
 	protected void load() {
 		this.parent.get();
 		((LandingPage) this.parent).dismissPopUps(true,true);
+	
 		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Web.waitForElement(this.lblHelathCareCosts);
+		} catch (Exception e) {
 		}
+				
 		this.lblHelathCareCosts.click();
-		
 		
 	}
 	
 	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName) {
-		//Log out
 		if (fieldName.trim().equalsIgnoreCase("Health-care costs") || fieldName.trim().equalsIgnoreCase("Health care costs")) {
 			return this.lblHelathCareCosts;
 		}
@@ -100,51 +117,16 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
      * @return - void
      */
 	
-//	public void verifyHealthCostFromUI(float estMonthlyIncome){
-//		float doctorAndTestsPartABCost = common.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
-//		float prescriptionDrugsPartDCost = common.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
-//		float medicareSupplementalCost = common.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
-//		float dentalInsuranceCost = common.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
-//		float hearingAndVisionCost = common.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
-//		float prescriptionDrugsCost = common.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
-//		float dentalCost = common.getIntegerCurrency(this.lblDentalCost.getText());
-//		float doctorsAndTestsCost = common.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
-//		
-//		float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
-//									+ dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
-//									doctorsAndTestsCost;
-//		float projectedHealthCareCost = common.getIntegerCurrency(this.lblProjectedHlthCareCost.getText());
-//		
-//		float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
-//		
-//		if(((int)projectedHealthCareCost-(int)calProjHlthCareCost)<=0.04)
-//			Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI ", false);
-//		else
-//			Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI ", false);
-//		
-//		
-//	}
-	
+
 	public void verifyHealthCostFromUI(float estMonthlyIncome){
-		
-		 float medicareSupplementalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(0).getText());
-		 float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(1).getText());
-		 float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(2).getText());
-		 float dentalInsuranceCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(3).getText());
-		 float prescriptionDrugsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(4).getText());
-		 float hearingAndVisionCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(5).getText());
-		 float dentalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(6).getText());
-		 float doctorsAndTestsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(7).getText());
-		
-//		
-//        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
-//        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
-//        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
-//        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
-//        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
-//        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
-//        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
-//        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
+        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
+        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
+        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
+        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
+        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
+        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
+        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
+        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
         
         float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
                                                         + dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
@@ -157,7 +139,6 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
                Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI ", false);
         else
                Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI ", false);
-        
         
  }
 
@@ -200,6 +181,33 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		}else {
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);
 		}
+	}
+	
+	/** <pre> Method to return the no of plans associated to a user from db
+	 * 
+	 * @return noOfPlans
+	 */
+	public ResultSet getParticipantInfoFromDB(String ssn){
+		
+		//query to get the no of plans
+		String[] sqlQuery = null;
+		try {
+			sqlQuery = Stock.getTestQuery("getParticipantInfo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
+		
+		if (DB.getRecordSetCount(participantInfo) > 0) {
+			try {
+				participantInfo.first();			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
+			}
+		}		
+		return participantInfo;
 	}
 	
 }
