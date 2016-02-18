@@ -415,7 +415,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			try {
 				lib.Web.waitForElement(btnContinue);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+				
 				e1.printStackTrace();
 			}
 			lib.Web.clickOnElement(this.btnContinue);
