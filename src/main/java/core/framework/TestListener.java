@@ -2,6 +2,8 @@ package core.framework;
 
 import java.util.HashMap;
 
+import lib.Log;
+import lib.Log.Level;
 import lib.Stock;
 import lib.Web;
 
@@ -14,6 +16,10 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import com.gargoylesoftware.htmlunit.StorageHolder.Type;
+
+import core.framework.ThrowException.TYPE;
+
 public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener {
 
 	
@@ -21,22 +27,29 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		try{
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
 			Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
+			Log.Report(Level.INFO,"Test Configuration initialized successfully");
 		}catch(Exception e){
-			e.printStackTrace();
+			ThrowException.Report(TYPE.EXCEPTION,e.getMessage());			
 		}		
 	}
 
 	public void onStart(ITestContext test) {	
+		Globals.GC_MANUAL_TC_NAME = test.getName();
 		try{	
 			if(!Web.webdriver.getWindowHandle().isEmpty()){
-				System.out.println("WebDriver not null");
+				Log.Report(Level.INFO,"Web Driver instance found to be active for the Test Case :"+test.getName());				
 			}
-		}catch(Exception e){	
-			System.out.println("Initiating WebDriver");
-			Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
-			Web.appLoginStatus = false; 
-		}		
-		Globals.GC_MANUAL_TC_NAME = test.getName();		
+		}catch(Exception t){				
+			try{
+				Log.Report(Level.INFO,"Web Driver instance found to be inactive for the Test Case :"+
+			               test.getName()+" ,hence re-initiating");
+				Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+				Log.Report(Level.INFO,"Web Driver instance re-initiated successfully the Test Case :"+
+			               test.getName());
+			}catch(Exception e){
+				ThrowException.Report(TYPE.EXCEPTION,"Failed to re-initialize Web Driver :" +e.getMessage());
+			}			
+		}						
 	}
 
 	
@@ -90,7 +103,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			if (Web.webdriver.getWindowHandles().size() >= 0)
 				Web.webdriver.quit();
 		} catch (Exception e) {
-			//Do Nothing
+			ThrowException.Report(TYPE.EXCEPTION,"Failed to quit Web Driver :" +e.getMessage());
 		}
 		
 	}
