@@ -1,6 +1,11 @@
 package framework.util;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CommonLib {
 	public final String MailExistingPINMsg = "Combined verification and pin letter generated: doc_id = "
@@ -46,6 +51,33 @@ public class CommonLib {
 		totalTimeTaken_Sec = totalTime / 1000;
 
 		return totalTimeTaken_Sec;
+	}
+	
+
+	/**
+	 * <pre>Compare data base date and web date</pre>
+	 * @param
+	 * @return	:boolean <br> is date equal</br>
+	 * @author	: Ranjan
+	 */
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,
+			String webDate) {
+
+		boolean isDateEqual_Flag = false;
+		Date date;
+		try {
+			date = new Date();
+			dbDate = dbDate.substring(0, dbDate.indexOf(" "));
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			date = df.parse(dbDate);
+			SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy");
+			String strDate = sfd.format(date);
+			if (strDate.equalsIgnoreCase(webDate))
+				isDateEqual_Flag = true;
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		return isDateEqual_Flag;
 	}
 
 }
