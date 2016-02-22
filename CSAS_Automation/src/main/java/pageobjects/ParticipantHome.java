@@ -39,16 +39,16 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "input[value='Log In']")
 	private WebElement CSASLoginBtn;
-	
+
 	@FindBy(xpath = "//a[contains(text(),'Registered')]//td[@class = 'colTitle rightJust']")
 	private WebElement Reg_Status_UserName_Label;
-	
+
 	@FindBy(xpath = "//a[contains(text(),'Registered')]//td[@class = 'data']")
 	private WebElement Reg_Status_UserName_data;
-	
+
 	@FindBy(css = "table#partList")
 	private WebElement partList_Tab;
-	
+
 	@FindBy(css = "table#partList tr>td:nth-of-type(15)")
 	private List<WebElement> PlanNoOnPartList_Link;
 
@@ -204,7 +204,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Web Registration Status')]")
 	private WebElement participantRegStatusLabel;
 
-	@FindBy(css = "table[name = 'pptinfo'] tr:nth-of-type(11)>td.data")
+	@FindBy(xpath = "//a[contains(text(),'Registered')]")
 	private WebElement participantRegStatus;
 
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Managed Account Status')]")
@@ -220,9 +220,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement participantSecFoundationSts;
 
 	// Order PIN..
-
-	// @FindBy(css =
-	// "table.compactDataTable tr:nth-of-type(7) a:nth-of-type(2)")
 	@FindBy(xpath = "(//div[@class='dataContainerBody'])[2]/table/tbody/tr/td[2]/table/tbody/tr[5]/td/a[2]")
 	private WebElement lnkOrderPIN;
 
@@ -231,25 +228,25 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "input[value = 'Mail Existing PIN']")
 	private WebElement btnMailExistingPIN;
-	
+
 	@FindBy(css = "input[value = 'Order Temp PIN']")
 	private WebElement btnOrderTempPin;
-	
+
 	@FindBy(css = "input[value = 'Mail Existing VRU PIN and Web Passcode']")
 	private WebElement btnMailExstngVRUPINandWebPscd;
-	
+
 	@FindBy(css = "input[value = 'Mail Existing Web Passcode']")
 	private WebElement btnMailExstngWebPscd;
-	
+
 	@FindBy(css = "input[value = 'Mail Existing VRU PIN']")
 	private WebElement btnMailExstngVRUPIN;
-	
+
 	@FindBy(css = "input[value = 'Order Temp VRU PIN and Web Passcode']")
-	private WebElement btnOrderTempPINandWebPscd;	
+	private WebElement btnOrderTempPINandWebPscd;
 
 	@FindBy(css = "input[value = 'Order Temp Web Passcode']")
 	private WebElement btnOrderTempWebPscd;
-	
+
 	@FindBy(css = "input[value = 'Order Temp VRU PIN']")
 	private WebElement btnOrderTempVRUPIN;
 
@@ -287,19 +284,17 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	// implement List...
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td:nth-of-type(9)")
-	private WebElement PDIStatus;
+	private List<WebElement> PDIStatus;
 
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'colTitle centered']:nth-of-type(10)")
 	private WebElement InstanceLabel;
 
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'data centered']:nth-of-type(10)")
 	private List<WebElement> InstanceValue_List;
-	
-	@FindBy(css="table[id='table_messageHandlerMessage']")
-	private 
 
-	LoadableComponent<?> parent;
-	
+	@FindBy(css = "table[id='table_messageHandlerMessage']")
+	private LoadableComponent<?> parent;
+
 	/*-----------------------------------------------------------------*/
 
 	public ParticipantHome() {
@@ -308,7 +303,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		// Assert.assertEquals(Web.webdriver.getTitle(), "CSAS v12.03.2");
 		Assert.assertTrue(Web.webdriver.getTitle().contains("CSAS v12.03.2"));
 	}
 
@@ -341,39 +335,41 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (fieldName.trim().equalsIgnoreCase("SSN")) {
 			return this.SSNfield;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Mail Existing PIN")){
+
+		if (fieldName.trim().equalsIgnoreCase("Mail Existing PIN")) {
 			return this.btnMailExistingPIN;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Order Temp PIN")){
+
+		if (fieldName.trim().equalsIgnoreCase("Order Temp PIN")) {
 			return this.btnOrderTempPin;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN and Web Passcode")){
+
+		if (fieldName.trim().equalsIgnoreCase(
+				"Mail Existing VRU PIN and Web Passcode")) {
 			return this.btnMailExstngVRUPINandWebPscd;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Mail Existing Web Passcode")){
+
+		if (fieldName.trim().equalsIgnoreCase("Mail Existing Web Passcode")) {
 			return this.btnMailExstngWebPscd;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN")){
+
+		if (fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN")) {
 			return this.btnMailExstngVRUPIN;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN and Web Passcode")){
+
+		if (fieldName.trim().equalsIgnoreCase(
+				"Order Temp VRU PIN and Web Passcode")) {
 			return this.btnOrderTempPINandWebPscd;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Order Temp Web Passcode")){
+
+		if (fieldName.trim().equalsIgnoreCase("Order Temp Web Passcode")) {
 			return this.btnOrderTempWebPscd;
 		}
-		
-		if(fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN")){
+
+		if (fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN")) {
 			return this.btnOrderTempVRUPIN;
 		}
-		
+
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -381,31 +377,32 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 		return null;
 	}
-	
-	public String getPPTID(String WebRegStatus) throws Exception {		
+
+	public String getPPTID(String WebRegStatus) throws Exception {
 		ResultSet resultset = null;
 		String pptID = Globals.GC_EMPTY;
-		if(WebRegStatus.equalsIgnoreCase("Registered")){
-			resultset = DB.executeQuery(Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
-					                    Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
+		if (WebRegStatus.equalsIgnoreCase("Registered")) {
+			resultset = DB.executeQuery(
+					Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
+					Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
 			if (resultset != null) {
 				while (resultset.next()) {
-					   pptID = resultset.getString("ID");
+					pptID = resultset.getString("ID");
 				}
 			}
 		}
-		if(WebRegStatus.equalsIgnoreCase("NonRegistered")){
-			resultset = DB.executeQuery(Stock.getTestQuery("getPPTIDforWebNonRegStatus")[0],
-                    					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
+		if (WebRegStatus.equalsIgnoreCase("NonRegistered")) {
+			resultset = DB.executeQuery(
+					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[0],
+					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
 			if (resultset != null) {
 				while (resultset.next()) {
-				   pptID = resultset.getString("ID");
+					pptID = resultset.getString("ID");
 				}
 			}
-		}		
+		}
 		return pptID;
 	}
-
 
 	/**
 	 * Method to enter user credentials and click on Sign In button
@@ -426,7 +423,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(participantPlanSearchPage);
 		isElementDisplayed = Web.isWebElementDisplayed(
 				this.participantPlanSearchPage, true);
-
 		if (isElementDisplayed) {
 			Reporter.logEvent(
 					Status.PASS,
@@ -444,7 +440,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	}
 
 	/**
-	 * Method to enter participant ID and click on Sign In button
+	 * Method to enter participantID or SSN and click on Sign In button
 	 * 
 	 * @param ppt_id
 	 * @throws Exception
@@ -455,10 +451,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(this.menuSearch);
 		Web.clickOnElement(this.menuSearch);
 		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
-		Reporter.logEvent(Status.INFO,"Performing search using PPT ID", "PPT ID : "+PPT_Or_SSN_Value , true);
+		Reporter.logEvent(Status.INFO, "Performing search using PPT ID/SSN",
+				"PPT ID/SSN : " + PPT_Or_SSN_Value, true);
 		Web.clickOnElement(this.SubmitPPTIdBtn);
-		
-		
 		Web.waitForElement(this.PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(this.PPTHomePageTitle,
 				true);
@@ -475,18 +470,17 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Participant Home Page with all the details is not displayed",
 					false);
 		}
-
 	}
 
-	/*
-	 * Retrieve data from db & verify
+	/**
+	 * Method to verify Employment status
 	 * 
-	 * @PARAMETER = ppt_id
+	 * @param ppt_id
+	 * @param emp_Status
 	 */
 	public void verify_HireDate_TermDate(String ppt_id, String emp_Status) {
 		List<String> HireDate_TermDate_List;
 		WebElement empStatus = null;
-
 		try {
 			Thread.sleep(100);
 			for (int i = 0; i < PlanNumber.size(); i++) {
@@ -496,18 +490,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				HireDate_TermDate_List = get_Hire_Term_Date_From_DB(
 						Stock.getTestQuery("getHireDateAndTerminationDate"),
 						planNum, ind_id, i);
-
 				empStatus = lnkEmploymentStatus.get(i);
 				switch (emp_Status) {
 				case "ACTIVE":
 					if (empStatus.getText().equalsIgnoreCase("ACTIVE")) {
 						Web.mouseHover(empStatus);
-						if (HireDate_TermDate_List.get(1) == null){
-
+						if (HireDate_TermDate_List.get(1) == null) {
 							if (DB.compareDB_Date_With_Web_Date(
 									HireDate_TermDate_List.get(0),
 									HireDate_List.get(i).getText()))
-
 								Reporter.logEvent(
 										Status.PASS,
 										"Check if Employment status is ACTIVE and Hire date: "
@@ -525,17 +516,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 														.getText(), false);
 							Web.clickOnElement(PPTHomePageTitle);
 							Thread.sleep(100);
-
 						}
 					}
 					break;
-
 				case "TERMINATED":
-
 					if (lnkEmploymentStatus.get(i).getText()
 							.contains("TERMINATED")) {
 						Web.mouseHover(empStatus);
-
 						if (DB.compareDB_Date_With_Web_Date(
 								HireDate_TermDate_List.get(0), HireDate_List
 										.get(i).getText())
@@ -563,19 +550,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 											+ "Termination date is : "
 											+ TermDate_List.get(i).getText(),
 									false);
-
 						Web.clickOnElement(PPTHomePageTitle);
 						Thread.sleep(100);
 					}
-
 					break;
-
 				default:
 					break;
 				}
-
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -586,7 +568,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
 					"Assertion Failed!!", true);
-			// throw ae;
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -596,15 +577,20 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 	}
 
+	/**
+	 * Method to get Hire date and Termination date from DB for a participant
+	 * 
+	 * @param getHireDateAndTerminationDate
+	 * @param planNum
+	 * @param indID
+	 * @param index
+	 * @return
+	 */
 	public ArrayList<String> get_Hire_Term_Date_From_DB(
-
-	String[] getHireDateAndTerminationDate, String planNum, String indID,
-			int index) {
-
+			String[] getHireDateAndTerminationDate, String planNum,
+			String indID, int index) {
 		ResultSet resultset;
-
 		hireTermDateList = new ArrayList<String>();
-
 		resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
 				getHireDateAndTerminationDate[1], indID, planNum);
 		if (resultset != null) {
@@ -622,19 +608,16 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return hireTermDateList;
 	}
 
-	/*
-	 * verify page instance against db
+	/**
+	 * Method to verify database instance on Participant home page
 	 */
 	public void verify_Page_Instance() {
-
 		String instance_DB;
 		String instance_Web;
 		String ind_id;
 		boolean flag;
 		flag = Web.isWebElementDisplayed(InstanceLabel, true);
-
 		if (flag) {
-
 			Reporter.logEvent(Status.PASS,
 					"Check if Instance label is present ",
 					"Instance Label is present", true);
@@ -646,7 +629,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							Stock.getTestQuery("getPageInstanceFromInd_id"),
 							ind_id);
 					if (instance_Web.equalsIgnoreCase(instance_DB)) {
-
 						Reporter.logEvent(Status.PASS,
 								"Check if database name for individual ID:  "
 										+ ind_id + "  is: " + instance_DB,
@@ -654,7 +636,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ ind_id + "  is: " + instance_Web,
 								true);
 					} else {
-
 						Reporter.logEvent(
 								Status.FAIL,
 								"Check if database name for individual ID:  "
@@ -663,27 +644,27 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ ind_id + "  is not : " + instance_Web,
 								false);
 					}
-
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		} else
 			Reporter.logEvent(Status.FAIL,
 					"Check if Instance label is not present ",
 					"Instance Label is not present", false);
-
 	}
 
+	/**
+	 * Method to verify Page instance from DB
+	 * 
+	 * @param getPageInstanceFromInd_id
+	 * @param ind_id
+	 * @return
+	 */
 	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
-
-	String ind_id) {
-
+			String ind_id) {
 		ResultSet resultset;
 		String instance = null;
-
 		resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
 				getPageInstanceFromInd_id[1], ind_id);
 		if (resultset != null) {
@@ -692,7 +673,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					instance = resultset.getString("database_instance");
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -704,91 +684,83 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * 
 	 * @PARAMETER = SSN
 	 */
-
 	public void validate_Personal_Data_On_PPT_Home(String ssn) {
 
 		ArrayList<String> personal_Data_From_DB;
 		try {
 			personal_Data_From_DB = get_Personal_Data_From_DB(
 					Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
-		
-			if (personal_Data_From_DB.isEmpty()) {
-				
-			// Personal data validation..
 
-			String FullName_DB = personal_Data_From_DB.get(0) + " "
-					+ personal_Data_From_DB.get(1);
+			if (!personal_Data_From_DB.isEmpty()) {
+				// Personal data validation..
+				String FullName_DB = personal_Data_From_DB.get(0) + " "
+						+ personal_Data_From_DB.get(1);
+				String SSN = personalData_On_PPT_Home_List.get(1).getText();
+				String[] splitedStr = SSN.split("-");
+				String concatenated_SSN = null;
+				concatenated_SSN = splitedStr[0] + splitedStr[1]
+						+ splitedStr[2];
+				if (personalData_On_PPT_Home_List.get(0).getText()
+						.equalsIgnoreCase(FullName_DB)
+						&& DB.compareDB_Date_With_Web_Date(
+								personal_Data_From_DB.get(3),
+								personalData_On_PPT_Home_List.get(2).getText())
+						&& concatenated_SSN
+								.equalsIgnoreCase(personal_Data_From_DB.get(2))
+						&& personalData_On_PPT_Home_List.get(3).getText()
+								.contains(personal_Data_From_DB.get(4))) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
+									+ FullName_DB
+									+ "\n"
+									+ personal_Data_From_DB.get(2)
+									+ "\n"
+									+ personal_Data_From_DB.get(3)
+									+ "\n"
+									+ personal_Data_From_DB.get(4),
+							"Name,SSN,Date Of Birth and Gender in database in database & web is same \n"
+									+ personalData_On_PPT_Home_List.get(0)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(1)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(2)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(3)
+											.getText() + "\n", true);
+				} else {
 
-			String SSN = personalData_On_PPT_Home_List.get(1).getText();
-			String[] splitedStr = SSN.split("-");
-
-			String concatenated_SSN = null;
-
-			concatenated_SSN = splitedStr[0] + splitedStr[1] + splitedStr[2];
-
-			if (personalData_On_PPT_Home_List.get(0).getText()
-					.equalsIgnoreCase(FullName_DB)
-					&& DB.compareDB_Date_With_Web_Date(
-							personal_Data_From_DB.get(3),
-							personalData_On_PPT_Home_List.get(2).getText())
-					&& concatenated_SSN.equalsIgnoreCase(personal_Data_From_DB
-							.get(2))
-					&& personalData_On_PPT_Home_List.get(3).getText()
-							.contains(personal_Data_From_DB.get(4))) {
-
-				Reporter.logEvent(
-						Status.PASS,
-						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
-								+ FullName_DB
-								+ "\n"
-								+ personal_Data_From_DB.get(2)
-								+ "\n"
-								+ personal_Data_From_DB.get(3)
-								+ "\n"
-								+ personal_Data_From_DB.get(4),
-						"Name,SSN,Date Of Birth and Gender in database in database & web is same \n"
-								+ personalData_On_PPT_Home_List.get(0)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(1)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(2)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(3)
-										.getText() + "\n", true);
+					Reporter.logEvent(
+							Status.FAIL,
+							"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
+									+ FullName_DB
+									+ "\n"
+									+ personal_Data_From_DB.get(2)
+									+ "\n"
+									+ personal_Data_From_DB.get(3)
+									+ "\n"
+									+ personal_Data_From_DB.get(4),
+							"Name,SSN,Date Of Birth and Gender in database in database & web is not same \n"
+									+ personalData_On_PPT_Home_List.get(0)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(1)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(2)
+											.getText()
+									+ "\n"
+									+ personalData_On_PPT_Home_List.get(3)
+											.getText() + "\n", false);
+				}
 			} else {
-
-				Reporter.logEvent(
-						Status.FAIL,
-						"Check if Name,SSN,Date Of Birth and Gender in database & web is same or not \n\n\n"
-								+ FullName_DB
-								+ "\n"
-								+ personal_Data_From_DB.get(2)
-								+ "\n"
-								+ personal_Data_From_DB.get(3)
-								+ "\n"
-								+ personal_Data_From_DB.get(4),
-						"Name,SSN,Date Of Birth and Gender in database in database & web is not same \n"
-								+ personalData_On_PPT_Home_List.get(0)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(1)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(2)
-										.getText()
-								+ "\n"
-								+ personalData_On_PPT_Home_List.get(3)
-										.getText() + "\n", false);
-			}
-			}else{
 				Reporter.logEvent(Status.INFO,
-						"Validate personal data from DB for the SSN:  "+ssn,
+						"Validate personal data from DB for the SSN:  " + ssn,
 						"No records found in DB", false);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -799,31 +771,25 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
 					"Assertion Failed!!", true);
-			// throw ae;
 		} finally {
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
-	/*
+	/**
 	 * Method to validate personal data
 	 * 
-	 * @PARAMETER = getPersonalDataOnPPTHomePage
-	 * 
-	 * @PARAMETER = ssn
+	 * @param - getPersonalDataOnPPTHomePage,ssn
 	 */
 	public ArrayList<String> get_Personal_Data_From_DB(
-			String[] getPersonalDataOnPPTHomePage,
-
-			String ssn) {
+			String[] getPersonalDataOnPPTHomePage, String ssn) {
 
 		ResultSet resultset;
 		personalDataDB = new ArrayList<String>();
-
 		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0],
 				getPersonalDataOnPPTHomePage[1], ssn);
 		if (resultset != null) {
@@ -834,10 +800,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					personalDataDB.add(resultset.getString("ssn"));
 					personalDataDB.add(resultset.getString("birth_date"));
 					personalDataDB.add(resultset.getString("sex"));
-
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -846,66 +810,96 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	public void verifyPIN_ExistingOrTemp() throws Throwable {
 		String parentWindow = Globals.GC_EMPTY;
-		Map<String,String> getMessage = new LinkedHashMap<String,String>();
-		int iEleIndex=0;
+		Map<String, String> getMessage = new LinkedHashMap<String, String>();
+		int iEleIndex = 0;
 		CommonLib cl = new CommonLib();
 		String msgVarName = Stock.GetParameterValue("ValidateMsgVarNm");
-		if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
+		if (Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")) {
 			Web.waitForElement(lnkOrderPIN);
-			Web.clickOnElement(lnkOrderPIN);			
-			parentWindow = Web.webdriver.getWindowHandle();		
+			Web.clickOnElement(lnkOrderPIN);
+			parentWindow = Web.webdriver.getWindowHandle();
 			for (String childWindow : Web.webdriver.getWindowHandles()) {
 				Web.webdriver.switchTo().window(childWindow);
 			}
 		}
-	 
-		if(Web.isWebElementDisplayed(getWebElement(Stock.GetParameterValue("btnName")))){
-			   getWebElement(Stock.GetParameterValue("btnName")).click();
-			   if(!msgVarName.contains(",")){msgVarName=msgVarName+", ";}
-			   for(String str : msgVarName.split(",")){
-				   if(!str.trim().equals(Globals.GC_EMPTY)){getMessage.put(str.trim(),(String) cl.getVarByName(str));}	
-			   }
-			   if(getMessage.size()>0 & txtExistingAndOrderPINMessage.size()>0){
-					   for (Map.Entry<String, String> expectedMsg : getMessage.entrySet()) {
-						   String getObjText = new StringBuilder(txtExistingAndOrderPINMessage.get(iEleIndex)
-								                                .getText()).delete(0,1).toString().trim();
-						   if(!expectedMsg.getKey().contains("Note")){
-							  if(getObjText.matches(".*\\d+.*") 
-							    & getObjText.replaceAll("\\d","").replaceAll(" ","").equals(expectedMsg.getValue().replaceAll(" ",""))
-							    & Web.isWebElementDisplayed(imgInfoMsg)){
-								Reporter.logEvent(Status.PASS,"Validate info message for button "
-							                      +expectedMsg.getKey(),"Info message successfully validated",false);
-							 }else{
-								 Reporter.logEvent(Status.FAIL,"Validate info message for button "
-							                      +expectedMsg.getKey(),"Info message validation failed",true);
-							 }   
-						   }else{
-							  if(getObjText.replaceAll(" ","").equals(expectedMsg.getValue().replaceAll(" ",""))){
-								  Reporter.logEvent(Status.PASS,"Validate info message for button "
-					                      +expectedMsg.getKey(),"Info message successfully validated",false);
-							  }else{
-								  Reporter.logEvent(Status.FAIL,"Validate info message for button "
-					                      +expectedMsg.getKey(),"Info message validation failed",true);
-							  }
-						   }
-						   iEleIndex++;
-					   }    
-			   }else{
-				   Reporter.logEvent(Status.FAIL,"Validate if respective info message for the button is displayed",
-						             "Info message for button :" +Stock.GetParameterValue("btnName")
-						             + " is not displayed",true);
-			   }
-		}else{
-			Reporter.logEvent(Status.FAIL,"Validate if respective info message for the button is displayed",
-		             "Info message for button :" +Stock.GetParameterValue("btnName")
-		             + " is not displayed",true);
-		}	
-		if(Stock.GetParameterValue("closeChildBrowser").equalsIgnoreCase("TRUE")){
+
+		if (Web.isWebElementDisplayed(getWebElement(Stock
+				.GetParameterValue("btnName")))) {
+			getWebElement(Stock.GetParameterValue("btnName")).click();
+			if (!msgVarName.contains(",")) {
+				msgVarName = msgVarName + ", ";
+			}
+			for (String str : msgVarName.split(",")) {
+				if (!str.trim().equals(Globals.GC_EMPTY)) {
+					getMessage.put(str.trim(), (String) cl.getVarByName(str));
+				}
+			}
+			if (getMessage.size() > 0
+					& txtExistingAndOrderPINMessage.size() > 0) {
+				for (Map.Entry<String, String> expectedMsg : getMessage
+						.entrySet()) {
+					String getObjText = new StringBuilder(
+							txtExistingAndOrderPINMessage.get(iEleIndex)
+									.getText()).delete(0, 1).toString().trim();
+					if (!expectedMsg.getKey().contains("Note")) {
+						if (getObjText.matches(".*\\d+.*")
+								& getObjText
+										.replaceAll("\\d", "")
+										.replaceAll(" ", "")
+										.equals(expectedMsg.getValue()
+												.replaceAll(" ", ""))
+								& Web.isWebElementDisplayed(imgInfoMsg)) {
+							Reporter.logEvent(Status.PASS,
+									"Validate info message for button "
+											+ expectedMsg.getKey(),
+									"Info message successfully validated",
+									false);
+						} else {
+							Reporter.logEvent(Status.FAIL,
+									"Validate info message for button "
+											+ expectedMsg.getKey(),
+									"Info message validation failed", true);
+						}
+					} else {
+						if (getObjText.replaceAll(" ", "").equals(
+								expectedMsg.getValue().replaceAll(" ", ""))) {
+							Reporter.logEvent(Status.PASS,
+									"Validate info message for button "
+											+ expectedMsg.getKey(),
+									"Info message successfully validated",
+									false);
+						} else {
+							Reporter.logEvent(Status.FAIL,
+									"Validate info message for button "
+											+ expectedMsg.getKey(),
+									"Info message validation failed", true);
+						}
+					}
+					iEleIndex++;
+				}
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Validate if respective info message for the button is displayed",
+						"Info message for button :"
+								+ Stock.GetParameterValue("btnName")
+								+ " is not displayed", true);
+			}
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Validate if respective info message for the button is displayed",
+					"Info message for button :"
+							+ Stock.GetParameterValue("btnName")
+							+ " is not displayed", true);
+		}
+		if (Stock.GetParameterValue("closeChildBrowser").equalsIgnoreCase(
+				"TRUE")) {
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 		}
 	}
-	
+
 	/**
 	 * Method to verify registration status
 	 * 
@@ -926,6 +920,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 						false);
 				switch (reg_status) {
 				case "Registered":
+
 					reg_status_On_Web = participantRegStatus.getText();
 					if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
 						Reporter.logEvent(Status.PASS,
@@ -933,6 +928,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										+ reg_status,
 								"Web registration status on PPT homepage is: "
 										+ reg_status_On_Web, false);
+						Web.clickOnElement(participantRegStatus);
 						Web.mouseHover(participantRegStatus);
 						String userName_label = Reg_Status_UserName_Label
 								.getText();
@@ -951,7 +947,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 									"Validate on hover Username display with number on ppt homepage",
 									"On hover Username didn't display with number on ppt homepage:\n\n"
 											+ userName_label + ":  " + userName,
-									false);
+									true);
 						}
 					} else {
 
@@ -1037,11 +1033,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				break;
 			case "Plan Not Offered":
 				// Get data from db for Enrolled participant
-				// plan_Num_DB = get_Plan_number_From_DB(
-				// Stock.getTestQuery("get_Plan_Number_From_DB"));
+				plan_Num_DB = get_Plan_number_From_DB(Stock
+						.getTestQuery("get_Plan_Number_From_DB"));
 
 				part_id = get_Participant_Id_From_DB(
-						Stock.getTestQuery("get_Part_ID_From_DB"), "331883-01");
+						Stock.getTestQuery("get_Part_ID_From_DB"),
+						plan_Num_DB.trim());
 				// Search with ppt_id
 				search_PPT_Plan_With_PPT_ID_OR_SSN(part_id, PPTIdfield);
 
@@ -1100,18 +1097,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @author rnjbdn
 	 */
 	public String get_Plan_number_From_DB(String[] get_Plan_Num_From_PartService) {
-
 		ResultSet resultset;
 		String plan_Num = null;
-		System.out.println(get_Plan_Num_From_PartService[0] + "   "
-				+ get_Plan_Num_From_PartService[1]);
 		resultset = DB.executeQuery(get_Plan_Num_From_PartService[0],
 				get_Plan_Num_From_PartService[1]);
 		if (resultset != null) {
 			try {
 				while (resultset.next()) {
 					plan_Num = resultset.getString("ga_id");
-					System.out.println(plan_Num + "-------");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -1274,7 +1267,96 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Search didn't display with list of participant successfully",
 					false);
 		}
-
 	}
 
+	/**
+	 * <pre>
+	 * Method to get PPT ID based on the PDI status
+	 * </pre>
+	 * 
+	 * @param pdiStatus
+	 * @return pptID
+	 * @author rnjbdn
+	 */
+	public String getPPTIDForPDIStatus(String pdiStatus) throws Exception {
+		ResultSet resultset = null;
+		String pptID = Globals.GC_EMPTY;
+		if (pdiStatus.equalsIgnoreCase("Yes")) {
+			resultset = DB.executeQuery(
+					Stock.getTestQuery("getPPTIDforPDIStatusY")[0],
+					Stock.getTestQuery("getPPTIDforPDIStatusY")[1]);
+			if (resultset != null) {
+				while (resultset.next()) {
+					pptID = resultset.getString("IND_ID");
+				}
+			}
+		}
+		if (pdiStatus.equalsIgnoreCase("No")) {
+			resultset = DB.executeQuery(
+					Stock.getTestQuery("getPPTIDforPDIStatusN")[0],
+					Stock.getTestQuery("getPPTIDforPDIStatusN")[1]);
+			if (resultset != null) {
+				while (resultset.next()) {
+					pptID = resultset.getString("IND_ID");
+				}
+			}
+		}
+		return pptID;
+	}
+
+	/**
+	 * <pre>
+	 * Method to verify PDI status
+	 * </pre>
+	 * 
+	 * @param pdi_Status
+	 * 
+	 * @author rnjbdn
+	 */
+	public void verify_PDI_Status(String pdi_Status) {
+
+		String pdistatus_Web;
+		int noOfPlans;
+		boolean flag = false;
+		flag = Web.isWebElementDisplayed(PDILabel, true);
+		if (flag) {
+			Reporter.logEvent(Status.PASS,
+					"Check if PDI status label is present ",
+					"PDI status Label is present", false);
+			noOfPlans = PDIStatus.size();
+			if (noOfPlans > 1) {
+				for (int i = 1; i < noOfPlans; i++) {
+					pdistatus_Web = PDIStatus.get(i).getText();
+					if (pdi_Status.equalsIgnoreCase("YES")
+							& pdistatus_Web.equalsIgnoreCase(pdi_Status)) {
+						Reporter.logEvent(Status.PASS,
+								"Check PDI status for a participant is : "
+										+ pdi_Status,
+								"PDI status for a participant is : "
+										+ pdistatus_Web, false);
+					} else if (pdi_Status.equalsIgnoreCase("No")
+							& pdistatus_Web.equalsIgnoreCase(pdi_Status)) {
+						Reporter.logEvent(Status.PASS,
+								"Check if PDI status for a participant is : "
+										+ pdi_Status,
+								"PDI status for a participant is: "
+										+ pdistatus_Web, false);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Check PDI status for a participant",
+								"PDI status for a participant is neither YES nor NO",
+								true);
+					}
+				}
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Check if PDI status is present or not",
+						"PDI status is not present", true);
+			}
+		} else
+			Reporter.logEvent(Status.FAIL,
+					"Check if PDI label is not present ",
+					"PDI Label is not present", true);
+	}
 }
