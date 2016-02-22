@@ -1,11 +1,11 @@
 package lib;
 
-import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -239,16 +240,39 @@ public class Web {
 		}
 		return element;
 	}
+	
 	/**
 	 * Method to wait for the specified element's presence
 	 * 
 	 * @param webElememnt
 	 * @throws Exception
 	 */
-	public static void waitForElement(WebElement element) throws Exception {
-		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
-		.until(ExpectedConditions.visibilityOf(element));
+	public static void waitForElement(WebElement element){
+		try{
+			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
+			.ignoring(StaleElementReferenceException.class)
+			.until(ExpectedConditions.visibilityOf(element));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
+	
+	/**
+	 * Method to wait for the list element's presence
+	 * 
+	 * @param webElememnt
+	 * @throws Exception
+	 */
+	public static void waitForElements(List<WebElement> elements){
+		try{
+			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
+			.ignoring(StaleElementReferenceException.class)
+			.until(ExpectedConditions.visibilityOfAllElements(elements));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * Method to wait for the specified element's presence
