@@ -111,7 +111,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult.getParameters()[1];
 			Stock.globalTestdata = globalTestData;
 			currentTCInvocationCount = testResult.getMethod().getCurrentInvocationCount();
-			Web.ifEndTestITRExecuted = ((Stock.getIterations() == (currentTCInvocationCount+1))? true:false);				
+			Web.setLastIteration((Stock.getIterations() == (currentTCInvocationCount+1))? true:false);				
 		}
 	}
 

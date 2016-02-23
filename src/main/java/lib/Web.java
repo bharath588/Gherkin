@@ -37,7 +37,15 @@ public class Web {
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
-	public static boolean ifEndTestITRExecuted = false;	
+	private static boolean isLastIteration = false;	
+
+	public static boolean isLastIteration() {
+		return isLastIteration;
+	}
+
+	public static void setLastIteration(boolean isLastIteration) {
+		Web.isLastIteration = isLastIteration;
+	}
 
 	/**
 	 * <pre>
