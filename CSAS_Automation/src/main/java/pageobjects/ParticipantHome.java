@@ -6,18 +6,23 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
+import core.framework.ThrowException;
+import core.framework.ThrowException.TYPE;
 import framework.util.CommonLib;
 
 public class ParticipantHome extends LoadableComponent<ParticipantHome> {
@@ -307,9 +312,20 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	}
 
 	@Override
-	protected void load() {
-		this.parent = parent;
-		Web.webdriver.get(Stock.globalParam.get("AppURL"));
+	protected void load(){
+		//this.parent = parent;		
+		try{
+			Web.webdriver.get(Stock.getConfigParam("AppURL"));
+			Reporter.logEvent(Status.INFO,
+					"Check if the CSAS Log in page open",
+					"CSAS log in page launhced successfully", true);
+			submitLoginCredentials(
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password"));
+		}catch(Exception e){
+			ThrowException.Report(TYPE.EXCEPTION,e.getMessage());
+		}
+		
 	}
 
 	/**
@@ -378,16 +394,19 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return null;
 	}
 
-	public String getPPTID(String WebRegStatus) throws Exception {
+	public String getSSN_or_pptID(String WebRegStatus,String paramNm) throws Exception {
 		ResultSet resultset = null;
-		String pptID = Globals.GC_EMPTY;
+		String res = Globals.GC_EMPTY;		
+		
+		if(!paramNm.equalsIgnoreCase("ID")
+		 ||!paramNm.equalsIgnoreCase("SSN")){return null;}
 		if (WebRegStatus.equalsIgnoreCase("Registered")) {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
 			if (resultset != null) {
 				while (resultset.next()) {
-					pptID = resultset.getString("ID");
+					res = resultset.getString(paramNm);
 				}
 			}
 		}
@@ -397,11 +416,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
 			if (resultset != null) {
 				while (resultset.next()) {
-					pptID = resultset.getString("ID");
+					res = resultset.getString(paramNm);
 				}
 			}
 		}
-		return pptID;
+		return res;
 	}
 
 	/**
@@ -422,20 +441,19 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 		Web.waitForElement(participantPlanSearchPage);
 		isElementDisplayed = Web.isWebElementDisplayed(
-				this.participantPlanSearchPage, true);
+						   participantPlanSearchPage, true);
 		if (isElementDisplayed) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Check if the user logged in to Participant/plan search page",
 					"User is successfully logged in to Participant/plan search page",
-					true);
-			Web.appLoginStatus = true;
+					false);			
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Check if the user logged in to Participant/plan search page",
 					"User is not logged in to Participant/plan search page",
-					false);
+					true);
 		}
 	}
 
@@ -448,14 +466,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String PPT_Or_SSN_Value,
 			WebElement searchField) throws Exception {
 		boolean isElementDisplayed = false;
-		Web.waitForElement(this.menuSearch);
-		Web.clickOnElement(this.menuSearch);
+		Web.waitForElement(menuSearch);
+		Web.clickOnElement(menuSearch);
 		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
 		Reporter.logEvent(Status.INFO, "Performing search using PPT ID/SSN",
 				"PPT ID/SSN : " + PPT_Or_SSN_Value, true);
-		Web.clickOnElement(this.SubmitPPTIdBtn);
-		Web.waitForElement(this.PPTHomePageTitle);
-		isElementDisplayed = Web.isWebElementDisplayed(this.PPTHomePageTitle,
+		Web.clickOnElement(SubmitPPTIdBtn);
+		Web.waitForElement(PPTHomePageTitle);
+		isElementDisplayed = Web.isWebElementDisplayed(PPTHomePageTitle,
 				true);
 		if (isElementDisplayed) {
 			Reporter.logEvent(
@@ -813,8 +831,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Map<String, String> getMessage = new LinkedHashMap<String, String>();
 		int iEleIndex = 0;
 		CommonLib cl = new CommonLib();
+		boolean msgValidate = false;
 		String msgVarName = Stock.GetParameterValue("ValidateMsgVarNm");
-		if (Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")) {
+		if (Web.webdriver.getWindowHandles().size()==1) {
 			Web.waitForElement(lnkOrderPIN);
 			Web.clickOnElement(lnkOrderPIN);
 			parentWindow = Web.webdriver.getWindowHandle();
@@ -824,66 +843,45 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 
 		if (Web.isWebElementDisplayed(getWebElement(Stock
-				.GetParameterValue("btnName")))) {
-			getWebElement(Stock.GetParameterValue("btnName")).click();
-			if (!msgVarName.contains(",")) {
-				msgVarName = msgVarName + ", ";
+				.GetParameterValue("btnName")))){
+			    getWebElement(Stock.GetParameterValue("btnName")).click();
+		}else{
+			throw new AssertionError("Web Element "+Stock.GetParameterValue("btnName")+
+					                 "not displayed in the page");
+		}
+		
+		if (!msgVarName.contains(",")) {msgVarName = msgVarName + ", ";}
+		
+		for (String str : msgVarName.split(",")) {
+			if (!str.trim().equals(Globals.GC_EMPTY)) {
+				getMessage.put(str.trim(), (String) cl.getVarByName(str));
 			}
-			for (String str : msgVarName.split(",")) {
-				if (!str.trim().equals(Globals.GC_EMPTY)) {
-					getMessage.put(str.trim(), (String) cl.getVarByName(str));
+		}
+		
+		if (getMessage.size() > 0
+				& txtExistingAndOrderPINMessage.size() > 0) {
+			for (Map.Entry<String, String> expectedMsg : getMessage.entrySet()) {
+				String getObjText = new StringBuilder(
+						txtExistingAndOrderPINMessage.get(iEleIndex)
+								.getText()).delete(0, 1).toString().trim();
+				if (!expectedMsg.getKey().contains("Note")) {
+					if (getObjText.matches(".*\\d+.*")
+							& getObjText.replaceAll("\\d", "").replaceAll(" ", "")
+									.equals(expectedMsg.getValue().replaceAll(" ", ""))
+							& Web.isWebElementDisplayed(imgInfoMsg)) {msgValidate=true;}
+				} else {
+					if (getObjText.replaceAll(" ", "").equals(
+							expectedMsg.getValue().replaceAll(" ", ""))) {msgValidate=true;}
 				}
-			}
-			if (getMessage.size() > 0
-					& txtExistingAndOrderPINMessage.size() > 0) {
-				for (Map.Entry<String, String> expectedMsg : getMessage
-						.entrySet()) {
-					String getObjText = new StringBuilder(
-							txtExistingAndOrderPINMessage.get(iEleIndex)
-									.getText()).delete(0, 1).toString().trim();
-					if (!expectedMsg.getKey().contains("Note")) {
-						if (getObjText.matches(".*\\d+.*")
-								& getObjText
-										.replaceAll("\\d", "")
-										.replaceAll(" ", "")
-										.equals(expectedMsg.getValue()
-												.replaceAll(" ", ""))
-								& Web.isWebElementDisplayed(imgInfoMsg)) {
-							Reporter.logEvent(Status.PASS,
-									"Validate info message for button "
-											+ expectedMsg.getKey(),
-									"Info message successfully validated",
-									false);
-						} else {
-							Reporter.logEvent(Status.FAIL,
-									"Validate info message for button "
-											+ expectedMsg.getKey(),
-									"Info message validation failed", true);
-						}
-					} else {
-						if (getObjText.replaceAll(" ", "").equals(
-								expectedMsg.getValue().replaceAll(" ", ""))) {
-							Reporter.logEvent(Status.PASS,
-									"Validate info message for button "
-											+ expectedMsg.getKey(),
-									"Info message successfully validated",
-									false);
-						} else {
-							Reporter.logEvent(Status.FAIL,
-									"Validate info message for button "
-											+ expectedMsg.getKey(),
-									"Info message validation failed", true);
-						}
-					}
-					iEleIndex++;
-				}
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Validate if respective info message for the button is displayed",
-						"Info message for button :"
-								+ Stock.GetParameterValue("btnName")
-								+ " is not displayed", true);
+				
+				if(msgValidate){
+					Reporter.logEvent(Status.PASS,"Validate info message for button "
+									+ expectedMsg.getKey(),"Info message successfully validated",false);
+				}else{
+					Reporter.logEvent(Status.FAIL,"Validate info message for button "
+									+ expectedMsg.getKey(),"Info message validation failed", true);					
+				}				
+				iEleIndex++;
 			}
 		} else {
 			Reporter.logEvent(
@@ -893,6 +891,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							+ Stock.GetParameterValue("btnName")
 							+ " is not displayed", true);
 		}
+	 
+		
 		if (Stock.GetParameterValue("closeChildBrowser").equalsIgnoreCase(
 				"TRUE")) {
 			Web.webdriver.close();
@@ -1165,9 +1165,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 								By.xpath("//table[@id = 'partList']//tr[" + i
 										+ "]/td[1]/a")).click();
 
-						Web.waitForElement(this.PPTHomePageTitle);
+						Web.waitForElement(PPTHomePageTitle);
 						isElementDisplayed = Web.isWebElementDisplayed(
-								this.PPTHomePageTitle, true);
+								PPTHomePageTitle, true);
 						if (isElementDisplayed) {
 							Reporter.logEvent(
 									Status.PASS,

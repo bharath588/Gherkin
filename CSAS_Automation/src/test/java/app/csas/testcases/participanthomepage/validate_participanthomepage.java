@@ -22,9 +22,8 @@ public class validate_participanthomepage {
 	boolean isPageDisplayed;
 	
 	@BeforeClass
-	public void ReportInit(){
-		Globals.GBL_SuiteName = this.getClass().getName();	
-		//Reporter.initializeModule(this.getClass().getName()) ;
+	public void ReportInit(){		
+		Reporter.initializeModule(this.getClass().getName());
 	}
 	
 	@DataProvider
@@ -56,15 +55,6 @@ public class validate_participanthomepage {
 			
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			if (Web.appLoginStatus == false) {
-				Reporter.logEvent(Status.PASS,
-						"Check if the CSAS Log in page open",
-						"CSAS log in page launhced successfully", true);
-				
-				participantHomeObj.submitLoginCredentials(
-						Stock.GetParameterValue("username"),
-						Stock.GetParameterValue("password"));
-			}			
 			
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
@@ -75,7 +65,6 @@ public class validate_participanthomepage {
 			participantHomeObj.verify_HireDate_TermDate(
 					Stock.GetParameterValue("ppt_id"),
 					Stock.GetParameterValue("emp_Status"));
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -114,15 +103,7 @@ public class validate_participanthomepage {
 			
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			if (Web.appLoginStatus == false) {
-				Reporter.logEvent(Status.PASS,
-						"Check if the CSAS Log in page open",
-						"CSAS log in page launhced successfully", true);
-				participantHomeObj.submitLoginCredentials(
-						Stock.GetParameterValue("username"),
-						Stock.GetParameterValue("password"));
-			}			
-			
+		
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
 					Stock.GetParameterValue("ppt_id"),Web.returnElement(participantHomeObj,"PPT_ID"));
@@ -167,22 +148,14 @@ public class validate_participanthomepage {
 
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			if (Web.appLoginStatus == false) {
-				Reporter.logEvent(Status.PASS,
-						"Check if the CSAS Log in page open",
-						"CSAS log in page launhced successfully", true);
-				participantHomeObj.submitLoginCredentials(
-						Stock.GetParameterValue("username"),
-						Stock.GetParameterValue("password"));
-			}
 			
 			// Step2:Search with PPT ID..
-			if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
-				pptID = participantHomeObj.getPPTID(Stock.GetParameterValue("web_reg_status"));
-	
+			if(Web.webdriver.getWindowHandles().size()==1){
+				pptID = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),"ID");				
 				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
+
 			}
-			
+						
 			// Step3: Verify Mail existing PIN and Order Temp PIN message
 			participantHomeObj.verifyPIN_ExistingOrTemp();
 
@@ -222,23 +195,12 @@ Author : Ranjan     Date : 02-02-16
 
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
-		if (Web.appLoginStatus == false) {
-			Reporter.logEvent(Status.PASS,
-					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully", true);
-			participantHomeObj.submitLoginCredentials(
-					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password"));
-		}
-		// Step2:Search with PPT ID..
-		//			if(Stock.GetParameterValue("searchUser").equalsIgnoreCase("TRUE")){
-						pptID = participantHomeObj.getPPTID(Stock.GetParameterValue("reg_status"));
-			
-						participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
-		//			}
-	/*	// Step2:Search with PPT ID..
-		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ppt_id"),
-				                                Web.returnElement(participantHomeObj,"PPT_ID"));*/
+		
+		
+		// Step2:Search with PPT ID..		
+		pptID = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("reg_status"),"ID");
+
+		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
 
 		// Step3: Verify Registration status
 		participantHomeObj.verify_Registration_Status(Stock
@@ -279,15 +241,8 @@ Author : Ranjan     Date : 02-02-16
 
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
-		if (Web.appLoginStatus == false) {
-			Reporter.logEvent(Status.PASS,
-					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully", true);
-			participantHomeObj.submitLoginCredentials(
-					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password"));
-		}
-		// Step2: Verify Managed Account status
+			
+		// Step3: Verify Managed Account status
 		participantHomeObj.verify_Managed_Account_Status(Stock
 				.GetParameterValue("managed_acc_status"));
 		
@@ -326,14 +281,7 @@ Author : Ranjan     Date : 09-02-16
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
-		if (Web.appLoginStatus == false) {
-			Reporter.logEvent(Status.PASS,
-					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully", true);
-			participantHomeObj.submitLoginCredentials(
-					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password"));
-		}
+					
 		// Step2:Search with SSN..
 		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(Stock.GetParameterValue("ssn"),
 				                                Web.returnElement(participantHomeObj,"SSN"));
@@ -376,20 +324,12 @@ Author : Ranjan     Date : 19-02-16
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
-		if (Web.appLoginStatus == false) {
-			Reporter.logEvent(Status.PASS,
-					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully", true);
-			participantHomeObj.submitLoginCredentials(
-					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password"));
-		}
-		
+					
 		//Step2:Search with SSN..
 		pptID = participantHomeObj.getPPTIDForPDIStatus(Stock.GetParameterValue("pdi_status"));
 		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
  
-		// Step3: Verify PDI status
+		// Step3: Verify PDI status 
 		participantHomeObj.verify_PDI_Status(Stock
 				.GetParameterValue("pdi_status"));
 	} catch (Exception e) {
