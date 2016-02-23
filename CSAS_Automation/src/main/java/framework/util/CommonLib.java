@@ -60,8 +60,7 @@ public class CommonLib {
 	 * @return	:boolean <br> is date equal</br>
 	 * @author	: Ranjan
 	 */
-	public static boolean compareDB_Date_With_Web_Date(String dbDate,
-			String webDate) {
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,String webDate){
 
 		boolean isDateEqual_Flag = false;
 		Date date;
@@ -72,6 +71,8 @@ public class CommonLib {
 			date = df.parse(dbDate);
 			SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy");
 			String strDate = sfd.format(date);
+			System.out.println(dbDate+"\n  "+strDate+"  \n"+webDate);	
+			
 			if (strDate.equalsIgnoreCase(webDate))
 				isDateEqual_Flag = true;
 		} catch (ParseException e) {			

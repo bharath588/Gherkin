@@ -639,6 +639,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Reporter.logEvent(Status.PASS,
 					"Check if Instance label is present ",
 					"Instance Label is present", true);
+			if (InstanceValue_List.size() <= 0) {throw new AssertionError("Plan does not diaplay any database instance value") ;} 
 			for (int i = 0; i < InstanceValue_List.size(); i++) {
 				instance_Web = InstanceValue_List.get(i).getText();
 				ind_id = IndID_List.get(i).getText();
