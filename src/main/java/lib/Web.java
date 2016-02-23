@@ -36,7 +36,8 @@ public class Web {
 	public static WebDriver webdriver = null;
 	public static Exception exception;
 	private static Select objSelect;
-	public static Robot robot;	
+	public static Robot robot;
+	public static boolean ifEndTestITRExecuted = false;	
 
 	/**
 	 * <pre>

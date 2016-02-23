@@ -1,12 +1,10 @@
 package core.framework;
 
 import java.util.HashMap;
-
 import lib.Log;
 import lib.Log.Level;
 import lib.Stock;
 import lib.Web;
-
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -15,14 +13,11 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
-import com.gargoylesoftware.htmlunit.StorageHolder.Type;
-
 import core.framework.ThrowException.TYPE;
 
 public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener {
 
-	
+	int currentTCInvocationCount=0;
 	public void onStart(ISuite suite) {
 		try{
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
@@ -111,10 +106,12 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 	// This belongs to IInvokedMethodListener and will execute before every
 	// method including @Before @After @Test
 	@SuppressWarnings("unchecked")
-	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {		
 		if (method.getTestMethod().isTest()) {
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult.getParameters()[1];
 			Stock.globalTestdata = globalTestData;
+			currentTCInvocationCount = testResult.getMethod().getCurrentInvocationCount();
+			Web.ifEndTestITRExecuted = ((Stock.getIterations() == (currentTCInvocationCount+1))? true:false);				
 		}
 	}
 
