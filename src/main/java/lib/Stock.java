@@ -208,7 +208,7 @@ public class Stock {
 
 	}
 	
-	public static String GetParameterValue(String strParamName){
+	public static String GetParameterValue(String strParamName) throws Exception{
 		String value = null;
 		if (globalTestdata.containsKey(strParamName.toUpperCase().trim())){
 			if (globalTestdata.get(strParamName.toUpperCase().trim()).length() > 0)
@@ -216,7 +216,7 @@ public class Stock {
 		}	
 		else {
 			//System.out.println("Parameter '" + strParamName + "' does not exist in Test data!");
-			throw new Error("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
+			throw new Exception("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
 		}
 		
 		return value;

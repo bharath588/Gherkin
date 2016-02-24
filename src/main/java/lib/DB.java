@@ -22,29 +22,26 @@ public class DB {
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
 	
-	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues){
+	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues) throws Exception{
 		
 		ResultSet tempRecordSet = null;
 		PreparedStatement stmt;
 
-		
-		try {
-					
-
+		try {				
 			stmt = DB.getPreparedStatement(dbName, query, queryParameterValues);
 			
 			tempRecordSet = stmt.executeQuery();
 			masterRecordSet.add(tempRecordSet);
 
 		} catch (SQLException e) {
-			throw new Error("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
+			throw new Exception ("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
 		}
 		return tempRecordSet;
 	}
 	
 
 	
-	public static int executeUpdate(String dbName,String query,String... queryParameterValues){
+	public static int executeUpdate(String dbName,String query,String... queryParameterValues) throws Exception{
 		
 		int recordsUpdated = 0;
 		PreparedStatement stmt;
@@ -54,12 +51,12 @@ public class DB {
 			stmt = DB.getPreparedStatement(dbName, query, queryParameterValues);
 			recordsUpdated = stmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new Error("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
+			throw new Exception ("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
 		}
 		return recordsUpdated;
 	}
 	
-	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues) {
+	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues) throws Exception {
 		PreparedStatement stmt = null;
 		int queryParamCnt = 0;
 		String dataBaseName = Stock.getConfigParam(dbName.trim());
@@ -87,18 +84,18 @@ public class DB {
 					}
 					
 				} else {
-					throw new Error("Parameters in the query and the values sent missmatched");
+					throw new Exception ("Parameters in the query and the values sent missmatched");
 				}
 			}
 		} catch (SQLException e) {
-			throw new Error("SQL Exception occurred while preparing query:\n" + query + "\n\nFailed with message:\n" + e.getMessage());
+			throw new Exception ("SQL Exception occurred while preparing query:\n" + query + "\n\nFailed with message:\n" + e.getMessage());
 		}
 		
 		return stmt;
 	}
 	
 	
-	private static Connection getDBConnection(String DBName){
+	private static Connection getDBConnection(String DBName) throws Exception{
 		
 		OracleDataSource dataSource;
 		Connection conn;
@@ -122,7 +119,7 @@ public class DB {
 				dbpassword = Stock.getConfigParam("DBPASSWORD");
 				
 				if (jdbcUrl.trim().length() == 0) {
-					throw new Error("No connection string found for the DB: " + DBName);
+					throw new Exception ("No connection string found for the DB: " + DBName);
 				}
 				
 				dataSource.setURL(jdbcUrl);
@@ -130,7 +127,7 @@ public class DB {
 				conn = dataSource.getConnection(dbuserid,dbpassword);
 				
 			} catch (SQLException e) {
-				throw new Error("Establishing connection to DB " + DBName + " Failed \n " + e.getMessage());
+				throw new Exception ("Establishing connection to DB " + DBName + " Failed \n " + e.getMessage());
 			}
 			
 			return conn;
@@ -139,7 +136,7 @@ public class DB {
 		
 	}
 	
-	public static int getRecordSetCount(ResultSet resultSet){
+	public static int getRecordSetCount(ResultSet resultSet) throws Exception{
 		
 		int rSize = 0;
 		
@@ -149,7 +146,7 @@ public class DB {
 			resultSet.beforeFirst();
 		} catch (SQLException e) {
 			//System.out.println("RecordSet is empty");
-			throw new Error("SQL Exception: " + e.getMessage());
+			throw new Exception ("SQL Exception: " + e.getMessage());
 		}
 		
 		return rSize;
@@ -157,7 +154,7 @@ public class DB {
 	}
 	
 
-	public static void closeDBConnections(){
+	public static void closeDBConnections() throws Exception{
 		
 		Iterator<String> connectionsIterator = dbConnections.keySet().iterator();
 		Iterator<ResultSet> recordSetsIterator = masterRecordSet.iterator();
@@ -172,7 +169,7 @@ public class DB {
 					
 				}
 			} catch (SQLException e) {
-			   throw new Error("list<Connections> :- a list containing db connections did not close properly");
+			   throw new Exception ("list<Connections> :- a list containing db connections did not close properly");
 			}
 			
 			

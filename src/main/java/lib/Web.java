@@ -92,9 +92,10 @@ public class Web {
 	 *            - Name of the web element as displayed in the page
 	 * @return <b>boolean - true</b> if element is displayed on the page.
 	 *         <b>false</b> otherwise
+	 * @throws Exception 
 	 */
 	public static boolean isWebElementDisplayed(Object pageClassObj,
-			String fieldName) {
+			String fieldName) throws Exception {
 		boolean blnElementDisplayed = false;
 		try {
 			WebElement displayedElement = getPageObjectFields(pageClassObj,
@@ -127,9 +128,10 @@ public class Web {
 	 * @param valueToSet
 	 *            - Value/String to be set
 	 * @return <b>Value</b> - Text set in <b>value</b> attribute of text box.
+	 * @throws Exception 
 	 */
 	public static String setTextToTextBox(String textBoxFieldName,
-			Object pageClassObj, CharSequence... valueToSet) {
+			Object pageClassObj, CharSequence... valueToSet) throws Exception {
 		String fieldTextValue = "";
 		if (textBoxFieldName != null) {
 			WebElement textBoxElement = getPageObjectFields(pageClassObj,
@@ -185,9 +187,10 @@ public class Web {
 	 * @param webElementName
 	 *            - Name of the web element to be clicked
 	 * @return <b>true</b> if successful, <b>false</b> otherwise.
+	 * @throws Exception 
 	 */
 	public static boolean clickOnElement(Object pageClassObj,
-			String webElementName) {
+			String webElementName) throws Exception {
 		boolean success = false;
 		if (webElementName != null) {
 			WebElement clickableElement = getPageObjectFields(pageClassObj,
@@ -228,16 +231,17 @@ public class Web {
 	 *            - Name of the Element listed in getWebElement method
 	 * @return <b>WebElement</b> - Corresponding WebElement mapped against the
 	 *         fieldName
+	 * @throws Exception 
 	 */
 	private static WebElement getPageObjectFields(Object pageObjectClass,
-			String fieldName) {
+			String fieldName) throws Exception {
 		Method getWebElementMethod = null;
 		WebElement element = null;
 		try {
 			getWebElementMethod = pageObjectClass.getClass().getDeclaredMethod(
 					"getWebElement", String.class);
 		} catch (NoSuchMethodException e) {
-			throw new Error("getWebElement() method is not found in "
+			throw new Exception("getWebElement() method is not found in "
 					+ pageObjectClass.getClass().toString());
 		}
 		getWebElementMethod.setAccessible(true);
@@ -296,7 +300,7 @@ public class Web {
 		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
 		.until(ExpectedConditions.visibilityOf(presentElement));
 	}
-	
+		
 	/**
 	 * Method to return WebElement using Page Object as reference
 	 * 
@@ -425,8 +429,9 @@ public class Web {
 	/**<pre> Method to initialize the Drop down object* </pre>
 	 * @param pageObjectClass - Object of the Page class
 	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
+	 * @throws Exception 
 	 */
-	private static void initDropDownObj(Object pageClassObj,String dropDownElementName){
+	private static void initDropDownObj(Object pageClassObj,String dropDownElementName) throws Exception{
 		try {
 			WebElement dropDownElement = getPageObjectFields(pageClassObj,dropDownElementName);
 			if (Web.isWebElementDisplayed(dropDownElement)) {
@@ -482,8 +487,9 @@ public class Web {
 	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
 	 * @param selValue - Value of the item listed in Dropdown box
 	 * @return <b>boolean</b> - true</b> if the specified element is selected <b>false</b> otherwise
+	 * @throws Exception 
 	 */
-	public static boolean selectDropDownOption(Object pageClassObj,String dropDownElementName,String selValue){
+	public static boolean selectDropDownOption(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
 		int itemIndex = -1;
 		boolean selected = false;
 		String selectedItemText;
@@ -535,8 +541,9 @@ public class Web {
 	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
 	 * @param selValue - Value of the item listed in Dropdown box
 	 * @return <b>boolean</b> - true</b> if the specified element is found <b>false</b> otherwise
+	 * @throws Exception 
 	 */
-	public static boolean verifyDropDownOptionExists(Object pageClassObj,String dropDownElementName,String selValue){
+	public static boolean verifyDropDownOptionExists(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
 		initDropDownObj(pageClassObj,dropDownElementName);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
@@ -580,8 +587,9 @@ public class Web {
 	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
 	 * @param selValue - Value of the item listed in Dropdown box (Full or partial)
 	 * @return <b>String</b> - Dropdown option text</b> if the specified element is found <b>Empty string</b> otherwise
+	 * @throws Exception 
 	 */
-	public static String getDropDownOptionAsText(Object pageClassObj,String dropDownElementName,String selValue){
+	public static String getDropDownOptionAsText(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
 		initDropDownObj(pageClassObj,dropDownElementName);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
