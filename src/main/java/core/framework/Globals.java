@@ -127,6 +127,14 @@ public class Globals {
     	  public static final String GC_TRANSACTION_FUTURE_STATUS="FUTURE";
     	  public static final String GC_TRANSACTION_COMPLETE_STATUS="COMPLETE";
     	  public static final String GC_BATCH_RUN_DATE_FORMAT="yyyy-MM-dd";
+    	  public static final String GC_RUN_DATE_TIMESTAMP="yyyyMMdd_HHmmss";
+    	  public static final String GC_TRANS_CONF_SUCCESS_STATUS="SUCCESS";
+    	  public static final String GC_TRANS_CONF_REQUESTED_STATUS="REQUESTED";
+    	  public static final String GC_ENROLL_STATUS="Enroll";
+    	  public static final String GC_CANCEL_STATUS="Cancel";
+    	  public static final String GC_TRANS_CONF_BEFORE_JOB_STATUS="Before";
+    	  public static final String GC_TRANS_CONF_AFTER_JOB_STATUS="After";
+    	  
     	  
         //SHELL
           public static final String GC_COMMAND_COMPLETE_STATUS="Complete";
