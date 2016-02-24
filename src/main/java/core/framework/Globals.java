@@ -120,6 +120,7 @@ public class Globals {
           public static final String GC_MEMBER_LOG_FILE_PATTERN="member_";
           public static final String GC_ENROLL_CANCEL_LOG_FILE_PATTERN="enroll_";
           public static final String GC_TRANSACTION_LOG_FILE_PATTERN="transaction_";
+          public static final String GC_TRANSACTION_COINFIRMATION_LOG_FILE_PATTERN="txnconf_";
           public static final String GC_LOG_FILE_TYPE=".log";
           public static final String GC_FILE_TYPE=".xml";
     	  public static final String GC_Database_Prefix="D_";
@@ -141,6 +142,7 @@ public class Globals {
     	  public static final String GC_MEMBER_FILE_NAMEPATTERN="ma_empower_dc_memb_";
     	  public static final String GC_ENROLLCANCEL_FILE_NAMEPATTERN="ma_fei_enrll_";
     	  public static final String GC_TRANSACTION_INPUT_FILE_NAMEPATTERN="ma_fei_txnpr_"; 
+    	  public static final String GC_TRANSACTION_CONFIRMATION_FILE_NAMEPATTERN="ma_empower_txnec_";
           
     	  public static final Map<String, String> databaseConnectionStrings;
     	  static
