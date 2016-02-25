@@ -81,20 +81,22 @@ public class deferralstestcases {
 			deferrals.myContributions_Confirmation_Page();
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 
@@ -140,20 +142,22 @@ public class deferralstestcases {
 			deferrals.myContributions_Confirmation_Page();			
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			} 
 	}
 
 
@@ -215,36 +219,29 @@ public class deferralstestcases {
 
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-		}
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
 		catch(Error ae)
-		{
-			ae.printStackTrace();
-			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			} 
 	}
-
-	
-
-
-
-	
-
 
 	
 
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_Catch_up(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -290,27 +287,28 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page", "My Contributions page is not displayed", true);
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 
 
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_006_Previous_Contributions_Participant_hired_in_prior_year(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -332,21 +330,22 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify if Participant was hired in previous year", "Participant not hired in previous year", true);
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}
-		catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			} 
 	}
 
 
@@ -365,7 +364,7 @@ public class deferralstestcases {
 
 	@Test(dataProvider = "setData")
 	public void Deferrals_Participant_Prior_Contributions(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -420,21 +419,22 @@ public class deferralstestcases {
 
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}
-		catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			} 
 	}
 
 
@@ -447,8 +447,7 @@ public class deferralstestcases {
 	 */
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_Other(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -483,20 +482,22 @@ public class deferralstestcases {
 			
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			} 
 		
 	}
 	
@@ -508,8 +509,7 @@ public class deferralstestcases {
 	 */
 	@Test(dataProvider = "setData")
 	public void Participant_not_elegible_for_Bonus_type_contribution(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -536,20 +536,22 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Check if Participant eligible for bonus type contribution", "Participant eligible for bonus type contribution", true);
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 		
 	}
 	
@@ -561,8 +563,7 @@ public class deferralstestcases {
 	 */
 	@Test(dataProvider = "setData")
 	public void Regular_SPLIT_Maximize_me_always(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -599,20 +600,22 @@ public class deferralstestcases {
 			
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 		
 	}
 	
@@ -625,8 +628,7 @@ public class deferralstestcases {
 	 */
 	@Test(dataProvider = "setData")
 	public void Multiple_deferral_split_contribution(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-		//      Globals.GBL_CurrentIterationNumber = itr;
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -776,20 +778,22 @@ public class deferralstestcases {
 			deferrals.verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"), "AFTRTXVR", Stock.GetParameterValue("Auto Increase Contribution Percent"), Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
-		finally { }
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 		
 	}
 	
@@ -797,8 +801,7 @@ public class deferralstestcases {
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral(
 		int itr, Map<String, String> testdata) {
-		Stock.globalTestdata = testdata;
-		// Globals.GBL_CurrentIterationNumber = itr;
+		
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -842,8 +845,7 @@ public class deferralstestcases {
 	
     @Test(dataProvider = "setData")
     public void SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions(int itr, Map<String, String> testdata){
-           Stock.globalTestdata = testdata;
-           //      Globals.GBL_CurrentIterationNumber = itr;
+           
            try{
                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
                   LeftNavigationBar leftmenu;
@@ -885,29 +887,30 @@ public class deferralstestcases {
            }
            catch(Exception e)
            {
-                  e.printStackTrace();
-                  Globals.exception = e;
-                  Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-           }catch(AssertionError ae)
-           {
-                  ae.printStackTrace();
-                  Globals.assertionerror = ae;
-                  Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-                  //throw ae;
+               e.printStackTrace();
+               Globals.exception = e;
+               Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
            }
-           finally { 
-           try { Reporter.finalizeTCReport(); }
-           catch (Exception e1) { e1.printStackTrace(); } 
+   		catch(Error ae)
+           {
+                           ae.printStackTrace();
+                           Globals.error = ae;
+                           Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                           
+           }
+   		finally { 
+   			try { Reporter.finalizeTCReport(); }
+   			catch (Exception e1) { e1.printStackTrace(); } 
+   			} 
            
     }
-    }
+    
 
 
 	
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions(int itr, Map<String, String> testdata) {
-		Stock.globalTestdata = testdata;
-		// Globals.GBL_CurrentIterationNumber = itr;
+		
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
@@ -930,23 +933,25 @@ public class deferralstestcases {
 
 		}
 		catch(Exception e)
-		{
-			e.printStackTrace();
-			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-		}catch(AssertionError ae)
-		{
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-			//throw ae;
-		}
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
 		finally { 
-		try { Reporter.finalizeTCReport(); }
-		catch (Exception e1) { e1.printStackTrace(); } 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 		
 	}
-	}
+	
 	 			
 
 	@AfterSuite
