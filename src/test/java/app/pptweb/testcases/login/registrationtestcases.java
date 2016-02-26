@@ -54,13 +54,7 @@ public class registrationtestcases {
 
 			LoginPage loginPage = new LoginPage();
 			
-			if (Web.appLoginStatus==false) {
-				loginPage.get();
-				loginPage.clickRegister();
-			}else{
-				loginPage.get();
-				loginPage.clickRegister();
-			}
+		
 			AccountLookup accLookup = new AccountLookup(loginPage);
 
 			//Steps
@@ -323,13 +317,7 @@ public class registrationtestcases {
 			
 			LoginPage objloginPage = new LoginPage();
 			
-			if (Web.appLoginStatus==false) {
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}else{
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}
+			
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage).get();
 
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.","Account lookup page is displayed", true);
@@ -595,14 +583,7 @@ public class registrationtestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
-			
-			if (Web.appLoginStatus==false) {
-				loginPage.get();
-				loginPage.clickRegister();
-			}else{
-				loginPage.get();
-				loginPage.clickRegister();
-			}
+		
 			AccountLookup accLookup = new AccountLookup(loginPage);
 
 			//Steps
@@ -714,13 +695,7 @@ public class registrationtestcases {
 			String expWithPinUsrLockmsg = "You have exceeded the maximum number of login attempts allowed. For security reasons, Internet access to your account has been temporarily disabled.";
 
 			LoginPage objloginPage = new LoginPage();
-			if (Web.appLoginStatus==false) {
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}else{
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}
+			
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage).get();		
 
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.", "Account lookup page is displayed", false);
@@ -923,13 +898,7 @@ public class registrationtestcases {
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage objloginPage = new LoginPage();
-			if (Web.appLoginStatus==false) {
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}else{
-				objloginPage.get();
-				objloginPage.clickRegister();
-			}
+			
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage);
 			AccountSetup objAccountSetup = new AccountSetup(objAccountLookup).get();
 
@@ -965,12 +934,7 @@ public class registrationtestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String hdrBlockText;
 			LoginPage loginPage = new LoginPage();
-			if (Web.appLoginStatus==false) {
-				loginPage.get();
-				loginPage.clickRegister();
-			}else{
-				loginPage.get();
-			}
+			
 			AccountLookup accLookup = new AccountLookup(loginPage);
 			AccountSetup accSetup = new AccountSetup(accLookup);
 

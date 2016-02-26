@@ -21,6 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 
 
@@ -86,7 +87,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
 	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement authCodeIErrorMsg;
 	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement deleteBeneficiaryErrorMsg;
-	
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/** Empty args constructor
 	 * 
@@ -117,7 +119,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-		
 		
 		String userLogedIn = this.lblUserName.getText();
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {

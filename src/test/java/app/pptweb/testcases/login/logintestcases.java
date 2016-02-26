@@ -48,7 +48,6 @@ public class logintestcases {
 
 
     @DataProvider
-
     public Object[][] setData(Method tc) throws Exception {
         prepTestData(tc);
         return Stock.setDataProvider(this.testData);

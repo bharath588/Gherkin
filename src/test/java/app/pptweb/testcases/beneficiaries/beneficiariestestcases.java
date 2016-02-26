@@ -36,7 +36,6 @@ public class beneficiariestestcases {
 
 
     @DataProvider
-
     public Object[][] setData(Method tc) throws Exception {
         prepTestData(tc);
         return Stock.setDataProvider(this.testData);
@@ -46,8 +45,12 @@ public class beneficiariestestcases {
         this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 
     }
+<<<<<<< Upstream, based on origin/master
 
 
+=======
+    
+>>>>>>> 3ee2880 modified is loaded method
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
 	

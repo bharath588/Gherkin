@@ -28,9 +28,7 @@ public class retirementincometestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
-		Globals.GBL_SuiteName = this.getClass().getName();
-		lib.Web.webdriver = Web.getWebDriver(Stock.globalParam.get("BROWSER"));
+		Reporter.initializeModule(this.getClass().getName());		
 	}
 
 	@DataProvider
@@ -40,14 +38,8 @@ public class retirementincometestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getName(), testCase.getName());
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-	
-	@BeforeMethod
-    public void getTCName(Method tc) {
-           tcName = tc.getName();       
-    }
-
 
 	@Test(dataProvider = "setData")
 	public void RIP_TC003_To_verify_Retirement_Income_tab(int itr, Map<String, String> testdata){
