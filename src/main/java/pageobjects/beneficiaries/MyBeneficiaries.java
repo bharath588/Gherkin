@@ -8,16 +8,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 import lib.DB;
+import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+import lib.Reporter.Status;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 
 
@@ -76,8 +79,14 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//input[@id='beneficiaryName']") private WebElement txtBeneficiaryName;
 	@FindBy(xpath="//input[@id='dateOfTrust']") private WebElement txtDateOfTrust;
 	@FindBy(xpath="//input[@id='taxIdentificationNumber']") private WebElement txtTaxIdentificationNo;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Date of birth')]") private WebElement txtDOBErrorMsg;
+	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Tax Identification Number')]") private WebElement txtTINErrorMsg;
+	@FindBy(xpath="//div[@class='alert alert-warning']//p") private WebElement lblAlertMsg;
+	@FindBy(id="btn-view-beneficiaries") private WebElement btnViewBeneficiaries;
+	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
+	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement authCodeIErrorMsg;
+	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement deleteBeneficiaryErrorMsg;
+	
 	
 	/** Empty args constructor
 	 * 
@@ -120,7 +129,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		} else {
 			this.lnkLogout.click();
 		}
-
 	}
 
 	@Override
@@ -128,12 +136,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Beneficiaries");
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	
 	private WebElement getWebElement(String fieldName) {
@@ -157,42 +160,79 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("ContinueAndConfirm")) {
 			return this.btnContinue;
 		}
-		
-		
-		
+		if (fieldName.trim().equalsIgnoreCase("DOB Error Msg")) {
+			return this.txtDOBErrorMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("DOB")) {
+			return this.txtDateOfBirth;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Beneficiary Relation")) {
+			return this.selMyBeneficiary;
+		}
+		if (fieldName.trim().equalsIgnoreCase("View Beneficiary Button")) {
+			return this.btnViewBeneficiaries;
+		}
+		if (fieldName.trim().equalsIgnoreCase("MyBeneficiaries")) {
+			return this.lblMyBeneficiaries;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TIN")) {
+			return this.txtTaxIdentificationNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TIN Error Msg")) {
+			return this.txtTINErrorMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Save button")) {
+			return this.btnSave;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Cancel button")) {
+			return this.btnCancel;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
+			return this.hdrAccountOverview;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Auth code I Error Msg")) {
+			return this.authCodeIErrorMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Delete Checkbox")) {
+			return this.chkDelBeneficiary;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Delete button")) {
+			return this.btnDelete;
+		}
+		if (fieldName.trim().equalsIgnoreCase("My Beneficiaries")) {
+			return this.lblMyBeneficiaries;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Submit button")) {
+			return this.btnContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Delete Beneficiary Error Message")) {
+			return this.deleteBeneficiaryErrorMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Alert Msg")) {
+			return this.lblAlertMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("First name")) {
+			return this.txtFirstName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Middle name")) {
+			return this.txtMiddleName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Last name")) {
+			return this.txtLastName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Suffix")) {
+			return this.txtSuffix;
+		}
+		if (fieldName.trim().equalsIgnoreCase("SSN")) {
+			return this.txtSSN;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Phone number")) {
+			return this.txtPhoneNumber;
+		}
 		return null;
 		
 	}
 	
-//	public void addBeneficiary(){
-//
-//		this.Linkclick.click();
-//		this.btnAddAnotherBeneficiary.click();
-//
-//		try {
-//			WebActions.waitForElement(this.lblAddBeneficiaryTitle);
-//		} catch (Exception e) {
-//		}
-//		
-//		this.btnPrimary.click();
-//		WebActions.selectDropDownOption(this.selMyBeneficiary, "Parent");
-//		WebActions.isWebElementDisplayed(this.lblMyBeneficiaries);
-//		this.txtFirstName.sendKeys("sandeep");
-//		this.txtMiddleName.sendKeys("BS");
-//		this.txtLastName.sendKeys("kamath");
-//		this.txtSuffix.sendKeys("Sir");
-//		this.txtDateOfBirth.sendKeys("08/22/1963");
-//		this.txtSSN.sendKeys("123-12-3123");
-//		this.txtPhoneNumber.sendKeys("(123) 123-1231");
-//		this.txtAddressOne.sendKeys("addr1");
-//		this.txtAddressTwo.sendKeys("addr2");
-//		this.txtCity.sendKeys("bangalore");
-//		this.txtZipCode.sendKeys("1234");
-//		WebActions.selectDropDownOption(this.selCountry, "India");
-//		this.btnCancel.click();
-//		
-//		
-//	}
 	
 	/**<pre> Method to check if a particular element is present on the page.
 	 *.</pre>
@@ -219,33 +259,20 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType){
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			
-		}
+		lib.Web.waitForElement(btnContinue);
 		if(Web.isWebElementDisplayed(lblDesignateBeneficiary))
 			maritalstatus.click();
 		
 		else{
 			Web.clickOnElement(this.btnAddAnotherBeneficiary);
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				
-			}
+			lib.Web.waitForElement(btnPrimary);
 			if(beneficiaryType.equalsIgnoreCase("Primary"))
 				
 				Web.clickOnElement(this.btnPrimary);
 			else
 				Web.clickOnElement(this.btnContingent);
 		}
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}	
+		lib.Web.waitForElement(selMyBeneficiary);
 		
 		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
 		if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
@@ -267,11 +294,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes")){
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				
-			}
+			lib.Web.waitForElement(txtAllocationBeneficiary1);
 			this.txtAllocationBeneficiary1.clear();
 			this.txtAllocationBeneficiary1.sendKeys(Stock.GetParameterValue("Allocation"));
 			this.txtAllocationBeneficiary2.sendKeys(Stock.GetParameterValue("Allocation"));
@@ -279,51 +302,46 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	
 	
-//	public String enterAllocationPercentage(){
-//		System.out.println("inside enter allocations");
-//		int noOfBeneficiaries = this.lsttxtPrimaryAllocation.size();
-//		allocationPercentage = Integer.toString(100/noOfBeneficiaries);
-//		System.out.println(allocationPercentage);
-//		for(int i=0;i<noOfBeneficiaries;i++){
-//			System.out.println(i);
-//			lsttxtPrimaryAllocation.get(i).clear();
-//			lsttxtPrimaryAllocation.get(i).sendKeys(allocationPercentage);
-//		}
-//		
-//		return allocationPercentage;
-//	}
-	
 
-//	public boolean verifyBeneficiaryPresentInBeneficiaryTable(){
-//		boolean isSuccess = false;
-//		String beneficiaryName = TestDataContainer.GetParameterValue("FirstName")+" "+TestDataContainer.GetParameterValue("MiddleName")+" "+TestDataContainer.GetParameterValue("LastName");
-//		if(this.tblMyBeneficiaries.getText().contains(beneficiaryName))
-//			isSuccess = true;
-//		this.btnContinue.click();
-//		System.out.println("button clisked");
-//		return isSuccess;
-//	}
-//	
 	
-//	public boolean clickOnBeneficiaryFromTable(String beneficiaryType){
-//		boolean isSuccess = true;
-//		List<WebElement> names = null;
-//		String beneficiaryName = TestDataContainer.GetParameterValue("FirstName")+" "+TestDataContainer.GetParameterValue("MiddleName")+" "+TestDataContainer.GetParameterValue("LastName");
-//		
-//		if(beneficiaryType.equalsIgnoreCase("Primary"))
-//			names= this.lstlnkPrimaryBeneficiaryName;
-//		else
-//			names = this.lstlnkContingentBeneficiaryName;
-//		
-//		if(this.verifyBeneficiaryPresentInBeneficiaryTable()){
-//			int noOfbeneficiaries = names.size();
-//			for(int i=1; i<=noOfbeneficiaries;i++){
-//				if(names.get(i).getText().contains(beneficiaryName))
-//					names.get(i).click();
-//			}
-//		}
-//		return isSuccess;
-//	}
+	public boolean clickOnBeneficiaryFromTable(String beneficiaryName,String beneficiaryType){
+		boolean clickedBeneficiary=false;
+		int noOfBeneficiaries=0;
+		if(beneficiaryName!=null){
+			if(beneficiaryType.equalsIgnoreCase("Primary")){
+					noOfBeneficiaries= this.lstlnkPrimaryBeneficiaryName.size();
+					for(int i=0; i<noOfBeneficiaries;i++){
+						if(lstlnkPrimaryBeneficiaryName.get(i).getText().contains(beneficiaryName)){
+							lstlnkPrimaryBeneficiaryName.get(i).click();
+							clickedBeneficiary=true;
+							break;
+						}
+					}
+			}
+			
+			}
+			if(beneficiaryType.equalsIgnoreCase("Contingent")){
+					noOfBeneficiaries = this.lstlnkContingentBeneficiaryName.size();
+					for(int i=0; i<noOfBeneficiaries;i++){
+						if(lstlnkContingentBeneficiaryName.get(i).getText().contains(beneficiaryName)){
+							lstlnkContingentBeneficiaryName.get(i).click();
+							clickedBeneficiary=true;
+							break;
+						}
+							
+					}
+					
+			
+		}
+		
+		if(beneficiaryName==null){
+			if(beneficiaryType.equalsIgnoreCase("Primary"))
+				lstlnkPrimaryBeneficiaryName.get(0).click();
+			else
+				lstlnkContingentBeneficiaryName.get(0).click();
+		}
+		return clickedBeneficiary;
+	}
 	
 	/**<pre> Method to verify the details after adding a beneficiary.
 	 *.</pre>
@@ -336,12 +354,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 		boolean isSuccess = false;
 		String beneficiaryName = Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName");
-		try {
-			Thread.sleep(10000);
-			Web.waitForElement(this.lblConfirmation);
-		} catch (Exception e) {
-			
-		}
+		lib.Web.waitForElement(lblConfirmation);
 		
 		if(Web.isWebElementDisplayed(this.lblConfirmation)){
 			
@@ -368,16 +381,17 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
-					if(attribute.equalsIgnoreCase("DOB")){	
-						return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+					if(attribute.equalsIgnoreCase("DOB")){
+						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
+							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						else
+							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
 					}
 					if(attribute.equalsIgnoreCase("Phone Number"))	
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-						System.out.println(address);
-						System.out.println(lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8]);
 						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ,true);
 					}
 				}
@@ -389,14 +403,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	
 	public boolean verifyEntityDetails(String attribute){
-
-		boolean isSuccess = false;
-		try {
-			Thread.sleep(5000);
-			Web.waitForElement(this.lblConfirmation);
-		} catch (Exception e) {
-			
-		}
+		
+		Web.waitForElement(this.lblConfirmation);
+		
 		
 		for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
 			if(lstTablePrimaryBeneficiary.get(i).getText().contains(Stock.GetParameterValue("BeneficiaryName"))){
@@ -426,15 +435,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 *.</pre>
 	 */
 	public void enterBeneficiaryDetails(){
-		this.txtFirstName.sendKeys(Stock.GetParameterValue("FirstName"));
-		this.txtMiddleName.sendKeys(Stock.GetParameterValue("MiddleName"));
-		this.txtLastName.sendKeys(Stock.GetParameterValue("LastName"));
-		this.txtSuffix.sendKeys(Stock.GetParameterValue("Prefix"));
-		this.txtDateOfBirth.sendKeys(Stock.GetParameterValue("DOB"));
-		System.out.println("SSn : "+Stock.GetParameterValue("SSN"));
-//		this.txtSSN.sendKeys(Stock.GetParameterValue("SSN"));
+		lib.Web.setTextToTextBox(txtFirstName,Stock.GetParameterValue("FirstName"));
+		lib.Web.setTextToTextBox(txtMiddleName,Stock.GetParameterValue("MiddleName"));
+		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
+		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
+		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
 		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("SSN"));
-		this.txtPhoneNumber.sendKeys(Stock.GetParameterValue("PhoneNumber"));
+		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
 	
 	}
 	
@@ -443,15 +450,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 *.</pre>
 	 */
 	public void enterAddressDetails(){
-		this.txtAddressOne.clear();
-		this.txtAddressOne.sendKeys(Stock.GetParameterValue("AddressOne"));
-		this.txtAddressTwo.clear();
-		this.txtAddressTwo.sendKeys(Stock.GetParameterValue("AddressTwo"));
-		this.txtCity.clear();
-		this.txtCity.sendKeys(Stock.GetParameterValue("City"));
+		
+		lib.Web.setTextToTextBox(txtAddressOne,Stock.GetParameterValue("AddressOne"));
+		lib.Web.setTextToTextBox(txtAddressTwo,Stock.GetParameterValue("AddressTwo"));
+		lib.Web.setTextToTextBox(txtCity,Stock.GetParameterValue("City"));
 		Web.selectDropDownOption(this.selState,Stock.GetParameterValue("State"));
-		this.txtZipCode.clear();
-		this.txtZipCode.sendKeys(Stock.GetParameterValue("Zipcode").split("\\.")[0]);
+		lib.Web.setTextToTextBox(txtZipCode,Stock.GetParameterValue("Zipcode").split("\\.")[0]);
 		Web.selectDropDownOption(this.selCountry,Stock.GetParameterValue("Country"));
 	}
 	
@@ -478,4 +482,43 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		DB.executeUpdate(sqlQuery_commit[0], sqlQuery_commit[1]);
 		
 	}
+	
+	public String readErrorMessage(String msgType){
+		String error_msg="";
+		WebElement msg = this.getWebElement(msgType);
+		error_msg=msg.getText();
+		System.out.println(error_msg);
+		return error_msg;
+	}
+	
+	public boolean ifElementDisabled(String elementName){
+		boolean isElementDisabled=false;
+		WebElement element = this.getWebElement(elementName);
+		System.out.println(elementName);
+//		if(!element.isEnabled())
+//			isElementDisabled=true;
+		
+		System.out.println(element.getAttribute("disabled"));
+		return isElementDisabled;
+	}
+	
+	public String fetchMaritalStatusFromDB(String queryName, String ssn) throws Exception{
+		String[] sqlQuery;
+		sqlQuery = Stock.getTestQuery(queryName);
+		ResultSet recSet=DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+		
+
+		if (DB.getRecordSetCount(recSet) > 0) {
+			try {
+				recSet.first();			
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
+			}
+		}
+		String marital_status=recSet.getString("MARITAL_STATUS");
+		return marital_status;
+	}
+	
+	
 }
