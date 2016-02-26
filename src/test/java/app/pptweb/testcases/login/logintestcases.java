@@ -26,22 +26,40 @@ public class logintestcases {
 	LoginPage login;
 	String tcName;
 	
+//	@BeforeClass
+//	public void InitTest() throws Exception {
+//		Globals.GBL_SuiteName = this.getClass().getName();
+//		
+//	}
+//
+//	@DataProvider
+//	public Object[][] setData(Method tc) throws Exception {
+//		prepTestData(tc);
+//		return Stock.setDataProvider(this.testData);
+//	}
+//
+//	private void prepTestData(Method testCase) throws Exception {
+//		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+//	}
 	@BeforeClass
-	public void InitTest() throws Exception {
-		Globals.GBL_SuiteName = this.getClass().getName();
-		
-	}
+    public void ReportInit(){               
+		Reporter.initializeModule(this.getClass().getName());
+    }
 
-	@DataProvider
-	public Object[][] setData(Method tc) throws Exception {
-		prepTestData(tc);
-		return Stock.setDataProvider(this.testData);
-	}
 
-	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
-	}
-	
+    @DataProvider
+
+    public Object[][] setData(Method tc) throws Exception {
+        prepTestData(tc);
+        return Stock.setDataProvider(this.testData);
+    }
+
+    private void prepTestData(Method testCase) throws Exception {
+        this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+
+    }
+
+
 	
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_invalid_Userid_and_Password(int itr, Map<String, String> testdata){
@@ -49,16 +67,12 @@ public class logintestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
-			login = new LoginPage();
+//			login = new LoginPage();
+			login = new LoginPage().get();
 			
-			if (Web.appLoginStatus==false) {
-				login.get();
-				login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
-			}else{
-				login.get();
-			}
 			
 			String errMsg = "";
+			
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {
