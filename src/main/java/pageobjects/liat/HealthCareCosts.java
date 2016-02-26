@@ -67,7 +67,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 
 	@Override
 	protected void isLoaded() throws Error {
-				
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));		
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		

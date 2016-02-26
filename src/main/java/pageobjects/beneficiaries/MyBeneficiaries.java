@@ -98,6 +98,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		
@@ -107,6 +108,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
+		
 		
 		String userLogedIn = this.lblUserName.getText();
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {

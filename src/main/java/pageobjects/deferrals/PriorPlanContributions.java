@@ -14,6 +14,7 @@ import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 import lib.Reporter.Status;
 
 
@@ -59,7 +60,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	
 	@Override
 	protected void isLoaded() throws Error {
-		
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		

@@ -4,11 +4,11 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-     <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
+     <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
                 </methods>
             </class>
         </classes>

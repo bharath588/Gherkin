@@ -20,18 +20,18 @@ import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
 public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
-	
-	
+
+
 	//Declarations
 	LoadableComponent<?> parent;
 	private String strLinkText = "";
 	@FindBy(xpath=".//a[text()[normalize-space()='Prior plan contributions']]") private WebElement lnkPriorPlanContributions;
-	
+
 	@FindBy(xpath=".//*[@role='navigation' and .//h3]") private WebElement weLeftNavSection;
 	private By lnkLeftNavItem;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	
+
 	/** Empty args constructor
 	 * 
 	 */
@@ -39,7 +39,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		this.parent = new MyAccountsPage();
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
-	
+
 	/** Constructor taking parent as input
 	 * 
 	 * @param parent
@@ -48,88 +48,72 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
-	
+
 
 	@Override
 	protected void isLoaded() throws Error {
-		
-		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-		
-		String userFromDatasheet = null;
+
 		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
-		} catch (SQLException e) {
+			Thread.sleep(5000);
+		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-		
-		String userLogedIn = this.lblUserName.getText();
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection));
-		} else {
-			this.lnkLogout.click();
 		}
-		
-//		if (!common.isWebElementDisplayed(this.weLeftNavSection,LeftNavigationBar.waitforLoad)) {
-//			LeftNavigationBar.waitforLoad = true;
-//			throw new Error("Left navigation menu bar is not displayed");
-//		} else{
-//			LeftNavigationBar.waitforLoad = false;
-//		}
+
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection));
+
 	}
 
 	@Override
 	protected void load() {
 		//boolean paramFlag = false;
-		
+
 		this.parent.get();
-//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
-//			System.out.println("inside");
-//			((LandingPage) this.parent).dismissPopUps(true,true);
-			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
-//		}
-//		else
-//			((MyAccountsPage) this.parent).clickPlanNameByGAID();
-			
-			
-			
-//		else{
-//			Set<String> paramNames = TestDataContainer.getParameterNames();
-//			
-//			for(String param: paramNames){
-//				if (param.equalsIgnoreCase("groupAccountID")) {
-//					paramFlag = true;
-//				}
-//			}
-			
-//			if (paramFlag==true) {
-//				((MyAccountsPage) this.parent).clickPlanNameByGAID(
-//						Stock.GetParameterValue("groupAccountID"));
-//			} else {
-//				((MyAccountsPage) this.parent).clickPlanNameByGAID();
-//				try {
-//					Thread.sleep(5000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-			
-		}
-		
+		//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
+		//			System.out.println("inside");
+		//			((LandingPage) this.parent).dismissPopUps(true,true);
+		Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+		//		}
+		//		else
+		//			((MyAccountsPage) this.parent).clickPlanNameByGAID();
 
-	
-			@SuppressWarnings("unused")
-			private WebElement getWebElement(String fieldName) {
 
-				if (fieldName.trim().equalsIgnoreCase("Prior plan contributions")) {
-					return this.lnkPriorPlanContributions;
-				}			
-				
-				return null;
-				}
-	
-	
+
+		//		else{
+		//			Set<String> paramNames = TestDataContainer.getParameterNames();
+		//			
+		//			for(String param: paramNames){
+		//				if (param.equalsIgnoreCase("groupAccountID")) {
+		//					paramFlag = true;
+		//				}
+		//			}
+
+		//			if (paramFlag==true) {
+		//				((MyAccountsPage) this.parent).clickPlanNameByGAID(
+		//						Stock.GetParameterValue("groupAccountID"));
+		//			} else {
+		//				((MyAccountsPage) this.parent).clickPlanNameByGAID();
+		//				try {
+		//					Thread.sleep(5000);
+		//				} catch (InterruptedException e) {
+		//					// TODO Auto-generated catch block
+		//					e.printStackTrace();
+		//				}
+
+	}
+
+
+
+	@SuppressWarnings("unused")
+	private WebElement getWebElement(String fieldName) {
+
+		if (fieldName.trim().equalsIgnoreCase("Prior plan contributions")) {
+			return this.lnkPriorPlanContributions;
+		}			
+
+		return null;
+	}
+
+
 	/** Method to click on the specified link in Left navigation bar
 	 * 
 	 * @param linkName - Link name as it is displayed on the page
@@ -137,7 +121,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public boolean clickNavigationLink(String linkName) {
 		boolean success = false;
-		
+
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
@@ -154,17 +138,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		else {
 			strLinkText = linkName.trim();
 		}
-		
+
 		lnkLeftNavItem = By.linkText(strLinkText);
 		List<WebElement> leftNavLink = weLeftNavSection.findElements(lnkLeftNavItem);
-		
+
 		if (leftNavLink.size() > 0) {
 			leftNavLink.get(0).click();
 			success = true;
 		} else {
 			Reporter.logEvent(Status.WARNING, "Click the specified link on left navigation bar", "'" + linkName + "' not found", false);
 		}
-		
+
 		return success;
 	}
 }
