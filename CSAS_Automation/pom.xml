@@ -8,7 +8,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>AutomationFramework</groupId>
+			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
