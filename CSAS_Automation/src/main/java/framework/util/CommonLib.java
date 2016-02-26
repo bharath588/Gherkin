@@ -36,26 +36,29 @@ public class CommonLib {
 	 * @param
 	 * @return	:boolean <br> is date equal</br>
 	 * @author	: Ranjan
+	 * @throws ParseException 
 	 */
-	public static boolean compareDB_Date_With_Web_Date(String dbDate,String webDate){
-
-		boolean isDateEqual_Flag = false;
-		Date date;
-		try {
-			date = new Date();
-			dbDate = dbDate.substring(0, dbDate.indexOf(" "));
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-			date = df.parse(dbDate);
-			SimpleDateFormat sfd = new SimpleDateFormat("dd-MMM-yyyy");
-			String strDate = sfd.format(date);
-			System.out.println(dbDate+"\n  "+strDate+"  \n"+webDate);	
-			
-			if (strDate.equalsIgnoreCase(webDate))
-				isDateEqual_Flag = true;
-		} catch (ParseException e) {			
-			e.printStackTrace();
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,String webDate) throws ParseException{
+		Date date1 = new Date() ;
+		Date date2 = new Date() ;
+		boolean isSameDate = false ;
+		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+		SimpleDateFormat format2 = new SimpleDateFormat("dd-MMM-yyyy");
+		date1 = format1.parse(dbDate);
+		date2 = format2.parse(webDate);
+		
+		if (date1.compareTo(date2) == 0) {
+			isSameDate = true ;
+		}else if (date1.compareTo(date2) > 0) {
+			isSameDate = false ;
+		} else if (date1.compareTo(date2) < 0) {
+			isSameDate = false ;
 		}
-		return isDateEqual_Flag;
+		return isSameDate;
 	}
+	
+	
+	
+	
 
 }

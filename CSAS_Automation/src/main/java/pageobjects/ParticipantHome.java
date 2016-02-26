@@ -14,12 +14,14 @@ import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -225,9 +227,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement participantSecFoundationSts;
 
 	// Order PIN..
-	@FindBy(xpath = "(//div[@class='dataContainerBody'])[2]/table/tbody/tr/td[2]/table/tbody/tr[5]/td/a[2]")
+//	@FindBy(xpath = "(//div[@class='dataContainerBody'])[2]/table/tbody/tr/td[2]/table/tbody/tr[5]/td/a[2]")
+	@FindBy(xpath = "//a[contains(text(), 'Order PIN ')]")
 	private WebElement lnkOrderPIN;
-
+	
 	@FindBy(css = "table#table_popupLayout tr:nth-of-type(2) span.titleShadow")
 	private WebElement OrderPINTitle;
 
@@ -466,10 +469,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @throws Exception
 	 * @author RANJAN
 	 */
-	/*
-	 * public String getSSN_or_pptID(String WebRegStatus, String paramNm) throws
-	 * Exception { =======
-	 */
 	public Map<String, String> getSSN_or_pptID(String WebRegStatus,
 			String... paramNm) throws Exception {
 		ResultSet resultset = null;
@@ -554,8 +553,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.clickOnElement(SubmitPPTIdBtn);
 
 		// ------------- Handle Multiple PPT Search Result -----
-		click_And_Verify_Plan_On_Search_Page(searchValue[1]);
-
+		if (searchValue.length > 1) {
+			click_And_Verify_Plan_On_Search_Page(searchValue[1]);
+		}
+	
 		Web.waitForElement(PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(PPTHomePageTitle, true);
 		if (isElementDisplayed) {
@@ -639,8 +640,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			} else if (!empStatus_WE.equals(emp_Status)) {
 				Reporter.logEvent(Status.INFO, "Check employment status",
 						"Employment status for plan number : " + planNum
-								+ " on web :" + empStatus_WE
-								+ " is not matching with test case "
+								+ " on web : is not matching with test case "
 								+ emp_Status, false);
 				continue;
 			}
@@ -686,11 +686,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @param index
 	 * @return
 	 * @author RANJAN
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
 	public ArrayList<String> get_Hire_Term_Date_From_DB(
 			String[] getHireDateAndTerminationDate, String planNum,
-			String indID, int index) throws SQLException {
+			String indID, int index) throws Exception {
 
 		ResultSet resultset;
 		hireTermDateList = new ArrayList<String>();
@@ -764,11 +764,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @param getPageInstanceFromInd_id
 	 * @param ind_id
 	 * @return
-	 * @throws SQLException
 	 * @author RANJAN
+	 * @throws Exception 
 	 */
 	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
-			String ind_id) throws SQLException {
+			String ind_id) throws Exception {
 
 		ResultSet resultset;
 		String instance = null;
@@ -796,18 +796,17 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		ArrayList<String> personal_Data_From_DB;
 		personal_Data_From_DB = get_Personal_Data_From_DB(
 				Stock.getTestQuery("getPersonalDataOnPPTHomePage"), ssn);
-
 		if (!personal_Data_From_DB.isEmpty()) {
 			// Personal data validation..
+			if (personalData_On_PPT_Home_List.size() == 0) {
+				throw new AssertionError("Personal data is not displayed");
+			}
 			String FullName_DB = personal_Data_From_DB.get(0) + " "
 					+ personal_Data_From_DB.get(1);
 			String SSN = personalData_On_PPT_Home_List.get(1).getText();
 			String[] splitedStr = SSN.split("-");
 			String concatenated_SSN = null;
 			concatenated_SSN = splitedStr[0] + splitedStr[1] + splitedStr[2];
-			if (personalData_On_PPT_Home_List.size() >= 0) {
-				throw new AssertionError("Personal data is not displayed");
-			}
 			if (personalData_On_PPT_Home_List.get(0).getText()
 					.equalsIgnoreCase(FullName_DB)
 					&& CommonLib.compareDB_Date_With_Web_Date(
@@ -877,12 +876,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * </pre>
 	 * 
 	 * @param - getPersonalDataOnPPTHomePage,ssn
-	 * @throws SQLException
 	 * @author RANJAN
+	 * @throws Exception 
 	 */
 	public ArrayList<String> get_Personal_Data_From_DB(
 			String[] getPersonalDataOnPPTHomePage, String ssn)
-			throws SQLException {
+			throws Exception {
 		ResultSet resultset;
 		personalDataDB = new ArrayList<String>();
 		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0],
@@ -974,10 +973,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							+ " is not displayed", true);
 		}
 
-	/*	if (Web.isLastIteration()) {
+		if (Web.isLastIteration()) {
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
-		}*/
+		}
 	}
 
 	private Object getVarByName(String fieldName) throws Throwable {
@@ -1212,11 +1211,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	}
 
 	/**
+	 * <pre>
 	 * Method to click on the first plan while an ind_id shows multiple SSN
+	 * </pre>
 	 * 
 	 * @param plan_Number_DB
 	 * @author rnjbdn
-	 * @throws InterruptedException
+	 * @throws Exception
 	 */
 	public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB)
 			throws InterruptedException {
@@ -1323,11 +1324,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 *            ,managed_Acc_Status
 	 * @return ArrayList
 	 * @author rnjbdn
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
 	public ArrayList<String> get_Ppt_ID_And_Managed_Acc_Sts_From_DB(
 			String[] get_IndID_PlanID_FromPartService, String managed_Acc_Status)
-			throws SQLException {
+			throws Exception {
 
 		ResultSet resultset;
 		plan_And_Participant_List = new ArrayList<String>();
@@ -1349,10 +1350,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @param get_Plan_Num_From_PartService
 	 * @return ArrayList
 	 * @author rnjbdn
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
 	public String get_Plan_number_From_DB(String[] get_Plan_Num_From_PartService)
-			throws SQLException {
+			throws Exception {
 		ResultSet resultset;
 		String plan_Num = null;
 		resultset = DB.executeQuery(get_Plan_Num_From_PartService[0],
@@ -1372,10 +1373,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 *            ,planNum
 	 * @return ArrayList
 	 * @author rnjbdn
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
 	public ArrayList<String> get_PptID_Id_From_DB(String[] get_Part_ID_From_DB,
-			String planNum) throws SQLException {
+			String planNum) throws Exception {
 		plan_And_Participant_List = new ArrayList<String>();
 		ResultSet resultset;
 		resultset = DB.executeQuery(get_Part_ID_From_DB[0],
@@ -1388,46 +1389,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return plan_And_Participant_List;
 	}
 
-	/**
-	 * <pre>
-	 * Method to click on the first plan while an ind_id shows multiple SSN
-	 * </pre>
-	 * 
-	 * @param plan_Number_DB
-	 * @author rnjbdn
-	 * @throws Exception
-	 */
-	/*
-	 * public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB)
-	 * throws Exception {
-	 * 
-	 * String plan_No_Web = null; boolean isElementDisplayed;
-	 * Web.waitForElement(partList_Tab); if
-	 * (Web.isWebElementDisplayed(partList_Tab)) {
-	 * Reporter.logEvent(Status.PASS, "Participant table should display",
-	 * "Participant table is displayed successfully", false); for (int i = 1; i
-	 * < PlanNoOnPartList_Link.size(); i++) { plan_No_Web =
-	 * PlanNoOnPartList_Link.get(0).getText(); System.out.println(plan_No_Web +
-	 * "  : " + plan_Number_DB); if
-	 * (plan_Number_DB.equalsIgnoreCase(plan_No_Web)) {
-	 * 
-	 * Web.webdriver.findElement( By.xpath("//table[@id = 'partList']//tr[" + i
-	 * + "]/td[1]/a")).click();
-	 * 
-	 * Web.waitForElement(PPTHomePageTitle); isElementDisplayed =
-	 * Web.isWebElementDisplayed( PPTHomePageTitle, true); if
-	 * (isElementDisplayed) { Reporter.logEvent( Status.PASS,
-	 * "Participant Home Page with all the details should display",
-	 * "Participant Home Page with all the details is displayed successfully",
-	 * true); break; } else { Reporter.logEvent( Status.FAIL,
-	 * "Participant Home Page with all the details should not display",
-	 * "Participant Home Page with all the details is not displayed", false); }
-	 * } }
-	 * 
-	 * } else { Reporter.logEvent(Status.FAIL,
-	 * "Participant table should display",
-	 * "Participant table is displayed successfully", false); } }
-	 */
 	/**
 	 * <pre>
 	 * Method to verify Managed account message

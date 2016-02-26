@@ -65,8 +65,7 @@ public class validate_participanthomepage {
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ppt_id"),"PPT_ID");
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
 
 			// Step3:Search for the HireDate & Termination Date based on plan
 			participantHomeObj.verify_Employment_Status(
@@ -115,8 +114,7 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 
 			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ppt_id"),"PPT_ID");
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
 
 			// Step3:Verify page instance against database..
 			participantHomeObj.verify_Page_Instance();
@@ -162,10 +160,6 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Querying for ID and GA_ID and performing search with ID  
 			if(Web.webdriver.getWindowHandles().size()==1){
-/*<<<<<<< HEAD
-				pptID = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),"ID");				
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
-=======*/
 				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
 						      GetParameterValue("web_reg_status"),"ID","GA_ID");
 			
@@ -271,7 +265,7 @@ public class validate_participanthomepage {
 			//Step2:Search with PPTID
 			pptID_ManagaedAccSts_List_DB = participantHomeObj.getPPTIDAndManagedAccSts(Stock.GetParameterValue("managed_acc_status"));
 			
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID_ManagaedAccSts_List_DB.get(0),"PPT_ID");
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",pptID_ManagaedAccSts_List_DB.get(0));
 			// Step3: Verify Managed Account status
 			if (Stock.GetParameterValue("managed_acc_status").equalsIgnoreCase("Plan Not Offered")) {
 				participantHomeObj.verify_Managed_Account_Status(Stock
@@ -321,7 +315,7 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Search with SSN..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ssn"),"SSN");
+					"SSN",Stock.GetParameterValue("ssn"));
 			// Step3: Verify Registration status
 			participantHomeObj.verify_Personal_Data(Stock
 					.GetParameterValue("ssn"));
@@ -369,7 +363,7 @@ public class validate_participanthomepage {
 			// Step2:Search with SSN..
 			pptID = participantHomeObj.getPPTIDForPDIStatus(Stock
 					.GetParameterValue("pdi_status"));
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,"PPT_ID");
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",pptID);
 
 			// Step3: Verify PDI status
 			participantHomeObj.verify_PDI_Status(Stock
