@@ -948,7 +948,7 @@ public class beneficiariestestcases {
 					Reporter.logEvent(Status.PASS, "verify Save button is disabled", "Save button is disabled", false);
 				else
 					Reporter.logEvent(Status.FAIL, "verify Save button is disabled", "Save button is not disabled", true);
-				
+				beneficiary.ifElementDisabled("Cancel button");
 				lib.Web.clickOnElement(beneficiary, "Cancel button");
 				if(lib.Web.isWebElementDisplayed(beneficiary, "Account Overview"))
 					Reporter.logEvent(Status.PASS, "Verify if Account overview page is displayed", "Account overview page is displayed", false);

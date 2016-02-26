@@ -69,7 +69,7 @@ public class logintestcases {
 //			login = new LoginPage();
 			login = new LoginPage().get();
 			
-			
+			System.out.println(System.getProperty("java.io.tmpdir"));
 			String errMsg = "";
 			
 			errMsg = login.isValidCredentials();
