@@ -10,7 +10,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -29,7 +29,7 @@ public class registrationtestcases {
 
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Globals.GBL_SuiteName = this.getClass().getName();
+		Reporter.initializeModule(this.getClass().getName());
 	}
 
 	@DataProvider
@@ -54,7 +54,6 @@ public class registrationtestcases {
 
 			LoginPage loginPage = new LoginPage();
 			
-		
 			AccountLookup accLookup = new AccountLookup(loginPage);
 
 			//Steps
@@ -316,8 +315,7 @@ public class registrationtestcases {
 			String expectedErrMsg;
 			
 			LoginPage objloginPage = new LoginPage();
-			
-			
+						
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage).get();
 
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.","Account lookup page is displayed", true);
@@ -583,7 +581,6 @@ public class registrationtestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
-		
 			AccountLookup accLookup = new AccountLookup(loginPage);
 
 			//Steps
@@ -695,7 +692,6 @@ public class registrationtestcases {
 			String expWithPinUsrLockmsg = "You have exceeded the maximum number of login attempts allowed. For security reasons, Internet access to your account has been temporarily disabled.";
 
 			LoginPage objloginPage = new LoginPage();
-			
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage).get();		
 
 			Reporter.logEvent(Status.INFO, "Navigate to Account look-up page.", "Account lookup page is displayed", false);
@@ -898,7 +894,6 @@ public class registrationtestcases {
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LoginPage objloginPage = new LoginPage();
-			
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage);
 			AccountSetup objAccountSetup = new AccountSetup(objAccountLookup).get();
 
@@ -934,7 +929,7 @@ public class registrationtestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String hdrBlockText;
 			LoginPage loginPage = new LoginPage();
-			
+
 			AccountLookup accLookup = new AccountLookup(loginPage);
 			AccountSetup accSetup = new AccountSetup(accLookup);
 
@@ -1010,7 +1005,7 @@ public class registrationtestcases {
 
 
 
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();

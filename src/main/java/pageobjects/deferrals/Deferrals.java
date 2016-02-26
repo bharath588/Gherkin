@@ -149,10 +149,6 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-<<<<<<< Upstream, based on origin/master
-=======
-			
->>>>>>> 5c155f8 modified isloaded logic
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			String ssn = Stock.GetParameterValue("userName");
 			ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));

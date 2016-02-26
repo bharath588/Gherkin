@@ -9,7 +9,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -26,39 +26,21 @@ public class logintestcases {
 	LoginPage login;
 	String tcName;
 	
-//	@BeforeClass
-//	public void InitTest() throws Exception {
-//		Globals.GBL_SuiteName = this.getClass().getName();
-//		
-//	}
-//
-//	@DataProvider
-//	public Object[][] setData(Method tc) throws Exception {
-//		prepTestData(tc);
-//		return Stock.setDataProvider(this.testData);
-//	}
-//
-//	private void prepTestData(Method testCase) throws Exception {
-//		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
-//	}
 	@BeforeClass
-    public void ReportInit(){               
-		Reporter.initializeModule(this.getClass().getName());
-    }
+	public void InitTest() throws Exception {
+		Reporter.initializeModule(this.getClass().getName());		
+	}
 
+	@DataProvider
+	public Object[][] setData(Method tc) throws Exception {
+		prepTestData(tc);
+		return Stock.setDataProvider(this.testData);
+	}
 
-    @DataProvider
-    public Object[][] setData(Method tc) throws Exception {
-        prepTestData(tc);
-        return Stock.setDataProvider(this.testData);
-    }
-
-    private void prepTestData(Method testCase) throws Exception {
-        this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
-
-    }
-
-
+	private void prepTestData(Method testCase) throws Exception {
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+	}
+	
 	
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_invalid_Userid_and_Password(int itr, Map<String, String> testdata){
@@ -66,12 +48,12 @@ public class logintestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
-//			login = new LoginPage();
-			login = new LoginPage().get();
+			login = new LoginPage();
 			
-			System.out.println(System.getProperty("java.io.tmpdir"));
+			login.get();
+			login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
+			
 			String errMsg = "";
-			
 			errMsg = login.isValidCredentials();
 				
 			if (errMsg.trim().isEmpty()) {
@@ -182,8 +164,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		
 		//Logout if opted
 		landingPage.logout(true);
-		Reporter.finalizeTCReport();
-		
+				
 	}
 	catch(Exception e)
     {
@@ -203,7 +184,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 	}
 	
 	
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();

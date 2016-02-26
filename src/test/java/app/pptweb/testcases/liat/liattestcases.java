@@ -9,7 +9,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -31,7 +31,7 @@ public class liattestcases {
 	
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Reporter.initializeModule(this.getClass().getName());		
+		Reporter.initializeModule(this.getClass().getName());
 	}
 
 	@DataProvider
@@ -43,11 +43,16 @@ public class liattestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
+
+	@BeforeMethod
+    public void getTCName(Method tc) {
+           tcName = tc.getName();       
+           lib.Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+    }
+	
 	
 	@Test(dataProvider = "setData")
 	public void RIP_TC003_To_verify_Retirement_Income_tab(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -130,30 +135,25 @@ public class liattestcases {
 				Reporter.logEvent(Status.FAIL, "Check close button for view details", "Not able to click clos button", true);
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 		}
 	@Test(dataProvider = "setData")
 	public void RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -253,31 +253,26 @@ public class liattestcases {
 			}
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -312,31 +307,26 @@ public class liattestcases {
 		
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -370,31 +360,26 @@ public class liattestcases {
 		
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -427,31 +412,27 @@ public class liattestcases {
 			}		
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
+
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -478,31 +459,26 @@ public class liattestcases {
 				Reporter.logEvent(Status.FAIL, "Check Percent of my goal section for yearly retirement income", "Percent of my goal section not displayed", true);
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void HCC_TC009_To_verify_Health_care_costs(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -522,31 +498,26 @@ public class liattestcases {
 			healthCareCost.verifyPersonalizeBtn();
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 	
 	@Test(dataProvider = "setData")
 	public void HDIC_TC010_To_verify_How_do_I_compare_tab(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
-//      Globals.GBL_CurrentIterationNumber = itr;
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -558,28 +529,25 @@ public class liattestcases {
 			hdic.verifyViewDetails();
 		}
 		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	        //throw ae;
-	    }
-	    finally {
-	    }
-	    try {
-	                    Reporter.finalizeTCReport();
-	    } catch (Exception e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	    }
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
 	}
 		
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();

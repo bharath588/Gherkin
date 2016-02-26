@@ -9,7 +9,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -27,7 +27,7 @@ public class authenticationtestcases {
 
 	@BeforeClass
 	public void InitTest() throws Exception {
-		Globals.GBL_SuiteName = this.getClass().getName();		
+		Reporter.initializeModule(this.getClass().getName());	
 	}
 
 	@DataProvider
@@ -329,7 +329,7 @@ public class authenticationtestcases {
 	}
 
 
-	@AfterClass
+	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();

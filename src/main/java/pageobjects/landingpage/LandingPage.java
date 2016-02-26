@@ -71,31 +71,26 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-<<<<<<< Upstream, based on origin/master
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-=======
-//		String ssn = Stock.GetParameterValue("userName");
-//		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-//		
-//		String userFromDatasheet = null;
-//		try {
-//			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}		
-//		
-//		String userLogedIn = this.lblUserName.getText();
-//		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-//			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-//			Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
-//		} else {
-//			this.lnkLogout.click();
-//		}
->>>>>>> 3ee2880 modified is loaded method
 		
-		Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+		String userFromDatasheet = null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		String userLogedIn = this.lblUserName.getText();
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+		} else {
+			this.lnkLogout.click();
+		}
+		
+		
 	}
 
 	@Override
