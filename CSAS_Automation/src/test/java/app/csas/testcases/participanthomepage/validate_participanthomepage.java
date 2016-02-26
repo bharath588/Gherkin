@@ -2,6 +2,7 @@ package app.csas.testcases.participanthomepage;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,8 +66,7 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ppt_id"),
-					Web.returnElement(participantHomeObj, "PPT_ID"));
+					Stock.GetParameterValue("ppt_id"),"PPT_ID");
 
 			// Step3:Search for the HireDate & Termination Date based on plan
 			participantHomeObj.verify_Employment_Status(
@@ -116,8 +116,7 @@ public class validate_participanthomepage {
 
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ppt_id"),
-					Web.returnElement(participantHomeObj, "PPT_ID"));
+					Stock.GetParameterValue("ppt_id"),"PPT_ID");
 
 			// Step3:Verify page instance against database..
 			participantHomeObj.verify_Page_Instance();
@@ -140,38 +139,43 @@ public class validate_participanthomepage {
 			}
 		}
 	}
-
-	/**
-	 * -------------------------------------------------------------------
-	 * <pre>
-	 *TESTCASE:	Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
-	 *DESCRIPTION:	Validate Mail existing PIN and ORder Temp PIN Message 
-	 *RETURNS:	VOID	
-	 *REVISION HISTORY: 
-	 *--------------------------------------------------------------------
-	 *Author: Souvik     Date : 25-01-16      
-	 *--------------------------------------------------------------------
-	 * </pre>
-	 * @param <br>CSAS Credential,Participant ID,Employment Status</br>
-	 */
-	@Test(dataProvider = "setData")
+/**
+ * -------------------------------------------------------------------
+ * <pre>
+ *TESTCASE:     Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN
+ *DESCRIPTION:  Validate Mail existing PIN and ORder Temp PIN Message Details
+ *RETURNS:      VOID    
+ *REVISION HISTORY: 
+ *--------------------------------------------------------------------
+ *Author:Souvik    Date : 25-01-16      
+ *--------------------------------------------------------------------
+ * </pre>
+ * @param <br>CSAS Credential,Participant ID,DB Instance</br>
+ */	@Test(dataProvider = "setData")
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr,
 			Map<String, String> testdata) throws Throwable {
-		String pptID = Globals.GC_EMPTY;
+		Map<String,String> sqlQueryRes = new HashMap<String,String>();
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-
-			// Step2:Search with PPT ID..
+			// Step2:Querying for ID and GA_ID and performing search with ID  
 			if(Web.webdriver.getWindowHandles().size()==1){
+/*<<<<<<< HEAD
 				pptID = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),"ID");				
 				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
+=======*/
+				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
+						      GetParameterValue("web_reg_status"),"ID","GA_ID");
+			
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						                                              sqlQueryRes.get("ID"),
+						                                              sqlQueryRes.get("GA_ID"));
 			}
 			// Step3: Verify Mail existing PIN and Order Temp PIN message
 			participantHomeObj.verifyPIN_ExistingOrTemp();
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -190,7 +194,7 @@ public class validate_participanthomepage {
 			}
 		}
 	}
-
+ 
 	/**
 	 * -------------------------------------------------------------------
 	 * <pre>
@@ -208,6 +212,7 @@ public class validate_participanthomepage {
 	public void Validate_Registration_Status_On_PPT_Home_Page(int itr,
 			Map<String, String> testdata) {
 		String pptID = Globals.GC_EMPTY;
+		Map<String,String> sqlQueryRes = new HashMap<String,String>();
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		// Step1:Launch and logged into CSAS application..
@@ -215,9 +220,9 @@ public class validate_participanthomepage {
 		
 		
 		// Step2:Search with PPT ID..		
-		pptID = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("reg_status"),"ID");
+		sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("reg_status"),"ID");
 
-		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,Web.returnElement(participantHomeObj,"PPT_ID"));
+		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",sqlQueryRes.get("ID"));
 
 		// Step3: Verify Registration status
 		participantHomeObj.verify_Registration_Status(Stock
@@ -266,7 +271,7 @@ public class validate_participanthomepage {
 			//Step2:Search with PPTID
 			pptID_ManagaedAccSts_List_DB = participantHomeObj.getPPTIDAndManagedAccSts(Stock.GetParameterValue("managed_acc_status"));
 			
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID_ManagaedAccSts_List_DB.get(0),Web.returnElement(participantHomeObj,"PPT_ID"));
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID_ManagaedAccSts_List_DB.get(0),"PPT_ID");
 			// Step3: Verify Managed Account status
 			if (Stock.GetParameterValue("managed_acc_status").equalsIgnoreCase("Plan Not Offered")) {
 				participantHomeObj.verify_Managed_Account_Status(Stock
@@ -285,7 +290,7 @@ public class validate_participanthomepage {
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
 					"Assertion Failed!!", true);
-		} finally {
+		}  finally {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -316,8 +321,7 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Search with SSN..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(
-					Stock.GetParameterValue("ssn"),
-					Web.returnElement(participantHomeObj, "SSN"));
+					Stock.GetParameterValue("ssn"),"SSN");
 			// Step3: Verify Registration status
 			participantHomeObj.verify_Personal_Data(Stock
 					.GetParameterValue("ssn"));
@@ -365,8 +369,7 @@ public class validate_participanthomepage {
 			// Step2:Search with SSN..
 			pptID = participantHomeObj.getPPTIDForPDIStatus(Stock
 					.GetParameterValue("pdi_status"));
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,
-					Web.returnElement(participantHomeObj, "PPT_ID"));
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN(pptID,"PPT_ID");
 
 			// Step3: Verify PDI status
 			participantHomeObj.verify_PDI_Status(Stock

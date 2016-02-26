@@ -1,8 +1,10 @@
 package pageobjects;
 
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -299,6 +301,69 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private LoadableComponent<?> parent;
 
 	/*-----------------------------------------------------------------*/
+	private Map<String, String> Mail_Existing_PIN = new LinkedHashMap<String, String>();
+	private Map<String, String> Order_Temp_PIN = new LinkedHashMap<String, String>();
+	private Map<String, String> Mail_Existing_VRUPIN_and_Web_PassCode = new LinkedHashMap<String, String>();
+	private Map<String, String> Mail_Existing_Web_Passcode = new LinkedHashMap<String, String>();
+	private Map<String, String> Mail_Existing_VRUPIN = new LinkedHashMap<String, String>();
+	private Map<String, String> Order_Temp_VRU_PIN_and_Web_PassCode = new LinkedHashMap<String, String>();
+	private Map<String, String> Order_Temp_Web_PassCode = new LinkedHashMap<String, String>();
+	private Map<String, String> Order_Temp_VRUPIN = new LinkedHashMap<String, String>();
+
+	private void initTempandOrderPINMsg() {
+		Mail_Existing_PIN
+				.put("MSG1",
+						"Combined verification and pin letter generated: doc_id = "
+								+ " If a PIN confirmation letter doc id is displayed then a reminder PIN letter will be"
+								+ " sent to the participant.  If \"No document to generate.\" displays then a"
+								+ " reminder PIN letter will not be sent until PIN has been system generated."
+								+ " CSR should not attempt to issue through ISIS.");
+		Order_Temp_PIN
+				.put("MSG1",
+						"Note: this VRU PIN (or web passcode) is a single use PIN (passcode) "
+								+ "that must be re-set after first use. Please direct participant accordingly.");
+		Order_Temp_PIN.put("MSG2", "The temporary PIN number is");
+
+		Mail_Existing_VRUPIN_and_Web_PassCode.put("MSG1",
+				"An order to mail the participant's existing web passcode "
+						+ "has been issued, confirmation #.");
+		Mail_Existing_VRUPIN_and_Web_PassCode.put("MSG2",
+				"An order to mail the participant's existing VRU PIN "
+						+ "has been issued, confirmation #.");
+
+		Mail_Existing_Web_Passcode.put("MSG1",
+				"An order to mail the participant's existing web passcode "
+						+ "has been issued, confirmation #.");
+
+		Mail_Existing_VRUPIN.put("MSG1",
+				"An order to mail the participant's existing VRU PIN "
+						+ "has been issued, confirmation #.");
+
+		Order_Temp_VRU_PIN_and_Web_PassCode
+				.put("MSG1",
+						"Note: this VRU PIN (or web passcode) is a single use PIN (passcode) that must "
+								+ "be re-set after first use. "
+								+ "Please direct participant accordingly.");
+		Order_Temp_VRU_PIN_and_Web_PassCode.put("MSG2",
+				"The temporary web passcode number is");
+		Order_Temp_VRU_PIN_and_Web_PassCode.put("MSG3",
+				"The temporary VRU PIN number is");
+
+		Order_Temp_Web_PassCode
+				.put("MSG1",
+						"Note: this VRU PIN (or web passcode) is a single use PIN (passcode) that must "
+								+ "be re-set after first use. "
+								+ "Please direct participant accordingly.");
+		Order_Temp_Web_PassCode.put("MSG2",
+				"The temporary web passcode number is");
+
+		Order_Temp_VRUPIN
+				.put("MSG1",
+						"Note: this VRU PIN (or web passcode) is a single use PIN (passcode) that must "
+								+ "be re-set after first use. "
+								+ "Please direct participant accordingly.");
+		Order_Temp_VRUPIN.put("MSG2", "The temporary VRU PIN number is");
+	}
 
 	public ParticipantHome() {
 		PageFactory.initElements(Web.webdriver, this);
@@ -322,6 +387,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, e.getMessage());
 		}
+
 	}
 
 	/**
@@ -348,37 +414,37 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			return this.SSNfield;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Mail Existing PIN")) {
+		if (fieldName.trim().equalsIgnoreCase("Mail_Existing_PIN")) {
 			return this.btnMailExistingPIN;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Order Temp PIN")) {
+		if (fieldName.trim().equalsIgnoreCase("Order_Temp_PIN")) {
 			return this.btnOrderTempPin;
 		}
 
 		if (fieldName.trim().equalsIgnoreCase(
-				"Mail Existing VRU PIN and Web Passcode")) {
+				"Mail_Existing_VRUPIN_and_Web_PassCode")) {
 			return this.btnMailExstngVRUPINandWebPscd;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Mail Existing Web Passcode")) {
+		if (fieldName.trim().equalsIgnoreCase("Mail_Existing_Web_Passcode")) {
 			return this.btnMailExstngWebPscd;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Mail Existing VRU PIN")) {
+		if (fieldName.trim().equalsIgnoreCase("Mail_Existing_VRUPIN")) {
 			return this.btnMailExstngVRUPIN;
 		}
 
 		if (fieldName.trim().equalsIgnoreCase(
-				"Order Temp VRU PIN and Web Passcode")) {
+				"Order_Temp_VRU_PIN_and_Web_PassCode")) {
 			return this.btnOrderTempPINandWebPscd;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Order Temp Web Passcode")) {
+		if (fieldName.trim().equalsIgnoreCase("Order_Temp_Web_PassCode")) {
 			return this.btnOrderTempWebPscd;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Order Temp VRU PIN")) {
+		if (fieldName.trim().equalsIgnoreCase("Order_Temp_VRUPIN")) {
 			return this.btnOrderTempVRUPIN;
 		}
 
@@ -400,31 +466,29 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @throws Exception
 	 * @author RANJAN
 	 */
-	public String getSSN_or_pptID(String WebRegStatus, String paramNm)
-			throws Exception {
+	/*
+	 * public String getSSN_or_pptID(String WebRegStatus, String paramNm) throws
+	 * Exception { =======
+	 */
+	public Map<String, String> getSSN_or_pptID(String WebRegStatus,
+			String... paramNm) throws Exception {
 		ResultSet resultset = null;
-		String res = Globals.GC_EMPTY;
+		Map<String, String> res = new LinkedHashMap<String, String>();
 
-		if (!paramNm.equalsIgnoreCase("ID") || !paramNm.equalsIgnoreCase("SSN")) {
-			return null;
-		}
 		if (WebRegStatus.equalsIgnoreCase("Registered")) {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
-			if (resultset != null) {
-				while (resultset.next()) {
-					res = resultset.getString(paramNm);
-				}
-			}
-		}
-		if (WebRegStatus.equalsIgnoreCase("NonRegistered")) {
+		} else if (WebRegStatus.equalsIgnoreCase("NonRegistered")) {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[0],
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
-			if (resultset != null) {
-				while (resultset.next()) {
-					res = resultset.getString(paramNm);
+		}
+
+		if (resultset != null) {
+			while (resultset.next()) {
+				for (String param : paramNm) {
+					res.put(param, resultset.getString(param));
 				}
 			}
 		}
@@ -477,16 +541,21 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @throws Exception
 	 * @author RANJAN
 	 */
-	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String PPT_Or_SSN_Value,
-			WebElement searchField) throws Exception {
+	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String ssnOrIDElement,
+			String... searchValue) throws Exception {
+		WebElement searchField = getWebElement(ssnOrIDElement.toUpperCase());
 
 		boolean isElementDisplayed = false;
 		Web.waitForElement(menuSearch);
 		Web.clickOnElement(menuSearch);
-		Web.setTextToTextBox(searchField, PPT_Or_SSN_Value);
+		Web.setTextToTextBox(searchField, searchValue[0]);
 		Reporter.logEvent(Status.INFO, "Performing search using PPT ID/SSN",
-				"PPT ID/SSN : " + PPT_Or_SSN_Value, true);
+				"PPT ID/SSN : " + searchValue[0], true);
 		Web.clickOnElement(SubmitPPTIdBtn);
+
+		// ------------- Handle Multiple PPT Search Result -----
+		click_And_Verify_Plan_On_Search_Page(searchValue[1]);
+
 		Web.waitForElement(PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(PPTHomePageTitle, true);
 		if (isElementDisplayed) {
@@ -494,7 +563,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Status.PASS,
 					"Participant Home Page with all the details should display",
 					"Participant Home Page with all the details is displayed successfully",
-					true);
+					false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
@@ -622,6 +691,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	public ArrayList<String> get_Hire_Term_Date_From_DB(
 			String[] getHireDateAndTerminationDate, String planNum,
 			String indID, int index) throws SQLException {
+
 		ResultSet resultset;
 		hireTermDateList = new ArrayList<String>();
 		resultset = DB.executeQuery(getHireDateAndTerminationDate[0],
@@ -699,6 +769,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 */
 	public String get_Page_Instance_From_DB(String[] getPageInstanceFromInd_id,
 			String ind_id) throws SQLException {
+
 		ResultSet resultset;
 		String instance = null;
 		resultset = DB.executeQuery(getPageInstanceFromInd_id[0],
@@ -812,7 +883,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	public ArrayList<String> get_Personal_Data_From_DB(
 			String[] getPersonalDataOnPPTHomePage, String ssn)
 			throws SQLException {
-
 		ResultSet resultset;
 		personalDataDB = new ArrayList<String>();
 		resultset = DB.executeQuery(getPersonalDataOnPPTHomePage[0],
@@ -829,13 +899,14 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		return personalDataDB;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void verifyPIN_ExistingOrTemp() throws Throwable {
 		String parentWindow = Globals.GC_EMPTY;
 		Map<String, String> getMessage = new LinkedHashMap<String, String>();
 		int iEleIndex = 0;
-		CommonLib cl = new CommonLib();
 		boolean msgValidate = false;
-		String msgVarName = Stock.GetParameterValue("ValidateMsgVarNm");
+
+		initTempandOrderPINMsg();
 		if (Web.webdriver.getWindowHandles().size() == 1) {
 			Web.waitForElement(lnkOrderPIN);
 			Web.clickOnElement(lnkOrderPIN);
@@ -854,22 +925,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					+ "not displayed in the page");
 		}
 
-		if (!msgVarName.contains(",")) {
-			msgVarName = msgVarName + ", ";
-		}
-
-		for (String str : msgVarName.split(",")) {
-			if (!str.trim().equals(Globals.GC_EMPTY)) {
-				getMessage.put(str.trim(), (String) cl.getVarByName(str));
-			}
-		}
+		getMessage = (Map<String, String>) getVarByName(Stock
+				.GetParameterValue("btnName"));
 
 		if (getMessage.size() > 0 & txtExistingAndOrderPINMessage.size() > 0) {
 			for (Map.Entry<String, String> expectedMsg : getMessage.entrySet()) {
 				String getObjText = new StringBuilder(
 						txtExistingAndOrderPINMessage.get(iEleIndex).getText())
 						.delete(0, 1).toString().trim();
-				if (!expectedMsg.getKey().contains("Note")) {
+				if (!expectedMsg.getValue().contains("Note")) {
 					if (getObjText.matches(".*\\d+.*")
 							& getObjText
 									.replaceAll("\\d", "")
@@ -910,11 +974,15 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							+ " is not displayed", true);
 		}
 
-		if (Stock.GetParameterValue("closeChildBrowser").equalsIgnoreCase(
-				"TRUE")) {
+	/*	if (Web.isLastIteration()) {
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
-		}
+		}*/
+	}
+
+	private Object getVarByName(String fieldName) throws Throwable {
+		Field field = this.getClass().getDeclaredField(fieldName);
+		return field.get(this);
 	}
 
 	/**
@@ -964,7 +1032,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					}
 					break;
 				case "Not Registered":
-
 					break;
 				}
 			} else {
@@ -973,13 +1040,224 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 						"Registration status on ppt homepage is incorrect\n\n",
 						true);
 			}
-
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate Web registration status label and reg status on ppt homepage",
 					"Web registration status label and reg status on ppt homepage didn't display successfully",
 					false);
+		}
+	}
+
+	/**
+	 * Method to verify managed account status
+	 * 
+	 * @param managed_Acc_Status
+	 * @author rnjbdn
+	 */
+	public void verify_Managed_Account_Status(String managed_Acc_Status) {
+
+		ArrayList<String> plan_And_Participant_ID_From_DB;
+		String plan_Num_DB = null;
+		String part_id = null;
+		try {
+			switch (managed_Acc_Status) {
+			case "ENROLLED":
+
+				// Get data from db for Enrolled participant
+				plan_And_Participant_ID_From_DB = get_Participant_ID_From_DB_For_Managed_Acc_Status(
+						Stock.getTestQuery("get_Particiant_ID_From_Part_Services"),
+						managed_Acc_Status);
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(
+						plan_And_Participant_ID_From_DB.get(0), "PPT_ID");
+				// Verify managed account message
+				if (plan_And_Participant_ID_From_DB.get(1).equalsIgnoreCase(
+						"ENROLLED")) {
+					verify_Managed_Account_Message(Stock
+							.GetParameterValue("expected_msg"));
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"As per the effective date participant status has been changed",
+							"As per the effective date participant status has been changed please look for other participant",
+							false);
+				}
+				break;
+			case "UNENROLLED":
+				// Get data from db for Enrolled participant
+				plan_And_Participant_ID_From_DB = get_Participant_ID_From_DB_For_Managed_Acc_Status(
+						Stock.getTestQuery("get_Particiant_ID_From_Part_Services"),
+						managed_Acc_Status);
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(
+						plan_And_Participant_ID_From_DB.get(0), "PPT_ID");
+				// Verify managed account message
+				if (plan_And_Participant_ID_From_DB.get(1).equalsIgnoreCase(
+						"UNENROLLED")) {
+					verify_Managed_Account_Message(Stock
+							.GetParameterValue("expected_msg"));
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"As per the effective date participant status has been changed",
+							"As per the effective date participant status has been changed please look for other participant",
+							false);
+				}
+				break;
+			case "Plan Not Offered":
+				// Get data from db for Enrolled participant
+				plan_Num_DB = get_Plan_number_From_DB(Stock
+						.getTestQuery("get_Plan_Number_From_DB"));
+
+				part_id = get_Participant_Id_From_DB(
+						Stock.getTestQuery("get_Part_ID_From_DB"),
+						plan_Num_DB.trim());
+				// Search with ppt_id
+				search_PPT_Plan_With_PPT_ID_OR_SSN(part_id, "PPT_ID");
+
+				// Verify managed account message
+				verify_Managed_Account_Message(Stock
+						.GetParameterValue("expected_msg"));
+				break;
+			default:
+				break;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to retrieve managed account status from d_isis DB
+	 * 
+	 * @param get_IndID_PlanID_FromPartService
+	 *            ,managed_Acc_Status
+	 * @return ArrayList
+	 * @author rnjbdn
+	 * @throws Exception
+	 */
+	public ArrayList<String> get_Participant_ID_From_DB_For_Managed_Acc_Status(
+			String[] get_IndID_PlanID_FromPartService, String managed_Acc_Status)
+			throws Exception {
+
+		ResultSet resultset;
+		plan_And_Participant_List = new ArrayList<String>();
+		String ind_id = null;
+		String status_reason_code = null;
+		resultset = DB.executeQuery(get_IndID_PlanID_FromPartService[0],
+				get_IndID_PlanID_FromPartService[1], managed_Acc_Status);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					ind_id = resultset.getString("ind_id");
+					status_reason_code = resultset
+							.getString("status_reason_code");
+					plan_And_Participant_List.add(ind_id);
+					plan_And_Participant_List.add(status_reason_code);
+
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return plan_And_Participant_List;
+	}
+
+	/**
+	 * Method to retrieve plan Number from d_isis DB
+	 * 
+	 * @param get_Plan_Num_From_PartService
+	 * @return ArrayList
+	 * @author rnjbdn
+	 * @throws Exception
+	 */
+	/*
+	 * public String get_Plan_number_From_DB(String[]
+	 * get_Plan_Num_From_PartService) throws Exception { ResultSet resultset;
+	 * String plan_Num = null; resultset =
+	 * DB.executeQuery(get_Plan_Num_From_PartService[0],
+	 * get_Plan_Num_From_PartService[1]); if (resultset != null) { try { while
+	 * (resultset.next()) { plan_Num = resultset.getString("ga_id"); } } catch
+	 * (SQLException e) { e.printStackTrace(); } } return plan_Num; }
+	 */
+
+	/**
+	 * Method to retrieve participant ID from d_isis DB
+	 * 
+	 * @param get_Part_ID_From_DB
+	 *            ,planNum
+	 * @return ArrayList
+	 * @author rnjbdn
+	 * @throws Exception
+	 */
+	public String get_Participant_Id_From_DB(String[] get_Part_ID_From_DB,
+			String planNum) throws Exception {
+
+		ResultSet resultset;
+		String part_ID = null;
+		resultset = DB.executeQuery(get_Part_ID_From_DB[0],
+				get_Part_ID_From_DB[1], planNum);
+		if (resultset != null) {
+			try {
+				while (resultset.next()) {
+					part_ID = resultset.getString("ind_id");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return part_ID;
+	}
+
+	/**
+	 * Method to click on the first plan while an ind_id shows multiple SSN
+	 * 
+	 * @param plan_Number_DB
+	 * @author rnjbdn
+	 * @throws InterruptedException
+	 */
+	public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB)
+			throws InterruptedException {
+		String plan_No_Web = null;
+		boolean isElementDisplayed = false;
+
+		Thread.sleep(2000);
+		if (Web.isWebElementDisplayed(partList_Tab)) {
+			Reporter.logEvent(Status.INFO,
+					"Participant table displayed for multiple search",
+					"Participant table is displayed successfully", true);
+			for (int i = 0; i <= PlanNoOnPartList_Link.size() - 1; i++) {
+				plan_No_Web = PlanNoOnPartList_Link.get(i).getText();
+
+				if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)
+						&& partList_Tab
+								.findElement(
+										By.xpath("//tr[" + (i + 1) + "]/td[16]"))
+								.getText().equalsIgnoreCase("ACTIVE")) {
+
+					partList_Tab.findElement(
+							By.xpath("//tr[" + (i + 1) + "]/td[1]/a")).click();
+					Web.waitForElement(PPTHomePageTitle);
+
+					isElementDisplayed = Web.isWebElementDisplayed(
+							PPTHomePageTitle, true);
+					if (isElementDisplayed) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Participant Home Page should display",
+								"Participant Home Page is displayed successfully",
+								false);
+
+					} else {
+						Reporter.logEvent(Status.FAIL,
+								"Participant Home Page should display",
+								"Participant Home Page is not displayed", true);
+					}
+					break;
+				}
+			}
 		}
 	}
 
@@ -1119,50 +1397,37 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * @author rnjbdn
 	 * @throws Exception
 	 */
-	public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB)
-			throws Exception {
-
-		String plan_No_Web = null;
-		boolean isElementDisplayed;
-		Web.waitForElement(partList_Tab);
-		if (Web.isWebElementDisplayed(partList_Tab)) {
-			Reporter.logEvent(Status.PASS, "Participant table should display",
-					"Participant table is displayed successfully", false);
-			for (int i = 1; i < PlanNoOnPartList_Link.size(); i++) {
-				plan_No_Web = PlanNoOnPartList_Link.get(0).getText();
-				System.out.println(plan_No_Web + "  : " + plan_Number_DB);
-				if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)) {
-
-					Web.webdriver.findElement(
-							By.xpath("//table[@id = 'partList']//tr[" + i
-									+ "]/td[1]/a")).click();
-
-					Web.waitForElement(PPTHomePageTitle);
-					isElementDisplayed = Web.isWebElementDisplayed(
-							PPTHomePageTitle, true);
-					if (isElementDisplayed) {
-						Reporter.logEvent(
-								Status.PASS,
-								"Participant Home Page with all the details should display",
-								"Participant Home Page with all the details is displayed successfully",
-								true);
-						break;
-					} else {
-						Reporter.logEvent(
-								Status.FAIL,
-								"Participant Home Page with all the details should not display",
-								"Participant Home Page with all the details is not displayed",
-								false);
-					}
-				}
-			}
-
-		} else {
-			Reporter.logEvent(Status.FAIL, "Participant table should display",
-					"Participant table is displayed successfully", false);
-		}
-	}
-
+	/*
+	 * public void click_And_Verify_Plan_On_Search_Page(String plan_Number_DB)
+	 * throws Exception {
+	 * 
+	 * String plan_No_Web = null; boolean isElementDisplayed;
+	 * Web.waitForElement(partList_Tab); if
+	 * (Web.isWebElementDisplayed(partList_Tab)) {
+	 * Reporter.logEvent(Status.PASS, "Participant table should display",
+	 * "Participant table is displayed successfully", false); for (int i = 1; i
+	 * < PlanNoOnPartList_Link.size(); i++) { plan_No_Web =
+	 * PlanNoOnPartList_Link.get(0).getText(); System.out.println(plan_No_Web +
+	 * "  : " + plan_Number_DB); if
+	 * (plan_Number_DB.equalsIgnoreCase(plan_No_Web)) {
+	 * 
+	 * Web.webdriver.findElement( By.xpath("//table[@id = 'partList']//tr[" + i
+	 * + "]/td[1]/a")).click();
+	 * 
+	 * Web.waitForElement(PPTHomePageTitle); isElementDisplayed =
+	 * Web.isWebElementDisplayed( PPTHomePageTitle, true); if
+	 * (isElementDisplayed) { Reporter.logEvent( Status.PASS,
+	 * "Participant Home Page with all the details should display",
+	 * "Participant Home Page with all the details is displayed successfully",
+	 * true); break; } else { Reporter.logEvent( Status.FAIL,
+	 * "Participant Home Page with all the details should not display",
+	 * "Participant Home Page with all the details is not displayed", false); }
+	 * } }
+	 * 
+	 * } else { Reporter.logEvent(Status.FAIL,
+	 * "Participant table should display",
+	 * "Participant table is displayed successfully", false); } }
+	 */
 	/**
 	 * <pre>
 	 * Method to verify Managed account message
