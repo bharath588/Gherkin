@@ -41,6 +41,16 @@ public class Stock {
 	public static int getIterations(){
 		return dataProviderIterations;
 	}
+	
+	private static String checkEnv(String envName){
+		if(envName.contains("PROJ")){
+			return Globals.DB_TYPE.get("PROJ");
+		}
+		if(envName.contains("QA")){
+			return Globals.DB_TYPE.get("QA");
+		}
+		return null;
+	}
 
 	public static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName)
 			throws Exception {
@@ -49,15 +59,19 @@ public class Stock {
 		// Getting Application name and Module name so that the
 		// correct excel is picked up
 		LinkedHashMap<Integer, Map<String, String>> td = null;
-		Map<String, String> mapData = null;
-		String appName = tcAbsPath.split("\\.")[1];
-		String modName = tcAbsPath.split("\\.")[3];
+		Map<String, String> mapData = null;		
+		//String appName = tcAbsPath.split("\\.")[1];
+		//String modName = tcAbsPath.split("\\.")[3];
+		String appName = getConfigParam("AUT");
+		String modName = tcAbsPath.split("\\.")[(tcAbsPath.split("\\.").length)-1];
+		
 		boolean ifTCFound = false;
 		Log.Report(Level.DEBUG, "Preparing test data for Test Case : " + tcName);
 
 		try {
-			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + appName + ".xls");
-			//int tcColNo = XL.getColNum(modName, 0, Globals.GC_TESTDATATCCOLNAME);
+			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
+					          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
+			
 			int manualTCColNo = XL.getColNum(modName, 0, Globals.GC_COL_MANUAL_TC);
 			int itrColNo = XL.getColNum(modName, 0, Globals.GC_ITRCCOLNAME);
 			int itcPointer = 0;
@@ -225,7 +239,9 @@ public class Stock {
 	public static String[] getTestQuery(String queryName) throws Exception
 	{
 		String[] queryData;
-		XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC + Globals.GC_TESTDATAPREFIX + Stock.getConfigParam("AUT") + ".xls");
+		String appName = getConfigParam("AUT");
+		XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
+		          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
 		int queryColNo = XL.getColNum("query", 0,"QueryName");
 		int queryPointer = 0;
 

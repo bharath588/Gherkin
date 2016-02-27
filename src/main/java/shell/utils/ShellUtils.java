@@ -2,8 +2,6 @@ package shell.utils;
 
 import java.io.*;
 
-import lib.ReadProperties;
-
 //import org.apache.commons.io.FileUtils;
 //import org.apache.commons.io.input.ReaderInputStream;
 

@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -19,16 +19,20 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import lib.Log;
 import lib.Stock;
 import lib.XL_ReadWrite;
 import lib.Log.Level;
+
 import org.testng.TestNG;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+
 import com.google.common.collect.Lists;
+
 import core.framework.ThrowException.TYPE;
 
 public class DriverScript {
@@ -154,9 +158,9 @@ Author : Souvik     Date : 09-10-2015
 				if (xlRW.isSheetExist(moduleName.getKey())) { // check if the sheet exist
 					
 					 // Setting test dependency for each module
-					 Map<Integer, String> depdItr = SetTestCaseDependency(xlRW, moduleName.getKey());
+					 //Map<Integer, String> depdItr = SetTestCaseDependency(xlRW, moduleName.getKey());
 					 // Map sort to provide testcase prioritization
-					 Map<Integer, String> treeMap = new TreeMap<Integer, String>();
+					// Map<Integer, String> treeMap = new TreeMap<Integer, String>();
 
 					 // Looping through Test
 					 for (int iModuleLoop=0;iModuleLoop<xlRW.getRowCount(moduleName.getKey())- 1;iModuleLoop++){
@@ -297,7 +301,8 @@ REVISION HISTORY:
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Author : Souvik     Date : 09-10-2015       
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-*/	private Map<Integer,String> SetTestCaseDependency(XL_ReadWrite xlObj, String moduleName) throws Exception {
+*/	@SuppressWarnings("unused")
+private Map<Integer,String> SetTestCaseDependency(XL_ReadWrite xlObj, String moduleName) throws Exception {
 		int colNumber = 0;String cellRef =Globals.GC_EMPTY;
 		String depdTC = Globals.GC_EMPTY;
 		Map<Integer,String> itr = new TreeMap<Integer,String>();
@@ -345,7 +350,8 @@ REVISION HISTORY:
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 Author : Souvik     Date : 09-10-2015       
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-*/	private void RunTestNG() throws Exception{
+*/	@SuppressWarnings("unused")
+private void RunTestNG() throws Exception{
 	    String resourcePath = Globals.GC_EMPTY;
 	    Process proc = null;
 		try{

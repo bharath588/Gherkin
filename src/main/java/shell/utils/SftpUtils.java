@@ -12,10 +12,6 @@ import java.io.FileFilter;
 import java.util.Arrays;
 //import java.util.Collections;
 //import java.util.Vector;
-
-
-import lib.ReadProperties;
-
 //import org.apache.commons.io.FileUtils;
 
 import lib.Stock;

@@ -1,5 +1,6 @@
 package core.framework;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -16,14 +17,16 @@ public class Globals {
           public static final String GC_KEYTESTTYPE = "TESTTYPE";
           public static final String GC_DEFAULTTESTTYPE = "DefaultTest";
           public static final String GC_KEY_RUNXML = "RUNXML";
-       //  public static final String GC_PROJECT_RESOURCES= "TESTRESOURCES";
           public static final String GC_VAL_RUNALLITR = "ALL";
           public static final String GC_AUT_TYPE = "WEB";
-//        public static final String GC_TC_PASSED="PASS";
-//        public static final String GC_TC_FAILED="FAIL";
-//        public static final String GC_TC_INFO="INFO";
-          
-       //SpreadSheet
+          public static final Map<String,String> DB_TYPE;
+          static{
+        	  DB_TYPE = new HashMap<String,String>();
+        	  DB_TYPE.put("PROJ","DEV");
+        	  DB_TYPE.put("QA","QA");        	  
+          }
+	  	      
+		//SpreadSheet
           public static final String GC_CONFIGFILEANDSHEETNAME = "testexecutionconfig";
           public static final String GC_DATASHEET_ERR = "Sheet not found";
           public static final String GC_TESTCASERUNORDERPREFIX = "runorder_";
@@ -110,10 +113,7 @@ public class Globals {
           public static final String GC_EXPNTYPE_ILLEGALSTATE = "illegalstateexception";
           public static final String GC_EXPNTYPE_IOEXCEPTION = "illegalstateexception";
           
-          
-          
-          
-               
+                         
         //AAG Managed Accounts
           public static final String GC_LOG_FILE_VALIDATION_MESSAGE="Successful-> "+"[1-9].*";
           public static final String GC_PROSPECT_LOG_FILE_PATTERN="prospect_";
@@ -176,9 +176,5 @@ public class Globals {
   	    	databaseConnectionStrings.put("Q_INST", "jdbc:oracle:thin:@qinstdb:1521/qinstmain.isis.gwl.com");
   	    	databaseConnectionStrings.put("Q_IN02", "jdbc:oracle:thin:@qin02db:1521/qin02main.isis.gwl.com");
   	    	databaseConnectionStrings.put("Q_ISIS", "jdbc:oracle:thin:@qisisdb:1521/QISISMAIN.ISIS.GWL.COM");
-  	    	
-  	    	
-  	    	   	    	
-
   	    	}
 }
