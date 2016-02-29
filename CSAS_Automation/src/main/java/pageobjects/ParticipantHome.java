@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -380,7 +379,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@Override
 	protected void load() {
 		try {
-			Web.webdriver.get(Stock.getConfigParam("AppURL"));
+		//	Web.webdriver.get(Stock.getConfigParam("AppURL"));
+			 Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
 			Reporter.logEvent(Status.INFO,
 					"Check if the CSAS Log in page open",
 					"CSAS log in page launhced successfully", true);
@@ -1004,12 +1004,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Validate Web registration status label and reg status on ppt homepage",
 					"Web registration status label and reg status on ppt homepage displayed successfully",
 					false);
-			Web.clickOnElement(participantRegStatus);
-			Web.mouseHover(participantRegStatus);
 			reg_status_On_Web = participantRegStatus.getText();
 			if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
 				isWebRegSts = true;
 			}
+			Web.clickOnElement(participantRegStatus);
+			Web.mouseHover(participantRegStatus);			
 			if (isWebRegSts) {
 				switch (reg_status) {
 				case "Registered":
@@ -1017,9 +1017,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 					if (userName.matches("[0-9a-zA-Z]+")) {
 						Reporter.logEvent(
-								Status.FAIL,
+								Status.PASS,
 								"Validate on hover Username display with number on ppt homepage",
-								"On hover Username didn't display with number on ppt homepage:\n\n",
+								"On hover Username display with number on ppt homepage:\n\n",
 								true);
 					} else {
 						Reporter.logEvent(

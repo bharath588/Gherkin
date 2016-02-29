@@ -101,7 +101,7 @@ public class validate_participanthomepage {
 	 *Author:Ranjan     Date : 25-01-16      
 	 *--------------------------------------------------------------------
 	 * </pre>
-	 * @param <br>CSAS Credential,Participant ID,Employment Status</br>
+	 * @param <br>CSAS Credential,Participant ID,DB Instance</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_PPT_HomePage_Instance(int itr,
@@ -148,7 +148,7 @@ public class validate_participanthomepage {
  *Author:Souvik    Date : 25-01-16      
  *--------------------------------------------------------------------
  * </pre>
- * @param <br>CSAS Credential,Participant ID,DB Instance</br>
+ * @param <br>CSAS Credential,Participant ID</br>
  */	@Test(dataProvider = "setData")
 	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr,
 			Map<String, String> testdata) throws Throwable {
@@ -205,7 +205,7 @@ public class validate_participanthomepage {
 	@Test(dataProvider = "setData")
 	public void Validate_Registration_Status_On_PPT_Home_Page(int itr,
 			Map<String, String> testdata) {
-		String pptID = Globals.GC_EMPTY;
+
 		Map<String,String> sqlQueryRes = new HashMap<String,String>();
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -304,7 +304,7 @@ public class validate_participanthomepage {
 	 *Author:Ranjan     Date : 09-02-16    
 	 *--------------------------------------------------------------------
 	 * </pre>
-	 * @param <br>CSAS Credential,Participant ID,Employment Status</br>
+	 * @param <br>CSAS Credential,Participant ID,SSN</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Personal_Data_On_PPT_Home(int itr,

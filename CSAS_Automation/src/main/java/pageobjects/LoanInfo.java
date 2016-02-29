@@ -1,7 +1,10 @@
 package pageobjects;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -12,9 +15,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
-import core.framework.ThrowException;
-import core.framework.ThrowException.TYPE;
 
 public class LoanInfo extends LoadableComponent<LoanInfo> {
 
@@ -108,20 +108,17 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(LoanInfoPageTitle));	
+		Assert.assertTrue(Web.isWebElementDisplayed(LoanInfoPageTitle));
 	}
 
 	@Override
 	protected void load() {
 		this.parent = new ParticipantHome().get();
-		Reporter.logEvent(
-				Status.INFO,
-				"Check if Loan info page open",
-				"Loan info page displayed successfully",
-				true);
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 			Web.clickOnElement(MenuLoanInfo);
+			Reporter.logEvent(Status.INFO, "Check if Loan info page open",
+					"Loan info page displayed successfully", true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
@@ -141,7 +138,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	public void verify_LoanInfoPage() {
 
 		if (Web.isWebElementDisplayed(MenuPPTInfo, true)) {
-			
+
 			if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 				Web.clickOnElement(MenuLoanInfo);
 				if (Web.isWebElementDisplayed(LoanInfoPageTitle, true)) {
@@ -163,4 +160,89 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * Method to get PPT ID based on the PDI status
+	 * </pre>
+	 * 
+	 * @return pptID
+	 * @author rnjbdn
+	 */
+	public ArrayList<String> getPPTIDAndExpDataForLoanInfo(
+			String expecteddata_loaninfo) throws Exception {
+		ResultSet resultset = null;
+		ArrayList<String> loanInfo_List = new ArrayList<String>();
+		resultset = DB.executeQuery(
+				Stock.getTestQuery("getPPTIDforLoanInfo")[0],
+				Stock.getTestQuery("getPPTIDforLoanInfo")[1]);
+		if (resultset != null) {
+			while (resultset.next()) {
+				loanInfo_List.add(resultset.getString("IND_ID"));
+				loanInfo_List.add(resultset.getString(expecteddata_loaninfo));
+			}
+		}
+		return loanInfo_List;
+	}
+
+	/**
+	 * <pre>
+	 * Method to verify Loan status details on Loan info page
+	 * </pre>
+	 * 
+	 * @return pptID
+	 * @author rnjbdn
+	 */
+	public void verify_Loan_Status_Details(String loanStsVal_From_DB,
+			String loanSts_var) {
+		boolean isLoanStatusEleDisplayed = false;
+		String loanSts_Val_On_Web;
+		if (Web.isWebElementDisplayed(LoanStatus_Tab, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Check if Loan Status table displayed or not",
+					"Loan Status table displayed successfully", false);
+			if (Loan_Status_List.size() <= 0) {
+				throw new AssertionError("Non of the loan is in active state");
+			}
+			for (int i = 0; i < Loan_Status_List.size(); i++) {
+				isLoanStatusEleDisplayed = Web
+						.isWebElementDisplayed(Total_Outstanding_Bal_List
+								.get(i));
+				if (isLoanStatusEleDisplayed) {
+					loanSts_Val_On_Web = Total_Outstanding_Bal_List.get(i)
+							.getText();
+					if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Check if " + loanSts_var
+										+ " displayed properly for Loan status",
+								loanSts_var
+										+ " displayed successfully for the Loan status /n/n"
+										+ loanSts_var + " :"
+										+ loanSts_Val_On_Web, false);
+					}else{
+						Reporter.logEvent(
+								Status.FAIL,
+								"Check if " + loanSts_var
+										+ " displayed properly for Loan status",
+								loanSts_var
+										+ " displayed successfully for the Loan status /n/n"
+										+ loanSts_var + " :"
+										+ loanSts_Val_On_Web, false);
+					}
+				}else{
+					Reporter.logEvent(
+							Status.FAIL,
+							"Check if " + loanSts_var
+									+ " displayed properly for Loan status",
+							loanSts_var
+									+ " didn't displayed successfully for the Loan status /n/n"
+									, true);
+				}
+			}
+		}else{
+			Reporter.logEvent(Status.PASS,
+					"Check if Loan Status table displayed or not",
+					"Loan Status table didn't displayed successfully", true);
+		}
+	}
 }
