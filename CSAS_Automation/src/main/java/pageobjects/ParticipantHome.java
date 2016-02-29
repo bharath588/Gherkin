@@ -379,7 +379,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@Override
 	protected void load() {
-		// this.parent = parent;
 		try {
 			Web.webdriver.get(Stock.getConfigParam("AppURL"));
 			Reporter.logEvent(Status.INFO,

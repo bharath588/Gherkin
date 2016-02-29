@@ -108,23 +108,26 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.webdriver.getTitle()
-				.contains("Loan Info/History"));
+		Assert.assertTrue(Web.isWebElementDisplayed(LoanInfoPageTitle));	
 	}
 
 	@Override
 	protected void load() {
-		
 		this.parent = new ParticipantHome().get();
-		try {
-			Web.webdriver.get(Stock.getConfigParam("AppURL"));
-			Reporter.logEvent(Status.INFO,
-					"Check if the CSAS Log in page open",
-					"CSAS log in page launhced successfully", true);
-			new ParticipantHome().submitLoginCredentials(Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password"));
-		} catch (Exception e) {
-			ThrowException.Report(TYPE.EXCEPTION, e.getMessage());
+		Reporter.logEvent(
+				Status.INFO,
+				"Check if Loan info page open",
+				"Loan info page displayed successfully",
+				true);
+		Web.mouseHover(MenuPPTInfo);
+		if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
+			Web.clickOnElement(MenuLoanInfo);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Check if Loan info Link on Participant Info tab displayed or not",
+					"Loan info Link on Participant Info tab didn't disply successfully",
+					true);
 		}
 	}
 
@@ -132,12 +135,13 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	 * <pre>
 	 * Method to Loan info page
 	 * </pre>
+	 * 
 	 * @author RANJAN
 	 */
 	public void verify_LoanInfoPage() {
 
 		if (Web.isWebElementDisplayed(MenuPPTInfo, true)) {
-			Web.mouseHover(MenuPPTInfo);
+			
 			if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 				Web.clickOnElement(MenuLoanInfo);
 				if (Web.isWebElementDisplayed(LoanInfoPageTitle, true)) {
