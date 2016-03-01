@@ -146,6 +146,7 @@ public class Globals {
     	  public static final String GC_REMOTE_INPUT_DIRECTORY="/work/batch/input/";    	  
     	  public static final String GC_REMOTE_ARCHIVE_DIRECTORY="/work/batch/input/archive/";
     	  public static final String GC_LOCAL_TEMP_DIRECTORY ="C:\\temp";
+//    	  public static final String GC_LOCAL_TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
     	  public static final String GC_PROSPECT_FILE_NAMEPATTERN="ma_empower_dc_prosp_";
     	  public static final String GC_MEMBER_FILE_NAMEPATTERN="ma_empower_dc_memb_";
     	  public static final String GC_ENROLLCANCEL_FILE_NAMEPATTERN="ma_fei_enrll_";
