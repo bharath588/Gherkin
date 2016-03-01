@@ -380,7 +380,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	protected void load() {
 		try {
 		//	Web.webdriver.get(Stock.getConfigParam("AppURL"));
-			 Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
+			Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
 			Reporter.logEvent(Status.INFO,
 					"Check if the CSAS Log in page open",
 					"CSAS log in page launhced successfully", true);
@@ -563,7 +563,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Status.PASS,
 					"Participant Home Page with all the details should display",
 					"Participant Home Page with all the details is displayed successfully",
-					false);
+					true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
@@ -637,25 +637,21 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					chkEmploymentStats = true;
 				}
 			} else if (!empStatus_WE.equals(emp_Status)) {
-				Reporter.logEvent(Status.INFO, "Check employment status",
-						"Employment status for plan number : " + planNum
-								+ " on web : is not matching with test case "
-								+ emp_Status, false);
 				continue;
 			}
 			if (chkEmploymentStats) {
 				Reporter.logEvent(
 						Status.PASS,
-						"Check if Employment status is " + emp_Status
+						"Check if Employment status for plan number : "+planNum+" is " + emp_Status
 								+ ", Hire date: "
 								+ HireDate_TermDate_List.get(0)
 								+ "and Termination date: "
 								+ HireDate_TermDate_List.get(1),
-						"Employment status is " + emp_Status
+						"Employment status for plan number : "+planNum+" is " + emp_Status
 								+ " and the Hire Date is: "
 								+ HireDate_List.get(i).getText()
 								+ "and Termination date: "
-								+ TermDate_List.get(i), false);
+								+ TermDate_List.get(i).getText(), true);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
@@ -664,11 +660,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 								+ HireDate_TermDate_List.get(0)
 								+ "and Termination date: "
 								+ HireDate_TermDate_List.get(1),
-						"Employment status is neither " + emp_Status
+						"Employment status plan number : "+planNum+" is neither " + emp_Status
 								+ " nor the Hire Date is: "
 								+ HireDate_List.get(i).getText()
 								+ " and Termination date: "
-								+ TermDate_List.get(i), true);
+								+ TermDate_List.get(i).getText(), true);
 			}
 			Web.clickOnElement(PPTHomePageTitle);
 		}
@@ -719,6 +715,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		String instance_DB;
 		String instance_Web;
 		String ind_id;
+		String ga_id ;
 		boolean flag;
 		flag = Web.isWebElementDisplayed(InstanceLabel, true);
 		if (flag) {
@@ -732,20 +729,21 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			for (int i = 0; i < InstanceValue_List.size(); i++) {
 				instance_Web = InstanceValue_List.get(i).getText();
 				ind_id = IndID_List.get(i).getText();
+				ga_id = PlanNumber.get(i).getText() ;
 				instance_DB = get_Page_Instance_From_DB(
 						Stock.getTestQuery("getPageInstanceFromInd_id"), ind_id);
 				if (instance_Web.equalsIgnoreCase(instance_DB)) {
 					Reporter.logEvent(Status.PASS,
 							"Check if database name for individual ID:  "
-									+ ind_id + "  is: " + instance_DB,
+									+ ind_id + " and plan number "+ga_id+"  is: " + instance_DB,
 							"Check if database name for individual ID :"
-									+ ind_id + "  is: " + instance_Web, false);
+									+ ind_id + " and plan number "+ga_id+"  is: " + instance_Web, false);
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Check if database name for individual ID:  "
-									+ ind_id + "  is not : " + instance_DB,
+									+ ind_id + " and plan number "+ga_id+"  is not : " + instance_DB,
 							"Check if database name for individual ID :"
-									+ ind_id + "  is not : " + instance_Web,
+									+ ind_id + " and plan number "+ga_id+"  is not : " + instance_Web,
 							true);
 				}
 			}
@@ -999,11 +997,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.waitForElement(participantRegStatusLabel);
 		if (Web.isWebElementDisplayed(participantRegStatusLabel)
 				&& Web.isWebElementDisplayed(participantRegStatus)) {
-			Reporter.logEvent(
-					Status.PASS,
-					"Validate Web registration status label and reg status on ppt homepage",
-					"Web registration status label and reg status on ppt homepage displayed successfully",
-					false);
+			
 			reg_status_On_Web = participantRegStatus.getText();
 			if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
 				isWebRegSts = true;
@@ -1011,38 +1005,44 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Web.clickOnElement(participantRegStatus);
 			Web.mouseHover(participantRegStatus);			
 			if (isWebRegSts) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Validate Web registration status label "+participantRegStatusLabel.getText()+" and reg status as "+reg_status+" on ppt homepage",
+						"Web registration status label "+participantRegStatusLabel.getText()+" and reg status as "+reg_status_On_Web+" on ppt homepage displayed successfully",
+						false);
+				
 				switch (reg_status) {
 				case "Registered":
 					String userName = Reg_Status_UserName_data.getText();
-
 					if (userName.matches("[0-9a-zA-Z]+")) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Validate on hover Username display with number on ppt homepage",
-								"On hover Username display with number on ppt homepage:\n\n",
+								"On hover Username display with number on ppt homepage:\n\n"+userName,
 								true);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate on hover Username display with number on ppt homepage",
-								"On hover Username didn't display with number on ppt homepage:\n\n",
+								"On hover Username didn't display with number on ppt homepage:\n\n"+userName,
 								true);
 					}
 					break;
-				case "Not Registered":
+				case "NonRegistered":
+					
 					break;
 				}
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Validate registration status on ppt homepage",
-						"Registration status on ppt homepage is incorrect\n\n",
+						"Validate registration status on ppt homepage as "+reg_status,
+						"Registration status on ppt homepage is incorrect for \n\n"+reg_status,
 						true);
 			}
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
-					"Validate Web registration status label and reg status on ppt homepage",
-					"Web registration status label and reg status on ppt homepage didn't display successfully",
+					"Validate Web registration status as "+reg_status+" on ppt homepage",
+					"Web registration status as "+reg_status+" on ppt homepage didn't display successfully",
 					false);
 		}
 	}
@@ -1162,24 +1162,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 		return plan_And_Participant_List;
 	}
-
-	/**
-	 * Method to retrieve plan Number from d_isis DB
-	 * 
-	 * @param get_Plan_Num_From_PartService
-	 * @return ArrayList
-	 * @author rnjbdn
-	 * @throws Exception
-	 */
-	/*
-	 * public String get_Plan_number_From_DB(String[]
-	 * get_Plan_Num_From_PartService) throws Exception { ResultSet resultset;
-	 * String plan_Num = null; resultset =
-	 * DB.executeQuery(get_Plan_Num_From_PartService[0],
-	 * get_Plan_Num_From_PartService[1]); if (resultset != null) { try { while
-	 * (resultset.next()) { plan_Num = resultset.getString("ga_id"); } } catch
-	 * (SQLException e) { e.printStackTrace(); } } return plan_Num; }
-	 */
 
 	/**
 	 * Method to retrieve participant ID from d_isis DB
