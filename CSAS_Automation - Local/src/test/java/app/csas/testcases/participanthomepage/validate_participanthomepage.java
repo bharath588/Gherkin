@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import pageobjects.ParticipantHome;
 import core.framework.Globals;
 
@@ -185,7 +188,6 @@ public class validate_participanthomepage {
 			}
 		}
 	}
-
  
 	/**
 	 * -------------------------------------------------------------------
