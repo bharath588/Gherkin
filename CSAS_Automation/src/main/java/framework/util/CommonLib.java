@@ -1,6 +1,5 @@
 package framework.util;
 
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +8,6 @@ import java.util.Locale;
 
 public class CommonLib {
 	
-
-
 	public static long startTime;
 	public static long finishTime;
 	public static long totalTime;
@@ -56,9 +53,5 @@ public class CommonLib {
 		}
 		return isSameDate;
 	}
-	
-	
-	
-	
 
 }
