@@ -37,7 +37,7 @@ public class Web {
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
-	private static boolean isLastIteration = false;	
+	private static boolean isLastIteration = false;
 
 	public static boolean isLastIteration() {
 		return isLastIteration;
@@ -83,6 +83,49 @@ public class Web {
 
 	/**
 	 * <pre>
+	 * Method to check if elements exists on the page and is displayed
+	 * </pre>
+	 * 
+	 * @param element
+	 *            - List<WebElement> object which is to be check for
+	 * @param waitForElement
+	 *            - <b>true</b> if user wants to wait for the element before
+	 *            checking if it is displayed. <b>false</b> otherwise
+	 * @return <b>boolean - true</b> if elements are displayed on the page.
+	 *         <b>false</b> otherwise
+	 */
+	public static boolean isWebElementsDisplayed(List<WebElement> elements,
+			boolean... waitForElement) {
+		boolean blnElementDisplayed = false;
+		try {
+			try {
+				if (waitForElement.length > 0) {
+					if (waitForElement[0] == true) {
+						Web.waitForElements(elements);
+					}
+				}
+			} catch (Exception e) {
+				// Do nothing
+			}
+			try {
+				if ((new WebDriverWait(Web.webdriver, Long.parseLong("1")))
+						.ignoring(StaleElementReferenceException.class)
+						.until(ExpectedConditions
+								.visibilityOfAllElements(elements)).size() == elements
+						.size()) {
+					blnElementDisplayed = true;
+				}
+			} catch (Exception e) {
+				// Do nothing
+			}
+		} catch (NoSuchElementException e) {
+			blnElementDisplayed = false;
+		}
+		return blnElementDisplayed;
+	}
+
+	/**
+	 * <pre>
 	 * Method to check if element exists on the page and is displayed
 	 * </pre>
 	 * 
@@ -92,7 +135,7 @@ public class Web {
 	 *            - Name of the web element as displayed in the page
 	 * @return <b>boolean - true</b> if element is displayed on the page.
 	 *         <b>false</b> otherwise
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static boolean isWebElementDisplayed(Object pageClassObj,
 			String fieldName) throws Exception {
@@ -128,7 +171,7 @@ public class Web {
 	 * @param valueToSet
 	 *            - Value/String to be set
 	 * @return <b>Value</b> - Text set in <b>value</b> attribute of text box.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String setTextToTextBox(String textBoxFieldName,
 			Object pageClassObj, CharSequence... valueToSet) throws Exception {
@@ -145,14 +188,15 @@ public class Web {
 		return fieldTextValue;
 	}
 
-	/** Method to return parent element of the specified element
+	/**
+	 * Method to return parent element of the specified element
+	 * 
 	 * @param element
 	 * @return WebElement - Parent element
 	 */
 	public static WebElement getParent(WebElement element) {
 		return element.findElement(By.xpath("parent::*"));
 	}
-
 
 	/**
 	 * <pre>
@@ -187,7 +231,7 @@ public class Web {
 	 * @param webElementName
 	 *            - Name of the web element to be clicked
 	 * @return <b>true</b> if successful, <b>false</b> otherwise.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static boolean clickOnElement(Object pageClassObj,
 			String webElementName) throws Exception {
@@ -218,6 +262,7 @@ public class Web {
 		}
 		return success;
 	}
+
 	/**
 	 * <pre>
 	 * Method to get declared WebElement from a specified page.
@@ -231,7 +276,7 @@ public class Web {
 	 *            - Name of the Element listed in getWebElement method
 	 * @return <b>WebElement</b> - Corresponding WebElement mapped against the
 	 *         fieldName
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	private static WebElement getPageObjectFields(Object pageObjectClass,
 			String fieldName) throws Exception {
@@ -253,39 +298,40 @@ public class Web {
 		}
 		return element;
 	}
-	
+
 	/**
 	 * Method to wait for the specified element's presence
 	 * 
 	 * @param webElememnt
 	 * @throws Exception
 	 */
-	public static void waitForElement(WebElement element){
-		try{
-			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
-			.ignoring(StaleElementReferenceException.class)
-			.until(ExpectedConditions.visibilityOf(element));
-		}catch(Exception e){
+	public static void waitForElement(WebElement element) {
+		try {
+			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+					.getConfigParam("objectSyncTimeout")))).ignoring(
+					StaleElementReferenceException.class).until(
+					ExpectedConditions.visibilityOf(element));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Method to wait for the list element's presence
 	 * 
 	 * @param webElememnt
 	 * @throws Exception
 	 */
-	public static void waitForElements(List<WebElement> elements){
-		try{
-			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
-			.ignoring(StaleElementReferenceException.class)
-			.until(ExpectedConditions.visibilityOfAllElements(elements));
-		}catch(Exception e){
+	public static void waitForElements(List<WebElement> elements) {
+		try {
+			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+					.getConfigParam("objectSyncTimeout")))).ignoring(
+					StaleElementReferenceException.class).until(
+					ExpectedConditions.visibilityOfAllElements(elements));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Method to wait for the specified element's presence
@@ -297,18 +343,19 @@ public class Web {
 			throws Exception {
 		WebElement presentElement = getPageObjectFields(pageClassObj,
 				webElementName);
-		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock.getConfigParam("objectSyncTimeout"))))
-		.until(ExpectedConditions.visibilityOf(presentElement));
+		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+				.getConfigParam("objectSyncTimeout"))))
+				.until(ExpectedConditions.visibilityOf(presentElement));
 	}
-		
+
 	/**
 	 * Method to return WebElement using Page Object as reference
 	 * 
 	 * @param webElememnt
 	 * @throws Exception
 	 */
-	public static WebElement returnElement(Object pageClassObj, String webElementName)
-			throws Exception {
+	public static WebElement returnElement(Object pageClassObj,
+			String webElementName) throws Exception {
 		WebElement presentElement = getPageObjectFields(pageClassObj,
 				webElementName);
 		return presentElement;
@@ -329,12 +376,11 @@ public class Web {
 	public static WebDriver getWebDriver(String webBrowser) {
 		WebDriver webDriver;
 
-//		try {
-//			robot = new Robot();
-//		} catch (AWTException e) { 
-//			e.printStackTrace();
-//		}
-
+		// try {
+		// robot = new Robot();
+		// } catch (AWTException e) {
+		// e.printStackTrace();
+		// }
 
 		if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
 				|| webBrowser.trim().equalsIgnoreCase("IEXPLORE")
@@ -355,8 +401,8 @@ public class Web {
 				|| webBrowser.trim().equalsIgnoreCase("FF")) {
 			ProfilesIni profiles = new ProfilesIni();
 			FirefoxProfile ffProfile = profiles.getProfile("default");
-			//ffProfile.setPreference("signon.autologin.proxy", true);
-			
+			// ffProfile.setPreference("signon.autologin.proxy", true);
+
 			if (ffProfile == null) {
 				System.out.println("Initiating Firefox with dynamic profile");
 				webDriver = new FirefoxDriver();
@@ -364,28 +410,38 @@ public class Web {
 				System.out.println("Initiating Firefox with default profile");
 				webDriver = new FirefoxDriver(ffProfile);
 			}
-			
+
 		} else {
 			throw new Error("Unknown browser type specified: " + webBrowser);
 		}
-		
+
 		webDriver.manage().window().maximize();
 		return webDriver;
 	}
 
-	/**<pre> Method to verify two strings. 
+	/**
+	 * <pre>
+	 * Method to verify two strings. 
 	 * Method also takes care of reporting the result into the log file.
 	 * Trims off white spaces at both the ends.
-	 * If opted ignores case while comparing.</pre>
+	 * If opted ignores case while comparing.
+	 * </pre>
+	 * 
 	 * @param inExpectedText
 	 * @param inActualText
-	 * @param ignoreCase - <b>true</b> or <b>false</b>
-	 * <pre>	Pass <b>true</b> to ignore case while comparing. 
+	 * @param ignoreCase
+	 *            - <b>true</b> or <b>false</b>
+	 * 
+	 *            <pre>
+	 * Pass <b>true</b> to ignore case while comparing. 
 	 * 	Takes default value if this argument is vomited. 
-	 * 	Default value: <b>false</b></pre>
-	 * @return - boolean - true</b> if both the string matches. <b>false</b> otherwise
+	 * 	Default value: <b>false</b>
+	 * </pre>
+	 * @return - boolean - true</b> if both the string matches. <b>false</b>
+	 *         otherwise
 	 */
-	public static boolean VerifyText(String inExpectedText,String inActualText, boolean... ignoreCase) {
+	public static boolean VerifyText(String inExpectedText,
+			String inActualText, boolean... ignoreCase) {
 		boolean isMatching = false;
 
 		if (ignoreCase.length > 0) {
@@ -405,72 +461,105 @@ public class Web {
 		}
 		return isMatching;
 	}
-	/**<pre> Method to verify partial text of two strings. 
+
+	/**
+	 * <pre>
+	 * Method to verify partial text of two strings. 
 	 * Trims off white spaces at both the ends.
 	 * @param inPartialText
 	 * @param inActualText
 	 * @param ignoreCase
-	 * @Default value: <b>false</b></pre>
-	 * @return - boolean - true</b> if both the string matches. <b>false</b> otherwise
+	 * @Default value: <b>false</b>
+	 * </pre>
+	 * 
+	 * @return - boolean - true</b> if both the string matches. <b>false</b>
+	 *         otherwise
 	 */
-	public static boolean VerifyPartialText(String inPartialText,String inActualText,boolean ignoreCase) {
+	public static boolean VerifyPartialText(String inPartialText,
+			String inActualText, boolean ignoreCase) {
 		boolean isMatching = false;
-		if (ignoreCase && inActualText.trim().toLowerCase().contains(inPartialText.toLowerCase().trim())){
+		if (ignoreCase
+				&& inActualText.trim().toLowerCase()
+						.contains(inPartialText.toLowerCase().trim())) {
 			isMatching = true;
-		}else if (inActualText.trim().contains(inPartialText.trim())){
+		} else if (inActualText.trim().contains(inPartialText.trim())) {
 			isMatching = true;
-		}             
+		}
 		return isMatching;
 	}
 
+	// ------------------------------------------------------------------------DROP
+	// DOWN Methods
+	// ----------------------------------------------------------------------
 
-	//------------------------------------------------------------------------DROP DOWN Methods ----------------------------------------------------------------------	
-
-	/**<pre> Method to initialize the Drop down object* </pre>
-	 * @param pageObjectClass - Object of the Page class
-	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
-	 * @throws Exception 
+	/**
+	 * <pre>
+	 * Method to initialize the Drop down object*
+	 * </pre>
+	 * 
+	 * @param pageObjectClass
+	 *            - Object of the Page class
+	 * @param dropDownElementName
+	 *            - Name of the Dropdown element as displayed in the page
+	 * @throws Exception
 	 */
-	private static void initDropDownObj(Object pageClassObj,String dropDownElementName) throws Exception{
+	private static void initDropDownObj(Object pageClassObj,
+			String dropDownElementName) throws Exception {
 		try {
-			WebElement dropDownElement = getPageObjectFields(pageClassObj,dropDownElementName);
+			WebElement dropDownElement = getPageObjectFields(pageClassObj,
+					dropDownElementName);
 			if (Web.isWebElementDisplayed(dropDownElement)) {
-				objSelect = new Select(dropDownElement);			
-			}else {
-				throw new NoSuchElementException("Unable to locate the drop down object " + dropDownElementName);
+				objSelect = new Select(dropDownElement);
+			} else {
+				throw new NoSuchElementException(
+						"Unable to locate the drop down object "
+								+ dropDownElementName);
 			}
 		} catch (NoSuchElementException e) {
 			throw new Error(e.getMessage());
 		}
 	}
 
-	/**<pre> Method to initialize the Drop down object* </pre>
-	 * @param dropDownElement - Dropdown WebElement
+	/**
+	 * <pre>
+	 * Method to initialize the Drop down object*
+	 * </pre>
+	 * 
+	 * @param dropDownElement
+	 *            - Dropdown WebElement
 	 */
-	private static void initDropDownObj(WebElement dropDownElement){
+	private static void initDropDownObj(WebElement dropDownElement) {
 		try {
 			if (Web.isWebElementDisplayed(dropDownElement)) {
-				objSelect = new Select(dropDownElement);			
-			}else {
-				throw new NoSuchElementException("Unable to locate the drop down object " + dropDownElement.toString());
+				objSelect = new Select(dropDownElement);
+			} else {
+				throw new NoSuchElementException(
+						"Unable to locate the drop down object "
+								+ dropDownElement.toString());
 			}
 		} catch (NoSuchElementException e) {
 			throw new Error(e.getMessage());
 		}
 	}
 
-	/**<pre> Method to get the item index in Dropdown* </pre>
-	 * @param itemValue - Value of the item listed in Dropdown box
+	/**
+	 * <pre>
+	 * Method to get the item index in Dropdown*
+	 * </pre>
+	 * 
+	 * @param itemValue
+	 *            - Value of the item listed in Dropdown box
 	 */
 	private static int getDropDownItemIndex(String itemValue) {
 		int iCntr = 0;
 		boolean selected = false;
 
-		ListIterator<WebElement> lstIter = objSelect.getOptions().listIterator();
-		while (lstIter.hasNext()){
+		ListIterator<WebElement> lstIter = objSelect.getOptions()
+				.listIterator();
+		while (lstIter.hasNext()) {
 			WebElement currElement = lstIter.next();
 			String txt = currElement.getText();
-			if (txt.toUpperCase().contains(itemValue.toUpperCase())){
+			if (txt.toUpperCase().contains(itemValue.toUpperCase())) {
 				selected = true;
 				break;
 			}
@@ -482,40 +571,58 @@ public class Web {
 			return -1;
 	}
 
-	/**<pre> Method to select a specified item in Dropdown box</pre>
-	 * @param pageObjectClass - Object of the Page class
-	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
-	 * @param selValue - Value of the item listed in Dropdown box
-	 * @return <b>boolean</b> - true</b> if the specified element is selected <b>false</b> otherwise
-	 * @throws Exception 
+	/**
+	 * <pre>
+	 * Method to select a specified item in Dropdown box
+	 * </pre>
+	 * 
+	 * @param pageObjectClass
+	 *            - Object of the Page class
+	 * @param dropDownElementName
+	 *            - Name of the Dropdown element as displayed in the page
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box
+	 * @return <b>boolean</b> - true</b> if the specified element is selected
+	 *         <b>false</b> otherwise
+	 * @throws Exception
 	 */
-	public static boolean selectDropDownOption(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
+	public static boolean selectDropDownOption(Object pageClassObj,
+			String dropDownElementName, String selValue) throws Exception {
 		int itemIndex = -1;
 		boolean selected = false;
 		String selectedItemText;
 
-		initDropDownObj(pageClassObj,dropDownElementName);
+		initDropDownObj(pageClassObj, dropDownElementName);
 		itemIndex = getDropDownItemIndex(selValue);
 
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
 			objSelect.selectByIndex(itemIndex);
-			Reporter.logEvent(Status.INFO, "Select drop down box item: " + selValue, 
-					"Selected item: " + selectedItemText, false);
+			Reporter.logEvent(Status.INFO, "Select drop down box item: "
+					+ selValue, "Selected item: " + selectedItemText, false);
 			selected = true;
 		} else {
-			Reporter.logEvent(Status.WARNING, "Select drop down box item: " + selValue, 
-					"Option not present in the drop down box", false);
+			Reporter.logEvent(Status.WARNING, "Select drop down box item: "
+					+ selValue, "Option not present in the drop down box",
+					false);
 		}
 		return selected;
 	}
 
-	/**<pre> Method to select a specified item in Dropdown box</pre>
-	 * @param dropDownElement - Dropdown WebElement
-	 * @param selValue - Value of the item listed in Dropdown box
-	 * @return <b>boolean</b> - true</b> if the specified element is selected <b>false</b> otherwise
+	/**
+	 * <pre>
+	 * Method to select a specified item in Dropdown box
+	 * </pre>
+	 * 
+	 * @param dropDownElement
+	 *            - Dropdown WebElement
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box
+	 * @return <b>boolean</b> - true</b> if the specified element is selected
+	 *         <b>false</b> otherwise
 	 */
-	public static boolean selectDropDownOption(WebElement dropDownElement,String selValue){
+	public static boolean selectDropDownOption(WebElement dropDownElement,
+			String selValue) {
 		int itemIndex = -1;
 		boolean selected = false;
 		String selectedItemText;
@@ -526,71 +633,102 @@ public class Web {
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
 			objSelect.selectByIndex(itemIndex);
-			Reporter.logEvent(Status.INFO, "Select drop down box item: " + selValue, 
-					"Selected item: " + selectedItemText, false);
+			Reporter.logEvent(Status.INFO, "Select drop down box item: "
+					+ selValue, "Selected item: " + selectedItemText, false);
 			selected = true;
 		} else {
-			Reporter.logEvent(Status.WARNING, "Select drop down box item: " + selValue, 
-					"Option not present in the drop down box", false);
+			Reporter.logEvent(Status.WARNING, "Select drop down box item: "
+					+ selValue, "Option not present in the drop down box",
+					false);
 		}
 		return selected;
 	}
 
-	/**<pre> Method to verify if the specified item is found in Dropdown box</pre>
-	 * @param pageObjectClass - Object of the Page class
-	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
-	 * @param selValue - Value of the item listed in Dropdown box
-	 * @return <b>boolean</b> - true</b> if the specified element is found <b>false</b> otherwise
-	 * @throws Exception 
+	/**
+	 * <pre>
+	 * Method to verify if the specified item is found in Dropdown box
+	 * </pre>
+	 * 
+	 * @param pageObjectClass
+	 *            - Object of the Page class
+	 * @param dropDownElementName
+	 *            - Name of the Dropdown element as displayed in the page
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box
+	 * @return <b>boolean</b> - true</b> if the specified element is found
+	 *         <b>false</b> otherwise
+	 * @throws Exception
 	 */
-	public static boolean verifyDropDownOptionExists(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
-		initDropDownObj(pageClassObj,dropDownElementName);
+	public static boolean verifyDropDownOptionExists(Object pageClassObj,
+			String dropDownElementName, String selValue) throws Exception {
+		initDropDownObj(pageClassObj, dropDownElementName);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
-			Reporter.logEvent(Status.PASS, "Verify option [" + selValue + "] exists in drop down box", 
-					"Option " + selectedItemText + " present in the drop down box", false);
+			Reporter.logEvent(Status.PASS, "Verify option [" + selValue
+					+ "] exists in drop down box", "Option " + selectedItemText
+					+ " present in the drop down box", false);
 			return true;
 		} else {
-			Reporter.logEvent(Status.FAIL, "Verify option [" + selValue + "] exists in drop down box", 
+			Reporter.logEvent(Status.FAIL, "Verify option [" + selValue
+					+ "] exists in drop down box",
 					"Option not present in the drop down box", false);
 			return false;
 		}
 	}
 
-	/**<pre> Method to verify if the specified item is found in Dropdown box</pre>
-	 * @param dropDownElement - WebElement Dropdown
-	 * @param selValue - Value of the item listed in Dropdown box
-	 * @return <b>boolean</b> - true</b> if the specified element is found <b>false</b> otherwise
+	/**
+	 * <pre>
+	 * Method to verify if the specified item is found in Dropdown box
+	 * </pre>
+	 * 
+	 * @param dropDownElement
+	 *            - WebElement Dropdown
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box
+	 * @return <b>boolean</b> - true</b> if the specified element is found
+	 *         <b>false</b> otherwise
 	 */
-	public static boolean verifyDropDownOptionExists(WebElement dropDownElement,String selValue){
+	public static boolean verifyDropDownOptionExists(
+			WebElement dropDownElement, String selValue) {
 		initDropDownObj(dropDownElement);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
-			Reporter.logEvent(Status.PASS, "Verify option [" + selValue + "] exists in drop down box", 
-					"Option " + selectedItemText + " present in the drop down box", false);
+			Reporter.logEvent(Status.PASS, "Verify option [" + selValue
+					+ "] exists in drop down box", "Option " + selectedItemText
+					+ " present in the drop down box", false);
 			return true;
 		} else {
-			Reporter.logEvent(Status.FAIL, "Verify option [" + selValue + "] exists in drop down box", 
+			Reporter.logEvent(Status.FAIL, "Verify option [" + selValue
+					+ "] exists in drop down box",
 					"Option not present in the drop down box", false);
 			return false;
 		}
 	}
 
-	/**<pre> Method to return the complete text of specified item in Dropdown box if item exists</pre>
-	 * @param pageObjectClass - Object of the Page class
-	 * @param dropDownElementName - Name of the Dropdown element as displayed in the page
-	 * @param selValue - Value of the item listed in Dropdown box (Full or partial)
-	 * @return <b>String</b> - Dropdown option text</b> if the specified element is found <b>Empty string</b> otherwise
-	 * @throws Exception 
+	/**
+	 * <pre>
+	 * Method to return the complete text of specified item in Dropdown box if item exists
+	 * </pre>
+	 * 
+	 * @param pageObjectClass
+	 *            - Object of the Page class
+	 * @param dropDownElementName
+	 *            - Name of the Dropdown element as displayed in the page
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box (Full or partial)
+	 * @return <b>String</b> - Dropdown option text</b> if the specified element
+	 *         is found <b>Empty string</b> otherwise
+	 * @throws Exception
 	 */
-	public static String getDropDownOptionAsText(Object pageClassObj,String dropDownElementName,String selValue) throws Exception{
-		initDropDownObj(pageClassObj,dropDownElementName);
+	public static String getDropDownOptionAsText(Object pageClassObj,
+			String dropDownElementName, String selValue) throws Exception {
+		initDropDownObj(pageClassObj, dropDownElementName);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
 
@@ -602,12 +740,20 @@ public class Web {
 		}
 	}
 
-	/**<pre> Method to return the complete text of specified item in Dropdown box if item exists</pre>
-	 * @param dropDownElement - WebElement Dropdown
-	 * @param selValue - Value of the item listed in Dropdown box (Full or partial)
-	 * @return <b>String</b> - Dropdown option text</b> if the specified element is found <b>Empty string</b> otherwise
+	/**
+	 * <pre>
+	 * Method to return the complete text of specified item in Dropdown box if item exists
+	 * </pre>
+	 * 
+	 * @param dropDownElement
+	 *            - WebElement Dropdown
+	 * @param selValue
+	 *            - Value of the item listed in Dropdown box (Full or partial)
+	 * @return <b>String</b> - Dropdown option text</b> if the specified element
+	 *         is found <b>Empty string</b> otherwise
 	 */
-	public static String getDropDownOptionAsText(WebElement dropDownElement,String selValue){
+	public static String getDropDownOptionAsText(WebElement dropDownElement,
+			String selValue) {
 		initDropDownObj(dropDownElement);
 		int itemIndex = getDropDownItemIndex(selValue);
 		String selectedItemText;
@@ -620,36 +766,47 @@ public class Web {
 		}
 	}
 
-	public static void selectDropnDownOptionAsIndex(WebElement dropDownElement, String dropDownIndex) {
+	public static void selectDropnDownOptionAsIndex(WebElement dropDownElement,
+			String dropDownIndex) {
 		initDropDownObj(dropDownElement);
 		int dropDownIndexElement = Integer.parseInt(dropDownIndex);
-		if(dropDownIndexElement>0) 
+		if (dropDownIndexElement > 0)
 			objSelect.selectByIndex(dropDownIndexElement);
-		else 
-			objSelect.selectByIndex(0);		
+		else
+			objSelect.selectByIndex(0);
 
 	}
 
-	//-------------------------------------------------------------- End of DROP DOWN Methods ----------------------------------------------------------------------
+	// -------------------------------------------------------------- End of
+	// DROP DOWN Methods
+	// ----------------------------------------------------------------------
 
-	/**<pre> Method to convert amount displayed as String with $ symbol and returns a float value.
-	 * If opted ignores case while comparing.</pre>
-	 * @param curValue - a String value - the value that is read from the application eg "$12,123.50"
+	/**
+	 * <pre>
+	 * Method to convert amount displayed as String with $ symbol and returns a float value.
+	 * If opted ignores case while comparing.
+	 * </pre>
+	 * 
+	 * @param curValue
+	 *            - a String value - the value that is read from the application
+	 *            eg "$12,123.50"
 	 * 
 	 * @return - float
 	 */
 
-	public static float getIntegerCurrency(String curValue){
+	public static float getIntegerCurrency(String curValue) {
 		float parsedIntCurValue = 0;
 
-		if(curValue.equalsIgnoreCase("N/A"))
+		if (curValue.equalsIgnoreCase("N/A"))
 			parsedIntCurValue = 0;
-		else{
+		else {
 			String removedDollarSign = curValue.substring(1);
 
 			try {
-				NumberFormat usFormat = NumberFormat.getNumberInstance(Locale.US);
-				parsedIntCurValue = usFormat.parse(removedDollarSign).floatValue();
+				NumberFormat usFormat = NumberFormat
+						.getNumberInstance(Locale.US);
+				parsedIntCurValue = usFormat.parse(removedDollarSign)
+						.floatValue();
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -674,46 +831,48 @@ public class Web {
 	public static String captureScreenshot() {
 		String fileName = null;
 		try {
-			//			WebActions.strScreenshotsFolderPath = DriveSuite.currRunPath
-			//					+ "/Reports/"
-			//					+ ReadProperties.getEnvVariableValue("testSuiteName")
-			//							.replaceAll(" ", "_")
-			//					+ "/"
-			//					+ ReadProperties.getEnvVariableValue("currTestCaseName")
-			//							.replaceAll(" ", "_") + "\\Screenshots";
+			// WebActions.strScreenshotsFolderPath = DriveSuite.currRunPath
+			// + "/Reports/"
+			// + ReadProperties.getEnvVariableValue("testSuiteName")
+			// .replaceAll(" ", "_")
+			// + "/"
+			// + ReadProperties.getEnvVariableValue("currTestCaseName")
+			// .replaceAll(" ", "_") + "\\Screenshots";
 
-//			Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
-//					+ "/"
-//					+ Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots";
+			// Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
+			// + "/"
+			// + Globals.GBL_TestCaseName.replaceAll(" ", "_") +
+			// "\\Screenshots";
 			Globals.GBL_strScreenshotsFolderPath = "./TestReport/"
-					+ Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots";
+					+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
+					+ "\\Screenshots";
 
-			//			File screenShotDir = new File(WebActions.strScreenshotsFolderPath);
+			// File screenShotDir = new
+			// File(WebActions.strScreenshotsFolderPath);
 			File screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
-			//			if (!new File(WebActions.strScreenshotsFolderPath).exists())
-			//				new File(WebActions.strScreenshotsFolderPath).mkdirs();
+			// if (!new File(WebActions.strScreenshotsFolderPath).exists())
+			// new File(WebActions.strScreenshotsFolderPath).mkdirs();
 			if (!new File(Globals.GBL_strScreenshotsFolderPath).exists())
 				new File(Globals.GBL_strScreenshotsFolderPath).mkdirs();
 
 			int randomInt = screenShotDir.listFiles().length;
 
-			//			File scrFile = ((TakesScreenshot) DriveSuite.webDriver)
-			//					.getScreenshotAs(OutputType.FILE);
+			// File scrFile = ((TakesScreenshot) DriveSuite.webDriver)
+			// .getScreenshotAs(OutputType.FILE);
 			File scrFile = ((TakesScreenshot) Web.webdriver)
 					.getScreenshotAs(OutputType.FILE);
 
-			//			fileName = ReadProperties.getEnvVariableValue("currTestCaseName")
-			//					+ "_Itr"
-			//					+ TestDataContainer.GetParameterValue("IterationNumber")
-			//					+ "_" + randomInt + ".png";
+			// fileName = ReadProperties.getEnvVariableValue("currTestCaseName")
+			// + "_Itr"
+			// + TestDataContainer.GetParameterValue("IterationNumber")
+			// + "_" + randomInt + ".png";
 
-			fileName = Globals.GBL_TestCaseName
-					+ "_Itr"
-					+ Globals.GBL_CurrentIterationNumber
-					+ "_" + randomInt + ".png";
+			fileName = Globals.GBL_TestCaseName + "_Itr"
+					+ Globals.GBL_CurrentIterationNumber + "_" + randomInt
+					+ ".png";
 
-			//			FileUtils.copyFile(scrFile, new File(
-			//					WebActions.strScreenshotsFolderPath + "\\" + fileName));
+			// FileUtils.copyFile(scrFile, new File(
+			// WebActions.strScreenshotsFolderPath + "\\" + fileName));
 			FileUtils.copyFile(scrFile, new File(
 					Globals.GBL_strScreenshotsFolderPath + "\\" + fileName));
 
@@ -726,7 +885,8 @@ public class Web {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "./" + Globals.GBL_TestCaseName.replaceAll(" ", "_") + "\\Screenshots" + "\\" + fileName;
+		return "./" + Globals.GBL_TestCaseName.replaceAll(" ", "_")
+				+ "\\Screenshots" + "\\" + fileName;
 	}
 
 	/*
