@@ -77,6 +77,33 @@ public class SftpUtils {
     	return isSFTPConnected;                                               
     }
     
+    
+    /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+   	FUNCTION:			initializeRemoteDirectoryPath()	
+    DESCRIPTION:	    This method initialize the directory path for the remote directories
+    PARAMETERS: 		None
+    RETURNS:		    void               	
+    REVISION HISTORY: 
+    ------------------------------------------------------------------------------------------------------------------------------------------------------------
+    Author : Janani     Date : 02-03-2016       
+    ------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+    public static void initializeRemoteDirectoryPath()
+    {
+    	establishSFTPConnection();
+    	if(isSFTPConnected)
+    	{
+    		try {
+    			sftp = (ChannelSftp) sftpChannel;   
+    			Globals.GC_REMOTE_OUTPUT_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_OUTPUT_PATH;
+    			Globals.GC_REMOTE_INPUT_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_INPUT_PATH;
+    			Globals.GC_REMOTE_ARCHIVE_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_ARCHIVE_PATH;
+    		}
+    		catch(Exception e) { e.printStackTrace(); }
+    		}
+    }
+    
+    
     /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
    	FUNCTION:			upload_File(String srcFilePath,String dstFolderPath)	
     DESCRIPTION:	    Upload file from local to remote directory using SFTP
