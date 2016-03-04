@@ -3,13 +3,12 @@ package pageobjects;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
-
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -21,7 +20,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
 	private WebElement MenuPPTInfo;
 
-	@FindBy(xpath = "//*[@id='oCMenu_329'][contains(text() , 'Loan Info')]")
+	@FindBy(xpath = "//*[@id='oCMenu_25129'][contains(text() , 'Loan Info')]")
 	private WebElement MenuLoanInfo;
 
 	@FindBy(css = "td.pageMenuTitle")
@@ -97,7 +96,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	@FindBy(css = "table#table_loanHistorySummary tr td:nth-of-type(11)")
 	private List<WebElement> Total_Outstanding_Bal_List;
 
-	@FindBy(css = "table#table_loanHistorySummary tr td:nth-of-type(11)")
+	@FindBy(css = "table#table_loanHistorySummary tr td:nth-of-type(12)")
 	private List<WebElement> Default_Indicator_List;
 
 	LoadableComponent<?> parent;
@@ -126,6 +125,39 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 					"Loan info Link on Participant Info tab didn't disply successfully",
 					true);
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * Method to return WebElement object corresponding to specified field name
+	 * Elements available for fields:
+	 * 	LOG OUT Or LOGOUT - [Link]
+	 * 	HOME - [Link]
+	 * 	MY ACCOUNTS - [Link]
+	 * 	RETIREMENT INCOME - [Label]
+	 * </pre>
+	 * 
+	 * @param fieldName
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private List<WebElement> getWebElement(String fieldName) {
+
+		if (fieldName.trim().equalsIgnoreCase("Total Outstanding Bal")) {
+			return this.Total_Outstanding_Bal_List;
+		}
+		if (fieldName.trim().equalsIgnoreCase("PaymentFrqMthd")) {
+			return this.Payment_Frq_List;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Dafault_Ind")) {
+			return this.Default_Indicator_List;
+		}
+		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
+				+ fieldName + "'",
+				"No WebElement mapped for this field\nPage: <b>"
+						+ this.getClass().getName() + "</b>", false);
+
+		return null;
 	}
 
 	/**
@@ -178,7 +210,9 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 		if (resultset != null) {
 			while (resultset.next()) {
 				loanInfo_List.add(resultset.getString("IND_ID"));
+				loanInfo_List.add(resultset.getString("GA_ID"));
 				loanInfo_List.add(resultset.getString(expecteddata_loaninfo));
+				
 			}
 		}
 		return loanInfo_List;
@@ -192,10 +226,12 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	 * @return pptID
 	 * @author rnjbdn
 	 */
-	public void verify_Loan_Status_Details(String loanStsVal_From_DB,
+	public void verify_Loan_Status_Details(String webelement,String loanStsVal_From_DB,
 			String loanSts_var) {
 		boolean isLoanStatusEleDisplayed = false;
+		boolean isLoanStsEqual = false ;
 		String loanSts_Val_On_Web;
+		List<WebElement> loanStsWE = getWebElement(webelement.toUpperCase());
 		if (Web.isWebElementDisplayed(LoanStatus_Tab, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Check if Loan Status table displayed or not",
@@ -205,18 +241,60 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 			}
 			for (int i = 0; i < Loan_Status_List.size(); i++) {
 				isLoanStatusEleDisplayed = Web
-						.isWebElementDisplayed(Total_Outstanding_Bal_List
+						.isWebElementDisplayed(loanStsWE
 								.get(i));
+				
 				if (isLoanStatusEleDisplayed) {
-					loanSts_Val_On_Web = Total_Outstanding_Bal_List.get(i)
+					loanSts_Val_On_Web = loanStsWE.get(i)
 							.getText();
-					if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
+					switch (loanSts_var) {
+					case "LOAN_AMT":
+						if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
+							isLoanStsEqual = true ;
+						}
+						break;
+					case "REPAY_FREQ" :
+						switch (loanStsVal_From_DB) {
+						case "W":
+							break;
+						case "M":
+							break;
+						case "BW":
+							if (loanSts_Val_On_Web.contains("Bi Weekly")) {
+								isLoanStsEqual = true ;
+							}
+							break;
+						case "SM":
+							break;
+						}						
+						break ;
+					case "REPAY_MTHD_CODE":
+						if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, loanStsVal_From_DB)) {
+							isLoanStsEqual = true ;
+						}
+						break;
+					case "DEFAULT_IND":
+						switch (loanStsVal_From_DB) {
+						case "Y":
+							if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, "YES")) {
+								isLoanStsEqual = true ;
+							}
+							break;
+						case "N":
+							if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, "NO")) {
+								isLoanStsEqual = true ;
+							}
+							break;
+						}
+						break;
+					}					
+					if (isLoanStsEqual) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Check if " + loanSts_var
 										+ " displayed properly for Loan status",
 								loanSts_var
-										+ " displayed successfully for the Loan status /n/n"
+										+ " displayed successfully for the Loan status \n\n"
 										+ loanSts_var + " :"
 										+ loanSts_Val_On_Web, false);
 					}else{
@@ -225,7 +303,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 								"Check if " + loanSts_var
 										+ " displayed properly for Loan status",
 								loanSts_var
-										+ " displayed successfully for the Loan status /n/n"
+										+ " displayed successfully for the Loan status \n\n"
 										+ loanSts_var + " :"
 										+ loanSts_Val_On_Web, false);
 					}
@@ -235,7 +313,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 							"Check if " + loanSts_var
 									+ " displayed properly for Loan status",
 							loanSts_var
-									+ " didn't displayed successfully for the Loan status /n/n"
+									+ " didn't displayed successfully for the Loan status \n\n"
 									, true);
 				}
 			}

@@ -551,7 +551,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.clickOnElement(SubmitPPTIdBtn);
 
 		// ------------- Handle Multiple PPT Search Result -----
-		if (searchValue.length > 1) {
+		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link) && PlanNoOnPartList_Link.size() > 1) {
 			click_And_Verify_Plan_On_Search_Page(searchValue[1]);
 		}
 
@@ -1020,8 +1020,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			if (reg_status_On_Web.equalsIgnoreCase(reg_status)) {
 				isWebRegSts = true;
 			}
-			Web.clickOnElement(participantRegStatus);
-			Web.mouseHover(participantRegStatus);
 			if (isWebRegSts) {
 				Reporter.logEvent(Status.PASS,
 						"Validate Web registration status label "
@@ -1033,7 +1031,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 								+ " and reg status as " + reg_status_On_Web
 								+ " on ppt homepage displayed successfully",
 						false);
-
+				Web.clickOnElement(participantRegStatus);
+				Web.mouseHover(participantRegStatus);
 				switch (reg_status) {
 				case "Registered":
 					String userName = Reg_Status_UserName_data.getText();
