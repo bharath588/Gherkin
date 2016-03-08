@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Negative">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_00_Verify_new_user_flow_negative"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_00_Verify_new_user_flow_positive"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+                <methods>
+                    <include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+                <methods>
+                    <include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC002_Expired Password_negative">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC002_Expired Password_positive">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC019_Verify_Default_Plan_Prompting"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC018_Security_Question_Validation_Existing_User"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
