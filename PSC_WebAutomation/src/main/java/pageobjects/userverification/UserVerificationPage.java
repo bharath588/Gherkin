@@ -1,14 +1,11 @@
 package pageobjects.userverification;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
 import pageobjects.login.LoginPage;
 import lib.DB;
 import lib.Reporter;

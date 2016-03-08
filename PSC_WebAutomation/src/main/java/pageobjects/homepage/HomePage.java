@@ -2,19 +2,15 @@ package pageobjects.homepage;
 
 import java.lang.reflect.Method;
 import java.util.List;
-
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -118,14 +114,6 @@ public class HomePage extends LoadableComponent<HomePage>{
 		if (fieldName.trim().equalsIgnoreCase("MY PROFILE")) {
 			return this.myProfileLink;
 		}
-
-//		Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
-//				"No WebElement mapped for this field\nPage: <b>"+this.getClass()+"</b>", false);
-//		Reporter.logEvent(
-//				Status.WARNING,
-//				"Get WebElement for field '" + fieldName + "'",
-//				"No WebElement mapped for this field\nPage: <b> "+this.getClass().getName()+"</b>",
-//				false);
 		return null;
 	}
 		
@@ -136,10 +124,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	 */	
 	public void checkFooterLinkPostLogin(List<String> FooterLinks) {				
 		List<WebElement> footerLinks = wePostFooterLinkListLogin;
-		WebElement footerlink; @SuppressWarnings("unused")
-		boolean textMatch = false;@SuppressWarnings("unused")
+		WebElement footerlink; 
+		boolean textMatch = false;
 		String footerLinkText =null ;
-		String testData = null;@SuppressWarnings("unused")
+		String testData = null;
 		String modalWindowHeaderText = null;
 		try{
 			if(FooterLinks.size()!=footerLinks.size()){
