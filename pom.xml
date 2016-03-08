@@ -111,9 +111,9 @@
 						<reuseForks>false</reuseForks>
 						<forkMode>never</forkMode>
 						
-						<suiteXmlFiles>
+						<!-- <suiteXmlFiles>
 							<suiteXmlFile>RunXML/DemoTest.xml</suiteXmlFile>
-						</suiteXmlFiles>
+						</suiteXmlFiles> -->
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 

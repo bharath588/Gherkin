@@ -60,7 +60,10 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 //		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
 
-		lib.Web.webdriver.get(Stock.getConfigParam("AppURL"));
+		//lib.Web.webdriver.get(Stock.getConfigParam("AppURL"));
+		Web.webdriver.get(Stock.getConfigParam("AppURL" + "_" + Stock.getConfigParam("TEST_ENV")));
+
+
 
 
 		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
