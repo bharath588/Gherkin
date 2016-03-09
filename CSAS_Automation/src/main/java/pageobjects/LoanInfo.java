@@ -9,6 +9,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -112,7 +113,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void load() {
-		this.parent = new ParticipantHome().get();
+	//	this.parent = new ParticipantHome().get();
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 			Web.clickOnElement(MenuLoanInfo);
@@ -318,7 +319,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 				}
 			}
 		}else{
-			Reporter.logEvent(Status.PASS,
+			Reporter.logEvent(Status.FAIL,
 					"Check if Loan Status table displayed or not",
 					"Loan Status table didn't displayed successfully", true);
 		}

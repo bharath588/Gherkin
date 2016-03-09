@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import pageobjects.ParticipantHome;
 import core.framework.Globals;
 
@@ -58,7 +61,11 @@ public class validate_participanthomepage {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-
+			
+			Reporter.logEvent(
+					Status.PASS,
+					"Check if Employment status for plan number : ",
+					"Employment status for plan number : ", true);
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Search with PPT ID..
@@ -73,11 +80,12 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -121,11 +129,12 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -172,11 +181,12 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -224,12 +234,13 @@ public class validate_participanthomepage {
 		Globals.exception = e;
 		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 				"Exception Occured", true);
-	} catch (AssertionError ae) {
-		ae.printStackTrace();
-		Globals.assertionerror = ae;
-		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-				"Assertion Failed!!", true);
-	}  finally {
+	} catch (Error ae) {
+        ae.printStackTrace();
+        Globals.error = ae;
+        String errorMsg = ae.getMessage();
+        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                        errorMsg, true);
+	} finally {
 		try {
 			Reporter.finalizeTCReport();
 		} catch (Exception e1) {
@@ -277,12 +288,13 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
-		}  finally {
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -322,11 +334,12 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -371,11 +384,12 @@ public class validate_participanthomepage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
