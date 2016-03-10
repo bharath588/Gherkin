@@ -14,6 +14,7 @@ import java.util.Arrays;
 //import java.util.Vector;
 //import org.apache.commons.io.FileUtils;
 
+
 import lib.Stock;
 
 import com.jcraft.jsch.Channel;
@@ -91,13 +92,17 @@ public class SftpUtils {
     public static void initializeRemoteDirectoryPath()
     {
     	establishSFTPConnection();
+    	  String REMOTE_OUTPUT_PATH="\\\\work\\\\batch\\\\output";
+          String REMOTE_INPUT_PATH="\\\\work\\\\batch\\\\input\\";    	  
+          String REMOTE_ARCHIVE_PATH="\\\\work\\\\batch\\\\input\\\\archive\\";
     	if(isSFTPConnected)
     	{
     		try {
-    			sftp = (ChannelSftp) sftpChannel;   
-    			Globals.GC_REMOTE_OUTPUT_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_OUTPUT_PATH;
-    			Globals.GC_REMOTE_INPUT_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_INPUT_PATH;
-    			Globals.GC_REMOTE_ARCHIVE_DIRECTORY=sftp.getHome()+Globals.GC_REMOTE_ARCHIVE_PATH;
+    			sftp = (ChannelSftp) sftpChannel;  
+    			Globals.GC_REMOTE_OUTPUT_PATH=(sftp.getHome()+REMOTE_OUTPUT_PATH).replace("/home/d_keys/","\\\\fss-devlfs\\\\");
+    			Globals.GC_REMOTE_INPUT_PATH=(sftp.getHome()+REMOTE_INPUT_PATH).replace("/home/d_keys/","\\\\fss-devlfs\\\\");
+    			Globals.GC_REMOTE_ARCHIVE_PATH=(sftp.getHome()+REMOTE_ARCHIVE_PATH).replace("/home/d_keys/","\\\\fss-devlfs\\\\");
+    			
     		}
     		catch(Exception e) { e.printStackTrace(); }
     		}
@@ -127,7 +132,7 @@ public class SftpUtils {
      }
 	
      /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
-     FUNCTION:			download_File(String srcFolderPath,String fileNamePattern, String fileType,String dstFolderPath)	
+     FUNCTION:			download_File(String srcFolderPath, String remoteFolderPath,String fileNamePattern, String fileType,String dstFolderPath)	
      DESCRIPTION:	    Download Latest file from remote to local directory using SFTP
      PARAMETERS: 		String srcFolderPath,String fileNamePattern, String fileType,String dstFolderPath
      RETURNS:		    void               	
@@ -136,13 +141,13 @@ public class SftpUtils {
      Author : Janani     Date : 06-11-2015       
      ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-      */ public static void download_File(String srcFolderPath,String fileNamePattern, String fileType,String dstFolderPath)
+      */ public static void download_File(String srcFolderPath,String remoteFileFolderPath,String fileNamePattern, String fileType,String dstFolderPath)
       {
     	  establishSFTPConnection();
     	  if(isSFTPConnected) { 
     		  try{
     			  sftp = (ChannelSftp) sftpChannel;
-    			  File remoteFile=new File(srcFolderPath);
+    			  File remoteFile=new File(remoteFileFolderPath);
     			  File downloadFile=null;    			  
     			  sftp.cd(sftp.getHome() + srcFolderPath);
     			  File[] listOfFiles = remoteFile.listFiles(new FileFilter() {          
@@ -152,7 +157,8 @@ public class SftpUtils {
     			  for (File file : listOfFiles) {
     				  if (file.getName().startsWith(fileNamePattern) && file.getName().endsWith(fileType)) 
     					  downloadFile = file;								
-    			  }    			  
+    			  } 
+    			  System.out.println(downloadFile.getName());
     			  sftp.get(sftp.getHome() + srcFolderPath+downloadFile.getName(), dstFolderPath); 
        		  }
     		  catch(SftpException e)

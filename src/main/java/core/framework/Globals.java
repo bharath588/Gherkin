@@ -134,6 +134,7 @@ public class Globals {
     	  public static final String GC_CANCEL_STATUS="Cancel";
     	  public static final String GC_TRANS_CONF_BEFORE_JOB_STATUS="Before";
     	  public static final String GC_TRANS_CONF_AFTER_JOB_STATUS="After";
+    	  public static String GC_TEST_REALPATH="";
     	  
     	  
         //SHELL
@@ -142,15 +143,15 @@ public class Globals {
           public static final String GC_SHELL_HOST_NAME="gp-das2";
           public static final String GC_SHELL_CHANNEL_NAME="shell";
           public static final String GC_SFTP_CHANNEL_NAME="sftp";
-          public static final String GC_REMOTE_OUTPUT_PATH="/work/batch/output/";
-          public static final String GC_REMOTE_INPUT_PATH="/work/batch/input/";    	  
-    	  public static final String GC_REMOTE_ARCHIVE_PATH="/work/batch/input/archive/";
+          public static String GC_REMOTE_OUTPUT_PATH="";
+          public static String GC_REMOTE_INPUT_PATH="";    	  
+    	  public static String GC_REMOTE_ARCHIVE_PATH="";
     	  /*Before Using these Remote Output, Input and Archive variables, 
     	   * call initializeRemoteDirectoryPath() method from SFTP Utils Call to initialize values
     	   */
-      	  public static  String GC_REMOTE_OUTPUT_DIRECTORY="";
-    	  public static  String GC_REMOTE_INPUT_DIRECTORY="";    	  
-    	  public static  String GC_REMOTE_ARCHIVE_DIRECTORY="";
+      	  public static final String GC_REMOTE_OUTPUT_DIRECTORY="/work/batch/output/";
+    	  public static final String GC_REMOTE_INPUT_DIRECTORY="/work/batch/input/";    	  
+    	  public static final String GC_REMOTE_ARCHIVE_DIRECTORY="/work/batch/input/archive/";
     	  public static final String GC_LOCAL_TEMP_DIRECTORY ="C:\\temp";
 //    	  public static final String GC_LOCAL_TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
     	  public static final String GC_PROSPECT_FILE_NAMEPATTERN="ma_empower_dc_prosp_";
