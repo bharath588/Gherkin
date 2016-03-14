@@ -8,9 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-
 import lib.Reporter.Status;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -29,7 +27,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import core.framework.Globals;
 
 public class Web {
@@ -138,15 +135,19 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static boolean isWebElementDisplayed(Object pageClassObj,
-			String fieldName) throws Exception {
+			String fieldName,boolean... waitForEle)  {
 		boolean blnElementDisplayed = false;
 		try {
 			WebElement displayedElement = getPageObjectFields(pageClassObj,
 					fieldName);
-			try {
-				Web.waitForElement(displayedElement);
-			} catch (Exception e) {
-				// Do Nothing
+			try{
+				if (waitForEle.length > 0) {
+					if (waitForEle[0] == true) {
+						Web.waitForElement(displayedElement);
+					}
+				}	
+			}catch(Exception t){
+				// nothing
 			}
 			blnElementDisplayed = displayedElement.isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -279,14 +280,14 @@ public class Web {
 	 * @throws Exception
 	 */
 	private static WebElement getPageObjectFields(Object pageObjectClass,
-			String fieldName) throws Exception {
+			String fieldName) {
 		Method getWebElementMethod = null;
 		WebElement element = null;
 		try {
 			getWebElementMethod = pageObjectClass.getClass().getDeclaredMethod(
 					"getWebElement", String.class);
 		} catch (NoSuchMethodException e) {
-			throw new Exception("getWebElement() method is not found in "
+			throw new Error("getWebElement() method is not found in "
 					+ pageObjectClass.getClass().toString());
 		}
 		getWebElementMethod.setAccessible(true);
@@ -294,7 +295,7 @@ public class Web {
 			element = (WebElement) getWebElementMethod.invoke(pageObjectClass,
 					fieldName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Error("Error getting page obejct fields : "+ e.getMessage());
 		}
 		return element;
 	}
@@ -831,48 +832,21 @@ public class Web {
 	public static String captureScreenshot() {
 		String fileName = null;
 		try {
-			// WebActions.strScreenshotsFolderPath = DriveSuite.currRunPath
-			// + "/Reports/"
-			// + ReadProperties.getEnvVariableValue("testSuiteName")
-			// .replaceAll(" ", "_")
-			// + "/"
-			// + ReadProperties.getEnvVariableValue("currTestCaseName")
-			// .replaceAll(" ", "_") + "\\Screenshots";
-
-			// Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
-			// + "/"
-			// + Globals.GBL_TestCaseName.replaceAll(" ", "_") +
-			// "\\Screenshots";
 			Globals.GBL_strScreenshotsFolderPath = "./TestReport/"
 					+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
 					+ "\\Screenshots";
-
-			// File screenShotDir = new
-			// File(WebActions.strScreenshotsFolderPath);
+			
 			File screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
-			// if (!new File(WebActions.strScreenshotsFolderPath).exists())
-			// new File(WebActions.strScreenshotsFolderPath).mkdirs();
 			if (!new File(Globals.GBL_strScreenshotsFolderPath).exists())
 				new File(Globals.GBL_strScreenshotsFolderPath).mkdirs();
 
 			int randomInt = screenShotDir.listFiles().length;
-
-			// File scrFile = ((TakesScreenshot) DriveSuite.webDriver)
-			// .getScreenshotAs(OutputType.FILE);
 			File scrFile = ((TakesScreenshot) Web.webdriver)
 					.getScreenshotAs(OutputType.FILE);
-
-			// fileName = ReadProperties.getEnvVariableValue("currTestCaseName")
-			// + "_Itr"
-			// + TestDataContainer.GetParameterValue("IterationNumber")
-			// + "_" + randomInt + ".png";
 
 			fileName = Globals.GBL_TestCaseName + "_Itr"
 					+ Globals.GBL_CurrentIterationNumber + "_" + randomInt
 					+ ".png";
-
-			// FileUtils.copyFile(scrFile, new File(
-			// WebActions.strScreenshotsFolderPath + "\\" + fileName));
 			FileUtils.copyFile(scrFile, new File(
 					Globals.GBL_strScreenshotsFolderPath + "\\" + fileName));
 

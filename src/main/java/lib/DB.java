@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-
 import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
 
@@ -22,7 +21,7 @@ public class DB {
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
 	
-	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues) throws Exception{
+	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues) {
 		
 		ResultSet tempRecordSet = null;
 		PreparedStatement stmt;
@@ -34,7 +33,7 @@ public class DB {
 			masterRecordSet.add(tempRecordSet);
 
 		} catch (SQLException e) {
-			throw new Exception ("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
+			throw new Error ("Execution of the Query \n" + query + "\nFailed with message \n" + e.getMessage());
 		}
 		return tempRecordSet;
 	}
@@ -56,7 +55,7 @@ public class DB {
 		return recordsUpdated;
 	}
 	
-	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues) throws Exception {
+	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues)  {
 		PreparedStatement stmt = null;
 		int queryParamCnt = 0;
 		String dataBaseName = Stock.getConfigParam(dbName.trim());
@@ -84,18 +83,18 @@ public class DB {
 					}
 					
 				} else {
-					throw new Exception ("Parameters in the query and the values sent missmatched");
+					throw new Error ("Parameters in the query and the values sent missmatched");
 				}
 			}
 		} catch (SQLException e) {
-			throw new Exception ("SQL Exception occurred while preparing query:\n" + query + "\n\nFailed with message:\n" + e.getMessage());
+			throw new Error ("SQL Exception occurred while preparing query:\n" + query + "\n\nFailed with message:\n" + e.getMessage());
 		}
 		
 		return stmt;
 	}
 	
 	
-	private static Connection getDBConnection(String DBName) throws Exception{
+	private static Connection getDBConnection(String DBName) {
 		
 		OracleDataSource dataSource;
 		Connection conn;
@@ -119,7 +118,7 @@ public class DB {
 				dbpassword = Stock.getConfigParam("DBPASSWORD");
 				
 				if (jdbcUrl.trim().length() == 0) {
-					throw new Exception ("No connection string found for the DB: " + DBName);
+					throw new Error ("No connection string found for the DB: " + DBName);
 				}
 				
 				dataSource.setURL(jdbcUrl);
@@ -127,7 +126,7 @@ public class DB {
 				conn = dataSource.getConnection(dbuserid,dbpassword);
 				
 			} catch (SQLException e) {
-				throw new Exception ("Establishing connection to DB " + DBName + " Failed \n " + e.getMessage());
+				throw new Error ("Establishing connection to DB " + DBName + " Failed \n " + e.getMessage());
 			}
 			
 			return conn;

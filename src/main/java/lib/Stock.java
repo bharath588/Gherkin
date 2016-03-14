@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import lib.Log.Level;
 import core.framework.Globals;
 import core.framework.ThrowException;
@@ -52,16 +51,13 @@ public class Stock {
 		return null;
 	}
 
-	public static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName)
-			throws Exception {
+	public static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) {
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
 		// Getting Application name and Module name so that the
 		// correct excel is picked up
 		LinkedHashMap<Integer, Map<String, String>> td = null;
-		Map<String, String> mapData = null;		
-		//String appName = tcAbsPath.split("\\.")[1];
-		//String modName = tcAbsPath.split("\\.")[3];
+		Map<String, String> mapData = null;				
 		String appName = getConfigParam("AUT");
 		String modName = tcAbsPath.split("\\.")[(tcAbsPath.split("\\.").length)-1];
 		
@@ -144,7 +140,7 @@ public class Stock {
 		return null;
 	}
 
-	public static Map<String, String> getLoopIndex(String indexString) throws Exception {
+	public static Map<String, String> getLoopIndex(String indexString) {
 		String GET_INDEX_PATTERN = "[0-9,>temp]+";
 		String[] arrFirstSplit = null;
 		Pattern pattern = null;
@@ -194,7 +190,7 @@ public class Stock {
 		return null;
 	}
 
-	public static void getParam(String configPath) throws Exception {
+	public static void getParam(String configPath) {
 		String key = Globals.GC_EMPTY;
 		String val = Globals.GC_EMPTY;
 		XL_ReadWrite xlRW = null;
@@ -219,40 +215,41 @@ public class Stock {
 				ThrowException.Report(TYPE.EXCEPTION, "Unable to read Config :" + e.getMessage());
 			}
 		}
-
 	}
 	
-	public static String GetParameterValue(String strParamName) throws Exception{
+	public static String GetParameterValue(String strParamName) {
 		String value = null;
 		if (globalTestdata.containsKey(strParamName.toUpperCase().trim())){
 			if (globalTestdata.get(strParamName.toUpperCase().trim()).length() > 0)
 				value = globalTestdata.get(strParamName.trim().toUpperCase());
 		}	
 		else {
-			//System.out.println("Parameter '" + strParamName + "' does not exist in Test data!");
-			throw new Exception("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
+			throw new Error("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
 		}
-		
 		return value;
 	}
 	
-	public static String[] getTestQuery(String queryName) throws Exception
-	{
-		String[] queryData;
-		String appName = getConfigParam("AUT");
-		XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
-		          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
-		int queryColNo = XL.getColNum("query", 0,"QueryName");
-		int queryPointer = 0;
+	public static String[] getTestQuery(String queryName)	{
+		try{
+			String[] queryData;
+			String appName = getConfigParam("AUT");
+			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
+			          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
+			int queryColNo = XL.getColNum("query", 0,"QueryName");
+			int queryPointer = 0;
 
-		for (; queryPointer < XL.getRowCount("query"); queryPointer++) {
-			if(XL.getCellData("query",queryPointer, queryColNo).equalsIgnoreCase(queryName)){
-				break;
+			for (; queryPointer < XL.getRowCount("query"); queryPointer++) {
+				if(XL.getCellData("query",queryPointer, queryColNo).equalsIgnoreCase(queryName)){
+					break;
+				}
 			}
+			queryData = new String[]{XL.getCellData("query",queryPointer, queryColNo+1)
+					,XL.getCellData("query",queryPointer, queryColNo+2)};		
+			return queryData;
+		}catch(Exception e){
+			ThrowException.Report(TYPE.EXCEPTION, "Unable to get test query :" + e.getMessage());
 		}
-		queryData = new String[]{XL.getCellData("query",queryPointer, queryColNo+1)
-				,XL.getCellData("query",queryPointer, queryColNo+2)};		
-		return queryData;
+		return null;
 	}
 	
 	public static String getConfigParam(String parameterName){
