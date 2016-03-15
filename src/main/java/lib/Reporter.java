@@ -3,14 +3,13 @@ package lib;
 
 import java.io.File;
 import java.util.Random;
-
 import com.google.common.base.Throwables;
 import com.relevantcodes.extentreports.DisplayOrder;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.GridType;
 import com.relevantcodes.extentreports.LogStatus;
-
 import core.framework.Globals;
+import core.framework.TestListener;
 
 public class Reporter {
 
@@ -25,8 +24,17 @@ public class Reporter {
 	public static ExtentReports objReport;
 	public enum Status {
 		PASS, FAIL, WARNING, INFO
-	}
+	}	
+	private static boolean checkTestStatus;
 	
+	public static boolean isCheckTestStatus() {
+		return checkTestStatus;
+	}
+
+	public static void setCheckTestStatus(boolean checkTestStatus) {
+		Reporter.checkTestStatus = checkTestStatus;
+	}
+
 	/**  
 	 *<pre> Method to initiate 
 	 * 1) currently running test suite name (Used in HTML Report)
@@ -37,6 +45,7 @@ public class Reporter {
 	 */
 	public static void initializeModule(String className) {
 		if (!Globals.GBL_SuiteName.equalsIgnoreCase(className)) {
+			
 			Globals.GBL_REPLACE_EXISTING_HTML_REPORT = Stock.getConfigParam("Overwrite_Existing_Report");
 			Globals.GBL_SuiteName = className;
 			
@@ -61,7 +70,8 @@ public class Reporter {
 			Reporter.objReport.config().reportTitle("Execution summary report for [" + Globals.GBL_SuiteName + "]");
 			Reporter.objReport.config().displayCallerClass(false);
 			Reporter.objReport.config().useExtentFooter(false);
-			Reporter.objReport.config().setImageSize("10%");
+			Reporter.objReport.config().setImageSize("10%");	
+			checkTestStatus = true;
 		}
 	}
 	
@@ -173,13 +183,13 @@ public class Reporter {
 			
 			switch (logStatus) {
 			case PASS:
-				tmpLogStatus = LogStatus.PASS;
+				tmpLogStatus = LogStatus.PASS;				
 				Details = "<font size=\"3\" color=\"green\"><pre>" + Details + "</pre></font>";
 				break;
 			case FAIL:
-				tmpLogStatus = LogStatus.FAIL;
-				
+				tmpLogStatus = LogStatus.FAIL;				
 				Details = "<font size=\"3\" color=\"red\"><pre>" + Details + "</pre></font>";
+				checkTestStatus = false;
 				Details += stackTraceLnk;
 				break;
 			case WARNING:
@@ -216,7 +226,11 @@ public class Reporter {
 	 * @throws Exception
 	 */
 	public static void finalizeTCReport () throws Exception {
-		Reporter.objReport.endTest();
+		//Checking final report status
+		if(!checkTestStatus){
+			TestListener.setFinalTestStatus(false);
+		}
+		Reporter.objReport.endTest();		
 	}
 	
 

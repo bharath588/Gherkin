@@ -51,6 +51,7 @@ public class DriverScript {
 		Log.Report(Level.INFO,Globals.GC_LOG_INIT_MSG);
 		testConfigPath = Globals.GC_TESTCONFIGLOC+Globals.GC_CONFIGFILEANDSHEETNAME+".xls";	
 		ReadTestConfig();
+		//Checking if RunXML key has value set to "SelectXML" OR "";
 		if(Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_RUNXML_DEFAULT)||
 		   Stock.getConfigParam(Globals.GC_KEY_RUNXML).trim().equalsIgnoreCase(Globals.GC_EMPTY)){
 		   BuildTestNGXML();

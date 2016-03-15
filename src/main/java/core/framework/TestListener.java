@@ -18,6 +18,16 @@ import core.framework.ThrowException.TYPE;
 public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener {
 
 	int currentTCInvocationCount=0;
+	private static boolean finalTestStatus =  true;
+	
+	private boolean isFinalTestStatus() {
+		return finalTestStatus;
+	}
+
+	public static void setFinalTestStatus(boolean testStatus) {
+		finalTestStatus = testStatus;
+	}
+	
 	public void onStart(ISuite suite) {
 		try{
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
@@ -73,6 +83,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onFinish(ITestContext context) {
+		
 	}
 
 	
@@ -114,9 +125,12 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			Web.setLastIteration((Stock.getIterations() == (currentTCInvocationCount+1))? true:false);				
 		}
 	}
-
 	
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		
+		if(method.getTestMethod().isTest()){
+			if(!isFinalTestStatus()){
+				testResult.setStatus(ITestResult.FAILURE);
+			}			
+		}
 	}	
 }
