@@ -4,11 +4,21 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-     <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
+
+<test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
         <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+            <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+<test name="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF01_TC01_User_has_PIN"/>
                 </methods>
             </class>
         </classes>
