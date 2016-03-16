@@ -135,7 +135,7 @@ public class DB {
 		
 	}
 	
-	public static int getRecordSetCount(ResultSet resultSet) throws Exception{
+	public static int getRecordSetCount(ResultSet resultSet) {
 		
 		int rSize = 0;
 		
@@ -145,7 +145,7 @@ public class DB {
 			resultSet.beforeFirst();
 		} catch (SQLException e) {
 			//System.out.println("RecordSet is empty");
-			throw new Exception ("SQL Exception: " + e.getMessage());
+			throw new Error ("SQL Exception: " + e.getMessage());
 		}
 		
 		return rSize;

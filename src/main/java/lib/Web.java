@@ -235,7 +235,7 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static boolean clickOnElement(Object pageClassObj,
-			String webElementName) throws Exception {
+			String webElementName) {
 		boolean success = false;
 		if (webElementName != null) {
 			WebElement clickableElement = getPageObjectFields(pageClassObj,
