@@ -68,7 +68,7 @@ public class validate_loaninfopage {
 
 			//Step2: Get PPT ID and expected data for loan info validation
 			loanInfo_List = loanInfopage_Obj.getPPTIDAndExpDataForLoanInfo(Stock.GetParameterValue("expecteddata_loaninfo")) ;
-			if (loanInfo_List.size() <= 1) {
+			if (loanInfo_List.size() < 1) {
 				throw new AssertionError("Sql query doesnot provide any data") ;
 			}
 			// Step2:Search with PPT ID..
@@ -83,11 +83,12 @@ public class validate_loaninfopage {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					"Exception Occured", true);
-		} catch (AssertionError ae) {
-			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
