@@ -1,12 +1,29 @@
 package pageobjects;
 
+import lib.Reporter;
+import lib.Web;
+import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
 
 public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance>{
 
-//Money Type Balance..(MTB)	
+//PPT Info Menu links..
+	
+	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
+	private WebElement MenuPPTInfo;
+	
+	@FindBy(xpath = "//*[@id='oCMenu_323'][contains(text(),'Account Balance')]")
+	private WebElement MenuAccBal;
+	
+	@FindBy(xpath = "//*[@id='oCMenu_325'][contains(text(),'Money Type Balance')]")
+	private WebElement MenuMoneyTypeBal;
+	
+	//Money Type Balance..(MTB)	
 	@FindBy(css = "table[id = 'table_Money Type Balance'] td.pageMenuTitle")
 	private WebElement MTBPageTitle ;
 	
@@ -115,20 +132,42 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance>{
 	@FindBy(css = "table#acctBalMntySummary th:nth-of-type(6)")
 	private WebElement MTTVestedBal ;
 
+	LoadableComponent<?> parent;
+
+	public MoneyTypeBalance() {
+		
+		PageFactory.initElements(Web.webdriver, this);
+	}
+
 	@Override
 	protected void isLoaded() throws Error {
-		// TODO Auto-generated method stub
-		
+		Assert.assertTrue(Web.isWebElementDisplayed(MTBPageTitle));
 	}
 
 	@Override
 	protected void load() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
-	
-	
+		Web.mouseHover(MenuPPTInfo);
+		if (Web.isWebElementDisplayed(MenuAccBal, true)) {
+			Web.mouseHover(MenuAccBal);
+			if (Web.isWebElementDisplayed(MenuMoneyTypeBal, true)) {
+				Web.clickOnElement(MenuMoneyTypeBal);
+				if (Web.isWebElementDisplayed(MTBPageTitle, true)) {
+					Reporter.logEvent(Status.PASS,
+							"Check if Money Type Balance page displayed or not",
+							"Money Type Balance page displyed successfully", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Check if Money Type Balance page displayed or not",
+							"Money Type Balance page didn't disply successfully", true);
+				}
+			}
+			
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Check if Money Type Balance Link on Participant Info tab displayed or not",
+					"Money Type Balance Link on Participant Info tab didn't display successfully",
+					true);
+		}
+	}		
 }
