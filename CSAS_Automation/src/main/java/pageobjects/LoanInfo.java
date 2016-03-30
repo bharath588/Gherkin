@@ -117,13 +117,21 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 			Web.clickOnElement(MenuLoanInfo);
-			Reporter.logEvent(Status.INFO, "Check if Loan info page open",
-					"Loan info page displayed successfully", true);
+			if (Web.isWebElementDisplayed(LoanInfoPageTitle, true)) {
+				Reporter.logEvent(Status.PASS,
+						"Check if Loan info page displayed or not",
+						"Loan info page displyed successfully", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Check if Loan info page displayed or not",
+						"Loan info page didn't disply successfully", true);
+			}
+			
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Check if Loan info Link on Participant Info tab displayed or not",
-					"Loan info Link on Participant Info tab didn't disply successfully",
+					"Loan info Link on Participant Info tab didn't display successfully",
 					true);
 		}
 	}
