@@ -4,16 +4,26 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-
-<test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+     <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
                 </methods>
             </class>
         </classes>
     </test>
-
     
+    <test name="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+   
+   
 </suite>
