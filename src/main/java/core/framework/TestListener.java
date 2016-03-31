@@ -32,6 +32,11 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		try{
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
 			Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
+			if(!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty())
+            {
+            Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV, Globals.GC_EXECUTION_ENVIRONMENT, true);
+            }
+
 			Log.Report(Level.INFO,"Test Configuration initialized successfully");
 		}catch(Exception e){
 			ThrowException.Report(TYPE.EXCEPTION,e.getMessage());			
