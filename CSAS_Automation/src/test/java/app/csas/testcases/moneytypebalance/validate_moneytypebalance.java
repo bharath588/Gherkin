@@ -67,9 +67,11 @@ public class validate_moneytypebalance {
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
 			
-			// Step3: Verify Loan info page
+			// Step3: Verify Loan info page..
 			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
-	
+			
+			//Step4:Verify Asset allocation /Investment options Percentage..
+			moneyTypeBal_Obj.verify_Investment_Option_Percentage(Stock.GetParameterValue("ppt_id")) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -90,6 +92,55 @@ public class validate_moneytypebalance {
 		}
 	}
 	
+	/**
+	 * -------------------------------------------------------------------
+	 * <pre>
+	 *TESTCASE:	Validate_Active_Allocation_Percentage
+	 *DESCRIPTION:	Validate Active allocation percentage on Money Type Balance page  
+	 *RETURNS:	VOID	
+	 *REVISION HISTORY: 
+	 *--------------------------------------------------------------------
+	 *Author:Ranjan     Date : 27-02-16    
+	 *--------------------------------------------------------------------
+	 * </pre>
+	 * @param <br>CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void Validate_Variable_Investment_Money_Type_Link(int itr,
+			Map<String, String> testdata) {
+		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
+			
+			// Step3: Verify Loan info page..
+			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
+			
+			//Step4:Verify Asset allocation /Investment options Percentage..
+			moneyTypeBal_Obj.verify_VI_MoneyType_Link(Stock.GetParameterValue("ppt_id")) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}	
 	/**
 	 * <pre>Method to cleanup all active session </pre>
 	 * 
