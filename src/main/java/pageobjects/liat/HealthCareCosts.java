@@ -2,6 +2,7 @@ package pageobjects.liat;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
@@ -46,6 +47,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(id="projected-health-care-costs-chart") private WebElement lblPieChart;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
 	
 	/** Default constructor
 	 * 
@@ -69,7 +71,13 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));		
 		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo = null;
+		try {
+			strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		String userFromDatasheet = null;
 		try {
@@ -84,6 +92,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
 		} else {
 			this.lnkLogout.click();
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 		
 	}
@@ -119,14 +128,25 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	
 
 	public void verifyHealthCostFromUI(float estMonthlyIncome){
-        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
-        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
-        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
-        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
-        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
-        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
-        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
-        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
+		
+		 float medicareSupplementalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(0).getText());
+		 float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(1).getText());
+		 float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(2).getText());
+		 float dentalInsuranceCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(3).getText());
+		 float prescriptionDrugsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(4).getText());
+		 float hearingAndVisionCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(5).getText());
+		 float dentalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(6).getText());
+		 float doctorsAndTestsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(7).getText());
+		 
+		 
+//        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
+//        float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lblPrescriptionDrugPartDCost.getText());
+//        float medicareSupplementalCost = Web.getIntegerCurrency(this.lblMedicareSupplementalCost.getText());
+//        float dentalInsuranceCost = Web.getIntegerCurrency(this.lblDentalInsuranceCost.getText());
+//        float hearingAndVisionCost = Web.getIntegerCurrency(this.lblHearingAndVisionCost.getText());
+//        float prescriptionDrugsCost = Web.getIntegerCurrency(this.lblPrescriptionDrugCost.getText());
+//        float dentalCost = Web.getIntegerCurrency(this.lblDentalCost.getText());
+//        float doctorsAndTestsCost = Web.getIntegerCurrency(this.lblDoctorAndTestsCost.getText());
         
         float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
                                                         + dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
@@ -186,8 +206,9 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	/** <pre> Method to return the no of plans associated to a user from db
 	 * 
 	 * @return noOfPlans
+	 * @throws Exception 
 	 */
-	public ResultSet getParticipantInfoFromDB(String ssn){
+	public ResultSet getParticipantInfoFromDB(String ssn) throws Exception{
 		
 		//query to get the no of plans
 		String[] sqlQuery = null;

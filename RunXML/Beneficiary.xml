@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     
-    <test name="SIT_PPTWEB_Beneficiary_01_TC07_Married_with_Spouse_One_beneficiary_use_address_on_record">
+    <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
@@ -14,16 +14,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_01_TC06_Married_with_Spouse_One_beneficiary_new_address">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name=".Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_04_TC06_UnMarried_One_Individual_beneficiary_use_address_on_record">
+    <test name="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
@@ -32,7 +23,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_04_TC05_UnMarried_One_Individual_beneficiary_new_address">
+    <test name="SIT_PPTWEB_Beneficiary_TC008_Unmarried with One beneficiary use address on record_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
@@ -41,22 +32,121 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_04_TC02_UnMarried_Multiple_Individual_beneficiary">
+    <test name="SIT_PPTWEB_Beneficiary_TC009_UnMarried One Individual beneficiary new address_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_04_TC01_UnMarried_Multiple_Entity_beneficiary">
+     <test name="SIT_PPTWEB_Beneficiary_TC012_UnMarried Multiple Individual beneficiary_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC01_UnMarried_Multiple_Entity_beneficiary"/>
+                    <include name="UnMarried_Multiple_Individual_beneficiary"/>
                 </methods>
             </class>
         </classes>
     </test>
+     <test name="SIT_PPTWEB_Beneficiary_TC011_UnMarried Multiple Entity beneficiary_Sanity">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="UnMarried_Multiple_Entity_beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="SIT_PPTWEB_Beneficiary_TC003_Married with Spouse One beneficiary Date of Birth Error messages">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Date_of_Birth_Error_Messages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC005_Married no Spouse Error message">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC005_Married_no_Spouse_Error_message"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC010_UnMarried One Individual beneficiary Date of Birth error message">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Date_of_Birth_Error_Messages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC013_UnMarried Trust beneficiary">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC013_UnMarried_Trust_beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC014_UnMarried Trust warning message">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC014_UnMarried_Trust_warning_message"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC004_Married with Spouse Multiple beneficiaries">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="UnMarried_Multiple_Individual_beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC016_QJSA_with_Beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="SIT_PPTWEB_Beneficiary_TC015_QJSA with beneficiary on file">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC016_QJSA_with_Beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+     </test>
+     <test name="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC017_Ability_to_remove_a_beneficiary"/>
+                </methods>
+            </class>
+        </classes>
+      </test>
+     <test name="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment"/>
+                </methods>
+            </class>
+        </classes>
+      </test>
 </suite>

@@ -122,31 +122,95 @@
             </class>
         </classes>
     </test>
-     <test name="SIT_PPTWEB_Deferral_006_Previous Contributions_Participant hired in current year">
+    <test name="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions"/>
+                    <include name="Participant_not_elegible_for_Bonus_type_contribution"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup - participant within first year of employment">
+    <test name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions"/>
+                    <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
+    <test name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions"/>
+                    <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions"/>
                 </methods>
             </class>
         </classes>
     </test>
+    <test name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Catchup_MaximizeToIRSLimit_Split">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Catchup_SelectAnotherContribution_Split">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Catchup_SelectAnotherContribution_Roth">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Catchup_MaximizeToIRSLimit_Roth">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Bonus_SelectAnotherContribution_after">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Bonus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Bonus_SelectAnotherContribution_split">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Bonus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
 </suite>

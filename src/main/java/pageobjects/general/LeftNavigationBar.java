@@ -59,7 +59,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			e.printStackTrace();
 		}
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection));
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection,true));
 
 	}
 
@@ -71,7 +71,12 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
 		//			System.out.println("inside");
 		//			((LandingPage) this.parent).dismissPopUps(true,true);
-		Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+		try {
+			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//		}
 		//		else
 		//			((MyAccountsPage) this.parent).clickPlanNameByGAID();

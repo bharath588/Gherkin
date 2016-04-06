@@ -73,7 +73,13 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo = null;
+		try {
+			strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		String userFromDatasheet = null;
 		try {
@@ -108,7 +114,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			}
 		}
 		
-		if (Web.isWebElementDisplayed(this.btnCloseTutorial, true)) {
+		if (Web.isWebElementDisplayed(this.btnCloseTutorial)) {
 			this.btnCloseTutorial.click();
 		}
 		
@@ -133,8 +139,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	/** <pre> Method to return the no of plans associated to a user from db
 	 * 
 	 * @return noOfPlans
+	 * @throws Exception 
 	 */
-	public int getNoOfPlansFromDB(String ssn){
+	public int getNoOfPlansFromDB(String ssn) throws Exception{
 		
 		//query to get the no of plans
 		String[] sqlQuery = null;

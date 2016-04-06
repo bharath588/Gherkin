@@ -57,7 +57,13 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo = null;
+		try {
+			strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		String userFromDatasheet = null;
 		try {
@@ -81,7 +87,12 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		
 		this.parent.get();
 		((LandingPage) this.parent).dismissPopUps(true,true);
-		Web.clickOnElement(land, "MY ACCOUNTS");
+		try {
+			Web.clickOnElement(land, "MY ACCOUNTS");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			Thread.sleep(3000);

@@ -1,6 +1,7 @@
 package app.pptweb.testcases.liat;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,133 +26,30 @@ import core.framework.Globals;
 
 public class liattestcases {
  
+	
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
 	
 	@BeforeClass
-	public void InitTest() throws Exception {
+    public void ReportInit(){               
 		Reporter.initializeModule(this.getClass().getName());
-	}
+    }
 
-	@DataProvider
-	public Object[][] setData(Method tc) throws Exception {
-		prepTestData(tc);
-		return Stock.setDataProvider(this.testData);
-	}
 
-	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
-	}
+    @DataProvider
+    public Object[][] setData(Method tc) throws Exception {
+        prepTestData(tc);
+        return Stock.setDataProvider(this.testData);
+    }
 
-	@BeforeMethod
-    public void getTCName(Method tc) {
-           tcName = tc.getName();       
-           lib.Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+    private void prepTestData(Method testCase) throws Exception {
+        this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+
     }
 	
 	
-	@Test(dataProvider = "setData")
-	public void RIP_TC003_To_verify_Retirement_Income_tab(int itr, Map<String, String> testdata){
-		
-		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			LoginPage login = new LoginPage();
-			TwoStepVerification mfaPage = new TwoStepVerification(login);
-			LandingPage homePage = new LandingPage(mfaPage);
-			RetirementIncome retirement = new RetirementIncome(homePage);
-			retirement.get();
-			
-			Reporter.logEvent(Status.INFO, "Navigate to Retirement Incomep page.", "Retirement Income page is displayed", true);
-			//verify if paycheck rainbow line is displayed
-			if(retirement.isFieldDisplayed("Paycheck Rainbow"))
-				Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice", "Paycheck Rainbow slice is displayed", true);
-			else
-				Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice", "Paycheck Rainbow slice is not displayed", true);
-			
-			//verify if user is able to click on view details button
-			if(retirement.verifyViewDetailsLink())
-				Reporter.logEvent(Status.PASS, "Verify View Details Button", "Clicked on View Details buton", true);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify View Details Button", "Could not click on view details button", true);
-			
-			//verify if names under view details are displayed on paycheck view
-			String paycheckSliceDetails = retirement.getPaycheckSliceDetails();
-			
-			if(!(retirement.getContributionValueFromViewDetails("My Current Savings").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("My Current Savings").equalsIgnoreCase("$0.0") )){
-				if(paycheckSliceDetails.contains("My Savings"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'My Current Savings'", "Paycheck Rainbow slice is displaying 'My Savings'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'My Current Savings'", "Paycheck Rainbow slice is not displaying 'My Savings'", true);
-			}
-				
-			if(!(retirement.getContributionValueFromViewDetails("My Future Savings").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("My Future Savings").equalsIgnoreCase("$0.0"))){
-				if(paycheckSliceDetails.contains("My Savings"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'My Future Savings'", "Paycheck Rainbow slice is displaying 'My Savings'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'My Current Savings'", "Paycheck Rainbow slice is not displaying 'My Savings'", true);
-			}
-				
-			if(!(retirement.getContributionValueFromViewDetails("Employer Past Contribution").equalsIgnoreCase("N/A") ||  retirement.getContributionValueFromViewDetails("Employer Past Contribution").equalsIgnoreCase("$0.0"))){
-				if(paycheckSliceDetails.contains("Employer Contributions"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'Employer Past Contribution'", "Paycheck Rainbow slice is displaying 'Employer Contribution'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'Employer Past Contribution'", "Paycheck Rainbow slice is not displaying 'Employer Contribution'", true);
-			}
-			
-//			if(!(retirement.getContributionValueFromViewDetails("Employer Future Contribution").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("My Current Savings").equalsIgnoreCase("$0.0"))){
-//				if(paycheckSliceDetails.contains("Employer Contributions"))
-//					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'Employer Future Contribution'", "Paycheck Rainbow slice is displaying 'Employer Contribution'", false);
-//				else
-//					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'Employer Future Contribution'", "Paycheck Rainbow slice is not displaying 'Employer Contribution'", true);
-//			}
-			
-			
-			if(!(retirement.getContributionValueFromViewDetails("Social Security").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("Social Security").equalsIgnoreCase("$0.0"))){
-				if(paycheckSliceDetails.contains("Social Security"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'Social Security'", "Paycheck Rainbow slice is displaying 'Social Security'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'Social Security'", "Paycheck Rainbow slice is not displaying 'Social Security'", true);
-			}
-			
-			if(!(retirement.getContributionValueFromViewDetails("Other Assets").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("Other Assets").equalsIgnoreCase("$0.00"))){
-				if(paycheckSliceDetails.contains("Other Assets"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'Other Assets'", "Paycheck Rainbow slice is displaying 'Other Assets'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'Other Assets'", "Paycheck Rainbow slice is not displaying 'Other Assets'", true);
-			}
-			
-			if(!(retirement.getContributionValueFromViewDetails("Income Gap").equalsIgnoreCase("N/A") || retirement.getContributionValueFromViewDetails("Income Gap").equalsIgnoreCase("$0.00"))){
-				if(paycheckSliceDetails.contains("Income Gap"))
-					Reporter.logEvent(Status.PASS, "Check Paycheck rainbow slice for 'Income Gap'", "Paycheck Rainbow slice is displaying 'Income Gap'", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Check Paycheck rainbow slice for 'Income Gap'", "Paycheck Rainbow slice is not displaying 'Income Gap'", true);
-			}
-			
-			//close view details
-			if(retirement.verifyViewDetailsCloseLink())
-				Reporter.logEvent(Status.PASS, "Check close button for view details", "Able to click close buton", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Check close button for view details", "Not able to click clos button", true);
-		}
-		catch(Exception e)
-        {
-            e.printStackTrace();
-            Globals.exception = e;
-            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-        }
-		catch(Error ae)
-        {
-                        ae.printStackTrace();
-                        Globals.error = ae;
-                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-                        
-        }
-		finally { 
-			try { Reporter.finalizeTCReport(); }
-			catch (Exception e1) { e1.printStackTrace(); } 
-			}
-		}
+	
 	@Test(dataProvider = "setData")
 	public void RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(int itr, Map<String, String> testdata){
 		
