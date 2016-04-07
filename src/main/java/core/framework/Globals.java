@@ -26,7 +26,7 @@ public class Globals {
         	  DB_TYPE.put("QA","QA");        	  
           }
 	  	   // FOR CI  
-          public static final String GC_EXECUTION_ENVIRONMENT=System.getProperty("env");
+          public static final String GC_EXECUTION_ENVIRONMENT=System.getProperty("env").toUpperCase();
           public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
 
           
