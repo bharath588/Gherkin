@@ -78,6 +78,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
 		} else {
 			this.lnkLogout.click();
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
 

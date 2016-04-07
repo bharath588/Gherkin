@@ -86,7 +86,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@id='doItForMeUnenrolled']//a[text()[normalize-space()='Enroll in managed accounts']]") private WebElement lnkEnrollInManagedAccounts;
 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 @FindBy(linkText="Log out") private WebElement lnkLogout;
-
+@FindBy(xpath="//h1[text()='My Estimated Retirement Income']") private WebElement hdrEstimatedRetirementIncome;
 
 //ul/li[contains(@label,'Employer')]/span[@class='paycheck-item-val ng-binding']
 //div[@id='doItForMeUnenrolled']//a[text()[normalize-space()='Enroll in managed accounts']]
@@ -123,9 +123,10 @@ protected void isLoaded() throws Error {
 	String userLogedIn = this.lblUserName.getText();
 	if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 		Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-		Assert.assertTrue(Web.isWebElementDisplayed(lnkRetirementIncome));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.hdrEstimatedRetirementIncome));
 	} else {
 		this.lnkLogout.click();
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 	}
 	
 }

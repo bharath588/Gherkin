@@ -191,6 +191,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 			} else {
 				this.lnkLogout.click();
+				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 		}
 		

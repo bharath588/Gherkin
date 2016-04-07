@@ -136,6 +136,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
 		} else {
 			this.lnkLogout.click();
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
 

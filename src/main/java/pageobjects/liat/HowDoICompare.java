@@ -76,6 +76,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 				}
 			} else {
 				this.lnkLogout.click();
+				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 			
 		}

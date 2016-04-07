@@ -94,6 +94,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
 			this.lnkLogout.click();
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 		
 		
