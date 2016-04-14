@@ -212,5 +212,40 @@
             </class>
         </classes>
     </test>
-    
+    <test name="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Other"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Other_SelectAnotherContribution_Catchup_Roth">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Other"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Other_SelectAnotherContribution_split">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral_Other"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_020_Multiple_Create contribution rate for multiple deferral type, split contribution">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Multiple_deferral_split_contribution"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>

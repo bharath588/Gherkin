@@ -133,7 +133,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary))
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));
 			else
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries,true));
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
@@ -269,7 +269,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
 		
 		lib.Web.waitForElement(btnContinue);
-		if(Web.isWebElementDisplayed(lblDesignateBeneficiary))
+		if(Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
 			maritalstatus.click();
 		
 		else{
@@ -349,10 +349,14 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 		
 		if(beneficiaryName==null){
-			if(beneficiaryType.equalsIgnoreCase("Primary"))
+			if(beneficiaryType.equalsIgnoreCase("Primary")){
 				lstlnkPrimaryBeneficiaryName.get(0).click();
-			else
+				clickedBeneficiary=true;
+			}
+			else{
 				lstlnkContingentBeneficiaryName.get(0).click();
+				clickedBeneficiary=true;
+			}
 		}
 		return clickedBeneficiary;
 	}
@@ -542,21 +546,26 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * 
 	 * @return - String
 	 */
-	public String fetchMaritalStatusFromDB(String queryName, String ssn) throws Exception{
-		String[] sqlQuery;
-		sqlQuery = Stock.getTestQuery(queryName);
-		ResultSet recSet=DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
-		
+	public String fetchMaritalStatusFromDB(String ssn) throws Exception{
 
-		if (DB.getRecordSetCount(recSet) > 0) {
-			try {
-				recSet.first();			
-			} catch (SQLException e) {
-				e.printStackTrace();
-				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
-			}
+		
+		ResultSet strUserInfo = null;
+		try {
+			strUserInfo = Common.getParticipantInfoFromDB(ssn);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		String marital_status=recSet.getString("MARITAL_STATUS");
+		
+		String userFromDatasheet = null;
+		String marital_status=null;
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+			marital_status=strUserInfo.getString("MARITAL_STATUS");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Marital status : "+marital_status);
 		return marital_status;
 	}
 	

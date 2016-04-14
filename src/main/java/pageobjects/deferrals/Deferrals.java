@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -76,6 +77,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="ABONUS") private WebElement txtSplitAfterTaxBonus;
 			@FindBy(id="RBONUS") private WebElement txtSplitRothBonus;
 			@FindBy(id="ROTH") private WebElement txtSplitRothTax;
+			@FindBy(id="AGEBEF") private WebElement txtSplitBeforeCatchup;
+			@FindBy(id="AGERTH") private WebElement txtSplitRothCatchup;
+			@FindBy(id="AGRVAR") private WebElement txtSplitAgeRothVariable;
+			@FindBy(id="RTHVAR") private WebElement txtSplitRothVariable;
 			@FindBy(xpath=".//button[text()[normalize-space()='Continue']]") private WebElement btnContinueBeforeTaxSplitContribution;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage ng-binding']") private WebElement txtCompanyMatchMyContribution;
@@ -84,14 +89,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'AFTRTX')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch')]/../td[3]/.//a") private WebElement lnkCatchupAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-up before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before Bonus')]/../td[3]/.//a") private WebElement lnkBeforeBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax Bonus')]/../td[3]/.//a") private WebElement lnkAfterBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth Bonus')]/../td[3]/.//a") private WebElement lnkRothBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'other')]/../td[3]/.//a") private WebElement lnkOtherAutoIncrease;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch')]/../td[3]/.//div") private WebElement txtCatchup;
 			@FindBy(xpath=".//div[text()[normalize-space()='Auto Increase Before-tax deferral']]")	
 			private WebElement lblAutoIncreaseBeforeTaxDeferral;
@@ -250,8 +256,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("After Add Auto Increase")) {
 				return this.lnkAfterTaxAutoIncrease;
 			}
-			if(fieldName.trim().equalsIgnoreCase("Catch Up Add Auto Increase")) {
-				return this.lnkCatchupAutoIncrease;
+			if(fieldName.trim().equalsIgnoreCase("Catch Up Before Add Auto Increase")) {
+				return this.lnkCatchupBeforeAutoIncrease;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Catch Up Roth Add Auto Increase")) {
+				return this.lnkCatchupRothAutoIncrease;
 			}
 			if(fieldName.trim().equalsIgnoreCase("Roth Bonus Add Auto Increase")) {
 				return this.lnkRothBonusAutoIncrease;
@@ -315,6 +324,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.waitForElement(deferral);
 			
             lib.Web.clickOnElement(deferral);
+            Web.waitForElement(btnContinue);
 			if(lib.Web.isWebElementDisplayed(btnContinue, true))				
              isDisplayed = true;			
             return isDisplayed;           
@@ -450,20 +460,22 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(contributionType.equalsIgnoreCase("Split") ){
 				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
 				{				
-				this.radioSplitContribution.click();
-				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
-				
-				
-				if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
-//					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
-					befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
-					lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
-					lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
-				}
-				else{
-					lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
-					lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
-				}
+					this.radioSplitContribution.click();
+					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
+					
+					
+					if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
+	//					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
+						befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
+						lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
+						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+					}
+					else{
+						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+					}
+					
+					
 									
 				}
 				else
@@ -471,7 +483,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			else{
 				for(int i=0;i<lstradioSelectContibution.size();i++){
-					if(lstradioSelectContibution.get(i).getText().contains(contributionType)){
+					if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(i).getText(), contributionType))
+					{
 						lstradioSelectContibution.get(i).click();
 						Reporter.logEvent(Status.PASS, "Verify "+contributionType+" Contribution is selected", contributionType+" Contribution is selected", false);
 						break;
@@ -779,7 +792,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Add auto increase link displayed for Standard Contribution", "Verify Add auto increase link not displayed for Standard Contribution", true);
 			
-			if(Web.isWebElementDisplayed(lnkCatchupAutoIncrease, true))
+			if(Web.isWebElementDisplayed(lnkCatchupBeforeAutoIncrease, true))
 				Reporter.logEvent(Status.PASS, "Verify Add auto increase link displayed for CatchUp Contribution", "Verify Add auto increase link displayed for CatchUp Contribution", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Add auto increase link displayed for CatchUp Contribution", "Verify Add auto increase link not displayed for CatchUp Contribution", true);
@@ -930,16 +943,58 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
 				this.radioSplitContribution.click();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
+				if(Web.isWebElementDisplayed(txtSplitBeforeTax))
+					lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+				if(Web.isWebElementDisplayed(txtSplitAfterTaxBonus))
+					lib.Web.setTextToTextBox(txtSplitAfterTaxBonus, Stock.GetParameterValue("Split_Tax_after"));
+				if(Web.isWebElementDisplayed(txtSplitRothBonus))
+					lib.Web.setTextToTextBox(txtSplitRothBonus, Stock.GetParameterValue("Split_Tax_roth"));
+			}
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
+			this.btnContinue.click();
+			
+		}
+		
+		/**<pre> Method to split catch up contribution rate
+		 *.</pre>
+		 * 
+		 */
+		public void split_catchup_contribution(){
+			lib.Web.waitForElement(btnContinue);
+			lib.Web.clickOnElement(this.btnContinue);
+			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
+				this.radioSplitContribution.click();
+				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
+				lib.Web.setTextToTextBox(txtSplitBeforeCatchup, Stock.GetParameterValue("Split_Tax_before"));
+				lib.Web.setTextToTextBox(txtSplitRothCatchup, Stock.GetParameterValue("Split_Tax_roth"));
+				
 			}
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
 		
-			if(Web.isWebElementDisplayed(txtSplitBeforeTax))
-				lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
-			if(Web.isWebElementDisplayed(txtSplitAfterTaxBonus))
-				lib.Web.setTextToTextBox(txtSplitAfterTaxBonus, Stock.GetParameterValue("Split_Tax_after"));
-			
-			lib.Web.setTextToTextBox(txtSplitRothBonus, Stock.GetParameterValue("Split_Tax_roth"));
+			this.btnContinue.click();
+		}
+		/**<pre> Method to split Other contribution rate
+		 *.</pre>
+		 * 
+		 */
+		public void split_Other_contribution(){
+			lib.Web.waitForElement(btnContinue);
+			lib.Web.clickOnElement(this.btnContinue);
+			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
+				this.radioSplitContribution.click();
+				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
+				if(Web.isWebElementDisplayed(txtSplitAgeRothVariable))
+					lib.Web.setTextToTextBox(txtSplitAgeRothVariable, Stock.GetParameterValue("Split_Tax-AgeRoth"));
+				if(Web.isWebElementDisplayed(txtSplitRothVariable))
+					lib.Web.setTextToTextBox(txtSplitRothVariable, Stock.GetParameterValue("Spli_Tax_Roth"));
+				
+			}
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
+		
+			this.btnContinue.click();
 		}
 	}		
 	

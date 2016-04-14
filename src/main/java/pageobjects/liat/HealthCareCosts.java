@@ -22,6 +22,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.testng.Assert;
 
+import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
 public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
@@ -73,7 +74,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		try {
-			strUserInfo = getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+			strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -154,8 +155,9 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
         float projectedHealthCareCost = Web.getIntegerCurrency(this.lblProjectedHlthCareCost.getText());
         
         float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
-        
-        if(((int)projectedHealthCareCost-(int)calProjHlthCareCost)<=0.04)
+        System.out.println(projectedHealthCareCost);
+        System.out.println(calProjHlthCareCost);
+        if(((float)projectedHealthCareCost-(float)calProjHlthCareCost)<=0.4)
                Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI ", false);
         else
                Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI ", false);
@@ -208,27 +210,27 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	 * @return noOfPlans
 	 * @throws Exception 
 	 */
-	public ResultSet getParticipantInfoFromDB(String ssn) throws Exception{
-		
-		//query to get the no of plans
-		String[] sqlQuery = null;
-		try {
-			sqlQuery = Stock.getTestQuery("getParticipantInfo");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
-		
-		if (DB.getRecordSetCount(participantInfo) > 0) {
-			try {
-				participantInfo.first();			
-			} catch (SQLException e) {
-				e.printStackTrace();
-				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
-			}
-		}		
-		return participantInfo;
-	}
+//	public ResultSet getParticipantInfoFromDB(String ssn) throws Exception{
+//		
+//		//query to get the no of plans
+//		String[] sqlQuery = null;
+//		try {
+//			sqlQuery = Stock.getTestQuery("getParticipantInfo");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
+//		
+//		if (DB.getRecordSetCount(participantInfo) > 0) {
+//			try {
+//				participantInfo.first();			
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
+//			}
+//		}		
+//		return participantInfo;
+//	}
 	
 }

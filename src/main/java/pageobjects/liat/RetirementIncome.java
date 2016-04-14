@@ -6,6 +6,8 @@ package pageobjects.liat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import lib.Reporter;
+import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
 
@@ -255,76 +257,76 @@ private WebElement getWebElement(String fieldName) {
  * @throws Exception
  */
 
-//public float getProjectedIncome(){
-//	float projectedIncome = 0;
-//	if (WebActions.isWebElementDisplayed(this.lblRetirementIncome)) {
-//		projectedIncome = Common.getIntegerCurrency(this.lblProjectedIncome.getText());
-//	} else {
-//		this.lnkRetirementIncome.click();
-//		try {
-//			WebActions.waitForElement(lblRetirementIncome);
-//			projectedIncome = Common.getIntegerCurrency(this.lblProjectedIncome.getText());
-//		} catch (Exception e) {
-//			Reporter.logEvent(Status.FAIL, "Get Estimated Projected Income", "User was unable to navigated to the Retirement Income page and get the required value", false);
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	return projectedIncome;
-//}
-
 public float getProjectedIncome(){
-	float currentSavingsAmount = 0;
-	float futureSavingsAmount = 0;
-	float employerPastContributionAmount = 0;
-	float employerFutureContributionAmount = 0;
-	float socialsecurityAmount = 0;
-	float otherAssetsAmount = 0;
 	float projectedIncome = 0;
-	
-	
-	this.lnkRetirementIncome.click();
-	try {
-		Web.waitForElement(lblRetirementIncome);
-	} catch (Exception e) {
-		//
+	if (Web.isWebElementDisplayed(this.lblRetirementIncome)) {
+		projectedIncome = Web.getIntegerCurrency(this.lblProjectedIncome.getText());
+	} else {
+		this.lnkRetirementIncome.click();
+		try {
+			Web.waitForElement(lblRetirementIncome);
+			projectedIncome = Web.getIntegerCurrency(this.lblProjectedIncome.getText());
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Get Estimated Projected Income", "User was unable to navigated to the Retirement Income page and get the required value", false);
+			e.printStackTrace();
+		}
 	}
-		
-	
-	Web.clickOnElement(btnViewDetails);
-	
-	if(Web.isWebElementDisplayed(lblCurentSavings)){
-		currentSavingsAmount = Web.getIntegerCurrency(this.lblCurentSavings.getText());
-		System.out.println("current savings"+this.lblCurentSavings.getText());
-	}
-	if(Web.isWebElementDisplayed(lblFutureSavings)){
-		futureSavingsAmount = Web.getIntegerCurrency(this.lblFutureSavings.getText());
-		System.out.println("future savings:"+this.lblFutureSavings.getText());
-	}
-	
-	if(Web.isWebElementDisplayed(lblEmployerPastContribution)){
-		employerPastContributionAmount = Web.getIntegerCurrency(this.lblEmployerPastContribution.getText());
-		System.out.println(this.lblEmployerPastContribution.getText());
-	}
-	if(Web.isWebElementDisplayed(lblEmployerFutureContribution)){
-		employerFutureContributionAmount = Web.getIntegerCurrency(this.lblEmployerFutureContribution.getText());
-		System.out.println(this.lblEmployerFutureContribution.getText());
-	}
-	
-	if(Web.isWebElementDisplayed(lblSocialSecurity)){
-		socialsecurityAmount = Web.getIntegerCurrency(this.lblSocialSecurity.getText());
-		System.out.println(this.lblSocialSecurity.getText());
-	}
-	
-	if(Web.isWebElementDisplayed(lblOtherAssets)){
-		otherAssetsAmount = Web.getIntegerCurrency(this.lblOtherAssets.getText());
-		System.out.println(this.lblOtherAssets.getText());
-	}
-	projectedIncome = currentSavingsAmount+futureSavingsAmount+employerFutureContributionAmount+employerPastContributionAmount+socialsecurityAmount+otherAssetsAmount;
-	System.out.println(projectedIncome);
 	
 	return projectedIncome;
 }
+
+//public float getProjectedIncome(){
+//	float currentSavingsAmount = 0;
+//	float futureSavingsAmount = 0;
+//	float employerPastContributionAmount = 0;
+//	float employerFutureContributionAmount = 0;
+//	float socialsecurityAmount = 0;
+//	float otherAssetsAmount = 0;
+//	float projectedIncome = 0;
+//	
+//	
+//	this.lnkRetirementIncome.click();
+//	try {
+//		Web.waitForElement(lblRetirementIncome);
+//	} catch (Exception e) {
+//		//
+//	}
+//		
+//	
+//	Web.clickOnElement(btnViewDetails);
+//	
+//	if(Web.isWebElementDisplayed(lblCurentSavings)){
+//		currentSavingsAmount = Web.getIntegerCurrency(this.lblCurentSavings.getText());
+//		System.out.println("current savings"+this.lblCurentSavings.getText());
+//	}
+//	if(Web.isWebElementDisplayed(lblFutureSavings)){
+//		futureSavingsAmount = Web.getIntegerCurrency(this.lblFutureSavings.getText());
+//		System.out.println("future savings:"+this.lblFutureSavings.getText());
+//	}
+//	
+//	if(Web.isWebElementDisplayed(lblEmployerPastContribution)){
+//		employerPastContributionAmount = Web.getIntegerCurrency(this.lblEmployerPastContribution.getText());
+//		System.out.println(this.lblEmployerPastContribution.getText());
+//	}
+//	if(Web.isWebElementDisplayed(lblEmployerFutureContribution)){
+//		employerFutureContributionAmount = Web.getIntegerCurrency(this.lblEmployerFutureContribution.getText());
+//		System.out.println(this.lblEmployerFutureContribution.getText());
+//	}
+//	
+//	if(Web.isWebElementDisplayed(lblSocialSecurity)){
+//		socialsecurityAmount = Web.getIntegerCurrency(this.lblSocialSecurity.getText());
+//		System.out.println(this.lblSocialSecurity.getText());
+//	}
+//	
+//	if(Web.isWebElementDisplayed(lblOtherAssets)){
+//		otherAssetsAmount = Web.getIntegerCurrency(this.lblOtherAssets.getText());
+//		System.out.println(this.lblOtherAssets.getText());
+//	}
+//	projectedIncome = currentSavingsAmount+futureSavingsAmount+employerFutureContributionAmount+employerPastContributionAmount+socialsecurityAmount+otherAssetsAmount;
+//	System.out.println(projectedIncome);
+//	
+//	return projectedIncome;
+//}
 
 /**<pre> Method to check if a particular element is present on the page.
  *.</pre>

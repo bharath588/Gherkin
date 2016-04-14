@@ -159,6 +159,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
 				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -843,6 +844,7 @@ public class beneficiariestestcases {
 		}
 	}
 	
+	@Test(dataProvider = "setData")
 	public void Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message(int itr, Map<String, String> testdata){
 		Stock.globalTestdata = testdata;
 //      Globals.GBL_CurrentIterationNumber = itr;
@@ -926,6 +928,7 @@ public class beneficiariestestcases {
 			
 			// add a beneficiary
 			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			Web.waitForElement(beneficiary, "ContinueAndConfirm");
 			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
@@ -1081,7 +1084,8 @@ public class beneficiariestestcases {
 			
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			if(beneficiary.fetchMaritalStatusFromDB("getMaritalStatusFromIndividual", Stock.GetParameterValue("Participant ssn")).equalsIgnoreCase("null")){
+			String marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
+			if(marital_status==null){
 				Reporter.logEvent(Status.PASS, "Verify marital status should be null", "Marital status is null", false);
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
 				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
@@ -1089,7 +1093,8 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify marital status should be null", "Marital status not null", false);
 			
-			if(beneficiary.fetchMaritalStatusFromDB("getMaritalStatusFromIndividual", Stock.GetParameterValue("Participant ssn")).equalsIgnoreCase("M"))
+			marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
+			if(marital_status.equalsIgnoreCase("M"))
 				Reporter.logEvent(Status.PASS, "Verify marital status should not be null", "Marital status is not null", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify marital status should not be null", "Marital status is null", false);
@@ -1110,6 +1115,14 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			try {
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
         }
 		try {
             Reporter.finalizeTCReport();

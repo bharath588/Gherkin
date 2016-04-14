@@ -101,6 +101,14 @@ public class deferralstestcases {
 			lib.Web.clickOnElement(deferrals, "Continue button");
 			deferrals.add_Auto_Increase("After Add Auto Increase");
 			deferrals.myContributions_Confirmation_Page();
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -376,8 +384,10 @@ public class deferralstestcases {
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-			deferrals.select_ContributionType(lib.Stock
-					.GetParameterValue("Contribution_type"));
+			if (lib.Stock.GetParameterValue("Contribution_type").equalsIgnoreCase("Split"))
+				deferrals.split_catchup_contribution();
+			else
+				deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
 
 			if (!lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
@@ -386,6 +396,7 @@ public class deferralstestcases {
 
 			deferrals.myContributions_Confirmation_Page();
 
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
@@ -627,7 +638,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			if (lib.Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
+					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
 			else
@@ -650,11 +661,22 @@ public class deferralstestcases {
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is not matching", true);
 
-			deferrals.select_ContributionType(Stock
-					.GetParameterValue("Contribution_type"));
+			if (lib.Stock.GetParameterValue("Contribution_type").equalsIgnoreCase("Split"))
+				deferrals.split_Other_contribution();
+			else
+				deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+			
 			deferrals.add_Auto_Increase(Stock
 					.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -825,7 +847,7 @@ public class deferralstestcases {
 	}
 
 	/**
-	 * The following script adds or edits all the deferral typed and then
+	 * The following script adds or edits all the deferral type and then
 	 * confirm it
 	 * 
 	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_020_Multiple_Create
@@ -934,7 +956,7 @@ public class deferralstestcases {
 							"Standard Catch up page is not displayed", true);
 			}
 			deferrals.click_Select_Your_Contribution_Rate();
-			deferrals.select_ContributionType("Split");
+			deferrals.split_catchup_contribution();
 			lib.Web.clickOnElement(deferrals, "Continue button");
 			if (deferrals.verifyMyContributions(
 					Stock.GetParameterValue("Split_Tax_roth"),
