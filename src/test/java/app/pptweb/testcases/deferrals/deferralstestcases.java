@@ -1099,50 +1099,16 @@ public class deferralstestcases {
 			deferrals.add_Auto_Increase("Bonus Add Auto Increase");
 			deferrals.add_Auto_Increase("Roth Add Auto Increase");
 
-			lib.Web.clickOnElement(deferrals, "Confirm button");
-
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Split_Tax_before"),
-							"Before-tax",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Split_Tax_roth"),
-							"Roth deferral",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Split_Tax_before"),
-							"Age catch-up before tax",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Split_Tax_roth"),
-							" Age Catch-Up Roth",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Contribution Rate"),
-							"AFTRTX",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Contribution Rate"),
-							"After Tax Bonus",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-			deferrals
-					.verifyContributionDetails(
-							Stock.GetParameterValue("Contribution Rate"),
-							"AFTRTXVR",
-							Stock.GetParameterValue("Auto Increase Contribution Percent"),
-							Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			deferrals.myContributions_Confirmation_Page();
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
