@@ -7,11 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -19,20 +18,16 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import lib.Log;
 import lib.Stock;
 import lib.XL_ReadWrite;
 import lib.Log.Level;
-
 import org.testng.TestNG;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
-
 import com.google.common.collect.Lists;
-
 import core.framework.ThrowException.TYPE;
 
 public class DriverScript {
@@ -85,7 +80,7 @@ Author : Souvik     Date : 09-10-2015
 */	private void ReadRunOrder(String runOrderFilePath) throws Exception{
 		try{
 			xlRW = new XL_ReadWrite(runOrderFilePath);
-			runOrderDet = new HashMap<String,String>();
+			runOrderDet = new LinkedHashMap<String,String>();
 			String key = Globals.GC_EMPTY;String val = Globals.GC_EMPTY;
 			Log.Report(Level.INFO,"reading "+runOrderFilePath+" file to build TestNG XML");
 			for(int iROLoop=0;iROLoop<xlRW.getRowCount((Globals.GC_TESTCASERUNORDERPREFIX).split("_")[0])-1;iROLoop++){
