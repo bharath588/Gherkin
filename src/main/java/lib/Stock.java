@@ -2,9 +2,11 @@ package lib;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import lib.Log.Level;
 import core.framework.Globals;
 import core.framework.ThrowException;
@@ -15,7 +17,10 @@ public class Stock {
 	private static int dataProviderIterations;
 	public static Map<String, String> globalTestdata;
 	public static String globalManualTCName;
-
+	private static int iterationNumber = 0;
+	
+	
+	
 	public static Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
 		// Converting Map to Object[][] to handle @DataProvider
 		Object[][] tdObject = null;
@@ -52,6 +57,7 @@ public class Stock {
 	}
 
 	public static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) {
+		Stock.iterationNumber = 0;
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
 		// Getting Application name and Module name so that the
@@ -274,6 +280,19 @@ public class Stock {
 				}
 		}	
 		Stock.globalParam.put(parameterName.trim().toUpperCase(), parameterValue);
+	}
+
+	/**
+	 * <pre>This method returns the testdata for the current iteration to access them in @Beforemethod</pre>
+	 * @param globalTestData<pre>It is the testdata map for the respective testcase</pre>
+	 * @return <pre><b>Returns the data for the running iteration number</b></pre>
+	 */
+	public static Map<String,String> getIterationTestData(
+			LinkedHashMap<Integer, Map<String, String>> globalTestData) {
+		LinkedList<Integer> keyList = new LinkedList<>(globalTestData.keySet());
+		int index = keyList.get(iterationNumber);
+		iterationNumber++;
+		return globalTestData.get(index);
 	}
 
 	
