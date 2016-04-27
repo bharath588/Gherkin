@@ -25,7 +25,8 @@ public class Globals {
         	  DB_TYPE.put("PROJ","DEV");
         	  DB_TYPE.put("QA","QA");        	  
           }
-	  	   // FOR CI  
+	  	   // FOR CI 
+          
           public static final String GC_EXECUTION_ENVIRONMENT=System.getProperty("env").toUpperCase();
           public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
 
@@ -125,9 +126,18 @@ public class Globals {
           public static final String GC_ENROLL_CANCEL_LOG_FILE_PATTERN="enroll_";
           public static final String GC_TRANSACTION_LOG_FILE_PATTERN="transaction_";
           public static final String GC_TRANSACTION_COINFIRMATION_LOG_FILE_PATTERN="txnconf_";
+  //QA 
+//          public static final String GC_PROSPECT_LOG_FILE_PATTERN="qaprospect_";
+//          public static final String GC_MEMBER_LOG_FILE_PATTERN="qamember_";
+//          public static final String GC_ENROLL_CANCEL_LOG_FILE_PATTERN="qaenroll_";
+//          public static final String GC_TRANSACTION_LOG_FILE_PATTERN="qatransaction_";
+//          public static final String GC_TRANSACTION_COINFIRMATION_LOG_FILE_PATTERN="qatxnconf_";   
+        
           public static final String GC_LOG_FILE_TYPE=".log";
           public static final String GC_FILE_TYPE=".xml";
-    	  public static final String GC_Database_Prefix="D_";
+  	    public static final String GC_Database_Prefix="D_";
+//    	  public static final String GC_Database_Prefix="Q_";
+
     	  public static final String GC_TRANSACTION_FUTURE_STATUS="FUTURE";
     	  public static final String GC_TRANSACTION_COMPLETE_STATUS="COMPLETE";
     	  public static final String GC_BATCH_RUN_DATE_FORMAT="yyyy-MM-dd";
@@ -171,11 +181,11 @@ public class Globals {
   	    	//Dev databases
   	    	databaseConnectionStrings.put("D_INST", "jdbc:oracle:thin:@DINSTDB:1521/dinstmain.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_PNP", "jdbc:oracle:thin:@dpnpdb:1521/dpnpmain.isis.gwl.com");
-  	    	databaseConnectionStrings.put("D_ISIS", "jdbc:oracle:thin:@disisdb:1521/disismain.isis.gwl.com");
+  	    	databaseConnectionStrings.put("D_ISIS", "jdbc:oracle:thin:@disisdb:1521/disisbatch.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_CMNM", "jdbc:oracle:thin:@fsxd01dbad02:1521/dcmnmmain.isis.gwl.com");
   	    	databaseConnectionStrings.put("D_MISC", "jdbc:oracle:thin:@gp-pdb2:1521/D_MISC.ISIS.GWL.COM");
   	    	databaseConnectionStrings.put("D_AMA", "jdbc:oracle:thin:@Damadb:1521/damamain.isis.gwl.com");
-  	    	databaseConnectionStrings.put("D_QAMA", "jdbc:oracle:thin:@gp-ddb2:1521:D_QAMA");
+  	    	databaseConnectionStrings.put("D_QAMA", "jdbc:oracle:thin:@Qamadb:1521/qamamain.isis.gwl.com");
   	    	
   	    	//to be deleted once the all projects comply
   	    	databaseConnectionStrings.put("D_QASI", "jdbc:oracle:thin:@dqasi:1521/dqasimain.isis.gwl.com");
