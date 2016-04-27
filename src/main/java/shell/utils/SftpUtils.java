@@ -141,14 +141,15 @@ public class SftpUtils {
      Author : Janani     Date : 06-11-2015       
      ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-      */ public static void download_File(String srcFolderPath,String remoteFileFolderPath,String fileNamePattern, String fileType,String dstFolderPath)
+      */ public static File download_File(String srcFolderPath,String remoteFileFolderPath,String fileNamePattern, String fileType,String dstFolderPath)
       {
     	  establishSFTPConnection();
+    	  File downloadFile=null;     	  
     	  if(isSFTPConnected) { 
     		  try{
     			  sftp = (ChannelSftp) sftpChannel;
     			  File remoteFile=new File(remoteFileFolderPath);
-    			  File downloadFile=null;    			  
+    			   			  
     			  sftp.cd(sftp.getHome() + srcFolderPath);
     			  File[] listOfFiles = remoteFile.listFiles(new FileFilter() {          
     				  public boolean accept(File file) {
@@ -166,6 +167,7 @@ public class SftpUtils {
     			  e.printStackTrace();
     		  }
     	  }
+		return downloadFile;
       }
 
       /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
