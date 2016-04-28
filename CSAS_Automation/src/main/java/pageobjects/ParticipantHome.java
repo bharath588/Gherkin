@@ -297,6 +297,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "div.dataContainerBody td:nth-of-type(2) td[class = 'data centered']:nth-of-type(10)")
 	private List<WebElement> InstanceValue_List;
 
+	@FindBy(css = "table.compactDataTable tr:nth-of-type(2) input[type = 'radio'][checked = 'checked']")
+	private WebElement PPT_Indx_Radio_Btn;
+	
+
 	@FindBy(css = "table[id='table_messageHandlerMessage']")
 	private LoadableComponent<?> parent;
 
@@ -449,6 +453,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			return this.btnOrderTempVRUPIN;
 		}
 
+		if (fieldName.trim().equalsIgnoreCase("Plan_No")) {
+			return this.PlanNumber.get(0);
+		}
+
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -476,7 +484,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[0],
 					Stock.getTestQuery("getPPTIDforWebRegStatus")[1]);
-		} else if (WebRegStatus.equalsIgnoreCase("NonRegistered")) {
+		} else if (WebRegStatus.equalsIgnoreCase("Not Registered")) {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[0],
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
@@ -490,6 +498,29 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}
 		return res;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get GA ID based on the registration status
+	 * </pre>
+	 * 
+	 * @param WebRegStatus
+	 * @return
+	 * @throws Exception
+	 * @author RANJAN
+	 */
+	public String getSSN_or_pptID_EmpSts(String ppt_id) throws Exception {
+		ResultSet resultset;
+		String plan_Num = null;
+		resultset = DB.executeQuery(Stock.getTestQuery("getGAID")[0],
+				Stock.getTestQuery("getGAID")[1],ppt_id);
+		if (resultset != null) {
+			while (resultset.next()) {
+				plan_Num = resultset.getString("gc_id");
+			}
+		}
+		return plan_Num;
 	}
 
 	/**
@@ -1051,7 +1082,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					}
 					break;
 				case "NonRegistered":
-
 					break;
 				}
 			} else {
@@ -1235,12 +1265,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Participant table is displayed successfully", true);
 			for (int i = 0; i <= PlanNoOnPartList_Link.size() - 1; i++) {
 				plan_No_Web = PlanNoOnPartList_Link.get(i).getText();
-
-				if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)
-						&& partList_Tab
-								.findElement(
-										By.xpath("//tr[" + (i + 1) + "]/td[16]"))
-								.getText().equalsIgnoreCase("ACTIVE")) {
+				if (plan_No_Web.contains(plan_Number_DB))
+			//	if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)
+			//			&& partList_Tab
+			//					.findElement(
+			//							By.xpath("//tr[" + (i + 1) + "]/td[16]"))
+			//					.getText().equalsIgnoreCase("ACTIVE"))
+				{
 
 					partList_Tab.findElement(
 							By.xpath("//tr[" + (i + 1) + "]/td[1]/a")).click();
@@ -1582,5 +1613,18 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					plan_Num_DB.trim());
 		}
 		return plan_And_PPT_ID_From_DB;
+	}
+	
+	/**
+	 * <pre>Method to get the checked plan number</pre>
+	 * 
+	 */
+	public String getCheckedPlanOnPPTHome(String plan_No_Chkd){
+		String ga_id = null ;
+		if (Web.isWebElementDisplayed(PPT_Indx_Radio_Btn, false)) {
+			WebElement plan_No = getWebElement(plan_No_Chkd.toUpperCase());
+			ga_id = plan_No.getText() ;	
+		}
+		return ga_id ;
 	}
 }

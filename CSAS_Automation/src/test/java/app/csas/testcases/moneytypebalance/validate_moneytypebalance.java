@@ -59,19 +59,21 @@ public class validate_moneytypebalance {
 	public void Validate_Active_Allocation_Percentage(int itr,
 			Map<String, String> testdata) {
 		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		String ga_id = null ;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
 			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+			String plan_No = participantHomeObj.getCheckedPlanOnPPTHome("Plan_No") ;
 			
 			// Step3: Verify Loan info page..
 			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
 			
 			//Step4:Verify Asset allocation /Investment options Percentage..
-			moneyTypeBal_Obj.verify_Investment_Option_Percentage(Stock.GetParameterValue("ppt_id")) ;
+			moneyTypeBal_Obj.verify_Investment_Option_Percentage(Stock.GetParameterValue("ppt_id"),plan_No) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -116,12 +118,13 @@ public class validate_moneytypebalance {
 			
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
+			String plan_No = participantHomeObj.getCheckedPlanOnPPTHome("Plan_No") ;
 			
 			// Step3: Verify Loan info page..
 			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
 			
 			//Step4:Verify Asset allocation /Investment options Percentage..
-			moneyTypeBal_Obj.verify_VI_MoneyType_Link(Stock.GetParameterValue("ppt_id")) ;
+			moneyTypeBal_Obj.verify_VI_MoneyType_Link(Stock.GetParameterValue("ppt_id"),plan_No) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

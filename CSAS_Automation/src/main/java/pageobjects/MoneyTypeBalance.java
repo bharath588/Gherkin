@@ -1,5 +1,6 @@
 package pageobjects;
 
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -20,6 +23,9 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 
 	ArrayList<String> legal_Name_List;
 	ArrayList<String> investmentOptPerList;
+	ArrayList<String> money_Type_List;
+	ArrayList<String> money_Type_Info_List;
+
 	// PPT Info Menu links..
 
 	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
@@ -210,25 +216,26 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * @author rnjbdn
 	 * @throws Exception
 	 */
-	public void verify_Investment_Option_Percentage(String ppt_id)
-			throws Exception {
+	public void verify_Investment_Option_Percentage(String ppt_id,
+			String plan_No) throws Exception {
 		if (Web.isWebElementDisplayed(ADAInvstOptLabel, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify the Active Deposite Allocation Information.",
 					"Active Deposite Allocation Information is displayed.",
 					true);
 			legal_Name_List = get_Active_Legal_Name(
-					Stock.getTestQuery("getActiveLegalNameList"), ppt_id);
+					Stock.getTestQuery("getActiveLegalNameList"), ppt_id,
+					plan_No);
 			if (legal_Name_List.size() <= 0) {
 				throw new AssertionError(
 						"Plan does not have any active Investment Options.");
 			}
 
 			for (int i = 0; i < legal_Name_List.size(); i++) {
-				
+
 				if (legal_Name_List.size() == ADAllcInvstOpt.size()
-						&& legal_Name_List.contains(
-										ADAllcInvstOpt.get(i).getText().trim())) {
+						&& legal_Name_List.contains(ADAllcInvstOpt.get(i)
+								.getText().trim())) {
 					investmentOptPerList = get_Asset_Allocation_Percentage(
 							Stock.getTestQuery("getInvestmentOptPer"), ppt_id,
 							ADAllcInvstOpt.get(i).getText());
@@ -238,7 +245,10 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 					}
 					if (ADAllcInvstOpt.get(i).getText().trim()
 							.contains(investmentOptPerList.get(0).trim())
-							&& ADAllocationPerVal.get(i).getText().contains(
+							&& ADAllocationPerVal
+									.get(i)
+									.getText()
+									.contains(
 											investmentOptPerList.get(1).trim())) {
 						Reporter.logEvent(
 								Status.PASS,
@@ -270,12 +280,11 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 										+ ADAllocationPerVal.get(i).getText(),
 								true);
 					}
-				}else{
+				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Verify Invetment Options against DB",
-							"Invetment Optionsis not available in DB",
-							false);
-					break ;
+							"Invetment Optionsis not available in DB", false);
+					break;
 				}
 			}
 
@@ -295,11 +304,12 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * @throws Exception
 	 */
 	public ArrayList<String> get_Active_Legal_Name(
-			String[] getActiveLegalNameList, String ind_id) throws Exception {
+			String[] getActiveLegalNameList, String ind_id, String ga_id)
+			throws Exception {
 		ResultSet resultset;
 		legal_Name_List = new ArrayList<String>();
 		resultset = DB.executeQuery(getActiveLegalNameList[0],
-				getActiveLegalNameList[1], ind_id, ind_id);
+				getActiveLegalNameList[1], ind_id, ga_id);
 		if (resultset != null) {
 			while (resultset.next()) {
 				String legalName = resultset.getString("legal_name");
@@ -334,7 +344,7 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 		}
 		return investmentOptPerList;
 	}
-	
+
 	/**
 	 * <pre>
 	 * Method to verify Investment Options percentage on Money Type Balance
@@ -344,13 +354,42 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * @author rnjbdn
 	 * @throws Exception
 	 */
-	public void verify_VI_MoneyType_Link(String ppt_id)
+	public void verify_VI_MoneyType_Link(String ppt_id,String ga_id)
 			throws Exception {
 		if (Web.isWebElementDisplayed(VITitle, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify Variable Investment section.",
 					"Verify Variable Investment section is displayed.",
 					true);
+			money_Type_List = get_Money_Type(
+					Stock.getTestQuery("getMoneyType"), ppt_id,ga_id );
+			if (money_Type_List.size() <= 0) {
+				throw new AssertionError(
+						"Variable Investment section does not contains any Money Type.");
+			}
+			String moneyType = VIMoneyTypeVal.getText().substring(0, VIMoneyTypeVal.getText().length() - 1 ) ;
+			if (money_Type_List.contains(moneyType)) {
+				money_Type_Info_List = get_Money_Type_Info(
+						Stock.getTestQuery("getMoneyTypeInfo"), ppt_id, moneyType);
+				Web.mouseHover(VIMoneyTypeVal);
+			//	String al = Web.webdriver.findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
+				JavascriptExecutor js = (JavascriptExecutor) Web.webdriver;
+				//Object obj =js.executeScript("variableMTFunc(0)") ;
+				Object obj =js.executeScript("function variableMTFunc(index){overlib( variableMTArray[index],  HAUTO, VAUTO);}; variableMTFunc(0)") ;
+				//	Object val = js.executeScript("return nd();") ;
+			//	Object val = js.executeScript("return variableMTFunc('0');") ;
+			//	Object val = js.executeScript(return document.getWe) ;
+				System.out.println(obj.toString());
+//				String text = VIMoneyTypeVal.getAttribute("Money Type") ;
+				if (true) {
+					System.out.println("report");
+				} else {
+					System.out.println("repodfk");
+				}
+			} else {
+
+			}
+
 			
 		} else {
 			Reporter.logEvent(Status.PASS,
@@ -359,7 +398,7 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 					true);
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Method to get all the active Legal name from DB
@@ -367,21 +406,21 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * 
 	 * @throws Exception
 	 */
-	public ArrayList<String> get_Money_Type(
-			String[] getActiveLegalNameList, String ind_id) throws Exception {
+	public ArrayList<String> get_Money_Type(String[] getMoneyType,
+			String ind_id, String ga_id) throws Exception {
 		ResultSet resultset;
-		legal_Name_List = new ArrayList<String>();
-		resultset = DB.executeQuery(getActiveLegalNameList[0],
-				getActiveLegalNameList[1], ind_id, ind_id);
+		money_Type_List = new ArrayList<String>();
+		resultset = DB.executeQuery(getMoneyType[0], getMoneyType[1], ind_id,
+				ga_id);
 		if (resultset != null) {
 			while (resultset.next()) {
-				String legalName = resultset.getString("legal_name");
-				legal_Name_List.add(legalName);
+				String money_Type = resultset.getString("sdmt_code");
+				money_Type_List.add(money_Type);
 			}
 		}
-		return legal_Name_List;
+		return money_Type_List;
 	}
-	
+
 	/**
 	 * <pre>
 	 * Method to get all the active Legal name from DB
@@ -389,18 +428,22 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * 
 	 * @throws Exception
 	 */
-	public ArrayList<String> get_Money_Type_Info(
-			String[] getActiveLegalNameList, String ind_id) throws Exception {
+	public ArrayList<String> get_Money_Type_Info(String[] getMoneyTypeInfo,
+			String ind_id, String code) throws Exception {
 		ResultSet resultset;
-		legal_Name_List = new ArrayList<String>();
-		resultset = DB.executeQuery(getActiveLegalNameList[0],
-				getActiveLegalNameList[1], ind_id, ind_id);
+		money_Type_Info_List = new ArrayList<String>();
+		resultset = DB.executeQuery(getMoneyTypeInfo[0], getMoneyTypeInfo[1],
+				ind_id, code);
 		if (resultset != null) {
 			while (resultset.next()) {
-				String legalName = resultset.getString("legal_name");
-				legal_Name_List.add(legalName);
+				String moneyType = resultset.getString("code");
+				String description = resultset.getString("descr");
+				String seq_No = resultset.getString("gdmt_seqnbr");
+				money_Type_Info_List.add(moneyType);
+				money_Type_Info_List.add(description);
+				money_Type_Info_List.add(seq_No);
 			}
 		}
-		return legal_Name_List;
+		return money_Type_Info_List;
 	}
 }
