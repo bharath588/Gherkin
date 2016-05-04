@@ -534,7 +534,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * Method to enter participantID or SSN and click on Sign In button
 	 * </pre>
 	 * 
-	 * @param ppt_id
+	 * @param ppt_id/SSN weblement name, PPT ID/SSN and PLAN Number
 	 * @throws Exception
 	 * @author RANJAN
 	 */
@@ -551,6 +551,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.clickOnElement(SubmitPPTIdBtn);
 
 		// ------------- Handle Multiple PPT Search Result -----
+		// GA_ID is passed as searchValue[1]
 		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link) && PlanNoOnPartList_Link.size() > 1) {
 			click_And_Verify_Plan_On_Search_Page(searchValue[1]);
 		}
