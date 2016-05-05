@@ -384,6 +384,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			// Web.webdriver.get(Stock.getConfigParam("AppURL"));
 			Web.webdriver.get(Stock.getConfigParam("AppURL" + "_"
 					+ Stock.getConfigParam("TEST_ENV")));
+			System.out.println(Stock.getConfigParam("AppURL" + "_"
+					+ Stock.getConfigParam("TEST_ENV")));
 			Reporter.logEvent(Status.INFO,
 					"Check if the CSAS Log in page open",
 					"CSAS log in page launhced successfully", true);
