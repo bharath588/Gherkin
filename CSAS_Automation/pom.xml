@@ -32,12 +32,12 @@
 						<suiteXmlFiles>
 							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
-						<systemProperties>
+						<!-- <systemProperties>
 							<property>
 								<name>env</name>
 								<value>${env}</value>
 							</property>
-						</systemProperties>
+						</systemProperties> -->
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
