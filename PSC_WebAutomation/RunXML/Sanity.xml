@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-
 <suite name="testsuite" verbose="1">
-
-	<listeners>
-
-		<listener class-name="core.framework.TestListener" />
-
-	</listeners>
-
-	<test name="testXML">
-
-		<classes>
-
-			<class name="app.csas.testcases.participanthomepage.Validate_ParticipantHomePage">
-
-				<methods>
-
-					<include name="ValidateEmploymentStatusAsActiveOrTerminated" />
-
-				</methods>
-
-			</class>
-
-		</classes>
-
-	</test>
-
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+   <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
-

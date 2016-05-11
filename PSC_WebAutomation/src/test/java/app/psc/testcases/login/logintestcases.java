@@ -30,7 +30,6 @@ public class logintestcases {
 	LoginPage login;
 	UserVerificationPage userverification;
 	HomePage home;
-	private String tcName = Globals.GC_EMPTY;
 
 	@BeforeClass
 	public void InitTest() throws Exception {
@@ -68,10 +67,13 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void TC017_01_Internal_Employee_External_Client_Login(int itr, Map<String, String> testdata) {		
 		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Validate the internal employee vs External client Login scenario", false);
 			// Step-1 : Login with internal/external employee credentials
 			login = new LoginPage().get();
-			Reporter.initializeReportForTC(itr, tcName);
-		//	login.submitLoginCredentials(testdata.get("username"), testdata.get("password"));
+		
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			Thread.sleep(10000);
 			// Step-2 : Check if the user is on the login page
 			if ((!Web.isWebElementDisplayed(login, "LOGIN FRAME"))) {
@@ -83,13 +85,13 @@ public class logintestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-			lib.Web.webdriver.quit();
-		} catch (AssertionError ae) {
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);	
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);	
-			lib.Web.webdriver.quit();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -123,7 +125,9 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void TC006_01_Verify_Force_Login(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, tcName);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Validate A random user when enters any URL and do force login,it should be navigated to planEmpower site", false);
 			login = new LoginPage();
 			boolean isUsernameFieldDisplayed;
 			boolean isGWRSLogoDisplayed;
@@ -131,7 +135,7 @@ public class logintestcases {
 			// same
 			// page-GWRS
 
-			Web.webdriver.get(testdata.get("ForceLoginTrueURL"));
+			Web.webdriver.get(Stock.GetParameterValue("ForceLoginTrueURL"));
 			isUsernameFieldDisplayed = Web.isWebElementDisplayed(login, "FORCELOGIN USERNAME");
 			
 			if(isUsernameFieldDisplayed){
@@ -146,7 +150,7 @@ public class logintestcases {
 			// to
 			// Empower site and verify modal window
 
-			Web.webdriver.get(testdata.get("ForceLoginFalseURL"));
+			Web.webdriver.get(Stock.GetParameterValue("ForceLoginFalseURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
 			
 			if(isGWRSLogoDisplayed){
@@ -156,7 +160,7 @@ public class logintestcases {
 				Reporter.logEvent(Status.FAIL, "Check if GWRS Logo displayed",
 						"GWRS Logo is not displayed ", true);
 			}
-			
+			Thread.sleep(7000);
 			if((Web.isWebElementDisplayed(login, "LOGIN FRAME"))){
 				Reporter.logEvent(Status.PASS, "Check if the Login Frame is displayed",
 						"Login frame is displayed", false);
@@ -167,7 +171,7 @@ public class logintestcases {
 
 
 			// Step-3:Check for forcelogin with dummyvalues
-			Web.webdriver.get(testdata.get("ForceLoginDummyURL"));
+			Web.webdriver.get(Stock.GetParameterValue("ForceLoginDummyURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
 
 			if(isGWRSLogoDisplayed){
@@ -177,7 +181,7 @@ public class logintestcases {
 				Reporter.logEvent(Status.FAIL, "Check if GWRS Logo displayed",
 						"GWRS Logo is not displayed ", true);
 			}
-			
+			Thread.sleep(7000);
 			if((Web.isWebElementDisplayed(login, "LOGIN FRAME"))){
 				Reporter.logEvent(Status.PASS, "Check if the Login Frame is displayed",
 						"Login frame is displayed", false);
@@ -190,12 +194,12 @@ public class logintestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-			lib.Web.webdriver.quit();
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);	
-			lib.Web.webdriver.quit();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -222,20 +226,23 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, tcName);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the pre-login error messages", false);
 			login = new LoginPage().get();
-		//	login.submitLoginCredentials(testdata.get("username"), testdata.get("password"));
-			login.verifyErrorforRespectiveLogin(testdata.get("errorMessages"));			
+			
+		login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-			lib.Web.webdriver.quit();
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);	
-			lib.Web.webdriver.quit();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -269,7 +276,9 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void TC004_01_Verify_Header_and_Footer_Links_PreLogin(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, tcName);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the pre login Header and footer links", false);
 			login = new LoginPage().get();
 			login.checkHeaderLinkPreLogin();
 			Thread.sleep(1000);
@@ -278,12 +287,12 @@ public class logintestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-			lib.Web.webdriver.quit();
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);	
-			lib.Web.webdriver.quit();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -312,15 +321,18 @@ public class logintestcases {
 	@Test(dataProvider = "setData")
 	public void TC004_02_Verify_Header_and_Footer_Links_PostLogin(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, tcName);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the post login Header and footer links", false);
 			login = new LoginPage().get();
+			
 			List<String> preLoginFooterList = login.getPreLoginFooterLinkList();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
 			userverification = new UserVerificationPage().get();
 			userverification.performVerification(
 					new String[] { (userverification.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
-							testdata.get("username"))).trim(), testdata.get("UserSecondaryAns") });
+							Stock.GetParameterValue("username"))).trim(), Stock.GetParameterValue("UserSecondaryAns") });
 			Thread.sleep(3000);
 			accountverification.jumpPagedisplayed();
 			home.checkFooterLinkPostLogin(preLoginFooterList);			
@@ -328,12 +340,12 @@ public class logintestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-			lib.Web.webdriver.quit();
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);	
-			lib.Web.webdriver.quit();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -345,6 +357,7 @@ public class logintestcases {
 
 	@AfterSuite
 	public void DriverQuite() {
-		Web.webdriver.quit();
+//		Web.webdriver.close();
+//		Web.webdriver.quit();
 	}
 }

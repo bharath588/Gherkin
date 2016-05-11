@@ -209,6 +209,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		setPreLoginFooterLinkList(footerLinkText);
 	}
 
+	/**
+	 * This method verifies the error messages pre login for invalid credentials
+	 * @param errorMsg
+	 */
 	public void verifyErrorforRespectiveLogin(String errorMsg) {
 		boolean textMatch = false;
 		try {
@@ -260,7 +264,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		int linkObjSize = linkObjList.size();
 		try{
 			 //Looping through the list of Header/Footer links
-			for (int iLoopCnt = 0; iLoopCnt <= linkObjSize - 1; iLoopCnt++) {
+			for (int iLoopCnt = 0; iLoopCnt < linkObjSize - 1; iLoopCnt++) {
 				new LoginPage();
 				testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
 				Thread.sleep(500);

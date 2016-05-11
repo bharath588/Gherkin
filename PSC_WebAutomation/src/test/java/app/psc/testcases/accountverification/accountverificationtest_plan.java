@@ -44,12 +44,41 @@ public class accountverificationtest_plan {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC012_User access to New plan or Plans</u></b>
+	 * 
+	 * Application: <b>PSC</b>
+	 * Functionality: <b>Login</b>
+	 * Sub-functionality: <b>Give access to new plan number</b>
+	 * Test Type: <b>Positive validation</b>
+	 * 
+	 * <b>Description:</b>
+	 * This test case verifies that the user has to give the plan number to which it has got access recently when logs into the application
+	 * 
+	 * <pre>
+	 * This test case is validated in three iterations
+	 * </pre>
+	 * 
+	 * <pre>
+	 * <b>Pre-Conditions:</b> The user should have got access to a new plan
+	 * <u><b>Test data:</b></u> <b>txtUsername-</b> Username required to login
+	 * <b>txtPassword-</b> Password required to login 
+	 *  <b>assignedPlanNumber -</b> Input for plan number
+	 *  <b>chkPLuser -</b> Flag to check for PL user validations
+	 * assigned to the user(Valid / Invalid)
+	 * 
+	 * @author krsbhr
+	 * 
+	 */
 	@Test(dataProvider = "setData")
 	public void TC012_02_Verify_User_Access_New_Plan_For_Valid_Input(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify if the plan number field is displayed when a new plan is added for an existing user"+":"
+			+"Positive Sceanrio", false);
 			accountverificationpage = new AccountVerificationPage();
 			loginpage = new LoginPage();
 			userverification = new UserVerificationPage();
@@ -94,11 +123,12 @@ public class accountverificationtest_plan {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -107,7 +137,32 @@ public class accountverificationtest_plan {
 			}
 		}
 	}
-
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC012_User access to New plan or Plans</u></b>
+	 * 
+	 * Application: <b>PSC</b>
+	 * Functionality: <b>Login</b>
+	 * Sub-functionality: <b>Give access to new plan number</b>
+	 * Test Type: <b>Negative validation</b>
+	 * 
+	 * <b>Description:</b>
+	 * This test case verifies that the user has to give the plan number to which it has got access recently when logs into the application
+	 * 
+	 * <pre>
+	 * This test case is validated in three iterations
+	 * </pre>
+	 * 
+	 * <pre>
+	 * <b>Pre-Conditions:</b> The user should have got access to a new plan
+	 * <u><b>Test data:</b></u> <b>txtUsername-</b> Username required to login
+	 * <b>txtPassword-</b> Password required to login 
+	 *  <b>assignedPlanNumber -</b> Input for plan number
+	 *  <b>expectedErrorMessage -</b> Expected error message to be displayed
+	 * assigned to the user(Valid / Invalid)
+	 * 
+	 */
 	@Test(dataProvider = "setData")
 	public void TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input(int itr,
 			Map<String, String> testdata) {
@@ -116,7 +171,10 @@ public class accountverificationtest_plan {
 			userverification = new UserVerificationPage();
 			accountverificationpage = new AccountVerificationPage();
 			Reporter.initializeReportForTC(itr,
-					"TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input");
+					Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify if the plan number field is displayed when a new plan is added for an existing user"+":"
+			+"Negative Sceanrio", false);
 			accountverificationpage.addPlanNumber(
 					Stock.getTestQuery("addPlanNumberQuery"),
 					Stock.GetParameterValue("username"),
@@ -140,21 +198,21 @@ public class accountverificationtest_plan {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
-			// throw ae;
+					errorMsg, true);
 		} finally {
-		}
+		
 		try {
 			Reporter.finalizeTCReport();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	}
+	}}
 
 	@AfterSuite
 	public void cleanUpSession() {

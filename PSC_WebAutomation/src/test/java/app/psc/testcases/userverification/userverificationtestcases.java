@@ -56,8 +56,7 @@ public class userverificationtestcases {
 	 * <u><b>Test data:</b></u> <b>txtUserName -</b> Valid user name
 	 * <b>txtPassword -</b> Valid password <b>UserVeriEmail -</b> user
 	 * verification email <b>UserSecondaryAns -</b> secondary answer
-	 * 
-	 * @author krsbhr(1-SEP-2015)
+	 *
 	 * 
 	 */
 	@Test(dataProvider = "setData")
@@ -67,8 +66,15 @@ public class userverificationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			userverification = new UserVerificationPage().get();
-
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the user is able to navigate with valid email"
+	 +"and secondary answer when he logs in with new browser", false);	
 			Thread.sleep(3000);
+			
+			//userverification.get();
+
+			// Verify if the user id displayed same as logged in id
+			userverification.verifyUserIdDisplayed(Stock.GetParameterValue("username"));
 			Web.clickOnElement(userverification, "CANCEL");
 			
 			if(Web.isWebElementDisplayed(login, "LOGIN FRAME")){
@@ -78,11 +84,7 @@ public class userverificationtestcases {
 				Reporter.logEvent(Status.FAIL, "Check if user is navigated to splash screen when it clicks cancel",
 						"The user is not navigated to splash screen when cancel is clicked", true);
 			}
-			
-			//userverification.get();
-
-			// Verify if the user id displayed same as logged in id
-			userverification.verifyUserIdDisplayed(Stock.GetParameterValue("username"));
+			userverification.get();
 			// Enter Valid user secondary answer and email
 			userverification.performVerification(
 					new String[] { Stock.GetParameterValue("UserVeriEmail"), Stock.GetParameterValue("UserSecondaryAns") });
@@ -102,10 +104,12 @@ public class userverificationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}  catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -143,7 +147,9 @@ public class userverificationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			String actualErrorMessage = "";
-			
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the user is not able to navigate with invalid email"
+	 +"and secondary answer when he logs in with new browser", false);
 			userverification = new UserVerificationPage().get();
 
 			userverification.performVerification(
@@ -172,10 +178,12 @@ public class userverificationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}  catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", "Assertion Failed!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();

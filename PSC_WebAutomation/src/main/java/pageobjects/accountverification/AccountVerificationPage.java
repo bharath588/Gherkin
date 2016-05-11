@@ -308,7 +308,10 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		count = DB.getRecordSetCount(resultset);
 		return count;
 	}
-
+/**
+ * This method takes the user input for the new user flow in account verification screen
+ * @param accountVerificationData
+ */
 	public void performVerification(String[] accountVerificationData) {
 		String PlanNumber = accountVerificationData[0];
 		String txtFirstDropdownAns = accountVerificationData[1];
@@ -439,12 +442,22 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		}
 		return recentPlan;
 	}
+	/**
+	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
+	 */
 
 	public void jumpPagedisplayed() {
 		if (Web.isWebElementDisplayed(urlJumpPage))
 			urlJumpPage.click();
 	}
 
+	/**
+	 * This method adds a plan to an existing user
+	 * @param addPlanQuery
+	 * @param username
+	 * @param planNumber
+	 * @throws Exception
+	 */
 	public void addPlanNumber(String[] addPlanQuery, String username, String planNumber) throws Exception
 
 	{
@@ -452,11 +465,24 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		DB.executeUpdate(addPlanQuery[0], addPlanQuery[1], "K_" + username, planNumber);
 
 	}
+	/**
+	 * This methos returns the number of password rows in the isis_password table
+	 * @param queryForisispassword
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	public int getNumberOfRows(String[] queryForisispassword,String username) throws Exception
 	{
 		resultset = DB.executeQuery(queryForisispassword[0], queryForisispassword[1], "K_"+username);
 		return DB.getRecordSetCount(resultset);
 	}
+	/**
+	 * This method deletes the old password rows keeping the latest one
+	 * @param queryDeleteOldPassword
+	 * @param username
+	 * @throws Exception
+	 */
 	
 	public void deleteOldPasswordrows(String[] queryDeleteOldPassword,String username) throws Exception
 	{
@@ -466,11 +492,24 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		}
 	}
 	
+	/**
+	 * This method used to reset the password to user by a query which updates the effdate to effdate - 365
+	 * @param updateUserEffdateQuery
+	 * @param username
+	 * @throws Exception
+	 */
 	public void resetPasswordQuery(String[] updateUserEffdateQuery,String username) throws Exception
 	{
 		DB.executeUpdate(updateUserEffdateQuery[0], updateUserEffdateQuery[1], "K_"+username);
 		
 	}
+	/**
+	 * This method sets the old password for the user by deleting the recently created row
+	 * @param querytoDeleterecentRows
+	 * @param queryResetOldPassword
+	 * @param username
+	 * @throws Exception
+	 */
 	public void setOldPassword(String[] querytoDeleterecentRows,String[] queryResetOldPassword,String username) throws Exception
 	{
 		DB.executeUpdate(querytoDeleterecentRows[0],querytoDeleterecentRows[1],"K_"+username,"K_"+username);
@@ -484,6 +523,13 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 				"The query "+queryResetOldPassword[1]+"Executed successfully",false);
 	}
 
+	/**
+	 * This methos will return the number of sites the user is having access to
+	 * @param queryTofindAccesstoSites
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	public int getUseraccessForSites(String[] queryTofindAccesstoSites,String username) throws Exception
 	{
 	 	
@@ -491,6 +537,10 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		return DB.getRecordSetCount(resultset);
 		
 	}
+	/**
+	 * This method will log out user from the application
+	 * @throws InterruptedException
+	 */
 	public void logoutFromApplication() throws InterruptedException
 	{
 		if(Web.isWebElementDisplayed(linkLogout)){
@@ -504,6 +554,13 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		Thread.sleep(3000);
 	}
 	
+	/**
+	 * This method used to fetch the email address of the user
+	 * @param getEmailQuery
+	 * @param userid
+	 * @return
+	 * @throws Exception
+	 */
 	public String getEmailAddressOfuser(String[] getEmailQuery, String userid) throws Exception {
 		String emailAddr = "";
 		resultset = DB.executeQuery(getEmailQuery[0], getEmailQuery[1], "K_" + userid);
@@ -515,6 +572,11 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		return emailAddr;
 	}
 	
+	/**
+	 * Method compares the actual error message with expected one
+	 * @param actualErrorMessage
+	 * @param expectedErrorMsg
+	 */
 	public void actualErrorValidationRptNegativeFlow(String actualErrorMessage, String expectedErrorMsg){
 		if (!actualErrorMessage.trim().isEmpty()) {
 			Reporter.logEvent(
@@ -545,6 +607,11 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		}
 	}
 	
+	/**
+	 * Method checks if any error message is displayed for valid input and report appropriately
+	 * @param actualErrorMessage
+	 * @param scenarioDesc
+	 */
 	public void actualErrorValidationRptPositiveFlow(String actualErrorMessage, String scenarioDesc){
 		if ((actualErrorMessage.trim().isEmpty())) {
 			Reporter.logEvent(
@@ -558,7 +625,13 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 					"The user has failed to proceeed with provided input for "+ scenarioDesc +" scenario", true);
 		}
 	}
-	
+	/**
+	 * It check the number of sites the user is having access to and check the fields accordingly
+	 * @param userAccessToSite
+	 * @param emailAddress
+	 * @param recentPlan
+	 * @throws Exception
+	 */
 	public void resetPassword(int userAccessToSite, String emailAddress, String recentPlan) throws Exception{
 		if (userAccessToSite == 1) {
 			resetPassword(emailAddress,

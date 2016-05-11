@@ -130,7 +130,8 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	
 	/** This method Performs user verification based on the user input */
 	public void performVerification(String[] userVerfiData) {
-		new UserVerificationPage();				
+		new UserVerificationPage();	
+		
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
 			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
@@ -180,6 +181,13 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			return "";
 	}
 
+	/**
+	 * This method fetches the email address of user from database
+	 * @param getEmailQuery
+	 * @param userid
+	 * @return
+	 * @throws Exception
+	 */
 	public String getEmailAddressOfuser(String[] getEmailQuery, String userid) throws Exception {
 		String emailAddr = "";
 		resultset = DB.executeQuery(getEmailQuery[0], getEmailQuery[1], "K_" + userid);

@@ -145,7 +145,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 						if(Web.isWebElementDisplayed(frmModalWindow,true)){
 							Web.webdriver.switchTo().frame(frmModalWindow);
 							//testData = TestDataContainer.GetParameterValue("link_Footer"+(iLoopCnt+1)); 
-							testData=Stock.globalTestdata.get("link_Footer"+(iLoopCnt+1));
+							testData=Stock.GetParameterValue("link_Footer"+(iLoopCnt+1));
 							
 							if(testData.equalsIgnoreCase("PSCUserAuthorizationForm")){
 								Web.webdriver.switchTo().defaultContent();	

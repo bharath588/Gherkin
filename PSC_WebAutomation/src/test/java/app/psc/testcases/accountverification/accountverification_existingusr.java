@@ -43,13 +43,22 @@ public class accountverification_existingusr {
 	}
 
 	
+	/**
+	 * <pre>Verify the expired password scenario for invalid user input</pre>
+	 * @param itr
+	 * @param testdata
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	
 	@Test(dataProvider = "setData")
 	public void TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(
 			int itr, Map<String, String> testdata) throws SQLException,
 			Exception {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the expired password scenario for negative user input", false);
 			userverification = new UserVerificationPage();
 			accountverification = new AccountVerificationPage();
 			accountverification.logoutFromApplication();
@@ -85,11 +94,12 @@ public class accountverification_existingusr {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -99,12 +109,20 @@ public class accountverification_existingusr {
 		}
 	}
 
+	/**
+	 * <pre>Verify the expired password scenario for valid user input</pre>
+	 * @param itr
+	 * @param testdata
+	 * @throws Exception
+	 */
 	@Test(dataProvider = "setData")
 	public void TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow(
 			int itr, Map<String, String> testdata) throws Exception {
 		String actualErrorMessage = "";
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the expired password scenario for valid user input", false);			
 			userverification = new UserVerificationPage();
 			accountverification = new AccountVerificationPage();
 			accountverification.deleteOldPasswordrows(
@@ -137,15 +155,24 @@ public class accountverification_existingusr {
 			actualErrorMessage = accountverification.getErrorMessageText();
 			accountverification.actualErrorValidationRptPositiveFlow(actualErrorMessage,"Changed Password");
 		} catch (Exception e) {
+			accountverification.setOldPassword(
+					Stock.getTestQuery("deleteRecentPasswordRows"),
+					Stock.getTestQuery("queryTosetOldPassword"),
+					Stock.GetParameterValue("username"));
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
+			accountverification.setOldPassword(
+					Stock.getTestQuery("deleteRecentPasswordRows"),
+					Stock.getTestQuery("queryTosetOldPassword"),
+					Stock.GetParameterValue("username"));
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -154,12 +181,39 @@ public class accountverification_existingusr {
 			}
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC019_Default plan access</u></b>
+	 *  
+	 *  Application: <b>PSC</b>
+	 *  Functionality: <b>Login</b>
+	 *  Sub-functionality: <b>Default Planprompt</b>
+	 *  Test Type: <b>Positive validation</b>
+	 *  
+	 *  <b>Description:</b>
+	 *             A random user will be required to go through default plan prompting if default ga_id = NULL
+	 *  
+	 *  <u><b>Test data:</b></u>
+	 *  <u><b>Test data:</b></u> <b>txtUsername-</b> Username required to login
+	 *  <b>txtPassword-</b> Password required to login 
+	 *  <b>PlanNumber -</b> Input for plan number
+	 *  <b>setDefaultplanNullQuery  -</b> Query to set default plan id to NULL
+	 * <b>getPlanNUmberQuery -</b> Query to fetch the total number of plans for the user 
+	 * 
+	 * <b>Number of iterations -</b> 3
+	 * @author krsbhr
+	 * 
+	 */
 
 	@Test(dataProvider = "setData")
 	public void TC019_Verify_Default_Plan_Prompting(int itr,
 			Map<String, String> testdata) throws SQLException, Exception {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the Default plan prompting sceanrio for an user according to the number of plans"
+					+ "The user has access to", false);
 			int PlanCount = 0;
 			String[] setDeafultPlanNullQuery;
 			accountverification = new AccountVerificationPage();
@@ -240,11 +294,12 @@ public class accountverification_existingusr {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -254,11 +309,38 @@ public class accountverification_existingusr {
 		}
 	}
 
+
+/**
+ * <pre>
+ * Testcase: <b><u>SIT_PSC_Login_01_TC018_Existing User_Security questions validation</u></b>
+ *  
+ *  Application: <b>PSC</b>
+ *  Functionality: <b>Login</b>
+ *  Sub-functionality: <b>Security Questions</b>
+ *  Test Type: <b>Positive validation</b>
+ *  
+ *  <b>Description:</b>
+ *  When the security questions are deleted for the user should be asked to re-enter them 
+ *  
+ *  <u><b>Test data:</b></u>
+ *   <b>txtUserName       -</b> Valid user name
+ *             <b>txtPassword               -</b> Valid password
+ *             <b>deleteSecurityQuesQuery -</b> Query to delete security questions
+ *  <b>firstDrpdwnAns -</b> Answer for the first dropdown 
+ *  <b>secondDrpdwnAns -</b> Answer for the second dropdown 
+ *  <b>thirdDrpdwnAns -</b> Answer for the third fropdown
+ * <b>Number of iterations = </b> 1
+ * @author krsbhr
+ * 
+ */
 	@Test(dataProvider = "setData")
 	public void TC018_Security_Question_Validation_Existing_User(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates if the user is navigated to security answers page when the security answers are"
+					+ "deleted in database", false);
 			accountverification = new AccountVerificationPage();
 			String[] queryDeleteSecurityAnswers;
 			accountverification.logoutFromApplication();
@@ -300,12 +382,13 @@ public class accountverification_existingusr {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
-		} finally {
+					errorMsg, true);
+		}  finally {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {

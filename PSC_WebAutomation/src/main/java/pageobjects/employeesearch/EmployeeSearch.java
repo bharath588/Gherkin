@@ -27,6 +27,8 @@ import pageobjects.login.LoginPage;
 
 public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
+	
+	//Locators declaration
 	@FindBy(css = "iframe[id = 'framec']")
 	private WebElement employeeSearchFrame;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[2]/a")
@@ -168,7 +170,6 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName) {
 		if (fieldName.trim().equalsIgnoreCase("BTN GO")) {
 			return this.btnGoPlanNumberforSearchBox;
@@ -221,6 +222,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return null;
 	}
 
+	/**
+	 * This method used to search the employee by SSN number
+	 * @param SSN
+	 * @throws InterruptedException
+	 */
 	public void searchEmployeeBySSN(String SSN) throws InterruptedException {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
@@ -233,6 +239,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		dismissErrorBox();
 	}
 
+	/**
+	 * This method validates if search results are displayed for a particular search criteria
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public boolean isSearchResultsDisplayed() throws InterruptedException {
 		boolean isSearchttableDisplayed;
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
@@ -243,6 +254,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return isSearchttableDisplayed;
 	}
 
+
+	/**
+	 * This method used to search the employee by Name
+	 * @param Name
+	 * @throws InterruptedException
+	 */
 	public void searchEmployeeByName(String Name) throws InterruptedException {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
@@ -253,7 +270,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Thread.sleep(2500);		
 		Web.webdriver.switchTo().defaultContent();
 	}
-
+	/**
+	 * This method used to search the employee by EmployeeID
+	 * @param EmployeeID
+	 * @throws InterruptedException
+	 */
 	public void searchEmployeeByEmployeeId(String EmployeeID) throws InterruptedException {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
@@ -265,6 +286,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.webdriver.switchTo().defaultContent();
 	}
 
+	/**
+	 * This method checks the error messages for invalid search criteria
+	 * @return
+	 */
 	public String getErrorMessageTextforInvalidSearch() {
 		String errorText;
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
@@ -277,6 +302,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return errorText;
 	}
 
+	/**
+	 * This method returns the total number of plans the user is having
+	 * @param getNumberOfPlansQuery
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	public int getNumberOfplans(String[] getNumberOfPlansQuery, String username)
 			throws Exception {
 		queryResultSet = DB.executeQuery(getNumberOfPlansQuery[0],
@@ -284,6 +316,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return DB.getRecordSetCount(queryResultSet);
 	}
 
+	/**
+	 * This method selects the required plan from the plan dropdown box on homepage
+	 * @param resultset
+	 * @return
+	 * @throws SQLException
+	 */
 	public String selectFromDropdown(ResultSet resultset) throws SQLException {
 		String planWithDivisons = "";
 		while (resultset.next()) {
@@ -297,6 +335,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return planWithDivisons;
 
 	}
+
+	/**
+	 * This is a generic method which checks which field is displayed to select plan number
+	 * @param resultset
+	 * @return
+	 * @throws SQLException
+	 */
 
 	public String selectPlanFromResultset(ResultSet resultset)
 			throws SQLException, InterruptedException {
@@ -313,6 +358,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return planNumber;
 	}
 
+	/**
+	 * This method selects the required plan from the plan text box on home page
+	 * @param resultset
+	 * @return
+	 * @throws SQLException
+	 */
 	@SuppressWarnings("unused")
 	public String enterFromtextBox(ResultSet resultset) throws SQLException {
 		int countResultSet;
@@ -328,6 +379,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return planWithDivisons;
 	}
 
+	/**
+	 * Method captures the error message text from error pop up 
+	 * @return
+	 */
 	public String getErrorMessageText() {
 		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox,
 				false);
@@ -338,6 +393,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			return "";
 	}
 
+	/**
+	 * This method navigates the user to employee tab
+	 * @throws InterruptedException
+	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
 		Web.clickOnElement(tabEmployees);
 		Thread.sleep(2000);
@@ -347,7 +406,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Thread.sleep(2000);
 		
 	}
-
+	/**
+	 * This method used to search the employee by Division
+	 * @throws InterruptedException
+	 */
+	
 	public void searchByDivision() throws InterruptedException {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
@@ -368,7 +431,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		Web.webdriver.switchTo().defaultContent();
 	}
-
+	/**
+	 * This method used to search the employee by Participant ID
+	 * @param pptID
+	 * @throws InterruptedException
+	 */
 	public void searchByParticipantID(String pptID) throws InterruptedException {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
@@ -383,6 +450,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Thread.sleep(2500);		
 		lib.Web.webdriver.switchTo().defaultContent();
 	}
+	/**
+	 * This method converts the List of WebElements to List of string
+	 * @param refList
+	 * @return
+	 */
 
 	public List<String> getWebElementstoListofStrings(List<WebElement> refList) {
 		List<String> list = new ArrayList<String>();
@@ -392,6 +464,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 		return list;
 	}
+	/**
+	 * This method converts the List of WebElements to List of string when multiple columns are selected
+	 * @param refList
+	 * @return
+	 */
 
 	public List<String> getMultipleWebElementstoListofStrings(List<WebElement> refList) {
 		List<String> list = new ArrayList<String>();
@@ -403,6 +480,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 		return list;
 	}
+	/**
+	 * This method verifies if the search results contain any duplicate values ,Returns true if it finds any duplicate record
+	 * @return
+	 */
 	public boolean checkIfduplicateExists() {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		boolean isDuplateRowFound = false;
@@ -417,6 +498,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return isDuplateRowFound;
 	}
 
+	/**
+	 * This method verifies the dropdown option on employeesearch page
+	 * @return
+	 */
 	public boolean compareDropdownOptions() {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
@@ -439,6 +524,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return areDropdownOptionsSame;
 	}
 
+	/**
+	 * This method verifies the different screen elements of Employeesearch page as Go button,Print button etc
+	 */
 	public void verifyScreenElements() {
 		String[] verifyElements = new String[] {"BTN_GO_EMP_SEARCH",
 				"ICON_PRINT", "TXT_SEARCH_BOX" };
@@ -458,6 +546,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.webdriver.switchTo().defaultContent();
 	}
 
+	/**
+	 * This method verifies the column headers
+	 * @throws Exception
+	 */
 	public void verifyColumnHeaders() throws Exception {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 		String[] headersArray = new String[] { "Last name", "First name",
@@ -484,6 +576,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.webdriver.switchTo().defaultContent();
 		}
 	}
+	/**
+	 * This method verifies if the search results are displayed as Hyperlinks
+	 * @return
+	 */
 
 	public boolean verifySearchResultsasLinks() {
 		boolean areResultsdisplayedLinks;
@@ -503,6 +599,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return areResultsdisplayedLinks;
 	}
 
+	/**
+	 * This method verifies if the user is redirected to the Employee Overview page when it clicks any search results hyperlinks
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public boolean verifyEmployeeredirectOverviewPage() throws InterruptedException {
 		boolean isRedirected;
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
@@ -518,6 +619,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return isRedirected;
 	}
 
+	/**
+	 * This testcase verifies the pagination of search results
+	 * @return
+	 */
 	public boolean verifyPaginationforSearchResults() {
 
 		if (Web.isWebElementDisplayed(this.errorMsgBox)) {
@@ -541,6 +646,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return isPaginationCorrect;
 	}
 
+	/**
+	 * It verifies the limit of search results
+	 * @return
+	 */
 	public boolean verifyLimitofsearchResults() {
 		if (Web.isWebElementDisplayed(this.errorMsgBox)) {
 			this.errorMsgBox.click();
@@ -560,6 +669,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	}
 
+	/**
+	 * It takes the sorting option as the parameter and clicks the respective column and checks if the column is in sorted order
+	 * @param sortOption
+	 * @return
+	 * @throws InterruptedException
+	 */
 	public boolean verifySortingofColumns(String sortOption)
 			throws InterruptedException {
 		if (Web.isWebElementDisplayed(this.errorMsgBox)) {
@@ -604,14 +719,26 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return true;
 	}
 
+	/**
+	 * Used to switch to the Employeesearch frame 
+	 */
 	public void switchToFrame() {
 		Web.webdriver.switchTo().frame(employeeSearchFrame);
 	}
-
+	/**
+	 * Used to switch to the Default content
+	 */
 	public void switchToDefaultContent() {
 		Web.webdriver.switchTo().defaultContent();
 	}
 
+	/**
+	 * It selects the plan for user from DB
+	 * @param planNumwithDivQuery
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	public ResultSet selectPlanForUser(String[] planNumwithDivQuery,
 			String username) throws Exception {
 		queryResultSet = DB.executeQuery(planNumwithDivQuery[0],
@@ -619,7 +746,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return queryResultSet;
 	}
 
-	// Comment : searchResultsFirstName (check for Last and Middle name as well)
+	/**
+	 * It verifies the filter functionality by taking a text as the filter criteria
+	 * @param searchText
+	 */
 	public void verifyFilterFunctionality(String searchText) {
 		switchToFrame();
 		Web.setTextToTextBox(txtFilter, searchText);
@@ -661,6 +791,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		switchToDefaultContent();
 	}
 
+	/**
+	 * This method selects default plan of the user
+	 * @param Query
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
 	public String selectDefaultPlan(String[] Query, String username)
 			throws Exception {
 		String defaultPlan = "";
@@ -671,6 +808,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return defaultPlan;
 	}
 
+	/**
+	 * This method provides the SSN which is having extensions
+	 * @param SSNExtQuery
+	 * @param defaultPlan
+	 * @return
+	 * @throws Exception
+	 */
 	public String getSSNwithExtn(String[] SSNExtQuery, String defaultPlan)
 			throws Exception {
 		String SSN = "";
@@ -682,6 +826,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return SSN;
 	}
 
+	/**
+	 * This method gives the masked ssn in search results for external users
+	 * @throws InterruptedException
+	 */
 	public void verifySSNmasking() throws InterruptedException {
 		searchEmployeeBySSN("");
 		switchToFrame();
@@ -696,18 +844,26 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		switchToDefaultContent();
 	}
-
+/**
+ * Method used to logout from application
+ * @throws InterruptedException
+ */
 	public void logoutFromApplication() throws InterruptedException {
 		if (Web.isWebElementDisplayed(linkLogout)) {
 			linkLogout.click();
 			Thread.sleep(2000);
 		}
 	}
-
+/**
+ * Method navigates the user to employee tab
+ */
 	public void gotoEmployeeTab() {
 		Web.clickOnElement(tabEmployees);
 	}
-
+/**
+ * It dismisses/closes if any error message is diplayed on screen
+ * @throws InterruptedException
+ */
 	public void dismissErrorBox() throws InterruptedException {
 		if (Web.isWebElementDisplayed(errorMsgBox)) {
 			Web.clickOnElement(errorMsgBox);
@@ -715,7 +871,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Thread.sleep(2000);			
 		}
 	}
-
+/**
+ * This method selects the plans which is having division for the logged in user
+ * @param planNumwithDivQuery
+ * @param username
+ * @throws Exception
+ */
 	public void selectPlanwithDiv(String[] planNumwithDivQuery, String username)
 			throws Exception {
 		int iCounter = 0;
@@ -735,6 +896,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 		}
 	}
+	/**
+	 * Method used to enter plan number in text box 
+	 * @throws Exception
+	 */
 
 	public void EnterPlanNumber() throws Exception {
 		Web.setTextToTextBox(txtPlanNumberField,

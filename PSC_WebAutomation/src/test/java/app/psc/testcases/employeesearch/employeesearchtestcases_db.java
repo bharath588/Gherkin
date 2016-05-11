@@ -4,15 +4,18 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import pageobjects.employeesearch.EmployeeSearch;
 import core.framework.Globals;
 
@@ -38,11 +41,17 @@ public class employeesearchtestcases_db {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
+	/**
+	 * This testcase verifies the dropdown options and screen elements on the employeesearch page(e.g.Go button,Print icon etc)
+	 * @param itr
+	 * @param testdata
+	 */
 	@Test(dataProvider = "setData")
 	public void TC017_Verify_the_dropdown_options_And_Screen_elements(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description", "This testcase verifies the dropdown options and screen elements on the employeesearch page(e.g.Go button,Print icon etc)", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.navigateToEmployeeTab();
 			employeesearch.verifyScreenElements();
@@ -61,11 +70,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -75,12 +85,19 @@ public class employeesearchtestcases_db {
 		}
 
 	}
+	/**
+	 * This testcase verifies sorting of search results w.r.t diiferent columns
+	 * @param itr
+	 * @param testdata
+	 */
 
 	@Test(dataProvider = "setData")
 	public void TC018_Verify_the_sorting_in_search_results(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase verifies sorting of search results w.r.t diiferent columns", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("");
 			employeesearch.verifySortingofColumns("FirstName");
@@ -90,11 +107,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -104,12 +122,18 @@ public class employeesearchtestcases_db {
 		}
 
 	}
-
+/**
+ * This testcase validates the pagination of the search results 
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC019_Verify_the_Pagination_on_search_results_page(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates the pagination of the search results ", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("1");
 			if (employeesearch.verifyPaginationforSearchResults()) {
@@ -126,11 +150,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -140,12 +165,19 @@ public class employeesearchtestcases_db {
 		}
 
 	}
+	/**
+	 * This testcase validates the order in which the search results are displayed(eg. Name,SSN,Mi etc)
+	 * @param itr
+	 * @param testdata
+	 */
 
 	@Test(dataProvider = "setData")
 	public void TC020_Verify_the_Order_of_search_results(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates the order in which the search results are displayed(eg. Name,SSN,Mi etc)", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("1");
 			employeesearch.verifyColumnHeaders();
@@ -154,11 +186,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -168,11 +201,18 @@ public class employeesearchtestcases_db {
 		}
 	}
 
+	/**
+	 * This testcase validates whether the search results displayed are hyperlinks
+	 * @param itr
+	 * @param testdata
+	 */
 	@Test(dataProvider = "setData")
 	public void TC021_Verify_Search_results_are_displayed_as_Hyperlinks(
 			int itr, Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates whether the search results displayed are hyperlinks", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("1");
 			if (employeesearch.verifySearchResultsasLinks()) {
@@ -189,11 +229,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		} catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -202,12 +243,18 @@ public class employeesearchtestcases_db {
 			}
 		}
 	}
-
+/**
+ * This testcase validates whether the user is redirected to employee overview page when it clicks the search results hyperlinks
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page(
 			int itr, Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates whether the user is redirected to employee overview page when it clicks the search results hyperlinks", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("1");
 			if (employeesearch.verifyEmployeeredirectOverviewPage()) {
@@ -228,11 +275,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -242,12 +290,19 @@ public class employeesearchtestcases_db {
 		}
 
 	}
+	/**
+	 * This test case verifies if the limit of search results are according to the value in the dropdown  
+	 * @param itr
+	 * @param testdata
+	 */
 
 	@Test(dataProvider = "setData")
 	public void TC023_Verify_the_limit_of_search_results_on_searchpage(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies if the limit of search results are according to the value in the dropdown", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("1");
 			if (employeesearch.verifyLimitofsearchResults()) {
@@ -268,11 +323,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -281,12 +337,18 @@ public class employeesearchtestcases_db {
 			}
 		}
 	}
-
+/**
+ * This test case verifies the filter functionality on the search results page according to a provided text
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC024_Verify_Filter_Functionality_Search_Results_Page(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies the filter functionality on the search results page according to a provided text", false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchEmployeeBySSN("0");
 			employeesearch.switchToFrame();
@@ -309,11 +371,12 @@ public class employeesearchtestcases_db {
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
 					.getCause().getMessage(), true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -323,12 +386,18 @@ public class employeesearchtestcases_db {
 		}
 
 	}
-
+/**
+ * This test case verifies the search results for SSN that has extensions(in other words Duplicate SSNs')
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC025_Verify_search_results_for_ssn_with_extension(int itr,
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies the search results for SSN that has extensions(in other words Duplicate SSNs')", false);
 			employeesearch = new EmployeeSearch();
 			employeesearch.logoutFromApplication();
 			DB.executeUpdate(
@@ -363,11 +432,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -377,7 +447,11 @@ public class employeesearchtestcases_db {
 		}
 
 	}
-
+/**
+ * This test case verifies that the search results are not displayed for employees having ERR code
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code(
 			int itr, Map<String, String> testdata) {
@@ -387,7 +461,8 @@ public class employeesearchtestcases_db {
 		boolean planExist = true;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies that the search results are not displayed for employees having ERR code", false);
 			employeesearch = new EmployeeSearch();
 			
 			resultset = employeesearch.selectPlanForUser(
@@ -444,11 +519,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -458,7 +534,11 @@ public class employeesearchtestcases_db {
 		}
 
 	}
-
+/**
+ * This test case verifies that the search results contains terminated employee details also
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC027_Verify_termed_employeedetails_are_displayed(int itr,
 			Map<String, String> testdata) {
@@ -466,6 +546,8 @@ public class employeesearchtestcases_db {
 		String employeeId = "";
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies that the search results contains terminated employee details also", false);
 			employeesearch = new EmployeeSearch();
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("getTermedEmployees")[0],
@@ -493,11 +575,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -507,6 +590,11 @@ public class employeesearchtestcases_db {
 		}
 	}
 
+	/**
+	 * This test case verifies that the search results contains terminated employee details also
+	 * @param itr
+	 * @param testdata
+	 */
 	@Test(dataProvider = "setData")
 	public void TC028_Verify_search_results_are_displayed_for_termed_employees(
 			int itr, Map<String, String> testdata) {
@@ -516,6 +604,9 @@ public class employeesearchtestcases_db {
 		String employeeId = "";
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case verifies that the search results contains terminated employee details also", false);
+
 			employeesearch = new EmployeeSearch().get();
 
 			resultset = employeesearch.selectPlanForUser(
@@ -555,11 +646,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -569,13 +661,21 @@ public class employeesearchtestcases_db {
 		}
 
 	}
-
+/**
+ *The objective of this test case is to verify that the SSN are masked for external users(PL users)<br>
+ *<b>Example of Masking-(112-093-XXX)</b>
+ * @param itr
+ * @param testdata
+ */
 	@Test(dataProvider = "setData")
 	public void TC029_Verify_ssn_masking_for_external_users(int itr,
 			Map<String, String> testdata) {
 		String planNumber = Globals.GC_EMPTY;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"*The objective of this test case is to verify that the SSN are masked for external users(PL users)"
+ +"Example of Masking-(112-093-XXX)", false);
 			employeesearch = new EmployeeSearch();
 			employeesearch.logoutFromApplication();
 			DB.executeUpdate(Stock.getTestQuery("queryChangeUserCategory")[0],
@@ -603,11 +703,12 @@ public class employeesearchtestcases_db {
 			String exceptionMessage = e.getMessage();
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 					exceptionMessage, true);
-		} catch (AssertionError ae) {
+		}catch (Error ae) {
 			ae.printStackTrace();
-			Globals.assertionerror = ae;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
-					"Assertion Error!!", true);
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
