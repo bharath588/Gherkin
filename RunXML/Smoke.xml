@@ -43,7 +43,7 @@
             </class>
         </classes>
     </test> 
-    <test name="Balance_validations">
+   <!--  <test name="Balance_validations">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -132,7 +132,7 @@
                 </methods>
             </class>
         </classes>
-    </test> 
+    </test>  -->
     <test name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

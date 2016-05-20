@@ -996,6 +996,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 			this.btnContinue.click();
 		}
+		
+		public String getCatchupMaximized(){
+
+            Web.waitForElement(btnAddOrEditCatchUp);
+
+            String status=txtMaximizeMeAlwaysCatchupBefore.getText();
+
+            System.out.println("Statuss : "+status);
+
+            return status;
+
+		}
 	}		
 	
 

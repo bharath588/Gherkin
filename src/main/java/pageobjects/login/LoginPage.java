@@ -1,7 +1,9 @@
 package pageobjects.login;
 
+import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+import lib.Reporter.Status;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,14 +14,50 @@ import org.testng.Assert;
 public class LoginPage extends LoadableComponent<LoginPage>{
 
 	//Object Declarations 
-	@FindBy(xpath=".//button[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
+	@FindBy(xpath=".//button[text()[normalize-space()='Dismiss']]") private WebElement btnDismiss;
 	@FindBy(id="usernameInput") private WebElement txtUserName;
 	@FindBy(id="passwordInput") private WebElement txtPassword;
 	@FindBy(xpath=".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(css="a[href*='register']") private WebElement btnRegister;
 	@FindBy(id="helpBlock") private WebElement weHelpBlock;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help?']]") private WebElement lnkForgotPassword;
-
+	private WebElement hrdCustomerSupport;
+	@FindBy(linkText = "contact us")
+	private WebElement lnkContactus;
+	@FindBy(xpath = "//*[@id='labelModalReviewChanges']")
+	private WebElement txtContactus;
+	@FindBy(xpath = ".//div[@class='modal-content']/div[2]/.")
+	private WebElement txtContactusInfo;
+	@FindBy(xpath = ".//a[@rel='tel' and @class='phone not-link']")
+	private WebElement lnkContactNo;
+	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[@class='banner-wrapper']/img")
+	private WebElement imgBanner;
+	@FindBy(xpath = ".//*[@class='copyright ng-binding']")
+	private WebElement txtCopyRightInfo;
+	@FindBy(linkText = "System Requirements and Security")
+	private WebElement lnkSystemRequirements;
+	@FindBy(linkText = "Privacy")
+	private WebElement lnkPrivacy;
+	@FindBy(linkText = "Terms and Conditions")
+	private WebElement lnkTermsandConditions;
+	@FindBy(linkText = "Business Continuity Plan")
+	private WebElement lnkBusinessContinuityPlan;
+	@FindBy(linkText = "Market Timing and Excessive Trading Policies")
+	private WebElement lnkMarkeTiming;
+	@FindBy(linkText = "Broker Check Notification")
+	private WebElement lnkBrokerCheckNotification;
+	@FindBy(xpath = ".//a[@ui-sref='participantSavingsrates']")
+	private WebElement imgSavings;
+	@FindBy(xpath = ".//a[@ui-sref='participantRolloveroptions']")
+	private WebElement imgRollover;
+	@FindBy(xpath = ".//a[@ui-sref='participantBrowserSupport']")
+	private WebElement imgBrowserSupport;
+	@FindBy(xpath = ".//a[text()[normalize-space()='Dismiss']]")
+	private WebElement lnkDismiss;
+	@FindBy(xpath = ".//div[contains(@class,'inner-container')]//h2")
+	private WebElement txtInnerContainer;
 	LoadableComponent<?> parent;
 	@SuppressWarnings("unused")
 	private String username;
@@ -137,11 +175,11 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			e1.printStackTrace();
 		}
 
-		boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss);
+		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss);
 
 		if (isElementPresent)
 		{
-			lnkDismiss.click();
+			btnDismiss.click();
 		}
 
 		this.btnLogin.click();
@@ -196,5 +234,193 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		}
 
 	}
+	/**
+	 * <pre>
+	 * Method to validate if customer care information is displayed or not.
+	 * Returns the customer care info if it is displayed
+	 * Returns empty string if customer care info block is displayed
+	 * </pre>
+	 * 
+	 * @return String - Displayed
+	 */
+	public String isValidCustomerSupportInfo() {
+		boolean isElementPresent = Web
+				.isWebElementDisplayed(this.hrdCustomerSupport);
 
+		if (isElementPresent) {
+			return this.hrdCustomerSupport.getText().trim();
+		} else
+			return "";
+
+	}
+
+	/**
+	 * <pre>
+	 * Method to validate if customer care information is displayed or not.
+	 * Returns the customer care info if it is displayed
+	 * Returns empty string if customer care info block is displayed
+	 * </pre>
+	 * 
+	 * @return String - Displayed
+	 */
+	public boolean isValidContactUsInfo(String contactNo) {
+		boolean isElementPresent = Web.isWebElementDisplayed(this.lnkContactus);
+		boolean isTextMatching = false;
+		if (isElementPresent) {
+			Web.clickOnElement(this.lnkContactus);
+
+			if (Web.isWebElementDisplayed(this.txtContactus, true)) {
+				isTextMatching = Web.VerifyText("Contact Us", this.txtContactus
+						.getText().trim(), true);
+				if (isTextMatching) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Contact Us' header is displayed",
+							"Contact Us Header is displayed", true);
+
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Contact Us' header is displayed",
+							"Contact Us Header is not displayed", true);
+				}
+				isTextMatching = Web
+						.VerifyText(
+								"Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015",
+								this.txtContactusInfo.getText().trim(), true);
+				if (isTextMatching) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Contact Us Info'  is displayed",
+							"Contact Us Info is displayed", false);
+
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Contact Us info' header is displayed",
+							"Contact Us Info is not Same", false);
+				}
+			}
+		} else {
+			if (!contactNo.isEmpty()) {
+				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNo
+						.getText().trim(), true);
+				if (isTextMatching) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Contact No'  is displayed",
+							"Contact No is displayed", false);
+
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Contact No' is displayed",
+							"'Contact No' is not Same. Expected/ " + contactNo
+									+ "Actual/ "
+									+ this.lnkContactNo.getText().trim(), false);
+				}
+			}
+		}
+
+		return isTextMatching;
+	}
+
+	/**
+	 * <pre>
+	 * Method to validate if customer care information is displayed or not.
+	 * Returns the customer care info if it is displayed
+	 * Returns empty string if customer care info block is displayed
+	 * </pre>
+	 * 
+	 * @return String - Displayed
+	 */
+	public boolean isSponsorLogoDisplayed(String logoName) {
+		boolean isElementPresent = Web.isWebElementDisplayed(this.lblSponser);
+		boolean isLogoPresent = false;
+		if (logoName == null) {
+			logoName = "";
+		}
+		if (isElementPresent) {
+			isLogoPresent = Web.VerifyText(logoName, this.lblSponser
+					.getAttribute("alt").trim(), true);
+		}
+		return isLogoPresent;
+
+	}
+
+	/**
+	 * <pre>
+	 * Method to validate if customer care information is displayed or not.
+	 * Returns the customer care info if it is displayed
+	 * Returns empty string if customer care info block is displayed
+	 * </pre>
+	 * 
+	 * @return String - Displayed
+	 */
+	public boolean isSponsorBannerDisplayed() {
+		boolean isElementPresent = Web.isWebElementDisplayed(this.lblSponser);
+		boolean isBannerPresent = false;
+
+		if (isElementPresent) {
+			isBannerPresent = true;
+		}
+		return isBannerPresent;
+
+	}
+
+	public boolean verifyWebElementDisplayed(String fieldName) {
+
+		boolean isDisplayed = Web.isWebElementDisplayed(
+				this.getWebElement(fieldName), true);
+
+		if (isDisplayed) {
+
+			Reporter.logEvent(Status.PASS, "Verify 'FiledName'  is displayed",
+					fieldName + " is displayed", false);
+			isDisplayed = true;
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'FiledName' header is displayed", fieldName
+							+ " is not Same", false);
+		}
+
+		return isDisplayed;
+
+	}
+
+	/**
+	 * <pre>
+	 * Method to get the text of an webElement
+	 * Returns string webElement is displayed
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getWebElementText(String fieldName) {
+		String getText = "";
+
+		if (verifyWebElementDisplayed(fieldName)) {
+
+			getText = this.getWebElement(fieldName).getText().trim();
+
+		}
+
+		return getText;
+
+	}
+
+	public void verifyLinkIsNotBroken(String linkName) throws InterruptedException {
+		boolean isPageDisplayed = false;
+		Web.clickOnElement(this.getWebElement(linkName));
+		Thread.sleep(3000);
+		isPageDisplayed = Web.VerifyPartialText(linkName, this.txtInnerContainer
+				.getText().toString().trim(), true);
+		if (isPageDisplayed) {
+			lib.Reporter.logEvent(Status.PASS, "Verify " + linkName
+					+ " Page is Displayed", linkName + " Page is Displayed",
+					true);
+
+		} else {
+			lib.Reporter.logEvent(Status.FAIL, "Verify " + linkName
+					+ " Page is Displayed",
+					linkName + " Page is Not Displayed", true);
+		}
+		Web.webdriver.navigate().back();
+
+	}
 }

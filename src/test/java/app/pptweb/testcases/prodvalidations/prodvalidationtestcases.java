@@ -9,20 +9,17 @@ import java.util.Map;
 import java.util.Set;
 
 import lib.Reporter;
+import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
 
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
 import pageobjects.balance.Balance;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
-import pageobjects.enrollment.Enrollment;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.general.MyAccountsPage;
 import pageobjects.general.RateOfReturnPage;
@@ -39,6 +36,8 @@ import pageobjects.payroll.PayrollCalendar;
 import pageobjects.planinformation.PlanForms;
 import pageobjects.statementsanddocuments.StatementsAndDocuments;
 import pageobjects.transactionhistory.TransactionHistory;
+import pageobjects.withdrawals.RequestWithdrawal;
+import appUtils.Common;
 import core.framework.Globals;
 
 public class prodvalidationtestcases {
@@ -1465,6 +1464,161 @@ public class prodvalidationtestcases {
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void SF01_TC019_Verify_Request_A_Withdrawal_link(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+					+ Common.getSponser());
+			login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
+			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(lftNavBar);
+			requestWithdrawal.get();
+			boolean lblDisplayed = false;
+
+			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
+					"Request A Withdrawal", true);
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Request A Withdrawal Page is Displayed",
+						"Request A Withdrawal Page is visible", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Request A Withdrawal Page is Displayed",
+						"Request A Withdrawal Page is NOT visible", true);
+			}
+			requestWithdrawal.selectWithdrawalType(Stock
+					.GetParameterValue("withdrawalType"));
+			lblDisplayed = Web.clickOnElement(requestWithdrawal, "MAX AMOUNT");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Max Amount CheckBox is Selected",
+						"Max Amount CheckBox is Selected", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Max Amount CheckBox is Selected",
+						"Max Amount CheckBox is Not Selected", true);
+			}
+			requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
+			requestWithdrawal.isTextFieldDisplayed("Max Avail");
+			Web.clickOnElement(requestWithdrawal, "CONTINUE");
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Plan withdrawal");
+
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Plan Withdrawal Page is Displayed",
+						"Plan Withdrawal Page is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Plan Withdrawal Page is Displayed",
+						"Plan Withdrawal Page is Not Displayed", true);
+			}
+
+			requestWithdrawal
+					.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+			lblDisplayed = Web.clickOnElement(requestWithdrawal, "YES");
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Social Security number Field is Displayed.",
+						"Social Security number Field is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Social Security number Field is Displayed",
+						"Social Security number Field is Not Displayed", true);
+			}
+			Web.setTextToTextBox("SSN", requestWithdrawal,
+					Stock.GetParameterValue("SSN"));
+			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Withdrawal method");
+
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Withdrawal Method Page is Displayed",
+						"Withdrawal Method Page is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Withdrawal Method Page is Displayed",
+						"Withdrawal Method Page is Not Displayed", true);
+			}
+			requestWithdrawal
+					.isTextFieldDisplayed("How would you like your withdrawal distributed?");
+			Web.selectDropDownOption(requestWithdrawal, "WITHDRAWAL METHOD",
+					Stock.GetParameterValue("withdrawalMethod"));
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Confirm your contact information");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Contact Information is Displayed",
+						"Contact Information is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Contact Information is Displayed",
+						"Contact Information is Not Displayed", true);
+			}
+			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Delivery method");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Delivery Method Page is Displayed",
+						"Delivery Method Page is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Delivery Method Page is Displayed",
+						"Delivery Method Page is Not Displayed", true);
+			}
+			requestWithdrawal.selectDelivaryMethod(Stock
+					.GetParameterValue("deliveryMethod"));
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Withdrawal summary");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Withdrawal Summary is Displayed",
+						"Withdrawal Summary is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Withdrawal Summary is Displayed",
+						"Withdrawal Summary is Not Displayed", true);
+			}
+			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
+					"I AGREE AND SUBMIT", true);
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify I agree and Submit Button is Displayed",
+						"I agree and Submit Button is Displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify I agree and Submit Button is Displayed",
+						"I agree and Submit Button is Not Displayed", false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }
