@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.testng.Assert;
 
+import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
@@ -35,6 +36,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	@FindBy(xpath=".//*[@class='plan']/*[starts-with(@id,'ga_')]") private List<WebElement> lstLnkPlanName;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(xpath="//*[@id='account-overview-chart']") private WebElement imgGraph;
 	
 	/** Empty args constructor
 	 * 
@@ -57,17 +59,19 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = null;
-		try {
-			strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		String userFromDatasheet = null;
+		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+		{
+			userFromDatasheet=Stock.GetParameterValue("lblUserName");
+		}
+		else{
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+				0, ssn.length() - 3));
+
+		
 		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+					+ strUserInfo.getString("LAST_NAME");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
@@ -79,6 +83,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		}
 		}
 	}
 
@@ -115,6 +120,13 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
 				"No WebElement mapped for this field\nPage: <b>" + this.getClass().getName() + "</b>", false);
+		//Account Overview
+		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
+			return this.hdrMyAccounts;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Graph")) {
+			return this.imgGraph;
+		}
 		
 		return null;
 	}

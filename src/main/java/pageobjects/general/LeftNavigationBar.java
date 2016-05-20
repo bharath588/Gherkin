@@ -139,8 +139,14 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "Plan Information";
 		} else if (linkName.trim().equalsIgnoreCase("PRIOR PLAN CONTRIBUTIONS")){
 			strLinkText = "Prior plan contributions";
-		}
-		else {
+		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
+			strLinkText = "Rate of return";
+		}else if (linkName.trim().equalsIgnoreCase("REQUEST A LONE")) {
+					strLinkText = "Request a loan";
+		}else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
+			strLinkText = "Request a withdrawal";
+			 
+		} else {
 			strLinkText = linkName.trim();
 		}
 

@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import lib.Reporter;
 import lib.Reporter.Status;
+import lib.Web;
 import pageobjects.general.*;
 import pageobjects.login.*;
 import pageobjects.deferrals.Deferrals;
@@ -337,7 +338,7 @@ public class deferralstestcases {
 
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_Catch_up(int itr,
-			Map<String, String> testdata) {
+			Map<String, String> testdata) throws Exception {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -416,6 +417,9 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
+			Web.webdriver.navigate().refresh();
+			Deferrals deferrals = new Deferrals();
+			Web.waitForElement(deferrals,"My Contributions");
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -805,7 +809,7 @@ public class deferralstestcases {
 			if (deferrals.clickAddEditButton("Standard Add"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
-						"Standard Contributions page is  displayed", false);
+						"Standard Contributions page is  displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Verify Standard contribution page",
@@ -823,7 +827,16 @@ public class deferralstestcases {
 						"Maximize me always check box is not present", true);
 
 			deferrals.regular_maximize_me_always("Yes");
+			
 			deferrals.myContributions_Confirmation_Page();
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1153,7 +1166,14 @@ public class deferralstestcases {
 
 			deferrals.View_only_Standard_with_changes(Stock
 					.GetParameterValue("Contribution Rate"));
-
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1265,7 +1285,14 @@ public class deferralstestcases {
 
 			deferrals.Catchup_with_split_contributions(Stock
 					.GetParameterValue("Contribution Rate"));
-
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1307,9 +1334,25 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
+			
+			if(deferrals.getCatchupMaximized()==null){
+				deferrals.clickAddEditButton("Catch Up Add");
+				deferrals.click_Maximize_IRS_Limit();
+				deferrals.select_ContributionType("Before");
+				deferrals.myContributions_Confirmation_Page();
+				lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			}
 			deferrals
 					.Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always();
-
+			
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1353,7 +1396,15 @@ public class deferralstestcases {
 			deferrals.get();
 			deferrals
 					.Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer();
-
+			
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1396,7 +1447,15 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			deferrals.Catch_up_Salary_changes_on_IRS_panel();
-
+			
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
