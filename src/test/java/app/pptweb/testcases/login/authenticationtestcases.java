@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
@@ -44,7 +45,7 @@ public class authenticationtestcases {
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -104,7 +105,7 @@ public class authenticationtestcases {
 
 			//Get verification code from database
 			String verificationCode = "";
-			if(lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("Already_Have_Code")) {
+			if(lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 				verificationCode = twoStepVerification.getVerificationCode(true);
 			} else {
 				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
@@ -156,7 +157,7 @@ public class authenticationtestcases {
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -250,7 +251,7 @@ public class authenticationtestcases {
 		boolean isMatching;
 		boolean eleDisplayed;
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
 			LoginPage objLogin = new LoginPage();
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);

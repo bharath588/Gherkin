@@ -54,7 +54,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h5") private WebElement txtIncomeType;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h3") private WebElement txtIncomeTypeValue;
 @FindBy(xpath=".//*[contains(text(),'Retirement age')]") private WebElement lblRetirementAge;
-@FindBy(xpath="//div[@id='contribution-rate-slider']//button[@class='sliderThumb']") private WebElement sliderContributionRate;
+@FindBy(xpath="//div[@id='contribution-rate-slider']//button") private WebElement sliderContributionRate;
 @FindBy(xpath="//div[@id='retirement-age-slider']//button[@class='sliderThumb']") private WebElement sliderRetirementAge;
 @FindBy(xpath="//div[@id='investment-mix-slider']//button[@class='sliderThumb']") private WebElement sliderInvestmentMix;
 //@FindBy(xpath="//div[@class='svg-wrap']") private WebElement myGoalPercent;
@@ -469,7 +469,7 @@ public boolean navigateToTabAndVerify(String tabName) {
 public boolean verifyIfSliderPresent(String sliderName){
 	boolean isSuccess = false;
 	WebElement element = this.getWebElement(sliderName);
-	if(Web.isWebElementDisplayed(element))
+	if(Web.isWebElementDisplayed(element,true))
 		isSuccess = true;
 	
 	return isSuccess;

@@ -29,7 +29,7 @@ public class Common {
 		
 		if (DB.getRecordSetCount(participantInfo) > 0) {
 			try {
-				participantInfo.first();			
+				participantInfo.last();			
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);

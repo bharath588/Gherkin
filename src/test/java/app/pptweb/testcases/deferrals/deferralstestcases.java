@@ -1519,11 +1519,105 @@ public class deferralstestcases {
 		}
 
 	}
+	
 
 	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();
 	}
+	/**
+	 * Thee following scripts test for the prior contribution details of the
+	 * participants that are in the following category 1. Participant in the
+	 * first year of joining the plan or first year of the employment 2.
+	 * Participant in the first year of catchup contribution 3. Participant who
+	 * is not in the first year of employment
+	 * 
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_008_Prior Plan
+	 * Contributions_Participant not in first year of employment
+	 * 2.SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup - participant
+	 * within first year of employment 3.SIT_PPTWEB_Deferral_006_Previous
+	 * Contributions_Participant hired in current year
+	 */
 
+	@Test(dataProvider = "setData")
+	public void Deferrals_Participant_Prior_Contributions6(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			
+			leftmenu = new LeftNavigationBar(homePage);
+			PriorPlanContributions priorContributions = new PriorPlanContributions(
+					leftmenu);
+
+						priorContributions.get();
+
+						// perform a initial check on the prior plan contribution
+				priorContributions.verifyPriorPlanContributionsPage();
+				//Web.VerifyText(inExpectedText, inActualText, ignoreCase)
+				// enter the year to date and catchup contribution value
+				priorContributions.enterContributionValue(
+						lib.Stock.GetParameterValue("yearToDateContribution"),
+						lib.Stock.GetParameterValue("catchupContribution"));
+
+				if (priorContributions.verifyConfirmationDetails(
+						lib.Stock.GetParameterValue("yearToDateContribution"),
+						"Year To Date")) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify Year to Date Confirmation Detials verification",
+							"Test data for Year to Date value matched with test data on the confirmation page",
+							true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify Year to Date Confirmation Detials verification",
+							"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
+							true);
+				}
+				// verify the values for the year to date and catchup
+				// contribution value on the confirmtion page
+				if (priorContributions.verifyConfirmationDetails(
+						lib.Stock.GetParameterValue("catchupContribution"),
+						"Catch up")) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify catchup Contribution Confirmation Detials verification",
+							"Test data for catchup Contribution value matched with test data on the confirmation page",
+							true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify catchup Contribution Confirmation Detials verification",
+							"Test data for catchup Contribution value DID NOT matched with test data on the confirmation page",
+							true);
+				}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }

@@ -23,14 +23,15 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	private LoadableComponent<?> parent;
 	private static boolean waitforLoad = false;
 	@FindBy(xpath="//h1[text()='Prior Plan Contributions']") private WebElement lblPriorContributions;
-	@FindBy(xpath="//input[@id='radioPreviousContributionYes']") private WebElement radioYes;
-	@FindBy(xpath="//input[@id='radioPreviousContributionNo']") private WebElement radioNo;
+	@FindBy(xpath="//label[contains(text(),'Yes')]") private WebElement labelYes;
+	@FindBy(xpath="//label[contains(text(),'No')]") private WebElement labelNo;
 //	@FindBy(xpath="//button[@id='btnSubmit']") private WebElement btnsubmit;
 	@FindBy(xpath="//button[@id='btnSubmit submit']") private WebElement btnsubmit;
 	@FindBy(xpath="//button[@id='btnContinue']") private WebElement btnContinue;
 //	@FindBy(xpath="//div[@class='page-title ng-scope']/p']") private WebElement txtPriorContribution;
-	@FindBy(xpath="//p[@class='ng-binding']") private WebElement txtPriorContribution;
-	@FindBy(xpath="//input[@id='regular']") private WebElement txtYearToDateContribution;
+	@FindBy(xpath="//td[@class='col-sm-9']//div[contains(@class,'title ng-binding')]") private WebElement txtPriorContribution;
+	@FindBy(xpath=".//a/font[contains(text(),'Why is this important?')]") private WebElement lnkWhyThisIsImportant;
+	
 	@FindBy(xpath="//input[@id='catchup']") private WebElement txtCatchupContribution;
 	@FindBy(xpath="//h2[text()='Confirmation Details']") private WebElement lblConfirmationDetails;
 //	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[0]/td") private WebElement lblYearToDateContribution;
@@ -38,6 +39,8 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 //	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
 	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[2]/td") private WebElement lblCatchupContribution;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath="//div[contains(@class,'text-notation')]") private WebElement txtYearToDateContribution;
+	
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	
 	/**
@@ -91,27 +94,37 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	protected void load() {
 		this.parent.get();	
 		
-		((LeftNavigationBar) this.parent).clickNavigationLink("Prior plan contributions");
+		((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
 	}
 
 	public void verifyPriorPlanContributionsPage(){
 		
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 		String actualText = txtPriorContribution.getText();
-		if(lib.Web.VerifyText("Have you made contributions to any other retirement plans since 1/1/"+"year",actualText , true))
+		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
 			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching", false);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching", true);
-		
-		if(lib.Web.isWebElementDisplayed(radioYes))
+		String toolTip=lnkWhyThisIsImportant.getAttribute("uib-tooltip-html");
+		if(lib.Web.VerifyPartialText(Stock.GetParameterValue("toolTip"),toolTip , true))
+			Reporter.logEvent(Status.PASS, "Verify ToolTip in Prior Contributions page", "ToolTip is matching", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify ToolTip in Prior Contributions page", "ToolTip is not Same", true);
+		if(lib.Web.isWebElementDisplayed(labelYes))
 			Reporter.logEvent(Status.PASS, "Verify Yes Radio button", "Yes Radio button is displayed", false);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify Yes Radio button", "Yes Radio button is displayed", true);
 		
-		if(lib.Web.isWebElementDisplayed(radioNo))
+		if(lib.Web.isWebElementDisplayed(labelNo))
 			Reporter.logEvent(Status.PASS, "Verify No Radio button", "No Radio button is displayed", false);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify No Radio button", "No Radio button is displayed", true);
+		this.labelYes.click();
+		actualText = txtYearToDateContribution.getText();
+		if(lib.Web.VerifyPartialText("This includes 401(k) pre-tax, Roth 401(k), 403(b), SARSEP and Simple IRA contributions.",actualText , true))
+			Reporter.logEvent(Status.PASS, "Verify Year to date contributions: text in Prior Contributions page", "text is matching", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Year to date contributions: text in Prior Contributions page", "text is not matching", true);
 	}
 	
 	public boolean verifyParticipantsHiredInPriorYear(){
@@ -123,7 +136,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	}
 	
 	public void enterContributionValue(String yearToDateContribution, String catchupContribution){
-		this.radioYes.click();
+		this.labelYes.click();
 		if(!yearToDateContribution.equalsIgnoreCase("null"))
 			lib.Web.setTextToTextBox(txtYearToDateContribution,yearToDateContribution);
 		if(!catchupContribution.equalsIgnoreCase("null"))

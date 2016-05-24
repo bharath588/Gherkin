@@ -67,6 +67,16 @@
             </class>
         </classes>
     </test>
+    <!--  New TestCase For Apple -->
+     <test name="SIT_xPPTWEB_Login_04_01_TC002_UI_Validation_User_does_not_have_PIN_Apple">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF01_TC02_User_does_not_have_PIN_Apple"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="SIT_xPPTWEB_Login_04_01_TC003_Functionality_With_PIN__Negative_flow">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -85,6 +95,16 @@
             </class>
         </classes>
     </test>
+     <!--  New TestCase For Apple -->
+    <test name="SIT_xPPTWEB_Login_04_01_TC004_Functionality_Without_PIN__Negative_flow_Apple">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF01_TC03_NegativeFlow_WithoutPINTab_Apple"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -94,11 +114,31 @@
             </class>
         </classes>
     </test>
+     <!--  New TestCase For Apple -->
+    <test name="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User_Apple">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF01_TC05_UserLock_WithoutPIN_Apple"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <!--  New TestCase For Apple -->
+     <test name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow_Apple">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF04_TC01_AccountLookup_PositiveFlow_Apple"/>
                 </methods>
             </class>
         </classes>

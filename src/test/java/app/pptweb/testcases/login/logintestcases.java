@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
@@ -47,7 +48,7 @@ public class logintestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
 			login = new LoginPage();
 			
 			login.get();
@@ -93,7 +94,7 @@ public class logintestcases {
 public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
 	
 	try{
-		Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+		Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
 		String verificationCode = "";
 		
 		TwoStepVerification twoStepVerification = new TwoStepVerification(new LoginPage());

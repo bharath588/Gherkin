@@ -11,6 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
+import core.framework.Globals;
+
 public class LoginPage extends LoadableComponent<LoginPage>{
 
 	//Object Declarations 
@@ -63,7 +66,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	private String username;
 	@SuppressWarnings("unused")
 	private String password;
-
+	private String url = null;
 	public LoginPage(){
 		//this.parent = parent;
 		PageFactory.initElements(lib.Web.webdriver, this);
@@ -78,47 +81,79 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	@Override
 	protected void isLoaded() throws Error {
 
-		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword));;
+		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword));
+		String accuCode = null;
+
+		if (Stock.globalTestdata.containsKey("ACCUCODE"))
+
+		{
+			if (Stock.GetParameterValue("AccuCode") != null)
+				accuCode = Stock.GetParameterValue("AccuCode");
+			else
+				accuCode = Globals.GC_DEFAULT_SPONSER;
+			url = Stock.getConfigParam(
+					"AppURL" + "_" + Stock.getConfigParam("TEST_ENV")).replace(
+					"Empower", accuCode);
+
+			Assert.assertTrue(
+					Web.webdriver.getCurrentUrl().equalsIgnoreCase(url),
+					"Login page for '" + Common.getSponser()
+							+ "' is not loaded.");
+
+		}
 	}
 
 	@Override
 	protected void load() {
 
-		/*try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block              
-		}*/
+		/*
+		 * try { Thread.sleep(2000); } catch (InterruptedException e1) { // TODO
+		 * Auto-generated catch block }
+		 */
 
-		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
-		
+		/*
+		 * lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		 * lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		 */
 
-//		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-//		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		// lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
+		// lib.Web.webdriver.get(Stock.getConfigParam("AppURL"));
+		if (Stock.globalTestdata.containsKey("ACCUCODE")
+				&& Stock.GetParameterValue("AccuCode") != null) {
 
-		//lib.Web.webdriver.get(Stock.getConfigParam("AppURL"));
-		Web.webdriver.get(Stock.getConfigParam("AppURL" + "_" + Stock.getConfigParam("TEST_ENV")));
+			url = Stock.getConfigParam(
+					"AppURL" + "_" + Stock.getConfigParam("TEST_ENV")).replace(
+					"Empower", lib.Stock.GetParameterValue("AccuCode"));
+		}
 
+		else {
+			url = Stock.getConfigParam("AppURL" + "_"
+					+ Stock.getConfigParam("TEST_ENV"));
 
+		}
 
+		/*
+		 * lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		 * lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		 */
 
-		/*lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);*/
-
-//		lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
-//		lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
-
-
+		// lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
+		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
+		Web.webdriver.get(url);
+		Web.webdriver.navigate().refresh();
 		lib.Web.webdriver.manage().window().maximize();
 
-		//currently not beeing seen
-		/*boolean isElementPresent = Web.isWebElementDisplayed(lnkDismiss,true);
-		if (isElementPresent)
-			lnkDismiss.click();*/
+		// currently not beeing seen
+		/*
+		 * boolean isElementPresent =
+		 * Web.isWebElementDisplayed(btnDismiss,true); if (isElementPresent)
+		 * btnDismiss.click();
+		 */
 
 	}
+
 
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
@@ -153,6 +188,50 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		if (fieldName.trim().equalsIgnoreCase("FORGOT PASSWORD")) {
 			return this.lnkForgotPassword;			
+		}
+		if (fieldName.trim().equalsIgnoreCase("CONTACT US")) {
+			return this.lnkContactus;
+		}
+		if (fieldName.trim().equalsIgnoreCase("COPYRIGHT INFO")) {
+			return this.txtCopyRightInfo;
+		}
+		if (fieldName.trim().equalsIgnoreCase(
+				"System Requirements and Security")) {
+			return this.lnkSystemRequirements;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Privacy")) {
+			return this.lnkPrivacy;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Terms and Conditions")) {
+			return this.lnkTermsandConditions;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Business Continuity Plan")) {
+			return this.lnkBusinessContinuityPlan;
+		}
+		if (fieldName.trim().equalsIgnoreCase(
+				"Market Timing and Excessive Trading Policies")) {
+			return this.lnkMarkeTiming;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Broker Check Notification")) {
+			return this.lnkBrokerCheckNotification;
+		}
+		if (fieldName.trim()
+				.equalsIgnoreCase("IMAGE participant Savings rates")) {
+			return this.imgSavings;
+		}
+		if (fieldName.trim().equalsIgnoreCase(
+				"IMAGE participant Rollover options")) {
+			return this.imgRollover;
+		}
+		if (fieldName.trim().equalsIgnoreCase(
+				"IMAGE participant Browser Support")) {
+			return this.imgBrowserSupport;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Dismiss")) {
+			return this.lnkDismiss;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Inner Container")) {
+			return this.txtInnerContainer;
 		}
 
 	
