@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.testng.Assert;
 
+import appUtils.Common;
+import core.framework.Globals;
 import pageobjects.login.LoginPage;
 
 public class AccountLookup extends LoadableComponent<AccountLookup> {
@@ -46,7 +48,9 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Street Address')]") private WebElement lblStrAddrErrMsg;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'PIN')]") private WebElement lblPINErrMsg;
 	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'] | .//*[@class='form-group has-error']") private WebElement lblMainErrMsg;
-	
+	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	private WebElement lblSponser;
+	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
 	/** Empty args constructor
 	 * 
 	 */
@@ -67,6 +71,15 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblAccLookupHeaderTextBlock));
+		String sponser = this.lblSponser.getAttribute("Alt");
+		if(sponser.isEmpty())
+		{
+			sponser=Common.GC_DEFAULT_SPONSER;
+		}
+		if (!Common.isCurrentSponser(sponser)) {
+			Assert.assertTrue(Web.isWebElementDisplayed(txtPassword,true));
+
+		} 
 	}
 
 	@Override

@@ -16,6 +16,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
+import core.framework.Globals;
 import pageobjects.login.LoginPage;
 
 
@@ -46,7 +48,9 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	@FindBy(xpath=".//*[contains(@for,'confirmPassword') and ./ng-message]") private WebElement lblConfirmPwdErrMsg;
 	@FindBy(xpath=".//p[text()[normalize-space()='Valid Username']]") private WebElement lblValidUsername;
 	@FindBy(xpath=".//p[text()[normalize-space()='Valid password']]") private WebElement lblStrongPassword;
-	
+	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	/** Empty args constructor
 	 * 
 	 */
@@ -67,6 +71,15 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount));
+		String sponser = this.lblSponser.getAttribute("Alt");
+		if(sponser.isEmpty())
+		{
+			sponser=Common.GC_DEFAULT_SPONSER;
+		}
+		if (!Common.isCurrentSponser(sponser)) {
+			Assert.assertTrue(Web.isWebElementDisplayed(btnLogin,true));
+
+		} 
 	}
 	
 	@Override

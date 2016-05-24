@@ -90,7 +90,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			if (Stock.GetParameterValue("AccuCode") != null)
 				accuCode = Stock.GetParameterValue("AccuCode");
 			else
-				accuCode = Globals.GC_DEFAULT_SPONSER;
+				accuCode = Common.GC_DEFAULT_SPONSER;
 			url = Stock.getConfigParam(
 					"AppURL" + "_" + Stock.getConfigParam("TEST_ENV")).replace(
 					"Empower", accuCode);

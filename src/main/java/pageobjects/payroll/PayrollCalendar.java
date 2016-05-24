@@ -85,7 +85,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			String userLogedIn = this.lblUserName.getText();
 			String sponser = this.lblSponser.getAttribute("Alt");
 			if (sponser.isEmpty()) {
-				sponser = Globals.GC_DEFAULT_SPONSER;
+				sponser = Common.GC_DEFAULT_SPONSER;
 			}
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 					&& Common.isCurrentSponser(sponser)) {

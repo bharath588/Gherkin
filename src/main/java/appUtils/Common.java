@@ -15,6 +15,8 @@ public class Common {
 	 * 
 	 * @return noOfPlans
 	 */
+	 //For Sponsor
+    public static final String GC_DEFAULT_SPONSER="Empower";
 	public static ResultSet getParticipantInfoFromDB(String ssn){
 		
 		//query to get the no of plans
@@ -173,7 +175,7 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 		}
 
 		else {
-			if (Globals.GC_DEFAULT_SPONSER.equalsIgnoreCase(sponserName))
+			if (GC_DEFAULT_SPONSER.equalsIgnoreCase(sponserName))
 				status = true;
 			else
 				status = false;
@@ -188,11 +190,11 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 			if (lib.Stock.GetParameterValue("AccuCode") != null) {
 				sponser = lib.Stock.GetParameterValue("AccuCode");
 			} else {
-				sponser = Globals.GC_DEFAULT_SPONSER;
+				sponser = GC_DEFAULT_SPONSER;
 
 			}
 		} else {
-			sponser = Globals.GC_DEFAULT_SPONSER;
+			sponser = GC_DEFAULT_SPONSER;
 
 		}
 		return sponser;
