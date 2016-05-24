@@ -46,8 +46,8 @@ public class validate_loaninfopage {
 	/**
 	 * -------------------------------------------------------------------
 	 * <pre>
-	 *TESTCASE:	Validate_Total_Outstanding_Balance
-	 *DESCRIPTION:	Validate Total outstanding balance on Loan info page  
+	 *TESTCASE:	Validate_LoanStatus_Details
+	 *DESCRIPTION:	Validate Loan status section on Loan info page  
 	 *RETURNS:	VOID	
 	 *REVISION HISTORY: 
 	 *--------------------------------------------------------------------
@@ -57,7 +57,7 @@ public class validate_loaninfopage {
 	 * @param <br>CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void Validate_Total_Outstanding_Balance(int itr,
+	public void Validate_LoanStatus_Details(int itr,
 			Map<String, String> testdata) {
 		ArrayList<String> loanInfo_List ;
 		loanInfopage_Obj = new LoanInfo() ;

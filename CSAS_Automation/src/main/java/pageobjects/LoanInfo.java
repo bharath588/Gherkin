@@ -1,13 +1,18 @@
 package pageobjects;
 
 import java.sql.ResultSet;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -233,9 +238,10 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	 * 
 	 * @return pptID
 	 * @author rnjbdn
+	 * @throws ParseException 
 	 */
 	public void verify_Loan_Status_Details(String webelement,String loanStsVal_From_DB,
-			String loanSts_var) {
+			String loanSts_var) throws ParseException {
 		boolean isLoanStatusEleDisplayed = false;
 		boolean isLoanStsEqual = false ;
 		String loanSts_Val_On_Web;
@@ -257,7 +263,10 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 							.getText();
 					switch (loanSts_var) {
 					case "LOAN_AMT":
-						if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
+						//if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
+						Number number = null ;
+						number = NumberFormat.getCurrencyInstance(Locale.US).parse(loanSts_Val_On_Web) ;
+						if (number != null) {
 							isLoanStsEqual = true ;
 						}
 						break;

@@ -25,6 +25,7 @@ public class validate_loanquotepage {
 	ParticipantHome participantHomeObj;
 	LoanQuote loanQuotePO;
 	boolean isPageDisplayed;
+	String ga_id = null ;
 
 	@BeforeClass
 	public void ReportInit() {
@@ -67,8 +68,11 @@ public class validate_loanquotepage {
 			// Step1:Launch and logged into CSAS application..
 			if (itr == 1) {
 				participantHomeObj = new ParticipantHome().get();
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-						Stock.GetParameterValue("PPT_ID"));
+			//	ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("PPT_ID")) ;
+			//	participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+			//			Stock.GetParameterValue("PPT_ID"));
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("SSN",
+						Stock.GetParameterValue("SSN"));
 				// Step2:Navigating to Loan Quote
 				loanQuotePO.get();
 				loanQuotePO.SelectLoanType(Stock.GetParameterValue("LoanType"));
@@ -135,8 +139,11 @@ public class validate_loanquotepage {
 			// Step1:Launch and logged into CSAS application
 			if (itr == 1) {
 				participantHomeObj = new ParticipantHome().get();
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-						Stock.GetParameterValue("PPT_ID"));
+			//	ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("PPT_ID")) ;
+			//	participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+			//			Stock.GetParameterValue("PPT_ID"));
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("SSN",
+						Stock.GetParameterValue("SSN"));
 				// Step2:Navigating to Loan Quote
 				loanQuotePO.get();
 				loanQuotePO.SelectLoanType(Stock.GetParameterValue("LoanType"));

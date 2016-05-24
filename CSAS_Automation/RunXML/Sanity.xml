@@ -1,32 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-
 <suite name="testsuite" verbose="1">
-
-	<listeners>
-
-		<listener class-name="core.framework.TestListener" />
-
-	</listeners>
-
-	<test name="testXML">
-
-		<classes>
-
-			<class name="app.csas.testcases.participanthomepage.Validate_ParticipantHomePage">
-
-				<methods>
-
-					<include name="ValidateEmploymentStatusAsActiveOrTerminated" />
-
-				</methods>
-
-			</class>
-
-		</classes>
-
-	</test>
-
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+  <!--   <test name="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt Home Page_Employment_Status_TERMINATED">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Employment_Status_As_Active_Or_Terminated"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Instance">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_PPT_HomePage_Instance"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_info_Ppt_Home_Page_Personal_Data">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Personal_Data_On_PPT_Home"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Registration_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Enrolled">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Managed_Account_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_UnEnrolled">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Managed_Account_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Not_Offered_By_Plan">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_Managed_Account_Status_On_PPT_Home_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_PDI_Status">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_PDI_Status_On_PPT_Home"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_PIN_Button_NonRegistered">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN"/>
+                </methods>
+            </class>
+        </classes>
+    </test> -->
+    <test name="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_Registered">
+        <classes>
+            <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+                <methods>
+                    <include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+   <!--  <test name="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance">
+        <classes>
+            <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+                <methods>
+                    <include name="Validate_LoanStatus_Details"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Loan_Info_Payment_Frequency">
+        <classes>
+            <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+                <methods>
+                    <include name="Validate_LoanStatus_Details"/>
+                </methods>
+            </class>
+        </classes>
+    </test> 
+  	<test name="CSAS_PPT_Info_Loan_Info_Payment_Frequency_Method">
+        <classes>
+            <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+                <methods>
+                    <include name="Validate_LoanStatus_Details"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="CSAS_PPT_Info_Loan_Info_Default_Indicator">
+        <classes>
+            <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+                <methods>
+                    <include name="Validate_LoanStatus_Details"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote">
+        <classes>
+            <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
+                <methods>
+                    <include name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Validate_Selected_Loan_Type_Details">
+        <classes>
+            <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
+                <methods>
+                    <include name="Validate_Selected_Loan_Type_Details"/>
+                </methods>
+            </class>
+        </classes>
+    </test> -->
 </suite>
-

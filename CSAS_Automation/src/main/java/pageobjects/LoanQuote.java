@@ -52,16 +52,16 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 	@FindBy(xpath = "//*[@id='table_workLayout']//table[@class='compactDataTable']//tr[2]/td[@class='colTitle']")
 	private WebElement existingLoanTypeText;
 
-	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Maximum Loan Amount')]/followingsibling::td/a")
+	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Maximum Loan Amount')]/following-sibling::td/a")
 	private WebElement planMaxLoanAmt;
 
-	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Minimum Loan Amount')]/followingsibling::td")
+	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Minimum Loan Amount')]/following-sibling::td")
 	private WebElement planMinLoanAmt;
 
-	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Interest Rate')]/followingsibling::td/a")
+	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'Plan Interest Rate')]/following-sibling::td/a")
 	private WebElement planIntRate;
 
-	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'maximum number of loans allowed')]/followingsibling::td")
+	@FindBy(xpath = "//form[@name='loanQuoteForm'][1]//table[@class='innerDataTable'][1]//td[contains(text(),'maximum number of loans allowed')]/following-sibling::td")
 	private WebElement planMaxNoOfLoanAllowed;
 
 	@FindBy(xpath = "//*[@id='table_workLayout']//div[@id='overDiv']//table[@class='compactDataTable']//tr")
