@@ -1118,7 +1118,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
 				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
-				
+				beneficiary.updateMaritalStatus(Stock.GetParameterValue("Participant ssn"));
 			} catch (Exception e) {
 
 				e.printStackTrace();

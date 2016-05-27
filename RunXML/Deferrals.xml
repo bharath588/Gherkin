@@ -239,13 +239,50 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Deferral_020_Multiple_Create contribution rate for multiple deferral type, split contribution">
+    <test name="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="Multiple_deferral_split_contribution"/>
+                    <include name="Deferral_020_Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always"/>
                 </methods>
             </class>
         </classes>
     </test>
-</suite>
+     <test name="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferral_006_Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+	<test name="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Regular_SPLIT_Maximize_me_always"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferral_008_Catch_up_Maximize_me_always"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    

@@ -518,6 +518,14 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 	}
 	
+	public void updateMaritalStatus(String ssn) throws Exception{
+		String[] sqlQuery;
+		String[] sqlQuery_commit;
+		sqlQuery = Stock.getTestQuery("updateMaritalStatus");
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn);
+		DB.executeUpdate(sqlQuery[0], "commit");
+	}
+	
 	/**<pre> Method to read error/alert messages
 	 *.</pre>
 	 * @param msgType - error message type
