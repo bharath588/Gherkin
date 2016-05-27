@@ -88,9 +88,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
 	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement authCodeIErrorMsg;
 	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement deleteBeneficiaryErrorMsg;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -137,8 +137,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));

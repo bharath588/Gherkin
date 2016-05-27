@@ -28,6 +28,7 @@ public class Balance extends LoadableComponent<Balance> {
 	//Declarations
 	private LoadableComponent<?> parent;
 	
+	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Balance']") private WebElement lblBalance;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
@@ -50,7 +51,7 @@ public class Balance extends LoadableComponent<Balance> {
 	@FindBy(xpath="//table[@id='balanceHistoryTable']//thead/tr") private WebElement hdrBalanceHistoryTable;
 	@FindBy(xpath="//table[@id='balanceComparisonTable']//tbody/tr") private List<WebElement> lstBalancceComparisonDetail;
 	@FindBy(xpath="//table[@id='balanceComparisonTable']//thead/tr") private WebElement hdrBalancceComparisonTable;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor

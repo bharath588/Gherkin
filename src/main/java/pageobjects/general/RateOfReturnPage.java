@@ -48,9 +48,8 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	private WebElement startDate;
 	@FindBy(xpath = ".//*[@ng-model='rateOfReturnCtrl.endDate']")
 	private WebElement endDate;
-	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='userProfileName']")
-	private WebElement lblUserName;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;

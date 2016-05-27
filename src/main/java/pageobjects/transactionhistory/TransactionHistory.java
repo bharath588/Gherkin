@@ -30,7 +30,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	private LoadableComponent<?> parent;
 	private String confirmationNo;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Transaction History']") private WebElement lblTransactionHistory;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='tranHistFilterOptions']") private WebElement tblTransactionFilterOption;
@@ -48,7 +48,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	@FindBy(xpath="//table[@id='tranHistContribSummaryTable']//tbody//tr/td[1]") private WebElement txtConfirmationNo;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
 	@FindBy(xpath="*//td[@id='txnHistSummTxnDesc']") private List<WebElement> lstTransactionType;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	/** Empty args constructor
 	 * 
@@ -107,7 +107,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	protected void load() {
 		this.parent.get();
 		
-		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction History");
+		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction history");
 		
 	}
 	

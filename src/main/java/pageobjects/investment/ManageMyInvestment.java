@@ -28,7 +28,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String fromInvestmentOption;
 	String toInvestmentOption;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()[normalize-space()='My Investments']]") private WebElement lblMyInvestments;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//button[text()[normalize-space()='Change My Investments']]") private WebElement btnChangeMyInvestment;
@@ -89,7 +89,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath="//table/tbody/tr[@class='tableSubtitle']") private WebElement hdrInvestmentOptionTblForDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td[2]") private List<WebElement> lstInvestmentOptionsDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td/input") private List<WebElement> lstChkInvestmentOptionDollarCost;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor

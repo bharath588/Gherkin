@@ -126,7 +126,7 @@ public class registrationtestcases {
 			accLookup.clickOnFields("PIN");
 			accLookup.clickOnFields("CONTINUE");
 			actualErrMsg = accLookup.getFieldErrorMsg("Social Security Number");
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			if (actualErrMsg.length() == 0) {
 				Reporter.logEvent(
 						Status.FAIL,

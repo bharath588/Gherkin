@@ -35,9 +35,8 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement inputLonatypeMortgage;
 	@FindBy(id = "loanInitiation")
 	private WebElement btnContinue;
-	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='userProfileName']")
-	private WebElement lblUserName;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;

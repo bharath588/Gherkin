@@ -127,12 +127,13 @@ public class authenticationtestcases {
 				twoStepVerification.submitVerificationCode(verificationCode, true, false);
 
 				//Verify user is on landing page (Check label 'Retirement income' is displayed on the page)
-				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out") && Web.isWebElementDisplayed(landingPage, "Retirement income");
+				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out");
 				if (isDisplayed) {
 					Reporter.logEvent(Status.PASS, "Verify user is on landing page", "user is on landing page", true);
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify user is on landing page", "user is not on landing page", true);
 				}
+				landingPage.logout(true);
 			}
 
 		}catch(Exception e)

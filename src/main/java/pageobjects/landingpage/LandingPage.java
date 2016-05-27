@@ -35,7 +35,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	/*private String username;
 	private String password;*/
 	
-	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(xpath=".//*[@id='utility-nav']/ul/li[2]/a[@title='Log out']") private WebElement lnkLogout;
 	@FindBy(id="home") private WebElement lnkHome;	
 	@FindBy(linkText="My Accounts") private WebElement lnkMyAccounts;
 	@FindBy(xpath=".//*[text()='Retirement income']") private WebElement lblRetirementIncome;
@@ -50,7 +50,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
     @FindBy(id="atAGlanceROR") private WebElement RateOfReturn;
     @FindBy(id="atAGlanceLastContribution") private WebElement LastContributionAmount;
     @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-    @FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+    @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
     /** Empty args constructor
@@ -75,6 +75,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
+		ssn = Stock.GetParameterValue("userName");
 				String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
@@ -83,7 +84,6 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		else{
 		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
 				0, ssn.length() - 3));
-
 		
 		try {
 			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
@@ -97,10 +97,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) { 
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) { 
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+			//Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));

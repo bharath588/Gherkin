@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     
-    <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
+       <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -14,7 +14,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
+   <test name="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -248,4 +248,32 @@
             </class>
         </classes>
     </test>
-</suite>
+
+<test name="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferrals_Participant_Prior_Contributions6"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+      <test name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup - participant within first year of employment">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferrals_Participant_Prior_Contributions7"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+   <test name="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferrals_Participant_Prior_Contributions8"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    </suite>

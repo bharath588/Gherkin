@@ -28,11 +28,10 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement lblProfile;
 	@FindBy(xpath = "//*[@id='content-container']//h1")
 	private WebElement hrdUserName;
-	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='userProfileName']")
-	private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//div[contains(@class,'personal-information')]//h2")
 	private WebElement hrdPersonalInfo;

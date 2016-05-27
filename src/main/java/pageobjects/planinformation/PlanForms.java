@@ -36,13 +36,13 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 	//Declarations
 		private LoadableComponent<?> parent;
 		
-		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[text()='Plan forms']") private WebElement lblPlanForms;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//table[@class='table ng-scope']") private WebElement tblPlanForms;
 		@FindBy(xpath="//table[@class='table ng-scope']/tbody/tr") private List<WebElement> lstPlanforms;
 		@FindBy(xpath="//table[@class='table ng-scope']/tbody//a") private List<WebElement> lstPlanformName;
-		@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+		@FindBy(xpath = "//img[@class='site-logo']")
 		private WebElement lblSponser;
 		
 		

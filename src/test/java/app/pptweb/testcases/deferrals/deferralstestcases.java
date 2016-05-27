@@ -188,14 +188,15 @@ public class deferralstestcases {
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is not matching", true);
 
-			if(Stock.GetParameterValue("Contribution_type").equalsIgnoreCase("split"))
+			if (Stock.GetParameterValue("Contribution_type").equalsIgnoreCase(
+					"split"))
 				deferrals.split_bonus_contribution();
 			else
-				deferrals.select_ContributionType(Stock.GetParameterValue("Contribution_type"));
-			
-			
-			
-			deferrals.add_Auto_Increase(Stock.GetParameterValue("Add_auto_increase_type"));
+				deferrals.select_ContributionType(Stock
+						.GetParameterValue("Contribution_type"));
+
+			deferrals.add_Auto_Increase(Stock
+					.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
@@ -306,7 +307,6 @@ public class deferralstestcases {
 
 			deferrals.myContributions_Confirmation_Page();
 
-		
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -385,10 +385,12 @@ public class deferralstestcases {
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-			if (lib.Stock.GetParameterValue("Contribution_type").equalsIgnoreCase("Split"))
+			if (lib.Stock.GetParameterValue("Contribution_type")
+					.equalsIgnoreCase("Split"))
 				deferrals.split_catchup_contribution();
 			else
-				deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
+				deferrals.select_ContributionType(lib.Stock
+						.GetParameterValue("Contribution_type"));
 
 			if (!lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
@@ -419,7 +421,7 @@ public class deferralstestcases {
 		} finally {
 			Web.webdriver.navigate().refresh();
 			Deferrals deferrals = new Deferrals();
-			Web.waitForElement(deferrals,"My Contributions");
+			Web.waitForElement(deferrals, "My Contributions");
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -562,9 +564,8 @@ public class deferralstestcases {
 						lib.Stock.GetParameterValue("yearToDateContribution"),
 						lib.Stock.GetParameterValue("catchupContribution"));
 
-				if (priorContributions.verifyConfirmationDetails(
-						lib.Stock.GetParameterValue("yearToDateContribution"),
-						"Year To Date")) {
+				if (priorContributions.verifyCoontributionMessage(lib.Stock
+						.GetParameterValue("yearToDateContribution"))) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify Year to Date Confirmation Detials verification",
@@ -579,9 +580,8 @@ public class deferralstestcases {
 				}
 				// verify the values for the year to date and catchup
 				// contribution value on the confirmtion page
-				if (priorContributions.verifyConfirmationDetails(
-						lib.Stock.GetParameterValue("catchupContribution"),
-						"Catch up")) {
+				if (priorContributions.verifyCoontributionMessage(lib.Stock
+						.GetParameterValue("yearToDateContribution"))) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify catchup Contribution Confirmation Detials verification",
@@ -642,7 +642,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			if (lib.Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution",true))
+					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
 			else
@@ -665,11 +665,13 @@ public class deferralstestcases {
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is not matching", true);
 
-			if (lib.Stock.GetParameterValue("Contribution_type").equalsIgnoreCase("Split"))
+			if (lib.Stock.GetParameterValue("Contribution_type")
+					.equalsIgnoreCase("Split"))
 				deferrals.split_Other_contribution();
 			else
-				deferrals.select_ContributionType(lib.Stock.GetParameterValue("Contribution_type"));
-			
+				deferrals.select_ContributionType(lib.Stock
+						.GetParameterValue("Contribution_type"));
+
 			deferrals.add_Auto_Increase(Stock
 					.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
@@ -827,7 +829,7 @@ public class deferralstestcases {
 						"Maximize me always check box is not present", true);
 
 			deferrals.regular_maximize_me_always("Yes");
-			
+
 			deferrals.myContributions_Confirmation_Page();
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
@@ -860,8 +862,8 @@ public class deferralstestcases {
 	}
 
 	/**
-	 * The following script adds or edits all the deferral type and then
-	 * confirm it
+	 * The following script adds or edits all the deferral type and then confirm
+	 * it
 	 * 
 	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_020_Multiple_Create
 	 * contribution rate for multiple deferral type, split contribution
@@ -1121,7 +1123,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1334,8 +1336,8 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
-			if(deferrals.getCatchupMaximized()==null){
+
+			if (deferrals.getCatchupMaximized() == null) {
 				deferrals.clickAddEditButton("Catch Up Add");
 				deferrals.click_Maximize_IRS_Limit();
 				deferrals.select_ContributionType("Before");
@@ -1344,7 +1346,7 @@ public class deferralstestcases {
 			}
 			deferrals
 					.Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always();
-			
+
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -1396,7 +1398,7 @@ public class deferralstestcases {
 			deferrals.get();
 			deferrals
 					.Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer();
-			
+
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -1447,7 +1449,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			deferrals.Catch_up_Salary_changes_on_IRS_panel();
-			
+
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -1519,13 +1521,13 @@ public class deferralstestcases {
 		}
 
 	}
-	
 
 	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.webdriver.close();
 		lib.Web.webdriver.quit();
 	}
+
 	/**
 	 * Thee following scripts test for the prior contribution details of the
 	 * participants that are in the following category 1. Participant in the
@@ -1552,54 +1554,193 @@ public class deferralstestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			
 			leftmenu = new LeftNavigationBar(homePage);
 			PriorPlanContributions priorContributions = new PriorPlanContributions(
 					leftmenu);
 
-						priorContributions.get();
+			priorContributions.get();
 
-						// perform a initial check on the prior plan contribution
-				priorContributions.verifyPriorPlanContributionsPage();
-				//Web.VerifyText(inExpectedText, inActualText, ignoreCase)
-				// enter the year to date and catchup contribution value
+			// perform a initial check on the prior plan contribution
+			priorContributions.verifyPriorPlanContributionsPage();
+			Web.clickOnElement(priorContributions, "CANCEL");
+			Web.clickOnElement(priorContributions, "YES");
+			// Web.VerifyText(inExpectedText, inActualText, ignoreCase)
+			// enter the year to date and catchup contribution value
+			priorContributions.enterContributionValue(
+					"YEAR TO DATE CONTRIBUTION",
+					lib.Stock.GetParameterValue("yearToDateContribution"));
+			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+
+			if (priorContributions.verifyCoontributionMessage(lib.Stock
+					.GetParameterValue("yearToDateContribution"))) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Year to Date Confirmation Detials Updated",
+						"Test data for Year to Date value matched with test data on the confirmation page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Year to Date Confirmation Detials Updated",
+						"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
+						true);
+			}
+
+			if (lib.Web.isWebElementDisplayed(priorContributions, "Edit"))
+				Reporter.logEvent(Status.PASS, "Verify Edit button",
+						"Edit button is displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Edit button",
+						"Edit button is Not displayed", true);
+			// this will clear thedata
+			try {
+				Web.clickOnElement(priorContributions, "EDIT");
 				priorContributions.enterContributionValue(
-						lib.Stock.GetParameterValue("yearToDateContribution"),
-						lib.Stock.GetParameterValue("catchupContribution"));
+						"YEAT TO DATE CONTRIBUTION", "0");
+				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+				Web.clickOnElement(priorContributions, "EDIT");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-				if (priorContributions.verifyConfirmationDetails(
-						lib.Stock.GetParameterValue("yearToDateContribution"),
-						"Year To Date")) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Verify Year to Date Confirmation Detials verification",
-							"Test data for Year to Date value matched with test data on the confirmation page",
-							true);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify Year to Date Confirmation Detials verification",
-							"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
-							true);
-				}
-				// verify the values for the year to date and catchup
-				// contribution value on the confirmtion page
-				if (priorContributions.verifyConfirmationDetails(
-						lib.Stock.GetParameterValue("catchupContribution"),
-						"Catch up")) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Verify catchup Contribution Confirmation Detials verification",
-							"Test data for catchup Contribution value matched with test data on the confirmation page",
-							true);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify catchup Contribution Confirmation Detials verification",
-							"Test data for catchup Contribution value DID NOT matched with test data on the confirmation page",
-							true);
-				}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@Test(dataProvider = "setData")
+	public void Deferrals_Participant_Prior_Contributions7(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			PriorPlanContributions priorContributions = new PriorPlanContributions(
+					leftmenu);
+
+			priorContributions.get();
+			if (Web.isWebElementDisplayed(priorContributions, "EDIT")) {
+				Web.clickOnElement(priorContributions, "EDIT");
+				priorContributions.enterContributionValue(
+						"YEAT TO DATE CONTRIBUTION", "0");
+				priorContributions.enterContributionValue(
+						"CATCHUP CONTRIBUTION", "0");
+				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+				Web.clickOnElement(priorContributions, "EDIT");
+			}
+
+			// perform a initial check on the prior plan contribution
+			priorContributions.verifyPriorPlanContributionsPage();
+			Web.clickOnElement(priorContributions, "CANCEL");
+			Web.clickOnElement(priorContributions, "YES");
+			// Web.VerifyText(inExpectedText, inActualText, ignoreCase)
+			// enter the year to date and catchup contribution value
+			priorContributions.enterContributionValue(
+					"YEAR TO DATE CONTRIBUTION",
+					lib.Stock.GetParameterValue("yearToDateContribution"));
+			priorContributions.enterContributionValue("CATHUP CONTRIBUTION",
+					lib.Stock.GetParameterValue("catchupContribution"));
+			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+
+			if (priorContributions.verifyCoontributionMessage(lib.Stock
+					.GetParameterValue("totalContribution"))) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Year to Date Confirmation Detials Updated",
+						"Test data for Year to Date value matched with test data on the confirmation page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Year to Date Confirmation Detials Updated",
+						"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
+						true);
+			}
+
+			if (lib.Web.isWebElementDisplayed(priorContributions, "Edit"))
+				Reporter.logEvent(Status.PASS, "Verify Edit button",
+						"Edit button is displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Edit button",
+						"Edit button is Not displayed", true);
+			// this will clear thedata
+			try {
+				Web.clickOnElement(priorContributions, "EDIT");
+				priorContributions.enterContributionValue(
+						"YEAT TO DATE CONTRIBUTION", "0");
+				priorContributions.enterContributionValue(
+						"CATCHUP CONTRIBUTION", "0");
+				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+				Web.clickOnElement(priorContributions, "EDIT");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@Test(dataProvider = "setData")
+	public void Deferrals_Participant_Prior_Contributions8(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferral = new Deferrals(leftmenu);
+
+			deferral.get();
+
+			if (!lib.Web.isWebElementDisplayed(deferral,
+					"TEXT PRIOR PLAN CONTRIBUTION"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Prior Plan Contribution Link Is Displayed",
+						"Prior Plan Contribution Link Is Not Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Prior Plan Contribution Link Is Displayed",
+						"Prior Plan Contribution Link Is Displayed", true);
 
 		} catch (Exception e) {
 			e.printStackTrace();

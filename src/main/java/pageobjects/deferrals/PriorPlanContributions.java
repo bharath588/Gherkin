@@ -26,19 +26,20 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//label[contains(text(),'Yes')]") private WebElement labelYes;
 	@FindBy(xpath="//label[contains(text(),'No')]") private WebElement labelNo;
 //	@FindBy(xpath="//button[@id='btnSubmit']") private WebElement btnsubmit;
-	@FindBy(xpath="//button[@id='btnSubmit submit']") private WebElement btnsubmit;
-	@FindBy(xpath="//button[@id='btnContinue']") private WebElement btnContinue;
+	@FindBy(xpath="//button[contains(text(),'Save and Close')]") private WebElement btnSaveAndClose;
+	@FindBy(xpath="//button[contains(text(),'Cancel')]") private WebElement btnCancel;
+	@FindBy(xpath="//button[contains(@ng-click,'editPrevContribution')]") private WebElement btnEdit;
 //	@FindBy(xpath="//div[@class='page-title ng-scope']/p']") private WebElement txtPriorContribution;
 	@FindBy(xpath="//td[@class='col-sm-9']//div[contains(@class,'title ng-binding')]") private WebElement txtPriorContribution;
-	@FindBy(xpath=".//a/font[contains(text(),'Why is this important?')]") private WebElement lnkWhyThisIsImportant;
+	@FindBy(xpath=".//a[./font[contains(text(),'Why is this important?')]]") private WebElement lnkWhyThisIsImportant;
 	
 	@FindBy(xpath="//input[@id='catchup']") private WebElement txtCatchupContribution;
-	@FindBy(xpath="//h2[text()='Confirmation Details']") private WebElement lblConfirmationDetails;
-//	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[0]/td") private WebElement lblYearToDateContribution;
-	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblYearToDateContribution;
+	
+	@FindBy(xpath="//p[contains(text(),'I have')]") private WebElement lblContribution;
+	@FindBy(xpath="//input[contains(@ng-model,'regularPrevContribution')]") private WebElement inputYearToDateContribution;
 //	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
-	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[2]/td") private WebElement lblCatchupContribution;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath="//input[contains(@ng-model,'catchupPrevContribution')]") private WebElement inputCatchupContribution;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//div[contains(@class,'text-notation')]") private WebElement txtYearToDateContribution;
 	
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
@@ -79,14 +80,11 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
-			if (!lib.Web.isWebElementDisplayed(lblPriorContributions,PriorPlanContributions.waitforLoad)) {
-				PriorPlanContributions.waitforLoad = true;
-				throw new Error("'My contributions' page is not loaded");
-			}else{
-				PriorPlanContributions.waitforLoad = false;
-			}
+			//Assert.assertTrue(Web.isWebElementDisplayed(txtPriorContribution,true));
+			
 		} else {
 			this.lnkLogout.click();
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
 	
@@ -96,13 +94,66 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
 	}
-
+	/** <pre> Method to return WebElement object corresponding to specified field name
+	 * Elements available for fields:
+	 * 	LOG OUT Or LOGOUT - [Link]
+	 * 	HOME - [Link]
+	 * 	MY ACCOUNTS - [Link]
+	 * 	RETIREMENT INCOME - [Label]
+	 * </pre>
+	 * @param fieldName
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private WebElement getWebElement(String fieldName) {
+		//Log out
+		if (fieldName.trim().equalsIgnoreCase("LOG OUT") || fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+			return this.lnkLogout;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT PRIOR PLAN CONTRIBUTION")) {
+			return this.txtPriorContribution;
+		}
+		
+		//SAVE AND CLOSE
+		if (fieldName.trim().equalsIgnoreCase("SAVE AND CLOSE")) {
+			return this.btnSaveAndClose;
+		}
+		
+		//CANCEL
+		if (fieldName.trim().equalsIgnoreCase("CANCEL")) {
+			return this.btnCancel;
+		}
+		
+		//YES
+		if (fieldName.trim().equalsIgnoreCase("YES")) {
+			return this.labelYes;
+		}
+		//NO
+		if (fieldName.trim().equalsIgnoreCase("NO")) {
+			return this.labelNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("YEAR TO DATE CONTRIBUTION")) {
+			return this.inputYearToDateContribution;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CATCHUP CONTRIBUTION")) {
+			return this.inputCatchupContribution;
+		}
+		if (fieldName.trim().equalsIgnoreCase("EDIT")) {
+			return this.btnEdit;
+		}
+		
+		Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
+				"No WebElement mapped for this field\nPage: <b>" + this.getClass().getName() + "</b>", false);
+		
+		return null;
+	}
+	
 	public void verifyPriorPlanContributionsPage(){
 		
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
-			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching", false);
+			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching", true);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching", true);
 		String toolTip=lnkWhyThisIsImportant.getAttribute("uib-tooltip-html");
@@ -113,18 +164,34 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		if(lib.Web.isWebElementDisplayed(labelYes))
 			Reporter.logEvent(Status.PASS, "Verify Yes Radio button", "Yes Radio button is displayed", false);
 		else
-			Reporter.logEvent(Status.FAIL, "Verify Yes Radio button", "Yes Radio button is displayed", true);
+			Reporter.logEvent(Status.FAIL, "Verify Yes Radio button", "Yes Radio button is Not displayed", true);
 		
 		if(lib.Web.isWebElementDisplayed(labelNo))
 			Reporter.logEvent(Status.PASS, "Verify No Radio button", "No Radio button is displayed", false);
 		else
-			Reporter.logEvent(Status.FAIL, "Verify No Radio button", "No Radio button is displayed", true);
+			Reporter.logEvent(Status.FAIL, "Verify No Radio button", "No Radio button is Not displayed", true);
 		this.labelYes.click();
 		actualText = txtYearToDateContribution.getText();
 		if(lib.Web.VerifyPartialText("This includes 401(k) pre-tax, Roth 401(k), 403(b), SARSEP and Simple IRA contributions.",actualText , true))
-			Reporter.logEvent(Status.PASS, "Verify Year to date contributions: text in Prior Contributions page", "text is matching", false);
+			Reporter.logEvent(Status.PASS, "Verify Year to date contributions: text in Prior Contributions page", "text is matching", true);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify Year to date contributions: text in Prior Contributions page", "text is not matching", true);
+		
+		if(lib.Web.isWebElementDisplayed(btnSaveAndClose))
+		{
+			Reporter.logEvent(Status.PASS, "Verify SaveAndClose button is Displyed", "SaveAndClose button is displayed", false);
+			actualText = btnSaveAndClose.getAttribute("disabled");
+			if(lib.Web.VerifyText("true",actualText , true))
+				Reporter.logEvent(Status.PASS, "Verify SaveAndClose button is Disabled", "SaveAndClose button is Disabled", false);
+			else
+				Reporter.logEvent(Status.FAIL,  "Verify SaveAndClose button is Disabled", "SaveAndClose button is Not Disabled /nExpected:disabled /nActual:"+actualText, true);
+		}
+		else
+			Reporter.logEvent(Status.FAIL, "Verify SaveAndClose button is Displyed", "SaveAndClose button is  not displayed", true);
+		if(lib.Web.isWebElementDisplayed(btnCancel))
+			Reporter.logEvent(Status.PASS, "Verify Cancel button", "Cancel button is displayed", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Cancel button", "Cancel button is Not displayed", true);
 	}
 	
 	public boolean verifyParticipantsHiredInPriorYear(){
@@ -135,36 +202,23 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		return issuccess;
 	}
 	
-	public void enterContributionValue(String yearToDateContribution, String catchupContribution){
-		this.labelYes.click();
-		if(!yearToDateContribution.equalsIgnoreCase("null"))
-			lib.Web.setTextToTextBox(txtYearToDateContribution,yearToDateContribution);
-		if(!catchupContribution.equalsIgnoreCase("null"))
-			lib.Web.setTextToTextBox(txtCatchupContribution,catchupContribution);
-		this.btnsubmit.click();
+	public void enterContributionValue(String contributionType, String value){
+		
+		if(contributionType.equalsIgnoreCase("YEAR TO DATE CONTRIBUTION"))
+			lib.Web.setTextToTextBox(this.inputYearToDateContribution,value);
+		if(contributionType.equalsIgnoreCase("CATHUP CONTRIBUTION"))
+			lib.Web.setTextToTextBox(this.inputCatchupContribution,value);
 	}
 	
-	public boolean verifyConfirmationDetails(String value, String type){
+	public boolean verifyCoontributionMessage(String value){
 		Boolean success = false;
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		if(type.equalsIgnoreCase("Year To Date"))
-			success = lib.Web.VerifyText("$"+value+".00", lblYearToDateContribution.getText(), true);
-		
-		if(type.equalsIgnoreCase("Catch up"))
-			success = lib.Web.VerifyText("$"+value+".00", lblCatchupContribution.getText(), true);
-		
-		this.btnContinue.click();
-		try {
-			lib.Web.waitForElement(lblPriorContributions);
-		} catch (Exception e) {
+		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+			
+		if(Web.isWebElementDisplayed(this.lblContribution, true)){
+			success = lib.Web.VerifyText("I have contributed $"+value+".00 to other retirement plans since 1/1/"+year+".", lblContribution.getText(), true);
 		}
 		return success;
 	}
-	
+
 	
 }

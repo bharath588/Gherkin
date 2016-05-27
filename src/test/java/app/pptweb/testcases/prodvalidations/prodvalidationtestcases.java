@@ -30,6 +30,7 @@ import pageobjects.landingpage.LandingPage;
 import pageobjects.landingpage.LegacyLandingPage;
 import pageobjects.liat.ProfilePage;
 import pageobjects.loan.RequestLonePage;
+import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import pageobjects.payroll.PayrollCalendar;
@@ -242,7 +243,7 @@ public class prodvalidationtestcases {
 						.logEvent(
 								Status.FAIL,
 								"Check Customer Support Information on the Login Page",
-								"Customer Support Information is Same not on the Login Page",
+								"Customer Support Information isnot same on the Login Page\nExpected:"+Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")+"\nActual:"+customerSupportInfo,
 								false);
 			}
 			isContactNoMatching = login.isValidContactUsInfo(Stock
@@ -256,7 +257,7 @@ public class prodvalidationtestcases {
 			} else {
 				lib.Reporter.logEvent(Status.FAIL,
 						"Check Contact Us Information on the Login Page",
-						"Contact Us Information is Same not on the Login Page",
+						"Contact Us Information is not not on the Login Page",
 						true);
 			}
 
@@ -1621,4 +1622,187 @@ public class prodvalidationtestcases {
 			}
 		}
 	}
+	@Test(dataProvider = "setData")
+	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
+			String expLoginHelptxt;
+			boolean isMatching;
+			boolean verificationResult;
+			String verificationCode;
+
+			LoginPage objLogin = new LoginPage();
+			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
+			TwoStepVerification objAuth = new TwoStepVerification(objLogin);
+
+			Reporter.logEvent(Status.INFO, "Navigate to forgot password page.", "forgot password page is displayed", true);
+
+			//Step 3 - Verify following verbiage is displayed "Enter the information below to recover your username. You will have the option to change your password." 
+			//		 
+			//		Also,verify following fields are displayed along with the respective labels
+			//		Social Security,Zip Code,Last Name,Date of Birth, and Street Address
+
+			verificationResult = objForgotPsw.validateFieldNames();
+			if (verificationResult) {
+				Reporter.logEvent(Status.PASS, "Forgot Password Text fields label validation ", "text field name validation was successful", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Forgot Password Text fields label validation ", "text field name validation was un-successful", false);
+			}
+
+
+			expLoginHelptxt = objForgotPsw.isLoginHelptxtDisplayed();
+			isMatching = Web.VerifyText(expLoginHelptxt, actLoginHelptxt, true);
+			if (isMatching) {
+				Reporter.logEvent(Status.PASS, "Forgot Password header Text Verification", "Header text verification was successful", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Forgot Password header Text Verification", "Header text verification was un-successful actual text: " + actLoginHelptxt + "     Expected Text: "+ expLoginHelptxt, false);
+			}
+
+			//Step 4 - Enter corresponding details for following fields and click Continue button. - User is redirected to Login help (2 of 3) page
+
+			objForgotPsw.enterForgotPasswordDetails(lib.Stock.GetParameterValue("SSN"), 
+					lib.Stock.GetParameterValue("ZIPCODE"), 
+					lib.Stock.GetParameterValue("LASTNAME"), 
+					lib.Stock.GetParameterValue("DOB"), 
+					lib.Stock.GetParameterValue("STREETADDRESS"));
+
+			//Step 5 - Click on "Already have a code?" link
+			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
+
+			//Step 6 and 7 - Enter verification code into "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue" button
+			if (lib.Stock.GetParameterValue("codeDeliveryOption").equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+				verificationCode = objAuth.getVerificationCode(true);
+			} else {
+				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+					verificationCode = objAuth.getVerificationCode(false);
+				} else {
+					if (objAuth.isActivationCodeGenerated(lib.Stock.GetParameterValue("codeDeliveryOption"))) {
+						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
+					} else {
+						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
+					}
+					return;
+				}
+			}
+
+			objAuth.submitVerificationCode(verificationCode, false, false);
+
+			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
+			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+
+		}
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+	@Test(dataProvider = "setData")
+	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			String verificationCode = "";
+			
+			TwoStepVerification twoStepVerification = new TwoStepVerification(new LoginPage());
+			twoStepVerification.get();
+			
+			twoStepVerification.setPageMandatory(true);	//Two step verification page is expected to load
+			twoStepVerification.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to 'Two step verification (2 of 3)' page", 
+					"Navigation succeeded", true);
+			
+			// TODO Add code to verify text displayed on Two step verification page
+			
+			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have a code?' exists
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:");
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:");
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:");
+			
+			if (Web.isWebElementDisplayed(twoStepVerification, "Already have a code?")) {
+				Reporter.logEvent(Status.PASS, "Verify 'Already have a code?' link is displayed", 
+						"Link is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Verify 'Already have a code?' link is displayed", 
+						"Link is not displayed", false);
+			}
+			
+			//Select code delivery option and click continue
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("deliveryOption"));
+			
+			//Get verification code
+			if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+				verificationCode = twoStepVerification.getVerificationCode(true);
+			} else {
+				if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+					verificationCode = twoStepVerification.getVerificationCode(false);
+				} else {
+					if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("deliveryOption"))) {
+						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
+					} else {
+						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
+					}
+					return;
+				}
+			}
+			
+			if (verificationCode.trim().length() == 0) {
+				Reporter.logEvent(Status.FAIL, "Fetch verification code.", "Verification code not generated", false);
+				return;
+			}
+			
+			//Submit verification code
+			Thread.sleep(5000);
+			twoStepVerification.submitVerificationCode(verificationCode, true, 
+					Boolean.parseBoolean(lib.Stock.GetParameterValue("rememberDevice")));
+			
+			//Dismiss pop ups if displayed
+			LandingPage landingPage = new LandingPage(twoStepVerification);
+			//landingPage.dismissPopUps(true, true);
+			
+			//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
+			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+				Reporter.logEvent(Status.PASS, "Verify landing page is displayed", 
+						"Landing page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Verify landing page is displayed", 
+						"Landing page is not displayed", true);
+			}
+			
+			//Logout if opted
+			landingPage.logout(true);
+					
+		}
+		catch(Exception e)
+	    {
+	        e.printStackTrace();
+	        Globals.exception = e;
+	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
+	    }catch(AssertionError ae)
+	    {
+	        ae.printStackTrace();
+	        Globals.assertionerror = ae;
+	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	    }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+		}
+		
 }

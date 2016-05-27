@@ -29,9 +29,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	@FindBy(xpath = ".//*[@id='account-details-container']//div[@class='page-title']/h1")
 	private WebElement lblRequestAWithdrawal;
-	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='userProfileName']")
-	private WebElement lblUserName;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;

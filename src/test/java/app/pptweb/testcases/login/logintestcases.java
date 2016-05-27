@@ -152,7 +152,7 @@ public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr
 		
 		//Dismiss pop ups if displayed
 		LandingPage landingPage = new LandingPage(twoStepVerification);
-		landingPage.dismissPopUps(true, true);
+		//landingPage.dismissPopUps(true, true);
 		
 		//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
 		if (Web.isWebElementDisplayed(landingPage, "Log out")) {

@@ -37,7 +37,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	private LoadableComponent<?> parent;
 	String parentWindow;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Investment lineup']") private WebElement lblInvestmentlineup;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//a[text()[normalize-space()='Options']]") private WebElement tabOptions;
@@ -50,7 +50,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	@FindBy(xpath="//table[@id='fundOverviewWrapperTable']/tbody/tr/td[4]/a") private List<WebElement> lstlnkOnlineProspectus;
 	@FindBy(xpath="//table[@id='fundOverviewWrapperTable']/tbody/tr") private List<WebElement> lstFundOverviewTableRows;
 	@FindBy(xpath="//span[@class='legacyFundDocumentTitleLabel']") private WebElement lblFundDocTitle;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor

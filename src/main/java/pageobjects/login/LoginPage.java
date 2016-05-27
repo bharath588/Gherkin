@@ -24,6 +24,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	@FindBy(css="a[href*='register']") private WebElement btnRegister;
 	@FindBy(id="helpBlock") private WebElement weHelpBlock;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help?']]") private WebElement lnkForgotPassword;
+	@FindBy(xpath = ".//*[@id='customerSupport']/p")
 	private WebElement hrdCustomerSupport;
 	@FindBy(linkText = "contact us")
 	private WebElement lnkContactus;
@@ -361,10 +362,11 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 							"Verify 'Contact Us' header is displayed",
 							"Contact Us Header is not displayed", true);
 				}
+				String Actual=this.txtContactusInfo.getText().trim().toString();
 				isTextMatching = Web
 						.VerifyText(
 								"Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015",
-								this.txtContactusInfo.getText().trim(), true);
+								Actual, true);
 				if (isTextMatching) {
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Contact Us Info'  is displayed",
@@ -372,8 +374,8 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 				} else {
 					Reporter.logEvent(Status.FAIL,
-							"Verify 'Contact Us info' header is displayed",
-							"Contact Us Info is not Same", false);
+							"Verify 'Contact Us info' is displayed",
+							"Contact Us Info is not Same \n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"+Actual, false);
 				}
 			}
 		} else {
