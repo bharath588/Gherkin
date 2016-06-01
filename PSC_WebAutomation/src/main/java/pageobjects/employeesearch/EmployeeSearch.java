@@ -9,11 +9,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -22,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
 
@@ -906,5 +909,24 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.setTextToTextBox(txtPlanNumberField,
 				Stock.GetParameterValue("planNumber"));
 		Web.clickOnElement(btnGoPlanNumber);
+	}
+
+	public void setSSNmaskingForPlan(String[] setMaskingForPlanQuery,String planNumber) throws Exception {
+		DB.executeUpdate(setMaskingForPlanQuery[0],setMaskingForPlanQuery[1],planNumber);
+	}
+	
+	public String findPlanForUser(String[] findPlanNumberQuery,String username) throws SQLException
+	{
+		String maskedPlan = null;
+		queryResultSet = DB.executeQuery(findPlanNumberQuery[0], findPlanNumberQuery[1], "K_"+username);
+		if(queryResultSet != null)
+		{
+			while(queryResultSet.next())
+			{
+				maskedPlan = queryResultSet.getString("GA_ID");
+				break;
+			}
+		}
+		return maskedPlan;
 	}
 }

@@ -671,7 +671,7 @@ public class employeesearchtestcases_db {
 	@Test(dataProvider = "setData")
 	public void TC029_Verify_ssn_masking_for_external_users(int itr,
 			Map<String, String> testdata) {
-		String planNumber = Globals.GC_EMPTY;
+		String maskedPlan = Globals.GC_EMPTY;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
@@ -682,20 +682,22 @@ public class employeesearchtestcases_db {
 			DB.executeUpdate(Stock.getTestQuery("queryChangeUserCategory")[0],
 					Stock.getTestQuery("queryChangeUserCategory")[1], "K_"
 							+ Stock.GetParameterValue("username"));
+		maskedPlan =employeesearch.findPlanForUser(Stock.getTestQuery("queryTofindPlansForUser"), Stock.GetParameterValue("username"));
 
-			resultset = DB.executeQuery(
+		employeesearch.setSSNmaskingForPlan(Stock.getTestQuery("queryToEnablePlanforSSNmasking"),maskedPlan);
+		
+			/*resultset = DB.executeQuery(
 					Stock.getTestQuery("selectPlanForSSNMasking")[0],
 					Stock.getTestQuery("selectPlanForSSNMasking")[1], "K_"
 							+ Stock.GetParameterValue("username"));
 			if (resultset.next()) {
 				planNumber = resultset.getString("GA_ID");
-			}
-
+			}*/
 			DB.executeUpdate(Stock.getTestQuery("updateDefaultPlanQuery")[0],
 					Stock.getTestQuery("updateDefaultPlanQuery")[1],
-					planNumber, "K_" + Stock.GetParameterValue("username"));
+					maskedPlan, "K_" + Stock.GetParameterValue("username"));
 
-			employeesearch.get();
+			employeesearch.get();		
 			employeesearch.verifySSNmasking();
 			employeesearch.logoutFromApplication();
 		} catch (Exception e) {
