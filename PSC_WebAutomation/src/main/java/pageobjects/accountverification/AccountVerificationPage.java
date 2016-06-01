@@ -600,7 +600,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 			}
 		} else {
 			Reporter.logEvent(
-					Status.PASS,
+					Status.FAIL,
 					"Verify error message "+actualErrorMessage+"is displayed for invalid user input",
 					"Error message is not displayed for invalid input",
 					true);

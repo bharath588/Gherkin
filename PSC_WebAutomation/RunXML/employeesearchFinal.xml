@@ -4,6 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
+    <!-- 
     <test name="Employee_Search_Sanity_Suite_validssn">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
@@ -147,7 +148,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> -->
     <test name="Employee_Search_Regression_screen_elements">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
@@ -157,6 +158,7 @@
             </class>
         </classes>
     </test>
+    <!-- 
     <test name="Employee_Search_Regression_sorting">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
@@ -228,7 +230,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>   -->
     <test name="Employee_Search_Regression_emp_err_code">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
@@ -238,6 +240,7 @@
             </class>
         </classes>
     </test>
+    <!--
     <test name="Employee_Search_Regression_termed_employee">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
@@ -264,5 +267,5 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> -->
 </suite>

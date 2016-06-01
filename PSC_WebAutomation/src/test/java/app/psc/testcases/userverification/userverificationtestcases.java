@@ -72,10 +72,10 @@ public class userverificationtestcases {
 			Thread.sleep(3000);
 			
 			//userverification.get();
-
-			// Verify if the user id displayed same as logged in id
-			userverification.verifyUserIdDisplayed(Stock.GetParameterValue("username"));
 			Web.clickOnElement(userverification, "CANCEL");
+			// Verify if the user id displayed same as logged in id
+			
+			
 			
 			if(Web.isWebElementDisplayed(login, "LOGIN FRAME")){
 				Reporter.logEvent(Status.PASS, "Check if user is navigated to splash screen when it clicks cancel",
@@ -85,6 +85,7 @@ public class userverificationtestcases {
 						"The user is not navigated to splash screen when cancel is clicked", true);
 			}
 			userverification.get();
+			userverification.verifyUserIdDisplayed(Stock.GetParameterValue("username"));
 			// Enter Valid user secondary answer and email
 			userverification.performVerification(
 					new String[] { Stock.GetParameterValue("UserVeriEmail"), Stock.GetParameterValue("UserSecondaryAns") });

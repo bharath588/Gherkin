@@ -87,12 +87,14 @@ public class accountverificationtest_plan {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("addPlanNumber"));
 			accountverificationpage.get();
+			accountverificationpage.logoutFromApplication();
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
 					Stock.GetParameterValue("UserSecondaryAns") });
 			Web.clickOnElement(accountverificationpage, "CANCEL");
+			Thread.sleep(2000);
 			if (Web.isWebElementDisplayed(loginpage, "LOGIN FRAME")) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -179,6 +181,7 @@ public class accountverificationtest_plan {
 					Stock.getTestQuery("addPlanNumberQuery"),
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("addPlanNumber"));
+			accountverificationpage.logoutFromApplication();
 			accountverificationpage.get();
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(

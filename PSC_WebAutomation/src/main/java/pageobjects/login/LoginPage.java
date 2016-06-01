@@ -224,7 +224,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				Reporter.logEvent(Status.PASS, "Check if the appropiate error displayed",
 						"Expected Error message displayed", false);
 			}else{
-				Reporter.logEvent(Status.PASS, "Check if the appropiate error displayed",
+				Reporter.logEvent(Status.FAIL, "Check if the appropiate error displayed",
 						"Failed to display expected error message", true);
 			}		
 			Web.webdriver.switchTo().defaultContent();

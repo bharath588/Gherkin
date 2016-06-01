@@ -47,7 +47,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement btnGoEmployeeSearch;
 	@FindBy(xpath = ".//*[@id='searchResultsTable_data']/tr/td")
 	private WebElement errortxtSearchResults;
-	@FindBy(id = "planSearchAc_input")
+	@FindBy(css = "input[id = 'planSearchAc_input']")
 	private WebElement txtPlanNumberField;
 	@FindBy(css = "span[class *= 'growl-title']")
 	private WebElement errorMsgBox;
@@ -350,7 +350,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			planNumber = selectFromDropdown(resultset);
 			Thread.sleep(3000);
 			navigateToEmployeeTab();
-		} else if (Web.isWebElementDisplayed(txtPlanNumberField)) {
+		} 
+		if (Web.isWebElementDisplayed(txtPlanNumberField)) {
 			planNumber = enterFromtextBox(resultset);
 			Thread.sleep(3000);
 			navigateToEmployeeTab();
@@ -506,7 +507,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division" };
+				"Participant ID", "Division" ,"--------------------","Name - all plans","SSN - all plans"};
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.webdriver.switchTo().frame(employeeSearchFrame);

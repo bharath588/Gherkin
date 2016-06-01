@@ -468,6 +468,7 @@ public class employeesearchtestcases_db {
 			resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("getPlansForErrCode"),
 					Stock.GetParameterValue("username"));
+			employeesearch.get();
 			planNumber = employeesearch.selectPlanFromResultset(resultset);
 
 			if (DB.getRecordSetCount(resultset) < 1) {
@@ -485,7 +486,7 @@ public class employeesearchtestcases_db {
 				employeeId = tempResultset.getString("ID");
 			}
 
-			employeesearch.get();
+			
 			employeesearch.searchByParticipantID(employeeId);
 			if (planExist)
 				if (!employeesearch.isSearchResultsDisplayed()) {
