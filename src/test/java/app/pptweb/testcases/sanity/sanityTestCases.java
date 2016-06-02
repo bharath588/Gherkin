@@ -1,4 +1,4 @@
-package app.pptweb.testcases.prodvalidations;
+package app.pptweb.testcases.sanity;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
