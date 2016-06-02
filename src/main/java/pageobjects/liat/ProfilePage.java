@@ -28,7 +28,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement lblProfile;
 	@FindBy(xpath = "//*[@id='content-container']//h1")
 	private WebElement hrdUserName;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	@FindBy(xpath = "//img[@class='site-logo']")
@@ -105,8 +105,8 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn))
+				 {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblProfile, true));
 		} else {
@@ -239,19 +239,19 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 					" Verify User 'Profile' Page is displayed",
 					"User 'Profile' Page is not displayed", true);
 		}
-		
+		String userName=this.hrdUserName.getText().replaceAll("\\s+", " ").trim();
 		isTextMatching = Web.VerifyText(Stock.GetParameterValue("lblUserName"),
-				this.hrdUserName.getText().replaceAll("\\s+", " ").trim(), true);
+				userName, true);
 
 		if (isTextMatching) {
 			Reporter.logEvent(Status.PASS,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is displayed", false);
+					"USer Name is displayed\nExpected:"+Stock.GetParameterValue("lblUserName")+"\nActual:"+userName, false);
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is not Same", false);
+					"USer Name is not Same\nExpected:"+Stock.GetParameterValue("lblUserName")+"\nActual:"+userName, false);
 		}
 
 		verifyWebElementDisplayed("PERSONAL CONTACT INFORMATION");

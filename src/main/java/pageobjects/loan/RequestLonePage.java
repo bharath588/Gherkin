@@ -35,7 +35,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement inputLonatypeMortgage;
 	@FindBy(id = "loanInitiation")
 	private WebElement btnContinue;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+    @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
@@ -115,8 +115,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestALoan));
 		} else {

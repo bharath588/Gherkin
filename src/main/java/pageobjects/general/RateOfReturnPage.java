@@ -48,7 +48,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	private WebElement startDate;
 	@FindBy(xpath = ".//*[@ng-model='rateOfReturnCtrl.endDate']")
 	private WebElement endDate;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
@@ -100,8 +100,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn));
 		} else {

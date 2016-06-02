@@ -68,7 +68,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		//boolean paramFlag = false;
 
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(true,true);
+		//((LandingPage) this.parent).dismissPopUps(true,true);
 		//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
 		//			System.out.println("inside");
 		//			((LandingPage) this.parent).dismissPopUps(true,true);

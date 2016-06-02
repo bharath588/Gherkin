@@ -131,20 +131,20 @@ public class prodvalidationtestcases {
 				login.verifyWebElementDisplayed("image participant Rollover options");
 				login.verifyWebElementDisplayed("image participant Browser Support");
 			}
-			login.verifyWebElementDisplayed("System Requirements and Security");
+			login.verifyWebElementDisplayed(/*"System Requirements and Security"*/"Requirements and Security");
 			login.verifyWebElementDisplayed("Privacy");
-			login.verifyWebElementDisplayed("Terms and Conditions");
-			login.verifyWebElementDisplayed("Business Continuity Plan");
-			login.verifyWebElementDisplayed("Market Timing and Excessive Trading Policies");
-			login.verifyWebElementDisplayed("Broker Check Notification");
-			login.verifyLinkIsNotBroken("System Requirements and Security");
+			login.verifyWebElementDisplayed(/*"Terms and Conditions"*/"Terms");
+			login.verifyWebElementDisplayed(/*"Business Continuity Plan"*/"Business Continuity");
+			login.verifyWebElementDisplayed(/*"Market Timing and Excessive Trading Policies"*/"Market Timing and Excessive Trading");
+			login.verifyWebElementDisplayed("BrokerCheck Notification");
+			login.verifyLinkIsNotBroken("Requirements and Security");
 			login.verifyLinkIsNotBroken("Privacy");
-			login.verifyLinkIsNotBroken("Terms and Conditions");
-			login.verifyLinkIsNotBroken("Business Continuity Plan");
-			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading Policies");
+			login.verifyLinkIsNotBroken("Terms");
+			login.verifyLinkIsNotBroken("Business Continuity");
+			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading");
 			boolean windowFound = false;
 			String parentWindow = Web.webdriver.getWindowHandle();
-			Web.clickOnElement(login, "Broker Check Notification");
+			Web.clickOnElement(login, "BrokerCheck Notification");
 			Set<String> handles = Web.webdriver.getWindowHandles();
 			for (String windowHandle : handles) {
 
@@ -305,7 +305,7 @@ public class prodvalidationtestcases {
 								false);
 			}
 
-			isContactNoMatching = login.isValidContactUsInfo(Stock
+			isContactNoMatching = login.isValidContactUsInfoPostLogin(Stock
 					.GetParameterValue("ExpectedContactNo_Post_login"));
 			if (isContactNoMatching) {
 				lib.Reporter.logEvent(Status.PASS,

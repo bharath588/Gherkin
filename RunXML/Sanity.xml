@@ -16,7 +16,7 @@
     
     <test name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
                 </methods>
@@ -26,7 +26,7 @@
     
  <test name="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
                 </methods>
@@ -35,7 +35,7 @@
     </test>
      <test name="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
                     <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
                 </methods>

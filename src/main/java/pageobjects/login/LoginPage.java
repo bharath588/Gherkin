@@ -24,44 +24,49 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	@FindBy(css="a[href*='register']") private WebElement btnRegister;
 	@FindBy(id="helpBlock") private WebElement weHelpBlock;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help?']]") private WebElement lnkForgotPassword;
-	@FindBy(xpath = ".//*[@id='customerSupport']/p")
+	@FindBy(xpath = ".//*[@id='customerSupport']//p[1]")
 	private WebElement hrdCustomerSupport;
 	@FindBy(linkText = "contact us")
 	private WebElement lnkContactus;
-	@FindBy(xpath = "//*[@id='labelModalReviewChanges']")
+	@FindBy(xpath = ".//*[@id='prelogin-contact-modal']//h1")
 	private WebElement txtContactus;
 	@FindBy(xpath = ".//div[@class='modal-content']/div[2]/.")
 	private WebElement txtContactusInfo;
-	@FindBy(xpath = ".//a[@rel='tel' and @class='phone not-link']")
-	private WebElement lnkContactNo;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
-	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[@id='prelogin-footer-phone']")
+	private WebElement lnkContactNoPreLogin;
+	@FindBy(xpath = ".//*[@id='customerSupport']//span")
+	private WebElement lnkContactNoPostLogin;
+	/*@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	private WebElement lblSponser;*/
 	@FindBy(xpath = ".//*[@class='banner-wrapper']/img")
 	private WebElement imgBanner;
 	@FindBy(xpath = ".//*[@class='copyright ng-binding']")
 	private WebElement txtCopyRightInfo;
-	@FindBy(linkText = "System Requirements and Security")
+	@FindBy(linkText = "Requirements and Security")
 	private WebElement lnkSystemRequirements;
 	@FindBy(linkText = "Privacy")
 	private WebElement lnkPrivacy;
-	@FindBy(linkText = "Terms and Conditions")
+	@FindBy(linkText = "Terms")
 	private WebElement lnkTermsandConditions;
-	@FindBy(linkText = "Business Continuity Plan")
+	@FindBy(linkText = "Business Continuity")
 	private WebElement lnkBusinessContinuityPlan;
-	@FindBy(linkText = "Market Timing and Excessive Trading Policies")
+	@FindBy(linkText = "Market Timing and Excessive Trading")
 	private WebElement lnkMarkeTiming;
-	@FindBy(linkText = "Broker Check Notification")
+	@FindBy(linkText = "BrokerCheck Notification")
 	private WebElement lnkBrokerCheckNotification;
-	@FindBy(xpath = ".//a[@ui-sref='participantSavingsrates']")
+	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Saving more can be')]]")
 	private WebElement imgSavings;
-	@FindBy(xpath = ".//a[@ui-sref='participantRolloveroptions']")
+	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Changing jobs?')]]")
 	private WebElement imgRollover;
-	@FindBy(xpath = ".//a[@ui-sref='participantBrowserSupport']")
+	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Having browser issues')]]")
 	private WebElement imgBrowserSupport;
-	@FindBy(xpath = ".//a[text()[normalize-space()='Dismiss']]")
+	@FindBy(xpath = ".//*[@id='prelogin-contact-modal-button'][contains(text(),'Dismiss')]")
 	private WebElement lnkDismiss;
 	@FindBy(xpath = ".//div[contains(@class,'inner-container')]//h2")
 	private WebElement txtInnerContainer;
+	@FindBy(xpath = "//img[@class='site-logo']")
+	private WebElement lblSponser;
+	
 	LoadableComponent<?> parent;
 	@SuppressWarnings("unused")
 	private String username;
@@ -197,23 +202,23 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			return this.txtCopyRightInfo;
 		}
 		if (fieldName.trim().equalsIgnoreCase(
-				"System Requirements and Security")) {
+				"Requirements and Security")) {
 			return this.lnkSystemRequirements;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Privacy")) {
 			return this.lnkPrivacy;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Terms and Conditions")) {
+		if (fieldName.trim().equalsIgnoreCase("Terms")) {
 			return this.lnkTermsandConditions;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Business Continuity Plan")) {
+		if (fieldName.trim().equalsIgnoreCase("Business Continuity")) {
 			return this.lnkBusinessContinuityPlan;
 		}
 		if (fieldName.trim().equalsIgnoreCase(
-				"Market Timing and Excessive Trading Policies")) {
+				"Market Timing and Excessive Trading")) {
 			return this.lnkMarkeTiming;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Broker Check Notification")) {
+		if (fieldName.trim().equalsIgnoreCase("BrokerCheck Notification")) {
 			return this.lnkBrokerCheckNotification;
 		}
 		if (fieldName.trim()
@@ -380,22 +385,56 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			}
 		} else {
 			if (!contactNo.isEmpty()) {
-				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNo
+				
+				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNoPreLogin
 						.getText().trim(), true);
 				if (isTextMatching) {
 					Reporter.logEvent(Status.PASS,
-							"Verify 'Contact No'  is displayed",
-							"Contact No is displayed", false);
+							"Verify 'Contact No'  is displayed on Pre Login Page",
+							"Contact No is displayed on Pre Login Page", false);
 
 				} else {
 					Reporter.logEvent(Status.FAIL,
-							"Verify 'Contact No' is displayed",
-							"'Contact No' is not Same. Expected/ " + contactNo
+							"Verify 'Contact No' is displayed on Pre Login Page",
+							"'Contact No' is not Same on Pre Login Page. Expected/ " + contactNo
 									+ "Actual/ "
-									+ this.lnkContactNo.getText().trim(), false);
+									+ this.lnkContactNoPreLogin.getText().trim(), false);
 				}
 			}
 		}
+
+		return isTextMatching;
+	}
+	/**
+	 * <pre>
+	 * Method to validate if customer care information is displayed or not.
+	 * Returns the customer care info if it is displayed
+	 * Returns empty string if customer care info block is displayed
+	 * </pre>
+	 * 
+	 * @return String - Displayed
+	 */
+	public boolean isValidContactUsInfoPostLogin(String contactNo) {
+		
+		boolean isTextMatching=false;
+			if (!contactNo.isEmpty()) {
+				
+				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNoPostLogin
+						.getText().trim(), true);
+				if (isTextMatching) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Contact No'  is displayed on Landing Page",
+							"Contact No is displayed on Landing Page", false);
+
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Contact No' is displayed on Landing Page",
+							"'Contact No' is not Same on Landing Page. Expected/ " + contactNo
+									+ "Actual/ "
+									+ this.lnkContactNoPostLogin.getText().trim(), false);
+				}
+			}
+		
 
 		return isTextMatching;
 	}
@@ -416,8 +455,8 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			logoName = "";
 		}
 		if (isElementPresent) {
-			isLogoPresent = Web.VerifyText(logoName, this.lblSponser
-					.getAttribute("alt").trim(), true);
+			isLogoPresent =true; /*Web.VerifyText(logoName, this.lblSponser
+					.getAttribute("alt").trim(), true);*/
 		}
 		return isLogoPresent;
 
@@ -433,7 +472,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	 * @return String - Displayed
 	 */
 	public boolean isSponsorBannerDisplayed() {
-		boolean isElementPresent = Web.isWebElementDisplayed(this.lblSponser);
+		boolean isElementPresent = Web.isWebElementDisplayed(this.imgBanner);
 		boolean isBannerPresent = false;
 
 		if (isElementPresent) {

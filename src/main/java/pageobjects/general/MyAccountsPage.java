@@ -34,7 +34,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 //	@FindBy(xpath=".//h1[text()='My Accounts']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//h1[text()='Account Overview']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//*[@class='plan']/*[starts-with(@id,'ga_')]") private List<WebElement> lstLnkPlanName;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//*[@id='account-overview-chart']") private WebElement imgGraph;
 	

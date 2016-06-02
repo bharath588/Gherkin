@@ -49,7 +49,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	@FindBy(id="atAGlanceBalance") private WebElement DailyBalance;     
     @FindBy(id="atAGlanceROR") private WebElement RateOfReturn;
     @FindBy(id="atAGlanceLastContribution") private WebElement LastContributionAmount;
-    @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+    @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
     @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	

@@ -29,7 +29,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	@FindBy(xpath = ".//*[@id='account-details-container']//div[@class='page-title']/h1")
 	private WebElement lblRequestAWithdrawal;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+    @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	 @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
@@ -98,8 +98,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web
 					.isWebElementDisplayed(this.lblRequestAWithdrawal));

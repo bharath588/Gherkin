@@ -54,7 +54,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h5") private WebElement txtIncomeType;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h3") private WebElement txtIncomeTypeValue;
 @FindBy(xpath=".//*[contains(text(),'Retirement age')]") private WebElement lblRetirementAge;
-@FindBy(xpath="//div[@id='contribution-rate-slider']//button[@class='sliderThumb']") private WebElement sliderContributionRate;
+@FindBy(xpath="//div[@id='contribution-rate-slider']") private WebElement sliderContributionRate;
 @FindBy(xpath="//div[@id='retirement-age-slider']//button[@class='sliderThumb']") private WebElement sliderRetirementAge;
 @FindBy(xpath="//div[@id='investment-mix-slider']//button[@class='sliderThumb']") private WebElement sliderInvestmentMix;
 //@FindBy(xpath="//div[@class='svg-wrap']") private WebElement myGoalPercent;
@@ -86,7 +86,7 @@ private LoadableComponent<?> parent;
 //@FindBy(xpath="//button[@class='view-details-trigger hidden-xs']/span[text()[normalize-space()='Close']]") private WebElement lnkCloseViewDetails;
 @FindBy(xpath="//button[@ng-click='viewDetailsClick()']/span[@class='ng-binding ng-scope' and text()[normalize-space()='Close']]") private WebElement lnkCloseViewDetails;
 @FindBy(xpath="//div[@id='doItForMeUnenrolled']//a[text()[normalize-space()='Enroll in managed accounts']]") private WebElement lnkEnrollInManagedAccounts;
-@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 @FindBy(linkText="Log out") private WebElement lnkLogout;
 @FindBy(xpath="//h1[text()='My Estimated Retirement Income']") private WebElement hdrEstimatedRetirementIncome;
 
