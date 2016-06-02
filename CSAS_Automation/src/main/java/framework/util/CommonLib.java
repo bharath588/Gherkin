@@ -1,13 +1,14 @@
 package framework.util;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class CommonLib {
-	
+
 	public static long startTime;
 	public static long finishTime;
 	public static long totalTime;
@@ -26,32 +27,59 @@ public class CommonLib {
 
 		return totalTimeTaken_Sec;
 	}
-	
 
 	/**
-	 * <pre>Compare data base date and web date</pre>
+	 * <pre>
+	 * Compare data base date and web date
+	 * </pre>
+	 * 
 	 * @param
-	 * @return	:boolean <br> is date equal</br>
-	 * @author	: Ranjan
-	 * @throws ParseException 
+	 * @return :boolean <br>
+	 *         is date equal</br>
+	 * @author : Ranjan
+	 * @throws ParseException
 	 */
-	public static boolean compareDB_Date_With_Web_Date(String dbDate,String webDate) throws ParseException{
-		Date date1 = new Date() ;
-		Date date2 = new Date() ;
-		boolean isSameDate = false ;
-		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+	public static boolean compareDB_Date_With_Web_Date(String dbDate,
+			String webDate) throws ParseException {
+		Date date1 = new Date();
+		Date date2 = new Date();
+		boolean isSameDate = false;
+		DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm",
+				Locale.ENGLISH);
 		SimpleDateFormat format2 = new SimpleDateFormat("dd-MMM-yyyy");
 		date1 = format1.parse(dbDate);
 		date2 = format2.parse(webDate);
-		
+
 		if (date1.compareTo(date2) == 0) {
-			isSameDate = true ;
-		}else if (date1.compareTo(date2) > 0) {
-			isSameDate = false ;
+			isSameDate = true;
+		} else if (date1.compareTo(date2) > 0) {
+			isSameDate = false;
 		} else if (date1.compareTo(date2) < 0) {
-			isSameDate = false ;
+			isSameDate = false;
 		}
 		return isSameDate;
+	}
+
+	/**
+	 * <pre>
+	 * Validate string contains money type value with $ currency symbol or not
+	 * </pre>
+	 * 
+	 * @return boolean:it will 
+	 */
+	public static boolean isAccountBalance_In_ProperFormat(String accountBal) {
+		boolean isAccBal = false;
+		Number number = null;
+		try {
+			number = NumberFormat.getCurrencyInstance(Locale.US).parse(
+					accountBal);
+			if (number != null) {
+				isAccBal = true;
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return isAccBal;
 	}
 
 }

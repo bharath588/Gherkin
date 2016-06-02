@@ -406,6 +406,54 @@ public class validate_participanthomepage {
 	}
 
 	/**
+	 * -------------------------------------------------------------------
+	 * <pre>
+	 *TESTCASE:	Validate_PPT_Home_Account_Balance
+	 *DESCRIPTION:	Validate PPT account balance on PPT home page  
+	 *RETURNS:	VOID	
+	 *REVISION HISTORY: 
+	 *--------------------------------------------------------------------
+	 *Author:Ranjan     Date : 25-05-16    
+	 *--------------------------------------------------------------------
+	 * </pre>
+	 * @param <br>CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void Validate_PPT_Home_Account_Balance(int itr,
+			Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
+			
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+
+			// Step3: Verify Account balance
+			participantHomeObj.verifyAccountBal_On_PPTHome();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	
+	/**
 	 * <pre>Method to cleanup all active session </pre>
 	 * 
 	 * @author rnjbdn

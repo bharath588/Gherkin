@@ -3,17 +3,21 @@ package pageobjects;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
+import framework.util.CommonLib;
 
 public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 
@@ -91,6 +95,10 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	@FindBy(css = "table#variableFunds th:nth-of-type(9)")
 	private WebElement VICurrentBalLabel;
 	// VI values..
+
+	@FindBy(xpath = "//a[contains(@id,'variableFund')]")
+	private List<WebElement> VIInvstOptValList;
+
 	@FindBy(css = "table#variableFunds tr:nth-of-type(1) td:nth-of-type(1)[class ^= 'data']>a")
 	private WebElement VIInvstOptVal;
 
@@ -109,6 +117,20 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	// Fixed Investment(FI)..
 	@FindBy(xpath = "//span[contains(text(),'Fixed Investments')]")
 	private WebElement FITitle;
+
+	// FI values..
+
+	@FindBy(xpath = "//a[contains(@id,'fixedFund')]")
+	private List<WebElement> FIInvstOptValList;
+
+	@FindBy(css = "table#fixedFunds tr:nth-of-type(1) td:nth-of-type(7)[class ^= 'data']")
+	private WebElement FIVestedBal;
+
+	@FindBy(css = "table#fixedFunds tr:nth-of-type(1) td:nth-of-type(8)[class ^= 'data']")
+	private WebElement FINonVestedBal;
+
+	@FindBy(css = "table#fixedFunds tr:nth-of-type(1) td:nth-of-type(9)[class ^= 'data']")
+	private WebElement FICurrentBal;
 
 	// Investment Total(IT)..
 	@FindBy(xpath = "//span[contains(text(),'Investment Totals')]")
@@ -159,7 +181,18 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 
 	@FindBy(css = "table#acctBalMntySummary th:nth-of-type(6)")
 	private WebElement MTTVestedBal;
-
+	
+	//Money Type Totals values..
+	
+	@FindBy(css = "table#acctBalMntySummary tbody>tr>td:nth-of-type(1)")
+	private List<WebElement> MTTMoneyTypeVal;
+	
+	@FindBy(css = "table#acctBalMntySummary tbody>tr:nth-of-type(1)>td:nth-of-type(2)")
+	private WebElement MTTCurBalVal;
+	
+	@FindBy(css = "table#acctBalMntySummary tbody>tr:nth-of-type(1)>td:nth-of-type(6)")
+	private WebElement MTTVestedcBalVal;
+	
 	LoadableComponent<?> parent;
 
 	public MoneyTypeBalance() {
@@ -350,48 +383,48 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 	 * @author rnjbdn
 	 * @throws Exception
 	 */
-	public void verify_VI_MoneyType_Link(String ppt_id,String ga_id)
+	public void verify_VI_MoneyType_Link(String ppt_id, String ga_id)
 			throws Exception {
 		if (Web.isWebElementDisplayed(VITitle, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify Variable Investment section.",
-					"Verify Variable Investment section is displayed.",
-					true);
+					"Verify Variable Investment section is displayed.", true);
 			money_Type_List = get_Money_Type(
-					Stock.getTestQuery("getMoneyType"), ppt_id,ga_id );
+					Stock.getTestQuery("getMoneyType"), ppt_id, ga_id);
 			if (money_Type_List.size() <= 0) {
 				throw new AssertionError(
 						"Variable Investment section does not contains any Money Type.");
 			}
-			String moneyType = VIMoneyTypeVal.getText().substring(0, VIMoneyTypeVal.getText().length() - 1 ) ;
+			String moneyType = VIMoneyTypeVal.getText().substring(0,
+					VIMoneyTypeVal.getText().length() - 1);
 			if (money_Type_List.contains(moneyType)) {
 				money_Type_Info_List = get_Money_Type_Info(
-						Stock.getTestQuery("getMoneyTypeInfo"), ppt_id, moneyType);
+						Stock.getTestQuery("getMoneyTypeInfo"), ppt_id,
+						moneyType);
 				Web.mouseHover(VIMoneyTypeVal);
-			//	String al = Web.webdriver.findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
+				// String al =
+				// Web.webdriver.findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
 				JavascriptExecutor js = (JavascriptExecutor) Web.webdriver;
-				//Object obj =js.executeScript("variableMTFunc(0)") ;
-				Object obj =js.executeScript("function variableMTFunc(index){overlib( variableMTArray[index],  HAUTO, VAUTO);}; variableMTFunc(0)") ;
-				//	Object val = js.executeScript("return nd();") ;
-			//	Object val = js.executeScript("return variableMTFunc('0');") ;
-			//	Object val = js.executeScript(return document.getWe) ;
+				// Object obj =js.executeScript("variableMTFunc(0)") ;
+				Object obj = js
+						.executeScript("function variableMTFunc(index){overlib( variableMTArray[index],  HAUTO, VAUTO);}; variableMTFunc(0)");
+				// Object val = js.executeScript("return nd();") ;
+				// Object val = js.executeScript("return variableMTFunc('0');")
+				// ;
+				// Object val = js.executeScript(return document.getWe) ;
 				System.out.println(obj.toString());
-//				String text = VIMoneyTypeVal.getAttribute("Money Type") ;
+				// String text = VIMoneyTypeVal.getAttribute("Money Type") ;
 				if (true) {
 					System.out.println("report");
-				} else {
-					System.out.println("repodfk");
 				}
 			} else {
 
 			}
 
-			
 		} else {
 			Reporter.logEvent(Status.PASS,
 					"Verify Variable Investment section.",
-					"Verify Variable Investment section is displayed.",
-					true);
+					"Verify Variable Investment section is displayed.", true);
 		}
 	}
 
@@ -441,5 +474,157 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 			}
 		}
 		return money_Type_Info_List;
+	}
+
+	/**
+	 * <pre>
+	 * Method to verify Variable Investment balance
+	 * </pre>
+	 */
+	public void verify_VariableInvestment_Balane(String pptid) {
+		if (Web.isWebElementDisplayed(VITitle)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify Variable Investment section.",
+					"Verify Variable Investment section is displayed.", true);
+			if (VIInvstOptValList.size() <= 0) {
+				throw new AssertionError(
+						"Did not display any Investment option for Variable Investment type");
+			} else {
+				if (CommonLib.isAccountBalance_In_ProperFormat(VIVestedBal
+						.getText())
+						&& CommonLib
+								.isAccountBalance_In_ProperFormat(VINonVestedBal
+										.getText())
+						&& CommonLib
+								.isAccountBalance_In_ProperFormat(VICurrentBal
+										.getText())) {
+					Reporter.logEvent(
+							Status.PASS,
+							"For participant : "+pptid+" verify Variable Investment balance for Investment option : "
+									+ VIInvstOptValList.get(0).getText(),
+							"For participant : "+pptid+" the Investment option or Asset model : "
+									+ VIInvstOptValList.get(0).getText()
+									+ " under Variable Investment is displaying \n vested balance: "
+									+ VIVestedBal.getText()
+									+ " \n Non vested balance: "
+									+ VINonVestedBal.getText() + " "
+									+ " \n Current Balance: "
+									+ VICurrentBal.getText()
+									+ " in proper format.", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"For participant : "+pptid+" verify Variable Investment balance for Investment option : "
+									+ VIInvstOptValList.get(0).getText(),
+							"For participant : "+pptid+" the Investment option or Asset model : "
+									+ VIInvstOptValList.get(0).getText()
+									+ " under Variable Investment is not displaying \n vested balance: "
+									+ VIVestedBal.getText()
+									+ " \n Non vested balance: "
+									+ VINonVestedBal.getText() + " "
+									+ " \n Current Balance: "
+									+ VICurrentBal.getText()
+									+ " in proper format.", true);
+				}
+			}
+		}
+	}
+
+	/**
+	 * <pre>
+	 * Method to verify Fixed Investment balance
+	 * </pre>
+	 */
+	public void verify_FixedInvestment_Balane(String pptid) {
+		if (Web.isWebElementDisplayed(FITitle)) {
+			Reporter.logEvent(Status.PASS, "Verify Fixed Investment section.",
+					"Verify Fixed Investment section is displayed.", true);
+			if (FIInvstOptValList.size() <= 0) {
+				throw new AssertionError(
+						"Did not display any Investment options for Fixed Investment type");
+			} else {
+				if (CommonLib.isAccountBalance_In_ProperFormat(FIVestedBal
+						.getText())
+						&& CommonLib
+								.isAccountBalance_In_ProperFormat(FINonVestedBal
+										.getText())
+						&& CommonLib
+								.isAccountBalance_In_ProperFormat(FICurrentBal
+										.getText())) {
+					Reporter.logEvent(
+							Status.PASS,
+							"For participant : "+pptid+" verify Fixed Investment balance for Investment option : "
+									+ FIInvstOptValList.get(0).getText(),
+							"For participant : "+pptid+" the Investment option or Asset model : "
+									+ FIInvstOptValList.get(0).getText()
+									+ " under Fixed Investment is displaying \n vested balance: "
+									+ FIVestedBal.getText()
+									+ " \n Non vested balance: "
+									+ FINonVestedBal.getText() + " "
+									+ " \n Current Balance: "
+									+ FICurrentBal.getText()
+									+ " in proper format.", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"For participant : "+pptid+" verify Fixed Investment balance for Investment option : "
+									+ FIInvstOptValList.get(0).getText(),
+							"For participant : "+pptid+" the Investment option or Asset model : "
+									+ FIInvstOptValList.get(0).getText()
+									+ " under Fixed Investment is displaying \n vested balance: "
+									+ FINonVestedBal.getText()
+									+ " \n Current Balance: "
+									+ FICurrentBal.getText()
+									+ " in proper format.", true);
+				}
+			}
+		}
+	}
+	
+
+	/**
+	 * <pre>
+	 * Method to verify Fixed Investment balance
+	 * </pre>
+	 */
+	public void verify_MoneyTypeTotalsBalance(String pptid) {
+		if (Web.isWebElementDisplayed(MoneyTypeTotalTitle)) {
+			Reporter.logEvent(Status.PASS, "Verify Money Type totals section.",
+					"Money Type Totals section is displayed.", true);
+			if (MTTMoneyTypeVal.size() <= 0) {
+				throw new AssertionError(
+						"Did not display any Money Type for Money Type Totals section.");
+			} else {
+				if (CommonLib.isAccountBalance_In_ProperFormat(MTTCurBalVal
+						.getText())
+						&& CommonLib
+								.isAccountBalance_In_ProperFormat(MTTVestedcBalVal
+										.getText())) {
+					Reporter.logEvent(
+							Status.PASS,
+							"For participant : "+pptid+" verify Money type totals for Money Type : "
+									+ MTTMoneyTypeVal.get(0).getText(),
+							"For participant : "+pptid+" Money Type : "
+									+ MTTMoneyTypeVal.get(0).getText()
+									+ " under Money Type Totals is displaying \n Current balance: "
+									+ MTTCurBalVal.getText()
+									+ " \n Vested Balance: "
+									+ MTTVestedcBalVal.getText()
+									+ " in proper format.", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"For participant : "+pptid+" verify Money type totals for Money Type : "
+									+ MTTMoneyTypeVal.get(0).getText(),
+							"For participant : "+pptid+" Money Type : "
+									+ MTTMoneyTypeVal.get(0).getText()
+									+ " under Money Type Totals is not displaying \n Current balance: "
+									+ MTTCurBalVal.getText()
+									+ " \n Vested Balance: "
+									+ MTTVestedcBalVal.getText()
+									+ " in proper format.", true);
+				}
+			}
+		}
 	}
 }

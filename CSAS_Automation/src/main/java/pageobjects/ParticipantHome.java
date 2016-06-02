@@ -4,20 +4,24 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -135,20 +139,23 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	// Required List implementaions..
 
-	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(2)>td")
-	private WebElement tbTotalVarBal;
+	@FindBy(css = "td[valign='top'] table.compactDataTable tr>td:nth-of-type(1)")
+	private List<WebElement> numberOFRowsInBalPopUp;
 
-	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(3)>td")
-	private WebElement tbTotalFixBal;
+	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(2)>td")
+	private List<WebElement> tbTotalVarBal;
+
+	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(2)>td")
+	private List<WebElement> tbTotalFixBal;
 
 	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(4)>td")
-	private WebElement tbTotalExcludingLoans;
+	private List<WebElement> tbTotalExcludingLoans;
 
 	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(5)>td")
-	private WebElement tbTotalLoanBal;
+	private List<WebElement> tbTotalLoanBal;
 
 	@FindBy(css = "td[valign='top'] table.compactDataTable tr:nth-of-type(6)>td")
-	private WebElement tbTotalIncludingLoan;
+	private List<WebElement> tbTotalIncludingLoan;
 
 	@FindBy(xpath = "//td[contains(text(),'Total Balance:')]")
 	private WebElement participantTotalBalLabel;
@@ -299,7 +306,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "table.compactDataTable tr:nth-of-type(2) input[type = 'radio'][checked = 'checked']")
 	private WebElement PPT_Indx_Radio_Btn;
-	
 
 	@FindBy(css = "table[id='table_messageHandlerMessage']")
 	private LoadableComponent<?> parent;
@@ -384,8 +390,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			// Web.webdriver.get(Stock.getConfigParam("AppURL"));
 			Web.webdriver.get(Stock.getConfigParam("AppURL" + "_"
 					+ Stock.getConfigParam("TEST_ENV")));
-		/*	System.out.println(Stock.getConfigParam("AppURL" + "_"
-					+ Stock.getConfigParam("TEST_ENV")));*/
+			/*
+			 * System.out.println(Stock.getConfigParam("AppURL" + "_" +
+			 * Stock.getConfigParam("TEST_ENV")));
+			 */
 			Reporter.logEvent(Status.INFO,
 					"Check if the CSAS Log in page open",
 					"CSAS log in page launhced successfully", true);
@@ -501,7 +509,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * <pre>
 	 * Method to get GA ID based on the registration status
@@ -516,7 +524,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		ResultSet resultset;
 		String plan_Num = null;
 		resultset = DB.executeQuery(Stock.getTestQuery("getGAID")[0],
-				Stock.getTestQuery("getGAID")[1],ppt_id);
+				Stock.getTestQuery("getGAID")[1], ppt_id);
 		if (resultset != null) {
 			while (resultset.next()) {
 				plan_Num = resultset.getString("gc_id");
@@ -584,7 +592,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		Web.clickOnElement(SubmitPPTIdBtn);
 
 		// ------------- Handle Multiple PPT Search Result -----
-		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link) && PlanNoOnPartList_Link.size() > 1) {
+		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link)
+				&& PlanNoOnPartList_Link.size() > 1) {
 			click_And_Verify_Plan_On_Search_Page(searchValue[1]);
 		}
 
@@ -1268,11 +1277,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			for (int i = 0; i <= PlanNoOnPartList_Link.size() - 1; i++) {
 				plan_No_Web = PlanNoOnPartList_Link.get(i).getText();
 				if (plan_No_Web.contains(plan_Number_DB))
-			//	if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)
-			//			&& partList_Tab
-			//					.findElement(
-			//							By.xpath("//tr[" + (i + 1) + "]/td[16]"))
-			//					.getText().equalsIgnoreCase("ACTIVE"))
+				// if (plan_Number_DB.equalsIgnoreCase(plan_No_Web)
+				// && partList_Tab
+				// .findElement(
+				// By.xpath("//tr[" + (i + 1) + "]/td[16]"))
+				// .getText().equalsIgnoreCase("ACTIVE"))
 				{
 
 					partList_Tab.findElement(
@@ -1616,17 +1625,107 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 		return plan_And_PPT_ID_From_DB;
 	}
-	
+
 	/**
-	 * <pre>Method to get the checked plan number</pre>
+	 * <pre>
+	 * Method to get the checked plan number
+	 * </pre>
 	 * 
 	 */
-	public String getCheckedPlanOnPPTHome(String plan_No_Chkd){
-		String ga_id = null ;
+	public String getCheckedPlanOnPPTHome(String plan_No_Chkd) {
+		String ga_id = null;
 		if (Web.isWebElementDisplayed(PPT_Indx_Radio_Btn, false)) {
 			WebElement plan_No = getWebElement(plan_No_Chkd.toUpperCase());
-			ga_id = plan_No.getText() ;	
+			ga_id = plan_No.getText();
 		}
-		return ga_id ;
+		return ga_id;
+	}
+
+	/**
+	 * <pre>
+	 * Method to validate Account balance on PPT home page
+	 * </pre>
+	 */
+	public void verifyAccountBal_On_PPTHome() {
+		String accountBal = null;
+		String accountBal_Col = null;
+		boolean isAccBalPopupDisplayedWithDtls = false;
+		ArrayList<String> accBalList = new ArrayList<String>();
+		if (Web.isWebElementDisplayed(tdParticipantBalance)) {
+			accountBal = lnkHoverablePlanBalance.getText();
+			CommonLib.isAccountBalance_In_ProperFormat(accountBal);
+			accountBal_Col = tdParticipantBalance.getCssValue("color");
+			if (CommonLib.isAccountBalance_In_ProperFormat(accountBal)) {
+				// && accountBal_Col.contains("hexCodeForGreen()")) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if Plan account balance displayed with proper format and with green color",
+						"Plan account balance displayed with proper format and with green color",
+						true);
+				Web.mouseHover(lnkHoverablePlanBalance);
+				if (Web.isWebElementDisplayed(lnkHoverablePlanBalanceAfterHover)) {
+					int colCount = tbTotalVarBal.size();
+					accBalList = new ArrayList<String>();
+					accBalList.add("Total Variable Balance");
+					accBalList.add("Total Fixed Balance");
+					accBalList.add("Total Excluding Loans");
+					accBalList.add("Total Loan Balance");
+					accBalList.add("Total Including Loans");
+					if (Web.isWebElementDisplayed(tbVestedBal)
+							&& Web.isWebElementDisplayed(tbNonVestedBal)
+							&& Web.isWebElementDisplayed(tbCurrentBal)) {
+						if (numberOFRowsInBalPopUp
+								.size() <= 0) {
+							throw new AssertionError("Plan balance popup didn't display with different Balance") ;
+						}
+						
+						for (int rowIndx = 1; rowIndx < numberOFRowsInBalPopUp
+								.size(); rowIndx++) {
+							
+							if (accBalList.get(rowIndx - 1).contains(
+									numberOFRowsInBalPopUp.get(rowIndx)
+											.getText().trim())) {
+								for (int colIndx = 2,tempIndx = 0; colIndx <= colCount; colIndx++) {
+									tempIndx = rowIndx +1 ;
+									String webElement = "td[valign='top'] table.compactDataTable tr:nth-of-type("+tempIndx+")>td:nth-of-type("+colIndx+")" ;
+									String balance = Web.webdriver.findElement(
+													By.cssSelector(webElement)).getText().trim();
+									if (CommonLib
+											.isAccountBalance_In_ProperFormat(balance))
+										isAccBalPopupDisplayedWithDtls = true;
+									else
+										isAccBalPopupDisplayedWithDtls = false;
+								}
+							}
+						}
+					}
+				}
+				if (isAccBalPopupDisplayedWithDtls) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Check On hover on Plan Account balance Link in Account balance Popup all the balance displayed in proper format.",
+							"On hover on Plan Account balance Link in Account balance Popup all the balance displayed in proper format.",
+							true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Check On hover on Plan Account balance Link in Account balance Popup all the balance displayed in proper format.",
+							"On hover on Plan Account balance Link in Account balance Popup all the balance displayed in proper format.",
+							true);
+				}
+
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check if Plan account balance displayed with proper format and with green color",
+						"Plan account balance didn't display with proper format and with green color",
+						true);
+			}
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check if Plan account balance display or not",
+					"Plan account balance displayed successfully", true);
+		}
 	}
 }

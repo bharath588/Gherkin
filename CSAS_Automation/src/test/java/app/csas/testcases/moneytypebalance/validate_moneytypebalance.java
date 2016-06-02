@@ -97,8 +97,8 @@ public class validate_moneytypebalance {
 	/**
 	 * -------------------------------------------------------------------
 	 * <pre>
-	 *TESTCASE:	Validate_Active_Allocation_Percentage
-	 *DESCRIPTION:	Validate Active allocation percentage on Money Type Balance page  
+	 *TESTCASE:	Validate_Variable_Investment_Money_Type_Link
+	 *DESCRIPTION:	Validate Money type link under VI sections  
 	 *RETURNS:	VOID	
 	 *REVISION HISTORY: 
 	 *--------------------------------------------------------------------
@@ -144,6 +144,163 @@ public class validate_moneytypebalance {
 			}
 		}
 	}	
+	
+
+	/**
+	 * -------------------------------------------------------------------
+	 * <pre>
+	 *TESTCASE:	Verify_Variable_Invstment_Balance
+	 *DESCRIPTION:	Validate Variable balance on Money Type Balance page  
+	 *RETURNS:	VOID	
+	 *REVISION HISTORY: 
+	 *--------------------------------------------------------------------
+	 *Author:Ranjan     Date : 27-02-16    
+	 *--------------------------------------------------------------------
+	 * </pre>
+	 * @param <br>CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void Verify_Variable_Invstment_Balance(int itr,
+			Map<String, String> testdata) {
+		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		String ga_id = null ;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+			String plan_No = participantHomeObj.getCheckedPlanOnPPTHome("Plan_No") ;
+			
+			// Step3: Verify Loan info page..
+			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
+			
+			//Step4:Verify Variable investment balance..
+			moneyTypeBal_Obj.verify_VariableInvestment_Balane(Stock.GetParameterValue("ppt_id")) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * -------------------------------------------------------------------
+	 * <pre>
+	 *TESTCASE:	Verify_Fixed_Invstment_Balance
+	 *DESCRIPTION:	Validate Fixed balance on Money Type Balance page  
+	 *RETURNS:	VOID	
+	 *REVISION HISTORY: 
+	 *--------------------------------------------------------------------
+	 *Author:Ranjan     Date : 27-02-16    
+	 *--------------------------------------------------------------------
+	 * </pre>
+	 * @param <br>CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void Verify_Fixed_Invstment_Balance(int itr,
+			Map<String, String> testdata) {
+		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		String ga_id = null ;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+			
+			// Step3: Verify Loan info page..
+			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
+			
+			//Step4:Verify Fixed investment balance..
+			moneyTypeBal_Obj.verify_FixedInvestment_Balane(Stock.GetParameterValue("ppt_id")) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+
+	/**
+	 * -------------------------------------------------------------------
+	 * <pre>
+	 *TESTCASE:	Verify_Money_Type_Totals
+	 *DESCRIPTION:	Validate Money Type total balances on Money Type Balance page  
+	 *RETURNS:	VOID	
+	 *REVISION HISTORY: 
+	 *--------------------------------------------------------------------
+	 *Author:Ranjan     Date : 27-02-16    
+	 *--------------------------------------------------------------------
+	 * </pre>
+	 * @param <br>CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void Verify_Money_Type_Totals(int itr,
+			Map<String, String> testdata) {
+		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		String ga_id = null ;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Step1:Launch and logged into CSAS application..
+			participantHomeObj = new ParticipantHome().get();
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
+			// Step2:Search with PPT ID..
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+			
+			// Step3: Verify Loan info page..
+			moneyTypeBal_Obj = new MoneyTypeBalance().get() ;
+			
+			//Step4:Verify Fixed investment balance..
+			moneyTypeBal_Obj.verify_MoneyTypeTotalsBalance(Stock.GetParameterValue("ppt_id")) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	 * <pre>Method to cleanup all active session </pre>
 	 * 

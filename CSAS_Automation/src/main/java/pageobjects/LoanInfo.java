@@ -13,6 +13,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.apache.bcel.generic.SWITCH;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -104,6 +105,16 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	@FindBy(css = "table#table_loanHistorySummary tr td:nth-of-type(12)")
 	private List<WebElement> Default_Indicator_List;
 
+	// Loan info Loan History
+	@FindBy(id = "table_paymentHistory")
+	private WebElement PaymentHistoryTab;
+
+	@FindBy(css = "table#table_paymentHistory tr>td:nth-of-type(12)")
+	private List<WebElement> PaymentStatus;
+
+	@FindBy(css = "table#table_paymentHistory tr>td:nth-of-type(10)")
+	private List<WebElement> PaymentEffectiveDate;
+
 	LoadableComponent<?> parent;
 
 	public LoanInfo() {
@@ -117,7 +128,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void load() {
-	//	this.parent = new ParticipantHome().get();
+		// this.parent = new ParticipantHome().get();
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuLoanInfo, true)) {
 			Web.clickOnElement(MenuLoanInfo);
@@ -130,7 +141,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 						"Check if Loan info page displayed or not",
 						"Loan info page didn't disply successfully", true);
 			}
-			
+
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
@@ -139,7 +150,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 					true);
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Method to return WebElement object corresponding to specified field name
@@ -153,7 +164,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	 * @param fieldName
 	 * @return
 	 */
-	
+
 	private List<WebElement> getWebElement(String fieldName) {
 
 		if (fieldName.trim().equalsIgnoreCase("Total Outstanding Bal")) {
@@ -225,7 +236,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 				loanInfo_List.add(resultset.getString("IND_ID"));
 				loanInfo_List.add(resultset.getString("GA_ID"));
 				loanInfo_List.add(resultset.getString(expecteddata_loaninfo));
-				
+
 			}
 		}
 		return loanInfo_List;
@@ -238,12 +249,13 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	 * 
 	 * @return pptID
 	 * @author rnjbdn
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public void verify_Loan_Status_Details(String webelement,String loanStsVal_From_DB,
-			String loanSts_var) throws ParseException {
+	public void verify_Loan_Status_Details(String webelement,
+			String loanStsVal_From_DB, String loanSts_var)
+			throws ParseException {
 		boolean isLoanStatusEleDisplayed = false;
-		boolean isLoanStsEqual = false ;
+		boolean isLoanStsEqual = false;
 		String loanSts_Val_On_Web;
 		List<WebElement> loanStsWE = getWebElement(webelement.toUpperCase());
 		if (Web.isWebElementDisplayed(LoanStatus_Tab, true)) {
@@ -254,23 +266,23 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 				throw new AssertionError("Non of the loan is in active state");
 			}
 			for (int i = 0; i < Loan_Status_List.size(); i++) {
-				isLoanStatusEleDisplayed = Web
-						.isWebElementDisplayed(loanStsWE
-								.get(i));
-				
+				isLoanStatusEleDisplayed = Web.isWebElementDisplayed(loanStsWE
+						.get(i));
+
 				if (isLoanStatusEleDisplayed) {
-					loanSts_Val_On_Web = loanStsWE.get(i)
-							.getText();
+					loanSts_Val_On_Web = loanStsWE.get(i).getText();
 					switch (loanSts_var) {
 					case "LOAN_AMT":
-						//if (loanSts_Val_On_Web.contains(loanStsVal_From_DB)) {
-						Number number = null ;
-						number = NumberFormat.getCurrencyInstance(Locale.US).parse(loanSts_Val_On_Web) ;
+						// if (loanSts_Val_On_Web.contains(loanStsVal_From_DB))
+						// {
+						Number number = null;
+						number = NumberFormat.getCurrencyInstance(Locale.US)
+								.parse(loanSts_Val_On_Web);
 						if (number != null) {
-							isLoanStsEqual = true ;
+							isLoanStsEqual = true;
 						}
 						break;
-					case "REPAY_FREQ" :
+					case "REPAY_FREQ":
 						switch (loanStsVal_From_DB) {
 						case "W":
 							break;
@@ -278,33 +290,36 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 							break;
 						case "BW":
 							if (loanSts_Val_On_Web.contains("Bi Weekly")) {
-								isLoanStsEqual = true ;
+								isLoanStsEqual = true;
 							}
 							break;
 						case "SM":
 							break;
-						}						
-						break ;
+						}
+						break;
 					case "REPAY_MTHD_CODE":
-						if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, loanStsVal_From_DB)) {
-							isLoanStsEqual = true ;
+						if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web,
+								loanStsVal_From_DB)) {
+							isLoanStsEqual = true;
 						}
 						break;
 					case "DEFAULT_IND":
 						switch (loanStsVal_From_DB) {
 						case "Y":
-							if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, "YES")) {
-								isLoanStsEqual = true ;
+							if (StringUtils.containsIgnoreCase(
+									loanSts_Val_On_Web, "YES")) {
+								isLoanStsEqual = true;
 							}
 							break;
 						case "N":
-							if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web, "NO")) {
-								isLoanStsEqual = true ;
+							if (StringUtils.containsIgnoreCase(
+									loanSts_Val_On_Web, "NO")) {
+								isLoanStsEqual = true;
 							}
 							break;
 						}
 						break;
-					}					
+					}
 					if (isLoanStsEqual) {
 						Reporter.logEvent(
 								Status.PASS,
@@ -314,7 +329,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 										+ " displayed successfully for the Loan status \n\n"
 										+ loanSts_var + " :"
 										+ loanSts_Val_On_Web, false);
-					}else{
+					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Check if " + loanSts_var
@@ -324,20 +339,95 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 										+ loanSts_var + " :"
 										+ loanSts_Val_On_Web, false);
 					}
-				}else{
+				} else {
 					Reporter.logEvent(
 							Status.FAIL,
 							"Check if " + loanSts_var
 									+ " displayed properly for Loan status",
 							loanSts_var
-									+ " didn't displayed successfully for the Loan status \n\n"
-									, true);
+									+ " didn't displayed successfully for the Loan status \n\n",
+							true);
 				}
 			}
-		}else{
+		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Check if Loan Status table displayed or not",
 					"Loan Status table didn't displayed successfully", true);
+		}
+	}
+
+	/**
+	 * <pre>
+	 * Method to verify Loan Info LOan History
+	 * </pre>
+	 */
+	public void verify_LoanHistory_PAID_Or_UNPAID(String paymentSts) {
+		boolean isPSAsExpected = false;
+		if (Loan_Status_List.size() <= 0) {
+			throw new AssertionError("Non of the loan is in active state");
+		} else {
+			for (int i = 0; i < Loan_Status_List.size(); i++) {
+				if (Loan_Status_List.get(i).getText().contains("Active")
+						&& View_Payment_Hst_List.get(i).getText()
+								.equalsIgnoreCase("History")) {
+					Web.clickOnElement(View_Payment_Hst_List.get(i));
+					if (Web.isWebElementDisplayed(PaymentHistoryTab)) {
+						if (PaymentStatus.size() <= 0
+								&& PaymentEffectiveDate.size() <= 0)
+							throw new AssertionError(
+									"Didn't display any info in Payment History table.");
+						else {
+							for (int j = 0; j < PaymentStatus.size(); j++) {
+								switch (paymentSts) {
+								case "UNPAID":
+									if (PaymentStatus.get(j).getText()
+											.equalsIgnoreCase("UNPAID")
+											&& PaymentEffectiveDate.get(j)
+													.getText().contains("N/A"))
+										isPSAsExpected = true;
+									break;
+								case "PAID":
+									if (PaymentStatus.get(j).getText()
+											.equalsIgnoreCase("PAID")
+											&& PaymentEffectiveDate
+													.get(j)
+													.getText()
+													.matches(
+															"^\\d{2}-[a-zA-Z]{3}-\\d{4}$"))
+										isPSAsExpected = true;
+									break;
+								}
+							}
+						}
+					} else
+						Reporter.logEvent(
+								Status.FAIL,
+								"Check if Payment History tab displayed or not.",
+								"Payment History tab didn't displayed.", true);
+					break ;
+				}
+			}
+			if (isPSAsExpected) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if for the for the Payment status "
+								+ paymentSts
+								+ "  payment effective date type is N/A and date respectively",
+						"For the Payment status "
+								+ paymentSts
+								+ " , payment effective date type is N/A and date respectively.",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check for the Payment status "
+								+ paymentSts
+								+ "  payment effective date type is N/A and date respectively",
+						"For the Payment status "
+								+ paymentSts
+								+ " , payment effective date type is not N/A and date respectively.",
+						true);
+			}
 		}
 	}
 }
