@@ -36,12 +36,12 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 	//Declarations
 		private LoadableComponent<?> parent;
 		
-		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[contains(text(),'Payroll Calendar')]") private WebElement lblPayrollCalendar;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//table[@class='table']/thead/tr") private WebElement hdrPayrollTable;
 		@FindBy(xpath="//table[@class='table']/tbody/tr") private List<WebElement> lstPayrollTableData;
-		@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+		@FindBy(xpath = "//img[@class='site-logo']")
 		private WebElement lblSponser;
 		
 		/** Empty args constructor
@@ -85,7 +85,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			String userLogedIn = this.lblUserName.getText();
 			String sponser = this.lblSponser.getAttribute("Alt");
 			if (sponser.isEmpty()) {
-				sponser = Globals.GC_DEFAULT_SPONSER;
+				sponser = Common.GC_DEFAULT_SPONSER;
 			}
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 					&& Common.isCurrentSponser(sponser)) {

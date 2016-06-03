@@ -32,7 +32,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	//Declarations
 	private LoadableComponent<?> parent;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Statements and documents']") private WebElement lblStmtsAndDocs;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
@@ -53,7 +53,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	@FindBy(id="statementsByTxnDetailTable") private WebElement tblStmtsByTxnDetail;
 	@FindBy(xpath="//table[@id='statementsByTxnDetailTable']//tbody/tr[@id='statementsByTxnDetailColTitle']") private WebElement hdrStmtsByTxnDetailTable;
 	@FindBy(xpath="//table[@id='statementsByTxnDetailTable']//tbody/tr[@id='statementsByTxnDetailData']") private List<WebElement> lstStmtsByTxnDetailTableRows;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -97,7 +97,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Globals.GC_DEFAULT_SPONSER;
+			sponser = Common.GC_DEFAULT_SPONSER;
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 				&& Common.isCurrentSponser(sponser)) {

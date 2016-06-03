@@ -40,7 +40,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath=".//span[text()='Contingent']") private WebElement btnContingent;
 	@FindBy(xpath=".//span[text()='Primary']") private WebElement btnPrimary;
 	@FindBy(id="btn-cancel") private WebElement btnCancel;
-	@FindBy(id="btn-save") private WebElement btnSave;
+	//@FindBy(id="btn-save") private WebElement btnSave;
+	@FindBy(xpath="//button[text()='Save']") private WebElement btnSave;
 	@FindBy(xpath=".//*[@class='page-title']") private WebElement lblAddBeneficiaryTitle;
 	@FindBy(xpath=".//*[text()='Primary']") private WebElement btnPrimaryBenType;
 	@FindBy(xpath=".//*[text()='Contingent']") private WebElement btnContingentBenType;
@@ -88,9 +89,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
 	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement authCodeIErrorMsg;
 	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement deleteBeneficiaryErrorMsg;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -135,10 +137,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Globals.GC_DEFAULT_SPONSER;
+			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));
@@ -419,7 +420,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
+						System.out.println("+++++++++++++++++++++++++++++++++++++++");
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
+						System.out.println(address);
+						System.out.println(lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8]);
 						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ,true);
 					}
 				}
@@ -516,14 +520,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
 		DB.executeUpdate(sqlQuery[0], "commit");
 		
-	}
-	
-	public void updateMaritalStatus(String ssn) throws Exception{
-		String[] sqlQuery;
-		String[] sqlQuery_commit;
-		sqlQuery = Stock.getTestQuery("updateMaritalStatus");
-		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn);
-		DB.executeUpdate(sqlQuery[0], "commit");
 	}
 	
 	/**<pre> Method to read error/alert messages

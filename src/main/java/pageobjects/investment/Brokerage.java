@@ -32,7 +32,7 @@ import pageobjects.general.LeftNavigationBar;
 public class Brokerage extends LoadableComponent<Brokerage>{
 private LoadableComponent<?> parent;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Brokerage']") private WebElement lblBrokerage;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='default']") private WebElement tblBrokerage;
@@ -44,7 +44,7 @@ private LoadableComponent<?> parent;
 	@FindBy(xpath="//table[@class='default']/tbody/tr[@class='tableData']/td[4]/a") private WebElement lnkTransferFrom;
 	@FindBy(xpath="//table[@class='default']/tbody/tr[@class='tableData']/td[5]/img") private WebElement imgPdf;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	/** Empty args constructor
 	 * 
@@ -87,7 +87,7 @@ private LoadableComponent<?> parent;
 		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Globals.GC_DEFAULT_SPONSER;
+			sponser = Common.GC_DEFAULT_SPONSER;
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 				&& Common.isCurrentSponser(sponser)) {

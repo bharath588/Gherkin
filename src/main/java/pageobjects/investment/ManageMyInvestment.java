@@ -28,7 +28,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String fromInvestmentOption;
 	String toInvestmentOption;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()[normalize-space()='My Investments']]") private WebElement lblMyInvestments;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//button[text()[normalize-space()='Change My Investments']]") private WebElement btnChangeMyInvestment;
@@ -89,7 +90,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath="//table/tbody/tr[@class='tableSubtitle']") private WebElement hdrInvestmentOptionTblForDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td[2]") private List<WebElement> lstInvestmentOptionsDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td/input") private List<WebElement> lstChkInvestmentOptionDollarCost;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -111,7 +112,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
@@ -133,10 +134,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Globals.GC_DEFAULT_SPONSER;
+			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments,true));
 		} else {
@@ -237,8 +237,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				investmentFundName2=lstInvestmentFundName.get(1).getText().trim();
 				System.out.println(investmentFundName1);
 				System.out.println(investmentFundName2);
+				Web.setTextToTextBox(lsttxtPercentage.get(0),percent);
 				Web.setTextToTextBox(lsttxtPercentage.get(1),percent);
-				Web.setTextToTextBox(lsttxtPercentage.get(2),percent);
 				Reporter.logEvent(Status.INFO, "Enter Investment Percent","Entered investment percent : "+percent+" for "+investmentFundName1+"and"+investmentFundName2+"each",true);
 			}	
 			else
