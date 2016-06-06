@@ -32,7 +32,8 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	//Declarations
 	private LoadableComponent<?> parent;
 	
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	// @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Statements and documents']") private WebElement lblStmtsAndDocs;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
@@ -99,8 +100,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true));
 		} else {

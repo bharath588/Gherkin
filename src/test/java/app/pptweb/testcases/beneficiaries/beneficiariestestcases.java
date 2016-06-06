@@ -137,7 +137,7 @@ public class beneficiariestestcases {
 					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
 			}
 
-
+//			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("Participant ssn"));
 
 
 		}
@@ -934,7 +934,7 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			
-			if(lib.Web.isWebElementDisplayed(beneficiary, "Auth code I Error Msg",true))
+			if(lib.Web.isWebElementDisplayed(beneficiary, "Auth code I Error Msg"))
 				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);

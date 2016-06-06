@@ -37,7 +37,8 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	private LoadableComponent<?> parent;
 	String parentWindow;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Investment lineup']") private WebElement lblInvestmentlineup;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//a[text()[normalize-space()='Options']]") private WebElement tabOptions;
@@ -50,7 +51,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	@FindBy(xpath="//table[@id='fundOverviewWrapperTable']/tbody/tr/td[4]/a") private List<WebElement> lstlnkOnlineProspectus;
 	@FindBy(xpath="//table[@id='fundOverviewWrapperTable']/tbody/tr") private List<WebElement> lstFundOverviewTableRows;
 	@FindBy(xpath="//span[@class='legacyFundDocumentTitleLabel']") private WebElement lblFundDocTitle;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -96,8 +97,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		if (sponser.isEmpty()) {
 			sponser = Globals.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup,true));
 		} else {
@@ -140,7 +140,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 				Reporter.logEvent(Status.PASS, "Verify if Fund Overview Table HEADER is displayed", "Expected : INVESTMENT NAME ASSET CLASS INVESTMENT OVERVIEW ONLINE PROSPECTUS TICKER SYMBOL \n Actual : "+hdrFundOverviewTable.getText(),true);
 			
 			int noOfRows=lstFundOverviewTableRows.size();
-			for(int i=1;i<=noOfRows;i++){
+			for(int i=0;i<noOfRows;i++){
 				
 				if(lstOnlineProspectus.get(i).getText().contains("View")){
 					investmentName=lstInvestmentNames.get(i).getText();

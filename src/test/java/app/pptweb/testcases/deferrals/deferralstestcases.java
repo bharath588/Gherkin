@@ -1546,7 +1546,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			deferrals.Catch_up_Maximize_me_always();
-			
+			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1561,7 +1561,6 @@ public class deferralstestcases {
 
 		} finally {
 			Deferrals deferrals = new Deferrals();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			deferrals.clickAddEditButton("Catch Up Add");
 			deferrals.click_Select_Your_Contribution_Rate();
 			deferrals.select_ContributionType("Before");

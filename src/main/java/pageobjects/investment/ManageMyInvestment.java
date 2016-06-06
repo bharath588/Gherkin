@@ -29,7 +29,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String toInvestmentOption;
 	
 	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()[normalize-space()='My Investments']]") private WebElement lblMyInvestments;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//button[text()[normalize-space()='Change My Investments']]") private WebElement btnChangeMyInvestment;
@@ -70,7 +70,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(id="fundTransferToTableSelectId") private WebElement tblTransferFundTo;
 	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/thead/tr") private WebElement hdrTransferFundToTable;
-	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/tbody/tr/td[5]") private WebElement lnkTransferToInvestmentOption;
+	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/tbody/tr/td[5]") private List<WebElement> lstlnkTransferToInvestmentOption;
 	@FindBy(xpath="//input[contains(@id,'ToPercent')]") private List<WebElement> txtTransferToPercent;
 	@FindBy(xpath="//div[text()='View by Asset Class']") private WebElement tabViewByAssetClass;
 	@FindBy(xpath="//div[@id='fundingoptions']/a[text()='Asset Class']") private WebElement selAssetClass;
@@ -112,7 +112,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
@@ -120,8 +120,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 
 		
 		try {
@@ -284,17 +283,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		else
 			Reporter.logEvent(Status.FAIL, "verify Rebalancer Frequency", "Expected: Your chosen Rebalancer frequency is: "+frequency+"\n Actual: "+lblRebalancerFrequency.getText().trim()+" "+radioOnce.getText().trim(),true);
 		
-		if(Web.VerifyText("Your chosen Rebalancer setup date is: "+setupDate, lblSetupDate.getText().trim(), true))
+		if(Web.VerifyText("Your chosen Rebalancer setup date is: "+date, lblSetupDate.getText().trim(), true))
 			Reporter.logEvent(Status.PASS, "verify Rebalancer setup date", "Expected: Your chosen Rebalancer setup date is: "+date+"\n Actual: "+lblSetupDate.getText().trim(), false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify Rebalancer setup date", "Expected: Your chosen Rebalancer setup date is: "+date+"\n Actual: "+lblSetupDate.getText().trim(),true);
 		
-		if(lstInvestmentFunds.get(0).getText().contains(investmentFundName1) & lstInvestmentFunds.contains(percent))
-			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName1+"\n Investment percent: "+percent, false);
+		if(lstInvestmentFunds.get(0).getText().contains(investmentFundName1) & lstInvestmentFunds.get(0).getText().contains(percent))
+			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Expected Fund name: "+investmentFundName1+"\n Expected Investment percent: "+percent+"\n Actual Fund Name and Percent : "+lstInvestmentFunds.get(0).getText(), false);
 		else
-			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName1+"\n Investment percent: "+percent,true);
+			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Expected Fund name: "+investmentFundName1+"\n Expected Investment percent: "+percent+"\n Actual Fund Name and Percent : "+lstInvestmentFunds.get(0).getText(),true);
 		
-		if(lstInvestmentFunds.get(1).getText().contains(investmentFundName2) & lstInvestmentFunds.contains(percent))
+		if(lstInvestmentFunds.get(1).getText().contains(investmentFundName2) & lstInvestmentFunds.get(1).getText().contains(percent))
 			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent, false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent,true);
@@ -317,14 +316,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			
 		if(Web.isWebElementDisplayed(tblTransferFundTo)){
 			Reporter.logEvent(Status.INFO, "Verify 'Transfer Fund To' Table is displayed", "Table is displayed",true);
-			Web.setTextToTextBox(txtTransferToPercent.get(0), toPercent);
-			toInvestmentOption=lnkTransferToInvestmentOption.getText();
+			Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
+			toInvestmentOption=lstlnkTransferToInvestmentOption.get(1).getText();
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "Verify 'Transfer Fund To' Table is displayed", "Table is not displayed",true);
+		System.out.println(Web.isWebElementDisplayed(btnReviewTransfer, true));
+		Web.waitForElement(btnReviewTransfer);
 		btnReviewTransfer.click();
-		Web.waitForElement(btnPreValidationOK);
-		btnPreValidationOK.click();
+//		Web.waitForElement(btnPreValidationOK);
+//		btnPreValidationOK.click();
+		Reporter.logEvent(Status.INFO, "Verify Review Transfer button is clicked", "Review Transfer button is clicked",true);
 		Web.webdriver.switchTo().defaultContent();
 	}
 	

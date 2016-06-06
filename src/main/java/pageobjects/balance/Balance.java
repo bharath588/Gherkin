@@ -73,7 +73,7 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
@@ -83,8 +83,7 @@ public class Balance extends LoadableComponent<Balance> {
 				
 		}
 		else{
-		 strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		 strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
 
 		
 		try {
@@ -105,7 +104,7 @@ public class Balance extends LoadableComponent<Balance> {
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true));
 		} else {
 			this.lnkLogout.click();
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
 
