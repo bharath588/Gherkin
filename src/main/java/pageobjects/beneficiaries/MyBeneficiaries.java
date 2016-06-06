@@ -121,7 +121,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+				0, ssn.length() - 3));
 
 		
 		try {
@@ -333,7 +334,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if(beneficiaryName!=null){
 			if(beneficiaryType.equalsIgnoreCase("Primary")){
 					noOfBeneficiaries= this.lstlnkPrimaryBeneficiaryName.size();
-					for(int i=1; i<noOfBeneficiaries;i++){
+					for(int i=0; i<noOfBeneficiaries;i++){
 						if(lstlnkPrimaryBeneficiaryName.get(i).getText().contains(beneficiaryName)){
 							lstlnkPrimaryBeneficiaryName.get(i).click();
 							clickedBeneficiary=true;
@@ -540,7 +541,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public boolean ifElementDisabled(String elementName){
 		boolean isElementDisabled=false;
 		WebElement element = this.getWebElement(elementName);
-		Web.waitForElement(element);
+		
 		if(!element.isEnabled())
 			isElementDisabled=true;
 		return isElementDisabled;

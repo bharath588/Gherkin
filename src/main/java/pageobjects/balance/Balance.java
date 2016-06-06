@@ -28,8 +28,8 @@ public class Balance extends LoadableComponent<Balance> {
 	//Declarations
 	private LoadableComponent<?> parent;
 	
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Balance']") private WebElement lblBalance;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//li[contains(@class,'tab ng-scope')]//a[text()[normalize-space()='Balance']]") private WebElement tabBalance;
@@ -73,7 +73,7 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
@@ -83,7 +83,8 @@ public class Balance extends LoadableComponent<Balance> {
 				
 		}
 		else{
-		 strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		 strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+				0, ssn.length() - 3));
 
 		
 		try {
@@ -99,7 +100,7 @@ public class Balance extends LoadableComponent<Balance> {
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)&& Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true));
 		} else {

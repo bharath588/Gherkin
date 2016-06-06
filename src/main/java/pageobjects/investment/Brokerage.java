@@ -32,8 +32,7 @@ import pageobjects.general.LeftNavigationBar;
 public class Brokerage extends LoadableComponent<Brokerage>{
 private LoadableComponent<?> parent;
 	
-//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Brokerage']") private WebElement lblBrokerage;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='default']") private WebElement tblBrokerage;
@@ -90,7 +89,8 @@ private LoadableComponent<?> parent;
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
+				&& Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
 		} else {

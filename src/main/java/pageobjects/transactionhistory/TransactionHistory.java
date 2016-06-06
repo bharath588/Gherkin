@@ -30,9 +30,8 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	private LoadableComponent<?> parent;
 	private String confirmationNo;
 	
-	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	@FindBy(xpath="//h1[text()='Transaction history']") private WebElement lblTransactionHistory;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath="//h1[text()='Transaction History']") private WebElement lblTransactionHistory;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='tranHistFilterOptions']") private WebElement tblTransactionFilterOption;
 	@FindBy(id="tranHistSummaryTable") private WebElement tblTransactionHstSummary;
@@ -94,7 +93,8 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
+				&& Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory,true));
 		} else {
@@ -152,7 +152,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 //				Reporter.logEvent(Status.PASS, "verify Contribution details displayed", "Contribution details displayed",true);
 //			else
 //				Reporter.logEvent(Status.FAIL, "verify Contribution details displayed", "Contribution details not displayed",true);
-			for(int i=0;i<lstConfirmationNumber.size();i++){
+			for(int i=1;i<=lstConfirmationNumber.size();i++){
 				System.out.println(lstTransactionType.get(i).getText());
 				if(lstTransactionType.get(i).getText().equalsIgnoreCase("Additional Deposit")){
 					confirmationNo=lstConfirmationNumber.get(i).getText().trim();

@@ -36,8 +36,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 	//Declarations
 		private LoadableComponent<?> parent;
 		
-		 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[text()='Plan forms']") private WebElement lblPlanForms;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//table[@class='table ng-scope']") private WebElement tblPlanForms;
@@ -90,7 +89,8 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			if (sponser.isEmpty()) {
 				sponser = Common.GC_DEFAULT_SPONSER;
 			}
-			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
+					&& Common.isCurrentSponser(sponser)) {
 				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPlanForms,true));
 			} else {

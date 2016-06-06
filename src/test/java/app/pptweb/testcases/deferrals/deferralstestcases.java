@@ -802,7 +802,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			if (lib.Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution",true))
+					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
 			else
@@ -852,12 +852,6 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Deferrals deferrals = new Deferrals();
-			deferrals.clickAddEditButton("Standard Add");
-			deferrals.regular_maximize_me_always("No");
-			deferrals.select_ContributionType("Before");
-			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1342,8 +1336,14 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
-			
+
+			if (deferrals.getCatchupMaximized() == null) {
+				deferrals.clickAddEditButton("Catch Up Add");
+				deferrals.click_Maximize_IRS_Limit();
+				deferrals.select_ContributionType("Before");
+				deferrals.myContributions_Confirmation_Page();
+				lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			}
 			deferrals
 					.Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always();
 
@@ -1367,21 +1367,6 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Deferrals deferrals = new Deferrals();
-			if(deferrals.getCatchupMaximized().equalsIgnoreCase("Maximize Me Always") || deferrals.getCatchupMaximized().equalsIgnoreCase("Add Auto Increase")){
-				deferrals.clickAddEditButton("Standard Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.regular_maximize_me_always("No");
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-				
-				deferrals.clickAddEditButton("Catch Up Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			}
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1434,21 +1419,6 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Deferrals deferrals = new Deferrals();
-			if(deferrals.getCatchupMaximized().equalsIgnoreCase("Maximize Me Always") || deferrals.getCatchupMaximized().equalsIgnoreCase("Add Auto Increase")){
-				deferrals.clickAddEditButton("Standard Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.regular_maximize_me_always("No");
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-				
-				deferrals.clickAddEditButton("Catch Up Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			}
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1478,7 +1448,6 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
 			deferrals.Catch_up_Salary_changes_on_IRS_panel();
 
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
@@ -1501,21 +1470,6 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Deferrals deferrals = new Deferrals();
-			if(deferrals.getCatchupMaximized().equalsIgnoreCase("Maximize Me Always") || deferrals.getCatchupMaximized().equalsIgnoreCase("Add Auto Increase")){
-				deferrals.clickAddEditButton("Standard Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.regular_maximize_me_always("No");
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-				
-				deferrals.clickAddEditButton("Catch Up Add");
-				deferrals.click_Maximize_IRS_Limit();
-				deferrals.select_ContributionType("Before");
-				deferrals.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			}
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
@@ -1546,7 +1500,6 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			deferrals.Catch_up_Maximize_me_always();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1560,12 +1513,6 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Deferrals deferrals = new Deferrals();
-			deferrals.clickAddEditButton("Catch Up Add");
-			deferrals.click_Select_Your_Contribution_Rate();
-			deferrals.select_ContributionType("Before");
-			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
