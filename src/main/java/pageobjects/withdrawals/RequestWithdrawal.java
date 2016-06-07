@@ -194,10 +194,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * 
 	 */
 	public void selectWithdrawalType(String withdrawalType) {
-		String withDrawalType=inputWithdrawalType.replace("Withdrawal Type",
-				withdrawalType);
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
-				.xpath(withDrawalType));
+				.xpath(inputWithdrawalType.replace("Withdrawal Type",
+						withdrawalType)));
 		inptWithdrawalType.click();
 		try {
 			Thread.sleep(8000);

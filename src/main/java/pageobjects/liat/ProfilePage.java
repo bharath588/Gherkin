@@ -107,7 +107,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 					e.printStackTrace();
 				}
 			}
-		String userLogedIn = this.hrdUserName.getText().replaceAll("\\s+", " ").trim();
+		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;

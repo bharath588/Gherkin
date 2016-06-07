@@ -71,7 +71,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount));
-		/*String sponser = this.lblSponser.getAttribute("Alt");
+		String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
@@ -79,7 +79,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 		if (!Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(Web.isWebElementDisplayed(btnLogin,true));
 
-		} */
+		} 
 	}
 	
 	@Override

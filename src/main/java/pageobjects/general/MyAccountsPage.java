@@ -34,7 +34,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 //	@FindBy(xpath=".//h1[text()='My Accounts']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//h1[text()='Account Overview']") private WebElement hdrMyAccounts;
 	@FindBy(xpath=".//*[@class='plan']/*[starts-with(@id,'ga_')]") private List<WebElement> lstLnkPlanName;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//*[@id='account-overview-chart']") private WebElement imgGraph;
 	
@@ -60,27 +60,21 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
-		ResultSet strUserInfo = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
-		 else {
+		else{
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+				0, ssn.length() - 3));
 
-				try {
-					strUserInfo = Common.getParticipantInfoFromDataBase(ssn
-							.substring(0, 9));
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
-				try {
-					userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-							+ strUserInfo.getString("LAST_NAME");
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}	
+		
+		try {
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+					+ strUserInfo.getString("LAST_NAME");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 		
 		String userLogedIn = this.lblUserName.getText();
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
@@ -91,14 +85,14 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 		}
-	
+	}
 
 	@Override
 	protected void load() {
 		LandingPage land = (LandingPage) this.parent;
 		
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(false,false);
+		((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
 			Web.clickOnElement(land, "MY ACCOUNTS");
 		} catch (Exception e1) {

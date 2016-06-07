@@ -62,14 +62,14 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelpTxr));
-		/*String sponser = this.lblSponser.getAttribute("Alt");
+		String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
 		}
 		if (!Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(Web.isWebElementDisplayed(txtPassword,true));
-		} */
+		} 
 		
 	}
 

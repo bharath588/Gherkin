@@ -14,7 +14,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
@@ -45,7 +44,7 @@ public class authenticationtestcases {
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -105,7 +104,7 @@ public class authenticationtestcases {
 
 			//Get verification code from database
 			String verificationCode = "";
-			if(lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+			if(lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("Already_Have_Code")) {
 				verificationCode = twoStepVerification.getVerificationCode(true);
 			} else {
 				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
@@ -127,13 +126,12 @@ public class authenticationtestcases {
 				twoStepVerification.submitVerificationCode(verificationCode, true, false);
 
 				//Verify user is on landing page (Check label 'Retirement income' is displayed on the page)
-				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out");
+				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out") && Web.isWebElementDisplayed(landingPage, "Retirement income");
 				if (isDisplayed) {
 					Reporter.logEvent(Status.PASS, "Verify user is on landing page", "user is on landing page", true);
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify user is on landing page", "user is not on landing page", true);
 				}
-				landingPage.logout(true);
 			}
 
 		}catch(Exception e)
@@ -158,7 +156,7 @@ public class authenticationtestcases {
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -252,7 +250,7 @@ public class authenticationtestcases {
 		boolean isMatching;
 		boolean eleDisplayed;
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
 			LoginPage objLogin = new LoginPage();
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);

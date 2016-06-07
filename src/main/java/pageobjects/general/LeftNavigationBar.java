@@ -29,7 +29,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 
 	@FindBy(xpath=".//*[@role='navigation' and .//h3]") private WebElement weLeftNavSection;
 	private By lnkLeftNavItem;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 
 	/** Empty args constructor
@@ -68,7 +68,6 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		//boolean paramFlag = false;
 
 		this.parent.get();
-		//((LandingPage) this.parent).dismissPopUps(true,true);
 		//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
 		//			System.out.println("inside");
 		//			((LandingPage) this.parent).dismissPopUps(true,true);

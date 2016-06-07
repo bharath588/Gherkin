@@ -141,14 +141,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(id = "BEFORE") private WebElement bfrtaxRate;
 			@FindBy(id = "ROTH") private WebElement txtRothtaxRate;
-			@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+			@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 			@FindBy(linkText="Log out") private WebElement lnkLogout;
 			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement txtMyCatchupContr;
 			@FindBy(id = "contributionInput") private WebElement txtAnnualCompensation;
 			@FindBy(xpath = ".//span[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p") private WebElement lblAlertMsg;
-			@FindBy(xpath="//td[@class='col-sm-9']//div[contains(@class,'title ng-binding')]") private WebElement txtPriorContribution;
-
 		/**
 		 * Default Constructor
 		 */
@@ -298,10 +296,6 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("MyContribution Button")) {
 				return this.btnMyContributions;	
 			}
-			if (fieldName.trim().equalsIgnoreCase("TEXT PRIOR PLAN CONTRIBUTION")) {
-				return this.txtPriorContribution;
-			}
-			
 			
 			return null;
 			}		
@@ -1001,18 +995,6 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
 		
 			this.btnContinue.click();
-		}
-		
-		public String getCatchupMaximized(){
-
-            Web.waitForElement(btnAddOrEditCatchUp);
-
-            String status=txtMaximizeMeAlwaysCatchupBefore.getText();
-
-            System.out.println("Statuss : "+status);
-
-            return status;
-
 		}
 	}		
 	
