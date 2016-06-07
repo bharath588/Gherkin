@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners> 
-    <test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+  <test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
         <classes>
             <class name="app.psc.testcases.userverification.userverificationtestcases">
                 <methods>
