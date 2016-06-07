@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="SIT_PSC_Fund_Prospectus_Page Validation">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC005_PSC_Fund_Prospectus_Page_Validation"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

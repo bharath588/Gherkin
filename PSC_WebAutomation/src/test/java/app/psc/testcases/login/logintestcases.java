@@ -283,7 +283,7 @@ public class logintestcases {
 			login.checkHeaderLinkPreLogin();
 			Thread.sleep(1000);
 			login.checkFooterLinkPreLogin();			
-		} catch (Exception e) {
+ 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);

@@ -1,7 +1,14 @@
 package pageobjects.login;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+
+import lib.Reporter;
+import lib.Reporter.Status;
+import lib.Stock;
+import lib.Web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,7 +16,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
@@ -63,7 +69,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement logoEmpower;
 	@FindBy(xpath = ".//*[@id='loginSpinner']")
 	private WebElement loginSpinner;
+	@FindBy(xpath = ".//iframe[@id='fund_iframe']")
+	private WebElement fundIFrame;
+	@FindBy(xpath = ".//table[@id='alphabetTable']")
+	private WebElement tabAlphabet;
+	@FindBy(xpath = ".//div[@id='defaultErrorMessage']//span[contains(text(),'Invalid fund ID')]")
+	private WebElement invalidFundErr;
+	@FindBy(xpath = "html/body")
+	private WebElement fundProspectusText;
+	@FindBy(xpath = ".//a[starts-with(text(),'Prospectus')]")
+	private WebElement fundNav_Prospectus;
+	@FindBy(xpath = ".//a[starts-with(text(),'Annual Report')]")
+	private WebElement fundNav_AnnualReport;
+	@FindBy(xpath = ".//a[starts-with(text(),'Semi Annual Report')]")
+	private WebElement fundNav_SemiAnnualReport;
+	@FindBy(xpath = ".//a[starts-with(text(),'Statement of Additional Information')]")
+	private WebElement fundNav_SOAI;
+	@FindBy(xpath = ".//iframe[@id='documentContentFrame']")
+	private WebElement docContentIFrame;
+	@FindBy(xpath = ".//table[@class='fundProspectusTable']")
+	private WebElement fundTable;
+	
+	
 
+		
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
 
@@ -266,16 +295,32 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		String currentURL = "";
 		String testData;
 		int linkObjSize = linkObjList.size();
+		List<WebElement> fundsList = null;
+		WebElement fundLink = null;
+		String[] charList = null;
+		int fundLinkSize = 0;
+		String charItem;
 		try{
 			 //Looping through the list of Header/Footer links
-			for (int iLoopCnt = 0; iLoopCnt < linkObjSize - 1; iLoopCnt++) {
+			for (int iLoopCnt = 0; iLoopCnt <= linkObjSize - 1; iLoopCnt++) {
 				new LoginPage();
-				testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
+				
+				//try-catch : To handle scenario - where only a specific link needs to be tested as specified in  test data
+				try{					
+					testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
+				}catch(Error e){
+					continue;
+				}				
 				Thread.sleep(500);
-				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), true)) {
-					Web.clickOnElement((linkObjList.get(iLoopCnt).findElement(By.cssSelector("a"))));
+				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), true)) {					
+					if(linkObjList.get(iLoopCnt)
+							       .findElement(By.cssSelector("a"))
+							       .getAttribute("href")
+							       .contains(testData)){
+					  Web.clickOnElement((linkObjList.get(iLoopCnt).findElement(By.cssSelector("a"))));					  
+					}					
 				}
-
+				
 				if ((testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")) {
 					String winHandleBefore = Web.webdriver.getWindowHandle();
 					for (String winHandle : Web.webdriver.getWindowHandles()) {
@@ -288,8 +333,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					currentURL = Web.webdriver.getCurrentUrl();
 				}
 
-				// Verification against redirected URLs
-				
+				// Verification against redirected URLs				
 				if((Web.VerifyPartialText(testData, currentURL, false))){
 					Reporter.logEvent(Status.PASS,"Check if the respective page is loaded",
 							 "Verified that the respective page :" + testData + " is loaded successfully", false);
@@ -297,9 +341,82 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					Reporter.logEvent(Status.FAIL,"Check if the respective page is loaded",
 							"Respective page :" + testData + " is not loaded", true);
 				}
-				
+								
 				if (!(testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")
 						&& !(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
+					
+					//Handle sponsor fund prospectus footer link	
+					if(testData.equalsIgnoreCase("sponsor-fund-prospectus")){
+					   Web.isWebElementDisplayed(fundIFrame,true);
+				       Web.webdriver.switchTo().frame(fundIFrame);
+					   if(Web.isWebElementDisplayed(tabAlphabet,true)){ 
+						   if(Stock.GetParameterValue("fundProspectus_Characters").contains(",")){
+							   charList = Stock.GetParameterValue("fundProspectus_Characters").split(",");
+						   }else{
+							   charList = new String[1];
+							   charList[0] =  Stock.GetParameterValue("fundProspectus_Characters");
+						   }
+						   
+						   for(int iCharLoop=0;iCharLoop<=(charList.length)-1;iCharLoop++){
+							   charItem = charList[iCharLoop];							   
+							   String charLink = ".//th/a[@class='alphabetLetter ng-binding' and text() ='"+charItem+"']";
+							   
+							   Web.clickOnElement(Web.webdriver.findElement(By.xpath(charLink)));Thread.sleep(1000);
+							   Reporter.logEvent(Status.INFO,"Selecting characters to list Sponsor Funds",
+									   "Character '"+charItem+"' selected to list relevant funds",false);
+							   			
+							   fundsList = fundTable.findElements(By.xpath("thead//th[text()='"+charItem+"']/../../following-sibling::tbody/tr")); 							  
+							   fundLinkSize = fundsList.size();							   
+
+							   if(fundLinkSize == 0){
+								  Reporter.logEvent(Status.INFO,"Funds Propectus list unavailable",
+							              "Funds list not available for Character '"+charList[iCharLoop]+"'",true);
+								  break;
+							   }							   
+							   for(int iFundLoop=0;iFundLoop<=fundLinkSize-1;iFundLoop++){
+								   fundLink = fundsList.get(iFundLoop).findElement(By.xpath("td/div/a"));								   								   
+								   String linkText = fundLink.getText();								   								  
+								   fundLink.click();Thread.sleep(2000);
+								   
+								   String oldTab = Web.webdriver.getWindowHandle();
+								   ArrayList<String> newTab = new ArrayList<String>(Web.webdriver.getWindowHandles());
+								   Web.webdriver.switchTo().window(newTab.get(1));
+								   if(Web.isWebElementDisplayed(invalidFundErr,false) 	
+										   
+								   ||fundProspectusText.getText().length()<100){ //ignoring fund prospectus details less than 100 chars
+									  Web.webdriver.close();Web.webdriver.switchTo().window(oldTab);
+									  Web.webdriver.switchTo().frame(fundIFrame);
+									  continue;									   
+								   }else{													 										   
+									 if(Web.isWebElementDisplayed(fundNav_Prospectus,false)
+									    && Web.isWebElementDisplayed(fundNav_AnnualReport,false)
+									    && Web.isWebElementDisplayed(fundNav_SemiAnnualReport,false)
+									    && Web.isWebElementDisplayed(fundNav_SOAI,false)){
+										Web.webdriver.switchTo().frame(docContentIFrame);
+										if(fundProspectusText.getText().length()>200){//validating if the prospectus text contains more that 200 chars
+											Reporter.logEvent(Status.PASS,"Link "+linkText+" validate fund prospectus details",
+								    		          "Fund prospectus details validated successfully",false);
+										}else{
+											Reporter.logEvent(Status.FAIL,"Link "+linkText+" validate fund prospectus details",
+								    		          "Fund prospectus details validation failed",true);
+										}	
+										Web.webdriver.switchTo().defaultContent();
+									 }else{
+										 Reporter.logEvent(Status.FAIL,"Link "+linkText+" validate fund prospectus details",
+							    		          "Fund prospectus details validation failed",true);
+									 }
+									 Web.webdriver.close();Web.webdriver.switchTo().window(oldTab);
+									 Web.webdriver.switchTo().frame(fundIFrame);
+									 break;
+								  }
+							   }							   
+						   }												 
+					   }else{
+						   Reporter.logEvent(Status.FAIL,"Fund Prospectuses alphabet table not displayed",
+								             "alphabet table not loaded",true);
+					   }
+					   Web.webdriver.switchTo().defaultContent();
+					}					
 					Web.waitForElement(linkPSCBreadCrumHome);
 					linkPSCBreadCrumHome.click();
 				}
@@ -309,18 +426,5 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			 testDataColNm.split("link_")[1] +
 			 " links , Exception:"+e.getMessage());
 		}
-	}
-	
-	public void waitForSuccessfulLogin() throws InterruptedException
-	{
-		if(Web.isWebElementDisplayed(frmLogin))
-		{
-		Web.webdriver.switchTo().frame(frmLogin);
-		do
-		{
-		Thread.sleep(3000);	
-		}while(Web.isWebElementDisplayed(loginSpinner));
-		}
-		Web.webdriver.switchTo().defaultContent();
 	}
 }
