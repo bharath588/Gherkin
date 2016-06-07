@@ -79,20 +79,27 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				true));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
-		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {
-			userFromDatasheet = Stock.GetParameterValue("lblUserName");
-		} else {
-			ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn
-					.substring(0, ssn.length() - 3));
-
-			try {
-				userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-						+ strUserInfo.getString("LAST_NAME");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		ResultSet strUserInfo = null;
+		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+		{
+			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
+		 else {
 
+				try {
+					strUserInfo = Common.getParticipantInfoFromDataBase(ssn
+							.substring(0, 9));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				try {
+					userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+							+ strUserInfo.getString("LAST_NAME");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		String userLogedIn = this.lblUserName.getText();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
@@ -187,9 +194,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * 
 	 */
 	public void selectWithdrawalType(String withdrawalType) {
+		String withDrawalType=inputWithdrawalType.replace("Withdrawal Type",
+				withdrawalType);
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
-				.xpath(inputWithdrawalType.replace("Withdrawal Type",
-						withdrawalType)));
+				.xpath(withDrawalType));
 		inptWithdrawalType.click();
 		try {
 			Thread.sleep(8000);

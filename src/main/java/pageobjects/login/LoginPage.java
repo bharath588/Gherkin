@@ -152,11 +152,11 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		lib.Web.webdriver.manage().window().maximize();
 
 		// currently not beeing seen
-		/*
-		 * boolean isElementPresent =
-		 * Web.isWebElementDisplayed(btnDismiss,true); if (isElementPresent)
-		 * btnDismiss.click();
-		 */
+		
+		  boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss,true);
+		  if (isElementPresent)
+		  btnDismiss.click();
+		 
 
 	}
 
@@ -367,7 +367,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 							"Verify 'Contact Us' header is displayed",
 							"Contact Us Header is not displayed", true);
 				}
-				String Actual=this.txtContactusInfo.getText().trim().toString();
+				String Actual=txtContactusInfo.getText().toString().trim();
 				isTextMatching = Web
 						.VerifyText(
 								"Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015",

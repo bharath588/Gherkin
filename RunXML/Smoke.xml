@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test
+	<!--  <test
 		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -13,19 +13,8 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
-
-	<test
-		name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test
+	</test> 
+<test
 		name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -45,16 +34,16 @@
 			</class>
 		</classes>
 	</test>
-	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+	 <test
+		name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
+					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-
 	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -64,8 +53,20 @@
 			</class>
 		</classes>
 	</test>
+	
+	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
+				</methods>
+			</class>
+		</classes>
+	</test> -->
 
-	<test
+	
+
+<!--	 <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -74,7 +75,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test>-->
 	<test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
@@ -85,7 +86,7 @@
 			</class>
 		</classes>
 	</test>
-	<test
+	<!-- <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -94,8 +95,8 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
-	<test name="Balance_validations">
+	</test>   -->
+	<!-- <test name="Balance_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -196,5 +197,5 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test>  -->
 </suite>

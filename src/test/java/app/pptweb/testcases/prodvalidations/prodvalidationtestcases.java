@@ -173,7 +173,7 @@ public class prodvalidationtestcases {
 								true);
 			}
 
-			Web.webdriver.close();
+			//Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 
 		} catch (Exception e) {
@@ -316,7 +316,7 @@ public class prodvalidationtestcases {
 			} else {
 				lib.Reporter.logEvent(Status.FAIL,
 						"Check Contact Us Information on the Home Page",
-						"Contact Us Information is Same not on the Home Page",
+						"Contact Us Information is not Same on the Home Page",
 						false);
 			}
 
@@ -357,13 +357,14 @@ public class prodvalidationtestcases {
 			isDisplayed = profilePage.validateUserProfileInfo();
 			if (isDisplayed) {
 				Reporter.logEvent(Status.INFO,
-						"Verify User Profile Info is Displayed",
-						"User Profile Info is Displayed", false);
+						"Verify All Of the Fields in User Profile is Displayed",
+						" Info in User Profile Page is Displayed", false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify User Profile Info is Displayed",
-						"User Profile Info is not Proper", false);
+						"Verify All Of the Fields in User Profile is Displayed",
+						"Info User Profile page is not Proper", false);
 			}
+		Web.clickOnElement(profilePage, "HOME");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

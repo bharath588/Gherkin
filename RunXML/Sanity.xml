@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-   <test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+   <!-- <test name="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -14,7 +14,7 @@
         </classes>
     </test>
     
-    <test name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
+    <test name="SIT_xPPTWEB_Sanity_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -24,7 +24,7 @@
         </classes>
     </test>
     
- <test name="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
+ <test name="SIT_xPPTWEB_Sanity_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -33,7 +33,7 @@
             </class>
         </classes>
     </test>
-     <test name="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text">
+     <test name="SIT_xPPTWEB_Sanity_Login_03_04_TC02_Send Activation Code by Text">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -42,7 +42,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email">
+    <test name="SIT_xPPTWEB_Sanity_Login_03_04_TC04_Send Activation Code by Email">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -52,7 +52,7 @@
         </classes>
     </test>
     
-    <test name="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC004_To verify Retirement Income tab_Plan Savings">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -61,7 +61,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC005_To verify Retirement Income tab_Social security">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -70,7 +70,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC006_To verify Retirement Income tab_Other assets">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -79,7 +79,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC007_To verify Retirement Income tab_Income gap">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -88,7 +88,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC008_To verify Retirement Income tab_% of my goal section">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -97,7 +97,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs">
+    <test name="SIT_ParticipantWeb_Sanity_HV_TC009_To verify Health care costs">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -106,7 +106,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
+    <test name="SIT_ParticipantWeb_Sanity_HV_TC010_To verify How do I compare tab">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -115,7 +115,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC0011_To verify Retirement Income tab_Plan Savings">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -124,7 +124,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC0012_To verify Retirement Income tab_Plan Savings">
+    <test name="SIT_ParticipantWeb_Sanity_RIP_TC0012_To verify Retirement Income tab_Plan Savings">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -132,45 +132,45 @@
                 </methods>
             </class>
         </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
+    </test> -->
+    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity">
+    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC008_Unmarried with One beneficiary use address on record_Sanity">
+    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address"/>
                 </methods>
             </class>
         </classes>
     </test>
     
-    <test name="SIT_PPTWEB_Beneficiary_TC009_UnMarried One Individual beneficiary new address_Sanity">
+    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC009_UnMarried One Individual beneficiary new address">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address"/>
                 </methods>
             </class>
         </classes>
     </test>
-   <test name="SIT_PPTWEB_Beneficiary_TC012_UnMarried Multiple Individual beneficiary_Sanity">
+   <test name="SIT_PPTWEB_Sanity_Beneficiary_TC012_UnMarried Multiple Individual beneficiary">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -179,7 +179,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC011_UnMarried Multiple Entity beneficiary_Sanity">
+    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC011_UnMarried Multiple Entity beneficiary">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -189,7 +189,7 @@
         </classes>
     </test>
    
-     <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+     <test name="SIT_PPTWEB_Sanity_Deferral_001_After-tax_Select another contribution rate">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -198,7 +198,7 @@
             </class>
        	</classes>
      </test>  	
-     <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
+     <test name="SIT_PPTWEB_Sanity_Deferral_012_Regular_BEFORE-Select Another contribution rate">
      <classes>
          <class name="app.pptweb.testcases.sanity.sanityTestCases">
              <methods>
@@ -207,7 +207,7 @@
          </class>
      </classes>
      </test>
-     <test name="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
+     <test name="SIT_PPTWEB_Sanity_Deferral_016_Regular_SPLIT- Select Another contributiont rate">
      <classes>
          <class name="app.pptweb.testcases.sanity.sanityTestCases">
              <methods>

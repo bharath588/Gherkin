@@ -59,6 +59,8 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement txtUsername;
 	@FindBy(xpath = ".//div[contains(@class,'login-information')]//div[2]//div[1]")
 	private WebElement txtPassword;
+	@FindBy(linkText = "Home")
+	private WebElement lblHome;
 	
 
 	/**
@@ -84,23 +86,28 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.hrdUserName, true));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
+		ResultSet strUserInfo = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
-		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		 else {
 
-		
-		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-					+ strUserInfo.getString("LAST_NAME");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}
-		String userLogedIn = this.lblUserName.getText();
+				try {
+					strUserInfo = Common.getParticipantInfoFromDataBase(ssn
+							.substring(0, 9));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				try {
+					userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+							+ strUserInfo.getString("LAST_NAME");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		String userLogedIn = this.hrdUserName.getText().replaceAll("\\s+", " ").trim();
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
@@ -120,7 +127,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	protected void load() {
 		this.parent.get();
 
-		((LandingPage) this.parent).dismissPopUps(true, true);
+		((LandingPage) this.parent).dismissPopUps(false, false);
 		this.lblUserName.click();
 
 	}
@@ -144,6 +151,9 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 				|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
 			return this.lnkLogout;
+		}
+		if (fieldName.trim().equalsIgnoreCase("HOME")) {
+			return this.lblHome;
 		}
 
 		// Profile
@@ -246,12 +256,12 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		if (isTextMatching) {
 			Reporter.logEvent(Status.PASS,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is displayed\nExpected:"+Stock.GetParameterValue("lblUserName")+"\nActual:"+userName, false);
+					"USer Name is displayed\nExpected:"+Stock.GetParameterValue("lblUserName").trim()+"\nActual:"+userName, false);
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is not Same\nExpected:"+Stock.GetParameterValue("lblUserName")+"\nActual:"+userName, false);
+					"USer Name is not Same\nExpected:"+Stock.GetParameterValue("lblUserName").trim()+"\nActual:"+userName, false);
 		}
 
 		verifyWebElementDisplayed("PERSONAL CONTACT INFORMATION");

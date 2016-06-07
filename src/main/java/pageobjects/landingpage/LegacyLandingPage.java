@@ -30,13 +30,14 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 	/*private String username;
 	private String password;*/
 	
-	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(linkText="Logout") private WebElement lnkLogout;
 	@FindBy(id="home") private WebElement lnkHome;	
 	@FindBy(xpath=".//div[contains(@class,'categoryTile myaccount')]") private WebElement lnkMyAccounts;
 	
     @FindBy(xpath=".//div[contains(@class,'categoryTile investments')]") private WebElement lnkInvestments;
     @FindBy(id="name") private WebElement lblUserName;
-    @FindBy(xpath=".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img") private WebElement lblSponser;
+    @FindBy(xpath = "//img[@class='site-logo']")
+	private WebElement lblSponser;
     @FindBy(id = "fancybox-close")
 	private WebElement btnClose;
 	
@@ -63,31 +64,36 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
+		ResultSet strUserInfo=null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName").toString().trim();
 				
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+	
+		try {
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(
+					0,9));
+		} catch (SQLException e1) {
+						e1.printStackTrace();
+		}
 
 		
 		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-					+ strUserInfo.getString("LAST_NAME");
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		}
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
 		}
-				
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)&& Common.isCurrentSponser(sponser)){
+			*/	
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
 			
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			//Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
