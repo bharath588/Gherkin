@@ -1,6 +1,7 @@
 package appUtils;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import core.framework.Globals;
@@ -17,7 +18,7 @@ public class Common {
 	 */
 	 //For Sponsor
     public static final String GC_DEFAULT_SPONSER="Empower";
-	public static ResultSet getParticipantInfoFromDB(String ssn){
+	public static ResultSet getParticipantInfoFromDB(String ssn) {
 		
 		//query to get the no of plans
 		String[] sqlQuery = null;
@@ -26,7 +27,7 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		 
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
 		
 		if (DB.getRecordSetCount(participantInfo) > 0) {
@@ -129,7 +130,7 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 			}
 		} else {
 			try {
-				sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
+				sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDBISIS");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -148,7 +149,28 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 							false);
 				}
 			}
+			else {
+				try {
+					sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
+				participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+				if (DB.getRecordSetCount(participantID) > 0) {
+					try {
+						participantID.last();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						Reporter.logEvent(
+								Status.WARNING,
+								"Query Participant DB:" + sqlQuery[0],
+								"The Query did not return any results. Please check participant test data as the appropriate data base.",
+								false);
+					}
+				}
+			}
 		}
 		System.out.println("ID is "+participantID.getString("ID"));
 		return participantID.getString("ID");
