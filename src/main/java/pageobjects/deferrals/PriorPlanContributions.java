@@ -39,7 +39,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//input[contains(@ng-model,'regularPrevContribution')]") private WebElement inputYearToDateContribution;
 //	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr[1]/td") private WebElement lblCatchupContribution;
 	@FindBy(xpath="//input[contains(@ng-model,'catchupPrevContribution')]") private WebElement inputCatchupContribution;
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//div[contains(@class,'text-notation')]") private WebElement txtYearToDateContribution;
 	
 	@FindBy(linkText="Log out") private WebElement lnkLogout;

@@ -129,6 +129,7 @@ public class authenticationtestcases {
 				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out") && Web.isWebElementDisplayed(landingPage, "Retirement income");
 				if (isDisplayed) {
 					Reporter.logEvent(Status.PASS, "Verify user is on landing page", "user is on landing page", true);
+					Web.clickOnElement(landingPage, "LOGOUT");
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify user is on landing page", "user is not on landing page", true);
 				}
@@ -287,6 +288,7 @@ public class authenticationtestcases {
 			//------------------------------------------------------------------------------------------------------------------------
 			//step 6 - There is a link for "Already have a code?" and clicking it takes user to the activation code entry page
 			objAuth.selectCodeDeliveryOption("ALREADY_HAVE_CODE");
+			Thread.sleep(3000);
 			if (lib.Web.isWebElementDisplayed(objAuth, "VERIFICATION CODE")) {
 				Reporter.logEvent(Status.PASS, "Already Have a code", "User navigated to the Verification code page", true);
 			} else {

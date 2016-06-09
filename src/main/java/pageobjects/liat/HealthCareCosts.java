@@ -46,7 +46,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(xpath=".//*[text()[normalize-space()='Doctors & Tests']]/../td[3]") private WebElement lblDoctorAndTestsCost;
 	@FindBy(id="projected-health-care-costs-income-label") private WebElement lblProjectedHlthCareCost;
 	@FindBy(id="projected-health-care-costs-chart") private WebElement lblPieChart;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
 	

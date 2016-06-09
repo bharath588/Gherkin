@@ -20,6 +20,7 @@ import lib.Reporter.Status;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -36,7 +37,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 	//Declarations
 		private LoadableComponent<?> parent;
 		
-		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[text()='Plan forms']") private WebElement lblPlanForms;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//table[@class='table ng-scope']") private WebElement tblPlanForms;
@@ -90,7 +91,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 				sponser = Common.GC_DEFAULT_SPONSER;
 			}
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-					&& Common.isCurrentSponser(sponser)) {
+					) {
 				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPlanForms,true));
 			} else {
@@ -127,22 +128,30 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 
 		}
 		
-		public boolean verifyPlanFormIsOpened(){
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			boolean windowFound=false;
-			String parentWindow = Web.webdriver.getWindowHandle();
-			Set<String> handles =  Web.webdriver.getWindowHandles();
-			int noOfwindows=handles.size();
-			System.out.println(noOfwindows);
-			if(noOfwindows==2)
-				windowFound=true;
-			Web.webdriver.close(); //closing child window
-	       
-			return windowFound;   
+	public boolean verifyPlanFormIsOpened() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		boolean windowFound = false;
+		String parentWindow = Web.webdriver.getWindowHandle();
+		Set<String> handles = Web.webdriver.getWindowHandles();
+
+		for (String windowHandle : handles) {
+
+			if (!windowHandle.equals(parentWindow)) {
+				Web.webdriver.switchTo().window(windowHandle);
+
+				windowFound = true;
+				break;
+			}
+				}
+		// closing child window
+		Web.webdriver.close(); 
+		//Switching to main window
+		Web.webdriver.switchTo().window(parentWindow);
+		return windowFound;
+	}
 }

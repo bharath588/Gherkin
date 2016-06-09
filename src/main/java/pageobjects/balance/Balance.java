@@ -28,8 +28,8 @@ public class Balance extends LoadableComponent<Balance> {
 	//Declarations
 	private LoadableComponent<?> parent;
 	
-	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Balance']") private WebElement lblBalance;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//li[contains(@class,'tab ng-scope')]//a[text()[normalize-space()='Balance']]") private WebElement tabBalance;
@@ -100,7 +100,7 @@ public class Balance extends LoadableComponent<Balance> {
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true));
 		} else {

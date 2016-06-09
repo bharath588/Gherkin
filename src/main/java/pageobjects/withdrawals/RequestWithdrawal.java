@@ -38,7 +38,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inptMaxAmount;
 	@FindBy(xpath = ".//button[contains(text(),'Continue')]")
 	private WebElement btnContinue;
-	@FindBy(id = "inlineRadio1")
+	@FindBy(xpath= ".//label[./input[@id='inlineRadio1']]")
 	private WebElement inpYes;
 	@FindBy(id = "inlineRadio2")
 	private WebElement inpNo;
@@ -168,7 +168,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("SSN")) {
 			return this.inputSSN;
 		}
-		if (fieldName.trim().equalsIgnoreCase("CONFIRN AND CONTINUE")) {
+		if (fieldName.trim().equalsIgnoreCase("CONFIRM AND CONTINUE")) {
 			return this.btnConfirmContinue;
 		}
 		if (fieldName.trim().equalsIgnoreCase("WITHDRAWAL METHOD")) {
@@ -193,16 +193,24 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * @param withdrawalType
 	 * 
 	 */
-	public void selectWithdrawalType(String withdrawalType) {
+	public boolean selectWithdrawalType(String withdrawalType) {
+		boolean isSelected=false;
+		try {
+			
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
 				.xpath(inputWithdrawalType.replace("Withdrawal Type",
 						withdrawalType)));
+		if(Web.isWebElementDisplayed(inptWithdrawalType, true))
+		{
 		inptWithdrawalType.click();
-		try {
+		isSelected=true;
+		}
+			
 			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		return isSelected;
 	}
 
 	/**
@@ -257,6 +265,17 @@ return isTextDisplayed;
 		try {
 			Thread.sleep(8000);
 		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	public void enterSSN(String ssn) {
+		
+		try {
+			if(Web.isWebElementDisplayed(this.inputSSN, true))
+			{
+				Web.setTextToTextBox(inputSSN, ssn);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

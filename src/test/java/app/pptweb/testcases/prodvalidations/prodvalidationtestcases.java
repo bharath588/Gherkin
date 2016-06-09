@@ -137,14 +137,17 @@ public class prodvalidationtestcases {
 			login.verifyWebElementDisplayed(/*"Business Continuity Plan"*/"Business Continuity");
 			login.verifyWebElementDisplayed(/*"Market Timing and Excessive Trading Policies"*/"Market Timing and Excessive Trading");
 			login.verifyWebElementDisplayed("BrokerCheck Notification");
+			login.verifyWebElementDisplayed("FINRA Investor Education");
 			login.verifyLinkIsNotBroken("Requirements and Security");
 			login.verifyLinkIsNotBroken("Privacy");
 			login.verifyLinkIsNotBroken("Terms");
 			login.verifyLinkIsNotBroken("Business Continuity");
 			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading");
+			login.verifyLinkIsNotBroken("FINRA Investor Education");
 			boolean windowFound = false;
 			String parentWindow = Web.webdriver.getWindowHandle();
 			Web.clickOnElement(login, "BrokerCheck Notification");
+			Thread.sleep(4000);
 			Set<String> handles = Web.webdriver.getWindowHandles();
 			for (String windowHandle : handles) {
 
@@ -173,7 +176,7 @@ public class prodvalidationtestcases {
 								true);
 			}
 
-			//Web.webdriver.close();
+			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 
 		} catch (Exception e) {
@@ -423,6 +426,7 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify Graph is Displayed",
 						"Graph is NOT visible", true);
 			}
+			Web.clickOnElement(myAccountPage, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -708,7 +712,6 @@ public class prodvalidationtestcases {
 			RateOfReturnPage ROR = new RateOfReturnPage(lftNavBar);
 			ROR.get();
 			boolean isVerified = false;
-
 			isVerified = ROR.verifyDataInRateOfReturnPage();
 			if (isVerified) {
 				Reporter.logEvent(
@@ -792,6 +795,7 @@ public class prodvalidationtestcases {
 						"Verify INVESTMENTS Link is Displayed",
 						"INVESTMENTS Link is Not Displayed", false);
 			}
+			Web.clickOnElement(homePage, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -821,11 +825,10 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-
 			leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
-
 			balance.get();
+			Thread.sleep(5000);
 			balance.navigateToTab("Balance");
 			balance.verifyTableDisplayed("Balance by Money Table");
 			balance.verifytableHeaderNotEmpty("Balance by Money Table Header");
@@ -886,6 +889,7 @@ public class prodvalidationtestcases {
 			TransactionHistory transaction = new TransactionHistory(leftmenu);
 
 			transaction.get();
+			Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
 			transaction.clickConfirmationNumber();
@@ -945,6 +949,7 @@ public class prodvalidationtestcases {
 					leftmenu);
 
 			statements.get();
+			Thread.sleep(5000);
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Statements Summary Table");
 			statements
@@ -1001,6 +1006,7 @@ public class prodvalidationtestcases {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 
 			investment.get();
+			Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
@@ -1008,10 +1014,10 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"),
 					Stock.GetParameterValue("investment_percent"));
-			DateFormat dateFormat = new SimpleDateFormat("d-MMM-yyyy");
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar cal = Calendar.getInstance();
 			System.out.println(dateFormat.format(cal.getTime()));
-			String date = dateFormat.format(cal.getTime());
+			String date = dateFormat.format(cal.getTime()).toUpperCase();
 			investment.verifyRebalanceInvestmentDetails(
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"), date,
@@ -1053,8 +1059,8 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			PayrollCalendar payroll = new PayrollCalendar(leftmenu);
-
 			payroll.get();
+			Thread.sleep(5000);
 			payroll.verifyDataIsDiaplyed();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1092,10 +1098,9 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			InvestmentLineup investment = new InvestmentLineup(leftmenu);
-
 			investment.get();
+			Thread.sleep(5000);
 			investment.viewProspectus();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1131,9 +1136,8 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			Brokerage brokerage = new Brokerage(leftmenu);
-
 			brokerage.get();
-
+			Thread.sleep(5000);
 			if (Web.isWebElementDisplayed(brokerage, "Brokerage Table")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify brokerage table is displayed",
@@ -1150,6 +1154,7 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify brokerage table is displayed",
 						"Table is not displayed", true);
+			Web.clickOnElement(brokerage, "LOGOUT");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1186,8 +1191,8 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			PlanForms planforms = new PlanForms(leftmenu);
-
 			planforms.get();
+			Thread.sleep(5000);
 			planforms.clickOnForm(null);
 			if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
@@ -1228,11 +1233,10 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-
 			leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
-
 			investment.get();
+			Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment
 					.choseInvestmentOption("Change Current Balance Investment");
@@ -1281,8 +1285,8 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
-
 			investment.get();
+			Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Dollar Cost");
 			Web.clickOnElement(investment, "Continue button1");
@@ -1322,8 +1326,8 @@ public class prodvalidationtestcases {
 
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
-
 			beneficiary.get();
+			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.",
 					"Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Primary");
@@ -1419,11 +1423,10 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferral = new Deferrals(leftmenu);
-
 			deferral.get();
+			Thread.sleep(5000);
 			if (deferral.clickAddEditButton("Standard Edit"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
@@ -1432,7 +1435,7 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Standard contribution page",
 						"Standard Contributions page is not displayed", true);
-			deferral.click_MaximizeToCompanyMatch();
+			deferral.click_Select_Your_Contribution_Rate();
 			deferral.select_ContributionType("Before");
 			lib.Web.clickOnElement(deferral, "Continue button");
 			if (deferral.verifyMyContributions("6", "Before-tax", "Standard"))
@@ -1483,8 +1486,8 @@ public class prodvalidationtestcases {
 			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(lftNavBar);
 			requestWithdrawal.get();
+			Thread.sleep(5000);
 			boolean lblDisplayed = false;
-
 			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 					"Request A Withdrawal", true);
 			if (lblDisplayed) {
@@ -1496,9 +1499,22 @@ public class prodvalidationtestcases {
 						"Verify Request A Withdrawal Page is Displayed",
 						"Request A Withdrawal Page is NOT visible", true);
 			}
-			requestWithdrawal.selectWithdrawalType(Stock
+			Thread.sleep(6000);
+			lblDisplayed=	requestWithdrawal.selectWithdrawalType(Stock
 					.GetParameterValue("withdrawalType"));
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify WithDrawal Type is Selected",
+						" WithDrawal Type is Selected", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify  WithDrawal Type is Selected",
+						" WithDrawal Type is Not Selected", true);
+			}
+			requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
+			
 			lblDisplayed = Web.clickOnElement(requestWithdrawal, "MAX AMOUNT");
+			
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Max Amount CheckBox is Selected",
@@ -1508,9 +1524,9 @@ public class prodvalidationtestcases {
 						"Verify Max Amount CheckBox is Selected",
 						"Max Amount CheckBox is Not Selected", true);
 			}
-			requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
-			requestWithdrawal.isTextFieldDisplayed("Max Avail");
+			//requestWithdrawal.isTextFieldDisplayed("Max Avail");
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
+			Thread.sleep(8000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Plan withdrawal");
 
@@ -1527,8 +1543,9 @@ public class prodvalidationtestcases {
 			requestWithdrawal
 					.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
 			lblDisplayed = Web.clickOnElement(requestWithdrawal, "YES");
+			Thread.sleep(3000);
 			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+					.isTextFieldDisplayed("Please enter your Social Security number.");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Social Security number Field is Displayed.",
@@ -1538,9 +1555,10 @@ public class prodvalidationtestcases {
 						"Verify Social Security number Field is Displayed",
 						"Social Security number Field is Not Displayed", true);
 			}
-			Web.setTextToTextBox("SSN", requestWithdrawal,
-					Stock.GetParameterValue("SSN"));
+			
+		requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
 			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
+			Thread.sleep(8000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Withdrawal method");
 
@@ -1557,6 +1575,7 @@ public class prodvalidationtestcases {
 					.isTextFieldDisplayed("How would you like your withdrawal distributed?");
 			Web.selectDropDownOption(requestWithdrawal, "WITHDRAWAL METHOD",
 					Stock.GetParameterValue("withdrawalMethod"));
+			Thread.sleep(4000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Confirm your contact information");
 			if (lblDisplayed) {
@@ -1569,6 +1588,7 @@ public class prodvalidationtestcases {
 						"Contact Information is Not Displayed", true);
 			}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
+			Thread.sleep(5000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Delivery method");
 			if (lblDisplayed) {
@@ -1775,9 +1795,9 @@ public class prodvalidationtestcases {
 			//Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
 			//landingPage.dismissPopUps(true, true);
-			
+			Thread.sleep(4000);
 			//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
-			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+			if (Web.isWebElementDisplayed(landingPage, "LOGOUT")) {
 				Reporter.logEvent(Status.PASS, "Verify landing page is displayed", 
 						"Landing page is displayed", true);
 			} else {

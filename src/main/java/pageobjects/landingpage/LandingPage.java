@@ -29,8 +29,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	 * private String username; private String password;
 	 */
 
-	@FindBy(xpath = ".//*[@id='utility-nav']/ul/li[2]/a[@title='Log out']")
-	private WebElement lnkLogout;
+	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(id = "home")
 	private WebElement lnkHome;
 	@FindBy(linkText = "My Accounts")

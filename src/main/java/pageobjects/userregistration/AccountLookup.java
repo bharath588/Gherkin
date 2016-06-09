@@ -41,13 +41,13 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 //	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='noPin']/a") private WebElement btnContinueOnGroupAccPasswordTab;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Social Security Number')]") private WebElement lblSSNErrMsg;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and (contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Last Name')]") private WebElement lblLastNameErrMsg;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Date of Birth')]") private WebElement lblDOBErrMsg;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Street Address')]") private WebElement lblStrAddrErrMsg;
-	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'PIN')]") private WebElement lblPINErrMsg;
-	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'] | .//*[@class='form-group has-error']") private WebElement lblMainErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and contains(text(),'Social Security Number')]") private WebElement lblSSNErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and (contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and contains(text(),'Last Name')]") private WebElement lblLastNameErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and contains(text(),'date')]") private WebElement lblDOBErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and contains(text(),'Street Address')]") private WebElement lblStrAddrErrMsg;
+	@FindBy(xpath=".//span[@class='ng-binding' and contains(text(),'PIN')]") private WebElement lblPINErrMsg;
+	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'][1] | .//*[@class='form-group has-error'][1]") private WebElement lblMainErrMsg;
 	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
 	private WebElement lblSponser;
 	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
@@ -71,7 +71,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblAccLookupHeaderTextBlock));
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
@@ -79,7 +79,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (!Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(Web.isWebElementDisplayed(txtPassword,true));
 
-		} 
+		} */
 	}
 
 	@Override

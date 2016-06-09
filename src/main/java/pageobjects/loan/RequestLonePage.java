@@ -93,13 +93,19 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestALoan, true));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
+		ResultSet strUserInfo=null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		
+		try {
+			strUserInfo = Common.getParticipantInfoFromDataBase((ssn.substring(
+					0,9)));
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 
 		
 		try {

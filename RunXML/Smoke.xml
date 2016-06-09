@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<!--  <test
+	   <test
 		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -14,8 +14,7 @@
 			</class>
 		</classes>
 	</test> 
-<test
-		name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+<test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -25,7 +24,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email">
+	<test name="SIT_xPPTWEB_Login_ProdValidation_03_04_TC04_Send Activation Code by Email">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -43,7 +42,8 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> 
+	
 	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -53,7 +53,7 @@
 			</class>
 		</classes>
 	</test>
-	
+		
 	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -62,20 +62,8 @@
 				</methods>
 			</class>
 		</classes>
-	</test> -->
-
+	</test> 
 	
-
-<!--	 <test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Lone_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>-->
 	<test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
@@ -86,7 +74,7 @@
 			</class>
 		</classes>
 	</test>
-	<!-- <test
+	 <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -95,8 +83,28 @@
 				</methods>
 			</class>
 		</classes>
-	</test>   -->
-	<!-- <test name="Balance_validations">
+	</test>  
+	<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Legacy_Home_Page">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	 	 <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Lone_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Balance_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -178,6 +186,16 @@
 			</class>
 		</classes>
 	</test>
+	<test name="Brokerage_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Brokerage_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	<test name="Edit_MyContribution">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -189,13 +207,5 @@
 	</test>
 
 
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Legacy_Home_Page">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
-				</methods>
-			</class>
-		</classes>
-	</test>  -->
+	 
 </suite>

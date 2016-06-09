@@ -28,7 +28,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String fromInvestmentOption;
 	String toInvestmentOption;
 	
-	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()[normalize-space()='My Investments']]") private WebElement lblMyInvestments;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//button[text()[normalize-space()='Change My Investments']]") private WebElement btnChangeMyInvestment;
@@ -40,6 +41,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath="//input[@value='Continue']") private WebElement btnContinue2;
 	@FindBy(xpath="//input[@value='Cancel']") private WebElement btnCancel;
 	@FindBy(id="perdTrfFreq_once") private WebElement radioOnce;
+	@FindBy(id="frequency_M") private WebElement radioMonthlyDollarCost;
 	@FindBy(id="perdTrfFreq_quarterly") private WebElement radioQuarterly;
 	@FindBy(id="perdTrfFreq_semi_annually") private WebElement radioSemiAnnually;
 	@FindBy(id="perdTrfFreq_annually") private WebElement radioAnnually;
@@ -69,7 +71,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(id="fundTransferToTableSelectId") private WebElement tblTransferFundTo;
 	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/thead/tr") private WebElement hdrTransferFundToTable;
-	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/tbody/tr/td[5]") private WebElement lnkTransferToInvestmentOption;
+	@FindBy(xpath="//table[@id='fundTransferToTableSelectId']/tbody/tr/td[5]") private List<WebElement> lnkTransferToInvestmentOption;
 	@FindBy(xpath="//input[contains(@id,'ToPercent')]") private List<WebElement> txtTransferToPercent;
 	@FindBy(xpath="//div[text()='View by Asset Class']") private WebElement tabViewByAssetClass;
 	@FindBy(xpath="//div[@id='fundingoptions']/a[text()='Asset Class']") private WebElement selAssetClass;
@@ -89,6 +91,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath="//table/tbody/tr[@class='tableSubtitle']") private WebElement hdrInvestmentOptionTblForDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td[2]") private List<WebElement> lstInvestmentOptionsDollarCost;
 	@FindBy(xpath="//table/tbody/tr[contains(@class,'tableData')]/td/input") private List<WebElement> lstChkInvestmentOptionDollarCost;
+	@FindBy(xpath="//input[@name='totaledPercentage0']") private WebElement txtInvestmentPercentDollarCost;
+	@FindBy(xpath="//input[@name='DOLLARS']") private WebElement txtTransferAmtDollarCost;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
@@ -135,8 +139,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
 		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				&& Common.isCurrentSponser(sponser)) {
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments,true));
 		} else {
@@ -175,8 +178,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Once")) {
 			return this.radioOnce;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Monthly Dollar Cost")) {
+			return this.radioMonthlyDollarCost;
+		}
 		if (fieldName.trim().equalsIgnoreCase("Today")) {
 			return this.radiotoday;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Today Dollar Cost")) {
+			return this.radiotodayDollarCost;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Setup Today Dollar Cost")) {
 			return this.radiotodayDollarCost;
@@ -233,8 +242,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			int noOfRows=lstInvestmentOptions.size();
 			if(noOfRows>=2){
 				Reporter.logEvent(Status.PASS, "Verify Investment options are available","Investment options available ",false);
-				investmentFundName1=lstInvestmentFundName.get(0).getText().trim();
-				investmentFundName2=lstInvestmentFundName.get(1).getText().trim();
+				investmentFundName1=lstInvestmentFundName.get(1).getText().trim();
+				investmentFundName2=lstInvestmentFundName.get(2).getText().trim();
 				System.out.println(investmentFundName1);
 				System.out.println(investmentFundName2);
 				Web.setTextToTextBox(lsttxtPercentage.get(1),percent);
@@ -251,7 +260,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		btnContinue2.click();
 		Web.webdriver.switchTo().defaultContent();
 	}
-	public void dollarCostAverageFlow(String frequency,String setupDate,String percent){
+	public void dollarCostAverageFlow(String frequency,String setupDate,String percent,String amount){
 		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		WebElement freq = this.getWebElement(frequency);
@@ -269,11 +278,22 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.PASS, "verify Investment Options Table Header for Dollar Cost Average", "Expected: Investment Options Balance Effective Date /n Actual: "+hdrInvestmentOptionTblForDollarCost.getText().trim(), false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify Investment Options Table Header for Dollar Cost Average", "Expected: Investment Options Balance Effective Date /n Actual: "+hdrInvestmentOptionTblForDollarCost.getText().trim(), true);
-		lstChkInvestmentOptionDollarCost.get(1).click();
+		lstChkInvestmentOptionDollarCost.get(0).click();
 		
-		fromInvestmentOption=lstInvestmentOptionsDollarCost.get(1).getText();
+		fromInvestmentOption=lstInvestmentOptionsDollarCost.get(0).getText();
 		btnContinueToNextStep.click();
-		
+		Web.waitForElement(txtTransferAmtDollarCost);
+		Web.setTextToTextBox(txtTransferAmtDollarCost,amount);
+		Reporter.logEvent(Status.INFO, "verify if transfer amount is entered","Entered Transfer amount: "+amount,false);
+		btnContinueToNextStep.click();
+		Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
+		lstChkInvestmentOptionDollarCost.get(0).click();
+		toInvestmentOption=lstInvestmentOptionsDollarCost.get(0).getText();
+		btnContinueToNextStep.click();
+		if(lstInvestmentOptionsDollarCost.get(0).getText().contains(toInvestmentOption))
+			Reporter.logEvent(Status.PASS, "verify Investment Option displayed", "Expected: "+toInvestmentOption+"/n Actual: "+lstInvestmentOptionsDollarCost.get(0).getText(), false);
+		else
+			Reporter.logEvent(Status.FAIL, "verify Investment Options displayed", "Expected: "+toInvestmentOption+"/n Actual: "+lstInvestmentOptionsDollarCost.get(0).getText(), true);
 		
 	}
 	
@@ -284,20 +304,21 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		else
 			Reporter.logEvent(Status.FAIL, "verify Rebalancer Frequency", "Expected: Your chosen Rebalancer frequency is: "+frequency+"\n Actual: "+lblRebalancerFrequency.getText().trim()+" "+radioOnce.getText().trim(),true);
 		
-		if(Web.VerifyText("Your chosen Rebalancer setup date is: "+setupDate, lblSetupDate.getText().trim(), true))
+		if(Web.VerifyText("Your chosen Rebalancer setup date is: "+date, lblSetupDate.getText().trim(), true))
 			Reporter.logEvent(Status.PASS, "verify Rebalancer setup date", "Expected: Your chosen Rebalancer setup date is: "+date+"\n Actual: "+lblSetupDate.getText().trim(), false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify Rebalancer setup date", "Expected: Your chosen Rebalancer setup date is: "+date+"\n Actual: "+lblSetupDate.getText().trim(),true);
-		
-		if(lstInvestmentFunds.get(0).getText().contains(investmentFundName1) & lstInvestmentFunds.contains(percent))
-			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName1+"\n Investment percent: "+percent, false);
+		System.out.println(lstInvestmentFunds.get(0).getText());
+		System.out.println(percent);
+		if(lstInvestmentFunds.get(0).getText().contains(investmentFundName1) & lstInvestmentFunds.get(0).getText().contains(percent))
+			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Expected Fund name:  "+investmentFundName1+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(0).getText(), false);
 		else
-			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName1+"\n Investment percent: "+percent,true);
+			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Expected Fund name: "+investmentFundName1+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(0).getText(),true);
 		
-		if(lstInvestmentFunds.get(1).getText().contains(investmentFundName2) & lstInvestmentFunds.contains(percent))
-			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent, false);
+		if(lstInvestmentFunds.get(1).getText().contains(investmentFundName2) & lstInvestmentFunds.get(0).getText().contains(percent))
+			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(1).getText(), false);
 		else
-			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent,true);
+			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(1).getText(),true);
 		
 		Web.webdriver.switchTo().defaultContent();
 		
@@ -317,14 +338,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			
 		if(Web.isWebElementDisplayed(tblTransferFundTo)){
 			Reporter.logEvent(Status.INFO, "Verify 'Transfer Fund To' Table is displayed", "Table is displayed",true);
-			Web.setTextToTextBox(txtTransferToPercent.get(0), toPercent);
-			toInvestmentOption=lnkTransferToInvestmentOption.getText();
+			Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
+			toInvestmentOption=lnkTransferToInvestmentOption.get(1).getText();
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "Verify 'Transfer Fund To' Table is displayed", "Table is not displayed",true);
 		btnReviewTransfer.click();
-		Web.waitForElement(btnPreValidationOK);
-		btnPreValidationOK.click();
+//		Web.waitForElement(btnPreValidationOK);
+//		btnPreValidationOK.click();
 		Web.webdriver.switchTo().defaultContent();
 	}
 	

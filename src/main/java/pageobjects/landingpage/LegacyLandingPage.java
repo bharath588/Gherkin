@@ -81,8 +81,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 
 		
 		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-					+ strUserInfo.getString("LAST_NAME");
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

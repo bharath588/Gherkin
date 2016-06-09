@@ -141,7 +141,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(id = "BEFORE") private WebElement bfrtaxRate;
 			@FindBy(id = "ROTH") private WebElement txtRothtaxRate;
-			@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+			@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 			@FindBy(linkText="Log out") private WebElement lnkLogout;
 			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement txtMyCatchupContr;
 			@FindBy(id = "contributionInput") private WebElement txtAnnualCompensation;
@@ -996,6 +996,19 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 			this.btnContinue.click();
 		}
+		public String getCatchupMaximized(){
+
+            Web.waitForElement(btnAddOrEditCatchUp);
+
+            String status=txtMaximizeMeAlwaysCatchupBefore.getText();
+
+            System.out.println("Statuss : "+status);
+
+            return status;
+
+                }
+
+
 	}		
 	
 

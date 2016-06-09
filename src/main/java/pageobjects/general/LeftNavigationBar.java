@@ -21,18 +21,24 @@ import pageobjects.landingpage.LandingPage;
 
 public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 
-
-	//Declarations
+	// Declarations
 	LoadableComponent<?> parent;
 	private String strLinkText = "";
-	@FindBy(xpath=".//a[text()[normalize-space()='Prior plan contributions']]") private WebElement lnkPriorPlanContributions;
+	@FindBy(xpath = ".//a[text()[normalize-space()='Prior plan contributions']]")
+	private WebElement lnkPriorPlanContributions;
 
-	@FindBy(xpath=".//*[@role='navigation' and .//h3]") private WebElement weLeftNavSection;
+	@FindBy(xpath = ".//*[@role='navigation' and .//h3]")
+	private WebElement weLeftNavSection;
 	private By lnkLeftNavItem;
-	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
-	@FindBy(linkText="Log out") private WebElement lnkLogout;
+	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
+	private WebElement lblUserName;
+	@FindBy(xpath = "//img[@class='site-logo']")
+	private WebElement lblSponser;
+	@FindBy(linkText = "Log out")
+	private WebElement lnkLogout;
 
-	/** Empty args constructor
+	/**
+	 * Empty args constructor
 	 * 
 	 */
 	public LeftNavigationBar() {
@@ -40,7 +46,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
-	/** Constructor taking parent as input
+	/**
+	 * Constructor taking parent as input
 	 * 
 	 * @param parent
 	 */
@@ -48,7 +55,6 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
-
 
 	@Override
 	protected void isLoaded() throws Error {
@@ -59,70 +65,69 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			e.printStackTrace();
 		}
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection,true));
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true));
 
 	}
 
 	@Override
 	protected void load() {
-		//boolean paramFlag = false;
+		// boolean paramFlag = false;
 
 		this.parent.get();
-		//		if(new LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
-		//			System.out.println("inside");
-		//			((LandingPage) this.parent).dismissPopUps(true,true);
+		// if(new
+		// LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
+		// System.out.println("inside");
+		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//		}
-		//		else
-		//			((MyAccountsPage) this.parent).clickPlanNameByGAID();
+		// }
+		// else
+		// ((MyAccountsPage) this.parent).clickPlanNameByGAID();
 
+		// else{
+		// Set<String> paramNames = TestDataContainer.getParameterNames();
+		//
+		// for(String param: paramNames){
+		// if (param.equalsIgnoreCase("groupAccountID")) {
+		// paramFlag = true;
+		// }
+		// }
 
-
-		//		else{
-		//			Set<String> paramNames = TestDataContainer.getParameterNames();
-		//			
-		//			for(String param: paramNames){
-		//				if (param.equalsIgnoreCase("groupAccountID")) {
-		//					paramFlag = true;
-		//				}
-		//			}
-
-		//			if (paramFlag==true) {
-		//				((MyAccountsPage) this.parent).clickPlanNameByGAID(
-		//						Stock.GetParameterValue("groupAccountID"));
-		//			} else {
-		//				((MyAccountsPage) this.parent).clickPlanNameByGAID();
-		//				try {
-		//					Thread.sleep(5000);
-		//				} catch (InterruptedException e) {
-		//					// TODO Auto-generated catch block
-		//					e.printStackTrace();
-		//				}
+		// if (paramFlag==true) {
+		// ((MyAccountsPage) this.parent).clickPlanNameByGAID(
+		// Stock.GetParameterValue("groupAccountID"));
+		// } else {
+		// ((MyAccountsPage) this.parent).clickPlanNameByGAID();
+		// try {
+		// Thread.sleep(5000);
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 	}
-
-
 
 	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName) {
 
 		if (fieldName.trim().equalsIgnoreCase("Prior plan contributions")) {
 			return this.lnkPriorPlanContributions;
-		}			
+		}
 
 		return null;
 	}
 
-
-	/** Method to click on the specified link in Left navigation bar
+	/**
+	 * Method to click on the specified link in Left navigation bar
 	 * 
-	 * @param linkName - Link name as it is displayed on the page
-	 * @return boolean - <b>true</b> if link is successfully found and clicked. <b>false</b> otherwise.
+	 * @param linkName
+	 *            - Link name as it is displayed on the page
+	 * @return boolean - <b>true</b> if link is successfully found and clicked.
+	 *         <b>false</b> otherwise.
 	 */
 	public boolean clickNavigationLink(String linkName) {
 		boolean success = false;
@@ -137,27 +142,30 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "Loans & Withdrawals";
 		} else if (linkName.trim().equalsIgnoreCase("PLAN INFORMATION")) {
 			strLinkText = "Plan Information";
-		} else if (linkName.trim().equalsIgnoreCase("PRIOR PLAN CONTRIBUTIONS")){
+		} else if (linkName.trim().equalsIgnoreCase("PRIOR PLAN CONTRIBUTIONS")) {
 			strLinkText = "Prior plan contributions";
 		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
 			strLinkText = "Rate of return";
-		}else if (linkName.trim().equalsIgnoreCase("REQUEST A LONE")) {
-					strLinkText = "Request a loan";
-		}else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
+		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LONE")) {
+			strLinkText = "Request a loan";
+		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
-			 
+
 		} else {
 			strLinkText = linkName.trim();
 		}
 
 		lnkLeftNavItem = By.linkText(strLinkText);
-		List<WebElement> leftNavLink = weLeftNavSection.findElements(lnkLeftNavItem);
+		List<WebElement> leftNavLink = weLeftNavSection
+				.findElements(lnkLeftNavItem);
 
 		if (leftNavLink.size() > 0) {
 			leftNavLink.get(0).click();
 			success = true;
 		} else {
-			Reporter.logEvent(Status.WARNING, "Click the specified link on left navigation bar", "'" + linkName + "' not found", false);
+			Reporter.logEvent(Status.WARNING,
+					"Click the specified link on left navigation bar", "'"
+							+ linkName + "' not found", false);
 		}
 
 		return success;

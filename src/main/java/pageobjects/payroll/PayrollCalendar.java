@@ -36,7 +36,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 	//Declarations
 		private LoadableComponent<?> parent;
 		
-		 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
+		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[contains(text(),'Payroll Calendar')]") private WebElement lblPayrollCalendar;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//table[@class='table']/thead/tr") private WebElement hdrPayrollTable;
@@ -88,7 +88,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 				sponser = Common.GC_DEFAULT_SPONSER;
 			}
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-					&& Common.isCurrentSponser(sponser)) {
+					) {
 				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar,true));
 			} else {

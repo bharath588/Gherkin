@@ -51,7 +51,6 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DB Name is"+getParticipantDBName(ssn)+"DB");
 		sqlQuery[0] = getParticipantDBName(ssn)+"DB";
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				ssn);

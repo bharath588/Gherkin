@@ -52,8 +52,10 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	private WebElement lnkBusinessContinuityPlan;
 	@FindBy(linkText = "Market Timing and Excessive Trading")
 	private WebElement lnkMarkeTiming;
-	@FindBy(linkText = "BrokerCheck Notification")
+	@FindBy(xpath = "//a[./img[contains(@alt,'BrokerCheck')]]")
 	private WebElement lnkBrokerCheckNotification;
+	@FindBy(linkText = "FINRA Investor Education")
+	private WebElement lnkFINRAInvestorEducation;
 	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Saving more can be')]]")
 	private WebElement imgSavings;
 	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Changing jobs?')]]")
@@ -221,6 +223,9 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		if (fieldName.trim().equalsIgnoreCase("BrokerCheck Notification")) {
 			return this.lnkBrokerCheckNotification;
 		}
+		if (fieldName.trim().equalsIgnoreCase("FINRA INVESTOR EDUCATION")) {
+			return this.lnkFINRAInvestorEducation;
+		}
 		if (fieldName.trim()
 				.equalsIgnoreCase("IMAGE participant Savings rates")) {
 			return this.imgSavings;
@@ -375,7 +380,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 				if (isTextMatching) {
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Contact Us Info'  is displayed",
-							"Contact Us Info is displayed", false);
+							"Contact Us Info is displayed\n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"+Actual, false);
 
 				} else {
 					Reporter.logEvent(Status.FAIL,

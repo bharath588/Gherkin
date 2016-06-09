@@ -38,7 +38,8 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
 	@FindBy(xpath=".//*[@id='confirmPasswordInput']") private WebElement txtReEnterPassword;
 	@FindBy(xpath=".//*[@id='accountRecoveryContinue']") private WebElement btnContinueAccRecovery;
-	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
+	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
+	 @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	
 	/** Empty args constructor
@@ -62,14 +63,14 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelpTxr));
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
 		}
 		if (!Common.isCurrentSponser(sponser)) {
 			Assert.assertTrue(Web.isWebElementDisplayed(txtPassword,true));
-		} 
+		} */
 		
 	}
 

@@ -53,6 +53,8 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
+	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
+
 
 	/**
 	 * Default Constructor
@@ -115,6 +117,10 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 
 	@Override
 	protected void load() {
+		if (Web.isWebElementDisplayed(lnkDismiss)) {
+			this.lnkDismiss.click();
+		}
+		
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Rate Of Return");
@@ -158,8 +164,9 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	 * </pre>
 	 * 
 	 * @return String - Displayed
+	 * @throws InterruptedException 
 	 */
-	public boolean verifyDataInRateOfReturnPage() {
+	public boolean verifyDataInRateOfReturnPage() throws InterruptedException {
 		boolean isElementDisplayed = false;
 		boolean isTextMatching = false;
 
@@ -177,6 +184,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 					" Verify 'Rate Of Return' Page is displayed",
 					"User 'Rate Of Return' Page is not displayed", true);
 		}
+		Thread.sleep(5000);
 		isElementDisplayed = Web.isWebElementDisplayed(this.tableHeaderFrom,
 				true);
 
