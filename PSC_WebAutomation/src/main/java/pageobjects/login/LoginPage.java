@@ -89,10 +89,21 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement docContentIFrame;
 	@FindBy(xpath = ".//table[@class='fundProspectusTable']")
 	private WebElement fundTable;
-	
-	
+	@FindBy(xpath = ".//*[@id='printSaveContentPlaceHolder_ctl00_pdfImage']")
+	private WebElement pdfIcon;
+	@FindBy(xpath = ".//h3[contains(text(),'Fund Prospectuses')]")
+	private WebElement fundProsHeader;
 
-		
+	private static String nameFundPros = "fundprospectus";
+	
+	public String getNameFundPros() {
+		return nameFundPros;
+	}
+
+//	public static void setNameFundPros(String nameFundPros) {
+//		LoginPage.nameFundPros = nameFundPros;
+//	}
+
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
 
@@ -104,12 +115,23 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertEquals(Web.webdriver.getTitle(), "Empower Retirement - Plan Service Center");
+		if(Stock.GetParameterValue("link_Footer8").equalsIgnoreCase(getNameFundPros())
+		 ||System.getProperty("URL").contains(getNameFundPros())){
+			Assert.assertEquals(Web.webdriver.getTitle().trim(), "Available Fund Prospectuses");
+		}else{
+			Assert.assertEquals(Web.webdriver.getTitle(), "Empower Retirement - Plan Service Center");
+		}		
 	}
 
 	@Override
 	protected void load() {
-		Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));	
+				
+		if(System.getProperties().containsKey("URL") &&
+		  !System.getProperty("URL").isEmpty()){
+			Web.webdriver.get(System.getProperty("URL"));
+		}else{
+			Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
+		}			
 	}
 
 	/**
@@ -219,7 +241,14 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 * @throws Exception
 	 */
 	public void checkFooterLinkPreLogin() throws Exception {
-		checkHeaderFooterLink(weFooterLinkListPreLogin, "link_Footer");
+		if(Stock.GetParameterValue("link_Footer8").equalsIgnoreCase(getNameFundPros())){
+			List<WebElement> ele = new ArrayList<WebElement>(); 
+			ele.add(fundProsHeader); // Need a dummy element to handle checkHeaderFooterLink linkObjList param
+			checkHeaderFooterLink(ele, "link_Footer");
+		}else{
+			checkHeaderFooterLink(weFooterLinkListPreLogin, "link_Footer");
+		}
+		
 	}
 
 	/**
@@ -228,7 +257,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	public void checkHeaderLinkPreLogin() {
 		checkHeaderFooterLink(weHeaderLinkListPreLogin, "link_Header");
-		Web.webdriver.navigate().back();
+		Web.webdriver.navigate().back();		
 	}
 
 	/**
@@ -311,8 +340,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				}catch(Error e){
 					continue;
 				}				
-				Thread.sleep(500);
-				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), true)) {					
+				Thread.sleep(1000);
+				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), false)) {					
 					if(linkObjList.get(iLoopCnt)
 							       .findElement(By.cssSelector("a"))
 							       .getAttribute("href")
@@ -346,22 +375,25 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 						&& !(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
 					
 					//Handle sponsor fund prospectus footer link	
-					if(testData.equalsIgnoreCase("sponsor-fund-prospectus")){
+					if(testData.equalsIgnoreCase(getNameFundPros())){
 					   Web.isWebElementDisplayed(fundIFrame,true);
 				       Web.webdriver.switchTo().frame(fundIFrame);
 					   if(Web.isWebElementDisplayed(tabAlphabet,true)){ 
+						   // ======================== CHARS ===========================
 						   if(Stock.GetParameterValue("fundProspectus_Characters").contains(",")){
 							   charList = Stock.GetParameterValue("fundProspectus_Characters").split(",");
 						   }else{
 							   charList = new String[1];
-							   charList[0] =  Stock.GetParameterValue("fundProspectus_Characters");
+							   charList[0] = Stock.GetParameterValue("fundProspectus_Characters");
 						   }
 						   
 						   for(int iCharLoop=0;iCharLoop<=(charList.length)-1;iCharLoop++){
 							   charItem = charList[iCharLoop];							   
 							   String charLink = ".//th/a[@class='alphabetLetter ng-binding' and text() ='"+charItem+"']";
-							   
-							   Web.clickOnElement(Web.webdriver.findElement(By.xpath(charLink)));Thread.sleep(1000);
+							   WebElement ele = Web.webdriver.findElement(By.xpath(charLink));
+							   String linkText = ele.getText(); 
+							   							   
+							   Web.clickOnElement(ele);Thread.sleep(1000);
 							   Reporter.logEvent(Status.INFO,"Selecting characters to list Sponsor Funds",
 									   "Character '"+charItem+"' selected to list relevant funds",false);
 							   			
@@ -371,27 +403,54 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 							   if(fundLinkSize == 0){
 								  Reporter.logEvent(Status.INFO,"Funds Propectus list unavailable",
 							              "Funds list not available for Character '"+charList[iCharLoop]+"'",true);
-								  break;
+								  continue;
 							   }							   
 							   for(int iFundLoop=0;iFundLoop<=fundLinkSize-1;iFundLoop++){
 								   fundLink = fundsList.get(iFundLoop).findElement(By.xpath("td/div/a"));								   								   
-								   String linkText = fundLink.getText();								   								  
-								   fundLink.click();Thread.sleep(2000);
+								   String lnkText = fundLink.getText();								   								  
+								   fundLink.click();
+								   Thread.sleep(2000);
 								   
 								   String oldTab = Web.webdriver.getWindowHandle();
 								   ArrayList<String> newTab = new ArrayList<String>(Web.webdriver.getWindowHandles());
 								   Web.webdriver.switchTo().window(newTab.get(1));
-								   if(Web.isWebElementDisplayed(invalidFundErr,false) 	
-										   
+								   if(Web.isWebElementDisplayed(invalidFundErr,false) 											   
 								   ||fundProspectusText.getText().length()<100){ //ignoring fund prospectus details less than 100 chars
 									  Web.webdriver.close();Web.webdriver.switchTo().window(oldTab);
 									  Web.webdriver.switchTo().frame(fundIFrame);
 									  continue;									   
 								   }else{													 										   
-									 if(Web.isWebElementDisplayed(fundNav_Prospectus,false)
+									 if(
+											 
+										Web.isWebElementDisplayed(fundNav_Prospectus,false)
 									    && Web.isWebElementDisplayed(fundNav_AnnualReport,false)
 									    && Web.isWebElementDisplayed(fundNav_SemiAnnualReport,false)
 									    && Web.isWebElementDisplayed(fundNav_SOAI,false)){
+										
+										// PDF Validation
+										if(Web.isWebElementDisplayed(pdfIcon,false)){
+										   pdfIcon.click();
+										   try{
+											   String oldTab2 = Web.webdriver.getWindowHandle();
+											   ArrayList<String> newPDFTab = new ArrayList<String>(Web.webdriver.getWindowHandles());
+											   Web.webdriver.switchTo().window(newPDFTab.get(2));
+											   if(Web.webdriver.getCurrentUrl().contains("http://prospectus-express.newriver.com/PNet/getcombinedpdf")){
+												   Reporter.logEvent(Status.PASS,"PDF document validation",
+												   "PDF document opened successfully for link : "+linkText,false);
+												   Web.webdriver.close();
+												   Web.webdriver.switchTo().window(oldTab2);
+											   }else{
+												   Reporter.logEvent(Status.FAIL,"PDF document validation",
+												   "PDF document failed to open for link : "+linkText,true);
+											   }
+										   }catch(Exception e){
+											   Reporter.logEvent(Status.FAIL,"PDF document validation",
+										       "PDF document failed to open for link : "+linkText,true);
+										   }								
+										}else{
+											Reporter.logEvent(Status.INFO,"Launch PDF URL",
+											"PDF icon not found for : "+linkText,true);
+										}
 										Web.webdriver.switchTo().frame(docContentIFrame);
 										if(fundProspectusText.getText().length()>200){//validating if the prospectus text contains more that 200 chars
 											Reporter.logEvent(Status.PASS,"Link "+linkText+" validate fund prospectus details",
@@ -427,4 +486,5 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			 " links , Exception:"+e.getMessage());
 		}
 	}
+	
 }
