@@ -318,32 +318,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		String currentURL = "";
 		String testData;
 		int linkObjSize = linkObjList.size();
-		List<WebElement> fundsList = null;
-		WebElement fundLink = null;
-		String[] charList = null;
-		int fundLinkSize = 0;
-		String charItem;
 		try{
 			 //Looping through the list of Header/Footer links
-			for (int iLoopCnt = 0; iLoopCnt <= linkObjSize - 1; iLoopCnt++) {
+			for (int iLoopCnt = 0; iLoopCnt < linkObjSize - 1; iLoopCnt++) {
 				new LoginPage();
-				
-				//try-catch : To handle scenario - where only a specific link needs to be tested as specified in  test data
-				try{					
-					testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
-				}catch(Error e){
-					continue;
-				}				
-				Thread.sleep(1000);
-				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), false)) {					
-					if(linkObjList.get(iLoopCnt)
-							       .findElement(By.cssSelector("a"))
-							       .getAttribute("href")
-							       .contains(testData)){
-					  Web.clickOnElement((linkObjList.get(iLoopCnt).findElement(By.cssSelector("a"))));					  
-					}					
+				testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
+				Thread.sleep(500);
+				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), true)) {
+					Web.clickOnElement((linkObjList.get(iLoopCnt).findElement(By.cssSelector("a"))));
 				}
-				
+
 				if ((testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")) {
 					String winHandleBefore = Web.webdriver.getWindowHandle();
 					for (String winHandle : Web.webdriver.getWindowHandles()) {
@@ -356,7 +340,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					currentURL = Web.webdriver.getCurrentUrl();
 				}
 
-				// Verification against redirected URLs				
+				// Verification against redirected URLs
+				
 				if((Web.VerifyPartialText(testData, currentURL, false))){
 					Reporter.logEvent(Status.PASS,"Check if the respective page is loaded",
 							 "Verified that the respective page :" + testData + " is loaded successfully", false);
@@ -364,112 +349,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					Reporter.logEvent(Status.FAIL,"Check if the respective page is loaded",
 							"Respective page :" + testData + " is not loaded", true);
 				}
-								
+				
 				if (!(testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")
 						&& !(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
-					
-					//Handle sponsor fund prospectus footer link	
-					if(testData.equalsIgnoreCase(getNameFundPros())){
-					   Web.isWebElementDisplayed(fundIFrame,true);
-				       Web.webdriver.switchTo().frame(fundIFrame);
-					   if(Web.isWebElementDisplayed(tabAlphabet,true)){ 
-						   // ======================== CHARS ===========================
-						   if(Stock.GetParameterValue("fundProspectus_Characters").contains(",")){
-							   charList = Stock.GetParameterValue("fundProspectus_Characters").split(",");
-						   }else{
-							   charList = new String[1];
-							   charList[0] = Stock.GetParameterValue("fundProspectus_Characters");
-						   }
-						   
-						   for(int iCharLoop=0;iCharLoop<=(charList.length)-1;iCharLoop++){
-							   charItem = charList[iCharLoop];							   
-							   String charLink = ".//th/a[@class='alphabetLetter ng-binding' and text() ='"+charItem+"']";
-							   WebElement ele = Web.webdriver.findElement(By.xpath(charLink));
-							   String linkText = ele.getText(); 
-							   							   
-							   Web.clickOnElement(ele);Thread.sleep(1000);
-							   Reporter.logEvent(Status.INFO,"Selecting characters to list Sponsor Funds",
-									   "Character '"+charItem+"' selected to list relevant funds",false);
-							   			
-							   fundsList = fundTable.findElements(By.xpath("thead//th[text()='"+charItem+"']/../../following-sibling::tbody/tr")); 							  
-							   fundLinkSize = fundsList.size();							   
-
-							   if(fundLinkSize == 0){
-								  Reporter.logEvent(Status.INFO,"Funds Propectus list unavailable",
-							              "Funds list not available for Character '"+charList[iCharLoop]+"'",true);
-								  continue;
-							   }							   
-							   for(int iFundLoop=0;iFundLoop<=fundLinkSize-1;iFundLoop++){
-								   fundLink = fundsList.get(iFundLoop).findElement(By.xpath("td/div/a"));								   								   
-								   String lnkText = fundLink.getText();								   								  
-								   fundLink.click();
-								   Thread.sleep(2000);
-								   
-								   String oldTab = Web.webdriver.getWindowHandle();
-								   ArrayList<String> newTab = new ArrayList<String>(Web.webdriver.getWindowHandles());
-								   Web.webdriver.switchTo().window(newTab.get(1));
-								   if(Web.isWebElementDisplayed(invalidFundErr,false) 											   
-								   ||fundProspectusText.getText().length()<100){ //ignoring fund prospectus details less than 100 chars
-									  Web.webdriver.close();Web.webdriver.switchTo().window(oldTab);
-									  Web.webdriver.switchTo().frame(fundIFrame);
-									  continue;									   
-								   }else{													 										   
-									 if(
-											 
-										Web.isWebElementDisplayed(fundNav_Prospectus,false)
-									    && Web.isWebElementDisplayed(fundNav_AnnualReport,false)
-									    && Web.isWebElementDisplayed(fundNav_SemiAnnualReport,false)
-									    && Web.isWebElementDisplayed(fundNav_SOAI,false)){
-										
-										// PDF Validation
-										if(Web.isWebElementDisplayed(pdfIcon,false)){
-										   pdfIcon.click();
-										   try{
-											   String oldTab2 = Web.webdriver.getWindowHandle();
-											   ArrayList<String> newPDFTab = new ArrayList<String>(Web.webdriver.getWindowHandles());
-											   Web.webdriver.switchTo().window(newPDFTab.get(2));
-											   if(Web.webdriver.getCurrentUrl().contains("http://prospectus-express.newriver.com/PNet/getcombinedpdf")){
-												   Reporter.logEvent(Status.PASS,"PDF document validation",
-												   "PDF document opened successfully for link : "+linkText,false);
-												   Web.webdriver.close();
-												   Web.webdriver.switchTo().window(oldTab2);
-											   }else{
-												   Reporter.logEvent(Status.FAIL,"PDF document validation",
-												   "PDF document failed to open for link : "+linkText,true);
-											   }
-										   }catch(Exception e){
-											   Reporter.logEvent(Status.FAIL,"PDF document validation",
-										       "PDF document failed to open for link : "+linkText,true);
-										   }								
-										}else{
-											Reporter.logEvent(Status.INFO,"Launch PDF URL",
-											"PDF icon not found for : "+linkText,true);
-										}
-										Web.webdriver.switchTo().frame(docContentIFrame);
-										if(fundProspectusText.getText().length()>200){//validating if the prospectus text contains more that 200 chars
-											Reporter.logEvent(Status.PASS,"Link "+linkText+" validate fund prospectus details",
-								    		          "Fund prospectus details validated successfully",false);
-										}else{
-											Reporter.logEvent(Status.FAIL,"Link "+linkText+" validate fund prospectus details",
-								    		          "Fund prospectus details validation failed",true);
-										}	
-										Web.webdriver.switchTo().defaultContent();
-									 }else{
-										 Reporter.logEvent(Status.FAIL,"Link "+linkText+" validate fund prospectus details",
-							    		          "Fund prospectus details validation failed",true);
-									 }
-									 Web.webdriver.close();Web.webdriver.switchTo().window(oldTab);
-									 Web.webdriver.switchTo().frame(fundIFrame);
-									 break;
-								  }
-							   }							   
-						   }												 
-					   }else{
-						   Reporter.logEvent(Status.FAIL,"Fund Prospectuses alphabet table not displayed",
-								             "alphabet table not loaded",true);
-					   }
-					   Web.webdriver.switchTo().defaultContent();
-					}					
 					Web.waitForElement(linkPSCBreadCrumHome);
 					linkPSCBreadCrumHome.click();
 				}
