@@ -276,13 +276,10 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the pre login Header and footer links", false);
 			login = new LoginPage().get();
-			if(!Stock.GetParameterValue("link_Footer8")
-					 .equalsIgnoreCase(login.getNameFundPros())){
-				login.checkHeaderLinkPreLogin();
-				Thread.sleep(1000);
-			}			
+			login.checkHeaderLinkPreLogin();
+			Thread.sleep(1000);
 			login.checkFooterLinkPreLogin();			
- 		} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
