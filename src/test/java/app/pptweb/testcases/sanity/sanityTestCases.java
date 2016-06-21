@@ -1,6 +1,8 @@
 package app.pptweb.testcases.sanity;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import appUtils.Common;
+import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.general.LeftNavigationBar;
@@ -30,6 +33,7 @@ import core.framework.Globals;
 
 public class sanityTestCases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
 
@@ -49,11 +53,32 @@ public class sanityTestCases {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 
 	}
+	public void prepareLoginTestData() {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					"getRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	public void prepareRegisrationTestData() {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					"getUnRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 	@Test(dataProvider = "setData")
 	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			prepareLoginTestData();
 			String verificationCode = "";
 			
 			TwoStepVerification twoStepVerification = new TwoStepVerification(new LoginPage());
@@ -262,6 +287,7 @@ public class sanityTestCases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			prepareLoginTestData();
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -298,10 +324,10 @@ public class sanityTestCases {
 			//Step 4 - Enter corresponding details for following fields and click Continue button. - User is redirected to Login help (2 of 3) page
 
 			objForgotPsw.enterForgotPasswordDetails(lib.Stock.GetParameterValue("SSN"), 
-					lib.Stock.GetParameterValue("ZIPCODE"), 
-					lib.Stock.GetParameterValue("LASTNAME"), 
-					lib.Stock.GetParameterValue("DOB"), 
-					lib.Stock.GetParameterValue("STREETADDRESS"));
+					lib.Stock.GetParameterValue("ZIP_CODE"), 
+					lib.Stock.GetParameterValue("LAST_NAME"), 
+					lib.Stock.GetParameterValue("BIRTH_DATE"), 
+					lib.Stock.GetParameterValue("FIRST_LINE_MAILING"));
 
 			//Step 5 - Click on "Already have a code?" link
 			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
@@ -325,7 +351,7 @@ public class sanityTestCases {
 			objAuth.submitVerificationCode(verificationCode, false, false);
 
 			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
-			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
+			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("NEWPASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
 
 		}
 		catch(Exception e)
