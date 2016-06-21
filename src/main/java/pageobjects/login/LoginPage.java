@@ -1,5 +1,8 @@
 package pageobjects.login;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -14,16 +17,23 @@ import org.testng.Assert;
 import appUtils.Common;
 import core.framework.Globals;
 
-public class LoginPage extends LoadableComponent<LoginPage>{
+public class LoginPage extends LoadableComponent<LoginPage> {
 
-	//Object Declarations 
-	@FindBy(xpath=".//button[text()[normalize-space()='Dismiss']]") private WebElement btnDismiss;
-	@FindBy(id="usernameInput") private WebElement txtUserName;
-	@FindBy(id="passwordInput") private WebElement txtPassword;
-	@FindBy(xpath=".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-	@FindBy(css="a[href*='register']") private WebElement btnRegister;
-	@FindBy(id="helpBlock") private WebElement weHelpBlock;
-	@FindBy(xpath=".//*[text()[normalize-space()='Login help?']]") private WebElement lnkForgotPassword;
+	// Object Declarations
+	@FindBy(xpath = ".//button[text()[normalize-space()='Dismiss']]")
+	private WebElement btnDismiss;
+	@FindBy(id = "usernameInput")
+	private WebElement txtUserName;
+	@FindBy(id = "passwordInput")
+	private WebElement txtPassword;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
+	private WebElement btnLogin;
+	@FindBy(css = "a[href*='register']")
+	private WebElement btnRegister;
+	@FindBy(id = "helpBlock")
+	private WebElement weHelpBlock;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Login help?']]")
+	private WebElement lnkForgotPassword;
 	@FindBy(xpath = ".//*[@id='customerSupport']//p[1]")
 	private WebElement hrdCustomerSupport;
 	@FindBy(linkText = "contact us")
@@ -32,12 +42,15 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	private WebElement txtContactus;
 	@FindBy(xpath = ".//div[@class='modal-content']/div[2]/.")
 	private WebElement txtContactusInfo;
-	@FindBy(xpath = ".//*[@id='prelogin-footer-phone']")
+	@FindBy(xpath = ".//span[@id='prelogin-footer-phone']")
 	private WebElement lnkContactNoPreLogin;
 	@FindBy(xpath = ".//*[@id='customerSupport']//span")
 	private WebElement lnkContactNoPostLogin;
-	/*@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
-	private WebElement lblSponser;*/
+	/*
+	 * @FindBy(xpath =
+	 * ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img") private
+	 * WebElement lblSponser;
+	 */
 	@FindBy(xpath = ".//*[@class='banner-wrapper']/img")
 	private WebElement imgBanner;
 	@FindBy(xpath = ".//*[@class='copyright ng-binding']")
@@ -68,19 +81,22 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	private WebElement txtInnerContainer;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-	
+	@FindBy(xpath = ".//div[@class='modal-body']//p//a")
+	private List<WebElement> txtTelPhoneNos;
+
 	LoadableComponent<?> parent;
 	@SuppressWarnings("unused")
 	private String username;
 	@SuppressWarnings("unused")
 	private String password;
 	private String url = null;
-	public LoginPage(){
-		//this.parent = parent;
+
+	public LoginPage() {
+		// this.parent = parent;
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
 
-	public LoginPage(String username,String password) {
+	public LoginPage(String username, String password) {
 		this.username = username;
 		this.password = password;
 		PageFactory.initElements(lib.Web.webdriver, this);
@@ -154,30 +170,31 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		lib.Web.webdriver.manage().window().maximize();
 
 		// currently not beeing seen
-		
-		  boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss,true);
-		  if (isElementPresent)
-		  btnDismiss.click();
-		 
+
+		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
+		if (isElementPresent)
+			btnDismiss.click();
 
 	}
 
-
-	/** <pre> Method to return WebElement object corresponding to specified field name
+	/**
+	 * <pre>
+	 * Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
 	 * 	USERNAME - [TEXTBOX]
 	 * 	PASSWORD - [TEXTBOX]
 	 *  SIGN IN -[BUTTON]
 	 *  REGISTER - [BUTTON]
 	 *  FORGOT PASSWORD - [LINK]
-	 *  </pre>
+	 * </pre>
+	 * 
 	 * @param fieldName
 	 * @return
 	 */
 
 	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName) {
-		//Username
+		// Username
 		if (fieldName.trim().equalsIgnoreCase("USERNAME")) {
 			return this.txtUserName;
 		}
@@ -187,15 +204,15 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		}
 
 		if (fieldName.trim().equalsIgnoreCase("SIGN IN")) {
-			return this.btnLogin;			
+			return this.btnLogin;
 		}
 
 		if (fieldName.trim().equalsIgnoreCase("REGISTER")) {
-			return this.btnRegister;			
+			return this.btnRegister;
 		}
 
 		if (fieldName.trim().equalsIgnoreCase("FORGOT PASSWORD")) {
-			return this.lnkForgotPassword;			
+			return this.lnkForgotPassword;
 		}
 		if (fieldName.trim().equalsIgnoreCase("CONTACT US")) {
 			return this.lnkContactus;
@@ -203,8 +220,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		if (fieldName.trim().equalsIgnoreCase("COPYRIGHT INFO")) {
 			return this.txtCopyRightInfo;
 		}
-		if (fieldName.trim().equalsIgnoreCase(
-				"Requirements and Security")) {
+		if (fieldName.trim().equalsIgnoreCase("Requirements and Security")) {
 			return this.lnkSystemRequirements;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Privacy")) {
@@ -245,17 +261,16 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			return this.txtInnerContainer;
 		}
 
-	
 		return null;
 	}
 
-
-	/**Method to enter user credentials and click on Sign In button
+	/**
+	 * Method to enter user credentials and click on Sign In button
 	 * 
 	 * @param userName
 	 * @param password
 	 */
-	public void submitLoginCredentials(String userName, String password){
+	public void submitLoginCredentials(String userName, String password) {
 
 		Web.setTextToTextBox(this.txtUserName, userName);
 		Web.setTextToTextBox(this.txtPassword, password);
@@ -267,8 +282,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss);
 
-		if (isElementPresent)
-		{
+		if (isElementPresent) {
 			btnDismiss.click();
 		}
 
@@ -282,13 +296,16 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 	}
 
-	/**<pre> Method to validate if entered login credentials are invalid and an error message is displayed.
+	/**
+	 * <pre>
+	 * Method to validate if entered login credentials are invalid and an error message is displayed.
 	 * Returns the error message displayed if an error block is displayed
-	 * Returns empty string if no error block is displayed</pre>
+	 * Returns empty string if no error block is displayed
+	 * </pre>
 	 * 
 	 * @return String - Displayed error message
 	 */
-	public String isValidCredentials(){
+	public String isValidCredentials() {
 		boolean isElementPresent = Web.isWebElementDisplayed(this.weHelpBlock);
 
 		if (isElementPresent)
@@ -297,7 +314,8 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			return "";
 	}
 
-	/**Method to click on <b>Register</b> button on Login page
+	/**
+	 * Method to click on <b>Register</b> button on Login page
 	 * 
 	 */
 	public void clickRegister() {
@@ -311,7 +329,8 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 	}
 
-	/**Method to click on <b>Forgot Password </b> button on Login page
+	/**
+	 * Method to click on <b>Forgot Password </b> button on Login page
 	 * 
 	 */
 	public void clickForgotPassword() {
@@ -324,6 +343,7 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		}
 
 	}
+
 	/**
 	 * <pre>
 	 * Method to validate if customer care information is displayed or not.
@@ -372,44 +392,53 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 							"Verify 'Contact Us' header is displayed",
 							"Contact Us Header is not displayed", true);
 				}
-				String Actual=txtContactusInfo.getText().toString().trim();
+				String Actual = txtContactusInfo.getText().toString().trim();
 				isTextMatching = Web
 						.VerifyText(
 								"Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015",
 								Actual, true);
 				if (isTextMatching) {
-					Reporter.logEvent(Status.PASS,
+					Reporter.logEvent(
+							Status.PASS,
 							"Verify 'Contact Us Info'  is displayed",
-							"Contact Us Info is displayed\n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"+Actual, false);
+							"Contact Us Info is displayed\n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"
+									+ Actual, false);
 
 				} else {
-					Reporter.logEvent(Status.FAIL,
+					Reporter.logEvent(
+							Status.FAIL,
 							"Verify 'Contact Us info' is displayed",
-							"Contact Us Info is not Same \n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"+Actual, false);
+							"Contact Us Info is not Same \n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"
+									+ Actual, false);
 				}
 			}
 		} else {
 			if (!contactNo.isEmpty()) {
-				
-				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNoPreLogin
-						.getText().trim(), true);
+
+				isTextMatching = Web.VerifyText(contactNo,
+						this.lnkContactNoPreLogin.getText().trim(), true);
 				if (isTextMatching) {
-					Reporter.logEvent(Status.PASS,
+					Reporter.logEvent(
+							Status.PASS,
 							"Verify 'Contact No'  is displayed on Pre Login Page",
 							"Contact No is displayed on Pre Login Page", false);
 
 				} else {
-					Reporter.logEvent(Status.FAIL,
+					Reporter.logEvent(
+							Status.FAIL,
 							"Verify 'Contact No' is displayed on Pre Login Page",
-							"'Contact No' is not Same on Pre Login Page. Expected/ " + contactNo
+							"'Contact No' is not Same on Pre Login Page. Expected/ "
+									+ contactNo
 									+ "Actual/ "
-									+ this.lnkContactNoPreLogin.getText().trim(), false);
+									+ this.lnkContactNoPreLogin.getText()
+											.trim(), false);
 				}
 			}
 		}
 
 		return isTextMatching;
 	}
+
 	/**
 	 * <pre>
 	 * Method to validate if customer care information is displayed or not.
@@ -419,27 +448,45 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 	 * 
 	 * @return String - Displayed
 	 */
-	public boolean isValidContactUsInfoPostLogin(String contactNo) {
-		
-		boolean isTextMatching=false;
-			if (!contactNo.isEmpty()) {
-				
-				isTextMatching = Web.VerifyText(contactNo, this.lnkContactNoPostLogin
-						.getText().trim(), true);
-				if (isTextMatching) {
-					Reporter.logEvent(Status.PASS,
-							"Verify 'Contact No'  is displayed on Landing Page",
-							"Contact No is displayed on Landing Page", false);
+	public boolean isValidContactUsInfoPostLogin(List<String> contactNo) {
 
-				} else {
-					Reporter.logEvent(Status.FAIL,
-							"Verify 'Contact No' is displayed on Landing Page",
-							"'Contact No' is not Same on Landing Page. Expected/ " + contactNo
-									+ "Actual/ "
-									+ this.lnkContactNoPostLogin.getText().trim(), false);
-				}
+		boolean isTextMatching = false;
+		if (contactNo.size()>1) {
+   for(int i=0;i<contactNo.size();i++)
+   {
+			isTextMatching = Web.VerifyText(contactNo.get(i),
+					this.lnkContactNoPostLogin.getText().trim(), true);
+			if (isTextMatching) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Contact No'  is displayed on Landing Page",
+						"Contact No is displayed on Landing Page is matching", false);
+
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Verify 'Contact No' is displayed on Landing Page",
+						"'Contact No' is not Same on Landing Page.\nExpected:"
+								+ contactNo.get(i) + "\nActual:"
+								+ this.lnkContactNoPostLogin.getText().trim(),
+						false);
 			}
-		
+		}
+		}else{
+			isTextMatching = Web.VerifyText(contactNo.get(0),
+					this.lnkContactNoPostLogin.getText().trim(), true);
+			if (isTextMatching) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Contact No'  is displayed on Landing Page",
+						"Contact No is displayed on Landing Page is matching", false);
+
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Verify 'Contact No' is displayed on Landing Page",
+						"'Contact No' is not Same on Landing Page. Expected/ "
+								+ contactNo.get(0) + "Actual/ "
+								+ this.lnkContactNoPostLogin.getText().trim(),
+						false);
+			}
+		}
 
 		return isTextMatching;
 	}
@@ -460,8 +507,10 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 			logoName = "";
 		}
 		if (isElementPresent) {
-			isLogoPresent =true; /*Web.VerifyText(logoName, this.lblSponser
-					.getAttribute("alt").trim(), true);*/
+			isLogoPresent = true; /*
+								 * Web.VerifyText(logoName, this.lblSponser
+								 * .getAttribute("alt").trim(), true);
+								 */
 		}
 		return isLogoPresent;
 
@@ -529,12 +578,13 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 
 	}
 
-	public void verifyLinkIsNotBroken(String linkName) throws InterruptedException {
+	public void verifyLinkIsNotBroken(String linkName)
+			throws InterruptedException {
 		boolean isPageDisplayed = false;
 		Web.clickOnElement(this.getWebElement(linkName));
 		Thread.sleep(3000);
-		isPageDisplayed = Web.VerifyPartialText(linkName, this.txtInnerContainer
-				.getText().toString().trim(), true);
+		isPageDisplayed = Web.VerifyPartialText(linkName,
+				this.txtInnerContainer.getText().toString().trim(), true);
 		if (isPageDisplayed) {
 			lib.Reporter.logEvent(Status.PASS, "Verify " + linkName
 					+ " Page is Displayed", linkName + " Page is Displayed",
@@ -548,4 +598,22 @@ public class LoginPage extends LoadableComponent<LoginPage>{
 		Web.webdriver.navigate().back();
 
 	}
+
+	@SuppressWarnings("null")
+	public List<String> getPreLoginTelePhoneNo(String sponsorName) {
+		ArrayList<String> telPhoneNos = new ArrayList<String>();
+		if (sponsorName.equalsIgnoreCase(Common.GC_DEFAULT_SPONSER)) {
+
+			int no = this.txtTelPhoneNos.size();
+			for (int i = 0; i < no; i++) {
+				telPhoneNos.add(txtTelPhoneNos.get(i).getText());
+				
+			}
+		} else {
+			telPhoneNos.add(lnkContactNoPreLogin.getText());
+		}
+		
+		return telPhoneNos;
+	}
+
 }

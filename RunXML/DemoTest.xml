@@ -4,24 +4,14 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-      <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
-   
+    <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Lone_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>

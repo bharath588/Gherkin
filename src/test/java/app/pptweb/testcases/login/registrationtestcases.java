@@ -23,7 +23,6 @@ import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
 import core.framework.Globals;
 
-
 public class registrationtestcases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
@@ -42,7 +41,8 @@ public class registrationtestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+		this.testData = Stock.getTestData(this.getClass().getPackage()
+				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
 	@Test(dataProvider = "setData")
@@ -398,7 +398,6 @@ public class registrationtestcases {
 		}
 	}
 
-
 	@Test(dataProvider = "setData")
 	public void SF01_TC02_User_does_not_have_PIN(int itr,
 			Map<String, String> testdata) {
@@ -511,7 +510,7 @@ public class registrationtestcases {
 			// Step 7 - In the social security field, enter alphanumeric
 			// characters
 			// and move the cursor out of the field.
-		     Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.webdriver);
 
 			objAccountLookup.setTextToFields("Social Security Number",
 					"ab12CD34e");
@@ -887,7 +886,7 @@ public class registrationtestcases {
 			// Step 7 - In the social security field, enter alphanumeric
 			// characters
 			// and move the cursor out of the field.
-     Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.webdriver);
 			objAccountLookup.setTextToFields("Social Security Number",
 					"ab12CD34e");
 			keyBoard.sendKeys(Keys.TAB).perform();
@@ -1135,6 +1134,7 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
+			precondition();
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -1218,8 +1218,8 @@ public class registrationtestcases {
 							Status.PASS,
 							"Verify error message after submitting invalid details",
 							"Expected error message is displayed.\nExpected: "
-									+ Stock.GetParameterValue("ExpectedErrorMsg")+"\nActual:"+ActErrMessage,
-							true);
+									+ Stock.GetParameterValue("ExpectedErrorMsg")
+									+ "\nActual:" + ActErrMessage, true);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
@@ -1256,7 +1256,6 @@ public class registrationtestcases {
 				sqlQuery = Stock.getTestQuery("unlockParticipants");
 				DB.executeUpdate(sqlQuery[0], sqlQuery[1],
 						Stock.GetParameterValue("SSN"));
-				DB.executeUpdate(sqlQuery[0], "Commit;");
 
 			} catch (Exception e) {
 				Reporter.logEvent(Status.FAIL, "A run time exception occured.",
@@ -1554,7 +1553,7 @@ public class registrationtestcases {
 			String expWithPinUsrLckmsgOne = "The passcode you entered is invalid. Please re-enter your passcode. You have 2 attempt(s) left.";
 			String expWithPinUsrLckmsgTwo = "The passcode you entered is invalid. Please re-enter your passcode. You have 1 attempt(s) left.";
 			String expWithPinUsrLockmsg = "You have exceeded the maximum number of login attempts allowed. For security reasons, Internet access to your account has been temporarily disabled.";
-
+			precondition();
 			LoginPage objloginPage = new LoginPage();
 			AccountLookup objAccountLookup = new AccountLookup(objloginPage)
 					.get();
@@ -1830,12 +1829,11 @@ public class registrationtestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			String[] sqlQuery;
 			try {
+				String[] sqlQuery;
 				sqlQuery = Stock.getTestQuery("unlockParticipants");
 				DB.executeUpdate(sqlQuery[0], sqlQuery[1],
 						Stock.GetParameterValue("SSN"));
-				DB.executeUpdate(sqlQuery[0], "Commit;");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -2108,6 +2106,19 @@ public class registrationtestcases {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	public void precondition() {
+		try {
+			String[] sqlQuery;
+			sqlQuery = Stock.getTestQuery("unlockParticipants");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],
+					Stock.GetParameterValue("SSN"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@AfterSuite

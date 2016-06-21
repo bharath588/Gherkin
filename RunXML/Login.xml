@@ -48,7 +48,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> 
       <test name="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -94,6 +94,15 @@
             </class>
         </classes>
     </test>
+      <test name="SIT_xPPTWEB_Login_04_01_TC006_Functionality_With_PIN_lock_User">
+        <classes>
+            <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
      <test name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -112,15 +121,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_04_01_TC006_Functionality_With_PIN_lock_User">
-        <classes>
-            <class name="app.pptweb.testcases.login.registrationtestcases">
-                <methods>
-                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+  
      <test name="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -157,7 +158,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> 
     <test name="SIT_xPPTWEB_Login_03_01_TC01_Send Activation Code by Text through Login flow">
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
@@ -229,5 +230,5 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> 
 </suite>

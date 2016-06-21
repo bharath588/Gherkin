@@ -1,6 +1,8 @@
 package app.pptweb.testcases.login;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.TestDataFromDB;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
@@ -22,6 +25,7 @@ import core.framework.Globals;
 
 public class authenticationtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
 
@@ -39,12 +43,23 @@ public class authenticationtestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
+	public void prepareLoginTestData() {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					"getRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			prepareLoginTestData();
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -158,6 +173,7 @@ public class authenticationtestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
+			prepareLoginTestData();
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -194,10 +210,10 @@ public class authenticationtestcases {
 			//Step 4 - Enter corresponding details for following fields and click Continue button. - User is redirected to Login help (2 of 3) page
 
 			objForgotPsw.enterForgotPasswordDetails(lib.Stock.GetParameterValue("SSN"), 
-					lib.Stock.GetParameterValue("ZIPCODE"), 
-					lib.Stock.GetParameterValue("LASTNAME"), 
-					lib.Stock.GetParameterValue("DOB"), 
-					lib.Stock.GetParameterValue("STREETADDRESS"));
+					lib.Stock.GetParameterValue("ZIP_CODE"), 
+					lib.Stock.GetParameterValue("LAST_NAME"), 
+					lib.Stock.GetParameterValue("BIRTH_DATE"), 
+					lib.Stock.GetParameterValue("FIRST_LINE_MAILING"));
 
 			//Step 5 - Click on "Already have a code?" link
 			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
@@ -221,7 +237,7 @@ public class authenticationtestcases {
 			objAuth.submitVerificationCode(verificationCode, false, false);
 
 			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
-			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
+			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("NEWPASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
 
 		}
 		catch(Exception e)
@@ -245,7 +261,7 @@ public class authenticationtestcases {
 
 	@Test(dataProvider = "setData")
 	public void SF04_TC05_ForgotPassword_DidntReceiveActivationCode(int itr, Map<String, String> testdata){
-
+		prepareLoginTestData();
 		String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 		String expLoginHelptxt;
 		boolean isMatching;
@@ -272,7 +288,7 @@ public class authenticationtestcases {
 			}
 
 
-			objForgotPsw.enterForgotPasswordDetails(Stock.GetParameterValue("SSN"), Stock.GetParameterValue("zipCode"), Stock.GetParameterValue("lastName"), Stock.GetParameterValue("DOB"), Stock.GetParameterValue("streetAddress"));
+			objForgotPsw.enterForgotPasswordDetails(Stock.GetParameterValue("SSN"), Stock.GetParameterValue("ZIP_CODE"), Stock.GetParameterValue("LAST_NAME"), Stock.GetParameterValue("BIRTH_DATE"), Stock.GetParameterValue("FIRST_LINE_MAILING"));
 
 			//------------------------------------------------------------------------------------------------------------------------
 			//Step 4 - Verify that below the page titile "Verify your identity" the following verbiage appears: "We need to confirm your identity to ensure your accounts are secure. 

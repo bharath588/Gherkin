@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -131,11 +132,11 @@ public class prodvalidationtestcases {
 				login.verifyWebElementDisplayed("image participant Rollover options");
 				login.verifyWebElementDisplayed("image participant Browser Support");
 			}
-			login.verifyWebElementDisplayed(/*"System Requirements and Security"*/"Requirements and Security");
+			login.verifyWebElementDisplayed(/* "System Requirements and Security" */"Requirements and Security");
 			login.verifyWebElementDisplayed("Privacy");
-			login.verifyWebElementDisplayed(/*"Terms and Conditions"*/"Terms");
-			login.verifyWebElementDisplayed(/*"Business Continuity Plan"*/"Business Continuity");
-			login.verifyWebElementDisplayed(/*"Market Timing and Excessive Trading Policies"*/"Market Timing and Excessive Trading");
+			login.verifyWebElementDisplayed(/* "Terms and Conditions" */"Terms");
+			login.verifyWebElementDisplayed(/* "Business Continuity Plan" */"Business Continuity");
+			login.verifyWebElementDisplayed(/* "Market Timing and Excessive Trading Policies" */"Market Timing and Excessive Trading");
 			login.verifyWebElementDisplayed("BrokerCheck Notification");
 			login.verifyWebElementDisplayed("FINRA Investor Education");
 			login.verifyLinkIsNotBroken("Requirements and Security");
@@ -246,7 +247,9 @@ public class prodvalidationtestcases {
 						.logEvent(
 								Status.FAIL,
 								"Check Customer Support Information on the Login Page",
-								"Customer Support Information isnot same on the Login Page\nExpected:"+Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")+"\nActual:"+customerSupportInfo,
+								"Customer Support Information isnot same on the Login Page\nExpected:"
+										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")
+										+ "\nActual:" + customerSupportInfo,
 								false);
 			}
 			isContactNoMatching = login.isValidContactUsInfo(Stock
@@ -263,7 +266,8 @@ public class prodvalidationtestcases {
 						"Contact Us Information is not not on the Login Page",
 						true);
 			}
-
+			List<String> telePhoneNo = login.getPreLoginTelePhoneNo(Stock
+					.GetParameterValue("Sponsor"));
 			Web.clickOnElement(login, "dismiss");
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -308,8 +312,8 @@ public class prodvalidationtestcases {
 								false);
 			}
 
-			isContactNoMatching = login.isValidContactUsInfoPostLogin(Stock
-					.GetParameterValue("ExpectedContactNo_Post_login"));
+			isContactNoMatching = login
+					.isValidContactUsInfoPostLogin(telePhoneNo);
 			if (isContactNoMatching) {
 				lib.Reporter.logEvent(Status.PASS,
 						"Check Contact Us Information on the Home Page",
@@ -317,7 +321,7 @@ public class prodvalidationtestcases {
 						false);
 
 			} else {
-				lib.Reporter.logEvent(Status.FAIL,
+				lib.Reporter.logEvent(Status.INFO,
 						"Check Contact Us Information on the Home Page",
 						"Contact Us Information is not Same on the Home Page",
 						false);
@@ -359,15 +363,17 @@ public class prodvalidationtestcases {
 
 			isDisplayed = profilePage.validateUserProfileInfo();
 			if (isDisplayed) {
-				Reporter.logEvent(Status.INFO,
+				Reporter.logEvent(
+						Status.INFO,
 						"Verify All Of the Fields in User Profile is Displayed",
 						" Info in User Profile Page is Displayed", false);
 			} else {
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(
+						Status.FAIL,
 						"Verify All Of the Fields in User Profile is Displayed",
 						"Info User Profile page is not Proper", false);
 			}
-		Web.clickOnElement(profilePage, "HOME");
+			Web.clickOnElement(profilePage, "HOME");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -416,12 +422,27 @@ public class prodvalidationtestcases {
 						"Account Overview Lable verification",
 						"Account Overview is NOT visible", false);
 			}
+			lblDisplayed = Web.VerifyPartialText(
+					Stock.GetParameterValue("groupId"),
+					Web.webdriver.getCurrentUrl(), false);
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Account Overview Page is Loaded with the same plan",
+						"Account Overview page is loaded with same plan", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Account Overview Page is Loaded with the same plan",
+						"Account Overview page is not loaded with same plan",
+						true);
+			}
 			lblDisplayed = Web.isWebElementDisplayed(myAccountPage, "Graph",
 					true);
 
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify Graph is Displayed",
-						"Graph is visible", true);
+						"Graph is visible", false);
 			} else {
 				Reporter.logEvent(Status.FAIL, "Verify Graph is Displayed",
 						"Graph is NOT visible", true);
@@ -498,31 +519,8 @@ public class prodvalidationtestcases {
 								+ " is Not visible", true);
 			}
 			Web.webdriver.switchTo().defaultContent();
-			requestLone.EnterLoanAmtAndTerm("$10,000", "12");
+			requestLone.EnterLoanAmtAndTerm("$1,000", "12");
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");
-			lblDisplayed = Web
-					.VerifyPartialText(
-							"YOUR\nLOAN \nREQUEST/PAYMENT \nESTIMATE",
-							requestLone
-									.getWebElementText("TEXT LOAN REQUEST ESTIMATE"),
-							true);
-			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.PASS,
-						"Verify Loan requset Estimate is Displayed",
-						"Loan Request Estimate is Displayed \n Expected:YOUR\nLOAN \nREQUEST/PAYMENT \nESTIMATE \nActual:"
-								+ requestLone
-										.getWebElementText("TEXT LOAN REQUEST ESTIMATE"),
-						true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Loan requset Estimate is Displayed",
-						"Loan Request Estimate is Not Displayed \n Expected:YOUR\nLOAN \nREQUEST/PAYMENT \nESTIMATE \nActual:"
-								+ requestLone
-										.getWebElementText("TEXT LOAN REQUEST ESTIMATE"),
-						true);
-			}
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
 			if (lblDisplayed) {
@@ -579,9 +577,11 @@ public class prodvalidationtestcases {
 			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
 			lblDisplayed = Web
-					.VerifyText(Stock.GetParameterValue("textVerifyAllInfo")
-							.toString().trim(), requestLone
-							.getWebElementText("TEXT VERIFY ALL INFO"), true);
+					.VerifyText(
+							"Please verify all information and carefully read all terms of the Loan Promissory Note and the Plan's Loan Provisions before clicking \"I Accept\".",
+							requestLone
+									.getWebElementText("TEXT VERIFY ALL INFO"),
+							true);
 
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -592,17 +592,18 @@ public class prodvalidationtestcases {
 						Status.FAIL,
 						"Verify Text PLEASE VERIFY ALL INFO..... is Displayed",
 						"PLEASE VERIFY ALL INFO..... Text is Not Dispalyed Expected:"
-								+ Stock.GetParameterValue("textVerifyAllInfo")
-										.toString().trim()
+								+ "Please verify all information and carefully read all terms of the Loan Promissory Note and the Plan's Loan Provisions before clicking \"I Accept\"."
 								+ "\nActual:"
 								+ requestLone
 										.getWebElementText("TEXT VERIFY ALL INFO"),
 						true);
 			}
-			lblDisplayed = Web.VerifyText(
-					Stock.GetParameterValue("textOnceYouClick").toString()
-							.trim(),
-					requestLone.getWebElementText("TEXT ONCE YOU CLICK"), true);
+			lblDisplayed = Web
+					.VerifyText(
+							"Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions.",
+							requestLone
+									.getWebElementText("TEXT ONCE YOU CLICK"),
+							true);
 
 			if (lblDisplayed) {
 				Reporter.logEvent(
@@ -614,8 +615,7 @@ public class prodvalidationtestcases {
 						Status.FAIL,
 						"Verify Text ONCE YOU CLICK I ACCEPT..... is Displayed",
 						"ONCE YOU CLICK I ACCEPT..... Text is Not Dispalyed Expected:"
-								+ Stock.GetParameterValue("textOnceYouClick")
-										.toString().trim()
+								+ "Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions."
 								+ "\nActual:"
 								+ requestLone
 										.getWebElementText("TEXT ONCE YOU CLICK"),
@@ -667,6 +667,8 @@ public class prodvalidationtestcases {
 						"Verify I Accept CheckBox is Displayed",
 						"I ACCEPT CheckBox is Not Displayed", false);
 			}
+			Web.clickOnElement(requestLone, "CHECKBOX I ACCEPT");
+			Thread.sleep(3000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone, "I ACCEPT",
 					true);
 			if (lblDisplayed) {
@@ -1471,7 +1473,7 @@ public class prodvalidationtestcases {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
 	public void SF01_TC019_Verify_Request_A_Withdrawal_link(int itr,
 			Map<String, String> testdata) {
@@ -1484,7 +1486,8 @@ public class prodvalidationtestcases {
 			LandingPage homePage = new LandingPage(mfaPage);
 			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
 			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
-			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(lftNavBar);
+			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
+					lftNavBar);
 			requestWithdrawal.get();
 			Thread.sleep(5000);
 			boolean lblDisplayed = false;
@@ -1500,7 +1503,7 @@ public class prodvalidationtestcases {
 						"Request A Withdrawal Page is NOT visible", true);
 			}
 			Thread.sleep(6000);
-			lblDisplayed=	requestWithdrawal.selectWithdrawalType(Stock
+			lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
 					.GetParameterValue("withdrawalType"));
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -1512,9 +1515,9 @@ public class prodvalidationtestcases {
 						" WithDrawal Type is Not Selected", true);
 			}
 			requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
-			
+
 			lblDisplayed = Web.clickOnElement(requestWithdrawal, "MAX AMOUNT");
-			
+
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Max Amount CheckBox is Selected",
@@ -1524,7 +1527,7 @@ public class prodvalidationtestcases {
 						"Verify Max Amount CheckBox is Selected",
 						"Max Amount CheckBox is Not Selected", true);
 			}
-			//requestWithdrawal.isTextFieldDisplayed("Max Avail");
+			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(8000);
 			lblDisplayed = requestWithdrawal
@@ -1555,8 +1558,8 @@ public class prodvalidationtestcases {
 						"Verify Social Security number Field is Displayed",
 						"Social Security number Field is Not Displayed", true);
 			}
-			
-		requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
+
+			requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
 			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
 			Thread.sleep(8000);
 			lblDisplayed = requestWithdrawal
@@ -1643,11 +1646,16 @@ public class prodvalidationtestcases {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
-	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
-		
-		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+							+ Common.getSponser());
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -1658,51 +1666,78 @@ public class prodvalidationtestcases {
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);
 
-			Reporter.logEvent(Status.INFO, "Navigate to forgot password page.", "forgot password page is displayed", true);
+			Reporter.logEvent(Status.INFO, "Navigate to forgot password page.",
+					"forgot password page is displayed", true);
 
-			//Step 3 - Verify following verbiage is displayed "Enter the information below to recover your username. You will have the option to change your password." 
-			//		 
-			//		Also,verify following fields are displayed along with the respective labels
-			//		Social Security,Zip Code,Last Name,Date of Birth, and Street Address
+			// Step 3 - Verify following verbiage is displayed
+			// "Enter the information below to recover your username. You will have the option to change your password."
+			//
+			// Also,verify following fields are displayed along with the
+			// respective labels
+			// Social Security,Zip Code,Last Name,Date of Birth, and Street
+			// Address
 
 			verificationResult = objForgotPsw.validateFieldNames();
 			if (verificationResult) {
-				Reporter.logEvent(Status.PASS, "Forgot Password Text fields label validation ", "text field name validation was successful", false);
+				Reporter.logEvent(Status.PASS,
+						"Forgot Password Text fields label validation ",
+						"text field name validation was successful", false);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Forgot Password Text fields label validation ", "text field name validation was un-successful", false);
+				Reporter.logEvent(Status.FAIL,
+						"Forgot Password Text fields label validation ",
+						"text field name validation was un-successful", false);
 			}
-
 
 			expLoginHelptxt = objForgotPsw.isLoginHelptxtDisplayed();
 			isMatching = Web.VerifyText(expLoginHelptxt, actLoginHelptxt, true);
 			if (isMatching) {
-				Reporter.logEvent(Status.PASS, "Forgot Password header Text Verification", "Header text verification was successful", false);
+				Reporter.logEvent(Status.PASS,
+						"Forgot Password header Text Verification",
+						"Header text verification was successful", false);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Forgot Password header Text Verification", "Header text verification was un-successful actual text: " + actLoginHelptxt + "     Expected Text: "+ expLoginHelptxt, false);
+				Reporter.logEvent(Status.FAIL,
+						"Forgot Password header Text Verification",
+						"Header text verification was un-successful actual text: "
+								+ actLoginHelptxt + "     Expected Text: "
+								+ expLoginHelptxt, false);
 			}
 
-			//Step 4 - Enter corresponding details for following fields and click Continue button. - User is redirected to Login help (2 of 3) page
+			// Step 4 - Enter corresponding details for following fields and
+			// click Continue button. - User is redirected to Login help (2 of
+			// 3) page
 
-			objForgotPsw.enterForgotPasswordDetails(lib.Stock.GetParameterValue("SSN"), 
-					lib.Stock.GetParameterValue("ZIPCODE"), 
-					lib.Stock.GetParameterValue("LASTNAME"), 
-					lib.Stock.GetParameterValue("DOB"), 
+			objForgotPsw.enterForgotPasswordDetails(
+					lib.Stock.GetParameterValue("SSN"),
+					lib.Stock.GetParameterValue("ZIPCODE"),
+					lib.Stock.GetParameterValue("LASTNAME"),
+					lib.Stock.GetParameterValue("DOB"),
 					lib.Stock.GetParameterValue("STREETADDRESS"));
 
-			//Step 5 - Click on "Already have a code?" link
-			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
+			// Step 5 - Click on "Already have a code?" link
+			objAuth.selectCodeDeliveryOption(lib.Stock
+					.GetParameterValue("codeDeliveryOption"));
 
-			//Step 6 and 7 - Enter verification code into "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue" button
-			if (lib.Stock.GetParameterValue("codeDeliveryOption").equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+			// Step 6 and 7 - Enter verification code into
+			// "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue"
+			// button
+			if (lib.Stock.GetParameterValue("codeDeliveryOption")
+					.equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 				verificationCode = objAuth.getVerificationCode(true);
 			} else {
-				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+				if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
 					verificationCode = objAuth.getVerificationCode(false);
 				} else {
-					if (objAuth.isActivationCodeGenerated(lib.Stock.GetParameterValue("codeDeliveryOption"))) {
-						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
+					if (objAuth.isActivationCodeGenerated(lib.Stock
+							.GetParameterValue("codeDeliveryOption"))) {
+						Reporter.logEvent(Status.PASS,
+								"Verify activation code is generated",
+								"Activation code is successfully generated",
+								false);
 					} else {
-						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
+						Reporter.logEvent(Status.FAIL,
+								"Verify activation code is generated",
+								"Activation code is not generated", false);
 					}
 					return;
 				}
@@ -1710,120 +1745,158 @@ public class prodvalidationtestcases {
 
 			objAuth.submitVerificationCode(verificationCode, false, false);
 
-			//Step 8 - Click the "I need help with my password too" link and enter new password and verify if the user is successful in setting the new psw
-			objForgotPsw.helpResetMyPassword(lib.Stock.GetParameterValue("PASSWORD"), lib.Stock.GetParameterValue("REENTERPASSWORD"));
+			// Step 8 - Click the "I need help with my password too" link and
+			// enter new password and verify if the user is successful in
+			// setting the new psw
+			objForgotPsw.helpResetMyPassword(
+					lib.Stock.GetParameterValue("PASSWORD"),
+					lib.Stock.GetParameterValue("REENTERPASSWORD"));
 
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
-		}
-		catch(Error ae)
-		{
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
 
-		}
-		finally { 
-			try { Reporter.finalizeTCReport(); }
-			catch (Exception e1) { e1.printStackTrace(); } 
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
+		}
 	}
+
 	@Test(dataProvider = "setData")
-	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
-		
-		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+							+ Common.getSponser());
 			String verificationCode = "";
-			
-			TwoStepVerification twoStepVerification = new TwoStepVerification(new LoginPage());
+
+			TwoStepVerification twoStepVerification = new TwoStepVerification(
+					new LoginPage());
 			twoStepVerification.get();
-			
-			twoStepVerification.setPageMandatory(true);	//Two step verification page is expected to load
+
+			twoStepVerification.setPageMandatory(true); // Two step verification
+														// page is expected to
+														// load
 			twoStepVerification.get();
-			
-			Reporter.logEvent(Status.PASS, "Navigate to 'Two step verification (2 of 3)' page", 
+
+			Reporter.logEvent(Status.PASS,
+					"Navigate to 'Two step verification (2 of 3)' page",
 					"Navigation succeeded", true);
-			
-			// TODO Add code to verify text displayed on Two step verification page
-			
-			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have a code?' exists
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:");
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:");
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:");
-			
-			if (Web.isWebElementDisplayed(twoStepVerification, "Already have a code?")) {
-				Reporter.logEvent(Status.PASS, "Verify 'Already have a code?' link is displayed", 
+
+			// TODO Add code to verify text displayed on Two step verification
+			// page
+
+			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have
+			// a code?' exists
+			Web.verifyDropDownOptionExists(twoStepVerification,
+					"CHOOSE DELIVERY METHOD", "TEXT ME:");
+			Web.verifyDropDownOptionExists(twoStepVerification,
+					"CHOOSE DELIVERY METHOD", "CALL ME:");
+			Web.verifyDropDownOptionExists(twoStepVerification,
+					"CHOOSE DELIVERY METHOD", "EMAIL:");
+
+			if (Web.isWebElementDisplayed(twoStepVerification,
+					"Already have a code?")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Already have a code?' link is displayed",
 						"Link is displayed", false);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Verify 'Already have a code?' link is displayed", 
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Already have a code?' link is displayed",
 						"Link is not displayed", false);
 			}
-			
-			//Select code delivery option and click continue
-			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("deliveryOption"));
-			
-			//Get verification code
-			if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
-				verificationCode = twoStepVerification.getVerificationCode(true);
+
+			// Select code delivery option and click continue
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock
+					.GetParameterValue("deliveryOption"));
+
+			// Get verification code
+			if (lib.Stock.GetParameterValue("deliveryOption").trim()
+					.equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+				verificationCode = twoStepVerification
+						.getVerificationCode(true);
 			} else {
-				if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
-					verificationCode = twoStepVerification.getVerificationCode(false);
+				if (lib.Stock.GetParameterValue("deliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
+					verificationCode = twoStepVerification
+							.getVerificationCode(false);
 				} else {
-					if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("deliveryOption"))) {
-						Reporter.logEvent(Status.PASS, "Verify activation code is generated", "Activation code is successfully generated", false);
+					if (twoStepVerification.isActivationCodeGenerated(lib.Stock
+							.GetParameterValue("deliveryOption"))) {
+						Reporter.logEvent(Status.PASS,
+								"Verify activation code is generated",
+								"Activation code is successfully generated",
+								false);
 					} else {
-						Reporter.logEvent(Status.FAIL, "Verify activation code is generated", "Activation code is not generated", false);
+						Reporter.logEvent(Status.FAIL,
+								"Verify activation code is generated",
+								"Activation code is not generated", false);
 					}
 					return;
 				}
 			}
-			
+
 			if (verificationCode.trim().length() == 0) {
-				Reporter.logEvent(Status.FAIL, "Fetch verification code.", "Verification code not generated", false);
+				Reporter.logEvent(Status.FAIL, "Fetch verification code.",
+						"Verification code not generated", false);
 				return;
 			}
-			
-			//Submit verification code
+
+			// Submit verification code
 			Thread.sleep(5000);
-			twoStepVerification.submitVerificationCode(verificationCode, true, 
-					Boolean.parseBoolean(lib.Stock.GetParameterValue("rememberDevice")));
-			
-			//Dismiss pop ups if displayed
+			twoStepVerification.submitVerificationCode(verificationCode, true,
+					Boolean.parseBoolean(lib.Stock
+							.GetParameterValue("rememberDevice")));
+
+			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
-			//landingPage.dismissPopUps(true, true);
+			// landingPage.dismissPopUps(true, true);
 			Thread.sleep(4000);
-			//Verify if landing page is displayed - Landing page is loaded if Logout link is displayed.
+			// Verify if landing page is displayed - Landing page is loaded if
+			// Logout link is displayed.
 			if (Web.isWebElementDisplayed(landingPage, "LOGOUT")) {
-				Reporter.logEvent(Status.PASS, "Verify landing page is displayed", 
+				Reporter.logEvent(Status.PASS,
+						"Verify landing page is displayed",
 						"Landing page is displayed", true);
 			} else {
-				Reporter.logEvent(Status.FAIL, "Verify landing page is displayed", 
+				Reporter.logEvent(Status.FAIL,
+						"Verify landing page is displayed",
 						"Landing page is not displayed", true);
 			}
-			
-			//Logout if opted
+
+			// Logout if opted
 			landingPage.logout(true);
-					
-		}
-		catch(Exception e)
-	    {
-	        e.printStackTrace();
-	        Globals.exception = e;
-	        Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception Occured", true);
-	    }catch(AssertionError ae)
-	    {
-	        ae.printStackTrace();
-	        Globals.assertionerror = ae;
-	        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
-	    }
-		finally { 
-			try { Reporter.finalizeTCReport(); }
-			catch (Exception e1) { e1.printStackTrace(); } 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
 		}
-		
+	}
+
 }
