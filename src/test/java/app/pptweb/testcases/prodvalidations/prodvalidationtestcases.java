@@ -680,6 +680,9 @@ public class prodvalidationtestcases {
 						"Verify I Accept Button is Displayed",
 						"I ACCEPT Button is Not Displayed", false);
 			}
+			Web.clickOnElement(requestLone, "I ACCEPT");
+			
+			Thread.sleep(3000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

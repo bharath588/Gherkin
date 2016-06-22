@@ -71,7 +71,7 @@ public class TestDataFromDB {
 			
 			
 		}
-		System.out.println(mapUsername);
+		///System.out.println(mapUsername);
 
 		return mapUsername;
 	}
@@ -79,7 +79,7 @@ public class TestDataFromDB {
 	public static void addUserDetailsToGlobalMap(Map<String, String> paramMap) {
 
 		tempMap = Stock.globalTestdata;
-		System.out.println("TEST DATA FROM EXCEL"+tempMap);
+		//System.out.println("TEST DATA FROM EXCEL"+tempMap);
 		for (Entry<String, String> entry : paramMap.entrySet()) {
 			tempMap.put(entry.getKey(), entry.getValue());
 

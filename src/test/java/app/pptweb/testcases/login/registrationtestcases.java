@@ -1,6 +1,8 @@
 package app.pptweb.testcases.login;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,6 +20,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import appUtils.Common;
+import appUtils.TestDataFromDB;
 import pageobjects.login.LoginPage;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
@@ -26,6 +29,7 @@ import core.framework.Globals;
 public class registrationtestcases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
 
@@ -43,6 +47,15 @@ public class registrationtestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
 				.getName(), Globals.GC_MANUAL_TC_NAME);
+	}
+	public void prepareLoginTestData() {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					"getUnRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test(dataProvider = "setData")
