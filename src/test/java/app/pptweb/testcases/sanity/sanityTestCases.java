@@ -20,6 +20,7 @@ import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.HealthCareCosts;
 import pageobjects.liat.HowDoICompare;
@@ -843,13 +844,13 @@ public class sanityTestCases {
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
 	
-		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage accpage=new MyAccountsPage(homePage);
 
 			//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 			//			leftmenu = new LeftNavigationBar(homePage);			
@@ -857,7 +858,7 @@ public class sanityTestCases {
 			//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
 			//			leftmenu = new LeftNavigationBar(accountPage);
 			//		}
-			leftmenu = new LeftNavigationBar(homePage);
+			leftmenu = new LeftNavigationBar(accpage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
@@ -978,7 +979,7 @@ public class sanityTestCases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-
+			MyAccountsPage accpage=new MyAccountsPage(homePage);
 
 			//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 			//			leftmenu = new LeftNavigationBar(homePage);			
@@ -986,7 +987,7 @@ public class sanityTestCases {
 			//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
 			//			leftmenu = new LeftNavigationBar(accountPage);
 			//		}
-			leftmenu = new LeftNavigationBar(homePage);
+			leftmenu = new LeftNavigationBar(accpage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
