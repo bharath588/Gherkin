@@ -224,10 +224,8 @@ public class validate_participanthomepage {
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
 		
-		
 		// Step2:Search with PPT ID..		
 		sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("reg_status"),"ID","GA_ID");
-
 		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",sqlQueryRes.get("ID"),sqlQueryRes.get("GA_ID"));
 
 		// Step3: Verify Registration status

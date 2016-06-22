@@ -62,10 +62,10 @@ public class CommonLib {
 
 	/**
 	 * <pre>
-	 * Validate string contains money type value with $ currency symbol or not
+	 * Validate string contains money type value with $ currency symbol or not.
 	 * </pre>
 	 * 
-	 * @return boolean:it will 
+	 * @return boolean:will return <b> true </b> if account balance 'll have $ sign along with numbers else 'll return <b>false</b>
 	 */
 	public static boolean isAccountBalance_In_ProperFormat(String accountBal) {
 		boolean isAccBal = false;

@@ -1695,6 +1695,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 										isAccBalPopupDisplayedWithDtls = true;
 									else
 										isAccBalPopupDisplayedWithDtls = false;
+									//	break ;
 								}
 							}
 						}
