@@ -1094,6 +1094,130 @@ public class sanityTestCases {
 		
 		
 	}
+	@Test(dataProvider = "setData")
+	public void UnMarried_Multiple_Entity_beneficiary(int itr, Map<String, String> testdata){
+	
+		
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+
+			//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+			//			leftmenu = new LeftNavigationBar(homePage);			
+			//		else {
+			//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			//			leftmenu = new LeftNavigationBar(accountPage);
+			//		}
+			leftmenu = new LeftNavigationBar(homePage);
+			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+
+			beneficiary.get();
+
+
+			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+
+			}
+
+			//verify if add another beneficiary button is displayed after adding a beneficiary
+			if(beneficiary.isFieldDisplayed("AddAnotherBeneficiary"))
+				Reporter.logEvent(Status.PASS, "verify add another beneficiary button", "add another beneficiary button displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "add another beneficiary button", "add another beneficiary button is not displayed", true);
+
+			//verify if continue and confirm button is displayed after adding a beneficiary
+			if(beneficiary.isFieldDisplayed("ContinueAndConfirm"))
+				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Confirm and Continue button displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
+
+			//click on continue and confirm button
+			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
+				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
+			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+			//verify beneficiary name
+			if(beneficiary.verifyEntityDetails("Name"))
+				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", true);
+			else
+				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust bot matching", true);
+
+			//verify beneficiary allocation percentage
+			if(beneficiary.verifyEntityDetails("Allocation"))
+				Reporter.logEvent(Status.PASS, "verify Trust Allocation", "beneficiary Trust is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust bot matching", true);
+
+			//verify beneficiary relationship
+			if(beneficiary.verifyEntityDetails("Relationship"))
+				Reporter.logEvent(Status.PASS, "verify Entity Relationship", "Entity Relationship is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship bot matching", true);
+
+			//verify beneficiary ssn
+			if(beneficiary.verifyEntityDetails("TIN"))
+				Reporter.logEvent(Status.PASS, "verify TIN", "beneficiary TIN is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN bot matching", true);
+
+			//verify beneficiary DOB
+			if(beneficiary.verifyEntityDetails("DOT"))
+				Reporter.logEvent(Status.PASS, "verify Date of trust", " Date of trust is matching", false);
+			else
+				Reporter.logEvent(Status.FAIL, "verify  Date of trust", " Date of trust bot matching", true);
+
+
+
+
+			//delete beneficiary from Database
+			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
+			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+			//throw ae;
+		}
+		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
 	/**
 	 * The following script After Tax Deferral and confirms it
 	 * 

@@ -1630,6 +1630,30 @@ public class prodvalidationtestcases {
 						"Verify I agree and Submit Button is Displayed",
 						"I agree and Submit Button is Not Displayed", false);
 			}
+			Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
+			Thread.sleep(3000);
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Request submitted!");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Request Submission Page is Displayed",
+						"Request Submission Page is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Request Submission Page is Displayed",
+						"Request Submission is Not Displayed", true);
+			}
+			lblDisplayed = requestWithdrawal
+					.isTextFieldDisplayed("Your confirmation number is");
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Request Confirmation Number is Displayed",
+						"Request Confirmation Number is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Request Confirmation Number is Displayed",
+						"Request Confirmation Number is Not Displayed", true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

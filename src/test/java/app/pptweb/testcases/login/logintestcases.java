@@ -13,6 +13,7 @@ import lib.Reporter.Status;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -33,6 +34,7 @@ public class logintestcases {
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
+		System.out.println("LOGIN");
 	}
 
 	@DataProvider
