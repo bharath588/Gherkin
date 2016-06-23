@@ -103,38 +103,38 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
 
 			//verify beneficiary Relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
 
 			//verify beneficiary new address
 			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
 			}
 
 //			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("Participant ssn"));
@@ -231,38 +231,38 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
 
 			//verify beneficiary relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
 
 			//verify beneficiary new address
 			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
 			}
 
 
@@ -357,31 +357,31 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyEntityDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust not matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyEntityDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify Trust Allocation", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust not matching", true);
 
 			//verify beneficiary relationship
 			if(beneficiary.verifyEntityDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify Entity Relationship", "Entity Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship not matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyEntityDetails("TIN"))
 				Reporter.logEvent(Status.PASS, "verify TIN", "beneficiary TIN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN not matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyEntityDetails("DOT"))
 				Reporter.logEvent(Status.PASS, "verify Date of trust", " Date of trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify  Date of trust", " Date of trust bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify  Date of trust", " Date of trust not matching", true);
 
 
 
@@ -603,25 +603,25 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyEntityDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust not matching", true);
 			
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyEntityDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify Trust Allocation", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust not matching", true);
 			
 			//verify beneficiary relationship
 			if(beneficiary.verifyEntityDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify Entity Relationship", "Entity Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship not matching", true);
 			
 			//verify beneficiary ssn
 			if(beneficiary.verifyEntityDetails("TIN"))
 				Reporter.logEvent(Status.PASS, "verify TIN", "beneficiary TIN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN not matching", true);
 			
 			//verify beneficiary DOB
 			if(beneficiary.verifyEntityDetails("DOT"))
@@ -1185,31 +1185,31 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
 			
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
 			
 			//verify beneficiary Relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
 			
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
 			
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
 					
 			
 		}

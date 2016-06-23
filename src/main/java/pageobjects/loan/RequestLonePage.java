@@ -68,8 +68,10 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement btnIAccept;
 	@FindBy(id = "checkLoanProvision")
 	private WebElement inputIAccept;
+	@FindBy(xpath = "//p[1]/span[2]")
+	private WebElement txtConfirmationNo;
 	private String loanQuote="//*[contains(text(),'webElementText')]";
-
+	
 	/**
 	 * Default Constructor
 	 */
@@ -195,7 +197,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (fieldName.trim().equalsIgnoreCase("CHECKBOX I ACCEPT")) {
 			return this.inputIAccept;
 		}
-
+		if (fieldName.trim().equalsIgnoreCase("Text Confirmation Number")) {
+			return this.txtConfirmationNo;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
