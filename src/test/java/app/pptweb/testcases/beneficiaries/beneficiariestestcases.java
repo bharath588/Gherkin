@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.enrollment.Enrollment;
@@ -54,6 +55,7 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -74,7 +76,7 @@ public class beneficiariestestcases {
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 
 			//			// add a beneficiary
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"), Stock.GetParameterValue("Allocation"));
 
 			try {
 				Thread.sleep(5000);
@@ -103,42 +105,39 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
 
 			//verify beneficiary Relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
 
 			//verify beneficiary new address
 			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
 			}
-
-//			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("Participant ssn"));
-
 
 		}
 		catch(Exception e)
@@ -201,7 +200,7 @@ public class beneficiariestestcases {
 
 
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 
 			try {
 				Thread.sleep(5000);
@@ -231,38 +230,38 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
 
 			//verify beneficiary relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
 
 			//verify beneficiary new address
 			if(Stock.GetParameterValue("Use Current Address").equalsIgnoreCase("No")){
 				if(beneficiary.verifyBeneficiaryDetails("Address"))
 					Reporter.logEvent(Status.PASS, "verify beneficiary Address", "beneficiary Address is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address bot matching", true);
 			}
 
 
@@ -327,7 +326,7 @@ public class beneficiariestestcases {
 
 
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 
 			try {
 				Thread.sleep(5000);
@@ -357,31 +356,31 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyEntityDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", true);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust bot matching", true);
 
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyEntityDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify Trust Allocation", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust bot matching", true);
 
 			//verify beneficiary relationship
 			if(beneficiary.verifyEntityDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify Entity Relationship", "Entity Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship bot matching", true);
 
 			//verify beneficiary ssn
 			if(beneficiary.verifyEntityDetails("TIN"))
 				Reporter.logEvent(Status.PASS, "verify TIN", "beneficiary TIN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN bot matching", true);
 
 			//verify beneficiary DOB
 			if(beneficiary.verifyEntityDetails("DOT"))
 				Reporter.logEvent(Status.PASS, "verify Date of trust", " Date of trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify  Date of trust", " Date of trust not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify  Date of trust", " Date of trust bot matching", true);
 
 
 
@@ -450,7 +449,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 			String error_msg="";
 			if(lib.Web.isWebElementDisplayed(beneficiary, "DOB Error Msg")){
 				error_msg=beneficiary.readErrorMessage("DOB Error Msg");
@@ -577,7 +576,7 @@ public class beneficiariestestcases {
 			beneficiary.get();
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 			
 			lib.Web.isWebElementDisplayed(beneficiary, "AddAnotherBeneficiary");
 			
@@ -603,25 +602,25 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyEntityDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify Trust name", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust name", "beneficiary Trust bot matching", true);
 			
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyEntityDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify Trust Allocation", "beneficiary Trust is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Trust Allocation", "beneficiary Trust bot matching", true);
 			
 			//verify beneficiary relationship
 			if(beneficiary.verifyEntityDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify Entity Relationship", "Entity Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify Entity Relationship", "Entity Relationship bot matching", true);
 			
 			//verify beneficiary ssn
 			if(beneficiary.verifyEntityDetails("TIN"))
 				Reporter.logEvent(Status.PASS, "verify TIN", "beneficiary TIN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify TIN", "beneficiary TIN bot matching", true);
 			
 			//verify beneficiary DOB
 			if(beneficiary.verifyEntityDetails("DOT"))
@@ -927,14 +926,14 @@ public class beneficiariestestcases {
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			
 			// add a beneficiary
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 			Web.waitForElement(beneficiary, "ContinueAndConfirm");
 			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			
-			if(lib.Web.isWebElementDisplayed(beneficiary, "Auth code I Error Msg"))
+			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg"))
 				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
@@ -1087,7 +1086,7 @@ public class beneficiariestestcases {
 			String marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
 			if(marital_status==null){
 				Reporter.logEvent(Status.PASS, "Verify marital status should be null", "Marital status is null", false);
-				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 			}
 			else
@@ -1160,7 +1159,7 @@ public class beneficiariestestcases {
 			beneficiary.get();
 			
 			// add a beneficiary
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 			
 			lib.Web.isWebElementDisplayed(beneficiary, "AddAnotherBeneficiary");
 			
@@ -1185,31 +1184,31 @@ public class beneficiariestestcases {
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
 			
 			//verify beneficiary allocation percentage
 			if(beneficiary.verifyBeneficiaryDetails("Allocation"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
 			
 			//verify beneficiary Relationship
 			if(beneficiary.verifyBeneficiaryDetails("Relationship"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
 			
 			//verify beneficiary ssn
 			if(beneficiary.verifyBeneficiaryDetails("SSN"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
 			
 			//verify beneficiary DOB
 			if(beneficiary.verifyBeneficiaryDetails("DOB"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
 			else
-				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB not matching", true);
+				Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
 					
 			
 		}
@@ -1244,6 +1243,129 @@ public class beneficiariestestcases {
             e1.printStackTrace();
 		}
 	}
+		
+		@Test(dataProvider = "setData")
+		public void Married_multiple_Primary_Beneficiary(int itr, Map<String, String> testdata){
+			Stock.globalTestdata = testdata;
+//	      Globals.GBL_CurrentIterationNumber = itr;
+			
+			
+			try{
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				
+//				TestDataFromDB.updateTable("setQjsaAndBeneSpouseRule", "194391");
+//				TestDataFromDB.fetchRegisteredParticipant("194391-01");
+				LeftNavigationBar leftmenu;
+				LoginPage login = new LoginPage();
+				TwoStepVerification mfaPage = new TwoStepVerification(login);
+				LandingPage homePage = new LandingPage(mfaPage);
+
+				//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
+				//			leftmenu = new LeftNavigationBar(homePage);			
+				//		else {
+				//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
+				//			leftmenu = new LeftNavigationBar(accountPage);
+				//		}
+				leftmenu = new LeftNavigationBar(homePage);
+				MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+
+				beneficiary.get();
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation1"));
+				
+				if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("No")){
+					//verify if add another beneficiary button is displayed after adding a beneficiary
+					if(beneficiary.isFieldDisplayed("AddAnotherBeneficiary"))
+						Reporter.logEvent(Status.PASS, "verify add another beneficiary button", "add another beneficiary button displayed", false);
+					else
+						Reporter.logEvent(Status.FAIL, "add another beneficiary button", "add another beneficiary button is not displayed", true);
+
+					//verify if continue and confirm button is displayed after adding a beneficiary
+					if(beneficiary.isFieldDisplayed("ContinueAndConfirm"))
+						Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Confirm and Continue button displayed", false);
+					else
+						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
+					//click on continue and confirm button
+					if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
+						Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
+					else
+						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
+					
+					Web.waitForElement(beneficiary, "View Beneficiary Button");
+					Web.clickOnElement(beneficiary, "View Beneficiary Button");
+					Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
+					beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName"));
+				}
+				else{
+					Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+					beneficiary.verifyErrorMessage(Stock.GetParameterValue("Error_Message"));
+					beneficiary.enterAllocations(Stock.GetParameterValue("Allocation2"));
+					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("null")){
+						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", false);
+						if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg")){
+							Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
+							String error_msg="";
+							error_msg=beneficiary.readErrorMessage("Generic Error Msg");
+							if(lib.Web.VerifyText(Stock.GetParameterValue("Generic_Error_Message"), error_msg, true))
+								Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching", false);
+							else
+								Reporter.logEvent(Status.FAIL, "Verify if Error message is matching", "Error message not matching", true);
+						}
+						else
+							Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
+						
+					}
+					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("100% Mandatory")){
+						beneficiary.verifyErrorMessage(Stock.GetParameterValue("Error_Message2"));
+					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("75% Mandatory")){
+						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", true);
+						beneficiary.verifyConfirmationPageDisplayed();
+						Web.clickOnElement(beneficiary, "View Beneficiary Button");
+						Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
+						beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
+					}
+					
+				}
+				}
+			}
+			catch(Exception e)
+	        {
+	            e.printStackTrace();
+	            Globals.exception = e;
+	            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+	        }
+			catch(Error ae)
+	        {
+	                        ae.printStackTrace();
+	                        Globals.error = ae;
+	                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	                        //throw ae;
+	        }
+			finally {
+				//delete beneficiary from Database
+				MyBeneficiaries beneficiary = new MyBeneficiaries();
+				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+					try {
+						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				
+	        }
+			try {
+	            Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+	            // TODO Auto-generated catch block
+	            e1.printStackTrace();
+			}
+		
+	}
+		
+		
+		
 	
 	@AfterSuite
 	public void cleanupSessions() {

@@ -469,7 +469,7 @@ public class prodvalidationtestcases {
 	}
 
 	@Test(dataProvider = "setData")
-	public void SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Lone_link(
+	public void SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link(
 			int itr, Map<String, String> testdata) {
 
 		try {
@@ -1076,7 +1076,14 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"), date,
 					Stock.GetParameterValue("investment_percent"));
-			Web.clickOnElement(investment, "Cancel button");
+			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+				investment.verifyRebalanceInvestmentConfirmationDetails();
+				investment.cancelTransfer("Rebalance Currnet Balance");
+			}
+				
+				
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1192,22 +1199,15 @@ public class prodvalidationtestcases {
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
 			Thread.sleep(5000);
-			if (Web.isWebElementDisplayed(brokerage, "Brokerage Table")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify brokerage table is displayed",
-						"Table displayed", true);
-
-				brokerage.verifyBrokerageDataDisplayed("Provider Name");
-				brokerage.verifyBrokerageDataDisplayed("Enroll image");
-				brokerage
-						.verifyBrokerageDataDisplayed("Transfer into sda link");
-				brokerage
-						.verifyBrokerageDataDisplayed("Transfer from sda link");
-				brokerage.verifyBrokerageDataDisplayed("PDF image");
-			} else
-				Reporter.logEvent(Status.FAIL,
-						"Verify brokerage table is displayed",
-						"Table is not displayed", true);
+			brokerage.verifyBrokerageTableDisplayed();
+			
+			brokerage.verifyBrokerageTableDataDisplayed("Provider Name");
+			brokerage.verifyBrokerageTableDataDisplayed("Enroll image");
+			brokerage
+					.verifyBrokerageTableDataDisplayed("Transfer into sda link");
+			brokerage
+					.verifyBrokerageTableDataDisplayed("Transfer from sda link");
+			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
 			Web.clickOnElement(brokerage, "LOGOUT");
 
 		} catch (Exception e) {
@@ -1304,6 +1304,9 @@ public class prodvalidationtestcases {
 			investment.ReviewFundToFundTransfer(
 					Stock.GetParameterValue("From_Percent"),
 					Stock.GetParameterValue("To_Percent"));
+			
+			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes"))
+				investment.cancelTransfer("F2F");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1328,7 +1331,7 @@ public class prodvalidationtestcases {
 	}
 
 	@Test(dataProvider = "setData")
-	public void Dollar_cost_average_flow(int itr, Map<String, String> testdata) {
+	public void Dollar_Cost_Average_Flow(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -1344,6 +1347,7 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Dollar Cost");
 			Web.clickOnElement(investment, "Continue button1");
+			investment.dollarCostAverageFlow(Stock.GetParameterValue("Frequency_Period"), Stock.GetParameterValue("Setup_date"), Stock.GetParameterValue("percent"), Stock.GetParameterValue("amount"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1386,56 +1390,56 @@ public class prodvalidationtestcases {
 					"Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Primary");
 
-			if (!beneficiary.ifElementDisabled("First name"))
-				Reporter.logEvent(Status.PASS,
-						"verify First name text box is enabled",
-						"First name text box is enabled", true);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify First name text box is enabled",
-						"First name text box not enabled", true);
-			if (!beneficiary.ifElementDisabled("Middle name"))
-				Reporter.logEvent(Status.PASS,
-						"verify Middle name text box is enabled",
-						"Middle name text box is enabled", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify Middle name text box is enabled",
-						"Middle name text box not enabled", true);
-			if (!beneficiary.ifElementDisabled("Last name"))
-				Reporter.logEvent(Status.PASS,
-						"verify Last name text box is enabled",
-						"Last name text box is enabled", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify Last name text box is enabled",
-						"Last name text box not enabled", true);
-			if (!beneficiary.ifElementDisabled("DOB"))
-				Reporter.logEvent(Status.PASS,
-						"verify DOB text box is enabled",
-						"DOB text box is enabled", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify DOB text box is enabled",
-						"DOB text box not enabled", true);
-			if (!beneficiary.ifElementDisabled("Suffix"))
-				Reporter.logEvent(Status.PASS,
-						"verify Suffix text box is enabled",
-						"Suffix text box is enabled", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify Suffix text box is enabled",
-						"Suffix text box not enabled", true);
-			if (!beneficiary.ifElementDisabled("SSN"))
-				Reporter.logEvent(Status.PASS,
-						"verify SSN text box is enabled",
-						"SSN text box is enabled", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"verify SSN text box is enabled",
-						"SSN text box not enabled", true);
-
-			lib.Web.clickOnElement(beneficiary, "Cancel button");
+//			if (!beneficiary.ifElementDisabled("First name"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify First name text box is enabled",
+//						"First name text box is enabled", true);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify First name text box is enabled",
+//						"First name text box not enabled", true);
+//			if (!beneficiary.ifElementDisabled("Middle name"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify Middle name text box is enabled",
+//						"Middle name text box is enabled", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify Middle name text box is enabled",
+//						"Middle name text box not enabled", true);
+//			if (!beneficiary.ifElementDisabled("Last name"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify Last name text box is enabled",
+//						"Last name text box is enabled", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify Last name text box is enabled",
+//						"Last name text box not enabled", true);
+//			if (!beneficiary.ifElementDisabled("DOB"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify DOB text box is enabled",
+//						"DOB text box is enabled", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify DOB text box is enabled",
+//						"DOB text box not enabled", true);
+//			if (!beneficiary.ifElementDisabled("Suffix"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify Suffix text box is enabled",
+//						"Suffix text box is enabled", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify Suffix text box is enabled",
+//						"Suffix text box not enabled", true);
+//			if (!beneficiary.ifElementDisabled("SSN"))
+//				Reporter.logEvent(Status.PASS,
+//						"verify SSN text box is enabled",
+//						"SSN text box is enabled", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"verify SSN text box is enabled",
+//						"SSN text box not enabled", true);
+			beneficiary.enterBeneficiaryDetails();
+			lib.Web.clickOnElement(beneficiary, "Save button");
 			if (lib.Web.isWebElementDisplayed(beneficiary, "MyBeneficiaries"))
 				Reporter.logEvent(Status.PASS,
 						"Verify if My Beneficiaries page is displayed",
@@ -1444,6 +1448,49 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify if My Beneficiaries page is displayed",
 						"My Beneficiaries page is not displayed", true);
+			if(beneficiary.isFieldDisplayed("ContinueAndConfirm"))
+				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Confirm and Continue button displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
+			
+			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+				//click on continue and confirm button
+				if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
+					Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
+				//verify beneficiary name
+
+				if(beneficiary.verifyBeneficiaryDetails("Name"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
+
+				//verify beneficiary allocation percentage
+				if(beneficiary.verifyBeneficiaryDetails("Allocation"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
+
+				//verify beneficiary Relationship
+				if(beneficiary.verifyBeneficiaryDetails("Relationship"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
+
+				//verify beneficiary ssn
+				if(beneficiary.verifyBeneficiaryDetails("SSN"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
+
+				//verify beneficiary DOB
+				if(beneficiary.verifyBeneficiaryDetails("DOB"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1492,7 +1539,7 @@ public class prodvalidationtestcases {
 			deferral.click_Select_Your_Contribution_Rate();
 			deferral.select_ContributionType("Before");
 			lib.Web.clickOnElement(deferral, "Continue button");
-			if (deferral.verifyMyContributions("6", "Before-tax", "Standard"))
+			if (deferral.verifyMyContributions(Stock.GetParameterValue("Contribution Rate"), "Before Tax", "Standard"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify Before contribution percent for Standard deferral",
@@ -1502,6 +1549,11 @@ public class prodvalidationtestcases {
 						Status.FAIL,
 						"Verify Before contribution percent for Standar deferral",
 						"Before contribution percent matching", true);
+			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+				deferral.myContributions_Confirmation_Page();
+				lib.Web.clickOnElement(deferral,"MyContribution Button");
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

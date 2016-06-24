@@ -3,22 +3,11 @@ package pageobjects.investment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
-
-
-
-
-
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
-
-
-
-
-
-
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -129,18 +118,43 @@ private LoadableComponent<?> parent;
 		if (fieldName.trim().equalsIgnoreCase("PDF image")) {
 			return this.imgPdf;
 		}
-			
+		if (fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+			return this.lnkLogout;
+		}	
 		return null;
 	}
 	
-	public void verifyBrokerageDataDisplayed(String dataName){
+	public void verifyBrokerageTableDisplayed(){
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
-	 	WebElement data = this.getWebElement(dataName);
+	 
+		
+	 	
+	 	if (Web.isWebElementDisplayed(tblBrokerage,true)) {
+			Reporter.logEvent(Status.PASS,"Verify brokerage table is displayed","Table displayed", true);
+			
+			if(StringUtils.containsIgnoreCase(hdrBrokerageTable.getText(), "PROVIDER NAME ENROLL TRANSFER INTO SDA TRANSFER FROM SDA FACT SHEET"))
+				Reporter.logEvent(Status.PASS, "Verify table header is displayed","Expected Header: PROVIDER NAME ENROLL TRANSFER INTO SDA TRANSFER FROM SDA FACT SHEET \n Actual: "+hdrBrokerageTable.getText(), true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify table header is displayed","Expected Header: PROVIDER NAME ENROLL TRANSFER INTO SDA TRANSFER FROM SDA FACT SHEET \n Actual: "+hdrBrokerageTable.getText(),true);
+			
+		} else
+			Reporter.logEvent(Status.FAIL,"Verify brokerage table is displayed","Table is not displayed", true);
+	 	Web.webdriver.switchTo().defaultContent();
+		
+		
+		
+	}
+	
+	public void verifyBrokerageTableDataDisplayed(String dataName){
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		WebElement data = this.getWebElement(dataName);
 		
 		if(Web.isWebElementDisplayed(data))
 			Reporter.logEvent(Status.PASS, "Verify "+dataName+" is displayed", dataName+" is displayed",false);
 		else
 			Reporter.logEvent(Status.PASS, "Verify "+dataName+" is displayed", dataName+" is not displayed",true);
+	
+		Web.webdriver.switchTo().defaultContent();
 	}
 
 }

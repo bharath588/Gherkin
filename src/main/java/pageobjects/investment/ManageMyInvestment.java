@@ -9,6 +9,8 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.Choose;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -27,6 +29,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String investmentFundName2;
 	String fromInvestmentOption;
 	String toInvestmentOption;
+	String confirmationNo;
 	
 	 //@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	 @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
@@ -38,8 +41,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath=".//strong[text()[normalize-space()='Change how my current balance is invested']]") private WebElement radioChangeCurrentBalInvst;
 	@FindBy(xpath=".//strong[text()[normalize-space()='Dollar-cost average']]") private WebElement radioDollarCost;
 	@FindBy(xpath="//button[text()[normalize-space()='Continue']]") private WebElement btnContinue1;
+	//@FindBy(xpath="//button[text()[normalize-space()='Continue']]") private WebElement btnContinue;
+	@FindBy(xpath = ".//input[@value = 'Continue']") private WebElement btnCont;
 	@FindBy(xpath="//input[@value='Continue']") private WebElement btnContinue2;
 	@FindBy(xpath="//input[@value='Cancel']") private WebElement btnCancel;
+	@FindBy(xpath="//input[@value='Submit']") private WebElement btnSubmitForRebalancer;
+	@FindBy(xpath="//button[@id='submitTransferbuttonOnVerifyId']") private WebElement btnSubmitForF2F;
+	@FindBy(xpath="//input[@value='View Pending Transfer']") private WebElement btnViewPendingTransfer;
 	@FindBy(id="perdTrfFreq_once") private WebElement radioOnce;
 	@FindBy(id="frequency_M") private WebElement radioMonthlyDollarCost;
 	@FindBy(id="perdTrfFreq_quarterly") private WebElement radioQuarterly;
@@ -50,6 +58,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(id="future_effdate_no") private WebElement radiotodayDollarCost;
 	@FindBy(id="future_effdate_yes") private WebElement radioFutureDollarCost;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
+	@FindBy(id="the_iframe") private WebElement theIframe;
 	@FindBy(id="transferPreSubmitButton") private WebElement btnReviewTransfer;
 	@FindBy(id="preValidationWarningAId") private WebElement btnPreValidationOK;
 	@FindBy(xpath="//table[@class='default']//tbody//table//tr//td[2]//input") private List<WebElement> lsttxtPercentage;
@@ -84,7 +93,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath="//tr[@id='fixedRatesColTitle']") private WebElement hdrVerifyTransferToTable;
 	@FindBy(xpath="//table[@id='transactions-validation']//tbody/tr/td[1]") private WebElement lblTransferToOption;
 	@FindBy(xpath="//table[@id='transactions-validation']//tbody/tr/td[2]") private WebElement lblTransferToPercent;
-	
+	@FindBy(xpath="//p/span[@class='baseFontFace baseFontSize alertFontColor alertFontWeight baseTextAlign']") private WebElement lblTransactionDetails;
+	@FindBy(xpath="//p/span[@class='baseFontFace baseFontSize alertFontColor alertFontWeight baseTextAlign']/span") private WebElement lblConfirmationNumber;
+	@FindBy(xpath="//p[@class='bold confirmationNumber']") private WebElement lblConfirmationNumberF2F;
+	@FindBy(xpath="//span[@class='baseFontFace sectionTitleFontSize sectionTitleFontColor sectionTitleFontWeight']") private WebElement lblConfirmationNumberForCancel;
+	@FindBy(xpath="//button[text()='Back']") private WebElement btnBack;
+	@FindBy(xpath="//input[@class='canceltransferBtn']") private WebElement btnCancelTransfer;
+	@FindBy(xpath="//input[@value='Cancel Transfer']") private WebElement btnCancelTransferF2F;
 	@FindBy(xpath="//input[@value='Continue to the next step']") private WebElement btnContinueToNextStep;
 	@FindBy(xpath="//input[@id='use_termdate_no']") private WebElement radioDoNoTerminate;
 	@FindBy(xpath="//input[@id='use_termdate_yes']") private WebElement radioTerminate;
@@ -172,8 +187,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Continue button1")) {
 			return this.btnContinue1;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Cancel button")) {
-			return this.btnCancel;
+		if (fieldName.trim().equalsIgnoreCase("Submit button Rebalancer")) {
+			return this.btnSubmitForRebalancer;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Submit button F2F")) {
+			return this.btnSubmitForF2F;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Once")) {
 			return this.radioOnce;
@@ -299,6 +317,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	public void verifyRebalanceInvestmentDetails(String frequency,String setupDate,String date,String percent){
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.waitForElement(lblRebalancerFrequency);
 		if(Web.VerifyText("Your chosen Rebalancer frequency is: "+frequency, lblRebalancerFrequency.getText().trim()+" "+radioOnce.getText().trim(), true))
 			Reporter.logEvent(Status.PASS, "verify Rebalancer Frequency", "Expected: Your chosen Rebalancer frequency is: "+frequency+"\n Actual: "+lblRebalancerFrequency.getText().trim()+" "+radioOnce.getText().trim(), true);
 		else
@@ -319,9 +338,40 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.PASS, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(1).getText(), false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify Fund name and investment percent displayed", "Fund name: "+investmentFundName2+"\n Investment percent: "+percent+"\n Actual Fund name: "+lstInvestmentFunds.get(1).getText(),true);
+		if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+			btnSubmitForRebalancer.click();
+			Web.webdriver.switchTo().defaultContent();
+			Web.waitForElement(btnBack);
+			Reporter.logEvent(Status.INFO, "Submit TRansfer Details",
+					"Transfer Details Submitted", true);
+		}
 		
+	}
+	
+	public void verifyRebalanceInvestmentConfirmationDetails(){
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		if(StringUtils.containsIgnoreCase(lblTransactionDetails.getText(), "Your Confirmation Number is")){
+			confirmationNo=lblConfirmationNumber.getText();
+			if(lblConfirmationNumber.getText()!=" " & lblConfirmationNumber.getText()!="null")
+				Reporter.logEvent(Status.PASS, "verify Confirmation Number Displayed","Confirmation Numberdisplayed",true);
+			else
+				Reporter.logEvent(Status.FAIL, "verify Confirmation Number Displayed","Confirmation Number not displayed",true);
+		}else
+			Reporter.logEvent(Status.FAIL, "verify Confirmation Number Displayed","Confirmation Number not displayed",true);
 		Web.webdriver.switchTo().defaultContent();
-		
+	}
+	
+	public void verifyF2FConfirmationDetails(){
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		if(StringUtils.containsIgnoreCase(lblConfirmationNumberF2F.getText(), "Your Confirmation Number is")){
+			confirmationNo=lblConfirmationNumberF2F.getText().split(":")[1].trim();
+			if(lblConfirmationNumberF2F.getText()!=" " & lblConfirmationNumberF2F.getText()!="null")
+				Reporter.logEvent(Status.PASS, "verify Confirmation Number Displayed","Confirmation Numberdisplayed",true);
+			else
+				Reporter.logEvent(Status.FAIL, "verify Confirmation Number Displayed","Confirmation Number not displayed",true);
+		}else
+			Reporter.logEvent(Status.FAIL, "verify Confirmation Number Displayed","Confirmation Number not displayed",true);
+		Web.webdriver.switchTo().defaultContent();
 	}
 	
 	public void fundToFundTransfer(String fromPercent, String toPercent){
@@ -385,8 +435,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "Verify Transfer To Table Header is Displayed", "Expected : Investment Option Balance Percent \n Actual : "+hdrVerifyTransferToTable.getText(),true);
-				
-		Web.webdriver.switchTo().defaultContent();
+		if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+			btnSubmitForF2F.click();
+			Web.webdriver.switchTo().defaultContent();
+			Web.waitForElement(btnBack);
+			Reporter.logEvent(Status.INFO, "Submit TRansfer Details",
+					"Transfer Details Submitted", true);
+		}
+		
 	}
 	
 	public void navigateToTab(String tabName){
@@ -406,6 +462,38 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.PASS, "Verify "+graphName+"is displayed", graphName+"is displayed",false);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify "+graphName+"is displayed", graphName+"is not displayed",true);
+		Web.webdriver.switchTo().defaultContent();
+	}
+	
+	public void cancelTransfer(String transferType){
+		btnBack.click();
+		choseInvestmentOption(transferType);
+		btnContinue1.click();
+		if(transferType.equalsIgnoreCase("Rebalance Currnet Balance")){
+			Web.waitForElement(iframeLegacyFeature);
+			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			radioOnce.click();
+			btnContinue2.click();
+			btnViewPendingTransfer.click();
+			Web.webdriver.switchTo().defaultContent();
+		}
+		if(transferType.equalsIgnoreCase("F2F")){
+			Web.waitForElement(btnCancelTransfer);
+			btnCancelTransfer.click();
+			
+		}
+		
+		Web.waitForElement(iframeLegacyFeature);
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		//Web.webdriver.switchTo().frame(theIframe);
+		btnCont.click();
+		if(StringUtils.containsIgnoreCase(lblConfirmationNumberForCancel.getText(), "Transfer Details for Confirmation Number: "+confirmationNo))
+			Reporter.logEvent(Status.PASS, "Verify Confirmation number displayed", "Expected : Transfer Details for Confirmation Number: "+confirmationNo+"\n Actual : "+lblConfirmationNumberForCancel.getText(),true);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Confirmation number displayed", "Expected : "+"Expected : Transfer Details for Confirmation Number: "+confirmationNo+"\n Actual : "+lblConfirmationNumberForCancel.getText(),true);
+	
+		btnCancelTransferF2F.click();
+		Reporter.logEvent(Status.INFO, "Verify Transfer Cancelled","Transfer Cancelled",true);
 		Web.webdriver.switchTo().defaultContent();
 	}
 }

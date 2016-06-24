@@ -13,6 +13,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
@@ -66,7 +67,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//h1[text()='Designate beneficiary']") private WebElement lblDesignateBeneficiary;
 	@FindBy(xpath="//span[text()='Yes']") private WebElement btnMarried;
 	@FindBy(xpath="//span[text()='No']") private WebElement btnUnmarried;
-	@FindBy(xpath="//table[@class='beneficiaries primary-beneficiaries table']/tbody") private WebElement tblMyBeneficiaries;
 	@FindBy(xpath="//button[text()='Delete']") private WebElement btnDelete;
 	@FindBy(xpath="//table[@class='beneficiaries primary-beneficiaries table']//*[@class='beneficiary-name']/a") private List<WebElement> lstlnkPrimaryBeneficiaryName;
 	@FindBy(xpath="//table[@class='beneficiaries contingent-beneficiaries table']//*[@class='beneficiary-name']/a") private List<WebElement> lstlnkContingentBeneficiaryName;
@@ -86,13 +86,15 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//div[contains(@class,'alert alert-warning')]//p") private WebElement lblAlertMsg;
 	@FindBy(id="btn-view-beneficiaries") private WebElement btnViewBeneficiaries;
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
-	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement authCodeIErrorMsg;
-	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement deleteBeneficiaryErrorMsg;
+	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement GenericErrorMsg;
+	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement lblErrorMsg;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	@FindBy(xpath = "//img[@class='site-logo']")
-	private WebElement lblSponser;
+	@FindBy(xpath = "//img[@class='site-logo']")private WebElement lblSponser;
 	
+	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody/tr")private List<WebElement> lstPrimaryBeneficiaries;
+	@FindBy(xpath = "//input[contains(@id,'primaryBeneficiaryAllocationPercent')]")private List<WebElement> lstPriBeneAllocations;
+	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody")private WebElement tblPrimaryBeneficiary;
 	/** Empty args constructor
 	 * 
 	 */
@@ -208,8 +210,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
 			return this.hdrAccountOverview;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Auth code I Error Msg")) {
-			return this.authCodeIErrorMsg;
+		if (fieldName.trim().equalsIgnoreCase("Generic Error Msg")) {
+			return this.GenericErrorMsg;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Delete Checkbox")) {
 			return this.chkDelBeneficiary;
@@ -223,8 +225,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("Submit button")) {
 			return this.btnContinue;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Save button")) {
+			return this.btnSave;
+		}
 		if (fieldName.trim().equalsIgnoreCase("Delete Beneficiary Error Message")) {
-			return this.deleteBeneficiaryErrorMsg;
+			return this.lblErrorMsg;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Alert Msg")) {
 			return this.lblAlertMsg;
@@ -274,7 +279,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @param useMyAddress - whether to use current address
 	 * @param beneficiaryType - Beneficiary type can be primary or contingent
 	 */
-	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType){
+	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent){
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
 		
 		lib.Web.waitForElement(btnContinue);
@@ -312,10 +317,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes") &&  Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes")){
-			lib.Web.waitForElement(txtAllocationBeneficiary1);
-			this.txtAllocationBeneficiary1.clear();
-			this.txtAllocationBeneficiary1.sendKeys(Stock.GetParameterValue("Allocation"));
-			this.txtAllocationBeneficiary2.sendKeys(Stock.GetParameterValue("Allocation"));
+			enterAllocations(allocation_percent);
 		}
 	}
 	
@@ -576,6 +578,41 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 		System.out.println("Marital status : "+marital_status);
 		return marital_status;
+	}
+	
+	public void verifyErrorMessage(String error_msg){
+		if(Web.isWebElementDisplayed(lblErrorMsg, true)){
+			Reporter.logEvent(Status.PASS, "verify error message displayed", "Error messgae displayed", true);
+			if(Web.VerifyText(error_msg, lblErrorMsg.getText(), true))
+				Reporter.logEvent(Status.PASS, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), false);
+			else
+				Reporter.logEvent(Status.PASS, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), false);
+		}
+		else
+			Reporter.logEvent(Status.FAIL, "verify error message displayed", "Error messgae not displayed", true);
+	}
+	
+	public void enterAllocations(String allocation_percent){
+
+		for(int i=0;i<lstPrimaryBeneficiaries.size();i++){
+			if(lstlnkPrimaryBeneficiaryName.get(i).getText().contains(Stock.GetParameterValue("FirstName")))
+				Web.setTextToTextBox(lstPriBeneAllocations.get(i),allocation_percent);
+			else
+				Web.setTextToTextBox(lstPriBeneAllocations.get(i),Integer.toString(100-(Integer.parseInt(allocation_percent))));
+		}
+	}
+	
+	public void verifyConfirmationPageDisplayed(){
+		
+	}
+	
+	public void verifyBeneficiaryDisplayed(String bene_type,String bene_Name){
+		if(bene_type.equalsIgnoreCase("Primary")){
+			if(StringUtils.containsIgnoreCase(tblPrimaryBeneficiary.getText(), bene_Name))
+				Reporter.logEvent(Status.PASS, "Verify Beneficiary name displayed in Primary Beneficiary Table","Beneficiay name displayed" , false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Beneficiary name displayed in Primary Beneficiary Table", "Beneficiay name not displayed", false);
+		}
 	}
 	
 	public void refresh(){

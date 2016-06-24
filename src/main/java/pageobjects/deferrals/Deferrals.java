@@ -24,6 +24,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private static boolean waitforLoad = false;	
 			public float irs_limit;
 			public float befor_tax;
+			public String contrbution_rate;
 			//My Contributions Page
 			@FindBy(xpath=".//div[@class='page-title ng-scope']/h1") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
@@ -338,7 +339,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public boolean click_Select_Your_Contribution_Rate()
 		{	
-			
+			String contrbution_rate=null;
 			lib.Web.waitForElement(radioSelectAnotherContributionRate);
 			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
@@ -350,7 +351,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.lnkContributionRate.click();
 			
 			lib.Web.waitForElement(txtcontributionRateSlider);
-			lib.Web.setTextToTextBox(txtcontributionRateSlider, Stock.GetParameterValue("Contribution Rate"));			
+			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
+				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+//				if(Integer.parseInt(lnksliderValue.getText())>15)
+//					contrbution_rate= Integer.toString(Integer.parseInt(contrbution_rate)-1);
+//				if(Integer.parseInt(lnksliderValue.getText())<10)
+//					contrbution_rate= Integer.toString(Integer.parseInt(contrbution_rate)+1);
+			}
+			else
+				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
+			
+			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
+			
 			this.btnDone.click();
 			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
 			if(sliderValue)

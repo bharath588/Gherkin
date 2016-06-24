@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.TestDataFromDB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Web;
@@ -41,6 +43,9 @@ public class deferralstestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
+	
+	
+	
 
 	/**
 	 * The following script After Tax Deferral and confirms it
@@ -54,6 +59,8 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			TestDataFromDB.getParticipantDetails("getDeferralParticipant","194394-01");
+			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -70,46 +77,50 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			try {
-				lib.Web.waitForElement(deferrals, "Table Header Contribution");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			if (lib.Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
-				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
-						"My Contributions page is  displayed", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
-						"My Contributions page is not displayed", true);
+			
 
-			if (deferrals.clickAddEditButton("After Tax Add"))
-				Reporter.logEvent(Status.PASS,
-						"Verify After-tax contribution page",
-						"After-tax Contributions page is  displayed", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify After-tax contribution page",
-						"After-tax Contributions page is not displayed", true);
-			if (deferrals.click_Select_Your_Contribution_Rate())
-				Reporter.logEvent(Status.PASS,
-						"Verify accuracy of My Contribution Rate",
-						"My Contribution Rate value is matching", false);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify accuracy of My Contribution Rate",
-						"My Contribution Rate value is not matching", true);
-			lib.Web.clickOnElement(deferrals, "Continue button");
-			deferrals.add_Auto_Increase("After Add Auto Increase");
-			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution", true))
-				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
-						"My Contributions page is  displayed", true);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
-						"My Contributions page is not displayed", true);
+			
+			
+//			try {
+//				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			if (lib.Web.isWebElementDisplayed(deferrals,
+//					"Table Header Contribution"))
+//				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+//						"My Contributions page is  displayed", false);
+//			else
+//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+//						"My Contributions page is not displayed", true);
+//
+//			if (deferrals.clickAddEditButton("After Tax Add"))
+//				Reporter.logEvent(Status.PASS,
+//						"Verify After-tax contribution page",
+//						"After-tax Contributions page is  displayed", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"Verify After-tax contribution page",
+//						"After-tax Contributions page is not displayed", true);
+//			if (deferrals.click_Select_Your_Contribution_Rate())
+//				Reporter.logEvent(Status.PASS,
+//						"Verify accuracy of My Contribution Rate",
+//						"My Contribution Rate value is matching", false);
+//			else
+//				Reporter.logEvent(Status.FAIL,
+//						"Verify accuracy of My Contribution Rate",
+//						"My Contribution Rate value is not matching", true);
+//			lib.Web.clickOnElement(deferrals, "Continue button");
+//			deferrals.add_Auto_Increase("After Add Auto Increase");
+//			deferrals.myContributions_Confirmation_Page();
+//			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+//			if (lib.Web.isWebElementDisplayed(deferrals,
+//					"Table Header Contribution", true))
+//				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+//						"My Contributions page is  displayed", true);
+//			else
+//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+//						"My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
