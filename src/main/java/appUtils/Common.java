@@ -12,35 +12,43 @@ import lib.Reporter.Status;
 
 public class Common {
 
-	/** <pre> Method to return the no of plans associated to a user from db
+	/**
+	 * <pre>
+	 * Method to return the no of plans associated to a user from db
 	 * 
 	 * @return noOfPlans
 	 */
-	 //For Sponsor
-    public static final String GC_DEFAULT_SPONSER="Empower";
+	// For Sponsor
+	public static final String GC_DEFAULT_SPONSER = "Empower";
+
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
-		
-		//query to get the no of plans
+
+		// query to get the no of plans
 		String[] sqlQuery = null;
 		try {
 			sqlQuery = Stock.getTestQuery("getParticipantInfo");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
-		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
-		
+
+		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				ssn);
+
 		if (DB.getRecordSetCount(participantInfo) > 0) {
 			try {
-				participantInfo.last();			
+				participantInfo.last();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				Reporter.logEvent(Status.WARNING, "Query Participant Info from DB:" + sqlQuery[0] , "The Query did not return any results. Please check participant test data as the appropriate data base.", false);
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Participant Info from DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
 			}
-		}		
+		}
 		return participantInfo;
 	}
-	
+
 	public static ResultSet getParticipantInfoFromDataBase(String ssn)
 			throws SQLException {
 
@@ -51,7 +59,7 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		sqlQuery[0] = getParticipantDBName(ssn)+"DB";
+		sqlQuery[0] = getParticipantDBName(ssn) + "DB";
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				ssn);
 
@@ -98,7 +106,8 @@ public class Common {
 			}
 
 		}
-System.out.println("DATA BASE Name"+participantDB.getString("database_instance"));
+		System.out.println("DATA BASE Name"
+				+ participantDB.getString("database_instance"));
 		return participantDB.getString("database_instance");
 	}
 
@@ -147,8 +156,7 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 							"The Query did not return any results. Please check participant test data as the appropriate data base.",
 							false);
 				}
-			}
-			else {
+			} else {
 				try {
 					sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
 				} catch (Exception e) {
@@ -171,7 +179,7 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 				}
 			}
 		}
-		System.out.println("ID is "+participantID.getString("ID"));
+		System.out.println("ID is " + participantID.getString("ID"));
 		return participantID.getString("ID");
 	}
 
@@ -220,24 +228,40 @@ System.out.println("DATA BASE Name"+participantDB.getString("database_instance")
 		}
 		return sponser;
 	}
-	
+
 	public static String getUserNameFromDB() {
 
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		try {
-			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(0, ssn.length()-3));
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(
+					0, ssn.length() - 3));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		String userFromDatasheet = null;
 		try {
-			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
+			userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+					+ strUserInfo.getString("LAST_NAME");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 		return userFromDatasheet;
 	}
+
+	public static boolean verifyStringIsInNumberFormat(String value) {
+		int number;
+		boolean lblDisplayed;
+		try {
+
+			number = Integer.parseInt(value);
+			lblDisplayed = true;
+		} catch (NumberFormatException ex) {
+			lblDisplayed = false;
+		}
+		return lblDisplayed;
+	}
+
 }

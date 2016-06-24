@@ -48,6 +48,16 @@ public class logintestcases {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
+	public void prepareLoginTestData(String quesryNmae,String planid) {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					quesryNmae, Stock.GetParameterValue(planid));
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 	public void prepareLoginTestData() {
 		try {
 			testDataFromDB = TestDataFromDB.getParticipantDetails(

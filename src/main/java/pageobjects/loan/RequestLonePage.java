@@ -69,7 +69,10 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	@FindBy(id = "checkLoanProvision")
 	private WebElement inputIAccept;
 	@FindBy(xpath = "//p[1]/span[2]")
+	private WebElement txtConfirmation;
+	@FindBy(xpath = "html/body/p[1]/span[2]/span")
 	private WebElement txtConfirmationNo;
+	
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	
 	/**
@@ -196,6 +199,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("CHECKBOX I ACCEPT")) {
 			return this.inputIAccept;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Text Confirmation")) {
+			return this.txtConfirmation;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Text Confirmation Number")) {
 			return this.txtConfirmationNo;

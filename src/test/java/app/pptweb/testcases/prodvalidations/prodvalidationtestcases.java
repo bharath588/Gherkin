@@ -484,6 +484,7 @@ public class prodvalidationtestcases {
 			requestLone.get();
 
 			boolean lblDisplayed = false;
+			int confirmationNumber = 0;
 
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
@@ -680,21 +681,57 @@ public class prodvalidationtestcases {
 						"Verify I Accept Button is Displayed",
 						"I ACCEPT Button is Not Displayed", false);
 			}
-			Web.clickOnElement(requestLone, "I ACCEPT");
-			Thread.sleep(5000);
-			lblDisplayed = Web.VerifyPartialText("Your confirmation number is",
-					requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
-					true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify RequestLoan Confirmation Number is Displayed",
-						"RequestLoan Confirmation Number is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify RequestLoan Confirmation Number is Displayed",
-						"RequestLoan Confirmation Number is Not Displayed",
+			if (Stock.GetParameterValue("submitRequest")
+					.equalsIgnoreCase("YES")) {
+				Web.clickOnElement(requestLone, "I ACCEPT");
+				Thread.sleep(5000);
+				lblDisplayed = Web.VerifyPartialText(
+						"Your confirmation number is",
+						requestLone.getWebElementText("TEXT CONFIRMATION"),
 						true);
+				if (lblDisplayed) {
+					Reporter.logEvent(
+							Status.INFO,
+							"Verify RequestLoan Confirmation is Displayed",
+							"RequestLoan Confirmation is Displayed",
+							true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify RequestLoan Confirmation is Displayed",
+							"RequestLoan Confirmation is Not Displayed",
+							true);
+				}
+				if (Web.isWebElementDisplayed(requestLone,
+						"TEXT CONFIRMATION NUMBER", true)) {
+					lblDisplayed = Common
+							.verifyStringIsInNumberFormat(requestLone
+									.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					if (lblDisplayed) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify Request Confirmation Number is in Number Format",
+								"Request Confirmation is in Number Format and \n Confirmation Number is:"
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+								false);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify Request Confirmation Number is Number Format",
+								"Request Confirmation Number is  Not in Number Format"
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+								true);
+					}
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify Request Confirmation Number is Displayed",
+							"Request Confirmation Number is Not Displayed",
+							true);
+				}
 			}
+			Web.webdriver.switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1506,7 +1543,7 @@ public class prodvalidationtestcases {
 			requestWithdrawal.get();
 			Thread.sleep(5000);
 			boolean lblDisplayed = false;
-			int confirmationNumber=0;
+			int confirmationNumber = 0;
 			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 					"Request A Withdrawal", true);
 			if (lblDisplayed) {
@@ -1643,61 +1680,63 @@ public class prodvalidationtestcases {
 						"Verify I agree and Submit Button is Displayed",
 						"I agree and Submit Button is Not Displayed", false);
 			}
-			Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
-			Thread.sleep(8000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Request submitted!");
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Request Submission Page is Displayed",
-						"Request Submission Page is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request Submission Page is Displayed",
-						"Request Submission is Not Displayed", true);
-			}
-			lblDisplayed = Web.VerifyPartialText("Your confirmation number is",
-					requestWithdrawal.getWebElementText("TEXT CONFIRMATION"),
-					true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Request Confirmation is Displayed",
-						"Request Confirmation is Displayed", false);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request Confirmation is Displayed",
-						"Request Confirmation is Not Displayed", true);
-			}
-			
-			if (Web.isWebElementDisplayed(requestWithdrawal,
-					"TEXT CONFIRMATION NUMBER", true)) {
-				try
-			    {
-				
-					 confirmationNumber = Integer.parseInt(requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"));
-						lblDisplayed = true;
-			    } catch (NumberFormatException ex)
-			    {
-			    	lblDisplayed = false;
-			    }
-				
-			
+			if (Stock.GetParameterValue("submitRequest")
+					.equalsIgnoreCase("YES")) {
+				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
+				Thread.sleep(8000);
+				lblDisplayed = requestWithdrawal
+						.isTextFieldDisplayed("Request submitted!");
+				if (lblDisplayed) {
+					Reporter.logEvent(Status.INFO,
+							"Verify Request Submission Page is Displayed",
+							"Request Submission Page is Displayed", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify Request Submission Page is Displayed",
+							"Request Submission is Not Displayed", true);
+				}
+				lblDisplayed = Web.VerifyPartialText(
+						"Your confirmation number is", requestWithdrawal
+								.getWebElementText("TEXT CONFIRMATION"), true);
+				if (lblDisplayed) {
+					Reporter.logEvent(Status.INFO,
+							"Verify Request Confirmation is Displayed",
+							"Request Confirmation is Displayed", false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify Request Confirmation is Displayed",
+							"Request Confirmation is Not Displayed", true);
+				}
 
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Request Confirmation Number is Displayed",
-						"Request Confirmation is Displayed and \n Confirmation Number is:"
-								+ confirmationNumber, false);
-			} 
-			else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request Confirmation Number is Displayed",
-						"Request Confirmation Number is Not an Integer"+requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"), true);
-			}
-			}else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request Confirmation Number is Displayed",
-						"Request Confirmation Number is Not Displayed", true);
+				if (Web.isWebElementDisplayed(requestWithdrawal,
+						"TEXT CONFIRMATION NUMBER", true)) {
+					lblDisplayed = Common
+							.verifyStringIsInNumberFormat(requestWithdrawal
+									.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					if (lblDisplayed) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify Request Confirmation Number is in Number Format",
+								"Request Confirmation is in Number Format and \n Confirmation Number is:"
+										+ requestWithdrawal
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+								false); 
+					}
+						else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify Request Confirmation Number is in Number Format",
+								"Request Confirmation Number is Not in Number Format"
+										+ requestWithdrawal
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+								true);
+					}
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify Request Confirmation Number is Displayed",
+							"Request Confirmation Number is Not Displayed",
+							true);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
