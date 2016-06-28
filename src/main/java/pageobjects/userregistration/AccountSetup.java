@@ -38,7 +38,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	//@FindBy(id="passwordInput") private WebElement txtPassword;
 	@FindBy(xpath=".//*[@id='passwordInput'  and @name='password']") private WebElement txtPassword;
 	@FindBy(id="confirmPasswordInput") private WebElement txtConfirmPassword;
-	@FindBy(id="submit") private WebElement btnRegister;
+	@FindBy(xpath=".//button[@id='submit']") private WebElement btnRegister;
 	@FindBy(xpath=" .//*[contains(@for,'email') and ./ng-message]") private WebElement lblEmailErrMsg;
 	@FindBy(xpath=" .//*[contains(@for,'phoneNumber') and ./ng-message]") private WebElement lblPhoneErrMsg;
 	@FindBy(xpath=".//*[contains(@for,'username') and ./ng-message]") private WebElement lblUserNameErrMsg;
@@ -51,6 +51,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+	
 	/** Empty args constructor
 	 * 
 	 */
@@ -238,7 +239,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 //		}
 		
 		Thread.sleep(5000);
-	
+
 		boolean isHeaderPresent = Web.isWebElementDisplayed(this.hrdSetUpYourAccount);
 		String headerText = "";
 		
@@ -741,5 +742,33 @@ public class AccountSetup extends LoadableComponent<AccountSetup>{
 			Reporter.logEvent(Status.PASS, "Enter valid Password and verify no error message is displayed", 
 					"Expected: No message displayed\nActual: No message displayed", true);
 		}
+	}
+	
+	/** Method to return text displayed in Account setup header block
+	 * 
+	 * @return <b>Header block text</b> if element present and text is displayed.
+	 *	<b>Empty string</b> if no text is displayed.
+	 *	<b>null</b> if header block element is not displayed.
+	 * @throws InterruptedException 
+	 */
+	public String getAccountSetupHeaderText() throws InterruptedException {
+		
+		try {
+			Web.waitForElement(this.lblUsernameAndPassword);
+		} catch (Exception e) {
+	}
+		
+		Thread.sleep(5000);
+
+		boolean isHeaderPresent = Web.isWebElementDisplayed(this.lblUsernameAndPassword);
+		String headerText = "";
+		
+		if (isHeaderPresent) {
+			headerText = this.lblUsernameAndPassword.getText().trim();
+		} else {
+			return null;
+		}
+		
+		return headerText;
 	}
 }

@@ -24,7 +24,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private static boolean waitforLoad = false;	
 			public float irs_limit;
 			public float befor_tax;
-			public String contrbution_rate;
+			public static String contrbution_rate;
 			//My Contributions Page
 			@FindBy(xpath=".//div[@class='page-title ng-scope']/h1") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
@@ -339,7 +339,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public boolean click_Select_Your_Contribution_Rate()
 		{	
-			String contrbution_rate=null;
+		
 			lib.Web.waitForElement(radioSelectAnotherContributionRate);
 			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
@@ -366,9 +366,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.btnDone.click();
 			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
 			if(sliderValue)
-				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to"+Stock.GetParameterValue("Contribution Rate"), false);
+				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to"+contrbution_rate, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to"+Stock.GetParameterValue("Contribution Rate"), false);
+				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to"+contrbution_rate, false);
 			return sliderValue;
 		}
 		
@@ -484,7 +484,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					}
 					else{
 						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
-						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+						int i=Integer.parseInt(contrbution_rate);
+						int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));
+						lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
 					}
 					
 					

@@ -40,6 +40,8 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	private WebElement lnkLogout;
 	@FindBy(xpath = "//*[@id='account-overview-chart']")
 	private WebElement imgGraph;
+	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
+	private WebElement lnkPlanName;
 
 	/**
 	 * Empty args constructor
@@ -101,7 +103,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		LandingPage land = (LandingPage) this.parent;
 
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(false, false);
+		((LandingPage) this.parent).dismissPopUps(true, true);
 		try {
 			// Web.clickOnElement(land, "MY ACCOUNTS");
 		} catch (Exception e1) {
@@ -139,6 +141,9 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Graph")) {
 			return this.imgGraph;
+		}
+		if (fieldName.trim().equalsIgnoreCase("PLAN NAME")) {
+			return this.lnkPlanName;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",

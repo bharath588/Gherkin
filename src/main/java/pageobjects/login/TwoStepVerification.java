@@ -43,6 +43,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(id="signin") private WebElement btnSignIn;
 	@FindBy(linkText="Didn't receive the code?") private WebElement lnkDidntReceiveCode;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help']]") private WebElement lblLoginHelp;
+	@FindBy(xpath="//button[contains(text(),'Continue to My Account')]") private WebElement btnContinueToMyAccount;
 	
 	/** Empty args constructor
 	 * 
@@ -154,6 +155,10 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			return this.lnkDidntReceiveCode;
 		}
 		
+		if (fieldName.trim().equalsIgnoreCase("CONTINUE TO MY ACCOUNT")) {
+			return this.btnContinueToMyAccount;
+		}
+		
 		
 		return null;
 	}
@@ -168,7 +173,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 * @param deliveryOption
 	 * 
 	 */
-	public void selectCodeDeliveryOption(String deliveryOption){
+	public void selectCodeDeliveryOption(String deliveryOption,boolean... args){
 		
 		if (deliveryOption.trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 			
@@ -196,8 +201,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			} catch (Exception e) {
 				// do nothing
 			}
-			
-			if (Web.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " ")) == false) {
+			//deliveryOption.replaceAll("_", " ")) == false;
+			if (Web.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " "),true)) {
 				throw new Error("Unable to select verification code delivery option: " + deliveryOption.replaceAll("_", " "));
 			}
 		}
@@ -281,7 +286,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			if (DB.getRecordSetCount(recSet) > 0) {
 				try {
 					recSet.first();
-					verificationCode = recSet.getString(1);
+					verificationCode = recSet.getString("TAG_VALUE");
 				} catch (SQLException e) {
 					e.printStackTrace();
 					Reporter.logEvent(Status.WARNING, "Get verification code from DB", "No verification code generated.", false);

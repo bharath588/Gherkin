@@ -407,8 +407,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("Relationship: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").substring(Stock.GetParameterValue("benificiary_SSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
@@ -455,7 +455,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					return Web.VerifyText("Type: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 				
 				if(attribute.equalsIgnoreCase("TIN")){
-//					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+//					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					return Web.VerifyText("TIN (last four): "+Stock.GetParameterValue("Tax_Identification_No").substring(Stock.GetParameterValue("Tax_Identification_No").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 				}
 				if(attribute.equalsIgnoreCase("DOT")){	
@@ -476,7 +476,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
-		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("SSN"));
+		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("benificiary_SSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
 	
 	}
@@ -508,13 +508,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @return - boolean
 	 * @throws Exception 
 	 */
-	public void deleteBeneficiariesFromDB(String ssn, String firstName) throws Exception{
+	public void deleteBeneficiariesFromDB(String ssn) throws Exception{
 		String[] sqlQuery;
 		String[] sqlQuery_commit;
 		sqlQuery = Stock.getTestQuery("deleteBeneficiaries");
 //		sqlQuery_commit = Stock.getTestQuery("deleteBeneficiaries_commit");
 		
-		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn);
 		DB.executeUpdate(sqlQuery[0], "commit");
 		
 	}

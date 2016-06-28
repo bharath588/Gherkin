@@ -479,6 +479,11 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			/*
+			 * myAccountPage.get(); if(Web.isWebElementDisplayed(myAccountPage,
+			 * "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID(Stock
+			 * .GetParameterValue("groupId")); }
+			 */
 			LeftNavigationBar lftBar = new LeftNavigationBar(myAccountPage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
@@ -520,7 +525,7 @@ public class prodvalidationtestcases {
 								+ " is Not visible", true);
 			}
 			Web.webdriver.switchTo().defaultContent();
-			requestLone.EnterLoanAmtAndTerm("$1,000", "12");
+			requestLone.EnterLoanAmtAndTerm("$500", "12");
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
@@ -690,17 +695,13 @@ public class prodvalidationtestcases {
 						requestLone.getWebElementText("TEXT CONFIRMATION"),
 						true);
 				if (lblDisplayed) {
-					Reporter.logEvent(
-							Status.INFO,
+					Reporter.logEvent(Status.INFO,
 							"Verify RequestLoan Confirmation is Displayed",
-							"RequestLoan Confirmation is Displayed",
-							true);
+							"RequestLoan Confirmation is Displayed", true);
 				} else {
-					Reporter.logEvent(
-							Status.FAIL,
+					Reporter.logEvent(Status.FAIL,
 							"Verify RequestLoan Confirmation is Displayed",
-							"RequestLoan Confirmation is Not Displayed",
-							true);
+							"RequestLoan Confirmation is Not Displayed", true);
 				}
 				if (Web.isWebElementDisplayed(requestLone,
 						"TEXT CONFIRMATION NUMBER", true)) {
@@ -815,7 +816,7 @@ public class prodvalidationtestcases {
 			homePage.get();
 
 			boolean lblDisplayed = false;
-
+			Thread.sleep(6000);
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
 			if (lblDisplayed) {
@@ -963,7 +964,7 @@ public class prodvalidationtestcases {
 					.verifyTableDataDisplayed("Transaction History Contr Detail Table");
 
 			transaction.verifyReferenceNumber();
-
+			// Web.clickOnElement(transaction, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1076,14 +1077,12 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"), date,
 					Stock.GetParameterValue("investment_percent"));
-			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes")) {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}
-				
-				
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1200,7 +1199,7 @@ public class prodvalidationtestcases {
 			brokerage.get();
 			Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
-			
+
 			brokerage.verifyBrokerageTableDataDisplayed("Provider Name");
 			brokerage.verifyBrokerageTableDataDisplayed("Enroll image");
 			brokerage
@@ -1304,8 +1303,9 @@ public class prodvalidationtestcases {
 			investment.ReviewFundToFundTransfer(
 					Stock.GetParameterValue("From_Percent"),
 					Stock.GetParameterValue("To_Percent"));
-			
-			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes"))
+
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes"))
 				investment.cancelTransfer("F2F");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1347,7 +1347,11 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Dollar Cost");
 			Web.clickOnElement(investment, "Continue button1");
-			investment.dollarCostAverageFlow(Stock.GetParameterValue("Frequency_Period"), Stock.GetParameterValue("Setup_date"), Stock.GetParameterValue("percent"), Stock.GetParameterValue("amount"));
+			investment.dollarCostAverageFlow(
+					Stock.GetParameterValue("Frequency_Period"),
+					Stock.GetParameterValue("Setup_date"),
+					Stock.GetParameterValue("percent"),
+					Stock.GetParameterValue("amount"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1390,54 +1394,54 @@ public class prodvalidationtestcases {
 					"Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Primary");
 
-//			if (!beneficiary.ifElementDisabled("First name"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify First name text box is enabled",
-//						"First name text box is enabled", true);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify First name text box is enabled",
-//						"First name text box not enabled", true);
-//			if (!beneficiary.ifElementDisabled("Middle name"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify Middle name text box is enabled",
-//						"Middle name text box is enabled", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify Middle name text box is enabled",
-//						"Middle name text box not enabled", true);
-//			if (!beneficiary.ifElementDisabled("Last name"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify Last name text box is enabled",
-//						"Last name text box is enabled", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify Last name text box is enabled",
-//						"Last name text box not enabled", true);
-//			if (!beneficiary.ifElementDisabled("DOB"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify DOB text box is enabled",
-//						"DOB text box is enabled", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify DOB text box is enabled",
-//						"DOB text box not enabled", true);
-//			if (!beneficiary.ifElementDisabled("Suffix"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify Suffix text box is enabled",
-//						"Suffix text box is enabled", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify Suffix text box is enabled",
-//						"Suffix text box not enabled", true);
-//			if (!beneficiary.ifElementDisabled("SSN"))
-//				Reporter.logEvent(Status.PASS,
-//						"verify SSN text box is enabled",
-//						"SSN text box is enabled", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"verify SSN text box is enabled",
-//						"SSN text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("First name"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify First name text box is enabled",
+			// "First name text box is enabled", true);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify First name text box is enabled",
+			// "First name text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("Middle name"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify Middle name text box is enabled",
+			// "Middle name text box is enabled", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify Middle name text box is enabled",
+			// "Middle name text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("Last name"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify Last name text box is enabled",
+			// "Last name text box is enabled", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify Last name text box is enabled",
+			// "Last name text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("DOB"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify DOB text box is enabled",
+			// "DOB text box is enabled", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify DOB text box is enabled",
+			// "DOB text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("Suffix"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify Suffix text box is enabled",
+			// "Suffix text box is enabled", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify Suffix text box is enabled",
+			// "Suffix text box not enabled", true);
+			// if (!beneficiary.ifElementDisabled("SSN"))
+			// Reporter.logEvent(Status.PASS,
+			// "verify SSN text box is enabled",
+			// "SSN text box is enabled", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "verify SSN text box is enabled",
+			// "SSN text box not enabled", true);
 			beneficiary.enterBeneficiaryDetails();
 			lib.Web.clickOnElement(beneficiary, "Save button");
 			if (lib.Web.isWebElementDisplayed(beneficiary, "MyBeneficiaries"))
@@ -1448,49 +1452,69 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify if My Beneficiaries page is displayed",
 						"My Beneficiaries page is not displayed", true);
-			if(beneficiary.isFieldDisplayed("ContinueAndConfirm"))
-				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Confirm and Continue button displayed", false);
+			if (beneficiary.isFieldDisplayed("ContinueAndConfirm"))
+				Reporter.logEvent(Status.PASS, "Confirm and Continue button",
+						"Confirm and Continue button displayed", false);
 			else
-				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
-			
-			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
-				//click on continue and confirm button
-				if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
-					Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
-				else
-					Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
-				//verify beneficiary name
+				Reporter.logEvent(Status.FAIL, "Confirm and Continue button",
+						"Confirm and Continue button is not displayed", true);
 
-				if(beneficiary.verifyBeneficiaryDetails("Name"))
-					Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes")) {
+				// click on continue and confirm button
+				if (Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
+					Reporter.logEvent(Status.PASS,
+							"Confirm and Continue button",
+							"Clicked confirm and continue button", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary name", "beneficiary name bot matching", true);
+					Reporter.logEvent(Status.FAIL,
+							"Confirm and Continue button",
+							"Could not Click confirm and continue button", true);
+				// verify beneficiary name
 
-				//verify beneficiary allocation percentage
-				if(beneficiary.verifyBeneficiaryDetails("Allocation"))
-					Reporter.logEvent(Status.PASS, "verify beneficiary Allocation", "beneficiary Allocation is matching", false);
+				if (beneficiary.verifyBeneficiaryDetails("Name"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary name",
+							"beneficiary name is matching", true);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Allocation", "beneficiary Allocation bot matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary name",
+							"beneficiary name bot matching", true);
 
-				//verify beneficiary Relationship
-				if(beneficiary.verifyBeneficiaryDetails("Relationship"))
-					Reporter.logEvent(Status.PASS, "verify beneficiary Relationship", "beneficiary Relationship is matching", false);
+				// verify beneficiary allocation percentage
+				if (beneficiary.verifyBeneficiaryDetails("Allocation"))
+					Reporter.logEvent(Status.PASS,
+							"verify beneficiary Allocation",
+							"beneficiary Allocation is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary Relationship", "beneficiary Relationship bot matching", true);
+					Reporter.logEvent(Status.FAIL,
+							"verify beneficiary Allocation",
+							"beneficiary Allocation bot matching", true);
 
-				//verify beneficiary ssn
-				if(beneficiary.verifyBeneficiaryDetails("SSN"))
-					Reporter.logEvent(Status.PASS, "verify beneficiary SSN", "beneficiary SSN is matching", false);
+				// verify beneficiary Relationship
+				if (beneficiary.verifyBeneficiaryDetails("Relationship"))
+					Reporter.logEvent(Status.PASS,
+							"verify beneficiary Relationship",
+							"beneficiary Relationship is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary SSN", "beneficiary SSN bot matching", true);
+					Reporter.logEvent(Status.FAIL,
+							"verify beneficiary Relationship",
+							"beneficiary Relationship bot matching", true);
 
-				//verify beneficiary DOB
-				if(beneficiary.verifyBeneficiaryDetails("DOB"))
-					Reporter.logEvent(Status.PASS, "verify beneficiary DOB", "beneficiary DOB is matching", false);
+				// verify beneficiary ssn
+				if (beneficiary.verifyBeneficiaryDetails("SSN"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary SSN",
+							"beneficiary SSN is matching", false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify beneficiary DOB", "beneficiary DOB bot matching", true);
+					Reporter.logEvent(Status.FAIL, "verify beneficiary SSN",
+							"beneficiary SSN bot matching", true);
+
+				// verify beneficiary DOB
+				if (beneficiary.verifyBeneficiaryDetails("DOB"))
+					Reporter.logEvent(Status.PASS, "verify beneficiary DOB",
+							"beneficiary DOB is matching", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify beneficiary DOB",
+							"beneficiary DOB bot matching", true);
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1539,7 +1563,9 @@ public class prodvalidationtestcases {
 			deferral.click_Select_Your_Contribution_Rate();
 			deferral.select_ContributionType("Before");
 			lib.Web.clickOnElement(deferral, "Continue button");
-			if (deferral.verifyMyContributions(Stock.GetParameterValue("Contribution Rate"), "Before Tax", "Standard"))
+			if (deferral.verifyMyContributions(
+					Stock.GetParameterValue("Contribution Rate"), "Before Tax",
+					"Standard"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify Before contribution percent for Standard deferral",
@@ -1549,11 +1575,11 @@ public class prodvalidationtestcases {
 						Status.FAIL,
 						"Verify Before contribution percent for Standar deferral",
 						"Before contribution percent matching", true);
-			if(Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase("Yes")){
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes")) {
 				deferral.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferral,"MyContribution Button");
+				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1772,9 +1798,8 @@ public class prodvalidationtestcases {
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
 										+ requestWithdrawal
 												.getWebElementText("TEXT CONFIRMATION NUMBER"),
-								false); 
-					}
-						else {
+								false);
+					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is in Number Format",
@@ -1965,11 +1990,11 @@ public class prodvalidationtestcases {
 			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have
 			// a code?' exists
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "TEXT ME:");
+					"CHOOSE DELIVERY METHOD", "TEXT ME:", true);
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "CALL ME:");
+					"CHOOSE DELIVERY METHOD", "CALL ME:", true);
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "EMAIL:");
+					"CHOOSE DELIVERY METHOD", "EMAIL:", true);
 
 			if (Web.isWebElementDisplayed(twoStepVerification,
 					"Already have a code?")) {

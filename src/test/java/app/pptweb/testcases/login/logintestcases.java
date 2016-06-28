@@ -160,11 +160,11 @@ public class logintestcases {
 			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have
 			// a code?' exists
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "TEXT ME:");
+					"CHOOSE DELIVERY METHOD", "TEXT ME:",true);
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "CALL ME:");
+					"CHOOSE DELIVERY METHOD", "CALL ME:",true);
 			Web.verifyDropDownOptionExists(twoStepVerification,
-					"CHOOSE DELIVERY METHOD", "EMAIL:");
+					"CHOOSE DELIVERY METHOD", "EMAIL:",true);
 
 			if (Web.isWebElementDisplayed(twoStepVerification,
 					"Already have a code?")) {

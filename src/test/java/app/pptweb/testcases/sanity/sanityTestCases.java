@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -89,6 +90,8 @@ public class sanityTestCases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+		  // DB.executeQuery("CommonDB", "delete from DEVL_REP.AUTHENTICATION_CONTROL where ssn ='022758966' and STATUS_CODE ='FAILURE'");
+		  // DB.executeQuery("CommonDB", "commit");
 			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));
 			String verificationCode = "";
 			
@@ -939,7 +942,7 @@ public class sanityTestCases {
 					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
 			}
 
-//			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("Participant ssn"));
+//			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("SSN"));
 
 
 		}
@@ -960,7 +963,7 @@ public class sanityTestCases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
 				
 			} catch (Exception e) {
 
@@ -1086,7 +1089,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1189,9 +1192,9 @@ public class sanityTestCases {
 
 			//delete beneficiary from Database
 			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
-			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"), Stock.GetParameterValue("Participant first name")+"%");
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
 
 
 		}
@@ -1212,7 +1215,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1342,7 +1345,7 @@ public class sanityTestCases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Participant ssn"))
+			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("SSN"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else{

@@ -157,7 +157,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 				
 			} catch (Exception e) {
 
@@ -283,7 +283,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -387,9 +387,9 @@ public class beneficiariestestcases {
 
 			//delete beneficiary from Database
 			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
-			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 
 
 		}
@@ -410,7 +410,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -647,7 +647,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1116,7 +1116,7 @@ public class beneficiariestestcases {
 		finally {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 				
 			} catch (Exception e) {
 
@@ -1229,7 +1229,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 			} catch (Exception e) {
 				
 				e.printStackTrace();
@@ -1347,7 +1347,7 @@ public class beneficiariestestcases {
 				MyBeneficiaries beneficiary = new MyBeneficiaries();
 				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 					try {
-						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

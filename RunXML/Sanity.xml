@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-     <test name="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+    <test name="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -132,8 +132,8 @@
                 </methods>
             </class>
         </classes>
-    </test>
-    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
+    </test>  
+   <test name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -142,7 +142,7 @@
             </class>
         </classes>
     </test>
-     <test name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
+      <test name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -206,7 +206,7 @@
              </methods>
          </class>
      </classes>
-     </test>
+     </test> 
      <test name="SIT_PPTWEB_Sanity_Deferral_016_Regular_SPLIT- Select Another contributiont rate">
      <classes>
          <class name="app.pptweb.testcases.sanity.sanityTestCases">
@@ -215,5 +215,5 @@
              </methods>
          </class>
      </classes>
- </test>  
+ </test> 
 </suite>

@@ -80,7 +80,7 @@ public class TestDataFromDB {
 			}
 
 		}
-		// /System.out.println(mapUsername);
+		System.out.println("TEST DATA FROM DB:"+mapUserDetails);
 
 		return mapUserDetails;
 	}

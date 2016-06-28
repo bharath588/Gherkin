@@ -80,7 +80,7 @@ public class authenticationtestcases {
 			}
 
 			//Validate drop down box option 'Text Me:' is displayed
-			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Text Me:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Text Me:",true);
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Text Me:' is available", "'Text Me:' option available", false);
 			} else {
@@ -88,7 +88,7 @@ public class authenticationtestcases {
 			}
 
 			//Validate drop down box option 'Call Me:' is displayed
-			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Call Me:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Call Me:",true);
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Call Me:' is available", "'Call Me:' option available", false);
 			} else {
@@ -96,7 +96,7 @@ public class authenticationtestcases {
 			}
 
 			//Validate drop down box option 'Email:' is displayed
-			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Email:");
+			isDisplayed = Web.verifyDropDownOptionExists(twoStepVerification, "Choose delivery method", "Email:",true);
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS, "Verify drop down box option 'Email:' is available", "'Email:' option available", false);
 			} else {
@@ -114,7 +114,7 @@ public class authenticationtestcases {
 			}
 
 			//Select code delivery option and click continue
-			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"),true);
 			Reporter.logEvent(Status.INFO, "Select code delivery option and click continue","Done", true);
 
 			//Get verification code from database
@@ -216,7 +216,7 @@ public class authenticationtestcases {
 					lib.Stock.GetParameterValue("FIRST_LINE_MAILING"));
 
 			//Step 5 - Click on "Already have a code?" link
-			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
+			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"),true);
 
 			//Step 6 and 7 - Enter verification code into "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue" button
 			if (lib.Stock.GetParameterValue("codeDeliveryOption").equalsIgnoreCase("ALREADY_HAVE_CODE")) {
