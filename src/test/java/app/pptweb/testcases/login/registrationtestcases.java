@@ -34,7 +34,7 @@ public class registrationtestcases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	private static HashMap<String, String> testDataFromDB = null;
-	public static String SSN=null;
+	public static String SSN = null;
 	LoginPage login;
 	String tcName;
 
@@ -63,6 +63,18 @@ public class registrationtestcases {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void prepareLoginTestData(String quesryNmae, String... queryParam) {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(quesryNmae,
+					queryParam);
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Test(dataProvider = "setData")
@@ -1543,7 +1555,7 @@ public class registrationtestcases {
 				sqlQuery = Stock.getTestQuery("unlockParticipants");
 				DB.executeUpdate(sqlQuery[0], sqlQuery[1],
 						Stock.GetParameterValue("SSN"));
-				DB.executeUpdate(sqlQuery[0], "Commit;");
+				DB.executeUpdate(sqlQuery[0], "Commit");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -1873,6 +1885,8 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
+			prepareLoginTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
 			if (Common.getSponser().equalsIgnoreCase("Apple")) {
 				Web.webdriver
 						.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -1901,6 +1915,7 @@ public class registrationtestcases {
 				} else {
 					objAccountSetup.validateUserNameAndPasswordUI();
 				}
+				objloginPage.get();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1929,7 +1944,11 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
+			prepareLoginTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
+			boolean isMatching=false;
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -1981,16 +2000,16 @@ public class registrationtestcases {
 						Stock.GetParameterValue("SSN"));
 				// Enter Zip Code
 				accLookup.setTextToFields("Zip Code",
-						Stock.GetParameterValue("ZipCode"));
+						Stock.GetParameterValue("ZIP_CODE"));
 				// Enter Last Name
 				accLookup.setTextToFields("Last Name",
-						Stock.GetParameterValue("LastName"));
+						Stock.GetParameterValue("LAST_NAME"));
 				// Enter Date of Birth
 				accLookup.setTextToFields("Date of Birth",
-						Stock.GetParameterValue("DOB"));
+						Stock.GetParameterValue("BIRTH_DATE"));
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
-						Stock.GetParameterValue("StreetAddress"));
+						Stock.GetParameterValue("FIRST_LINE_MAILING"));
 			}
 
 			// Click on Continue button
@@ -2001,6 +2020,7 @@ public class registrationtestcases {
 					"Submitted participant details and clicked on Continue button",
 					false);
 
+			Thread.sleep(5000);
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
@@ -2008,14 +2028,21 @@ public class registrationtestcases {
 						"Verify Account setup Header block text",
 						"Header text block is not displayed on the page", true);
 			} else {
-				Web.VerifyText(
-						/* "We found you!\nTo continue, provide your contact information and create a username and password." */"Create username and password",
-						hdrBlockText, true);
-				Reporter.logEvent(
-						Status.PASS,
-						"Navigate to Account setup page",
-						"user successfully navigated to the Account Setup page",
-						true);
+				isMatching = Web
+						.VerifyText(
+								"We found you!\nVerification codes for enhanced security will be sent to the email address or phone number you provide below.",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'We found you!' header is displayed",
+							"user successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'We found you!' header is displayed",
+							"We found you! Header is not displayed", true);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2030,6 +2057,7 @@ public class registrationtestcases {
 
 		} finally {
 			try {
+				ExecuteQuery.UnRegisterParticipant(SSN);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2135,10 +2163,11 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			prepareLoginTestData();
-			SSN=Stock.GetParameterValue("SSN");
-				String hdrBlockText;
-				Actions keyBoard = new Actions(Web.webdriver);
+			prepareLoginTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			SSN = Stock.GetParameterValue("SSN");
+			String hdrBlockText;
+			Actions keyBoard = new Actions(Web.webdriver);
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -2204,12 +2233,12 @@ public class registrationtestcases {
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
 						Stock.GetParameterValue("FIRST_LINE_MAILING"));
-				
+
 			}
 
 			// Click on Continue button
 			accLookup.clickOnFields("Continue");
-			
+
 			Reporter.logEvent(
 					Status.INFO,
 					"Enter participant details and click on Continue button.",
@@ -2280,13 +2309,17 @@ public class registrationtestcases {
 					Stock.GetParameterValue("PASSWORD"));
 			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
 					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
 			keyBoard.sendKeys(Keys.TAB).perform();
 			keyBoard.sendKeys(Keys.ENTER).perform();
-			//Web.clickOnElement(accSetup, "REGISTER");
-						Thread.sleep(5000);
-			objAuth.selectCodeDeliveryOption(lib.Stock
+			// Web.clickOnElement(accSetup, "REGISTER");
+			Thread.sleep(5000);
+			objAuth.selectCodeDeliveryOption(Stock
 					.GetParameterValue("codeDeliveryOption"));
-
 			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
 					.equalsIgnoreCase("EMAIL")) {
 				verificationCode = objAuth.getVerificationCode(false);
@@ -2294,25 +2327,25 @@ public class registrationtestcases {
 			objAuth.submitVerificationCode(verificationCode, false, false);
 
 			Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
-			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")
-					&& Web.isWebElementDisplayed(homePage, "Retirement income");
-			if (isDisplayed) {
-				Reporter.logEvent(Status.PASS,
-						"Verify user is on landing page",
-						"user is on landing page", true);
-				Web.clickOnElement(homePage, "LOGOUT");
-			} else if (Web.isWebElementDisplayed(homePage, "MY ACCOUNTS")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify user is on landing page",
-						"user is on MyACCOUNTS page", true);
-				Web.clickOnElement(homePage, "LOGOUT");
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify user is on landing page",
-						"user is not in Landing page", true);
-			}
-			
-
+			Thread.sleep(5000);
+			Web.waitForElement(homePage, "Log out");
+			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")&& Web.isWebElementDisplayed(homePage, "Retirement income");
+					if (isDisplayed) {
+						Reporter.logEvent(Status.PASS,
+								"Verify user is on landing page",
+								"user is navigated to landing page", true);
+						Web.clickOnElement(homePage, "LOGOUT");
+					} else if (Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")) {
+						Reporter.logEvent(Status.PASS,
+								"Verify user is on landing page",
+								"user is navigated to MyACCOUNTS page", true);
+						Web.clickOnElement(homePage, "LOGOUT");
+					} else {
+						Reporter.logEvent(Status.FAIL,
+								"Verify user is on landing page",
+								"user is not navigated to Landing page", true);
+					}
+		
 		}
 
 		catch (Exception e) {
@@ -2328,7 +2361,7 @@ public class registrationtestcases {
 
 		} finally {
 			try {
-				ExecuteQuery.UnRegisterParticipant("266400904");
+				ExecuteQuery.UnRegisterParticipant(SSN);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2343,10 +2376,11 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			prepareLoginTestData();
-			ExecuteQuery.UnRegisterParticipant(Stock
-					.GetParameterValue("SSN"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
+			Actions keyBoard = new Actions(Web.webdriver);
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -2412,42 +2446,79 @@ public class registrationtestcases {
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
 						Stock.GetParameterValue("FIRST_LINE_MAILING"));
-				
+
 			}
 
 			// Click on Continue button
 			accLookup.clickOnFields("Continue");
+
 			Reporter.logEvent(
 					Status.INFO,
 					"Enter participant details and click on Continue button.",
 					"Submitted participant details and clicked on Continue button",
 					false);
-
+			Thread.sleep(5000);
 			// Verify set up your account page is displayed
-			hdrBlockText = accSetup.getAccountSetupHeaderText();
+			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Account setup Header block text",
 						"Header text block is not displayed on the page", true);
 			} else {
-				isMatching = Web.VerifyText("Create username and password",
-						hdrBlockText, true);
-
+				isMatching = Web
+						.VerifyText(
+								"We found you!\nVerification codes for enhanced security will be sent to the email address or phone number you provide below.",
+								hdrBlockText, true);
 				if (isMatching) {
 					Reporter.logEvent(
 							Status.PASS,
-							"Verify 'Create username and password' header is displayed",
-							"Create username and password Header is displayed",
+							"Verify 'We found you!' header is displayed",
+							"user successfully navigated to the Account Setup page",
 							true);
 				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify 'Create username and password' header is displayed",
-							"Create username and password Header is not displayed",
-							true);
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'We found you!' header is displayed",
+							"We found you! Header is not displayed", true);
 				}
 			}
 
+			// Verify Provide contact information Header
+			hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+			isMatching = Web.VerifyText("Provide contact information",
+					hdrBlockText, true);
+			if (isMatching) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is displayed",
+						false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is not displayed",
+						false);
+			}
+
+			// Verify 'Email Address' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "EMAIL ADDRESS")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
+
+			// Verify 'Mobile Phone Number' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "MOBILE PHONE NUMBER")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
 			// Verify 'Username' field is displayed
 			if (Web.isWebElementDisplayed(accSetup, "USERNAME")) {
 				Reporter.logEvent(Status.PASS,
@@ -2480,41 +2551,53 @@ public class registrationtestcases {
 						"Verify 'Re-Enter Password' text field is displayed",
 						"'Re-Enter Password' is not displayed", false);
 			}
-
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
 			Web.setTextToTextBox("USERNAME", accSetup,
 					Stock.GetParameterValue("SSN") + "ABC");
 			Web.setTextToTextBox("PASSWORD", accSetup,
 					Stock.GetParameterValue("PASSWORD"));
 			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
 					Stock.GetParameterValue("REENTERPASSWORD"));
-			Web.clickOnElement(accSetup, "REGISTER");
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
 
-			objAuth.selectCodeDeliveryOption(lib.Stock
+			Thread.sleep(5000);
+			objAuth.selectCodeDeliveryOption(Stock
 					.GetParameterValue("codeDeliveryOption"));
-
 			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
 					.equalsIgnoreCase("EMAIL")) {
-				verificationCode = objAuth.getVerificationCode(true);
+				verificationCode = objAuth.getVerificationCode(false);
 			}
 			objAuth.submitVerificationCode(verificationCode, false, false);
 
 			Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
+			Thread.sleep(5000);
+			Web.waitForElement(homePage, "Log out");
 			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")
 					&& Web.isWebElementDisplayed(homePage, "Retirement income");
 			if (isDisplayed) {
 				Reporter.logEvent(Status.PASS,
 						"Verify user is on landing page",
-						"user is on landing page", true);
+						"user is navigated to landing page", true);
 				Web.clickOnElement(homePage, "LOGOUT");
-			} else if (Web.isWebElementDisplayed(homePage, "MY ACCOUNTS")) {
+			} else if (Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify user is on landing page",
-						"user is on MyACCOUNTS page", true);
+						"user is navigated to MyACCOUNTS page", true);
 				Web.clickOnElement(homePage, "LOGOUT");
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verify user is on landing page",
-						"user is not in Landing page", true);
+						"user is not navigated to Landing page", true);
 			}
 
 		}
@@ -2532,8 +2615,7 @@ public class registrationtestcases {
 
 		} finally {
 			try {
-				ExecuteQuery.UnRegisterParticipant(Stock
-						.GetParameterValue("SSN"));
+				ExecuteQuery.UnRegisterParticipant(SSN);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();

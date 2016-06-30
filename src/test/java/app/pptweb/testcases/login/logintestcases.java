@@ -34,8 +34,7 @@ public class logintestcases {
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
-		System.out.println("LOGIN");
-	}
+			}
 
 	@DataProvider
 	public Object[][] setData(Method tc) throws Exception {
@@ -48,10 +47,10 @@ public class logintestcases {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
 
-	public void prepareLoginTestData(String quesryNmae,String planid) {
+	public void prepareLoginTestData(String quesryNmae,String... queryParam) {
 		try {
 			testDataFromDB = TestDataFromDB.getParticipantDetails(
-					quesryNmae, Stock.GetParameterValue(planid));
+					quesryNmae, queryParam);
 			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +139,7 @@ public class logintestcases {
 					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
 							+ Common.getSponser());
 			String verificationCode = "";
-			prepareLoginTestData();
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();

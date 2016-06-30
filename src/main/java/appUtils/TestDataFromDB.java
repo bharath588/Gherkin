@@ -43,6 +43,8 @@ public class TestDataFromDB {
 			rsMetaData = participants.getMetaData();
 			noOfColumns = rsMetaData.getColumnCount();
 			for (int j = 1; j <= noOfColumns; j++) {
+				
+							
 				if (rsMetaData.getColumnName(j).contains("SUBSTR")) {
 					mapUserDetails
 							.put("PASSWORD", participants.getString(rsMetaData
@@ -73,7 +75,8 @@ public class TestDataFromDB {
 									.getString(rsMetaData.getColumnName(j)));
 				}
 			}
-			if(fetchNoOfPlans(mapUserDetails.get("SSN"))!=1)
+			
+			if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 || mapUserDetails.get("SSN").equalsIgnoreCase("000231671"))
 				participants.next();
 			else
 				break;
@@ -98,16 +101,18 @@ public class TestDataFromDB {
 		System.out.println("TEST DATA FROM BOTH" + tempMap);
 
 	}
-	public static void updateTable(String queryName, String... queryParameterValues) throws Exception{
+
+	public static void updateTable(String queryName,
+			String... queryParameterValues) throws Exception {
 		String[] sqlQuery = null;
 		sqlQuery = Stock.getTestQuery(queryName);
 		DB.executeUpdate(sqlQuery[0], sqlQuery[1], queryParameterValues);
 		DB.executeUpdate(sqlQuery[0], "commit");
-		
+
 	}
-	
-	
-	public static void fetchRegisteredParticipant(String... queryParameterValues) throws SQLException{
+
+	public static void fetchRegisteredParticipant(
+			String... queryParameterValues) throws SQLException {
 		String[] sqlQuery = null;
 		HashMap<String, String> mapUserDetails = new HashMap<String, String>();
 		ResultSetMetaData rsMetaData = null;
@@ -122,40 +127,58 @@ public class TestDataFromDB {
 			participants.first();
 			rsMetaData = participants.getMetaData();
 			noOfColumns = rsMetaData.getColumnCount();
-			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
-			
-			for(int i=1;i<=noOfRows;i++){
+			System.out.println("no of rows : " + noOfRows + " No of columns : "
+					+ noOfColumns);
+
+			for (int i = 1; i <= noOfRows; i++) {
 				rsMetaData = participants.getMetaData();
-				
+
 				for (int j = 1; j <= noOfColumns; j++) {
-					if (rsMetaData.getColumnName(j).equalsIgnoreCase("SUBSTR(DECRYPT(U.ENCRYPTED_PASS_CODE),1,10)--,WB.ACCT_BALANCE")) {
-						mapUserDetails.put("Password",participants.getString(rsMetaData.getColumnName(j)));
+					if (rsMetaData
+							.getColumnName(j)
+							.equalsIgnoreCase(
+									"SUBSTR(DECRYPT(U.ENCRYPTED_PASS_CODE),1,10)--,WB.ACCT_BALANCE")) {
+						mapUserDetails.put("Password", participants
+								.getString(rsMetaData.getColumnName(j)));
 					} else
 						mapUserDetails.put(rsMetaData.getColumnName(j),
-								participants.getString(rsMetaData.getColumnName(j)));
-				}	
+								participants.getString(rsMetaData
+										.getColumnName(j)));
+				}
 				System.out.println(mapUserDetails);
-				if(fetchNoOfPlans(mapUserDetails.get("SSN"))!=1)
+				if (fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 ||!fetchIndID(mapUserDetails.get("SSN")))
 					participants.next();
 				else
 					break;
 			}
-			
-			
-			
-			
-			}
-			
+
 		}
-		
-		public static int fetchNoOfPlans(String ssn){
-			String[] sqlQuery = null;
-			int noOfRecords=0;
-			
-			sqlQuery = Stock.getTestQuery("fetchNoOfPlans");
-			ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
-			noOfRecords = DB.getRecordSetCount(participants);
-			return noOfRecords;
-			
+
+	}
+
+	public static int fetchNoOfPlans(String ssn) {
+		String[] sqlQuery = null;
+		int noOfRecords = 0;
+
+		sqlQuery = Stock.getTestQuery("fetchNoOfPlans");
+		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+		noOfRecords = DB.getRecordSetCount(participants);
+		return noOfRecords;
+
+	}
+	
+	public static boolean fetchIndID(String ssn) throws SQLException {
+		String[] sqlQuery = null;
+		boolean IndID = false;
+
+		sqlQuery = Stock.getTestQuery("fetchIdFromUserNameRegistry");
+		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+		if (DB.getRecordSetCount(participants) > 0) 
+		{
+			System.out.println("ID:"+participants.getString("ID"));
+			IndID = true;
 		}
+		return IndID;
+
+	}
 }

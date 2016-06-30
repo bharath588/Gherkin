@@ -43,10 +43,11 @@ public class authenticationtestcases {
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-	public void prepareLoginTestData() {
+	
+	public void prepareLoginTestData(String quesryNmae,String... queryParam) {
 		try {
 			testDataFromDB = TestDataFromDB.getParticipantDetails(
-					"getRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
+					quesryNmae, queryParam);
 			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,7 +60,7 @@ public class authenticationtestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
-			prepareLoginTestData();
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(loginPage);
@@ -173,7 +174,7 @@ public class authenticationtestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME);
-			prepareLoginTestData();
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -261,7 +262,7 @@ public class authenticationtestcases {
 
 	@Test(dataProvider = "setData")
 	public void SF04_TC05_ForgotPassword_DidntReceiveActivationCode(int itr, Map<String, String> testdata){
-		prepareLoginTestData();
+		prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 		String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 		String expLoginHelptxt;
 		boolean isMatching;

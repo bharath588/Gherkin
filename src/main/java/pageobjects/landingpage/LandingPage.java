@@ -57,6 +57,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()='My Accounts']")
+	private WebElement lblMyAccounts;
 
 	/**
 	 * Empty args constructor
@@ -216,6 +218,10 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (fieldName.trim().equalsIgnoreCase("RETIREMENT INCOME")) {
 			return this.lblRetirementIncome;
 		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT MY ACCOUNTS")) {
+			return this.lblMyAccounts;
+		}
+
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",

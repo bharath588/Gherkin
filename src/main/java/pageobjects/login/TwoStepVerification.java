@@ -202,7 +202,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 				// do nothing
 			}
 			//deliveryOption.replaceAll("_", " ")) == false;
-			if (Web.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " "),true)) {
+			if (!Web.selectDropDownOption(lstDeliveryOption, deliveryOption.replaceAll("_", " "),true)) {
 				throw new Error("Unable to select verification code delivery option: " + deliveryOption.replaceAll("_", " "));
 			}
 		}

@@ -159,6 +159,46 @@
             </class>
         </classes>
     </test> 
+    <test
+		name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin">
+		<classes>
+			<class name="app.pptweb.testcases.login.registrationtestcases">
+				<methods>
+					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration" />
+				</methods>
+			</class>
+		</classes>
+	</test>  
+	 <test
+		name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Ihavepin">
+		<classes>
+			<class name="app.pptweb.testcases.login.registrationtestcases">
+				<methods>
+					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	 <test
+		name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin">
+		<classes>
+			<class name="app.pptweb.testcases.login.registrationtestcases">
+				<methods>
+					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	 <test
+		name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin">
+		<classes>
+			<class name="app.pptweb.testcases.login.registrationtestcases">
+				<methods>
+					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
     <test name="SIT_xPPTWEB_Login_03_01_TC01_Send Activation Code by Text through Login flow">
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
