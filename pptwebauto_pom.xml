@@ -12,14 +12,14 @@
 	</parent>
 	<groupId>com.fascore.qa.ParticipantWebAuto</groupId>
 	<artifactId>pptwebAuto</artifactId>
-	<version>0.0.1-PPTWebSNAPSHOT</version>
+	<version>2.0.2-PPTWebSNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
-			<version>2.0.2-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -148,6 +150,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id = "contributionInput") private WebElement txtAnnualCompensation;
 			@FindBy(xpath = ".//span[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p") private WebElement lblAlertMsg;
+			@FindBy(xpath = "//label[@class='radio-inline panel-title']//strong") private WebElement lblViewOnlyCatchUP;
+			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
+			
 		/**
 		 * Default Constructor
 		 */
@@ -297,6 +302,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("MyContribution Button")) {
 				return this.btnMyContributions;	
 			}
+			if(fieldName.trim().equalsIgnoreCase("VIEW ONLY SPLIT CONTRIBUTION TEXT")) {
+				return this.lblViewOnlyCatchUP;	
+			}
 			
 			return null;
 			}		
@@ -339,7 +347,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public boolean click_Select_Your_Contribution_Rate()
 		{	
-		
+			Actions keyBoard = new Actions(Web.webdriver);
 			lib.Web.waitForElement(radioSelectAnotherContributionRate);
 			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
@@ -364,11 +372,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
 			
 			this.btnDone.click();
+			if(btnDone.isEnabled())
+			{
+				keyBoard.sendKeys(Keys.ENTER).perform();
+			}
 			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
 			if(sliderValue)
-				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to"+contrbution_rate, false);
+				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to"+contrbution_rate, false);
+				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to "+contrbution_rate, false);
 			return sliderValue;
 		}
 		
@@ -689,29 +701,20 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void Catchup_with_split_contributions(String myContRate)
 		{
-//			String rothCatchupRate="";
-//			int rothCatchupRateNum;
+			
+		
 			try {
-				lib.Web.waitForElement(btnEditCatchUp);
+				lib.Web.waitForElement(btnAddOrEditCatchUp);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			lib.Web.clickOnElement(btnEditCatchUp);
+			lib.Web.clickOnElement(btnAddOrEditCatchUp);
 			click_Select_Your_Contribution_Rate();
 			lib.Web.clickOnElement(btnContinue);
-			if(lib.Web.isWebElementDisplayed(txtViewOnly))
-				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Check if view only is displayed for age roth rate", "View only is not displayed for roth catch up rate", true);
-			
-//			rothCatchupRate = rothCatchUprate.getText();
-//			rothCatchupRateNum = Integer.parseInt(rothCatchupRate);
-			//lib.Web.setTextToTextBox(txtCatchupRate, String.valueOf((Integer.valueOf(myContRate)) - rothCatchupRateNum));
-			lib.Web.setTextToTextBox(txtCatchupRate,String.valueOf(((Integer.valueOf(myContRate))-Integer.parseInt(Stock.GetParameterValue("Age_roth_Catchup_contr")))));
-			lib.Web.clickOnElement(btnContinue);
+			/*lib.Web.clickOnElement(btnContinue);
 			lib.Web.clickOnElement(btnConfirmAndContinue);
-			myContributions_Confirmation_Page();
+			myContributions_Confirmation_Page();*/
 		}
 		
 		/**<pre> Method to edit Standard contribution having a split  and verify if view only is displayed 
@@ -1021,8 +1024,38 @@ public class Deferrals extends LoadableComponent<Deferrals> {
             return status;
 
                 }
+		public String getContributionPercentage(String contibutionName) {
+			String Percentage=null;
+			boolean isTextDisplayed=false;
+			 WebElement textAgeCatchupRoth= Web.webdriver.findElement(By.xpath(txtAgeCatchupRoth.replace("webElement", contibutionName)));
+		
+			isTextDisplayed = Web.isWebElementDisplayed(textAgeCatchupRoth, true);
+			if (isTextDisplayed) {
+				Percentage=textAgeCatchupRoth.getText();
+			}
+				
+return Percentage;
+		}
+		/**
+		 * <pre>
+		 * Method to get the text of an webElement
+		 * Returns string webElement is displayed
+		 * </pre>
+		 * 
+		 * @return String - getText
+		 */
+		public String getWebElementText(String fieldName) {
+			String getText = "";
 
+			if (Web.isWebElementDisplayed(this.getWebElement(fieldName))) {
 
+				getText = this.getWebElement(fieldName).getText().trim();
+
+			}
+
+			return getText;
+
+		}
 	}		
 	
 

@@ -43,9 +43,6 @@ public class deferralstestcases {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 	}
-	
-	
-	
 
 	/**
 	 * The following script After Tax Deferral and confirms it
@@ -59,8 +56,9 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			TestDataFromDB.getParticipantDetails("getDeferralParticipant","194394-01");
-			
+			TestDataFromDB.getParticipantDetails("getDeferralParticipant",
+					"194394-01");
+
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -77,50 +75,47 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
 
-			
-			
-//			try {
-//				lib.Web.waitForElement(deferrals, "Table Header Contribution");
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			if (lib.Web.isWebElementDisplayed(deferrals,
-//					"Table Header Contribution"))
-//				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
-//						"My Contributions page is  displayed", false);
-//			else
-//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
-//						"My Contributions page is not displayed", true);
-//
-//			if (deferrals.clickAddEditButton("After Tax Add"))
-//				Reporter.logEvent(Status.PASS,
-//						"Verify After-tax contribution page",
-//						"After-tax Contributions page is  displayed", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"Verify After-tax contribution page",
-//						"After-tax Contributions page is not displayed", true);
-//			if (deferrals.click_Select_Your_Contribution_Rate())
-//				Reporter.logEvent(Status.PASS,
-//						"Verify accuracy of My Contribution Rate",
-//						"My Contribution Rate value is matching", false);
-//			else
-//				Reporter.logEvent(Status.FAIL,
-//						"Verify accuracy of My Contribution Rate",
-//						"My Contribution Rate value is not matching", true);
-//			lib.Web.clickOnElement(deferrals, "Continue button");
-//			deferrals.add_Auto_Increase("After Add Auto Increase");
-//			deferrals.myContributions_Confirmation_Page();
-//			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-//			if (lib.Web.isWebElementDisplayed(deferrals,
-//					"Table Header Contribution", true))
-//				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
-//						"My Contributions page is  displayed", true);
-//			else
-//				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
-//						"My Contributions page is not displayed", true);
+			// try {
+			// lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// }
+			// if (lib.Web.isWebElementDisplayed(deferrals,
+			// "Table Header Contribution"))
+			// Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+			// "My Contributions page is  displayed", false);
+			// else
+			// Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+			// "My Contributions page is not displayed", true);
+			//
+			// if (deferrals.clickAddEditButton("After Tax Add"))
+			// Reporter.logEvent(Status.PASS,
+			// "Verify After-tax contribution page",
+			// "After-tax Contributions page is  displayed", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "Verify After-tax contribution page",
+			// "After-tax Contributions page is not displayed", true);
+			// if (deferrals.click_Select_Your_Contribution_Rate())
+			// Reporter.logEvent(Status.PASS,
+			// "Verify accuracy of My Contribution Rate",
+			// "My Contribution Rate value is matching", false);
+			// else
+			// Reporter.logEvent(Status.FAIL,
+			// "Verify accuracy of My Contribution Rate",
+			// "My Contribution Rate value is not matching", true);
+			// lib.Web.clickOnElement(deferrals, "Continue button");
+			// deferrals.add_Auto_Increase("After Add Auto Increase");
+			// deferrals.myContributions_Confirmation_Page();
+			// lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			// if (lib.Web.isWebElementDisplayed(deferrals,
+			// "Table Header Contribution", true))
+			// Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+			// "My Contributions page is  displayed", true);
+			// else
+			// Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+			// "My Contributions page is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1295,9 +1290,56 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
+			boolean isTextMatching = false;
+			Thread.sleep(5000);
+			String perAgeRothCatchUp = deferrals
+					.getContributionPercentage("Age roth catch up");
+			String perAgeCatchupBefore = deferrals
+					.getContributionPercentage("Age Catch- up before");
 
-			deferrals.Catchup_with_split_contributions(Stock
-					.GetParameterValue("Contribution Rate"));
+			String contributionRate = Stock
+					.GetParameterValue("Contribution Rate");
+
+			deferrals.Catchup_with_split_contributions(contributionRate);
+			contributionRate = deferrals.contrbution_rate;
+Thread.sleep(5000);
+			int cr = Integer.parseInt(contributionRate.split("%")[0]);
+			int acr = Integer.parseInt(perAgeRothCatchUp.split("%")[0]);
+			String newPerAgeCatchupBefore = Integer.toString(cr - acr);
+			isTextMatching = Web.VerifyText(newPerAgeCatchupBefore
+					+ "% Age Catch- up before contribution with "
+					+ perAgeRothCatchUp + " Age roth catch up", deferrals
+					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
+					.trim(), true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Split Contribution on Select Contribution page",
+								"Split Contribution is Same on Select Contribution page \nExpected"
+										+ newPerAgeCatchupBefore
+										+ "% Age Catch- up before contribution with "
+										+ perAgeRothCatchUp
+										+ " Age roth catch up \nActual:"+deferrals.getWebElementText(
+										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Split Contribution on Select Contribution page",
+								"Split Contribution is Same on Select Contribution page. \nExpected"
+										+ newPerAgeCatchupBefore
+										+ "% Age Catch- up before contribution with "
+										+ perAgeRothCatchUp
+										+ " Age roth catch up \n Actual:"+deferrals.getWebElementText(
+										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
+										.trim(), true);
+			}
+			Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Confirm button");
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -1306,6 +1348,62 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
+			isTextMatching = Web.VerifyText(perAgeCatchupBefore ,deferrals
+					.getContributionPercentage("Age Catch- up before"),true);
+			if (!isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Age Catch- up before After Split Contribution on My Contribution page",
+								"Age Catch- up before is updated on My Contribution page \nExpected"
+										+ newPerAgeCatchupBefore
+										+ "%"+
+										"\nctual:"+deferrals
+										.getContributionPercentage("Age Catch- up before")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Age Catch- up before After Split Contribution on My Contribution page",
+								"Age Catch- up before is updated on My Contribution page \nExpected"
+										+ newPerAgeCatchupBefore
+										+ "%"+
+										"\nActual:"+deferrals
+										.getContributionPercentage("Age Catch- up before")
+										.trim(),
+								true);
+			}
+			isTextMatching = Web.VerifyText(perAgeRothCatchUp ,deferrals
+					.getContributionPercentage("Age roth catch up"),true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
+								"Age Catch- up Age roth catch up is Not updated on My Contribution page Expected/n"
+										+ perAgeRothCatchUp
+										+
+										" Actual:\n "+deferrals
+										.getContributionPercentage("Age roth catch up")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
+								"Age Catch- up Age roth catch up is updated on My Contribution page Expected/n"
+										+ perAgeRothCatchUp
+										+
+										" Actual:\n "+deferrals
+										.getContributionPercentage("Age roth catch up")
+										.trim(),
+								true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
