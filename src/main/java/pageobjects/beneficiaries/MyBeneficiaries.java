@@ -68,7 +68,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//span[text()='Yes']") private WebElement btnMarried;
 	@FindBy(xpath="//span[text()='No']") private WebElement btnUnmarried;
 	@FindBy(xpath="//button[text()='Delete']") private WebElement btnDelete;
-	@FindBy(xpath="//table[@class='beneficiaries primary-beneficiaries table']//*[@class='beneficiary-name']/a") private List<WebElement> lstlnkPrimaryBeneficiaryName;
+	@FindBy(xpath="//table[@class='beneficiaries primary-beneficiaries table']//*[contains(@class,'beneficiary-name')]/a") private List<WebElement> lstlnkPrimaryBeneficiaryName;
 	@FindBy(xpath="//table[@class='beneficiaries contingent-beneficiaries table']//*[@class='beneficiary-name']/a") private List<WebElement> lstlnkContingentBeneficiaryName;
 	@FindBy(xpath="//*[contains(@class,'contingent')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtContingentAllocation;
 	@FindBy(xpath="//*[contains(@class,'primary')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtPrimaryAllocation;
@@ -283,21 +283,27 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
 		
 		lib.Web.waitForElement(btnContinue);
-		if(Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
+		if(Web.isWebElementDisplayed(lblDesignateBeneficiary,true)){
 			maritalstatus.click();
+			Reporter.logEvent(Status.INFO, "Select marital status", "marital status selected to :  "+maritalStatus, true);
 		
-		else{
+		}
+			else{
 			Web.clickOnElement(this.btnAddAnotherBeneficiary);
 			lib.Web.waitForElement(btnPrimary);
-			if(beneficiaryType.equalsIgnoreCase("Primary"))
-				
+			if(beneficiaryType.equalsIgnoreCase("Primary")){
 				Web.clickOnElement(this.btnPrimary);
+				Reporter.logEvent(Status.PASS, "verify Primary button is clicked", "Clicked Primary button ", true);
+			
+			}
 			else
 				Web.clickOnElement(this.btnContingent);
 		}
 		lib.Web.waitForElement(selMyBeneficiary);
 		
 		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
+		
+		
 		if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
 			this.enterEntityDetails();
 		else{
@@ -407,8 +413,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("Relationship: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").substring(Stock.GetParameterValue("benificiary_SSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
@@ -444,9 +450,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 		
 		for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
-			if(lstTablePrimaryBeneficiary.get(i).getText().contains(Stock.GetParameterValue("BeneficiaryName"))){
+			if(lstTablePrimaryBeneficiary.get(i).getText().contains(Stock.GetParameterValue("FirstName"))){
 				if(attribute.equalsIgnoreCase("Name"))
-					return Web.VerifyText("Name: "+Stock.GetParameterValue("BeneficiaryName"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
+					return Web.VerifyText("Name: "+Stock.GetParameterValue("FirstName"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
 				
 				if(attribute.equalsIgnoreCase("Allocation"))	
 					return Web.VerifyText("Allocation: "+Stock.GetParameterValue("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
@@ -455,7 +461,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					return Web.VerifyText("Type: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 				
 				if(attribute.equalsIgnoreCase("TIN")){
-//					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("benificiary_SSN").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+//					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					return Web.VerifyText("TIN (last four): "+Stock.GetParameterValue("Tax_Identification_No").substring(Stock.GetParameterValue("Tax_Identification_No").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 				}
 				if(attribute.equalsIgnoreCase("DOT")){	
@@ -476,9 +482,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
-		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("benificiary_SSN"));
+		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("SSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
-	
+		Reporter.logEvent(Status.INFO, "Verify beneficiary details entered", "Entered beneficiary details", true);
 	}
 	
 
@@ -496,7 +502,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	
 	public void enterEntityDetails(){
-		lib.Web.setTextToTextBox(this.txtBeneficiaryName, Stock.GetParameterValue("BeneficiaryName"));
+		lib.Web.setTextToTextBox(this.txtBeneficiaryName, Stock.GetParameterValue("FirstName"));
 		lib.Web.setTextToTextBox(this.txtDateOfTrust, Stock.GetParameterValue("Date_of_Trust"));
 		lib.Web.setTextToTextBox(this.txtTaxIdentificationNo, Stock.GetParameterValue("Tax_Identification_No"));
 	}
@@ -593,7 +599,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	
 	public void enterAllocations(String allocation_percent){
-
+		Web.waitForElement(tblPrimaryBeneficiary);
 		for(int i=0;i<lstPrimaryBeneficiaries.size();i++){
 			if(lstlnkPrimaryBeneficiaryName.get(i).getText().contains(Stock.GetParameterValue("FirstName")))
 				Web.setTextToTextBox(lstPriBeneAllocations.get(i),allocation_percent);
@@ -608,10 +614,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	public void verifyBeneficiaryDisplayed(String bene_type,String bene_Name){
 		if(bene_type.equalsIgnoreCase("Primary")){
+			Web.waitForElement(tblPrimaryBeneficiary);
 			if(StringUtils.containsIgnoreCase(tblPrimaryBeneficiary.getText(), bene_Name))
-				Reporter.logEvent(Status.PASS, "Verify Beneficiary name displayed in Primary Beneficiary Table","Beneficiay name displayed" , false);
+				Reporter.logEvent(Status.PASS, "Verify Beneficiary name displayed in Primary Beneficiary Table","Beneficiay name displayed" , true);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify Beneficiary name displayed in Primary Beneficiary Table", "Beneficiay name not displayed", false);
+				Reporter.logEvent(Status.FAIL, "Verify Beneficiary name displayed in Primary Beneficiary Table", "Beneficiay name not displayed", true);
 		}
 	}
 	

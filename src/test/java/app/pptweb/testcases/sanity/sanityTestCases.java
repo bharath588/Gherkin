@@ -36,6 +36,7 @@ import core.framework.Globals;
 public class sanityTestCases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	private static HashMap<String, String> testDataFromDB = null;
+	public static String SSN = null;
 	LoginPage login;
 	String tcName;
 
@@ -107,9 +108,9 @@ public class sanityTestCases {
 			// TODO Add code to verify text displayed on Two step verification page
 			
 			// Verify options 'Text me', 'Call me', 'Email Me' and 'Already have a code?' exists
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:");
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:");
-			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:");
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "TEXT ME:",true);
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "CALL ME:",true);
+			Web.verifyDropDownOptionExists(twoStepVerification, "CHOOSE DELIVERY METHOD", "EMAIL:",true);
 			
 			if (Web.isWebElementDisplayed(twoStepVerification, "Already have a code?")) {
 				Reporter.logEvent(Status.PASS, "Verify 'Already have a code?' link is displayed", 
@@ -875,7 +876,7 @@ public class sanityTestCases {
 
 			beneficiary.get();
 
-
+			SSN = Stock.GetParameterValue("SSN");
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 
 			//			// add a beneficiary
@@ -1003,7 +1004,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
-
+			SSN = Stock.GetParameterValue("SSN");
 
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"), Stock.GetParameterValue("Allocation"));
@@ -1129,7 +1130,7 @@ public class sanityTestCases {
 
 			beneficiary.get();
 
-
+			SSN = Stock.GetParameterValue("SSN");
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"), Stock.GetParameterValue("Allocation"));
 

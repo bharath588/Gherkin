@@ -92,7 +92,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'AFTRTX')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-up before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
@@ -344,8 +344,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 *.</pre>
 		 * 
 		 * @return - boolean
+		 * @throws InterruptedException 
 		 */
-		public boolean click_Select_Your_Contribution_Rate()
+		public boolean click_Select_Your_Contribution_Rate() throws InterruptedException
 		{	
 			Actions keyBoard = new Actions(Web.webdriver);
 			lib.Web.waitForElement(radioSelectAnotherContributionRate);
@@ -376,11 +377,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			{
 				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
+			Thread.sleep(5000);
 			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
 			if(sliderValue)
-				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, false);
+				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
 			else
-				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to "+contrbution_rate, false);
+				Reporter.logEvent(Status.FAIL, "Select Another Contribution rate", "Contribution rate is not selected to "+contrbution_rate, true);
 			return sliderValue;
 		}
 		
@@ -698,8 +700,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		/**<pre> Method to edit Catch-up contribution having a split  and verify if view only is displayed 
 		 *.</pre>
 		 * @param myContRate- contribution rate 
+		 * @throws InterruptedException 
 		 */
-		public void Catchup_with_split_contributions(String myContRate)
+		public void Catchup_with_split_contributions(String myContRate) throws InterruptedException
 		{
 			
 		
@@ -720,8 +723,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		/**<pre> Method to edit Standard contribution having a split  and verify if view only is displayed 
 		 *.</pre>
 		 * @param myContRate- contribution rate 
+		 * @throws InterruptedException 
 		 */
-		public void View_only_Standard_with_changes(String myContRate)
+		public void View_only_Standard_with_changes(String myContRate) throws InterruptedException
 		{
 			String rothCatchupRate="";
 			int rothCatchupRateNum;
@@ -794,9 +798,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 
 		/**<pre> Method to edit Maximized Standard deferral to a custom rate and verify add auto increase link is displayed for both standard and catch up deferrals 
 		 *.</pre>
+		 * @throws InterruptedException 
 		 * 
 		 */
-		public void Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer(){
+		public void Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer() throws InterruptedException{
 			
 			
 			lib.Web.waitForElement(btnEditStandard);

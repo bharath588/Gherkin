@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="DevMacro">
-	<DateTime value="7/4/2016 5:15:46 PM"></DateTime>
+	<DateTime value="7/5/2016 4:19:02 PM"></DateTime>
 	<Module name="query">
 		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB"
 			Query="select EMAIL_ADDRESS,MOBILE_PHONE_NBR,MOBILE_PHONE_AREA_CODE from individual where ssn=?" />
@@ -56,7 +56,7 @@ order by v.ga_id, i.ssn" />
 			Query="select * from part_agrmt pa join individual i on pa.ind_id = i.id where i.ssn in ?" />
 		<parameter QueryName="getDeferralParticipant" DB="ParticipantDataDB"
 			Query="select distinct v.ga_id, i.id, i.ssn, a.zip_code, i.last_name, I.BIRTH_DATE, a.first_line_mailing,
-    u.username, substr(decrypt(u.encrypted_pass_code),1,10) --, wb.acct_balance
+    u.username, substr(decrypt(u.encrypted_pass_code),1,10)
 from  access_customization_view v
 join part_agrmt pa on pa.ga_id = v.ga_id
 join individual i on i.id = pa.ind_id
@@ -1235,7 +1235,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Married" />
 				<parameter name="Beneficiary Relation" value="Spouse" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1262,7 +1262,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Married" />
 				<parameter name="Beneficiary Relation" value="Spouse" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1287,13 +1287,36 @@ where a.PRIMARY_RES_IND='Y'
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record"></TestCase>
-		<TestCase
-			name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record"></TestCase>
+			name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="Marital Status" value="Unmarried" />
+				<parameter name="Beneficiary Relation" value="Child" />
+				<parameter name="Beneficiary Type" value="Primary" />
+				<parameter name="Use Current Address" value="Yes" />
+				<parameter name="FirstName" value="john" />
+				<parameter name="MiddleName" value="john" />
+				<parameter name="LastName" value="john" />
+				<parameter name="Prefix" value="mr" />
+				<parameter name="DOB" value="11/10/2010" />
+				<parameter name="benificiary_SSN" value="123123123" />
+				<parameter name="PhoneNumber" value="(123) 123-1231" />
+				<parameter name="AddressOne" value="addr1" />
+				<parameter name="AddressTwo" value="addr2" />
+				<parameter name="City" value="San Fransisco" />
+				<parameter name="State" value="California" />
+				<parameter name="Zipcode" value="18902" />
+				<parameter name="Country" value="Tonga" />
+				<parameter name="Allocation" value="100" />
+				<parameter name="Add_Allocation" value="No" />
+				<parameter name="Delete_Beneficiary" value="Yes" />
+				<parameter name="Validate_Date" value="No" />
+			</Iteration>
+		</TestCase>
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC009_UnMarried One Individual beneficiary new address">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1320,7 +1343,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC012_UnMarried Multiple Individual beneficiary">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1344,7 +1367,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Validate_Date" value="No" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1371,26 +1394,26 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC011_UnMarried Multiple Entity beneficiary">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="A Trust" />
 				<parameter name="Beneficiary Type" value="Primary" />
 				<parameter name="Use Current Address" value="Yes" />
-				<parameter name="BeneficiaryName" value="ABC Trust" />
+				<parameter name="FirstName" value="ABC Trust" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
 				<parameter name="Validate_Date" value="No" />
-				<parameter name="Delete_Beneficiary" value="No" />
+				<parameter name="Delete_Beneficiary" value="Yes" />
 				<parameter name="Date_of_Trust" value="12/10/2010" />
 				<parameter name="Tax_Identification_No" value="123456789" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="A Trust" />
 				<parameter name="Beneficiary Type" value="Primary" />
 				<parameter name="Use Current Address" value="Yes" />
-				<parameter name="BeneficiaryName" value="XYZ Trust" />
+				<parameter name="FirstName" value="XYZ Trust" />
 				<parameter name="Allocation" value="50" />
 				<parameter name="Add_Allocation" value="Yes" />
 				<parameter name="Validate_Date" value="No" />
@@ -1407,7 +1430,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Auto Increase Contribution Percent"
 					value="10" />
 				<parameter name="Auto Increases Until Reaches Percent"
-					value="30" />
+					value="24" />
 				<parameter name="Auto Increase Period" value="1" />
 				<parameter name="Contributing_type" value="Select another contribution" />
 			</Iteration>
