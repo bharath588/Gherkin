@@ -2,6 +2,7 @@ package core.framework;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Stock;
@@ -132,7 +133,9 @@ public class Globals {
           public static final String GC_LOG_FILE_TYPE=".log";
           public static final String GC_FILE_TYPE=".xml";
   	   public static String GC_Database_Prefix="";
-
+  	   public static String GC_SetEnvCommand = "";
+  	   
+  	  
     	  public static final String GC_TRANSACTION_FUTURE_STATUS="FUTURE";
     	  public static final String GC_TRANSACTION_COMPLETE_STATUS="COMPLETE";
     	  public static final String GC_BATCH_RUN_DATE_FORMAT="yyyy-MM-dd";
@@ -168,7 +171,9 @@ public class Globals {
     	  public static final String GC_ENROLLCANCEL_FILE_NAMEPATTERN="ma_fei_enrll_";
     	  public static final String GC_TRANSACTION_INPUT_FILE_NAMEPATTERN="ma_fei_txnpr_"; 
     	  public static final String GC_TRANSACTION_CONFIRMATION_FILE_NAMEPATTERN="ma_empower_txnec_";
-          
+    	  public static final String dbNameAlias = "MemberParticipantDB";
+          public static Map<String,String> testNGPropertiesMap = new LinkedHashMap<>();
+    	  
     	  public static final Map<String, String> databaseConnectionStrings;
     	  static
     	  {

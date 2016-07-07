@@ -4,22 +4,34 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.FilteredRowSet;
+import javax.sql.rowset.Predicate;
+
+import com.sun.rowset.FilteredRowSetImpl;
+
 import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
 
+@SuppressWarnings("restriction")
 public class DB {
 
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
+	private static FilteredRowSetImpl filterObj;
+	static int count = 0;
 	
 	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues) {
 		
@@ -76,7 +88,7 @@ public class DB {
 				//queryParamCnt = query.replaceAll("= ? ", "=? ").split("=? ").length;
 				
 				stmt = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				if (queryParamCnt == queryParameterValues.length) {
+					if (queryParamCnt == queryParameterValues.length) {
 					for (int i = 1; i <= queryParameterValues.length; i++) {
 						stmt.setString(i,queryParameterValues[i-1]);
 					
@@ -222,5 +234,90 @@ public class DB {
 		}
 		return isDateEqual_Flag;
 	}
+
+	
+	
+	/**
+	 * <p>
+	 * Returns the filtered rowset object of the existing resultset.User needs to pass the number of filters as parameters and 
+	 * the existing result set object on which the filtering is to be applied.
+	 * </p>
+	 * @param unfilteredRecordSet
+	 * @param predicates
+	 * @return filteredObj and null if there is no values matching the filter criteria
+	 * @throws SQLException
+	 */
+	public static FilteredRowSet filterRecordSet(ResultSet unfilteredRecordSet,Predicate...predicates) throws SQLException
+	{
+		filterObj = new FilteredRowSetImpl();
+		
+		List<Predicate> filterList = Arrays.asList(predicates);
+		   for(Predicate p : filterList)
+	        {
+			    filterObj = new FilteredRowSetImpl();
+	        	filterObj.populate(unfilteredRecordSet);
+	        	filterObj.setFilter(p);
+	        	unfilteredRecordSet = filterObj;
+	        	  
+	        	 int countRec = DB.getRecordSetCount(filterObj);
+		        	if (countRec == 0)
+		        	{
+	        		return null;
+		        	}
+	        }
+		return filterObj;
+	}
+	public static int getFilteredRowSetCount(FilteredRowSet frs) throws SQLException {
+
+		count = 0;
+	    if (frs == null) {
+	      return 0;
+	    }
+
+	    CachedRowSet crs = (CachedRowSet)frs;
+
+	    while (crs.next()) {
+	      count ++;
+	    }
+	    frs.beforeFirst();
+	    return count;
+	  }
+	
+	/*public static Statement createBatchProcess(String dbName,String query,PreparedStatement stmt,String...queryParameterValues) throws SQLException
+	{
+		
+		int queryParamCnt=0; 
+		if (queryParamCnt == queryParameterValues.length) {
+			for (int i = 1; i <= queryParameterValues.length; i++) {
+				stmt.setString(i,queryParameterValues[i-1]);
+			}
+			}
+		stmt.addBatch(query);
+		return stmt;
+	}
+	
+	public static void executeBatch(Statement stmt) throws SQLException 
+	{
+		stmt.executeBatch();
+	}
+	
+	public PreparedStatement getPreparedStatement(String dbName,String query) throws SQLException
+	{
+		return (getDBConnection(dbName)).prepareStatement(query);
+	}*/
+	public static String getRecordFromRecordSet(FilteredRowSet recordSet,String paramTobeFetched) throws SQLException
+	{
+		String paramValue = null;
+		if(recordSet != null)
+		{
+			while(recordSet.next())
+			{
+				paramValue = recordSet.getString(paramTobeFetched);
+				break;
+			}
+		}
+		return paramValue;
+	}
+
 
 }

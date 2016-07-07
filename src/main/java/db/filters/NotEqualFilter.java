@@ -12,7 +12,7 @@ import javax.sql.rowset.Predicate;
 import com.sun.rowset.FilteredRowSetImpl;
 
 @SuppressWarnings("restriction")
-public class NotEqualFilter implements Predicate{
+public class NotEqualFilter implements Predicate,Cloneable{
 	private Object filterOnValue;
 	public NotEqualFilter(Object value, int colNumber) {
 		

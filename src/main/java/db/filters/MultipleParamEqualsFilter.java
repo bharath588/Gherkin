@@ -10,7 +10,7 @@ import javax.sql.RowSet;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.Predicate;
 
-public class MultipleParamEqualsFilter implements Predicate {
+public class MultipleParamEqualsFilter implements Predicate,Cloneable {
 	private String[] params;
 	private String colName = null;
 	private int colNumber = -1;
@@ -48,26 +48,6 @@ public class MultipleParamEqualsFilter implements Predicate {
 			return false;
 		}
 			for (int i = 0; i < this.params.length; i++) {
-				
-				
-				if(columnValue == null && this.params[i] == null) {
-					evaluation = true;
-					}
-				
-					else if(columnValue != null && this.params[i] == null)
-					{
-						evaluation = false;
-					}
-				
-					else if(columnValue == null && this.params[i] != null)
-					{
-						evaluation = false;
-					}
-				
-					else {
-						if ((columnValue.equals(this.params[i]))) {
-							evaluation = true;
-						}	
 						if (value instanceof Timestamp || value instanceof Date) {
 							
 							if(columnValue == null && this.params[i] == null) {
@@ -93,8 +73,27 @@ public class MultipleParamEqualsFilter implements Predicate {
 							}
 						}
 						}
+							if(columnValue == null && this.params[i] == null) {
+								evaluation = true;
+								}
+							
+								else if(columnValue != null && this.params[i] == null)
+								{
+									evaluation = false;
+								}
+							
+								else if(columnValue == null && this.params[i] != null)
+								{
+									evaluation = false;
+								}
+							
+								else {
+									if ((columnValue.equals(this.params[i]))) {
+										evaluation = true;
+									}
+								}
 						}
-					}		
+							
 		} catch (SQLException e) {
 			return false;
 		}

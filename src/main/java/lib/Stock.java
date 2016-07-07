@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,7 @@ public class Stock {
 	private static int dataProviderIterations;
 	public static Map<String, String> globalTestdata;
 	public static String globalManualTCName;
-	private static int iterationNumber = 0;
+	public static int iterationNumber = 0;
 	
 	
 	
@@ -294,8 +295,95 @@ public class Stock {
 		iterationNumber++;
 		return globalTestData.get(index);
 	}
-
 	
-	
+	public static LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) {
+		Stock.iterationNumber = 0;
+		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
+		// Getting Application name and Module name so that the
+		// correct excel is picked up
+		LinkedHashMap<Integer, Map<String, String>> td = null;
+		Map<String, String> mapData = null;				
+		String appName = getConfigParam("AUT");
+		String modName = tcAbsPath.split("\\.")[(tcAbsPath.split("\\.").length)-1];
+		
+		boolean ifTCFound = false;
+		Log.Report(Level.DEBUG, "Preparing test data for Test Case : " + tcName);
+
+		try {
+			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
+					          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
+			
+		
+			int manualTCColNo = XL.getColNum(modName, 0, "TestCaseName");
+			int itrColNo = XL.getColNum(modName, 0, Globals.GC_ITRCCOLNAME);
+			int itcPointer = 0;
+
+			// Finding the TC in given TestData sheet
+			for (; itcPointer <= XL.getRowCount(modName); itcPointer++) {
+				if (XL.getCellData(modName, itcPointer, manualTCColNo).trim().equalsIgnoreCase(tcName)) {
+					Log.Report(Level.DEBUG, tcName + " found in " + modName + " sheet for row : " + itcPointer);
+					ifTCFound = true;
+					break;
+				}
+			}
+
+			if (ifTCFound) { // Loop to TD index
+				String strLoopPattern = XL.getCellData(modName, itcPointer, itrColNo).trim();
+				int counter = 0;
+				// Run ALL Test Data iteration
+				if (strLoopPattern.equals(Globals.GC_EMPTY)
+						|| strLoopPattern.equalsIgnoreCase(Globals.GC_VAL_RUNALLITR)) {
+					for (int iLoop = itcPointer; iLoop <= XL.getRowCount(modName); iLoop++) {
+						if (XL.getCellData(modName, iLoop + 2, manualTCColNo).trim().equals(tcName)) {
+							counter = counter + 1;
+						} else if (XL.getCellData(modName, iLoop + 2, manualTCColNo).trim().equals(Globals.GC_EMPTY)) {
+							//breaking out after all row count
+							break;
+						}
+					}
+					if (counter > 1) {
+						strLoopPattern = ("1>" + String.valueOf(counter));
+					} else {
+						strLoopPattern = "1";
+					}
+				}
+
+				td = new LinkedHashMap<Integer, Map<String, String>>();
+				Map<String, String> testDataItr = getLoopIndex(strLoopPattern);
+
+				for (String itrNo : testDataItr.keySet()) {
+					mapData = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+					// Loop to point to TC iterations
+					for (int iSelIndx = itcPointer + 2; iSelIndx <= XL.getRowCount(modName); iSelIndx++) {
+						if (itrNo.equals(XL.getCellData(modName, iSelIndx, itrColNo))) {
+							// Loop through the column to generate Key,Value
+							// pair TD map
+							for (int iColCnt = itrColNo + 1; iColCnt <= XL.getColCount(iSelIndx - 1,
+									modName); iColCnt++) {
+								if (!XL.getCellData(modName, itcPointer + 1, iColCnt).trim().equals(Globals.GC_EMPTY)) {
+									mapData.put(XL.getCellData(modName, itcPointer + 1, iColCnt).trim().toUpperCase(),
+											XL.getCellData(modName, iSelIndx, iColCnt).trim());
+									Log.Report(Level.DEBUG,
+											"test data mapped for index " + itrNo + " with key "
+													+ XL.getCellData(modName, itcPointer + 1, iColCnt) + " and value "
+													+ XL.getCellData(modName, iSelIndx, iColCnt));
+								}
+							}
+							mapData.remove("");
+							td.put(Integer.valueOf(itrNo), mapData);
+							break;
+						}
+					}
+				}
+				XL.clearXL();
+			} else {
+				Log.Report(Level.DEBUG, tcName + " not found in test data : " + modName + " sheet");
+			}
+			return td;
+		} catch (Exception e) {
+			ThrowException.Report(TYPE.EXCEPTION, "Exception occurred while preparing test data : " + e.getMessage());
+		}
+		return null;
+	}
 }

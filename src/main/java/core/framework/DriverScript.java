@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -18,16 +19,20 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import lib.Log;
 import lib.Stock;
 import lib.XL_ReadWrite;
 import lib.Log.Level;
+
 import org.testng.TestNG;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+
 import com.google.common.collect.Lists;
+
 import core.framework.ThrowException.TYPE;
 
 public class DriverScript {
@@ -52,7 +57,7 @@ public class DriverScript {
 		   BuildTestNGXML();
 		}
 		//Commenting the run part of the testng xml since the run can be initiated by the individual project POM
-		//RunTestNG();	
+		RunTestNG();	
 	}
 /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			ReadTestConfig()	
@@ -86,12 +91,14 @@ Author : Souvik     Date : 09-10-2015
 			for(int iROLoop=0;iROLoop<xlRW.getRowCount((Globals.GC_TESTCASERUNORDERPREFIX).split("_")[0])-1;iROLoop++){
 				key = xlRW.getCellData((Globals.GC_TESTCASERUNORDERPREFIX).split("_")[0],iROLoop+1,Globals.GC_COLNAME_MODULENAME).trim();
 				val = xlRW.getCellData((Globals.GC_TESTCASERUNORDERPREFIX).split("_")[0],iROLoop+1,Globals.GC_COLNAME_RUNSTATUS).trim();
-				runOrderDet.put(key,val);			
+				runOrderDet.put(key,val);	
+				System.out.println(runOrderDet);
 				Log.Report(Level.DEBUG,"setting @runOrderDet with key :"+key+" -- value :"+val);
 			}
 			runOrderDet.remove(Globals.GC_EMPTY);
 			xlRW.clearXL();
 		}catch(Exception e){
+			e.printStackTrace();
 			ThrowException.Report(TYPE.EXCEPTION, "Unable to read Run Order sheet :" + e.getMessage());			
 		}
 	}
@@ -411,11 +418,24 @@ private void RunTestNG() throws Exception{
 			xlRW.saveXL();
 			
 			//Executes TestNGXML
-			TestNG testng = new TestNG();
+			final TestNG testng = new TestNG();
 			List<String> suites = Lists.newArrayList();
 		    suites.add(Globals.GC_TESTNG_XML_PATH+"\\"+xmlFinaltoExecute);
 		    testng.setTestSuites(suites);
-			Log.Report(Level.DEBUG,"Executing TestNG XML : "+Globals.GC_TESTNG_XML_PATH+"\\"+xmlFinaltoExecute);	
+			Log.Report(Level.DEBUG,"Executing TestNG XML : "+Globals.GC_TESTNG_XML_PATH+"\\"+xmlFinaltoExecute);
+			for(int threadCount = 0;threadCount < 5;threadCount++)
+			{
+				new Thread(new Runnable()
+				{
+
+					@Override
+					public void run() {
+						  testng.run();
+					}
+					
+					
+				}).start();
+			}
 		    testng.run();
 			
 								

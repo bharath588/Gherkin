@@ -7,26 +7,30 @@ import java.util.List;
 
 import javax.sql.rowset.FilteredRowSet;
 
+import lib.Stock;
+
 import com.sun.rowset.FilteredRowSetImpl;
 
+import core.framework.Globals;
+
+@SuppressWarnings("restriction")
 public class QueryFilter{
 	List<String> filterParamList = new ArrayList<>();
 	FilteredRowSet frs = null;
-	String url = "jdbc:oracle:thin:@DINSTDB:1521/dinstmain.isis.gwl.com";
-    String userName = "KRSBHR";
-    String passWord = "db123";
+    String userName = Stock.getConfigParam("DBUSERID");
+    String passWord = Stock.getConfigParam("PASSWORD");
 	static String table = null;
 	static String columnName = null;
 	public static String[] filteredValue;
 	
 	
-	public void executeSubQuery(String subQuery) throws SQLException
+	public void executeSubQuery(String subQuery,String dbUrl) throws SQLException
 	{
 		frs= new FilteredRowSetImpl();
 		frs.setCommand(subQuery);
         frs.setUsername(userName);
         frs.setPassword(passWord);
-        frs.setUrl(url);
+        frs.setUrl(dbUrl);
 	    frs.execute();
 	}
 	
@@ -50,14 +54,11 @@ public class QueryFilter{
 		filteredValue = filterParamList.toArray(filteredValue);
 		
 	}	
-	public String[] evaluate(String subQuery) throws SQLException 
+	public String[] evaluate(String subQuery,String dbName) throws SQLException 
 	{
-		executeSubQuery(subQuery);
+		executeSubQuery(subQuery,Globals.databaseConnectionStrings.get(dbName));
 		getMetaData();
 		createFilterArray();	
 		return filteredValue;
 	}
-
-	
-
 }

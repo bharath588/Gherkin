@@ -13,7 +13,7 @@ import javax.sql.rowset.Predicate;
 import com.sun.rowset.FilteredRowSetImpl;
 
 @SuppressWarnings("restriction")
-public class EqualsFilter implements Predicate{
+public class EqualsFilter implements Predicate,Cloneable{
 	private Object filterOnValue;//filterOnValue
 	private String fieldName = null;//fieldName
 	private int colNumber = -1;

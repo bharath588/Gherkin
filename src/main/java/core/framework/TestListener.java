@@ -1,10 +1,16 @@
 package core.framework;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import lib.Log;
 import lib.Log.Level;
 import lib.Stock;
 import lib.Web;
+
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -12,11 +18,14 @@ import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+
 import core.framework.ThrowException.TYPE;
 
 public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener {
 
+	Map<String,String> tempMap;
 	int currentTCInvocationCount=0;
 	private static boolean finalTestStatus =  true;
 	
@@ -32,12 +41,20 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		try{
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
 			Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
-			if(!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty())
+			/*if(!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty())
             {
             Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV, Globals.GC_EXECUTION_ENVIRONMENT, true);
-            }
-
+            }*/
+			List<ITestNGMethod> methodsList = new LinkedList<>();
+			int counter=0;
+			methodsList = suite.getAllMethods();
+			for(ITestNGMethod ite : methodsList)
+			{
+				Globals.testNGPropertiesMap.put(ite.getInstance().getClass().getName()+counter,ite.getMethodName());
+				counter++;
+			}
 			Log.Report(Level.INFO,"Test Configuration initialized successfully");
+			counter = 0;
 		}catch(Exception e){
 			ThrowException.Report(TYPE.EXCEPTION,e.getMessage());			
 		}		
@@ -137,5 +154,6 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 				testResult.setStatus(ITestResult.FAILURE);
 			}			
 		}
-	}	
+	}
+
 }

@@ -26,7 +26,10 @@ public class MultipleParamNotEqualsFilter implements Predicate {
 		this.colNumber = colNumberArg;
 		this.colName = null;
 	}
-	@Override
+	
+	
+	
+	/*@Override
 	public boolean evaluate(RowSet rs) {
 		boolean evaluation = false;
 		CachedRowSet frs = (CachedRowSet) rs;
@@ -68,6 +71,89 @@ public class MultipleParamNotEqualsFilter implements Predicate {
 						}
 						}
 					}		
+		} catch (SQLException e) {
+			return false;
+		}
+		return evaluation;
+	}*/
+	
+	@Override
+	public boolean evaluate(RowSet rs) {
+		boolean evaluation = false;
+		CachedRowSet frs = (CachedRowSet) rs;
+		if (rs == null)
+			return false;
+		Object value = null;
+		String columnValue=null;
+		try {
+		if (this.colNumber > 0) {
+			value = frs.getObject(this.colNumber);
+			columnValue = String.valueOf(value);
+		} else if (this.colName != null) {
+			value = frs.getObject(this.colName);
+			columnValue = String.valueOf(value);
+		} else {
+			return false;
+		}
+			for (int i = 0; i < this.params.length; i++) {
+		
+						if (value instanceof Timestamp || value instanceof Date) {
+
+							if(columnValue == null && this.params[i] == null) {
+								evaluation = false;
+								break;
+								}
+							
+								else if(columnValue != null && this.params[i] == null)
+								{
+									evaluation = false;
+									break;
+								}
+							
+								else if(columnValue == null && this.params[i] != null)
+								{
+									evaluation = false;
+									break;
+								}
+							
+								else
+								{
+							SimpleDateFormat format1 = new SimpleDateFormat(
+									"yyyy-MM-dd");
+							String formatted = format1.format(this.params[i]);
+							String sqlDate = format1.format(value);
+							if (!sqlDate.equals(formatted)) {
+								evaluation = true;
+							}
+							else{
+								evaluation = false;
+								break;
+							}
+								}
+						}
+							if(columnValue == null && this.params[i] == null) {
+								evaluation = false;
+								break;
+								}
+							
+								else if(columnValue != null && this.params[i] == null)
+								{
+									evaluation = false;
+									break;
+								}
+							
+								else if(columnValue == null && this.params[i] != null)
+								{
+									evaluation = false;
+									break;
+								}
+								else if (!(columnValue.equals(this.params[i]))) {
+								evaluation = true;
+							}else{
+								evaluation = false;
+								break;
+							}
+						}
 		} catch (SQLException e) {
 			return false;
 		}

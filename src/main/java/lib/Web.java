@@ -2,31 +2,42 @@ package lib;
 
 import java.awt.Robot;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+
+import lib.Log.Level;
 import lib.Reporter.Status;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import core.framework.Globals;
 
 public class Web {
@@ -35,7 +46,8 @@ public class Web {
 	private static Select objSelect;
 	public static Robot robot;
 	private static boolean isLastIteration = false;
-
+    static DesiredCapabilities capabilities;
+	
 	public static boolean isLastIteration() {
 		return isLastIteration;
 	}
@@ -400,13 +412,16 @@ public class Web {
 			webDriver = new ChromeDriver();
 		} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 				|| webBrowser.trim().equalsIgnoreCase("FF")) {
+			
 			ProfilesIni profiles = new ProfilesIni();
 			FirefoxProfile ffProfile = profiles.getProfile("default");
 			// ffProfile.setPreference("signon.autologin.proxy", true);
 
 			if (ffProfile == null) {
 				System.out.println("Initiating Firefox with dynamic profile");
+				
 				webDriver = new FirefoxDriver();
+				
 			} else {
 				System.out.println("Initiating Firefox with default profile");
 				webDriver = new FirefoxDriver(ffProfile);
@@ -876,4 +891,64 @@ public class Web {
 		actions.moveToElement(webElement);
 		actions.build().perform();
 	}
+	public static WebDriver getRemoteWebDriver(String nodeUrl,String webBrowser ) throws MalformedURLException {
+        WebDriver webDriver;
+
+Log.Report(Level.INFO, "entered in to getRemoteMethod");
+        if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+                     || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
+                     || webBrowser.trim().equalsIgnoreCase("IE")) {
+               capabilities = DesiredCapabilities
+                            .internetExplorer();
+               capabilities.setCapability("ignoreZoomSetting", true);
+               capabilities.setCapability("ie.ensureCleanSession", true);
+               setCapabilities(webBrowser,Platform.XP);
+               System.setProperty("webdriver.ie.driver",
+                            Stock.getConfigParam("IEDriverClassPath"));
+               webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+
+        } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+               System.setProperty("webdriver.chrome.driver",
+                            Stock.getConfigParam("ChromeDriverClassPath"));
+               capabilities = DesiredCapabilities
+                            .chrome();
+               setCapabilities(webBrowser,Platform.XP);
+               webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+        } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
+                     || webBrowser.trim().equalsIgnoreCase("FF")) {
+               ProfilesIni profiles = new ProfilesIni();
+               FirefoxProfile ffProfile = profiles.getProfile("default");
+               capabilities = DesiredCapabilities
+                            .firefox();
+               //setCapabilities(webBrowser,Platform.XP);
+               capabilities.setBrowserName("firefox");
+               capabilities.setCapability(FirefoxDriver.PROFILE, ffProfile);
+               capabilities.setPlatform(Platform.XP);
+               
+        
+               // ffProfile.setPreference("signon.autologin.proxy", true);
+
+               
+                     System.out.println("Initiating Firefox with default profile");
+                     System.out.println("node url is"+nodeUrl);
+                     webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+               
+
+        } else {
+               throw new Error("Unknown browser type specified: " + webBrowser);
+        }
+        /*String nodeUrl="http://143.199.162.200:5566/wd/hub";
+        DesiredCapabilities capability = DesiredCapabilities.firefox();
+        capability.setBrowserName("firefox");
+        capability.setPlatform(Platform.XP);
+        webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
+
+        webDriver.manage().window().maximize();
+        return webDriver;
+ }
+
+	private static void setCapabilities(String webBrowser, Platform xp) {
+	capabilities.setCapability(webBrowser, xp);
+	}
+
 }
