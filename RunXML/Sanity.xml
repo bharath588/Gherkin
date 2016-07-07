@@ -132,7 +132,7 @@
                 </methods>
             </class>
         </classes>
-    </test>  
+    </test>   
    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">

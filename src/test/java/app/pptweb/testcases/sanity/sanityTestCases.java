@@ -964,7 +964,7 @@ public class sanityTestCases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
+				beneficiary.deleteBeneficiariesFromDB(SSN);
 				
 			} catch (Exception e) {
 
@@ -1090,7 +1090,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
+					beneficiary.deleteBeneficiariesFromDB(SSN);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1195,7 +1195,7 @@ public class sanityTestCases {
 			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
 			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"), Stock.GetParameterValue("Participant first name")+"%");
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
+				beneficiary.deleteBeneficiariesFromDB(SSN);
 
 
 		}
@@ -1216,7 +1216,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"));
+					beneficiary.deleteBeneficiariesFromDB(SSN);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
