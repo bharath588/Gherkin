@@ -15,8 +15,10 @@ import lib.Reporter.Status;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -278,10 +280,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @param maritalStatus - marital Status of the beneficiary
 	 * @param useMyAddress - whether to use current address
 	 * @param beneficiaryType - Beneficiary type can be primary or contingent
+	 * @throws InterruptedException 
 	 */
-	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent){
+	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent) throws InterruptedException{
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
-		
+		Actions keyBoard = new Actions(Web.webdriver);
 		lib.Web.waitForElement(btnContinue);
 		if(Web.isWebElementDisplayed(lblDesignateBeneficiary,true)){
 			maritalstatus.click();
@@ -320,7 +323,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 			
 		Web.clickOnElement(this.btnSave);
-
+		if(btnSave.isEnabled())
+		{
+			keyBoard.sendKeys(Keys.ENTER).perform();
+		}
+		Thread.sleep(5000);
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes") &&  Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes")){
 			enterAllocations(allocation_percent);

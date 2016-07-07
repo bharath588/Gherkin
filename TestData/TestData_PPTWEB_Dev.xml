@@ -1128,7 +1128,7 @@ where a.PRIMARY_RES_IND='Y'
 			name="SIT_ParticipantWeb_Sanity_RIP_TC007_To verify Retirement Income tab_Income gap">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="ga_PlanId" value="194394-01" />
-				<parameter name="userName" value="940299293ABC" />
+				<parameter name="userName" value="018807184ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>

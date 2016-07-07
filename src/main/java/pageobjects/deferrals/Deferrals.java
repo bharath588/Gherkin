@@ -377,7 +377,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			{
 				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
-			Thread.sleep(5000);
+			Thread.sleep(7000);
 			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
