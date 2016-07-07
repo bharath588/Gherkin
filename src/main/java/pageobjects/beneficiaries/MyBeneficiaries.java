@@ -323,10 +323,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 			
 		Web.clickOnElement(this.btnSave);
-		if(btnSave.isEnabled())
+		/*if(btnSave.isEnabled())
 		{
 			keyBoard.sendKeys(Keys.ENTER).perform();
-		}
+		}*/
 		Thread.sleep(5000);
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes") &&  Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes")){
