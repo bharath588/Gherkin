@@ -1481,7 +1481,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="FOUR TESTING" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Statement_and_Documents_validations">
@@ -1489,7 +1489,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="FOUR TESTING" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Manage_My_Investment_Flow">
@@ -1500,7 +1500,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Setup_date" value="Today" />
 				<parameter name="investment_percent" value="50" />
 				<parameter name="lblUserName" value="FOUR TESTING" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Dollar_Cost_Average_Flow">
@@ -1510,7 +1510,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
 				<parameter name="lblUserName" value="FOUR TESTING" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Payroll_Calendar_validations">
@@ -1527,7 +1527,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="From_Percent" value="90" />
 				<parameter name="To_Percent" value="100" />
 				<parameter name="lblUserName" value="FOUR TESTING" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Investment_lineup_validations">

@@ -14,6 +14,8 @@ import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -886,10 +888,13 @@ public class prodvalidationtestcases {
 			balance.get();
 			Thread.sleep(5000);
 			balance.navigateToTab("Balance");
-			//not seeing this table in PRod data
-			/*balance.verifyTableDisplayed("Balance by Money Table");
-			balance.verifytableHeaderNotEmpty("Balance by Money Table Header");
-			balance.verifyTableDataDisplayed("Balance by Money Table");*/
+			// not seeing this table in PRod data
+			/*
+			 * balance.verifyTableDisplayed("Balance by Money Table");
+			 * balance.verifytableHeaderNotEmpty
+			 * ("Balance by Money Table Header");
+			 * balance.verifyTableDataDisplayed("Balance by Money Table");
+			 */
 
 			balance.verifyTableDisplayed("Balance by Investment Table");
 			balance.verifytableHeaderNotEmpty("Balance by Investment Table Header");
@@ -1621,38 +1626,10 @@ public class prodvalidationtestcases {
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
 			requestWithdrawal.get();
+			Actions keyBoard = new Actions(Web.webdriver);
 			Thread.sleep(5000);
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-			
-			/*lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
-					.GetParameterValue("withdrawalType"));
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify WithDrawal Type is Selected",
-						" WithDrawal Type is Selected", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify  WithDrawal Type is Selected",
-						" WithDrawal Type is Not Selected", true);
-			}
-			requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
-
-			lblDisplayed = Web.clickOnElement(requestWithdrawal, "MAX AMOUNT");
-
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Max Amount CheckBox is Selected",
-						"Max Amount CheckBox is Selected", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Max Amount CheckBox is Selected",
-						"Max Amount CheckBox is Not Selected", true);
-			}*/
-			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
-			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-
-			
 			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 					"Request A Withdrawal", true);
 			if (lblDisplayed) {
@@ -1663,10 +1640,39 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Request A Withdrawal Page is Displayed",
 						"Request A Withdrawal Page is NOT visible", true);
-			}Thread.sleep(6000);
+			}
+			/*
+			 * lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
+			 * .GetParameterValue("withdrawalType")); if (lblDisplayed) {
+			 * Reporter.logEvent(Status.INFO,
+			 * "Verify WithDrawal Type is Selected",
+			 * " WithDrawal Type is Selected", true); } else {
+			 * Reporter.logEvent(Status.FAIL,
+			 * "Verify  WithDrawal Type is Selected",
+			 * " WithDrawal Type is Not Selected", true); }
+			 * requestWithdrawal.isTextFieldDisplayed
+			 * ("Total withdrawal amount");
+			 * 
+			 * lblDisplayed = Web.clickOnElement(requestWithdrawal,
+			 * "MAX AMOUNT");
+			 * 
+			 * if (lblDisplayed) { Reporter.logEvent(Status.INFO,
+			 * "Verify Max Amount CheckBox is Selected",
+			 * "Max Amount CheckBox is Selected", true); } else {
+			 * Reporter.logEvent(Status.FAIL,
+			 * "Verify Max Amount CheckBox is Selected",
+			 * "Max Amount CheckBox is Not Selected", true); }
+			 */
+			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
+
+			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
+
+			Thread.sleep(4000);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			Thread.sleep(5000);
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
-			Web.clickOnElement(requestWithdrawal, "CONTINUE");
-			Thread.sleep(8000);
+			Thread.sleep(7000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Plan withdrawal");
 
