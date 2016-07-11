@@ -27,6 +27,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.testng.Assert;
 
+import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
@@ -113,15 +114,27 @@ public RetirementIncome(LoadableComponent<?> parent) {
 protected void isLoaded() throws Error {
 	Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 	String ssn = Stock.GetParameterValue("userName");
-	ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-	
 	String userFromDatasheet = null;
+	ResultSet strUserInfo=null;
+	if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+	{
+		userFromDatasheet=Stock.GetParameterValue("lblUserName");
+	}
+	else{
+	
+	try {
+		strUserInfo = Common.getParticipantInfoFromDataBase((ssn.substring(
+				0,9)));
+	} catch (SQLException e1) {
+		e1.printStackTrace();
+	}
+		
 	try {
 		userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}		
-	
+	}
 	String userLogedIn = this.lblUserName.getText();
 	if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 		Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		

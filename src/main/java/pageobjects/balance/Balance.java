@@ -46,7 +46,7 @@ public class Balance extends LoadableComponent<Balance> {
 	@FindBy(xpath="//table[@id='balanceByMoneyTypeTable']//tbody[@id='balByMoneySourceTBody']/tr") private List<WebElement> lstBalanceByMoneyTypeDetail;
 	@FindBy(xpath="//table[@id='balanceByMoneyTypeTable']//thead/tr") private WebElement hdrBalanceByMoneyTable;
 	@FindBy(xpath="//table[@id='balanceByFundDetailTable']//tbody[@id='balanceByFundDetailTbody']/tr") private List<WebElement> lstBalanceByInvestmentTypeDetail;
-	@FindBy(xpath="//table[@id='balanceByMoneyTypeTable']//thead/tr") private WebElement hdrBalanceByInvestmentTable;
+	@FindBy(xpath="//table[@id='balanceByFundDetailTable']//thead/tr") private WebElement hdrBalanceByInvestmentTable;
 	@FindBy(xpath="//table[@id='balanceHistoryTable']//tbody/tr") private List<WebElement> lstBalanceHistoryDetail;
 	@FindBy(xpath="//table[@id='balanceHistoryTable']//thead/tr") private WebElement hdrBalanceHistoryTable;
 	@FindBy(xpath="//table[@id='balanceComparisonTable']//tbody/tr") private List<WebElement> lstBalancceComparisonDetail;
@@ -148,7 +148,7 @@ public class Balance extends LoadableComponent<Balance> {
 			return this.hdrBalanceByMoneyTable;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Balance by Investment Table Header")) {
-			return this.hdrBalanceByMoneyTable;
+			return this.hdrBalanceByInvestmentTable;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Balance History Table Header")) {
 			return this.hdrBalanceHistoryTable;

@@ -153,7 +153,7 @@
     </test>
     <test name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record">
         <classes>
-            <class name="alpp.pptweb.testcases.sanity.sanityTestCases">
+            <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
                     <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
                 </methods>

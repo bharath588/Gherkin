@@ -21,6 +21,7 @@ import lib.Reporter.Status;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -108,16 +109,15 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			
 		}
 		
-		public void clickOnForm(String planfrom){
-			Web.waitForElement(lblPlanForms);
+		public void clickOnForm(String planfrom) throws InterruptedException{
+			Web.waitForElement(tblPlanForms);
 			int noOfPlanForms=lstPlanformName.size();
-			System.out.println(noOfPlanForms);
 			if(planfrom==null){
-				lstPlanformName.get(0).click();
-				Reporter.logEvent(Status.INFO, "Verify Plan form is clicked", lstPlanformName.get(0).getText()+" Form is clicked",true);
+				lstPlanformName.get(1).click();
+				Reporter.logEvent(Status.INFO, "Verify Plan form is clicked", lstPlanformName.get(1).getText()+" Form is clicked",true);
 			}
 			else{
-				for(int i=0;i<noOfPlanForms;i++){
+				for(int i=1;i<noOfPlanForms;i++){
 					if(lstPlanformName.get(i).getText().trim().equalsIgnoreCase(planfrom)){
 						lstPlanformName.get(i).click();
 						Reporter.logEvent(Status.INFO, "Verify Plan form is clicked", planfrom+" Form is clicked",true);
