@@ -56,7 +56,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//*[contains(@class, 'editable-text-trigger')]")
 			private WebElement lnkContributionRate;
 			@FindBy(id="contributionRateSlider-text-edit") private WebElement txtcontributionRateSlider;
-			@FindBy(xpath=".//span[@class='valueAndEnd']") private WebElement lnksliderValue;
+			@FindBy(xpath=".//span[@class='valueAndEnd']/span[1]") private WebElement lnksliderValue;
 //			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
 			@FindBy(xpath="//button[@class='btn btn-primary reset-padding ng-binding']") private WebElement btnDone;
 //			@FindBy(xpath=".//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
@@ -377,8 +377,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			{
 				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
-			Thread.sleep(7000);
-			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText());			
+			Thread.sleep(5000);
+			boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
 			else
@@ -727,15 +727,17 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void View_only_Standard_with_changes(String myContRate) throws InterruptedException
 		{
-			String rothCatchupRate="";
-			int rothCatchupRateNum;
 			try {
-				lib.Web.waitForElement(btnEditStandard);
+				lib.Web.waitForElement(btnAddOrEditStandard);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			lib.Web.clickOnElement(btnEditStandard);
+			lib.Web.clickOnElement(btnAddOrEditStandard);
+			click_Select_Your_Contribution_Rate();
+			lib.Web.clickOnElement(btnContinue);
+			
+			/*lib.Web.clickOnElement(btnEditStandard);
 			click_Select_Your_Contribution_Rate();
 			lib.Web.clickOnElement(btnContinue);
 			Web.waitForElement(txtViewOnly);
@@ -752,7 +754,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.setTextToTextBox(txtRothtaxRate, String.valueOf((Integer.valueOf(myContRate)) -rothCatchupRateNum));
 			lib.Web.clickOnElement(btnContinue);
 			lib.Web.clickOnElement(btnConfirmAndContinue);
-			myContributions_Confirmation_Page();
+			myContributions_Confirmation_Page();*/
 		}
 		
 

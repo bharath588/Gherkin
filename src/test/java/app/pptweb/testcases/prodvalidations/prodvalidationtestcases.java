@@ -373,7 +373,8 @@ public class prodvalidationtestcases {
 						"Verify All Of the Fields in User Profile is Displayed",
 						"Info User Profile page is not Proper", false);
 			}
-			Web.clickOnElement(profilePage, "HOME");
+			Web.webdriver.navigate().back();
+			Web.clickOnElement(profilePage, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -525,7 +526,7 @@ public class prodvalidationtestcases {
 								+ " is Not visible", true);
 			}
 			Web.webdriver.switchTo().defaultContent();
-			requestLone.EnterLoanAmtAndTerm("$500", "12");
+			requestLone.EnterLoanAmtAndTerm("$1000", "12");
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
@@ -885,9 +886,10 @@ public class prodvalidationtestcases {
 			balance.get();
 			Thread.sleep(5000);
 			balance.navigateToTab("Balance");
-			balance.verifyTableDisplayed("Balance by Money Table");
+			//not seeing this table in PRod data
+			/*balance.verifyTableDisplayed("Balance by Money Table");
 			balance.verifytableHeaderNotEmpty("Balance by Money Table Header");
-			balance.verifyTableDataDisplayed("Balance by Money Table");
+			balance.verifyTableDataDisplayed("Balance by Money Table");*/
 
 			balance.verifyTableDisplayed("Balance by Investment Table");
 			balance.verifytableHeaderNotEmpty("Balance by Investment Table Header");
@@ -1611,7 +1613,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
@@ -1622,19 +1624,8 @@ public class prodvalidationtestcases {
 			Thread.sleep(5000);
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
-					"Request A Withdrawal", true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is visible", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is NOT visible", true);
-			}
-			Thread.sleep(6000);
-			lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
+			
+			/*lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
 					.GetParameterValue("withdrawalType"));
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -1657,8 +1648,23 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Max Amount CheckBox is Selected",
 						"Max Amount CheckBox is Not Selected", true);
-			}
+			}*/
 			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
+			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
+
+			
+			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
+					"Request A Withdrawal", true);
+			if (lblDisplayed) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Request A Withdrawal Page is Displayed",
+						"Request A Withdrawal Page is visible", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Request A Withdrawal Page is Displayed",
+						"Request A Withdrawal Page is NOT visible", true);
+			}Thread.sleep(6000);
+			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(8000);
 			lblDisplayed = requestWithdrawal

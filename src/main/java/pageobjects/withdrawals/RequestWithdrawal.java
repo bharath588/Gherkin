@@ -54,11 +54,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement txtConfirmation;
 	@FindBy(xpath = "//p[./i[@class='em-checkbox-icon']]//strong")
 	private WebElement txtConfirmationNo;
+	@FindBy(xpath = "//*[@id='inserviceradiono']")
+	private WebElement inptCurrentEmpNo;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
 	private String textField="//*[contains(text(),'webElementText')]";
 	private String inputWithdrawalType = "//div[@id='test_id'][.//span[contains(text(),'Withdrawal Type')]]//input";
 	private String inpMailType="//input[contains(@value,'mailType')]";
-
+	
 	/**
 	 * Default Constructor
 	 */
@@ -189,6 +191,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("TEXT CONFIRMATION NUMBER")) {
 			return this.txtConfirmationNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INPUT CURRENT EMPLOYER NO")) {
+			return this.inptCurrentEmpNo;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",

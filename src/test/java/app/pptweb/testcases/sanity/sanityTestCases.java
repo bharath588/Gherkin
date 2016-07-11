@@ -1260,6 +1260,7 @@ public class sanityTestCases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
+			boolean isContributionSelected=false;
 			try {
 				lib.Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
@@ -1281,7 +1282,8 @@ public class sanityTestCases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify After-tax contribution page",
 						"After-tax Contributions page is not displayed", true);
-			if (deferrals.click_Select_Your_Contribution_Rate())
+			isContributionSelected=deferrals.click_Select_Your_Contribution_Rate();
+			if (isContributionSelected)
 				Reporter.logEvent(Status.PASS,
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is matching", false);

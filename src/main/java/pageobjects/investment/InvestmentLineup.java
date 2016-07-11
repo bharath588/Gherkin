@@ -141,12 +141,12 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 				Reporter.logEvent(Status.PASS, "Verify if Fund Overview Table HEADER is displayed", "Expected : INVESTMENT NAME ASSET CLASS INVESTMENT OVERVIEW ONLINE PROSPECTUS TICKER SYMBOL \n Actual : "+hdrFundOverviewTable.getText(),true);
 			
 			int noOfRows=lstFundOverviewTableRows.size();
-			for(int i=0;i<noOfRows;i++){
+			for(int i=1;i<noOfRows;i++){
 				
 				if(lstOnlineProspectus.get(i).getText().contains("View")){
 					investmentName=lstInvestmentNames.get(i).getText();
 					System.out.println(investmentName);
-					lstlnkOnlineProspectus.get(0).click();
+					lstlnkOnlineProspectus.get(i).click();
 					if(switchToWindow("Prospectus Express")){
 						System.out.println(lblFundDocTitle.getText());
 						if(lblFundDocTitle.getText().contains(investmentName))
@@ -155,6 +155,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 							Reporter.logEvent(Status.FAIL, "Verify if we are able to view the prospectus", "Prospectus displayed for : "+lblFundDocTitle.getText()+"\n Expected : "+investmentName,true);
 						 Web.webdriver.close(); //closing child window
 				         Web.webdriver.switchTo().window(parentWindow);
+				         break;
 					}
 					else
 						Reporter.logEvent(Status.FAIL, "Verify if we are able to view the prospectus", "Prospectus not displayed",true);

@@ -241,10 +241,13 @@ public void verifyTableDisplayed(String tableName){
 		   		 verifytableHeaderNotEmpty("Stmts by Transmission Detail Table Header");
 		   		 verifyTableDataDisplayed("Stmts by Transmission Detail Table");
 		   			
-		         Web.webdriver.close(); //closing child window
-		         Web.webdriver.switchTo().window(parentWindow); //cntrl to parent window
+		         //closing child window
+		   		 Web.webdriver.close();
+		          //cntrl to parent window
 		       }
+		      
 		       }
+		   Web.webdriver.switchTo().window(parentWindow);
 	}
 	
 	public void navigateToTab(String tabName){

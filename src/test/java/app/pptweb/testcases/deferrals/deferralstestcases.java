@@ -1171,9 +1171,54 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
+			boolean isTextMatching = false;
+			Thread.sleep(5000);
+			String perRoth = deferrals
+					.getContributionPercentage("RTH");
+			String perBeforeTax = deferrals
+					.getContributionPercentage("BFRTX");
 
-			deferrals.View_only_Standard_with_changes(Stock
-					.GetParameterValue("Contribution Rate"));
+			String contributionRate = Stock
+					.GetParameterValue("Contribution Rate");
+
+			deferrals.View_only_Standard_with_changes(contributionRate);
+			contributionRate = deferrals.contrbution_rate;
+Thread.sleep(5000);
+			float cr = Float.parseFloat(contributionRate.split("%")[0]);
+			float bft = Float.parseFloat(perBeforeTax.split("%")[0]);
+			String newPerRoth = Float.toString(cr - bft);
+			isTextMatching = Web.VerifyText(newPerRoth
+					+ "% RTH contribution with "
+					+ perBeforeTax + " BFRTX", deferrals
+					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
+					.trim(), true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Split Contribution on Select Contribution page",
+								"Split Contribution is Same on Select Contribution page \nExpected"
+										+ "% RTH contribution with "
+										+ perBeforeTax + " BFRTX \nActual:"+deferrals.getWebElementText(
+										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Split Contribution on Select Contribution page",
+								"Split Contribution is not Same on Select Contribution page. \nExpected"
+										+ "% RTH contribution with "
+										+ perBeforeTax + " BFRTX \nActual:"+deferrals.getWebElementText(
+										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
+										.trim(), true);
+			}
+			Web.clickOnElement(deferrals, "Continue button");
+			Thread.sleep(4000);
+			Web.clickOnElement(deferrals, "Confirm button");
+			Thread.sleep(4000);
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -1182,6 +1227,62 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
+			isTextMatching = Web.VerifyText(perRoth ,deferrals
+					.getContributionPercentage("RTH"),true);
+			if (!isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Standard Roth After Split Contribution on My Contribution page",
+								"Roth is updated on My Contribution page \nExpected"
+										+ newPerRoth
+										+ "%"+
+										"\nctual:"+deferrals
+										.getContributionPercentage("RTH")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Standard Roth After Split Contribution on My Contribution page",
+								"Roth is not updated on My Contribution page \nExpected"
+										+ newPerRoth
+										+ "%"+
+										"\nctual:"+deferrals
+										.getContributionPercentage("RTH")
+										.trim(),
+								true);
+			}
+			isTextMatching = Web.VerifyText(perBeforeTax ,deferrals
+					.getContributionPercentage("BFRTX"),true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Standard Before Tax After Split Contribution on My Contribution page",
+								"Before Tax is Not updated on My Contribution page Expected/n"
+										+ perBeforeTax
+										+
+										" Actual:\n "+deferrals
+										.getContributionPercentage("BFRTX")
+										.trim(),
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Verify Standard Before Tax After Split Contribution on My Contribution page",
+								"Standard Before Tax is updated on My Contribution page Expected/n"
+										+ perBeforeTax
+										+
+										" Actual:\n "+deferrals
+										.getContributionPercentage("BFRTX")
+										.trim(),
+								true);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1339,7 +1440,9 @@ Thread.sleep(5000);
 										.trim(), true);
 			}
 			Web.clickOnElement(deferrals, "Continue button");
+			Thread.sleep(4000);
 			Web.clickOnElement(deferrals, "Confirm button");
+			Thread.sleep(4000);
 			lib.Web.clickOnElement(deferrals, "MyContribution Button");
 			if (lib.Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))

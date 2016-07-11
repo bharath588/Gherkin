@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="DevMacro">
-	<DateTime value="7/8/2016 2:48:04 PM"></DateTime>
+	<DateTime value="7/8/2016 9:35:53 AM"></DateTime>
 	<Module name="query">
 		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB"
 			Query="select EMAIL_ADDRESS,MOBILE_PHONE_NBR,MOBILE_PHONE_AREA_CODE from individual where ssn=?" />
@@ -1471,281 +1471,221 @@ where a.PRIMARY_RES_IND='Y'
 	<Module name="prodvalidations">
 		<TestCase name="Balance_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444329ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Transaction_History_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="Submit_Transaction" value="Yes" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Statement_and_Documents_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="Submit_Transaction" value="Yes" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Manage_My_Investment_Flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
 				<parameter name="investment_percent" value="50" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="Submit_Transaction" value="Yes" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Dollar_Cost_Average_Flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="686282133ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="Submit_Transaction" value="Yes" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Payroll_Calendar_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="FundToFundTransfer">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="From_Percent" value="90" />
 				<parameter name="To_Percent" value="100" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="Submit_Transaction" value="Yes" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Investment_lineup_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Brokerage_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="PlanForms_Validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Edit_Beneficiary">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="Submit_Transaction" value="YES" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="FirstName" value="john" />
+				<parameter name="MiddleName" value="john" />
+				<parameter name="LastName" value="john" />
+				<parameter name="Prefix" value="Mr" />
+				<parameter name="DOB" value="11/10/2010" />
+				<parameter name="SSN" value="123123123" />
+				<parameter name="PhoneNumber" value="(123) 123-1231" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Edit_MyContribution">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="100652302ABC" />
+				<parameter name="userName" value="321444328ABC " />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 				<parameter name="Contribution Rate" value="10" />
-				<parameter name="copyright info"
-					value="© 2016 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
-				<parameter name="lblUserName" value="TAMIR WEINER" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="102040625ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="ROBERT SIEGEL" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="604431969ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="groupId" value="194016-01" />
-				<parameter name="lblUserName" value="RED O'BEIGE " />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="227584566ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="loanType" value="General" />
-				<parameter name="lblUserName" value="FOUR  TESTING" />
-				<parameter name="submitRequest" value="YES" />
-				<parameter name="groupId" value="370088-01" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="669908391ABCD " />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="TAMIR WEINER" />
-			</Iteration>
-		</TestCase>
-		<TestCase name="SIT_xPPTWEB_Login_ProdValidation_TC_Legacy_Home_Page">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="142183388ABC " />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="EGCSMGU" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="811772793ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="deliveryOption" value="ALREADY_HAVE_CODE" />
-				<parameter name="rememberDevice" value="false" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_03_04_TC04_Send Activation Code by Email">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="SSN" value="101932208" />
-				<parameter name="LastName" value="GIBSON" />
-				<parameter name="DOB" value="01/01/1960" />
-				<parameter name="StreetAddress" value="1" />
-				<parameter name="zipCode" value="95014" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="102040625ABC" />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="logoName" value="" />
 				<parameter name="copyright info"
 					value="© 2016 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
-				<parameter name="lblUserName" value="TAMIR WEINER" />
-			</Iteration>
-			<Iteration Execution="No" id="2">
-				<parameter name="AccuCode" value="Apple" />
-				<parameter name="userName" value="102797443ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="logoName" value="Empower Retirement" />
-				<parameter name="copyright info"
-					value="© 2016 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
-				<parameter name="lblUserName" value="" />
-			</Iteration>
-			<Iteration Execution="No" id="3">
-				<parameter name="AccuCode" value="SWA" />
-				<parameter name="userName" value="353681285ABC" />
-				<parameter name="password" value="Test@1234" />
-				<parameter name="logoName" value="Southwest Airlines Retirement Plans" />
-				<parameter name="copyright info"
-					value="© 2016 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
-				<parameter name="lblUserName" value="" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="102040625ABC" />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="ExpectedCustomerSupportInfo_Pre_Login"
 					value="To speak with a Participant Services Representative, please contact us." />
 				<parameter name="ExpectedContactNo_Pre_login" value="" />
 				<parameter name="ExpectedCustomerSupportInfo_Post_Login"
-					value="To speak with a Participant Services Representative, please contact us between 5:00 AM and 7:00 PM PST." />
-				<parameter name="lblUserName" value="TAMIR WEINER" />
+					value="To speak with a Participant Services Representative, please contact us between 8:00 AM and 10:00 PM EST." />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 				<parameter name="sponsor" value="Empower" />
 			</Iteration>
-			<Iteration Execution="No" id="2">
-				<parameter name="AccuCode" value="Apple" />
-				<parameter name="userName" value="102797443ABC" />
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="ExpectedCustomerSupportInfo_Pre_Login"
-					value="To speak with a Participant Services Representative, please contact us between 5:00 AM and 7:00 PM PST." />
-				<parameter name="ExpectedContactNo_Pre_login" value="1-844-277-4401" />
-				<parameter name="ExpectedCustomerSupportInfo_Post_Login"
-					value="To speak with a Participant Services Representative, please contact us between 5:00 AM and 7:00 PM ." />
-				<parameter name="lblUserName" value="" />
-				<parameter name="sponsor" value="Apple" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
-			<Iteration Execution="No" id="3">
-				<parameter name="AccuCode" value="SWA" />
-				<parameter name="userName" value="353681285ABC" />
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="321444330ABC" />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="ExpectedCustomerSupportInfo_Pre_Login"
-					value="To speak with a Participant Services Representative, please contact us between 8:00 AM and 10:00 PM EST." />
-				<parameter name="ExpectedContactNo_Pre_login" value="1-866-LUV2SAV" />
-				<parameter name="ExpectedCustomerSupportInfo_Post_Login"
-					value="To speak with a Participant Services Representative, please contact us between 8:00 AM and 8:00 PM AST." />
-				<parameter name="lblUserName" value="" />
-				<parameter name="sponsor" value="SWA" />
+				<parameter name="groupId" value="194016-01" />
+				<parameter name="lblUserName" value="SIX TESTING" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="321444329ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="loanType" value="General" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="submitRequest" value="NO" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="321444329ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_xPPTWEB_Login_ProdValidation_TC_Legacy_Home_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="012345678xyz" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="MARY" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="AccuCode" value="" />
-				<parameter name="userName" value="669908391ABCD " />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="withdrawalType" value="IN SERVICE WITHDRAWAL" />
-				<parameter name="lblUserName" value="RED O'BEIGE " />
-				<parameter name="SSN" value="669908391" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="SSN" value="321444329" />
 				<parameter name="withdrawalMethod" value="Payment to self" />
 				<parameter name="deliveryMethod" value="first-class mail" />
-				<parameter name="submitRequest" value="YES" />
+				<parameter name="submitRequest" value="NO" />
 			</Iteration>
-			<Iteration Execution="No" id="2">
-				<parameter name="AccuCode" value="Apple" />
-				<parameter name="userName" value="" />
-				<parameter name="password" value="" />
-				<parameter name="withdrawalType" value="" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="SSN" value="" />
-				<parameter name="withdrawalMethod" value="" />
-				<parameter name="deliveryMethod" value="" />
-				<parameter name="submitRequest" value="" />
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="userName" value="321444329ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="deliveryOption" value="ALREADY_HAVE_CODE" />
+				<parameter name="rememberDevice" value="false" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
-			<Iteration Execution="No" id="3">
-				<parameter name="AccuCode" value="SWA" />
-				<parameter name="userName" value="" />
-				<parameter name="password" value="" />
-				<parameter name="withdrawalType" value="" />
-				<parameter name="lblUserName" value="" />
-				<parameter name="SSN" value="" />
-				<parameter name="withdrawalMethod" value="" />
-				<parameter name="deliveryMethod" value="" />
-				<parameter name="submitRequest" value="" />
+		</TestCase>
+		<TestCase
+			name="SIT_xPPTWEB_Login_ProdValidation_03_04_TC01_already have an Activation Code">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="AccuCode" value="" />
+				<parameter name="codeDeliveryOption" value="ALREADY_HAVE_CODE" />
+				<parameter name="SSN" value="321444328" />
+				<parameter name="LastName" value="TESTING" />
+				<parameter name="DOB" value="01/01/1987" />
+				<parameter name="StreetAddress" value="8525 E ORCHARD RD" />
+				<parameter name="zipCode" value="80111" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="reEnterPassword" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1805,56 +1745,20 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_04_01_TC003_Functionality_With_PIN__Negative_flow">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="TabName" value="I have a pin" />
-				<parameter name="SSN" value="483441069" />
-				<parameter name="PIN" value="1235" />
-				<parameter name="ExpectedErrorMsg"
-					value="The passcode you entered is invalid. Please re-enter your passcode. You have 2 attempt(s) left." />
-			</Iteration>
-			<Iteration Execution="Yes" id="2">
-				<parameter name="AccuCode" value="" />
-				<parameter name="TabName" value="I have a pin" />
-				<parameter name="SSN" value="483441068" />
-				<parameter name="PIN" value="1235" />
-				<parameter name="ExpectedErrorMsg" value="" />
-			</Iteration>
+			<Iteration Execution="Yes" id="1"></Iteration>
+			<Iteration Execution="Yes" id="2"></Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_04_01_TC004_Functionality_Without_PIN__Negative_flow">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="TabName" value="I DO NOT HAVE A PIN" />
-				<parameter name="SSN" value="057699070" />
-				<parameter name="ZipCode" value="53116" />
-				<parameter name="LastName" value="ECMTGSUP" />
-				<parameter name="DOB" value="11/10/1971" />
-				<parameter name="StreetAddress" value="1" />
-				<parameter name="ExpectedErrorMsg"
-					value="Error: The entries you provided do not match our records. Please try again. You have 2 attempt(s) remaining." />
-			</Iteration>
+			<Iteration Execution="Yes" id="1"></Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="TabName" value="I do not have a pin" />
-				<parameter name="SSN" value="451689149" />
-				<parameter name="ZipCode" value="75764" />
-				<parameter name="LastName" value="ICSOGS" />
-				<parameter name="DOB" value="06/25/1936" />
-				<parameter name="StreetAddress" value="2" />
-			</Iteration>
+			<Iteration Execution="Yes" id="1"></Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_04_01_TC006_Functionality_With_PIN_lock_User">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="AccuCode" value="" />
-				<parameter name="TabName" value="I have a pin" />
-				<parameter name="SSN" value="015210301" />
-				<parameter name="PIN" value="" />
-			</Iteration>
+			<Iteration Execution="Yes" id="1"></Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
@@ -1862,13 +1766,13 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="ga_PlanId" value="194037-04" />
-				<parameter name="queryName" value="getUnRegisteredUser" />
+				<parameter name="getUnRegisteredUser" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="ga_PlanId" value="" />
-				<parameter name="queryName" value="" />
+				<parameter name="getUnRegisteredUser" value="" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -1877,7 +1781,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="Apple" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="SSN" value="100140285" />
-				<parameter name="ZipCode" value="95014" />
+				<parameter name="95014" value="" />
 				<parameter name="LastName" value="RICHARDSON" />
 				<parameter name="DOB" value="05/06/1963" />
 				<parameter name="StreetAddress" value="1" />
@@ -1889,13 +1793,13 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="ga_PlanId" value="194037-04" />
-				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
+				<parameter name="getUnRegisteredUserWithPin" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="ga_PlanId" value="" />
-				<parameter name="queryName" value="" />
+				<parameter name="getUnRegisteredUserWithPin" value="" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -1904,14 +1808,14 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="FunctionalityType" value="ContactInformation" />
-				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="FunctionalityType" value="ContactInformation" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 		</TestCase>
@@ -1921,21 +1825,21 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="ContactInformation" />
-				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="getUnRegisteredUser" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="ContactInformation" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="3">
 				<parameter name="AccuCode" value="Apple" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="ContactInformation" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 		</TestCase>
@@ -1945,14 +1849,14 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="FunctionalityType" value="UsernameAndPassword" />
-				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I have a pin" />
 				<parameter name="FunctionalityType" value="UsernameAndPassword" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 		</TestCase>
@@ -1962,21 +1866,21 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="UsernamePassword" />
-				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="getUnRegisteredUser" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
 				<parameter name="AccuCode" value="SWA" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="UsernamePassword" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="3">
 				<parameter name="AccuCode" value="Apple" />
 				<parameter name="TabName" value="I do not have a pin" />
 				<parameter name="FunctionalityType" value="UsernamePassword" />
-				<parameter name="ga_PlanId" value="" />
+				<parameter name="194037-04" value="" />
 				<parameter name="queryName" value="" />
 			</Iteration>
 		</TestCase>
@@ -2010,7 +1914,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="codeDeliveryOption" value="ALREADY_HAVE_CODE" />
 				<parameter name="newPassword" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Test@1234" value="" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
 		</TestCase>
@@ -2019,7 +1923,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="codeDeliveryOption" value="CALL_ME" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Test@1234" value="" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
 		</TestCase>
@@ -2028,7 +1932,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="codeDeliveryOption" value="TEXT_ME" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Test@1234" value="" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
 		</TestCase>
@@ -2037,7 +1941,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Test@1234" value="" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
 		</TestCase>
@@ -2046,7 +1950,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="Test@1234" value="" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
 		</TestCase>
@@ -2055,7 +1959,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="ga_PlanId" value="194391-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="TabName" value="I do not have a pin" />
+				<parameter name="I do not have a pin" value="" />
 				<parameter name="PASSWORD" value="Test@1234" />
 				<parameter name="REENTERPASSWORD" value="Test@1234" />
 				<parameter name="queryName" value="getUnRegisteredUser" />
@@ -2066,7 +1970,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="ga_PlanId" value="194391-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="TabName" value="I have a pin" />
+				<parameter name="I have a pin" value="" />
 				<parameter name="PASSWORD" value="Test@1234" />
 				<parameter name="REENTERPASSWORD" value="Test@1234" />
 				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
@@ -2077,12 +1981,10 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="ga_PlanId" value="194037-04" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="TabName" value="I do not have a pin" />
+				<parameter name="I do not have a pin" value="" />
 				<parameter name="PASSWORD" value="Test@1234" />
 				<parameter name="REENTERPASSWORD" value="Test@1234" />
 				<parameter name="queryName" value="getUnRegisteredUser" />
-				<parameter name="EmailId" value="discard@gwl.com" />
-				<parameter name="MOBILEPHONENUMBER" value="9999999999" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin">
@@ -2090,12 +1992,10 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AccuCode" value="" />
 				<parameter name="ga_PlanId" value="194037-04" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="TabName" value="I have a pin" />
+				<parameter name="I have a pin" value="" />
 				<parameter name="PASSWORD" value="Test@1234" />
 				<parameter name="REENTERPASSWORD" value="Test@1234" />
 				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
-				<parameter name="EmailId" value="discard@gwl.com" />
-				<parameter name="MOBILEPHONENUMBER" value="9999999999" />
 			</Iteration>
 		</TestCase>
 	</Module>
