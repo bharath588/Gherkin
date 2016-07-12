@@ -974,7 +974,7 @@ public class prodvalidationtestcases {
 					.verifyTableDataDisplayed("Transaction History Contr Detail Table");
 
 			transaction.verifyReferenceNumber();
-			// Web.clickOnElement(transaction, "LOGOUT");
+			 Web.clickOnElement(transaction, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1669,6 +1669,7 @@ public class prodvalidationtestcases {
 			 */
 			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
 			Web.webdriver.switchTo().defaultContent();
+			Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
 			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 					"Request A Withdrawal", true);
 			if (lblDisplayed) {

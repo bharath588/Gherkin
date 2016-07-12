@@ -50,6 +50,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	@FindBy(xpath="*//td[@id='txnHistSummTxnDesc']") private List<WebElement> lstTransactionType;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	
 	/** Empty args constructor
 	 * 
 	 */
@@ -128,6 +129,12 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (fieldName.trim().equalsIgnoreCase("Transaction History Contr Detail Table Header")) {
 			return this.hdrTransactionHstContrDetailTable;
 		}
+		// Log out
+				if (fieldName.trim().equalsIgnoreCase("LOG OUT")
+						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+					return this.lnkLogout;
+				}
+
 		return null;
 	}
 	

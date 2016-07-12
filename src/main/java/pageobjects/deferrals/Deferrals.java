@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.*;
@@ -177,20 +178,23 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			String ssn = Stock.GetParameterValue("userName");
-			ResultSet strUserInfo = null;
-			try {
-				strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
 			String userFromDatasheet = null;
-			try {
-				userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}		
+			if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+			{
+				userFromDatasheet=Stock.GetParameterValue("lblUserName");
+			}
+				else{
+					ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+							0, ssn.length() - 3));
+
+					
+					try {
+						userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+								+ strUserInfo.getString("LAST_NAME");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					}
 			
 			String userLogedIn = this.lblUserName.getText();
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
