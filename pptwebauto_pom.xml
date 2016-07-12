@@ -41,7 +41,7 @@
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
+							<suiteXmlFile>RunXML/Smoke.xml</suiteXmlFile>
 						</suiteXmlFiles>
 						<systemProperties>
 							<property>
