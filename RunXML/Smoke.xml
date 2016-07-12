@@ -198,7 +198,7 @@
 		</classes>
 	</test> 
  
-    <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security">
+    <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -207,7 +207,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets">
+    <test name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -216,7 +216,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap">
+    <test name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -225,7 +225,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
+    <test name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -234,7 +234,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs">
+    <test name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -243,7 +243,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
+    <test name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
@@ -252,7 +252,7 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings">
+    <test name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>

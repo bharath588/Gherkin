@@ -1251,7 +1251,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
@@ -1278,7 +1278,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
@@ -1305,7 +1305,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
@@ -1332,7 +1332,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
@@ -1359,7 +1359,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="100" />
 				<parameter name="Add_Allocation" value="No" />
@@ -1383,7 +1383,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="AddressTwo" value="addr2" />
 				<parameter name="City" value="San Fransisco" />
 				<parameter name="State" value="California" />
-				<parameter name="Zipcode" value="18902" />
+				<parameter name="Zipcode" value="01108" />
 				<parameter name="Country" value="Tonga" />
 				<parameter name="Allocation" value="50" />
 				<parameter name="Add_Allocation" value="Yes" />
