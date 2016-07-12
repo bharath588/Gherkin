@@ -501,12 +501,12 @@ public class prodvalidationtestcases {
 					"Request a loan", true);
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
-						"Verify Request A Lone Page is Displayed",
-						"Request A Lone Page is visible", true);
+						"Verify Request A Loan Page is Displayed",
+						"Request A Loan Page is visible", true);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify Request A Lone Page is Displayed",
-						"Request A Lone Page is NOT visible", true);
+						"Verify Request A Loan Page is Displayed",
+						"Request A Loan Page is NOT visible", true);
 			}
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");

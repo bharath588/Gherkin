@@ -24,7 +24,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="SIT_xPPTWEB_Login_ProdValidation_03_04_TC01_already have an Activation Code">
+	<test name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
