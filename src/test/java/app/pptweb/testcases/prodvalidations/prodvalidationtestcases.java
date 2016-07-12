@@ -1668,19 +1668,13 @@ public class prodvalidationtestcases {
 			 * "Max Amount CheckBox is Not Selected", true); }
 			 */
 			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
-			Web.webdriver.switchTo().defaultContent();
-			Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
-			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
-					"Request A Withdrawal", true);
-			if (lblDisplayed) {
+			///Web.webdriver.switchTo().defaultContent();
+			//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
+			
 				Reporter.logEvent(Status.INFO,
 						"Verify Request A Withdrawal Page is Displayed",
 						"Request A Withdrawal Page is visible", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is NOT visible", true);
-			}
+			
 			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 				Thread.sleep(4000);
 			keyBoard.sendKeys(Keys.TAB).perform();
