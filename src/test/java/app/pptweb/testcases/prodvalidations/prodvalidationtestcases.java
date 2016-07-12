@@ -1668,6 +1668,7 @@ public class prodvalidationtestcases {
 			 * "Max Amount CheckBox is Not Selected", true); }
 			 */
 			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
+			Web.webdriver.switchTo().defaultContent();
 			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 					"Request A Withdrawal", true);
 			if (lblDisplayed) {
