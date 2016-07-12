@@ -1282,15 +1282,15 @@ public class sanityTestCases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify After-tax contribution page",
 						"After-tax Contributions page is not displayed", true);
-			isContributionSelected=deferrals.click_Select_Your_Contribution_Rate();
-			if (isContributionSelected)
+			deferrals.click_Select_Your_Contribution_Rate();
+			/*if (isContributionSelected)
 				Reporter.logEvent(Status.PASS,
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is matching", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Verify accuracy of My Contribution Rate",
-						"My Contribution Rate value is not matching", true);
+						"My Contribution Rate value is not matching", true);*/
 			lib.Web.clickOnElement(deferrals, "Continue button");
 			deferrals.add_Auto_Increase("After Add Auto Increase");
 			deferrals.myContributions_Confirmation_Page();

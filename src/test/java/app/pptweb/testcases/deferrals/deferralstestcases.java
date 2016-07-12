@@ -184,15 +184,15 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Bonus contribution page",
 						"Bonus Contributions page is not displayed", true);
-
-			if (deferrals.click_Select_Your_Contribution_Rate())
+			deferrals.click_Select_Your_Contribution_Rate();
+			/*if (deferrals.click_Select_Your_Contribution_Rate())
 				Reporter.logEvent(Status.PASS,
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is matching", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Verify accuracy of My Contribution Rate",
-						"My Contribution Rate value is not matching", true);
+						"My Contribution Rate value is not matching", true);*/
 
 			if (Stock.GetParameterValue("Contribution_type").equalsIgnoreCase(
 					"split"))
@@ -662,7 +662,8 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Other contribution page",
 						"Other Contributions page is not displayed", true);
-			if (deferrals.click_Select_Your_Contribution_Rate())
+			deferrals.click_Select_Your_Contribution_Rate();
+			/*if (deferrals.click_Select_Your_Contribution_Rate())
 				Reporter.logEvent(Status.PASS,
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is matching", false);
@@ -670,7 +671,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify accuracy of My Contribution Rate",
 						"My Contribution Rate value is not matching", true);
-
+*/
 			if (lib.Stock.GetParameterValue("Contribution_type")
 					.equalsIgnoreCase("Split"))
 				deferrals.split_Other_contribution();
