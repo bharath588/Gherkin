@@ -4,23 +4,15 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information">
+  <test name="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
         <classes>
-            <class name="app.pptweb.testcases.login.registrationtestcases">
+            <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_04_03_TC002_UI_Validation_WithoutPin_Contact_information">
-        <classes>
-            <class name="app.pptweb.testcases.login.registrationtestcases">
-                <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    
     
 </suite>

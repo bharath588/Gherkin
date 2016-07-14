@@ -9,7 +9,7 @@ and extract(month from actv_code_chllng_issue_tmstamp) = ? and extract(day from 
 and extract(MINUTE from to_timestamp(?,'DD-MM-YYYY HH24:MI:SS') - actv_code_chllng_issue_tmstamp) between 0 and 1 and rownum = 1
 order by ACTV_CODE_CHLLNG_ISSUE_TMSTAMP desc" />
 		<parameter QueryName="fetchActivationCode" DB="ParticipantDataDB"
-			Query="select TAG_VALUE from WORK_EMAIL_REQUEST_DETAIL WD inner join (select ID from WORK_EMAIL_REQUEST where USER_ID like 'AC%' and PROCESSED_DATE_TIME is null order by REQUESTED_DATE_TIME desc) A on WD.WER_ID = A.ID where WD.TAG_CODE = 'ACTIVATION'" />
+			Query="select TAG_VALUE from WORK_EMAIL_REQUEST_DETAIL WD inner join (select ID from WORK_EMAIL_REQUEST where USER_ID like 'AC%' order by REQUESTED_DATE_TIME desc) A on WD.WER_ID = A.ID where WD.TAG_CODE = 'ACTIVATION'" />
 		<parameter QueryName="deleteBeneficiaries" DB="ParticipantDataDB"
 			Query="delete from related_individual where pa_ind_id = (select id from individual where ssn = ? )" />
 		<parameter QueryName="fetchNoOfPlans" DB="ParticipantDataDB"
