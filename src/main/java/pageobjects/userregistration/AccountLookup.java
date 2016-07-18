@@ -34,7 +34,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(id="ssnInput") private WebElement txtSSN;
 	@FindBy(id="zipCodeInput") private WebElement txtZipCode;
 	@FindBy(id="lastNameInput") private WebElement txtLastName;
-	@FindBy(id="dateOfBirthInput") private WebElement txtDateOfBirth;
+	@FindBy(id="dateOfBirth") private WebElement txtDateOfBirth;//dateOfBirthInput
 	@FindBy(id="streetAddressInput") private WebElement txtStreetAddress;
 	//@FindBy(id="pinInput") private WebElement txtPINInput;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[@id='pinInput']") private WebElement txtPINInput;
