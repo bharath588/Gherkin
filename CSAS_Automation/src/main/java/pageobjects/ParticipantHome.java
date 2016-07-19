@@ -4,24 +4,20 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -82,13 +78,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	// Menu items..
 
 	@FindBy(css = "div#oCMenu_315")
-	private WebElement menuParticipantInfo;
+	private WebElement MenuParticipantInfo;
 
 	@FindBy(css = "div#oCMenu_316")
-	private WebElement menuParticipantChanges;
+	private WebElement MenuParticipantChanges;
 
 	@FindBy(css = "div#oCMenu_317")
-	private WebElement menuPlanInfo;
+	private WebElement MenuPlanInfo;
 
 	@FindBy(css = "div#oCMenu_318")
 	private WebElement menuAddtlResources;
@@ -306,6 +302,13 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "table.compactDataTable tr:nth-of-type(2) input[type = 'radio'][checked = 'checked']")
 	private WebElement PPT_Indx_Radio_Btn;
+
+	// Participants changes Menu Webelements..
+	@FindBy(xpath = "//div[contains(text(),'Contribution Allocation Change')]")
+	private WebElement ContrAllChngLink;
+
+	@FindBy(xpath = "//*[@id='oCMenu_324'][contains(text(),'Contribution Allocation Change')]")
+	private WebElement ContrAllChngSubLink;
 
 	@FindBy(css = "table[id='table_messageHandlerMessage']")
 	private LoadableComponent<?> parent;
@@ -1674,28 +1677,33 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					if (Web.isWebElementDisplayed(tbVestedBal)
 							&& Web.isWebElementDisplayed(tbNonVestedBal)
 							&& Web.isWebElementDisplayed(tbCurrentBal)) {
-						if (numberOFRowsInBalPopUp
-								.size() <= 0) {
-							throw new AssertionError("Plan balance popup didn't display with different Balance") ;
+						if (numberOFRowsInBalPopUp.size() <= 0) {
+							throw new AssertionError(
+									"Plan balance popup didn't display with different Balance");
 						}
-						
+
 						for (int rowIndx = 1; rowIndx < numberOFRowsInBalPopUp
 								.size(); rowIndx++) {
-							
+
 							if (accBalList.get(rowIndx - 1).contains(
 									numberOFRowsInBalPopUp.get(rowIndx)
 											.getText().trim())) {
-								for (int colIndx = 2,tempIndx = 0; colIndx <= colCount; colIndx++) {
-									tempIndx = rowIndx +1 ;
-									String webElement = "td[valign='top'] table.compactDataTable tr:nth-of-type("+tempIndx+")>td:nth-of-type("+colIndx+")" ;
-									String balance = Web.webdriver.findElement(
-													By.cssSelector(webElement)).getText().trim();
+								for (int colIndx = 2, tempIndx = 0; colIndx <= colCount; colIndx++) {
+									tempIndx = rowIndx + 1;
+									String webElement = "td[valign='top'] table.compactDataTable tr:nth-of-type("
+											+ tempIndx
+											+ ")>td:nth-of-type("
+											+ colIndx + ")";
+									String balance = Web.webdriver
+											.findElement(
+													By.cssSelector(webElement))
+											.getText().trim();
 									if (CommonLib
 											.isAccountBalance_In_ProperFormat(balance))
 										isAccBalPopupDisplayedWithDtls = true;
 									else
 										isAccBalPopupDisplayedWithDtls = false;
-									//	break ;
+									// break ;
 								}
 							}
 						}
@@ -1727,6 +1735,32 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			Reporter.logEvent(Status.FAIL,
 					"Check if Plan account balance display or not",
 					"Plan account balance displayed successfully", true);
+		}
+	}
+
+	/**
+	 * <pre>
+	 * Method to navigate to Contribution Allocations changes page.
+	 * </pre>
+	 */
+	public void navigateToCACPage() {
+		if (Web.isWebElementDisplayed(MenuParticipantChanges)) {
+			Web.mouseHover(MenuParticipantChanges);
+
+			Web.mouseHover(ContrAllChngLink);
+			if (Web.clickOnElement(ContrAllChngSubLink)) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Click on Contribution Allocation Change link under Participant changes Mene link.",
+						"Clicked on Contribution Allocation Change link under Participant changes Mene link successfully",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Click on Contribution Allocation Change link under Participant changes Mene link.",
+						"Din't click on Contribution Allocation Change link under Participant changes Mene link successfully",
+						true);
+			}
 		}
 	}
 }

@@ -6,14 +6,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
-
-import org.apache.bcel.generic.SWITCH;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -404,7 +401,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 								Status.FAIL,
 								"Check if Payment History tab displayed or not.",
 								"Payment History tab didn't displayed.", true);
-					break ;
+					break;
 				}
 			}
 			if (isPSAsExpected) {

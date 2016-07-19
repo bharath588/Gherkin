@@ -33,9 +33,13 @@
 							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
 						</suiteXmlFiles>
 						<systemProperties>
-							<property>
+							<!-- <property>
 								<name>env</name>
 								<value>${env}</value>
+							</property> -->
+							<property>
+								<name>testDataPath</name>
+								<value>${testDataPath}</value>
 							</property>
 						</systemProperties>
 					</configuration>
