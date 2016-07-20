@@ -30,6 +30,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@FindBy(css = "a[id = 'profileLink']") private WebElement myProfileLink;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
+	@FindBy(xpath=".//a[@id='logOutLink']") private WebElement logoutLink;
+
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
 	private boolean ifUserOrAccntVerificationMandate = false; 
@@ -130,9 +132,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 		String testData = null;
 		String modalWindowHeaderText = null;
 		try{
-			if(FooterLinks.size()!=footerLinks.size()){
+			/*if(FooterLinks.size()!=footerLinks.size()){
 				throw new Exception("Post login footer links doesnt match");
-			}
+			}*/
 			for(int iLoopCnt=0;iLoopCnt<=footerLinks.size()-1;iLoopCnt++){
 				Web.waitForElement(footerLinks.get(iLoopCnt).findElement(By.cssSelector("a")));				
 				footerlink =  footerLinks.get(iLoopCnt).findElement(By.cssSelector("a"));
@@ -174,4 +176,29 @@ public class HomePage extends LoadableComponent<HomePage>{
 					"Exception Occurred while checking footer links : "+e.getMessage() , true);
 		}
 	}
+	
+    public void validate_if_homepage_loaded(String ifSingleSiteUser) throws Exception {
+        if(ifSingleSiteUser.equalsIgnoreCase("false")){
+               if(Web.isWebElementDisplayed(urlJumpPage, true)){
+                     urlJumpPage.click();
+                     Web.waitForElement(weGreeting);
+                     isLoaded();
+               }else{
+                     throw new Exception("Expected Jump page not loaded");
+               }                                 
+        }else if (ifSingleSiteUser.equalsIgnoreCase("true")){
+               Web.waitForElement(weGreeting);
+               isLoaded();
+        }
+ }
+ 
+ public void logoutPSC(){
+        if(Web.isWebElementDisplayed(logoutLink,true)){
+               logoutLink.click();
+               Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
+        }else{
+               Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
+        }
+ }
+
 }

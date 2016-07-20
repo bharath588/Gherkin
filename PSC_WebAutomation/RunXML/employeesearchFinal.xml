@@ -4,7 +4,6 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <!-- 
     <test name="Employee_Search_Sanity_Suite_validssn">
         <classes>
             <class name="app.psc.testcases.employeesearch.employeesearchtestcases">

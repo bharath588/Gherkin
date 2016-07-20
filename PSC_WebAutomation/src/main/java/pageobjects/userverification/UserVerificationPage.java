@@ -54,7 +54,11 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	@Override
 	protected void isLoaded() throws Error {
 		Web.webdriver.switchTo().defaultContent();
-		Assert.assertTrue(Web.isWebElementDisplayed(txtUserVerificationEmail));
+		try {
+			Assert.assertTrue(Web.isWebElementDisplayed(txtUserVerificationEmail));
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -69,7 +73,10 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			e1.printStackTrace();
 		}
 		try {
-			Web.waitForElement(txtUserVerificationEmail);
+			if(Web.isWebElementDisplayed(txtUserVerificationEmail,true)){
+				Reporter.logEvent(Status.INFO,"Loading User Verification Page"
+						                     ,"User verfication page loaded",false);
+			}
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}

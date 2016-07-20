@@ -3,17 +3,15 @@ package app.psc.testcases.userverification;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.Globals;
@@ -21,6 +19,8 @@ import core.framework.Globals;
 public class userverificationtestcases {
 	LoginPage login;
 	UserVerificationPage userverification;
+	HomePage home;
+	boolean checkReLoginStats = false;
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;	
 
 	@BeforeClass
@@ -68,14 +68,12 @@ public class userverificationtestcases {
 			userverification = new UserVerificationPage().get();
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the user is able to navigate with valid email"
-	 +"and secondary answer when he logs in with new browser", false);	
+				   +"and secondary answer when he logs in with new browser", false);	
 			Thread.sleep(3000);
 			
 			//userverification.get();
 			Web.clickOnElement(userverification, "CANCEL");
 			// Verify if the user id displayed same as logged in id
-			
-			
 			
 			if(Web.isWebElementDisplayed(login, "LOGIN FRAME")){
 				Reporter.logEvent(Status.PASS, "Check if user is navigated to splash screen when it clicks cancel",
@@ -194,6 +192,65 @@ public class userverificationtestcases {
 		}
 	}
 
+	@Test(dataProvider = "setData")
+	public void TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session(int itr,Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify the user is navigated directly to the Jump page while re-login within same session", false);									
+			
+			userverification = new UserVerificationPage();
+			home = new HomePage();			
+			if(!checkReLoginStats && !Web.webdriver.getWindowHandle().isEmpty() 
+					              &&  Web.webdriver.getCurrentUrl().contains("http")){
+				//If already in Jump Page
+				if(Web.isWebElementDisplayed(home,"JUMP_PAGE_NXTGEN_LINK",false)){
+					Web.clickOnElement(home,"JUMP_PAGE_NXTGEN_LINK");
+					Web.waitForElement(home,"LOGOUT_LINK");
+					Web.clickOnElement(home,"LOGOUT_LINK");
+				}
+				
+				//If already in Home Page
+				if(Web.isWebElementDisplayed(home,"LOGOUT_LINK",false)){
+					Web.clickOnElement(home,"LOGOUT_LINK");
+				}				
+				checkReLoginStats = true;
+			}else{
+				checkReLoginStats = true;
+			}			
+						
+			if(itr==1){
+				userverification.get();
+				userverification.performVerification(
+						        new String[] {Stock.GetParameterValue("UserVeriEmail"),
+								              Stock.GetParameterValue("UserSecondaryAns")});				
+				home.validate_if_homepage_loaded(Stock.GetParameterValue("ifSingleSiteUser"));
+			}
+			if(itr==2){
+				home = new HomePage(new LoginPage(),false,new String[] {
+									Stock.GetParameterValue("username"),
+									Stock.GetParameterValue("password") }).get();
+			}
+			home.logoutPSC();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		}  catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 	@AfterSuite
 	public void DriverQuite() {
 		Web.webdriver.quit();
