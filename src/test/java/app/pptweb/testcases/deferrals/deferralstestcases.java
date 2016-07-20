@@ -1175,9 +1175,9 @@ public class deferralstestcases {
 			boolean isTextMatching = false;
 			Thread.sleep(5000);
 			String perRoth = deferrals
-					.getContributionPercentage("RTH");
+					.getContributionPercentage(Stock.GetParameterValue("Roth"));//RTH
 			String perBeforeTax = deferrals
-					.getContributionPercentage("BFRTX");
+					.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX"));//BFRTX
 
 			String contributionRate = Stock
 					.GetParameterValue("Contribution Rate");
@@ -1229,7 +1229,7 @@ Thread.sleep(5000);
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			isTextMatching = Web.VerifyText(perRoth ,deferrals
-					.getContributionPercentage("RTH"),true);
+					.getContributionPercentage(Stock.GetParameterValue("Roth")),true);
 			if (!isTextMatching) {
 				lib.Reporter
 						.logEvent(
@@ -1239,7 +1239,7 @@ Thread.sleep(5000);
 										+ newPerRoth
 										+ "%"+
 										"\nctual:"+deferrals
-										.getContributionPercentage("RTH")
+										.getContributionPercentage(Stock.GetParameterValue("Roth"))
 										.trim(),
 								true);
 
@@ -1252,12 +1252,12 @@ Thread.sleep(5000);
 										+ newPerRoth
 										+ "%"+
 										"\nctual:"+deferrals
-										.getContributionPercentage("RTH")
+										.getContributionPercentage(Stock.GetParameterValue("Roth"))
 										.trim(),
 								true);
 			}
 			isTextMatching = Web.VerifyText(perBeforeTax ,deferrals
-					.getContributionPercentage("BFRTX"),true);
+					.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX")),true);
 			if (isTextMatching) {
 				lib.Reporter
 						.logEvent(
@@ -1267,7 +1267,7 @@ Thread.sleep(5000);
 										+ perBeforeTax
 										+
 										" Actual:\n "+deferrals
-										.getContributionPercentage("BFRTX")
+										.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX"))
 										.trim(),
 								true);
 
@@ -1280,7 +1280,7 @@ Thread.sleep(5000);
 										+ perBeforeTax
 										+
 										" Actual:\n "+deferrals
-										.getContributionPercentage("BFRTX")
+										.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX"))
 										.trim(),
 								true);
 			}
@@ -1395,9 +1395,9 @@ Thread.sleep(5000);
 			boolean isTextMatching = false;
 			Thread.sleep(5000);
 			String perAgeRothCatchUp = deferrals
-					.getContributionPercentage("Age roth catch up");
+					.getContributionPercentage(Stock.GetParameterValue("viewonlyroth"));//Age roth catch up
 			String perAgeCatchupBefore = deferrals
-					.getContributionPercentage("Age Catch- up before");
+					.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax"));//Age Catch- up before
 
 			String contributionRate = Stock
 					.GetParameterValue("Contribution Rate");
@@ -1453,7 +1453,7 @@ Thread.sleep(5000);
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			isTextMatching = Web.VerifyText(perAgeCatchupBefore ,deferrals
-					.getContributionPercentage("Age Catch- up before"),true);
+					.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax")),true);
 			if (!isTextMatching) {
 				lib.Reporter
 						.logEvent(
@@ -1463,7 +1463,7 @@ Thread.sleep(5000);
 										+ newPerAgeCatchupBefore
 										+ "%"+
 										"\nctual:"+deferrals
-										.getContributionPercentage("Age Catch- up before")
+										.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax"))
 										.trim(),
 								true);
 
@@ -1476,12 +1476,12 @@ Thread.sleep(5000);
 										+ newPerAgeCatchupBefore
 										+ "%"+
 										"\nActual:"+deferrals
-										.getContributionPercentage("Age Catch- up before")
+										.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax"))
 										.trim(),
 								true);
 			}
 			isTextMatching = Web.VerifyText(perAgeRothCatchUp ,deferrals
-					.getContributionPercentage("Age roth catch up"),true);
+					.getContributionPercentage(Stock.GetParameterValue("viewonlyroth")),true);
 			if (isTextMatching) {
 				lib.Reporter
 						.logEvent(
@@ -1491,7 +1491,7 @@ Thread.sleep(5000);
 										+ perAgeRothCatchUp
 										+
 										" Actual:\n "+deferrals
-										.getContributionPercentage("Age roth catch up")
+										.getContributionPercentage(Stock.GetParameterValue("viewonlyroth"))
 										.trim(),
 								true);
 
@@ -1504,7 +1504,7 @@ Thread.sleep(5000);
 										+ perAgeRothCatchUp
 										+
 										" Actual:\n "+deferrals
-										.getContributionPercentage("Age roth catch up")
+										.getContributionPercentage(Stock.GetParameterValue("viewonlyroth"))
 										.trim(),
 								true);
 			}
