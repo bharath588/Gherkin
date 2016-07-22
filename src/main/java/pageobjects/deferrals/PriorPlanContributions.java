@@ -151,6 +151,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	public void verifyPriorPlanContributionsPage(){
 		
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+		Web.waitForElement(txtPriorContribution);
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
 			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching", true);
@@ -202,12 +203,20 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		return issuccess;
 	}
 	
-	public void enterContributionValue(String contributionType, String value){
+	public void enterContributionValue(String contributionType, String value) throws InterruptedException{
 		
-		if(contributionType.equalsIgnoreCase("YEAR TO DATE CONTRIBUTION"))
-			lib.Web.setTextToTextBox(this.inputYearToDateContribution,value);
-		if(contributionType.equalsIgnoreCase("CATHUP CONTRIBUTION"))
-			lib.Web.setTextToTextBox(this.inputCatchupContribution,value);
+		if(contributionType.equalsIgnoreCase("YEAR TO DATE CONTRIBUTION")){
+			Thread.sleep(4000);
+			Web.waitForElement(inputYearToDateContribution);
+			Web.clickOnElement(inputYearToDateContribution);
+			Web.setTextToTextBox(this.inputYearToDateContribution,value);
+		}
+		if(contributionType.equalsIgnoreCase("CATCHUP CONTRIBUTION")){
+			Thread.sleep(4000);
+			Web.waitForElement(inputCatchupContribution);
+			Web.clickOnElement(inputCatchupContribution);
+			Web.setTextToTextBox(this.inputCatchupContribution,value);
+		}
 	}
 	
 	public boolean verifyCoontributionMessage(String value){

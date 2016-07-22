@@ -59,7 +59,7 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		sqlQuery[0] = getParticipantDBName(ssn) + "DB";
+		sqlQuery[0] = getParticipantDBName(ssn) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				ssn);
 
@@ -263,5 +263,16 @@ public class Common {
 		}
 		return lblDisplayed;
 	}
-
+	private static String checkEnv(String envName) {
+		if (envName.contains("PROJ")) {
+			return Globals.DB_TYPE.get("PROJ");
+		}
+		if (envName.contains("QA")) {
+			return Globals.DB_TYPE.get("QA");
+		}
+		if (envName.contains("PROD")) {
+			return Globals.DB_TYPE.get("PROD");
+		}
+		return null;
+	}
 }

@@ -261,6 +261,17 @@
             </class>
         </classes>
     </test>
+     <test name="Liat_Verify_PayCheckView_Displayed">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include
+						name="LIAT_To_verify_PayCheckView_Displayed" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+    
    <!-- <test name="Payroll_Calendar_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

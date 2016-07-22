@@ -1184,13 +1184,13 @@ public class deferralstestcases {
 
 			deferrals.View_only_Standard_with_changes(contributionRate);
 			contributionRate = deferrals.contrbution_rate;
-Thread.sleep(5000);
-			float cr = Float.parseFloat(contributionRate.split("%")[0]);
-			float bft = Float.parseFloat(perBeforeTax.split("%")[0]);
-			String newPerRoth = Float.toString(cr - bft);
+           Thread.sleep(5000);
+			int cr = Integer.parseInt(contributionRate.split("%")[0]);
+			int bft = Integer.parseInt(perBeforeTax.split("%")[0]);
+			String newPerRoth = Integer.toString(cr - bft);
 			isTextMatching = Web.VerifyText(newPerRoth
-					+ "% RTH contribution with "
-					+ perBeforeTax + " BFRTX", deferrals
+					+ "% "+Stock.GetParameterValue("Roth")+" contribution with "
+					+ perBeforeTax +" " +Stock.GetParameterValue("viewonlyBFTX"), deferrals
 					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
 					.trim(), true);
 			if (isTextMatching) {
@@ -1198,9 +1198,9 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.PASS,
 								"Verify Split Contribution on Select Contribution page",
-								"Split Contribution is Same on Select Contribution page \nExpected"
-										+ "% RTH contribution with "
-										+ perBeforeTax + " BFRTX \nActual:"+deferrals.getWebElementText(
+								"Split Contribution is Same on Select Contribution page \nExpected:"+newPerRoth
+										+ "% "+Stock.GetParameterValue("Roth")+" contribution with "
+										+ perBeforeTax +" " +Stock.GetParameterValue("viewonlyBFTX")+"\nActual:"+deferrals.getWebElementText(
 										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
 										.trim(),
 								true);
@@ -1210,11 +1210,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.FAIL,
 								"Verify Split Contribution on Select Contribution page",
-								"Split Contribution is not Same on Select Contribution page. \nExpected"
-										+ "% RTH contribution with "
-										+ perBeforeTax + " BFRTX \nActual:"+deferrals.getWebElementText(
-										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
-										.trim(), true);
+								"Split Contribution is not Same on Select Contribution page \nExpected:"+newPerRoth
+										+ "% "+Stock.GetParameterValue("Roth")+" contribution with "
+										+ perBeforeTax +" " +Stock.GetParameterValue("viewonlyBFTX")+"\nActual:"+deferrals.getWebElementText(
+										"VIEW ONLY SPLIT CONTRIBUTION TEXT").trim(), true);
 			}
 			Web.clickOnElement(deferrals, "Continue button");
 			Thread.sleep(4000);
@@ -1235,10 +1234,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.PASS,
 								"Verify Standard Roth After Split Contribution on My Contribution page",
-								"Roth is updated on My Contribution page \nExpected"
+								"Roth is updated on My Contribution page \nExpected:"
 										+ newPerRoth
 										+ "%"+
-										"\nctual:"+deferrals
+										"\nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("Roth"))
 										.trim(),
 								true);
@@ -1248,10 +1247,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.FAIL,
 								"Verify Standard Roth After Split Contribution on My Contribution page",
-								"Roth is not updated on My Contribution page \nExpected"
+								"Roth is not updated on My Contribution page \nExpected:"
 										+ newPerRoth
 										+ "%"+
-										"\nctual:"+deferrals
+										"\nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("Roth"))
 										.trim(),
 								true);
@@ -1263,10 +1262,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.PASS,
 								"Verify Standard Before Tax After Split Contribution on My Contribution page",
-								"Before Tax is Not updated on My Contribution page Expected/n"
+								"Before Tax is Not updated on My Contribution page \nExpected:"
 										+ perBeforeTax
 										+
-										" Actual:\n "+deferrals
+										" \nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX"))
 										.trim(),
 								true);
@@ -1276,10 +1275,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.FAIL,
 								"Verify Standard Before Tax After Split Contribution on My Contribution page",
-								"Standard Before Tax is updated on My Contribution page Expected/n"
+								"Standard Before Tax is updated on My Contribution page \nExpected:"
 										+ perBeforeTax
 										+
-										" Actual:\n "+deferrals
+										" \nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX"))
 										.trim(),
 								true);
@@ -1311,18 +1310,10 @@ Thread.sleep(5000);
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
-			// <= 2)
-			// leftmenu = new LeftNavigationBar(homePage);
-			// else {
-			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
-			// leftmenu = new LeftNavigationBar(accountPage);
-			// }
-			leftmenu = new LeftNavigationBar(homePage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			if (deferrals.checkAftertaxOptionNotdisplayed()) {
@@ -1334,7 +1325,7 @@ Thread.sleep(5000);
 				Reporter.logEvent(
 						Status.PASS,
 						"Check if after tax option is displayed in contributions page",
-						"The after tax option is not displayed", false);
+						"The after tax option is not displayed", true);
 			}
 
 			if (lib.Web.isWebElementDisplayed(deferrals, "Edit Btn Aftertax")) {
@@ -1404,7 +1395,7 @@ Thread.sleep(5000);
 
 			deferrals.Catchup_with_split_contributions(contributionRate);
 			contributionRate = deferrals.contrbution_rate;
-Thread.sleep(5000);
+            Thread.sleep(5000);
 			int cr = Integer.parseInt(contributionRate.split("%")[0]);
 			int acr = Integer.parseInt(perAgeRothCatchUp.split("%")[0]);
 			String newPerAgeCatchupBefore = Integer.toString(cr - acr);
@@ -1462,7 +1453,7 @@ Thread.sleep(5000);
 								"Age Catch- up before is updated on My Contribution page \nExpected"
 										+ newPerAgeCatchupBefore
 										+ "%"+
-										"\nctual:"+deferrals
+										"\nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax"))
 										.trim(),
 								true);
@@ -1487,10 +1478,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.PASS,
 								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
-								"Age Catch- up Age roth catch up is Not updated on My Contribution page Expected/n"
+								"Age Catch- up Age roth catch up is Not updated on My Contribution page \nExpected:"
 										+ perAgeRothCatchUp
 										+
-										" Actual:\n "+deferrals
+										" \nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("viewonlyroth"))
 										.trim(),
 								true);
@@ -1500,10 +1491,10 @@ Thread.sleep(5000);
 						.logEvent(
 								Status.FAIL,
 								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
-								"Age Catch- up Age roth catch up is updated on My Contribution page Expected/n"
+								"Age Catch- up Age roth catch up is updated on My Contribution page \nExpected:"
 										+ perAgeRothCatchUp
 										+
-										" Actual:\n "+deferrals
+										" \nActual:"+deferrals
 										.getContributionPercentage(Stock.GetParameterValue("viewonlyroth"))
 										.trim(),
 								true);
@@ -1772,6 +1763,18 @@ Thread.sleep(5000);
 					leftmenu);
 
 			priorContributions.get();
+			Thread.sleep(5000);
+
+			if (Web.isWebElementDisplayed(priorContributions, "EDIT")) {
+				Web.clickOnElement(priorContributions, "EDIT");
+				priorContributions.enterContributionValue(
+						"YEAR TO DATE CONTRIBUTION", "0");
+				priorContributions.enterContributionValue(
+						"CATCHUP CONTRIBUTION", "0");
+				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+				Web.waitForElement(priorContributions, "EDIT");
+				Web.clickOnElement(priorContributions, "EDIT");
+			}
 
 			// perform a initial check on the prior plan contribution
 			priorContributions.verifyPriorPlanContributionsPage();
@@ -1807,9 +1810,10 @@ Thread.sleep(5000);
 						"Edit button is Not displayed", true);
 			// this will clear thedata
 			try {
+				Thread.sleep(4000);
 				Web.clickOnElement(priorContributions, "EDIT");
 				priorContributions.enterContributionValue(
-						"YEAT TO DATE CONTRIBUTION", "0");
+						"YEAR TO DATE CONTRIBUTION", "0");
 				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 				Web.clickOnElement(priorContributions, "EDIT");
 			} catch (Exception e) {
@@ -1852,13 +1856,16 @@ Thread.sleep(5000);
 					leftmenu);
 
 			priorContributions.get();
+			//Web.waitForElement(priorContributions, "EDIT");
+			Thread.sleep(5000);
 			if (Web.isWebElementDisplayed(priorContributions, "EDIT")) {
 				Web.clickOnElement(priorContributions, "EDIT");
 				priorContributions.enterContributionValue(
-						"YEAT TO DATE CONTRIBUTION", "0");
+						"YEAR TO DATE CONTRIBUTION", "0");
 				priorContributions.enterContributionValue(
 						"CATCHUP CONTRIBUTION", "0");
 				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
+				Web.waitForElement(priorContributions, "EDIT");
 				Web.clickOnElement(priorContributions, "EDIT");
 			}
 
@@ -1871,7 +1878,7 @@ Thread.sleep(5000);
 			priorContributions.enterContributionValue(
 					"YEAR TO DATE CONTRIBUTION",
 					lib.Stock.GetParameterValue("yearToDateContribution"));
-			priorContributions.enterContributionValue("CATHUP CONTRIBUTION",
+			priorContributions.enterContributionValue("CATCHUP CONTRIBUTION",
 					lib.Stock.GetParameterValue("catchupContribution"));
 			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 
@@ -1900,7 +1907,7 @@ Thread.sleep(5000);
 			try {
 				Web.clickOnElement(priorContributions, "EDIT");
 				priorContributions.enterContributionValue(
-						"YEAT TO DATE CONTRIBUTION", "0");
+						"YEAR TO DATE CONTRIBUTION", "0");
 				priorContributions.enterContributionValue(
 						"CATCHUP CONTRIBUTION", "0");
 				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
@@ -1941,11 +1948,11 @@ Thread.sleep(5000);
 			LandingPage homePage = new LandingPage(mfaPage);
 
 			leftmenu = new LeftNavigationBar(homePage);
-			Deferrals deferral = new Deferrals(leftmenu);
+			PriorPlanContributions priorContributions = new PriorPlanContributions(
+					leftmenu);
 
-			deferral.get();
-
-			if (!lib.Web.isWebElementDisplayed(deferral,
+			priorContributions.get();
+			if (!lib.Web.isWebElementDisplayed(priorContributions,
 					"TEXT PRIOR PLAN CONTRIBUTION"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Prior Plan Contribution Link Is Displayed",

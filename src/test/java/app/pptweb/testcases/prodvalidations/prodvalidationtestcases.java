@@ -2575,4 +2575,57 @@ public class prodvalidationtestcases {
 			}
 		}
 	}
+	
+	@Test(dataProvider = "setData")
+	public void LIAT_To_verify_PayCheckView_Displayed(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome retirement = new RetirementIncome(homePage);
+			retirement.get();
+			boolean lblDisplayed = false;
+			Reporter.logEvent(Status.INFO,
+					"Navigate to Retirement Incomep page.",
+					"Retirement Income page is displayed", true);
+
+			// verify PayCheck View in retirement income page
+			lblDisplayed = Web.isWebElementDisplayed(retirement,
+					"Paycheck Rainbow", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify PayCheck View in Retirement Income Page",
+						"PayCheck View in Retirement Income Page is displayed",
+						true);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify PayCheck View in Retirement Income Page",
+						"PayCheck View in Retirement Income Page is Not displayed",
+						true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
 }
