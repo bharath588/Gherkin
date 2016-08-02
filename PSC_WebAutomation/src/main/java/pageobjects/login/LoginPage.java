@@ -3,8 +3,6 @@ package pageobjects.login;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
@@ -16,10 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
-import lib.Reporter;
-import lib.Reporter.Status;
-import lib.Stock;
-import lib.Web;
+
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
