@@ -2,12 +2,14 @@ package pageobjects.login;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
@@ -59,6 +61,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement txtForceLoginUsernameField;
 	@FindBy(css = "img[alt = 'Empower Retirement']")
 	private WebElement logoEmpower;
+	@FindBy(xpath = ".//*[@id='loginSpinner']")
+	private WebElement loginSpinner;
 
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
@@ -305,5 +309,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			 testDataColNm.split("link_")[1] +
 			 " links , Exception:"+e.getMessage());
 		}
+	}
+	
+	public void waitForSuccessfulLogin() throws InterruptedException
+	{
+		if(Web.isWebElementDisplayed(frmLogin))
+		{
+		Web.webdriver.switchTo().frame(frmLogin);
+		do
+		{
+		Thread.sleep(3000);	
+		}while(Web.isWebElementDisplayed(loginSpinner));
+		}
+		Web.webdriver.switchTo().defaultContent();
 	}
 }

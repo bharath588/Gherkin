@@ -329,10 +329,9 @@ public class logintestcases {
 			List<String> preLoginFooterList = login.getPreLoginFooterLinkList();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			userverification = new UserVerificationPage().get();
-			userverification.performVerification(
-					new String[] { (userverification.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
-							Stock.GetParameterValue("username"))).trim(), Stock.GetParameterValue("UserSecondaryAns") });
+			 new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
 			accountverification.jumpPagedisplayed();
 			home.checkFooterLinkPostLogin(preLoginFooterList);			

@@ -2,15 +2,19 @@ package pageobjects.homepage;
 
 import java.lang.reflect.Method;
 import java.util.List;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+
+import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -67,6 +71,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	protected void load() {		
 		this.parent.get();
 		UserVerificationPage userVeriPg = new UserVerificationPage();
+		LoginPage loginObj =  new LoginPage();
 		try{			
 			if(ifUserOrAccntVerificationMandate) {	// Performs User or Account Verification 		
 				invokeMethod = this.parent.getClass().getDeclaredMethod("performVerification", String[].class);
@@ -80,11 +85,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 				Web.webdriver.switchTo().defaultContent();
 				invokeMethod = this.parent.getClass().getDeclaredMethod("submitLoginCredentials", String[].class);
 				invokeMethod.invoke(this.parent.getClass().newInstance(),new Object[]{userData});
-				
-				Thread.sleep(5000);
+				loginObj.waitForSuccessfulLogin();
 				//Check if UserVerification Pages appears then performVerification
 				if(Web.isWebElementDisplayed(Web.returnElement(userVeriPg,"EMAIL ADDRESS"))){
-				   userVeriData[0] = Stock.GetParameterValue("userVerificationEmail");
+				   userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
+							Stock.GetParameterValue("username"));
 				   userVeriData[1] = Stock.GetParameterValue("userVerificationAns");
 				   invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
 				   invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
@@ -115,6 +120,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 		if (fieldName.trim().equalsIgnoreCase("MY PROFILE")) {
 			return this.myProfileLink;
+		}
+		if (fieldName.trim().equalsIgnoreCase("JUMP_PAGE_NXTGEN_LINK")) {
+			return this.urlJumpPage;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LOGOUT_LINK")) {
+			return this.logoutLink;
 		}
 		return null;
 	}
