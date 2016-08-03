@@ -23,13 +23,13 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@for='ssnInput']") private WebElement lblSSN;
 	@FindBy(xpath=".//*[@for='zipCodeInput']") private WebElement lblZipCode;
 	@FindBy(xpath=".//*[@for='lastNameInput']") private WebElement lblLastName;
-	@FindBy(xpath=".//*[@for='dateOfBirthInput']") private WebElement lblDateofBirth;
+	@FindBy(xpath=".//*[@for='dateOfBirth']") private WebElement lblDateofBirth;
 	@FindBy(xpath=".//*[@for='streetAddressInput']") private WebElement lblStreetAddress;
 	@FindBy(xpath=".//form[@name='registerForm']/.//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='ssnInput']") private WebElement txtSSN;
 	@FindBy(xpath=".//*[@id='zipCodeInput']") private WebElement txtZipCode;
 	@FindBy(xpath=".//*[@id='lastNameInput']") private WebElement txtLastName;
-	@FindBy(xpath=".//*[@id='dateOfBirthInput']") private WebElement txtDateofBirth;
+	@FindBy(xpath=".//*[@id='dateOfBirth']") private WebElement txtDateofBirth;
 	@FindBy(xpath=".//*[@id='streetAddressInput']") private WebElement txtStreetAddress;
 	@FindBy(xpath=".//*[@class='form-group has-error ng-scope']") private WebElement lblErrorMessage;
 	@FindBy(xpath=".//*[@id='passwordReset']/a") private WebElement lnkNeedHelpWithPassword;
