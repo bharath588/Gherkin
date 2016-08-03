@@ -51,8 +51,9 @@ public class Balance extends LoadableComponent<Balance> {
 	@FindBy(xpath="//table[@id='balanceHistoryTable']//thead/tr") private WebElement hdrBalanceHistoryTable;
 	@FindBy(xpath="//table[@id='balanceComparisonTable']//tbody/tr") private List<WebElement> lstBalancceComparisonDetail;
 	@FindBy(xpath="//table[@id='balanceComparisonTable']//thead/tr") private WebElement hdrBalancceComparisonTable;
-	@FindBy(xpath = "//img[@class='site-logo']")
-	private WebElement lblSponser;
+	@FindBy(xpath = "//img[@class='site-logo']") private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	
 	/** Empty args constructor
 	 * 
@@ -105,6 +106,7 @@ public class Balance extends LoadableComponent<Balance> {
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

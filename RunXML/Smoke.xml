@@ -271,7 +271,61 @@
 			</class>
 		</classes>
 	</test>
-    
+    <test name="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Liat_Verify_HowDoICompareTab_Labels_Circles">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_HowDoICompare_Labels_Circles" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="LIAT_Verify_Health_care_costs_helpful_links">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Verify_Health_care_costs_helpful_links" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="LIAT_Verify_Tour_Link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Verify_Tour_Link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
    <!-- <test name="Payroll_Calendar_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

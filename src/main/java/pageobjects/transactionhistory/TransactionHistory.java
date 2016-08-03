@@ -50,7 +50,8 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	@FindBy(xpath="*//td[@id='txnHistSummTxnDesc']") private List<WebElement> lstTransactionType;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-	
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/** Empty args constructor
 	 * 
 	 */
@@ -100,6 +101,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

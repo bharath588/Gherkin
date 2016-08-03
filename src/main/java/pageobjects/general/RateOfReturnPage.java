@@ -54,6 +54,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 
 	/**
@@ -110,6 +111,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 

@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="QA">
-	<DateTime value="7/21/2016 5:40:34 PM"></DateTime>
+	<DateTime value="8/3/2016 1:57:12 PM"></DateTime>
 	<Module name="Program"></Module>
 	<Module name="query">
 		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB_QA"
@@ -106,47 +106,47 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="104472295ABC" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="104472295ABC" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="018807184ABC" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="443049090abc" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="104472295ABC" />
+				<parameter name="userName" value="745927539ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="104472295ABC" />
+				<parameter name="userName" value="345698867ABC" />
 				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="112503791ABC" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Help Me Do It" value="Y" />
 				<parameter name="Do It For Me" value="Y" />
@@ -156,7 +156,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC0012_To verify Retirement Income tab_Plan Savings">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="112503791ABC" />
+				<parameter name="userName" value="024696772ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Help Me Do It" value="Y" />
 				<parameter name="Do It For Me" value="Y" />
@@ -613,7 +613,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="112526214" />
 				<parameter name="Contribution Rate" value="10" />
@@ -628,7 +628,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="112526214" />
 				<parameter name="Contribution Rate" value="11" />
@@ -645,7 +645,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -664,7 +664,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -682,7 +682,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_011_Regular_BEFORE-Maximize to the IRS limit">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -700,7 +700,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_013_Regular_ROTH-Maximize to the company match">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -718,7 +718,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_014_Regular_ROTH-Maximize to the IRS limit">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="503274764ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -736,7 +736,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -754,26 +754,26 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_017_Regular_SPLIT-Maximize to the company match">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
-				<parameter name="Contribution Rate" value="11" />
+				<parameter name="Contribution Rate" value="6" />
 				<parameter name="Auto Increase Contribution Percent"
 					value="10" />
 				<parameter name="Auto Increases Until Reaches Percent"
 					value="30" />
 				<parameter name="Auto Increase Period" value="1" />
-				<parameter name="Split_Tax_roth" value="4" />
+				<parameter name="Split_Tax_roth" value="2" />
 				<parameter name="Contributing_type" value="Maximize to company match" />
 				<parameter name="Contribution_type" value="Split" />
 				<parameter name="Add_auto_increase_type" value="Before Add Auto Increase" />
-				<parameter name="Split_Tax_before" value="2" />
+				<parameter name="Split_Tax_before" value="4" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -792,7 +792,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -808,7 +808,7 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="SIT_PPTWEB_Deferral_005_Catch up_Maximize to the IRS limit">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -826,7 +826,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -844,7 +844,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Contribution Rate" value="11" />
 				<parameter name="Auto Increase Contribution Percent"
@@ -888,18 +888,18 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="745927539ABC" />
+				<parameter name="username" value="999750006ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Contribution Rate" value="12" />
 				<parameter name="Age_before_Catchup_contr" value="10" />
 				<parameter name="Contribution Rate" value="24" />
 				<parameter name="viewonlyroth" value="Age Catch-Up Roth" />
-				<parameter name="catchupbeforetax" value="Age Catch-Up Before Tax" />
+				<parameter name="catchupbeforetax" value="AGCTBFTX" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102040625ABC" />
+				<parameter name="username" value="330067938ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="263302464" />
 				<parameter name="Split_Tax_roth" value="4" />
@@ -910,7 +910,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="109779717ABC" />
+				<parameter name="username" value="686282133ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104472295" />
 				<parameter name="Split_Tax_roth" value="4" />
@@ -920,7 +920,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="109779717ABC" />
+				<parameter name="username" value="330067938ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104472295" />
 				<parameter name="Contribution Rate" value="10" />
@@ -930,7 +930,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="452748678ABC" />
+				<parameter name="username" value="109779717ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104472295" />
 				<parameter name="Annual_Compensation" value="100000" />
@@ -941,7 +941,7 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="106450145ABC" />
+				<parameter name="username" value="330067938ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104472295" />
 				<parameter name="Alert_Message"
@@ -952,19 +952,19 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="Catchup_MaximizeToIRSLimit_Split">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Split_Tax_roth" value="1" />
 				<parameter name="Contributing_type" value="Maximize to irs limit" />
 				<parameter name="Contribution_type" value="Split" />
 				<parameter name="Add_auto_increase_type" value="Catch Up Before Add Auto Increase" />
-				<parameter name="Split_Tax_before" value="2" />
+				<parameter name="Split_Tax_before" value="6" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Catchup_SelectAnotherContribution_Split">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -977,12 +977,12 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Contributing_type" value="Select another contribution" />
 				<parameter name="Contribution_type" value="Split" />
 				<parameter name="Add_auto_increase_type" value="Catch Up Before Add Auto Increase" />
-				<parameter name="Split_Tax_before" value="2" />
+				<parameter name="Split_Tax_before" value="6" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Catchup_SelectAnotherContribution_Roth">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
@@ -998,7 +998,7 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="Catchup_MaximizeToIRSLimit_Roth">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contributing_type" value="Maximize to irs limit" />
@@ -1006,70 +1006,70 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Add_auto_increase_type" value="Catch Up Roth Add Auto Increase" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Bonus_SelectAnotherContribution_after">
+		<TestCase name="Bonus_SelectAnotherContribution_before">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="11" />
 				<parameter name="Auto Increase Contribution Percent"
-					value="10" />
+					value="5" />
 				<parameter name="Auto Increases Until Reaches Percent"
-					value="30" />
+					value="20" />
 				<parameter name="Auto Increase Period" value="1" />
-				<parameter name="Contribution_type" value="After" />
-				<parameter name="Add_auto_increase_type" value="After Bonus Add Auto Increase" />
+				<parameter name="Contribution_type" value="Before" />
+				<parameter name="Add_auto_increase_type" value="Before Bonus Add Auto Increase" />
 				<parameter name="Contributing_type" value="Select another contribution" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Bonus_SelectAnotherContribution_split">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Particicpant_ssn" value="104888318" />
 				<parameter name="Contribution Rate" value="12" />
 				<parameter name="Auto Increase Contribution Percent"
-					value="10" />
+					value="5" />
 				<parameter name="Auto Increases Until Reaches Percent"
-					value="30" />
+					value="20" />
 				<parameter name="Auto Increase Period" value="1" />
 				<parameter name="Contribution_type" value="Split" />
-				<parameter name="Add_auto_increase_type" value="After Bonus Add Auto Increase" />
+				<parameter name="Add_auto_increase_type" value="Before Bonus Add Auto Increase" />
 				<parameter name="Contributing_type" value="Select another contribution" />
-				<parameter name="Split_Tax_roth" value="2" />
+				<parameter name="Split_Tax_roth" value="10" />
 				<parameter name="Split_Tax_after" value="10" />
 				<parameter name="Split_Tax_before" value="2" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Other_SelectAnotherContribution_Catchup_Roth">
+		<TestCase name="Other_SelectAnotherContribution_Before">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Contribution Rate" value="11" />
 				<parameter name="Auto Increase Contribution Percent"
-					value="10" />
+					value="5" />
 				<parameter name="Auto Increases Until Reaches Percent"
-					value="30" />
+					value="20" />
 				<parameter name="Auto Increase Period" value="1" />
-				<parameter name="Contribution_type" value="Before" />
+				<parameter name="Contribution_type" value="Before Tax Variable" />
 				<parameter name="Add_auto_increase_type" value="Before Add Auto Increase" />
 				<parameter name="Contribution Rate" value="10" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Other_SelectAnotherContribution_split">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="102047646ABC" />
+				<parameter name="username" value="619637442ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Contribution Rate" value="11" />
 				<parameter name="Auto Increase Contribution Percent"
-					value="10" />
+					value="5" />
 				<parameter name="Auto Increases Until Reaches Percent"
-					value="30" />
+					value="25" />
 				<parameter name="Auto Increase Period" value="1" />
 				<parameter name="Contribution_type" value="Split" />
 				<parameter name="Add_auto_increase_type" value="Roth Add Auto Increase" />
-				<parameter name="Split_Tax-AgeRoth" value="6" />
-				<parameter name="Spli_Tax_Roth" value="4" />
+				<parameter name="Split_Tax_before" value="6" />
+				<parameter name="Split_Tax_roth" value="4" />
 				<parameter name="Contribution Rate" value="10" />
 			</Iteration>
 		</TestCase>
@@ -1081,7 +1081,7 @@ where a.PRIMARY_RES_IND='Y'
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup - participant within first year of employment">
+			name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="110628257ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -1100,6 +1100,64 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="yearToDateContribution" value="1,000" />
 				<parameter name="toolTip"
 					value="Contributions to any other retirement plan in the current year may affect the amount you can contribute to your 401(k) account for the remainder of the plan year." />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="619637442ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="Contribution Rate" value="10" />
+				<parameter name="Split_Tax_before" value="6" />
+				<parameter name="Chaining_Option"
+					value="Regular Pre-Tax Contribution to After Tax" />
+				<parameter name="Plan_id" value="194394" />
+				<parameter name="Contributing_type" value="Split" />
+				<parameter name="SSN" value="745927539" />
+				<parameter name="first_name" value="LOUIS" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="619637442ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="Contribution Rate" value="10" />
+				<parameter name="Split_Tax_before" value="6" />
+				<parameter name="Chaining_Option" value="ELECT TO AFT TO NQ" />
+				<parameter name="Plan_id" value="194394" />
+				<parameter name="Contributing_type" value="Split" />
+				<parameter name="SSN" value="745927539" />
+				<parameter name="first_name" value="LOUIS" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="619637442ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="Contribution Rate" value="10" />
+				<parameter name="Split_Tax_before" value="6" />
+				<parameter name="Chaining_Option"
+					value="Regular Pre-Tax Contribution to Non-Qualified Plan" />
+				<parameter name="Plan_id" value="194394" />
+				<parameter name="Contributing_type" value="Split" />
+				<parameter name="SSN" value="745927539" />
+				<parameter name="first_name" value="LOUIS" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type, split contribution">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="330067938ABC" />
+				<parameter name="password" value="Test@1234" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PPTWEB_Deferral_023_Multiple_Change contribution rate for multiple deferral type, split contributions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="330067938ABC" />
+				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1757,9 +1815,58 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="Liat_Verify_PayCheckView_Displayed">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="999750006ABC" />
+				<parameter name="userName" value="745927539ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="745927539ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Liat_Verify_HowDoICompareTab_Labels_Circles">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="745927539ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="745927539ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="574724924ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="" />
+				<parameter name="userType" value="Terminated" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="userName" value="940899893abc" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="" />
+				<parameter name="userType" value="Suspended" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="LIAT_Verify_Health_care_costs_helpful_links">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="745927539ABC" />
+				<parameter name="password" value="Test@1234" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="LIAT_Verify_Tour_Link">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="userName" value="745927539ABC" />
+				<parameter name="password" value="Test@1234" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -2032,7 +2139,7 @@ where a.PRIMARY_RES_IND='Y'
 			<Iteration Execution="Yes" id="1">
 				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="codeDeliveryOption" value="CALL_ME" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="newPassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
@@ -2041,7 +2148,7 @@ where a.PRIMARY_RES_IND='Y'
 			<Iteration Execution="Yes" id="1">
 				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="codeDeliveryOption" value="TEXT_ME" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="newPassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
@@ -2050,7 +2157,7 @@ where a.PRIMARY_RES_IND='Y'
 			<Iteration Execution="Yes" id="1">
 				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="newPassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>
@@ -2059,7 +2166,7 @@ where a.PRIMARY_RES_IND='Y'
 			<Iteration Execution="Yes" id="1">
 				<parameter name="ga_PlanId" value="194193-01" />
 				<parameter name="codeDeliveryOption" value="EMAIL" />
-				<parameter name="reEnterPassword" value="Test@1234" />
+				<parameter name="newPassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
 				<parameter name="queryName" value="getRegisteredUser" />
 			</Iteration>

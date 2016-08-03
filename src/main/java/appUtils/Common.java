@@ -127,7 +127,7 @@ public class Common {
 
 		if (DB.getRecordSetCount(participantID) > 0) {
 			try {
-				participantID.first();
+				participantID.last();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(

@@ -97,6 +97,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody/tr")private List<WebElement> lstPrimaryBeneficiaries;
 	@FindBy(xpath = "//input[contains(@id,'primaryBeneficiaryAllocationPercent')]")private List<WebElement> lstPriBeneAllocations;
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody")private WebElement tblPrimaryBeneficiary;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	/** Empty args constructor
 	 * 
 	 */
@@ -149,6 +150,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

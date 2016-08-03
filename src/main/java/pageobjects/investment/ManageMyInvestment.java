@@ -187,6 +187,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblDollarCostSetupDate;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 	/**
 	 * Empty args constructor
@@ -236,6 +237,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
@@ -406,14 +408,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(
 					Status.PASS,
 					"verify Investment Options Table Header for Dollar Cost Average",
-					"Expected: Investment Options Balance Effective Date /n Actual: "
+					"Expected: Investment Options Balance Effective Date \n Actual: "
 							+ hdrInvestmentOptionTblForDollarCost.getText()
 									.trim(), false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"verify Investment Options Table Header for Dollar Cost Average",
-					"Expected: Investment Options Balance Effective Date /n Actual: "
+					"Expected: Investment Options Balance Effective Date \n Actual: "
 							+ hdrInvestmentOptionTblForDollarCost.getText()
 									.trim(), true);
 		lstChkInvestmentOptionDollarCost.get(0).click();
@@ -433,13 +435,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				.contains(toInvestmentOption))
 			Reporter.logEvent(Status.PASS,
 					"verify Investment Option displayed", "Expected: "
-							+ toInvestmentOption + "/n Actual: "
+							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"verify Investment Options displayed", "Expected: "
-							+ toInvestmentOption + "/n Actual: "
+							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
 

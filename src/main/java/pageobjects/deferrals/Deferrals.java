@@ -101,7 +101,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax Bonus')]/../td[3]/.//a") private WebElement lnkAfterBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth Bonus')]/../td[3]/.//a") private WebElement lnkRothBonusAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'other')]/../td[3]/.//a") private WebElement lnkOtherAutoIncrease;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'ROTH')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[3]/.//a") private WebElement lnkRothAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch')]/../td[3]/.//div") private WebElement txtCatchup;
 			@FindBy(xpath=".//div[text()[normalize-space()='Auto Increase Before-tax deferral']]")	
 			private WebElement lblAutoIncreaseBeforeTaxDeferral;
@@ -152,6 +152,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath = ".//span[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p") private WebElement lblAlertMsg;
 			@FindBy(xpath = "//label[@class='radio-inline panel-title']//strong") private WebElement lblViewOnlyCatchUP;
+			@FindBy(xpath = ".//*[@id='splitContribution']//div[contains(@class,'contribution-percentage')]") private WebElement splitPercent;
+			@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			
 		/**
@@ -207,6 +209,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 			} else {
 				this.lnkLogout.click();
+				Web.waitForElement(this.btnLogin);
 				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 		}
@@ -502,10 +505,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
 					}
 					else{
-						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
-						int i=Integer.parseInt(contrbution_rate);
-						int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));
-						lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
+						int i=Integer.parseInt(splitPercent.getText().split("%")[0]);
+						lib.Web.setTextToTextBox(txtSplitBeforeTax, Integer.toString(i/2));
+						/*int i=Integer.parseInt(splitPercent.getText().split("%")[0]);
+						int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));*/
+						lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-i/2));
 					}
 					
 					

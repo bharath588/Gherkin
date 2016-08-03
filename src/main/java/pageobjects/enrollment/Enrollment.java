@@ -34,6 +34,8 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(id="btn-enroll submit") private WebElement btnEnrollSubmit;
 	@FindBy(id="btn-enroll submit") private WebElement hdrEnrollmentDetails;
 	@FindBy(xpath="//div[@class='row']//a[text()='Skip & View My Account']") private WebElement btnSkipAndViewAccount;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/** Empty args constructor
      * 
      */

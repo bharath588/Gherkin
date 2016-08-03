@@ -72,7 +72,8 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement txtConfirmation;
 	@FindBy(xpath = "html/body/p[1]/span[2]/span")
 	private WebElement txtConfirmationNo;
-	
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
+	private WebElement btnLogin;
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	
 	/**
@@ -131,6 +132,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestALoan));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 

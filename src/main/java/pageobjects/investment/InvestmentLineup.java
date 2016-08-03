@@ -54,6 +54,8 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	@FindBy(xpath="//span[@class='legacyFundDocumentTitleLabel']") private WebElement lblFundDocTitle;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	
 	/** Empty args constructor
 	 * 
@@ -103,6 +105,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

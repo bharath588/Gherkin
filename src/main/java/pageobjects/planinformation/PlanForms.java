@@ -46,7 +46,8 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 		@FindBy(xpath="//table[@class='table ng-scope']/tbody//a") private List<WebElement> lstPlanformName;
 		@FindBy(xpath = "//img[@class='site-logo']")
 		private WebElement lblSponser;
-		
+		@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 		
 		/** Empty args constructor
 		 * 
@@ -97,6 +98,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPlanForms,true));
 			} else {
 				this.lnkLogout.click();
+				Web.waitForElement(this.btnLogin);
 				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 		}

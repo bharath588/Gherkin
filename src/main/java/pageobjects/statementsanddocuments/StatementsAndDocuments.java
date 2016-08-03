@@ -55,7 +55,8 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	@FindBy(xpath="//table[@id='statementsByTxnDetailTable']//tbody/tr[@id='statementsByTxnDetailData']") private List<WebElement> lstStmtsByTxnDetailTableRows;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-	
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/** Empty args constructor
 	 * 
 	 */
@@ -105,6 +106,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

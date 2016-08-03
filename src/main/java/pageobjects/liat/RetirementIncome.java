@@ -1,31 +1,27 @@
 
 package pageobjects.liat;
 
-
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-
-
-
-
-
-
-
-
-
 import org.testng.Assert;
+
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 import core.framework.Globals;
 import appUtils.Common;
@@ -42,7 +38,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security' and @role='tab']") private WebElement lnkSocialSecurity;
 @FindBy(xpath=".//*[text()='Social Security Administration']") private WebElement lnkSocialSecuirtyAdministration;
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Other Assets']") private WebElement lnkOtherAssets;
-
+@FindBy(xpath=".//*[text()='Retirement income']") private WebElement tabRetirementIncome;
 @FindBy(xpath=".//*[@class='ng-binding' and text() = 'Other Assets' and @role='tab']") private WebElement lnkOtherAssets;
 @FindBy(xpath=".//button[text()[normalize-space()='Add an account']]") private WebElement btnAddAnAccount;
 @FindBy(xpath=".//*[@class='ng-binding ng-scope' and text() = 'Income Gap']") private WebElement lnkIncomeGap;
@@ -55,11 +51,11 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h5") private WebElement txtIncomeType;
 @FindBy(xpath="//div[@class='paycheck-label-inner-container']/h3") private WebElement txtIncomeTypeValue;
 @FindBy(xpath=".//*[contains(text(),'Retirement age')]") private WebElement lblRetirementAge;
-@FindBy(xpath="//div[@id='contribution-rate-slider']") private WebElement sliderContributionRate;
+//@FindBy(xpath="//div[@id='contribution-rate-slider']") private WebElement sliderContributionRate;
 @FindBy(xpath="//div[@id='retirement-age-slider']//button[@class='sliderThumb']") private WebElement sliderRetirementAge;
 @FindBy(xpath="//div[@id='investment-mix-slider']//button[@class='sliderThumb']") private WebElement sliderInvestmentMix;
 //@FindBy(xpath="//div[@class='svg-wrap']") private WebElement myGoalPercent;
-
+@FindBy(xpath="//div[@id='contribution-rate-slider']//button[contains(@class,'sliderThumb')]//div[contains(@class,'sliderThumbValue')]") private WebElement sliderContributionRate;
 @FindBy(xpath="//*[@id='progress-to-goal-inner']") private WebElement myGoalPercent;
 @FindBy(xpath="//div[@class='modal-header']/h2") private WebElement txtMyGoalPercent;
 @FindBy(xpath="//input[@id='monthlyOption']") private WebElement radButtonMonthly;
@@ -91,6 +87,23 @@ private LoadableComponent<?> parent;
 @FindBy(linkText="Log out") private WebElement lnkLogout;
 @FindBy(xpath="//h1[text()='My Estimated Retirement Income']") private WebElement hdrEstimatedRetirementIncome;
 
+@FindBy(xpath="//button[text()[normalize-space()='Tour']]") private WebElement btnTour;
+@FindBy(xpath="//button[contains(@class,'nextBtn')]") private WebElement btnNext;
+private String modalHeader="//h3[text()[normalize-space()='webElementText']]";
+
+@FindBy(xpath="//ul[contains(@class,'view-details-list')]//li") private List<WebElement> lstViewDetails;
+@FindBy(xpath=".//*[@id='contribution-rate-slider']//span[contains(@class,'editable-text-trigger')]") private WebElement lnkContributionPercent;
+@FindBy(xpath=".//*[@id='contributionRate-text-edit']") private WebElement inputContributionRate;
+@FindBy(xpath="//button[contains(text(),'Done')]") private WebElement btnDone;
+@FindBy(xpath=".//*[@id='pending-changes-btn']") private WebElement btnReviewChanges;
+@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
+String labelViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//div[contains(@class,'viewDetailsLabel')]";
+String valueViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//span[contains(@class,'paycheck-item-val')]";
+String lblIncomeType="//div[@class='paycheck-label-inner-container']/h5[contains(text(),'IncomeType')]";
+String valIncomeType="//div[@class='paycheck-label-inner-container'][./h5[contains(text(),'IncomeType')]]//h3";
+
+HashMap<String, String> mapViewDetails = new HashMap<String, String>();
 //ul/li[contains(@label,'Employer')]/span[@class='paycheck-item-val ng-binding']
 //div[@id='doItForMeUnenrolled']//a[text()[normalize-space()='Enroll in managed accounts']]
 /** Empty args constructor
@@ -141,6 +154,7 @@ protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.hdrEstimatedRetirementIncome));
 	} else {
 		this.lnkLogout.click();
+		Web.waitForElement(this.btnLogin);
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 	}
 	
@@ -151,7 +165,7 @@ protected void isLoaded() throws Error {
 protected void load() {
 	this.parent.get();
 	((LandingPage) this.parent).dismissPopUps(true,true);
-	
+	this.tabRetirementIncome.click();
 }
 
 /**<pre>Method to read the projected income value from the retirement income page
@@ -257,7 +271,24 @@ private WebElement getWebElement(String fieldName) {
 	if (fieldName.trim().equalsIgnoreCase("Income Gap")) {
 		return this.lblIncomeGap;
 	}
-	
+	if (fieldName.trim().equalsIgnoreCase("TOUR Button")) {
+		return this.btnTour;
+	}
+	if (fieldName.trim().equalsIgnoreCase("Next Button")) {
+		return this.btnNext;
+	}
+	if (fieldName.trim().equalsIgnoreCase("Finish Button")) {
+		return this.btnNext;
+	}
+	if (fieldName.trim().equalsIgnoreCase("VIEW DETAILS")) {
+		return this.btnViewDetails;
+	}
+	if (fieldName.trim().equalsIgnoreCase("Cancel Goal setup")) {
+		return this.lnkCancelGoalSetup;
+	}
+		if (fieldName.trim().equalsIgnoreCase("Review Changes")) {
+		return this.btnReviewChanges;
+	}
 	
 	return null;
 
@@ -516,7 +547,253 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 	}
 	
 	return modalHeader;
+}
+
+public void verifyTourModals(String modalHeaderTxt){
+	boolean isModalHeaderDisplayed=false;
+	 Web.waitForElement(btnNext);
+	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	
+	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
+	if (isModalHeaderDisplayed)
+		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);
+	else 
+		lib.Reporter.logEvent(Status.FAIL, "Verify " + modalHeaderTxt+ "' modal is Displayed","'"+modalHeaderTxt + "' modal is Not Displayed", false);
+	
+	
+}
+
+
+/**<pre> Method to verify the PayCheck Contribution and Color bar is displayed for NonZero Values.
+ *.</pre>
+ * @param label
+ * @throws InterruptedException 
+ */
+
+public void verifyPayCheckContributionInColorBarForNonZeroValue(String label) throws InterruptedException{
+	
+	int i;
+	int listofelements=lstViewDetails.size();
+for( i=1;i<=listofelements;i++)
+{
+	WebElement lblViewDetail= Web.webdriver.findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
+	WebElement valViewDetail= Web.webdriver.findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
+	mapViewDetails.put(lblViewDetail.getText(), valViewDetail.getText());
+	
+}
+
+if(mapViewDetails.containsKey(label)){
+		if(!mapViewDetails.get(label).equalsIgnoreCase("$0.00")){
+	if(label.contains("Saving"))
+	{
+			WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")));
+			if(Web.isWebElementDisplayed(lblincomeType, true))
+			{
+				
+				Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "My Savings is Displayed on Color Bar", false);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", "My Savings is  not Displayed on Color Bar", false);
+			}
+	}
+	else if(label.contains("Employer"))
+	{
+		WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")));
+		if(Web.isWebElementDisplayed(lblincomeType, true))
+		{
+			
+			Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is Displayed on Color Bar", false);
+		} else {
+			Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is  not Displayed on Color Bar", false);
+		}
+	}
+	else
+	{
+		WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
+		if(Web.isWebElementDisplayed(lblincomeType, true))
+		{
+			
+			Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", label+" is Displayed on Color Bar", false);
+		} else {
+			Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", label+" is not Displayed on Color Bar", false);
+		}
+	}
+	}
+
+		else if(mapViewDetails.get(label).equalsIgnoreCase("$0.00"))
+		{
+			
+			if(label.contains("Saving"))
+			{
+				if(mapViewDetails.get("My Current Savings").equalsIgnoreCase("$0.00") && mapViewDetails.get("My Future Savings").equalsIgnoreCase("$0.00")){
+					if(Web.isWebElementDisplayed(Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")))))
+					{
+						Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "My Savings is not Displayed on Color Bar", false);
+					} else {
+						Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", "My Savings is Displayed on Color Bar", false);
+					}
+				}
+			}
+			else if(label.contains("Employer"))
+			{
+				if(Web.isWebElementDisplayed(Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")))))
+				{
+					
+					Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is not Displayed on Color Bar", false);
+				} else {
+					Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is Displayed on Color Bar", false);
+				}
+			}
+			else
+			{
+			boolean blnElementDisplayed=true;
+			
+			try{
+				WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
+				if(lblincomeType.isDisplayed())
+					blnElementDisplayed=true;
+			}
+			catch(NoSuchElementException e){
+				blnElementDisplayed = false;
+			}
+				if(!blnElementDisplayed)
+				{
+					Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", label+" is not Displayed on Color Bar", false);
+				} else {
+					Reporter.logEvent(Status.FAIL, "Verify Income Type is Displayed on Color Bar", label+" is Displayed on Color Bar", false);
+				}
+			}
+			
+		}
+}
+else{
+	Reporter.logEvent(Status.INFO, "Verify Income Type is Displayed on Color Bar", label+" is not Applicable", false);
+}
+
+}
+/**<pre> Method to verify the PayCheck Contribution and Color bar is displayed for NonZero Values.
+ *.</pre>
+ * @param label
+ * @throws InterruptedException 
+ */
+
+public void verifyValueInColorBarForNonZeroValue(String label) throws InterruptedException{
+	int listofelements=lstViewDetails.size();
+	double currentSavings=0.00;
+	double futureSavings=0.00;
+	double currentContribution=0.00;
+	double futureContribution=0.00;
+	int mySavings;
+	mapViewDetails.clear();
+for( int i=1;i<=listofelements;i++)
+{
+	WebElement lblViewDetail= Web.webdriver.findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
+	WebElement valViewDetail= Web.webdriver.findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
+	if(!valViewDetail.getText().equalsIgnoreCase("$0.00")){
+	mapViewDetails.put(lblViewDetail.getText(), valViewDetail.getText());
+}
+	
+}
+if(label.contains("Savings"))
+{
+	
+if(mapViewDetails.containsKey("My Current Savings")){
+	
+currentSavings=Double.parseDouble(mapViewDetails.get("My Current Savings").substring(1).replaceAll(",", ""));
+}
+if(mapViewDetails.containsKey("My Future Savings")){
+	futureSavings=Double.parseDouble(mapViewDetails.get("My Future Savings").substring(1).replaceAll(",", ""));
+}
+mySavings=(int)Math.round((currentSavings+futureSavings));
+			WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType","My Savings")));
+			int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
+			if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
+							
+				Reporter.logEvent(Status.PASS, "Verify Value for Income Type is Displayed on Color Bar", "Value for My Savings is Same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "Verify Value for Income Type is Displayed on Color Bar", "Value for My Savings is not Same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, true);
+			}
+	}
+	else if(label.contains("Employer"))
+	{	
+		if(mapViewDetails.containsKey("Employer Past Contribution")){
+			
+			currentContribution=Double.parseDouble(mapViewDetails.get("Employer Past Contribution").substring(1).replaceAll(",", ""));
+			}
+			if(mapViewDetails.containsKey("Employer Future Contribution")){
+				futureContribution=Double.parseDouble(mapViewDetails.get("Employer Future Contribution").substring(1).replaceAll(",", ""));
+			}
+			mySavings=(int)Math.round((currentContribution+futureContribution));
+						WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType","Employer Contributions")));
+						int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
+						if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
+												
+			Reporter.logEvent(Status.PASS, "Verify Value for Income Type is Displayed on Color Bar", "Value for Employer Contributions is Same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, false);
+		} else {
+			Reporter.logEvent(Status.FAIL, "Verify Value for Income Type is Displayed on Color Bar", "Value for Employer Contributions is  not Same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, false);
+		}
+	}
+	else
+	{
+		if(mapViewDetails.containsKey(label)){
+		mySavings=(int)Math.round((Double.parseDouble(mapViewDetails.get(label).substring(1).replaceAll(",", ""))));
+		WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType",label)));
+		int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
+		if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
+										
+			Reporter.logEvent(Status.PASS, "Verify Value for Income Type is Displayed on Color Bar", "Value for "+label+" is same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, false);
+		} else {
+			Reporter.logEvent(Status.FAIL, "Verify Value for Income Type is Displayed on Color Bar", "Value for "+label+" is not same on Color Bar\nExpected:"+mySavings+"\nActual:"+savings, false);
+		}
+		}
+	}
+	
+}
+/**<pre> Method to verify if a slider is enabled on retirement income page.
+ *.</pre>
+ * @param sliderName - a String value - slider name Enabled on retirement income page"
+ * 
+ * @return - boolean
+ */
+
+public boolean verifyIfSliderEnabled(String sliderName){
+	boolean isSuccess = false;
+	WebElement element = this.getWebElement(sliderName);
+	Web.waitForElement(element);
+	if(element.isEnabled())
+		isSuccess = true;
+
+	return isSuccess;
+	
+}
+/**<pre> Method to verify the percent of my goal section.
+ *.</pre>
+ * @param incomeType - a String value - retirement income type can be monthly or yearly"
+ * 
+ * @return - String
+ * @throws InterruptedException 
+ */
+
+public void enterContributionRate(String contributionRate,boolean... args) throws InterruptedException{
+	Actions keyBoard = new Actions(Web.webdriver);
+	Web.waitForElement(lnkContributionPercent);
+	if (args.length > 0) {
+		Web.clickOnElement(this.lnkContributionPercent);
+		Thread.sleep(3000);
+			if(Web.isWebElementDisplayed(inputContributionRate)){
+				Web.setTextToTextBox(inputContributionRate, contributionRate);
+			}
+			keyBoard.sendKeys(Keys.TAB).perform();
+	}
+	else{
+           int contributionrate=Integer.parseInt(lnkContributionPercent.getText().split("%")[0])+1;
+	Web.clickOnElement(this.lnkContributionPercent);
+	Thread.sleep(3000);
+		if(Web.isWebElementDisplayed(inputContributionRate)){
+			Web.setTextToTextBox(inputContributionRate, Integer.toString(contributionrate));
+		}
+		keyBoard.sendKeys(Keys.TAB).perform();
+	
+	}
 	
 }
 

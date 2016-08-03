@@ -35,6 +35,8 @@ private LoadableComponent<?> parent;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/** Empty args constructor
 	 * 
 	 */
@@ -84,6 +86,7 @@ private LoadableComponent<?> parent;
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

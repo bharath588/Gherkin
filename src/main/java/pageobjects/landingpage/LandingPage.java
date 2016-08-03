@@ -59,6 +59,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()='My Accounts']")
 	private WebElement lblMyAccounts;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 	/**
 	 * Empty args constructor
@@ -115,6 +116,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			// Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 

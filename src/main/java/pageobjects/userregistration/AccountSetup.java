@@ -391,7 +391,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			actEmailAddress = this.txtEmail.getAttribute("value");
 			actMobileNumber = this.txtPhone.getAttribute("value");
 			System.out.println("************************"+actMobileNumber);
-			actMobileNumber="(" + actMobileNumber.substring(0, 3)+ ") "+actMobileNumber.substring(3, 6)+"-"+actMobileNumber.substring(6);
+			//actMobileNumber="(" + actMobileNumber.substring(0, 3)+ ") "+actMobileNumber.substring(3, 6)+"-"+actMobileNumber.substring(6);
 			
 
 			actEmailAddress = (actEmailAddress == null) ? "" : actEmailAddress;
@@ -536,7 +536,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		Reporter.logEvent(Status.INFO, "", "", true);
 
 		// Verify "Username and Password" header is displayed
-		isMatching = Web.VerifyText("Create username and password",
+		isMatching = Web.VerifyText("Username and Password",
 				this.lblUsernameAndPassword.getText(), true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS,

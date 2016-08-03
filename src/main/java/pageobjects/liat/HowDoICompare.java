@@ -2,6 +2,8 @@ package pageobjects.liat;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import lib.Reporter;
 import lib.Stock;
@@ -32,6 +34,22 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		@FindBy(xpath=".//*[contains(text(),'Additional Contributions')]") private WebElement lblAdditionalContribution;
 		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
+		@FindBy(xpath="//td[@class='target-my-peers']//div[contains(text(),'My Peers')]") private WebElement lblMyPeers;
+		@FindBy(xpath="//td[@class='target-top-peers']//strong") private WebElement lblTopPeers;
+		@FindBy(xpath="//td[contains(text(),'Me')]") private WebElement lblMe;
+		@FindBy(xpath=".//*[@id='my-peers-pog-inner']") private WebElement circleMyPeers;
+		@FindBy(xpath=".//*[@id='top-peers-pog-inner']") private WebElement circleTopPeers;
+		@FindBy(xpath=".//*[@id='progress-to-goal']/div/pw-radial-chart") private WebElement circleMe;
+		@FindBy(xpath=".//*[@id='ageRange']") private WebElement drpdwnAge;
+		@FindBy(xpath=".//*[@id='salaryRange']") private WebElement drpdwnSalary;
+		@FindBy(xpath="//tr[@class='balances']//td") private List<WebElement> lstBalance;
+		@FindBy(xpath="//tr[@class='contribution-rates']//td") private List<WebElement> lstContributionRate;
+		@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+		
+		
+		
+		
+		
 		
 		/**
 		 * Default Constructor
@@ -91,6 +109,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 				}
 			} else {
 				this.lnkLogout.click();
+				Web.waitForElement(this.btnLogin);
 				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 			
@@ -105,6 +124,49 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			
 			
 		}
+		
+
+/**<pre>Method to read the projected income value from the retirement income page
+ * 
+ *  
+ *  @return - (float) projected retirement income after the string is parsed into float.
+ * @throws Exception
+ */
+private WebElement getWebElement(String fieldName) {
+
+	if (fieldName.trim().equalsIgnoreCase("Label MyPeers")) {
+		return this.lblMyPeers;
+	}
+	
+	if (fieldName.trim().equalsIgnoreCase("Label TopPeers")) {
+		return this.lblTopPeers;
+	}
+	
+	if (fieldName.trim().equalsIgnoreCase("Label Me")) {
+		return this.lblMe;
+	}
+	
+	if (fieldName.trim().equalsIgnoreCase("Goal MyPeers")) {
+		return this.circleMyPeers;
+	}
+	
+	if (fieldName.trim().equalsIgnoreCase("Goal TopPeers")) {
+		return this.circleTopPeers;
+	}
+	
+	if (fieldName.trim().equalsIgnoreCase("Goal Me")) {
+		return this.circleMe;
+	}
+	if (fieldName.trim().equalsIgnoreCase("DropDown Age")) {
+		return this.drpdwnAge;
+	}
+	if (fieldName.trim().equalsIgnoreCase("DropDown Salary")) {
+		return this.drpdwnSalary;
+	}
+		
+	return null;
+
+}
 		
 		/** Method to verify the details in 'View Details' section.
 	     * 
@@ -132,6 +194,37 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			}else{
 				throw new Error("View Details button on HDIC page not desplayed, Verify the SSN(Test Data) used");
 			}
+		}
+		/** Method to get the list of values for Contribution Rate.
+	     * 
+	     * 
+	     */
+		public List<String> GetValuesofContributionRate(){
+			List<String> contributionRate= new ArrayList<String>();
+			contributionRate.clear();
+			if (Web.isWebElementDisplayed(this.lblMyPeers)) {
+				
+				for(int i=1;i<lstContributionRate.size();i++){
+					lstContributionRate.get(i).getText().trim();
+					contributionRate.add(lstContributionRate.get(i).getText().trim());
+				}
+			}
+			return contributionRate;
+		}
+		/** Method to get the list of values for Balance.
+	     * 
+	     * 
+	     */
+		public List<String> GetValuesofBalance(){
+			List<String> balance = new ArrayList<String>();
+			balance.clear();
+			if (Web.isWebElementDisplayed(this.lblMyPeers)) {
+				
+				for(int i=1;i<lstBalance.size();i++){
+					balance.add(lstBalance.get(i).getText().trim());
+				}
+			}
+			return balance;
 		}
 
 }

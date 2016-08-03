@@ -43,7 +43,8 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		@FindBy(xpath="//table[@class='table']/tbody/tr") private List<WebElement> lstPayrollTableData;
 		@FindBy(xpath = "//img[@class='site-logo']")
 		private WebElement lblSponser;
-		
+		@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 		/** Empty args constructor
 		 * 
 		 */
@@ -93,6 +94,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar,true));
 			} else {
 				this.lnkLogout.click();
+				Web.waitForElement(this.btnLogin);
 				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 		}

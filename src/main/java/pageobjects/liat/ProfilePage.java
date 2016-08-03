@@ -61,7 +61,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement txtPassword;
 	@FindBy(linkText = "Home")
 	private WebElement lblHome;
-	
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 	/**
 	 * Default Constructor
@@ -118,6 +118,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblProfile, true));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName, true));
 		}
 

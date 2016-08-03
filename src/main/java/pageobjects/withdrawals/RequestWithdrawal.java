@@ -57,6 +57,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	@FindBy(xpath = "//*[@id='inserviceradiono']")
 	private WebElement inptCurrentEmpNo;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	private String textField="//*[contains(text(),'webElementText')]";
 	private String inputWithdrawalType = "//div[@id='test_id'][.//span[contains(text(),'Withdrawal Type')]]//input";
 	private String inpMailType="//input[contains(@value,'mailType')]";
@@ -117,6 +119,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					.isWebElementDisplayed(this.lblRequestAWithdrawal));*/
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 

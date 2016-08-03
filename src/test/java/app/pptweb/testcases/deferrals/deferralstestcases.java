@@ -297,15 +297,18 @@ public class deferralstestcases {
 			if (lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to company match"))
 				deferrals.click_MaximizeToCompanyMatch();
+			
 			if (lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.click_Maximize_IRS_Limit();
+			
 			if (lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
+			
 			if (!lib.Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.add_Auto_Increase(lib.Stock

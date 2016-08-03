@@ -40,7 +40,8 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 	private WebElement lblSponser;
     @FindBy(id = "fancybox-close")
 	private WebElement btnClose;
-	
+    @FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
     /** Empty args constructor
      * 
      */
@@ -99,6 +100,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 			//Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
 		}
 		

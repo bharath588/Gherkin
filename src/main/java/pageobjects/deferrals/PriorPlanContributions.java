@@ -43,7 +43,8 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//div[contains(@class,'text-notation')]") private WebElement txtYearToDateContribution;
 	
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/**
 	 * Default Constructor
 	 */
@@ -84,6 +85,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 			
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}

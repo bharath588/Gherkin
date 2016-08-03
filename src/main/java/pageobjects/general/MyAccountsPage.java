@@ -42,6 +42,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	private WebElement imgGraph;
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 	/**
 	 * Empty args constructor
@@ -93,6 +94,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 				// Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
 			} else {
 				this.lnkLogout.click();
+				Web.waitForElement(this.btnLogin);
 				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			}
 		}

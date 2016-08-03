@@ -3,6 +3,7 @@ package pageobjects.liat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import lib.DB;
 import lib.Reporter;
@@ -14,12 +15,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-
-
-
-
-
 import org.testng.Assert;
 
 import core.framework.Globals;
@@ -50,6 +45,14 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
+	@FindBy(linkText = "Your full report(PDF)") private WebElement lnkFullReport;
+	@FindBy(linkText = "www.medicare.gov") private WebElement lnkMedicare;
+	@FindBy(id = "myModalLabel") private WebElement txtEmpowerModal;
+	@FindBy(xpath="//button[contains(@ng-click,'proceed()')]") private WebElement btnContinue;
+	@FindBy(xpath="//button[text()[normalize-space()='Tour']]") private WebElement btnTour;
+	@FindBy(id = "nextBtn") private WebElement btnNext;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+	private String modalHeader="//span[text()[normalize-space()='webElementText']]";
 	
 	/** Default constructor
 	 * 
@@ -93,7 +96,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}	
 		}
 		String userLogedIn = this.lblUserName.getText();
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
@@ -101,9 +104,9 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			Assert.assertTrue(Web.isWebElementDisplayed(btnPersonalize));
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(this.btnLogin);
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
-		
 		
 	}
 
@@ -125,6 +128,13 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	private WebElement getWebElement(String fieldName) {
 		if (fieldName.trim().equalsIgnoreCase("Health-care costs") || fieldName.trim().equalsIgnoreCase("Health care costs")) {
 			return this.lblHelathCareCosts;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Personalize Button")) {
+			return this.btnPersonalize;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Your full report(PDF)")) {
+			return this.lnkFullReport;
 		}
 		return null;
 	}
@@ -166,7 +176,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
         float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
         System.out.println(projectedHealthCareCost);
         System.out.println(calProjHlthCareCost);
-        if(((float)projectedHealthCareCost-(float)calProjHlthCareCost)<=0.5)
+        if(((float)projectedHealthCareCost-(float)calProjHlthCareCost)<=0.4)
                Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI ", false);
         else
                Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI ", false);
@@ -214,11 +224,56 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		}
 	}
 	
-	/** <pre> Method to return the no of plans associated to a user from db
-	 * 
-	 * @return noOfPlans
-	 * @throws Exception 
-	 */
+	
+	
+	
+	public void verifyMedicareLink() throws InterruptedException{
+		if(Web.isWebElementDisplayed( lnkMedicare, true)){
+			Thread.sleep(5);
+			Reporter.logEvent(Status.PASS,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", false);
+			Web.clickOnElement(lnkMedicare);
+			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
+			Web.waitForElement(txtEmpowerModal);
+			if(Web.VerifyText("You are now leaving Empower Retirement", txtEmpowerModal.getText().trim(), true))
+				Reporter.logEvent(Status.PASS,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), true);
+			
+			boolean windowFound = false;
+			String parentWindow = Web.webdriver.getWindowHandle();
+			btnContinue.click();
+			
+			Set<String> handles = Web.webdriver.getWindowHandles();
+			for (String windowHandle : handles) {
+
+				if (!windowHandle.equals(parentWindow)) {
+					if (Web.webdriver.switchTo().window(windowHandle).getTitle().contains("Medicare.gov: the official U.S. government site for Medicare")) {
+						windowFound = true;
+						break;
+					}
+				}
+			}
+			if (windowFound) 
+				lib.Reporter.logEvent(Status.PASS,"Verifying Medicare site is Opened in New Window","Medicare site is Opened in New Window",true);
+			else 
+				lib.Reporter.logEvent(Status.FAIL,"Verifying Medicare site is Opened in New Window","Medicare site is Not Opened in New Window",true);
+			Web.webdriver.close();
+			Web.webdriver.switchTo().window(parentWindow);
+		}
+		else
+			Reporter.logEvent(Status.FAIL,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", true);
+		
+	}
+	
+	public void verifyTourModals(){
+		
+	}
+	
+//	/** <pre> Method to return the no of plans associated to a user from db
+//	 * 
+//	 * @return noOfPlans
+//	 * @throws Exception 
+//	 */
 //	public ResultSet getParticipantInfoFromDB(String ssn) throws Exception{
 //		
 //		//query to get the no of plans

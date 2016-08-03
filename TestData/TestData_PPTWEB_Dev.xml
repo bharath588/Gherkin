@@ -1,32 +1,38 @@
-<TestData Application="PPTWEB" environment="DevMacro">
-	<DateTime value="7/8/2016 2:48:04 PM"></DateTime>
+<TestData Application="PPTWEB" environment="Dev">
+	<DateTime value="7/22/2016 11:21:43 AM"></DateTime>
+	<Module name="Program"></Module>
 	<Module name="query">
-		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB"
+		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB_DEV"
 			Query="select EMAIL_ADDRESS,MOBILE_PHONE_NBR,MOBILE_PHONE_AREA_CODE from individual where ssn=?" />
-		<parameter QueryName="isActivationCodeGenerated" DB="CommonDB"
+		<parameter QueryName="isActivationCodeGenerated" DB="CommonDB_DEV"
 			Query="select * from ACTIVATION_CODE_CHALLENGE where MSG_DELIVERY_TYPE_CODE in (?)
 and extract(month from actv_code_chllng_issue_tmstamp) = ? and extract(day from actv_code_chllng_issue_tmstamp) = ? 
 and extract(MINUTE from to_timestamp(?,'DD-MM-YYYY HH24:MI:SS') - actv_code_chllng_issue_tmstamp) between 0 and 1 and rownum = 1
 order by ACTV_CODE_CHLLNG_ISSUE_TMSTAMP desc" />
-		<parameter QueryName="fetchActivationCode" DB="ParticipantDataDB"
-			Query="select TAG_VALUE from WORK_EMAIL_REQUEST_DETAIL WD inner join (select ID from WORK_EMAIL_REQUEST where USER_ID like 'AC%' order by REQUESTED_DATE_TIME desc) A on WD.WER_ID = A.ID where WD.TAG_CODE = 'ACTIVATION'" />
-		<parameter QueryName="deleteBeneficiaries" DB="ParticipantDataDB"
+		<parameter QueryName="fetchActivationCode" DB="ParticipantDataDB_DEV"
+			Query="Select TAG_VALUE, A.PROCESSED_DATE_TIME, A.REQUESTED_DATE_TIME,A.FILE_NAME,A.EMAIL_ADDRESS,A.PUP_PROFILE_NAME
+from WORK_EMAIL_REQUEST_DETAIL WD 
+inner join (select ID, PROCESSED_DATE_TIME, REQUESTED_DATE_TIME,FILE_NAME,EMAIL_ADDRESS,PUP_PROFILE_NAME from WORK_EMAIL_REQUEST where USER_ID like 'AC%' 
+order by REQUESTED_DATE_TIME desc) A 
+on WD.WER_ID = A.ID
+where WD.TAG_CODE = 'ACTIVATION'" />
+		<parameter QueryName="deleteBeneficiaries" DB="ParticipantDataDB_DEV"
 			Query="delete from related_individual where pa_ind_id = (select id from individual where ssn = ? )" />
-		<parameter QueryName="fetchNoOfPlans" DB="ParticipantDataDB"
+		<parameter QueryName="fetchNoOfPlans" DB="ParticipantDataDB_DEV"
 			Query="select * from part_agrmt pa join individual i on pa.ind_id = i.id where i.ssn in ?" />
-		<parameter QueryName="unlockParticipants" DB="CommonDB"
+		<parameter QueryName="unlockParticipants" DB="CommonDB_DEV"
 			Query="delete from DEVL_REP.AUTHENTICATION_CONTROL where ssn =? and STATUS_CODE ='FAILURE'" />
-		<parameter QueryName="getParticipantInfo" DB="ParticipantDataDB"
+		<parameter QueryName="getParticipantInfo" DB="ParticipantDataDB_DEV"
 			Query="select * from individual where ssn= ?" />
-		<parameter QueryName="getParticipantDB" DB="CommonDB"
+		<parameter QueryName="getParticipantDB" DB="CommonDB_DEV"
 			Query="select database_instance from individual_registry where IND_ID = ?" />
-		<parameter QueryName="getParticipantID" DB="ParticipantDataDB"
+		<parameter QueryName="getParticipantID" DB="ParticipantDataDB_DEV"
 			Query="select ID from individual where ssn= ?" />
-		<parameter QueryName="getParticipantIDfromDiffDB" DB="IN02DB"
+		<parameter QueryName="getParticipantIDfromDiffDB" DB="IN02DB_DEV"
 			Query="select ID from individual where ssn= ?" />
-		<parameter QueryName="getParticipantIDfromDiffDBISIS" DB="ISISDB"
+		<parameter QueryName="getParticipantIDfromDiffDBISIS" DB="ISISDB_DEV"
 			Query="select ID from individual where ssn= ?" />
-		<parameter QueryName="getRegisteredUser" DB="ParticipantDataDB"
+		<parameter QueryName="getRegisteredUser" DB="ParticipantDataDB_DEV"
 			Query="select distinct pa.ga_id, i.id, i.ssn, a.zip_code, i.last_name, I.BIRTH_DATE, a.first_line_mailing, 
   u.username, substr(decrypt(u.encrypted_pass_code),1,10)  
 from  individual i
@@ -41,7 +47,7 @@ where pa.ga_id in (?)
   and ie.eligibility_date &lt; current_date
   and u.username not like 'null'
 order by pa.ga_id, i.ssn" />
-		<parameter QueryName="getUnRegisteredUser" DB="ParticipantDataDB"
+		<parameter QueryName="getUnRegisteredUser" DB="ParticipantDataDB_DEV"
 			Query="select distinct v.ga_id, i.id, i.ssn, a.zip_code, i.last_name, I.BIRTH_DATE, a.first_line_mailing,
   u.username
 from access_customization_view v
@@ -52,9 +58,9 @@ left join username_registry_link u on (u.ssn = i.ssn)
 where v.ga_id in (?)
 and u.username is null
 order by v.ga_id, i.ssn" />
-		<parameter QueryName="fetchNoOfPlans" DB="ParticipantDataDB"
+		<parameter QueryName="fetchNoOfPlans" DB="ParticipantDataDB_DEV"
 			Query="select * from part_agrmt pa join individual i on pa.ind_id = i.id where i.ssn in ?" />
-		<parameter QueryName="getDeferralParticipant" DB="ParticipantDataDB"
+		<parameter QueryName="getDeferralParticipant" DB="ParticipantDataDB_DEV"
 			Query="select distinct v.ga_id, i.id, i.ssn, a.zip_code, i.last_name, I.BIRTH_DATE, a.first_line_mailing,
     u.username, substr(decrypt(u.encrypted_pass_code),1,10)
 from  access_customization_view v
@@ -71,7 +77,7 @@ and pa.PIN_AUTH_CODE = 'U'
 and i.birth_date &lt; '01-JAN-1966' 
 and i.id in (select ind_id from user_defined_field_value)
 order by v.ga_id, i.ssn desc" />
-		<parameter QueryName="getUnRegisteredUserWithPin" DB="ParticipantDataDB"
+		<parameter QueryName="getUnRegisteredUserWithPin" DB="ParticipantDataDB_DEV"
 			Query="select ssn,last_name,birth_date,substr(decrypt(encrypted_pass_code),1,10) pin, 
 a.FIRST_LINE_MAILING, a.zip_code 
 from individual i 
@@ -83,10 +89,9 @@ where a.PRIMARY_RES_IND='Y'
   and PA.PIN_AUTH_CODE = 'U'
   and i.ssn not in (select ssn from username_registry_link)
   and rownum &lt;2100" />
-		<parameter QueryName="fetchIdFromUserNameRegistry" DB="CommonDB"
+		<parameter QueryName="fetchIdFromUserNameRegistry" DB="CommonDB_DEV"
 			Query="select ID from USERNAME_REGISTRY  where ssn = ?" />
 	</Module>
-	<Module name="Program"></Module>
 	<Module name="liat">
 		<TestCase
 			name="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
@@ -886,8 +891,8 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Contribution Rate" value="12" />
 				<parameter name="Age_before_Catchup_contr" value="10" />
 				<parameter name="Contribution Rate" value="12" />
-				<parameter name="viewonlyroth" value="" />
-				<parameter name="catchupbeforetax" value="" />
+				<parameter name="viewonlyroth" value="Age roth catch up" />
+				<parameter name="catchupbeforetax" value="Age Catch- up before" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">

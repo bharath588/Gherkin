@@ -3,6 +3,7 @@ package app.pptweb.testcases.prodvalidations;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -2589,7 +2590,7 @@ public class prodvalidationtestcases {
 			retirement.get();
 			boolean lblDisplayed = false;
 			Reporter.logEvent(Status.INFO,
-					"Navigate to Retirement Incomep page.",
+					"Navigate to Retirement Income page.",
 					"Retirement Income page is displayed", true);
 
 			// verify PayCheck View in retirement income page
@@ -2627,5 +2628,522 @@ public class prodvalidationtestcases {
 			}
 		}
 	}
+	@Test(dataProvider = "setData")
+	public void LIAT_To_verify_PayCheckView_Displayed_With_ColorBar(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome retirement = new RetirementIncome(homePage);
+			retirement.get();
+			boolean lblDisplayed = false;
+			Reporter.logEvent(Status.INFO,
+					"Navigate to Retirement Income page.",
+					"Retirement Income page is displayed", true);
+
+			// verify PayCheck View in retirement income page
+			lblDisplayed = Web.isWebElementDisplayed(retirement,
+					"Paycheck Rainbow", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify PayCheck View in Retirement Income Page",
+						"PayCheck View in Retirement Income Page is displayed",
+						true);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify PayCheck View in Retirement Income Page",
+						"PayCheck View in Retirement Income Page is Not displayed",
+						true);
+			Web.waitForElement(retirement,"VIEW DETAILS");
+			Web.clickOnElement(retirement,"VIEW DETAILS");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My Current Savings");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My Future Savings");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer Past Contribution");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer Future Contribution");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Social Security");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Other Assets");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Income Gap");
+			retirement.verifyValueInColorBarForNonZeroValue("My Savings");
+			retirement.verifyValueInColorBarForNonZeroValue("Employer Contributions");
+			retirement.verifyValueInColorBarForNonZeroValue("Social Security");
+			retirement.verifyValueInColorBarForNonZeroValue("Other Assets");
+			retirement.verifyValueInColorBarForNonZeroValue("Income Gap");
+					} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void LIAT_To_verify_HowDoICompare_Labels_Circles(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			HowDoICompare howdoicompare = new HowDoICompare(homePage);
+			howdoicompare.get();
+			boolean lblDisplayed = false;
+			Reporter.logEvent(Status.INFO,
+					"Navigate to How Do I Compare page.",
+					"How Do I Compare page is displayed", true);
+
+			
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Label MyPeers", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'My Peers' Label in How Do I Compare Page",
+						"'My Peers' Label is Displayed in How Do I Compare Page",
+						true);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'My Peers' Label in How Do I Compare Page",
+						"'My Peers' Label is Not Displayed in How Do I Compare Page",
+						true);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Label TopPeers", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Top Peers' Label in How Do I Compare Page",
+						"'Top Peers' Label is Displayed in How Do I Compare Page",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Top Peers' Label in How Do I Compare Page",
+						"'Top Peers' Label is Not Displayed in How Do I Compare Page",
+						false);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Label Me", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Me' Label in How Do I Compare Page",
+						"'Me' Label is Displayed in How Do I Compare Page",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Me' Label in How Do I Compare Page",
+						"'Me' Label is Not Displayed in How Do I Compare Page",
+						false);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Goal MyPeers", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'My Peers Goal Section' in How Do I Compare Page",
+						"'My Peers Goal Circle' is Displayed in How Do I Compare Page",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'My Peers Goal Section' in How Do I Compare Page",
+						"'Goal Circle For My Peers' is Not Displayed in How Do I Compare Page",
+						false);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Goal TopPeers", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Top Peers Goal Section' in How Do I Compare Page",
+						"'Goal Circle For Top Peers' is Displayed in How Do I Compare Page",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Top Peers Goal Section' in How Do I Compare Page",
+						"'Top Peers Goal Circle' is Not Displayed in How Do I Compare Page",
+						false);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
+					"Goal Me", true);
+			if (lblDisplayed)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Goal Section For Me' in How Do I Compare Page",
+						"'Goal Circle For Me' is Displayed in How Do I Compare Page",
+						false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Goal Section For Me' in How Do I Compare Page",
+						"'Goal Circle For Me' is Not Displayed in How Do I Compare Page",
+						false);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			HowDoICompare howdoicompare = new HowDoICompare(homePage);
+			howdoicompare.get();
+			boolean lblDisplayed = false;
+			List<String> DefaultContributionValues=new ArrayList<String>();
+			List<String> DefaultBalanceValues= new ArrayList<String>();
+			List<String> DefaultContributionValues1=new ArrayList<String>();
+			List<String> DefaultBalanceValues1= new ArrayList<String>();
+			List<String> ContributionRateValuesAfetrChange= new ArrayList<String>();
+			List<String> BalanceValuesAfterChange=new ArrayList<String>();
+			Reporter.logEvent(Status.INFO,
+					"Navigate to How Do I Compare page.",
+					"How Do I Compare page is displayed", true);
+			DefaultContributionValues=howdoicompare.GetValuesofContributionRate();
+			DefaultBalanceValues=howdoicompare.GetValuesofBalance();
+			DefaultContributionValues1=DefaultBalanceValues;
+			DefaultBalanceValues1=DefaultBalanceValues;
+            Web.selectDropDownOption(howdoicompare, "DropDown Age", "50-59", true);
+            ContributionRateValuesAfetrChange=howdoicompare.GetValuesofContributionRate();
+            BalanceValuesAfterChange=howdoicompare.GetValuesofBalance();
+			for(int i=0;i< DefaultContributionValues.size()-1;i++){
+				if(!(DefaultContributionValues1.get(i).equalsIgnoreCase(ContributionRateValuesAfetrChange.get(i)))){
+					lblDisplayed=true;
+					break;
+				}
+			}
+				
+				if(lblDisplayed){
+					Reporter.logEvent(Status.PASS,
+							"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
+							"'Contribution Rate' Changed in How Do I Compare Page",
+							true);
+				}
+				else{
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
+							"'Contribution Rate' is Not Changed in How Do I Compare Page",
+							true);
+				}
+				
+				for(int i=0;i< DefaultBalanceValues.size()-1;i++){
+					if(!DefaultBalanceValues1.get(i).equalsIgnoreCase(BalanceValuesAfterChange.get(i))){
+						lblDisplayed=true;
+						break;
+					}
+				}
+					
+					if(lblDisplayed){
+						Reporter.logEvent(Status.PASS,
+								"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
+								"'Balance' Changed in How Do I Compare Page",
+								false);
+					}
+					else{
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
+								"'Balance' is Not Changed in How Do I Compare Page",
+								false);
+					}
+					 Web.selectDropDownOption(howdoicompare, "DropDown Salary", "$75K - Less than $100K", true);
+			            ContributionRateValuesAfetrChange=howdoicompare.GetValuesofContributionRate();
+			            BalanceValuesAfterChange=howdoicompare.GetValuesofBalance();
+						for(int i=0;i< DefaultContributionValues.size()-1;i++){
+							if(!DefaultContributionValues1.get(i).equalsIgnoreCase(ContributionRateValuesAfetrChange.get(i))){
+								lblDisplayed=true;
+								break;
+							}
+						}
+							
+							if(lblDisplayed){
+								Reporter.logEvent(Status.PASS,
+										"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+										"'Contribution Rate' Changed in How Do I Compare Page",
+										true);
+							}
+							else{
+								Reporter.logEvent(
+										Status.FAIL,
+										"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+										"'Contribution Rate' is Not Changed in How Do I Compare Page",
+										true);
+							}
+							
+							for(int i=0;i< DefaultBalanceValues.size()-1;i++){
+								if(!DefaultBalanceValues1.get(i).equalsIgnoreCase(BalanceValuesAfterChange.get(i))){
+									lblDisplayed=true;
+									break;
+								}
+							}
+								
+								if(lblDisplayed){
+									Reporter.logEvent(Status.PASS,
+											"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+											"'Balance' Changed in How Do I Compare Page",
+											false);
+								}
+								else{
+									Reporter.logEvent(
+											Status.FAIL,
+											"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+											"'Balance' is Not Changed in How Do I Compare Page",
+											false);
+								}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+
+	@Test(dataProvider = "setData")
+	public void LIAT_To_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome retirement = new RetirementIncome(homePage);
+			retirement.get();
+			boolean lblEnabled = false;
+			Reporter.logEvent(Status.INFO,
+					"Navigate to Retirement Income page.",
+					"Retirement Income page is displayed", true);
+
+			// verify PayCheck View in retirement income page
+			if(Stock.GetParameterValue("userType").equalsIgnoreCase("Terminated")){
+				lblEnabled = retirement.verifyIfSliderEnabled("Contribution rate slider");
+			if (!lblEnabled)
+
+				Reporter.logEvent(Status.PASS,
+						"Verify Contribution Rate Slider in Retirement Income Page",
+						"Contribution Rate Slider in Retirement Income Page is Not Enabled",
+						true);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Contribution Rate Slider in Retirement Income Page",
+						"Contribution Rate Slider in Retirement Income Page is Enabled",
+						true);
+			}
+			if(Stock.GetParameterValue("userType").equalsIgnoreCase("Suspended")){
+				lblEnabled = retirement.verifyIfSliderEnabled("Contribution rate slider");
+				if (lblEnabled)
+
+					Reporter.logEvent(Status.PASS,
+							"Verify Contribution Rate Slider in Retirement Income Page",
+							"Contribution Rate Slider in Retirement Income Page is Enabled",
+							true);
+				else
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify Contribution Rate Slider in Retirement Income Page",
+							"Contribution Rate Slider in Retirement Income Page is Not Enabled",
+							true);
+				retirement.enterContributionRate("15");
+				Reporter.logEvent(Status.INFO,
+						"Enter Contribution Rate in Retirement Income Page",
+						"Contribution Rate is changed in Contribution Rate Slider",
+						true);
+				lblEnabled = retirement.verifyIfSliderEnabled("Review Changes");
+				if (!lblEnabled)
+
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Review Changes' Button in Retirement Income Page",
+							"'Review Changes' Button in Retirement Income Page is Not Enabled",
+							true);
+				else
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify 'Review Changes' Button in Retirement Income Page",
+							"'Review Changes' Button in Retirement Income Page is Enabled",
+							true);
+				
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void Verify_Health_care_costs_helpful_links(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			HealthCareCosts healthCareCost = new HealthCareCosts(homePage);
+			//RetirementIncome retirementIncome = new RetirementIncome();
+			healthCareCost.get();
+			
+			Web.clickOnElement(healthCareCost, "Personalize Button");
+			Reporter.logEvent(Status.INFO,"Verify 'Personalize Button' is clicked","Clicked on 'Personalize Button'", true);
+			
+			if(Web.isWebElementDisplayed(healthCareCost, "Your full report(PDF)", true)){
+				Reporter.logEvent(Status.PASS,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", false);
+				Web.clickOnElement(healthCareCost, "Your full report(PDF)");
+				Reporter.logEvent(Status.INFO,"Verify 'Your full report(PDF)' link is clicked","clicked on 'Your full report(PDF)' link", false);
+				String parentWindow = Web.webdriver.getWindowHandle();
+				Set<String> handles = Web.webdriver.getWindowHandles();
+
+				for (String windowHandle : handles) {
+
+					if (!windowHandle.equals(parentWindow)) {
+						Web.webdriver.switchTo().window(windowHandle);
+						break;
+					}
+				}
+				// closing child window
+				Web.webdriver.close(); 
+				//Switching to main window
+				Web.webdriver.switchTo().window(parentWindow);
+			}
+			else
+				Reporter.logEvent(Status.FAIL,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", true);
+			
+			healthCareCost.verifyMedicareLink();
+			
+			
+		}
+		catch(Exception e)
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Verify_Tour_Link(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome retirement = new RetirementIncome(homePage);
+			retirement.get();
+			
+			if(Web.isWebElementDisplayed(retirement, "TOUR Button", true)){
+				Web.clickOnElement(retirement, "TOUR Button");
+				Reporter.logEvent(Status.INFO,"Verify TOUR button is clicked","clicked on TOUR button", false);
+				retirement.verifyTourModals("Your retirement account experience");
+				Web.clickOnElement(retirement, "Next Button");
+				retirement.verifyTourModals("Progress toward your goal");
+				Web.clickOnElement(retirement, "Next Button");
+				retirement.verifyTourModals("Your estimated monthly retirement income");
+				Web.clickOnElement(retirement, "Next Button");
+				retirement.verifyTourModals("Income sources");
+				Web.clickOnElement(retirement, "Next Button");
+				retirement.verifyTourModals("Compare your options");
+				Web.clickOnElement(retirement, "Finish Button");
+				if (Web.isWebElementDisplayed(retirement, "Cancel Goal setup", true)) {
+					Web.clickOnElement(retirement, "Cancel Goal setup");
+				}
+			}
+			else
+				Reporter.logEvent(Status.FAIL,"Verify TOUR button is displayed","Tour button is displayed", false);
+			
+			
+			
+		}
+		catch(Exception e)
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+	
 
 }
