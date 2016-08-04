@@ -91,7 +91,7 @@ public class sanityTestCases {
 	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 		  // DB.executeQuery("CommonDB", "delete from DEVL_REP.AUTHENTICATION_CONTROL where ssn ='022758966' and STATUS_CODE ='FAILURE'");
 		  // DB.executeQuery("CommonDB", "commit");
 			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));
@@ -189,7 +189,7 @@ public class sanityTestCases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
@@ -315,8 +315,9 @@ public class sanityTestCases {
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser());
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			
+			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
 			boolean verificationResult;
@@ -405,7 +406,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -553,7 +554,7 @@ public class sanityTestCases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -614,7 +615,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -675,7 +676,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -736,7 +737,7 @@ public class sanityTestCases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -801,7 +802,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			float projectedIncome;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -841,7 +842,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -872,7 +873,7 @@ public class sanityTestCases {
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
 	
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1002,8 +1003,9 @@ public class sanityTestCases {
 		
 
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));		
+			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1127,8 +1129,9 @@ public class sanityTestCases {
 	
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));		
+			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1257,7 +1260,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1356,7 +1359,7 @@ public class sanityTestCases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();

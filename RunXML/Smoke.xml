@@ -43,17 +43,6 @@
 			</class>
 		</classes>
 	</test> 
-	
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC018_Verify_ROR_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-		
 	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -64,6 +53,16 @@
 		</classes>
 	</test> 
 	
+	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC018_Verify_ROR_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+			
 	<test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
@@ -316,7 +315,8 @@
 			</class>
 		</classes>
 	</test>
-	<test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
+	<!-- DO not have the test data -->
+	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -324,7 +324,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 	
    <!-- <test name="Payroll_Calendar_validations">
 		<classes>
