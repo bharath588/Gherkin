@@ -78,7 +78,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			login.get();
 
 			String copyRightInfo = "";
@@ -213,7 +213,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			login.get();
 
 			String customerSupportInfo = "";
@@ -360,7 +360,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			ProfilePage profilePage = new ProfilePage(homePage);
@@ -408,7 +408,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
@@ -482,7 +482,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
@@ -766,7 +766,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
@@ -816,7 +816,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
-			login = new LoginPage();
+			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LegacyLandingPage homePage = new LegacyLandingPage(mfaPage);
 
