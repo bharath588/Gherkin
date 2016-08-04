@@ -74,7 +74,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
-		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}

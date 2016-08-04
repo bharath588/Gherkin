@@ -77,7 +77,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			ResultSet strUserInfo=null;
-			if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 			{
 				userFromDatasheet=Stock.GetParameterValue("lblUserName");
 			}

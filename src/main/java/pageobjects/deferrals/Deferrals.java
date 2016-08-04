@@ -93,7 +93,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-up before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
@@ -181,7 +181,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
-			if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 			{
 				userFromDatasheet=Stock.GetParameterValue("lblUserName");
 			}

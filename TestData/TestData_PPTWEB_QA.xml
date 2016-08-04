@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="QA">
-	<DateTime value="8/3/2016 1:57:12 PM"></DateTime>
+	<DateTime value="8/3/2016 6:27:21 PM"></DateTime>
 	<Module name="Program"></Module>
 	<Module name="query">
 		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB_QA"
@@ -1255,24 +1255,17 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_xPPTWEB_Sanity_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
-				<parameter name="AccuCode" value="" />
 				<parameter name="TabName" value="I do not have a pin" />
-				<parameter name="SSN" value="789561234" />
-				<parameter name="ZipCode" value="80121" />
-				<parameter name="LastName" value="POP" />
-				<parameter name="DOB" value="03/09/1942" />
-				<parameter name="StreetAddress" value="234" />
+				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="queryName" value="getUnRegisteredUser" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_xPPTWEB_Sanity_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194394-01" />
-				<parameter name="AccuCode" value="" />
+				<parameter name="ga_PlanId" value="194037-04" />
+				<parameter name="queryName" value="getUnRegisteredUserWithPin" />
 				<parameter name="TabName" value="I have a pin" />
-				<parameter name="SSN" value="002502046" />
-				<parameter name="PIN" value="1234" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -1283,7 +1276,6 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="codeDeliveryOption" value="CALL_ME" />
 				<parameter name="Newpassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="ga_PlanId" value="194394-01" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -1294,13 +1286,12 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="codeDeliveryOption" value="ALREADY_HAVE_CODE" />
 				<parameter name="Newpassword" value="Test@1234" />
 				<parameter name="reEnterPassword" value="Test@1234" />
-				<parameter name="ga_PlanId" value="194394-01" />
 			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Married" />
 				<parameter name="Beneficiary Relation" value="Spouse" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1327,7 +1318,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Married" />
 				<parameter name="Beneficiary Relation" value="Spouse" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1354,7 +1345,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1381,7 +1372,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC009_UnMarried One Individual beneficiary new address">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1408,7 +1399,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC012_UnMarried Multiple Individual beneficiary">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1432,7 +1423,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Validate_Date" value="No" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="Child" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1459,7 +1450,7 @@ where a.PRIMARY_RES_IND='Y'
 		<TestCase
 			name="SIT_PPTWEB_Sanity_Beneficiary_TC011_UnMarried Multiple Entity beneficiary">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="A Trust" />
 				<parameter name="Beneficiary Type" value="Primary" />
@@ -1473,7 +1464,7 @@ where a.PRIMARY_RES_IND='Y'
 				<parameter name="Tax_Identification_No" value="123456789" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="ga_PlanId" value="194193-01" />
+				<parameter name="ga_PlanId" value="194394-01" />
 				<parameter name="Marital Status" value="Unmarried" />
 				<parameter name="Beneficiary Relation" value="A Trust" />
 				<parameter name="Beneficiary Type" value="Primary" />

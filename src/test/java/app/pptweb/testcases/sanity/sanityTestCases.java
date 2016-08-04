@@ -17,6 +17,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import appUtils.Common;
+import appUtils.ExecuteQuery;
 import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
@@ -182,7 +183,6 @@ public class sanityTestCases {
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 		}
-		
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_AccountLookup_PositiveFlow(int itr,
 			Map<String, String> testdata) {
@@ -190,7 +190,11 @@ public class sanityTestCases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser());
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
+			boolean isMatching=false;
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -242,16 +246,16 @@ public class sanityTestCases {
 						Stock.GetParameterValue("SSN"));
 				// Enter Zip Code
 				accLookup.setTextToFields("Zip Code",
-						Stock.GetParameterValue("ZipCode"));
+						Stock.GetParameterValue("ZIP_CODE"));
 				// Enter Last Name
 				accLookup.setTextToFields("Last Name",
-						Stock.GetParameterValue("LastName"));
+						Stock.GetParameterValue("LAST_NAME"));
 				// Enter Date of Birth
 				accLookup.setTextToFields("Date of Birth",
-						Stock.GetParameterValue("DOB"));
+						Stock.GetParameterValue("BIRTH_DATE"));
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
-						Stock.GetParameterValue("StreetAddress"));
+						Stock.GetParameterValue("FIRST_LINE_MAILING"));
 			}
 
 			// Click on Continue button
@@ -262,6 +266,7 @@ public class sanityTestCases {
 					"Submitted participant details and clicked on Continue button",
 					false);
 
+			Thread.sleep(5000);
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
@@ -269,14 +274,21 @@ public class sanityTestCases {
 						"Verify Account setup Header block text",
 						"Header text block is not displayed on the page", true);
 			} else {
-				Web.VerifyText(
-						/* "We found you!\nTo continue, provide your contact information and create a username and password." */"Create username and password",
-						hdrBlockText, true);
-				Reporter.logEvent(
-						Status.PASS,
-						"Navigate to Account setup page",
-						"user successfully navigated to the Account Setup page",
-						true);
+				isMatching = Web
+						.VerifyText(
+								"We found you!\nVerification codes for enhanced security will be sent to the email address or phone number you provide below.",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'We found you!' header is displayed",
+							"user successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'We found you!' header is displayed",
+							"We found you! Header is not displayed", true);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -291,12 +303,14 @@ public class sanityTestCases {
 
 		} finally {
 			try {
+				ExecuteQuery.UnRegisterParticipant(SSN);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		
@@ -859,7 +873,8 @@ public class sanityTestCases {
 	
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
+			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			
+			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -988,7 +1003,7 @@ public class sanityTestCases {
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
+			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1113,7 +1128,7 @@ public class sanityTestCases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
+			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);

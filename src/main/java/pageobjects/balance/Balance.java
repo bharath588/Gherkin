@@ -78,7 +78,7 @@ public class Balance extends LoadableComponent<Balance> {
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
-		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName").toString().trim();
 				

@@ -681,7 +681,7 @@ public class registrationtestcases {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Date of Birth error Verification for alpha numberic char",
-						"Verify error message 'Date of Birth must be numeric.' is displayed",
+						"Verify error message 'Please enter a valid date.' is displayed",
 						false);
 			} else {
 				if (Web.VerifyText(txtActErrMsg, expectedErrMsg, true)) {
