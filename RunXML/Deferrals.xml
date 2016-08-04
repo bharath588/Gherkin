@@ -233,7 +233,7 @@
             </class>
         </classes>
     </test>
-      <test name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup - participant within first year of employment">
+      <test name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -251,8 +251,7 @@
             </class>
         </classes>
     </test>
-<<<<<<< HEAD
-=======
+
      <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
@@ -325,6 +324,5 @@
             </class>
         </classes>
     </test>
-    
->>>>>>> branch 'dksbrk' of http://gitlab.retirementpartner.com/Automation/PPTWEBMavenized.git
+  
     </suite>
