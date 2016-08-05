@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	   <test
+	 <!--   <test
 		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -314,7 +314,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 	<!-- DO not have the test data -->
 	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
 		<classes>

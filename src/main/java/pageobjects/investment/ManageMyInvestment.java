@@ -11,6 +11,7 @@ import lib.Reporter.Status;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.Choose;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -637,8 +638,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is not displayed", true);
-		Web.waitForElement(btnReviewTransfer.get(0));
-		btnReviewTransfer.get(0).click();
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+		Web.waitForElement(btnReviewTransfer.get(1));
+		btnReviewTransfer.get(1).click();
 		// Web.waitForElement(btnPreValidationOK);
 		// btnPreValidationOK.click();
 		Web.webdriver.switchTo().defaultContent();
