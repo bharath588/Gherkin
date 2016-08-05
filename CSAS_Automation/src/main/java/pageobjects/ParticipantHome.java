@@ -76,7 +76,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement SSNfield;
 
 	// Menu items..
-
+	@FindBy(xpath = "//*[@id='oCMenu_316'][contains(text(),'Participant Changes')]")
+	private WebElement menuPPTChanges;
+	
 	@FindBy(css = "div#oCMenu_315")
 	private WebElement MenuParticipantInfo;
 
@@ -302,7 +304,22 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(css = "table.compactDataTable tr:nth-of-type(2) input[type = 'radio'][checked = 'checked']")
 	private WebElement PPT_Indx_Radio_Btn;
-
+	//F2F
+	@FindBy(xpath = "//div[contains(@id,'oCMenu')][contains(text(),'Cancel Pending Transfer')]")
+	private WebElement menuCancelF2FLink;
+	
+	@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[contains(text(),'EMPLOYER STOCK')]")
+	private WebElement cancelFndTransferPgHeader;
+	
+	@FindBy(xpath = "//table[@id='table_workLayout']//table[@align='center']//input[@type='checkbox']")
+	private List<WebElement> cancelFndTransferCheckBox;
+	
+	@FindBy(xpath = "//input[@value='Confirm Cancel Of Transfer']")
+	private WebElement btnConfCancelTranfer;
+	
+	@FindBy(xpath = "//input[@value='Submit Cancellation']")
+	private WebElement btnSubmitCancelTransfer;
+	
 	// Participants changes Menu Webelements..
 	@FindBy(xpath = "//div[contains(text(),'Contribution Allocation Change')]")
 	private WebElement ContrAllChngLink;
@@ -503,6 +520,47 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Stock.getTestQuery("getPPTIDforWebNonRegStatus")[1]);
 		}
 
+		if (resultset != null) {
+			while (resultset.next()) {
+				for (String param : paramNm) {
+					res.put(param, resultset.getString(param));
+				}
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get PPT ID based on the registration status
+	 * </pre>
+	 * 
+	 * @param WebRegStatus
+	 * @return
+	 * @throws Exception
+	 * @author SOUVIK
+	 */
+	public Map<String, String> getSSN_or_pptID(String WebRegStatus,boolean ifPlanNumReqd,String... paramNm) throws Exception {
+		ResultSet resultset = null;
+		Map<String, String> res = new LinkedHashMap<String, String>();
+		String planNum = Globals.GC_EMPTY; 
+		
+		if(ifPlanNumReqd){
+			planNum =  Stock.GetParameterValue("planID");
+		}else{
+			planNum = "194037-01"; // Default Plan number
+		}
+		
+		if (WebRegStatus.equalsIgnoreCase("Registered")) {
+			resultset = DB.executeQuery(
+						Stock.getTestQuery("getPPTIDforOrderPIN_Reg")[0],
+						Stock.getTestQuery("getPPTIDforOrderPIN_Reg")[1],planNum);
+		
+		} else if (WebRegStatus.equalsIgnoreCase("Not Registered")) {
+			resultset = DB.executeQuery(
+						Stock.getTestQuery("getPPTIDforOrderPIN_NonReg")[0],
+						Stock.getTestQuery("getPPTIDforOrderPIN_NonReg")[1],planNum);
+		}
 		if (resultset != null) {
 			while (resultset.next()) {
 				for (String param : paramNm) {
@@ -1746,7 +1804,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	public void navigateToCACPage() {
 		if (Web.isWebElementDisplayed(MenuParticipantChanges)) {
 			Web.mouseHover(MenuParticipantChanges);
-
 			Web.mouseHover(ContrAllChngLink);
 			if (Web.clickOnElement(ContrAllChngSubLink)) {
 				Reporter.logEvent(
@@ -1763,4 +1820,24 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}
 	}
+	
+
+	public void cancelExistingFundTransfers(){
+		Web.mouseHover(menuPPTChanges);
+		if(Web.isWebElementDisplayed(menuCancelF2FLink,true)) menuCancelF2FLink.click();		
+		Web.waitForElement(cancelFndTransferPgHeader);
+				
+		if(cancelFndTransferCheckBox.size() > 0){
+			if(Web.isWebElementDisplayed(cancelFndTransferCheckBox.get(0),false)){			
+				for(WebElement ele : cancelFndTransferCheckBox){
+					ele.click();
+				}
+				btnConfCancelTranfer.click();			
+				if(Web.isWebElementDisplayed(btnSubmitCancelTransfer, true)){
+					btnSubmitCancelTransfer.click();
+					Reporter.logEvent(Status.INFO,"Cancelling existing fund transfers","Existing fund transfers cancelled",true);
+				}
+			}
+		}		
+	}	
 }

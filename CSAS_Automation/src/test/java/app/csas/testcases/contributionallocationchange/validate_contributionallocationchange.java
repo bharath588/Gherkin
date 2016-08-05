@@ -43,6 +43,7 @@ public class validate_contributionallocationchange {
 
 	/**
 	 * -------------------------------------------------------------------
+	 * 
 	 * <pre>
 	 * TESTCASE:	Validate_Default_Investment_Option_Details
 	 * DESCRIPTION:	Validate default group allocation  
@@ -52,7 +53,9 @@ public class validate_contributionallocationchange {
 	 * Author:Ranjan     Date : 08-07-16    
 	 * --------------------------------------------------------------------
 	 * </pre>
-	 * @param <br>CSAS Credential</br>
+	 * 
+	 * @param <br>
+	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Default_Investment_Option_Details(int itr,
@@ -65,23 +68,28 @@ public class validate_contributionallocationchange {
 			// Step2:Search participant using SSN
 			contrAllocChng_Obj = new ContributionAllocationChange();
 			contrAllChange_List = contrAllocChng_Obj
-					.getContributionAllChangeDtls_DB(Stock.GetParameterValue("testType"));
+					.getContributionAllChangeDtls_DB(Stock
+							.GetParameterValue("testType"));
+
 			if (contrAllChange_List.size() <= 0) {
 				throw new AssertionError(
 						"Did not get any Change allocation ppts or ga_ids");
 			}
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-					contrAllChange_List.get(0));
+					contrAllChange_List.get(0), contrAllChange_List.get(1));
 			// Step3: Navigate to Contribution change allocation page..
 			contrAllocChng_Obj.get();
 
 			// Step4: Validate default investment options..
 			contrAllocChng_Obj.validate_DefaultInvstOpts(contrAllChange_List);
-			
-			//Validate re-balancer checkbox test case
-			if (Stock.GetParameterValue("testType").equalsIgnoreCase("RebalancerCheckbox")) {
+
+			// Validate re-balancer checkbox test case
+
+			if (Stock.GetParameterValue("testType").equalsIgnoreCase(
+					"RebalancerCheckbox")) { //
 				contrAllocChng_Obj.select_RebalancerChkBoxs();
-			} 
+				// contrAllocChng_Obj.selectProcessAccReblChkBx();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,6 +113,7 @@ public class validate_contributionallocationchange {
 
 	/**
 	 * -------------------------------------------------------------------
+	 * 
 	 * <pre>
 	 * TESTCASE:	Validate_Current_Deposite_Allocation_Details
 	 * DESCRIPTION:	Validate current deposit allocation details    
@@ -114,32 +123,62 @@ public class validate_contributionallocationchange {
 	 * Author:Ranjan     Date : 08-07-16    
 	 * --------------------------------------------------------------------
 	 * </pre>
-	 * @param <br>CSAS Credential</br>
+	 * 
+	 * @param <br>
+	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Current_Deposite_Allocation_Details(int itr,
 			Map<String, String> testdata) {
-		ArrayList<String> currDepositeAllocList;
+		ArrayList<String> currDepositeAllocList = new ArrayList<String>();
+		ArrayList<String> contrAllChangeChkBx_List = new ArrayList<String>();
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			// Step2:Search participant using SSN
+			// Step2:Search participant using SSN based on test type
 			contrAllocChng_Obj = new ContributionAllocationChange();
-			currDepositeAllocList = contrAllocChng_Obj.getCurrDepositeAllocDtls_DB() ;
-			if (currDepositeAllocList.size() <= 0) {
-				throw new AssertionError(
-						"Did not get any Change allocation ppts or ga_ids");
+			currDepositeAllocList = contrAllocChng_Obj
+					.getCurrDepositeAllocDtls_DB();
+			if (Stock.GetParameterValue("testType").equalsIgnoreCase(
+					"RebalancerCheckbox")) {
+				contrAllChangeChkBx_List = contrAllocChng_Obj
+						.getContributionAllChangeDtls_DB(Stock
+								.GetParameterValue("testType"));
+				if (contrAllChangeChkBx_List.size() <= 0) {
+					throw new AssertionError(
+							"Did not get any Change allocation ppts or ga_ids");
+				}
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						contrAllChangeChkBx_List.get(0), "341337-01");
+			} else {
+				if (currDepositeAllocList.size() <= 0) {
+					throw new AssertionError(
+							"Did not get any Change allocation ppts or ga_ids");
+				}
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						currDepositeAllocList.get(0),
+						currDepositeAllocList.get(1));
 			}
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-					currDepositeAllocList.get(0));
 			// Step3: Navigate to Contribution change allocation page..
 			contrAllocChng_Obj.get();
+
 			// Step4: Validate default investment options..
-			contrAllocChng_Obj.validate_CurrDepositeAlloc_Dtls(currDepositeAllocList);
-			//Step5: Complete the Fund percentage transfer transaction..
-			contrAllocChng_Obj.transferInvestmentPercentage(currDepositeAllocList);
-			
+			if (Stock.GetParameterValue("testType").equalsIgnoreCase(
+					"RebalancerCheckbox")) {
+				contrAllocChng_Obj
+						.validate_DefaultInvstOpts(contrAllChangeChkBx_List);
+				// Step5: Validate re-balancer checkbox test case
+				//contrAllocChng_Obj.selectProcessAccReblChkBx();
+				contrAllocChng_Obj.select_RebalancerChkBoxs();
+			} else {
+				// Step6: Validate current deposit allocation details..
+				contrAllocChng_Obj
+						.validate_CurrDepositeAlloc_Dtls(currDepositeAllocList);
+				// Step7: Complete the Fund percentage transfer transaction..
+				contrAllocChng_Obj
+						.transferInvestmentPercentage(currDepositeAllocList);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

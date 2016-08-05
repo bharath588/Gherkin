@@ -170,9 +170,9 @@ public class validate_participanthomepage {
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Querying for ID and GA_ID and performing search with ID  
 			if(Web.webdriver.getWindowHandles().size()==1){
-				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
-						      GetParameterValue("web_reg_status"),"ID","GA_ID");
-			
+			//	sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
+			//			      GetParameterValue("web_reg_status"),"ID","GA_ID");
+				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),true,"ID","GA_ID");
 				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 						                                              sqlQueryRes.get("ID"),
 						                                              sqlQueryRes.get("GA_ID"));

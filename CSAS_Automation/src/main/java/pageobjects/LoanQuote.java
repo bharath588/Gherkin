@@ -25,7 +25,7 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 	@FindBy(xpath = "//*[@id='oCMenu_316'][contains(text(),'Participant Changes')]")
 	private WebElement menuPPTChanges;
 
-	@FindBy(xpath = "//*[@id='oCMenu_327'][contains(text() , 'Loan Quote')]")
+	@FindBy(xpath = ".//*[@id='oCMenu_327'][contains(text(),'Loan Quote')]")
 	private WebElement menuLoanQuote;
 
 	@FindBy(xpath = "//*[@id='table_Loan Quote']//td[contains(text() , 'Loan Quote')]")
@@ -93,7 +93,7 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 	protected void load() {
 		this.parent = new ParticipantHome().get();
 		Web.mouseHover(menuPPTChanges);
-		if (Web.isWebElementDisplayed(menuLoanQuote, true)) {
+		if (Web.isWebElementDisplayed(menuLoanQuote)) {
 			Web.clickOnElement(menuLoanQuote);
 			if (Web.isWebElementDisplayed(loanQuoteTitle, true)) {
 				Reporter.logEvent(Status.PASS,

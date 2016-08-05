@@ -111,13 +111,14 @@ public class validate_moneytypebalance {
 	public void Validate_Variable_Investment_Money_Type_Link(int itr,
 			Map<String, String> testdata) {
 		moneyTypeBal_Obj = new MoneyTypeBalance() ;
+		String ga_id = "" ;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
-			
+			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
 			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"));
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
 			String plan_No = participantHomeObj.getCheckedPlanOnPPTHome("Plan_No") ;
 			
 			// Step3: Verify Loan info page..

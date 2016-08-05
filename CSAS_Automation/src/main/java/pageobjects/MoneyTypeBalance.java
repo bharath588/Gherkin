@@ -402,7 +402,7 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 						Stock.getTestQuery("getMoneyTypeInfo"), ppt_id,
 						moneyType);
 				Web.mouseHover(VIMoneyTypeVal);
-				// String al =
+			/*	// String al =
 				// Web.webdriver.findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
 				JavascriptExecutor js = (JavascriptExecutor) Web.webdriver;
 				// Object obj =js.executeScript("variableMTFunc(0)") ;
@@ -416,13 +416,16 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 				// String text = VIMoneyTypeVal.getAttribute("Money Type") ;
 				if (true) {
 					System.out.println("report");
-				}
+				}*/
+				Reporter.logEvent(Status.PASS,
+						"Verify Money type balance link.",
+						"Money type balance link verified successfully \n MoneyType details on hover : "+money_Type_Info_List, true);
 			} else {
 
 			}
 
 		} else {
-			Reporter.logEvent(Status.PASS,
+			Reporter.logEvent(Status.FAIL,
 					"Verify Variable Investment section.",
 					"Verify Variable Investment section is displayed.", true);
 		}

@@ -93,9 +93,7 @@ public class validate_disbursementhistory {
 				disbursementHistoryObj.verifyVestingDetails();
 				break;
 			case "PROCESSINGDETAILS":
-				
 				break;
-
 			default:
 				// Validate Payment History details..
 				disbursementHistoryObj

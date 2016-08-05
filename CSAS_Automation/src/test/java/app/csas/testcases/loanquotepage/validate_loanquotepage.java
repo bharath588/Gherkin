@@ -71,8 +71,8 @@ public class validate_loanquotepage {
 			//	ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("PPT_ID")) ;
 			//	participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 			//			Stock.GetParameterValue("PPT_ID"));
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("SSN",
-						Stock.GetParameterValue("SSN"));
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						Stock.GetParameterValue("PPT_ID"));
 				// Step2:Navigating to Loan Quote
 				loanQuotePO.get();
 				loanQuotePO.SelectLoanType(Stock.GetParameterValue("LoanType"));
@@ -142,8 +142,8 @@ public class validate_loanquotepage {
 			//	ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("PPT_ID")) ;
 			//	participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 			//			Stock.GetParameterValue("PPT_ID"));
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("SSN",
-						Stock.GetParameterValue("SSN"));
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						Stock.GetParameterValue("PPT_ID"));
 				// Step2:Navigating to Loan Quote
 				loanQuotePO.get();
 				loanQuotePO.SelectLoanType(Stock.GetParameterValue("LoanType"));

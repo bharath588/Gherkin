@@ -185,6 +185,10 @@ public class DisbursementInfoOrHistory extends
 		if (fieldName.trim().equalsIgnoreCase("DISTBURSEMENTTYPE")) {
 			return this.DHDisbursementType;
 		}
+
+		if (fieldName.trim().equalsIgnoreCase("PAYMENTHISTORY")) {
+			return this.tabPaymentHist;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -274,82 +278,100 @@ public class DisbursementInfoOrHistory extends
 			throw new AssertionError(
 					"Does not display any information in payment history section.");
 		} else {
+			int webEle_Indx = 0 ;
+			boolean isPaymentHisDtls = false ;
 			for (int i = 0; i < PHDate.size(); i++) {
-				if (CommonLib.compareDB_Date_With_Web_Date(
-						paymentHistDtls.get(2), PHDate.get(i).getText())
-					/*	&& PHStatus
-								.get(i)
-								.getText()
-								.contains(
-										paymentHistDtls.get(3))*/
-						&& PHAmount.get(i).getText().replaceAll(",", "")
-								.contains(paymentHistDtls.get(4).replaceAll("-",
-										""))
-						&& PHCheckNo.get(i).getText()
-								.contains(paymentHistDtls.get(5))
-						&& PHExpressCarrier.get(i).getText()
-								.contains(paymentHistDtls.get(6))
-						&& PHTrackingNumber.get(i).getText()
-								.contains(paymentHistDtls.get(7))
-						&& CommonLib.compareDB_Date_With_Web_Date(
-								paymentHistDtls.get(8), PHShipDate.get(i)
-										.getText())) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Check if Processing history displayed with follwing details. \n Date:"
-									+ paymentHistDtls.get(2) + " \n Status: "
-									+ paymentHistDtls.get(3) + " \n Amount: "
-									+ paymentHistDtls.get(4) + " \n Check No: "
-									+ paymentHistDtls.get(5)
-									+ " \n Express Carrier: "
-									+ paymentHistDtls.get(6)
-									+ " \n Tracking Number: "
-									+ paymentHistDtls.get(7)
-									+ " \n Ship Date: "
-									+ paymentHistDtls.get(8) + " \n",
-							"Processing history displayed with follwing details successfully. \n Date:"
-									+ PHDate.get(i).getText() + " \n Status: "
-									+ PHStatus.get(i).getText()
-									+ " \n Amount: "
-									+ PHAmount.get(i).getText()
-									+ " \n Check No: "
-									+ PHCheckNo.get(i).getText()
-									+ " \n Express Carrier: "
-									+ PHExpressCarrier.get(i).getText()
-									+ " \n Tracking Number: "
-									+ PHTrackingNumber.get(i).getText()
-									+ " \n Ship Date: "
-									+ PHShipDate.get(i).getText() + " \n",
-							false);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Check if Processing history displayed with follwing details. \n Date:"
-									+ paymentHistDtls.get(2) + " \n Status: "
-									+ paymentHistDtls.get(3) + " \n Amount: "
-									+ paymentHistDtls.get(4) + " \n Check No: "
-									+ paymentHistDtls.get(5)
-									+ " \n Express Carrier: "
-									+ paymentHistDtls.get(6)
-									+ " \n Tracking Number: "
-									+ paymentHistDtls.get(7)
-									+ " \n Ship Date: "
-									+ paymentHistDtls.get(8) + " \n",
-							"Processing history displayed with follwing details successfully. \n Date:"
-									+ PHDate.get(i).getText() + " \n Status: "
-									+ PHStatus.get(i).getText()
-									+ " \n Amount: "
-									+ PHAmount.get(i).getText()
-									+ " \n Check No: "
-									+ PHCheckNo.get(i).getText()
-									+ " \n Express Carrier: "
-									+ PHExpressCarrier.get(i).getText()
-									+ " \n Tracking Number: "
-									+ PHTrackingNumber.get(i).getText()
-									+ " \n Ship Date: "
-									+ PHShipDate.get(i).getText() + " \n",
-							false);
-				}
+					if (CommonLib.compareDB_Date_With_Web_Date(
+							paymentHistDtls.get(2), PHDate.get(i).getText())
+							/*
+							 * && PHStatus .get(i) .getText() .contains(
+							 * paymentHistDtls.get(3))
+							 */
+							&& PHAmount
+									.get(i)
+									.getText()
+									.replaceAll(",", "")
+									.contains(
+											paymentHistDtls.get(4).replaceAll(
+													"-", ""))
+							&& PHCheckNo.get(i).getText()
+									.contains(paymentHistDtls.get(5))
+							&& PHExpressCarrier.get(i).getText()
+									.contains(paymentHistDtls.get(6))
+							&& PHTrackingNumber.get(i).getText()
+									.contains(paymentHistDtls.get(7))
+							&& CommonLib.compareDB_Date_With_Web_Date(
+									paymentHistDtls.get(8), PHShipDate.get(i)
+											.getText())) {
+						isPaymentHisDtls = true ;
+						webEle_Indx = i ;
+						break ;
+					}
+			}
+			if (isPaymentHisDtls) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Check if Processing history displayed with follwing details. \n Date:"
+								+ paymentHistDtls.get(2)
+								+ " \n Status: "
+								+ paymentHistDtls.get(3)
+								+ " \n Amount: "
+								+ paymentHistDtls.get(4)
+								+ " \n Check No: "
+								+ paymentHistDtls.get(5)
+								+ " \n Express Carrier: "
+								+ paymentHistDtls.get(6)
+								+ " \n Tracking Number: "
+								+ paymentHistDtls.get(7)
+								+ " \n Ship Date: "
+								+ paymentHistDtls.get(8) + " \n",
+						"Processing history displayed with follwing details successfully. \n Date:"
+								+ PHDate.get(webEle_Indx).getText()
+								+ " \n Status: "
+								+ PHStatus.get(webEle_Indx).getText()
+								+ " \n Amount: "
+								+ PHAmount.get(webEle_Indx).getText()
+								+ " \n Check No: "
+								+ PHCheckNo.get(webEle_Indx).getText()
+								+ " \n Express Carrier: "
+								+ PHExpressCarrier.get(webEle_Indx).getText()
+								+ " \n Tracking Number: "
+								+ PHTrackingNumber.get(webEle_Indx).getText()
+								+ " \n Ship Date: "
+								+ PHShipDate.get(webEle_Indx).getText() + " \n",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Check if Processing history displayed with follwing details. \n Date:"
+								+ paymentHistDtls.get(2)
+								+ " \n Status: "
+								+ paymentHistDtls.get(3)
+								+ " \n Amount: "
+								+ paymentHistDtls.get(4)
+								+ " \n Check No: "
+								+ paymentHistDtls.get(5)
+								+ " \n Express Carrier: "
+								+ paymentHistDtls.get(6)
+								+ " \n Tracking Number: "
+								+ paymentHistDtls.get(7)
+								+ " \n Ship Date: "
+								+ paymentHistDtls.get(8) + " \n",
+						"Processing history displayed with follwing details successfully. \n Date:"
+								+ PHDate.get(webEle_Indx).getText()
+								+ " \n Status: "
+								+ PHStatus.get(webEle_Indx).getText()
+								+ " \n Amount: "
+								+ PHAmount.get(webEle_Indx).getText()
+								+ " \n Check No: "
+								+ PHCheckNo.get(webEle_Indx).getText()
+								+ " \n Express Carrier: "
+								+ PHExpressCarrier.get(webEle_Indx).getText()
+								+ " \n Tracking Number: "
+								+ PHTrackingNumber.get(webEle_Indx).getText()
+								+ " \n Ship Date: "
+								+ PHShipDate.get(webEle_Indx).getText() + " \n",
+						false);
 			}
 		}
 	}
@@ -449,37 +471,44 @@ public class DisbursementInfoOrHistory extends
 					"Vesting details did not verified successfully.", true);
 		}
 	}
-	
+
 	/**
-	 * <pre>Method to get Processing details information from DB</pre>
+	 * <pre>
+	 * Method to get Processing details information from DB
+	 * </pre>
+	 * 
 	 * @param ind_id
-	 * @return processingDtlsList : Event ID,Master Event ID, Disbursement Processing date, PSC Approval Required on Plan?
+	 * @return processingDtlsList : Event ID,Master Event ID, Disbursement
+	 *         Processing date, PSC Approval Required on Plan?
 	 * @throws SQLException
-	 *  
+	 * 
 	 */
-	public ArrayList<String> getProcessingDetails_DB(String ind_id) throws SQLException{
+	public ArrayList<String> getProcessingDetails_DB(String ind_id)
+			throws SQLException {
 		ArrayList<String> processingDtlsList = new ArrayList<String>();
 		ResultSet resultset = null;
 		resultset = DB.executeQuery(
 				Stock.getTestQuery("getProcessingDetails")[0],
-				Stock.getTestQuery("getProcessingDetails")[1],ind_id);
+				Stock.getTestQuery("getProcessingDetails")[1], ind_id);
 		if (resultset != null) {
 			while (resultset.next()) {
 				processingDtlsList.add(resultset.getString("EV_ID"));
 				processingDtlsList.add(resultset.getString("MASTER_EV_ID"));
 				processingDtlsList.add(resultset.getString("DPDATE_TIME"));
 				processingDtlsList.add(resultset.getString("DISB_PSC_IND"));
-				
+
 			}
 		}
 		return processingDtlsList;
 	}
-	
+
 	/**
-	 * <pre>Method to verify Processing details</pre>
+	 * <pre>
+	 * Method to verify Processing details
+	 * </pre>
 	 */
-	public void validateProcessingDetails(){
-		
+	public void validateProcessingDetails() {
+
 	}
 
 }

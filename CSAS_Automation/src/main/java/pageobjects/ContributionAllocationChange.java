@@ -128,10 +128,12 @@ public class ContributionAllocationChange extends
 	@FindBy(css = "form[name = 'allocChgForm'] table:nth-of-type(3) img[src *= 'restore']")
 	private List<WebElement> RAPExpandIcon;
 
-	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Investment')]/../following-sibling::tr/td[1]/a")
+	//@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Investment')]/../following-sibling::tr/td[1]/a")
+	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Investment')]/../following-sibling::tr//a")
 	private List<WebElement> RAP_InvestmentOpts_Left;
 
-	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Percent')]/../following-sibling::tr/td[2]/input")
+	//@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Percent')]/../following-sibling::tr/td[2]/input")
+	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Percent')]/../following-sibling::tr//input")
 	private List<WebElement> RAP_InvestmentPer_Left;
 
 	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Investment')]/../following-sibling::tr/td[1]/a")
@@ -155,7 +157,9 @@ public class ContributionAllocationChange extends
 	private WebElement RAP_Cancel_Btn;
 	
 	//Contribution Allocation change approval page..
-	@FindBy(css = "input[value = 'Submit']")
+	//@FindBy(css = "input[value = 'Submit']")
+	//@FindBy(css = "input[type = 'Submit'][value = 'Confirm Allocations']")
+	@FindBy(css = "input[type = 'Submit'][value = 'Submit']")
 	private WebElement CnfmAlloc_SubmitBtn;
 	
 	@FindBy(xpath = "//table[@class = 'dataTable']//td[contains(text(),'Investment')]/../following-sibling::tr/td[3]")
@@ -175,6 +179,10 @@ public class ContributionAllocationChange extends
 	private WebElement ConfrmMsg;
 
 	//Rebalancer check box
+
+	@FindBy(css = "input[type = 'checkbox'][name = 'processRebalancer']")
+	private WebElement ProcessAccReblChckBx;
+
 	@FindBy(css = "input.radioInput[value = '1']")
 	private WebElement AssetModel_RadioBtn;
 
@@ -214,11 +222,18 @@ public class ContributionAllocationChange extends
 		this.parent = new ParticipantHome().get();
 		new ParticipantHome().navigateToCACPage();
 		if (Web.isWebElementDisplayed(SeelctContrSrcCat_Btn)
-				&& Web.isWebElementDisplayed(ContrAllChngSrcPageTitle)) {
+				&& Web.isWebElementDisplayed(ContrAllChngSrcPageTitle)
+				) {
 			Web.clickOnElement(SeelctContrSrcCat_Btn);
 			if(Web.isWebElementDisplayed(SelectOwnAllo_Btn)
-					&& Web.isWebElementDisplayed(BegingAllocChng_Btn)){
+					&& Web.isWebElementDisplayed(BegingAllocChng_Btn)
+					&& Stock.GetParameterValue("testType").equalsIgnoreCase(
+							"RebalancerCheckbox")){
 				Web.clickOnElement(SelectAsstAlloc_Btn) ;
+			//	Web.clickOnElement(SelectOwnAllo_Btn) ;
+				Web.clickOnElement(BegingAllocChng_Btn) ;
+			} else{
+				Web.clickOnElement(SelectOwnAllo_Btn) ;
 				Web.clickOnElement(BegingAllocChng_Btn) ;
 			}
 		} else if(Web.isWebElementDisplayed(SelectOwnAllo_Btn)
@@ -359,75 +374,84 @@ public class ContributionAllocationChange extends
 			if (CDA_InvestmentOptions_Val.size() <= 0) {
 				throw new AssertionError("Did not display any deposite allocation information.") ;
 			}
-			if (CDA_InvestmentOptions_Val.get(0).getText().trim()
-					.equalsIgnoreCase(currDepositeAllocList.get(2))
-					&& CDA_InvestmentCode_Val.get(0).getText().trim()
-							.equalsIgnoreCase(currDepositeAllocList.get(3))
-							&& CDA_DepositType_Val.get(0).getText().trim()
-							.equalsIgnoreCase(currDepositeAllocList.get(4))
-							&& CommonLib.compareDB_Date_With_Web_Date(currDepositeAllocList.get(5),CDA_EffctiveDate_Val.get(0).getText().trim())
-							&& CDA_InvestmentPer_Val.get(0).getText().trim()
-							.contains(currDepositeAllocList.get(6))) {
-				Reporter.logEvent(
-						Status.PASS,
-						"Validate the Current Deposit is getting display correctly or not.",
-						"Current Deposit Allocation is getting displayed correctly with following details "
-						+ "\n"
-						+ "<b>Expected Details:"
-						+ "\n"
-						+ "Investment Option: "+currDepositeAllocList.get(2)
-						+ "\n"
-						+ "Investment Code: "+currDepositeAllocList.get(3)
-						+ "\n"
-						+ "Deposit Type: "+currDepositeAllocList.get(4)
-						+ "\n"
-						+ "Effective Date: "+currDepositeAllocList.get(5)
-						+ "\n"
-						+ "Investment Percentage: "+currDepositeAllocList.get(6)
-						+"\n"
-						+ "<b>Actual Details:"
-						+ "\n"
-						+ "Investment Option: "+CDA_InvestmentOptions_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Investment Code: "+CDA_InvestmentCode_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Deposit Type: "+CDA_DepositType_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Effective Date: "+CDA_EffctiveDate_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Investment Percentage: "+CDA_InvestmentPer_Val.get(0).getText().trim(),
-						true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Validate the Current Deposit is getting display correctly or not.",
-						"Current Deposit Allocation is not getting displayed correctly with following details "
-						+ "\n"
-						+ "<b>Expected Details:"
-						+ "\n"
-						+ "Investment Option: "+currDepositeAllocList.get(2)
-						+ "\n"
-						+ "Investment Code: "+currDepositeAllocList.get(3)
-						+ "\n"
-						+ "Deposit Type: "+currDepositeAllocList.get(4)
-						+ "\n"
-						+ "Effective Date: "+currDepositeAllocList.get(5)
-						+ "\n"
-						+ "Investment Percentage: "+currDepositeAllocList.get(6)
-						+"\n"
-						+ "<b>Actual Details:"
-						+ "\n"
-						+ "Investment Option: "+CDA_InvestmentOptions_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Investment Code: "+CDA_InvestmentCode_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Deposit Type: "+CDA_DepositType_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Effective Date: "+CDA_EffctiveDate_Val.get(0).getText().trim()
-						+ "\n"
-						+ "Investment Percentage: "+CDA_InvestmentPer_Val.get(0).getText().trim(),
-						true);
+			for (int i = 0; i < CDA_InvestmentOptions_Val.size() ; i++) {
+				if (CDA_InvestmentOptions_Val.get(i).getText().trim()
+						.equalsIgnoreCase(currDepositeAllocList.get(2))) {
+					if (CDA_InvestmentOptions_Val.get(0).getText().trim()
+							.equalsIgnoreCase(currDepositeAllocList.get(2))
+							&& CDA_InvestmentCode_Val.get(0).getText().trim()
+									.equalsIgnoreCase(currDepositeAllocList.get(3))
+									&& CDA_DepositType_Val.get(0).getText().trim()
+									.equalsIgnoreCase(currDepositeAllocList.get(4))
+									&& CommonLib.compareDB_Date_With_Web_Date(currDepositeAllocList.get(5),CDA_EffctiveDate_Val.get(0).getText().trim())
+									&& CDA_InvestmentPer_Val.get(0).getText().trim()
+									.contains(currDepositeAllocList.get(6))) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Validate the Current Deposit is getting display correctly or not.",
+								"Current Deposit Allocation is getting displayed correctly with following details "
+								+ "\n"
+								+ "<b>Expected Details:"
+								+ "\n"
+								+ "Investment Option: "+currDepositeAllocList.get(2)
+								+ "\n"
+								+ "Investment Code: "+currDepositeAllocList.get(3)
+								+ "\n"
+								+ "Deposit Type: "+currDepositeAllocList.get(4)
+								+ "\n"
+								+ "Effective Date: "+currDepositeAllocList.get(5)
+								+ "\n"
+								+ "Investment Percentage: "+currDepositeAllocList.get(6)
+								+"\n"
+								+ "<b>Actual Details:"
+								+ "\n"
+								+ "Investment Option: "+CDA_InvestmentOptions_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Investment Code: "+CDA_InvestmentCode_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Deposit Type: "+CDA_DepositType_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Effective Date: "+CDA_EffctiveDate_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Investment Percentage: "+CDA_InvestmentPer_Val.get(0).getText().trim(),
+								true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Validate the Current Deposit is getting display correctly or not.",
+								"Current Deposit Allocation is not getting displayed correctly with following details "
+								+ "\n"
+								+ "<b>Expected Details:"
+								+ "\n"
+								+ "Investment Option: "+currDepositeAllocList.get(2)
+								+ "\n"
+								+ "Investment Code: "+currDepositeAllocList.get(3)
+								+ "\n"
+								+ "Deposit Type: "+currDepositeAllocList.get(4)
+								+ "\n"
+								+ "Effective Date: "+currDepositeAllocList.get(5)
+								+ "\n"
+								+ "Investment Percentage: "+currDepositeAllocList.get(6)
+								+"\n"
+								+ "<b>Actual Details:"
+								+ "\n"
+								+ "Investment Option: "+CDA_InvestmentOptions_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Investment Code: "+CDA_InvestmentCode_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Deposit Type: "+CDA_DepositType_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Effective Date: "+CDA_EffctiveDate_Val.get(0).getText().trim()
+								+ "\n"
+								+ "Investment Percentage: "+CDA_InvestmentPer_Val.get(0).getText().trim(),
+								true);
+					}
+				} else {
+					continue ;
+				}
+				
 			}
+			
 		}
 	}
 	
@@ -580,6 +604,31 @@ public class ContributionAllocationChange extends
 					"Check and Click on Rebalancer radio button and check box.",
 					"Didn't click on Rebalancer radio button and check box.",
 					true);
+		}
+	}
+	
+	/**
+	 * <pre>Click on process account rebalancer check box</pre>
+	 * @throws ParseException
+	 */
+	public void selectProcessAccReblChkBx() throws ParseException{
+		if (Web.isWebElementDisplayed(ProcessAccReblChckBx)) {
+			Web.clickOnElement(ProcessAccReblChckBx) ;
+			Reporter.logEvent(
+					Status.PASS,
+					"Select process rebalancer check box.",
+					"Process rebalancer check box selected.",
+					false);
+			//transferInvestmentPercentage() ;
+			String invtOptns = Selected_InvstOptns.getText().trim() ;
+			String invstPer =  Selected_Percentage.getText().trim();
+			confirm_Allocation_Changes(invtOptns, invstPer);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Select process rebalancer check box.",
+					"Process rebalancer check box selected.",
+					false);
 		}
 	}
 }
