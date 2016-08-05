@@ -4,6 +4,24 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
+	<test name="Manage_My_Investment_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Manage_My_Investment_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 	 <!--   <test
 		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 		<classes>
