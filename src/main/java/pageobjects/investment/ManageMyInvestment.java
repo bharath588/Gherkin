@@ -88,7 +88,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(id = "the_iframe")
 	private WebElement theIframe;
 	@FindBy(id = "transferPreSubmitButton")
-	private WebElement btnReviewTransfer;
+	private List<WebElement> btnReviewTransfer;
 	@FindBy(id = "preValidationWarningAId")
 	private WebElement btnPreValidationOK;
 	@FindBy(xpath = "//table[@class='default']//tbody//table//tr//td[2]//input")
@@ -637,8 +637,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is not displayed", true);
-		Web.waitForElement(btnReviewTransfer);
-		btnReviewTransfer.click();
+		Web.waitForElement(btnReviewTransfer.get(0));
+		btnReviewTransfer.get(0).click();
 		// Web.waitForElement(btnPreValidationOK);
 		// btnPreValidationOK.click();
 		Web.webdriver.switchTo().defaultContent();
