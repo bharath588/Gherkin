@@ -176,10 +176,11 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
         float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
         System.out.println(projectedHealthCareCost);
         System.out.println(calProjHlthCareCost);
-        if(((float)projectedHealthCareCost-(float)calProjHlthCareCost)<=0.4)
-               Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI ", false);
+        //if(projectedHealthCareCost==calProjHlthCareCost || projectedHealthCareCost==calProjHlthCareCost+1 ||  projectedHealthCareCost==calProjHlthCareCost-1)
+        if(((float)projectedHealthCareCost-(float)calProjHlthCareCost)<=1.0)
+               Reporter.logEvent(Status.PASS, "Verify the Projected health Cost", "Projected health care cost is validated as per the values seen on the UI \nExpected:"+projectedHealthCareCost+"\nActual:"+calProjHlthCareCost, false);
         else
-               Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI ", false);
+               Reporter.logEvent(Status.FAIL, "Verify the Projected health Cost", "Projected health care cost is Not validated as per the values seen on the UI \nExpected:"+projectedHealthCareCost+"\nActual:"+calProjHlthCareCost, false);
         
  }
 

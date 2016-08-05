@@ -637,6 +637,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is not displayed", true);
+		Web.waitForElement(btnReviewTransfer);
 		btnReviewTransfer.click();
 		// Web.waitForElement(btnPreValidationOK);
 		// btnPreValidationOK.click();
