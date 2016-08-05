@@ -171,9 +171,9 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
         float totalHealthCareCost = doctorAndTestsPartABCost + prescriptionDrugsPartDCost + medicareSupplementalCost
                                                         + dentalInsuranceCost + hearingAndVisionCost + prescriptionDrugsCost + dentalCost +
                                                         doctorsAndTestsCost;
-        float projectedHealthCareCost = Web.getIntegerCurrency(this.lblProjectedHlthCareCost.getText());
+        float projectedHealthCareCost = (float)Math.round(Web.getIntegerCurrency(this.lblProjectedHlthCareCost.getText()));
         
-        float calProjHlthCareCost = estMonthlyIncome - totalHealthCareCost;
+        float calProjHlthCareCost = (float)Math.round(estMonthlyIncome - totalHealthCareCost);
         System.out.println(projectedHealthCareCost);
         System.out.println(calProjHlthCareCost);
         //if(projectedHealthCareCost==calProjHlthCareCost || projectedHealthCareCost==calProjHlthCareCost+1 ||  projectedHealthCareCost==calProjHlthCareCost-1)

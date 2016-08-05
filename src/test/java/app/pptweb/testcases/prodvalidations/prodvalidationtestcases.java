@@ -562,7 +562,8 @@ public class prodvalidationtestcases {
 			requestLone.isTextFieldDisplayed("Payment Method:");
 			requestLone.isTextFieldDisplayed("Payment Amount:");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
-
+			Web.webdriver.switchTo().defaultContent();
+			Web.webdriver.switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = requestLone
 					.isTextFieldDisplayed("MAILING AND CONTACT INFORMATION:");
 

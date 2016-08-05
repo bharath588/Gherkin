@@ -83,7 +83,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.hrdUserName, true));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblProfile, true));
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
