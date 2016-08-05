@@ -53,6 +53,16 @@
 		</classes>
 	</test> 
 	
+	<test name="Balance_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Balance_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -94,16 +104,6 @@
 		</classes>
 	</test>
 	
-	<test name="Balance_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Balance_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
 	<test name="Transaction_History_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
