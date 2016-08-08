@@ -380,6 +380,8 @@ public class prodvalidationtestcases {
 						"Info User Profile page is not Proper", false);
 			}
 			Web.webdriver.navigate().back();
+			Web.webdriver.navigate().refresh();
+			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -592,7 +594,7 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
 			lblDisplayed = Web
 					.VerifyText(
-							"Please verify all information and carefully read all terms of the Loan Promissory Note and the Plan's Loan Provisions before clicking \"I Accept\".",
+							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
 							requestLone
 									.getWebElementText("TEXT VERIFY ALL INFO"),
 							true);
@@ -606,7 +608,7 @@ public class prodvalidationtestcases {
 						Status.FAIL,
 						"Verify Text PLEASE VERIFY ALL INFO..... is Displayed",
 						"PLEASE VERIFY ALL INFO..... Text is Not Dispalyed Expected:"
-								+ "Please verify all information and carefully read all terms of the Loan Promissory Note and the Plan's Loan Provisions before clicking \"I Accept\"."
+								+ "PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\"."
 								+ "\nActual:"
 								+ requestLone
 										.getWebElementText("TEXT VERIFY ALL INFO"),
