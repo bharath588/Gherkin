@@ -195,7 +195,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -342,7 +342,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -392,7 +392,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -466,7 +466,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -752,7 +752,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -800,7 +800,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -869,7 +869,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -928,7 +928,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -987,7 +987,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1046,7 +1046,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1105,7 +1105,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1144,7 +1144,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1184,7 +1184,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1232,7 +1232,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1277,7 +1277,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1331,7 +1331,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1377,7 +1377,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1540,7 +1540,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1605,7 +1605,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 
@@ -1850,7 +1850,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -1975,7 +1975,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2103,7 +2103,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.assertionerror = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -2249,7 +2249,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2310,7 +2310,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2371,7 +2371,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2432,7 +2432,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2497,7 +2497,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2537,7 +2537,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2569,7 +2569,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2621,7 +2621,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2685,7 +2685,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2806,7 +2806,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2938,7 +2938,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3025,7 +3025,7 @@ public class prodvalidationtestcases {
 			ae.printStackTrace();
 			Globals.error = ae;
 			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					"Assertion Failed!!", true);
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3086,7 +3086,7 @@ public class prodvalidationtestcases {
         {
                         ae.printStackTrace();
                         Globals.error = ae;
-                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage() , true);                    
                         
         }
 		finally { 
@@ -3139,7 +3139,7 @@ public class prodvalidationtestcases {
         {
                         ae.printStackTrace();
                         Globals.error = ae;
-                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);                    
                         
         }
 		finally { 

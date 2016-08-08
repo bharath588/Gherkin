@@ -105,7 +105,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void isLoaded() throws Error {
 
-		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword));
+		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded");
 		String accuCode = null;
 
 		if (Stock.globalTestdata.containsKey("ACCUCODE"))

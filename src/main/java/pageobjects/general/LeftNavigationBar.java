@@ -65,7 +65,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			e.printStackTrace();
 		}
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true));
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),"Left Navigation Bar is Not Loaded");
 
 	}
 

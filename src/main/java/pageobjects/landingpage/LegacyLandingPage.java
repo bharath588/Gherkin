@@ -62,7 +62,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Legacy Landing Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo=null;

@@ -71,7 +71,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Transaction History Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

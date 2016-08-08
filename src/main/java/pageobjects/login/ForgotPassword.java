@@ -62,7 +62,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelpTxr));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblLoginHelpTxr),"Forgot Password Page is Not Loaded");
 		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{

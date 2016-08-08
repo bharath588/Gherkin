@@ -95,7 +95,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount, true));
+		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount, true),"Account SetUp Page is Not Loaded");
 		/*
 		 * String sponser = this.lblSponser.getAttribute("Alt");
 		 * if(sponser.isEmpty()) { sponser=Common.GC_DEFAULT_SPONSER; } if

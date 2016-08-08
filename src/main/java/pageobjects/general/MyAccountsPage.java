@@ -65,7 +65,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"My Accounts Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;

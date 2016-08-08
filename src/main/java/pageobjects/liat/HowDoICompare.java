@@ -73,7 +73,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"How Do I Compare Page is Not Loaded");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			ResultSet strUserInfo=null;

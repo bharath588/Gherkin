@@ -60,7 +60,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@Override
 	protected void isLoaded() throws Error {
 
-		Assert.assertTrue(Web.isWebElementDisplayed(this.hdrEnrollment));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.hdrEnrollment),"Enrollment Page is Not Loaded");
 		
 		
 	}

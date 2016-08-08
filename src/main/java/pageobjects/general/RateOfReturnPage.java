@@ -77,7 +77,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn, true));
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn, true),"Rate Of Return Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;

@@ -70,7 +70,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(lblAccLookupHeaderTextBlock));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblAccLookupHeaderTextBlock),"Account LookUp Page is Not Loaded");
 		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{

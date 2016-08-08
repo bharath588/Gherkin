@@ -64,7 +64,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Payroll Calender Page is Not Loaded");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

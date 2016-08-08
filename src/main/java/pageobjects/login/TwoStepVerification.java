@@ -92,7 +92,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Assert.assertTrue(Web.isWebElementDisplayed(lstDeliveryOption));
+		Assert.assertTrue(Web.isWebElementDisplayed(lstDeliveryOption),"MFA Page is Not Loaded");
     }
 	
 	@Override
