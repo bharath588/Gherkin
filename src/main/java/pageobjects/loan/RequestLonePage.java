@@ -96,7 +96,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestALoan, true),"Request A Loan Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName, true),"Request A Loan Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo=null;

@@ -743,6 +743,7 @@ public class prodvalidationtestcases {
 				}
 			}
 			Web.webdriver.switchTo().defaultContent();
+			Web.clickOnElement(requestLone, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -790,7 +791,7 @@ public class prodvalidationtestcases {
 						"Rate Of Return Page is Not Displayed with Proper Data",
 						true);
 			}
-
+			Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -825,7 +826,9 @@ public class prodvalidationtestcases {
 			homePage.get();
 
 			boolean lblDisplayed = false;
+			
 			Thread.sleep(6000);
+			Web.webdriver.navigate().refresh();
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
 			if (lblDisplayed) {
@@ -918,7 +921,7 @@ public class prodvalidationtestcases {
 			balance.verifytableHeaderNotEmpty("Balance Comparison Table Header");
 			balance.verifyTableDataDisplayed("Balance Comparison Table");
 			balance.verifyGraphDisplayed("Balance Comparison Graph");
-
+			Web.clickOnElement(balance, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

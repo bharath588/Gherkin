@@ -164,6 +164,10 @@ public class Balance extends LoadableComponent<Balance> {
 		if (fieldName.trim().equalsIgnoreCase("Balance Comparison Graph")) {
 			return this.balanceComparisonGraph;
 		}
+		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
+				|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+			return this.lnkLogout;
+		}
 		return null;
 	}
 	private List<WebElement> getWebElementList(String fieldName) {

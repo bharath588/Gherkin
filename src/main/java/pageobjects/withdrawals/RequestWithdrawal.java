@@ -83,7 +83,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestAWithdrawal,
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,
 				true),"Request A WithDrawal Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
