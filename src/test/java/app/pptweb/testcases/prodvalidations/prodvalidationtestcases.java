@@ -772,8 +772,7 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
-			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
 			RateOfReturnPage ROR = new RateOfReturnPage(lftNavBar);
 			ROR.get();
 			boolean isVerified = false;

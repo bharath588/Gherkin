@@ -63,16 +63,6 @@
 		</classes>
 	</test>
 	
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC018_Verify_ROR_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-			
 	<test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
@@ -196,7 +186,17 @@
 			</class>
 		</classes>
 	</test> 
- 
+	
+	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC018_Verify_ROR_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+			 
     <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
