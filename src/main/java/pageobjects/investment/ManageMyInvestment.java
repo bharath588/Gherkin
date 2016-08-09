@@ -437,11 +437,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "verify if transfer amount is entered",
 				"Entered Transfer amount: " + amount, true);
 		btnContinueToNextStep.click();
-		Thread.sleep(5000);
+		Thread.sleep(7000);
 		Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
 		lstChkInvestmentOptionDollarCost.get(0).click();
 		toInvestmentOption = lstInvestmentOptionsDollarCost.get(0).getText();
 		btnContinueToNextStep.click();
+		
 		if (lstInvestmentOptionsDollarCost.get(0).getText()
 				.contains(toInvestmentOption))
 			Reporter.logEvent(Status.PASS,
@@ -455,6 +456,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
+		Thread.sleep(5000);
+		Web.waitForElement(lstInvestmentPercentDollarCost.get(0));
 		Web.clickOnElement(lstInvestmentPercentDollarCost.get(0));
 		keyBoard.sendKeys(Keys.BACK_SPACE).perform();
 		Web.setTextToTextBox(lstInvestmentPercentDollarCost.get(0),

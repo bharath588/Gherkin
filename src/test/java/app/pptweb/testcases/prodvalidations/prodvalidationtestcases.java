@@ -828,6 +828,7 @@ public class prodvalidationtestcases {
 			
 			Thread.sleep(6000);
 			Web.webdriver.navigate().refresh();
+			Thread.sleep(6000);
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
 			if (lblDisplayed) {
