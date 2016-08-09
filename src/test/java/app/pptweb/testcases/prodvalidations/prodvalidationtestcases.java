@@ -1639,52 +1639,55 @@ public class prodvalidationtestcases {
 			Thread.sleep(5000);
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-			/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
-					"Request A Withdrawal", true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is visible", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is NOT visible", true);
-			}
-			
-			 * lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
-			 * .GetParameterValue("withdrawalType")); if (lblDisplayed) {
-			 * Reporter.logEvent(Status.INFO,
-			 * "Verify WithDrawal Type is Selected",
-			 * " WithDrawal Type is Selected", true); } else {
-			 * Reporter.logEvent(Status.FAIL,
-			 * "Verify  WithDrawal Type is Selected",
-			 * " WithDrawal Type is Not Selected", true); }
-			 * requestWithdrawal.isTextFieldDisplayed
-			 * ("Total withdrawal amount");
-			 * 
-			 * lblDisplayed = Web.clickOnElement(requestWithdrawal,
-			 * "MAX AMOUNT");
-			 * 
-			 * if (lblDisplayed) { Reporter.logEvent(Status.INFO,
-			 * "Verify Max Amount CheckBox is Selected",
-			 * "Max Amount CheckBox is Selected", true); } else {
-			 * Reporter.logEvent(Status.FAIL,
-			 * "Verify Max Amount CheckBox is Selected",
-			 * "Max Amount CheckBox is Not Selected", true); }
-			 */
-			// requestWithdrawal.isTextFieldDisplayed("Max Avail");
-			///Web.webdriver.switchTo().defaultContent();
-			//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
-			
-				Reporter.logEvent(Status.INFO,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is visible", true);
+			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
+				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
+						"Request A Withdrawal", true);
+				if (lblDisplayed) {
+					Reporter.logEvent(Status.INFO,
+							"Verify Request A Withdrawal Page is Displayed",
+							"Request A Withdrawal Page is visible", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify Request A Withdrawal Page is Displayed",
+							"Request A Withdrawal Page is NOT visible", true);
+				}
+				*/
+				  lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
+				  .GetParameterValue("withdrawalType")); if (lblDisplayed) {
+				  Reporter.logEvent(Status.INFO,
+				  "Verify WithDrawal Type is Selected",
+				  " WithDrawal Type is Selected", true); } else {
+				  Reporter.logEvent(Status.FAIL,
+				  "Verify  WithDrawal Type is Selected",
+				  " WithDrawal Type is Not Selected", true); }
+				  requestWithdrawal.isTextFieldDisplayed
+				  ("Total withdrawal amount");
+				  
+				  lblDisplayed = Web.clickOnElement(requestWithdrawal,
+				  "MAX AMOUNT");
+				  
+				  if (lblDisplayed) { Reporter.logEvent(Status.INFO,
+				  "Verify Max Amount CheckBox is Selected",
+				  "Max Amount CheckBox is Selected", true); } else {
+				  Reporter.logEvent(Status.FAIL,
+				  "Verify Max Amount CheckBox is Selected",
+				  "Max Amount CheckBox is Not Selected", true); }
+				}
+				 
+				// requestWithdrawal.isTextFieldDisplayed("Max Avail");
+				///Web.webdriver.switchTo().defaultContent();
+				//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
+				if(Stock.getConfigParam("TEST_ENV").contains("PROD")){
+					Reporter.logEvent(Status.INFO,
+							"Verify Request A Withdrawal Page is Displayed",
+							"Request A Withdrawal Page is visible", true);
 				Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-				Thread.sleep(4000);
-			keyBoard.sendKeys(Keys.TAB).perform();
-			keyBoard.sendKeys(Keys.ENTER).perform();
-			Thread.sleep(5000);
+				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
+					Thread.sleep(4000);
+				keyBoard.sendKeys(Keys.TAB).perform();
+				keyBoard.sendKeys(Keys.ENTER).perform();
+				Thread.sleep(5000);
+				}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(7000);
 			lblDisplayed = requestWithdrawal

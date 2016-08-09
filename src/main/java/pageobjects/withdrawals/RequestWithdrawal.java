@@ -10,7 +10,9 @@ import lib.Web;
 import lib.Reporter.Status;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -58,7 +60,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inptCurrentEmpNo;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-
+	@FindBy(xpath= ".//label[./input[@id='inserviceradioyes']]")
+	private WebElement inpCurrentEmployerYes;
 	private String textField="//*[contains(text(),'webElementText')]";
 	private String inputWithdrawalType = "//div[@id='test_id'][.//span[contains(text(),'Withdrawal Type')]]//input";
 	private String inpMailType="//input[contains(@value,'mailType')]";
@@ -213,11 +216,19 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 */
 	public boolean selectWithdrawalType(String withdrawalType) {
 		boolean isSelected=false;
+		Actions keyBoard = new Actions(Web.webdriver);
 		try {
-			
+			if(Web.isWebElementDisplayed(inpCurrentEmployerYes, true))
+			{
+				inpCurrentEmployerYes.click();
+			}
+			Thread.sleep(3000);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
 				.xpath(inputWithdrawalType.replace("Withdrawal Type",
 						withdrawalType)));
+	
 		if(Web.isWebElementDisplayed(inptWithdrawalType, true))
 		{
 		inptWithdrawalType.click();
@@ -230,7 +241,6 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		return isSelected;
 	}
-
 	/**
 	 * <pre>
 	 * Method to get the text of an webElement
