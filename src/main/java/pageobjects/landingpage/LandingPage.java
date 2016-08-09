@@ -147,7 +147,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			this.lnkDismiss.click();
 		}
 
-		if (Web.isWebElementDisplayed(this.lnkCancelGoalSetup)) {
+		if (Web.isWebElementDisplayed(this.lnkCancelGoalSetup,true)) {
 			this.lnkCancelGoalSetup.click();
 		}
 

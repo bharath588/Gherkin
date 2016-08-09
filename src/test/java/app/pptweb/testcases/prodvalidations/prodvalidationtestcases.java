@@ -487,13 +487,12 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
 			/*
 			 * myAccountPage.get(); if(Web.isWebElementDisplayed(myAccountPage,
 			 * "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID(Stock
 			 * .GetParameterValue("groupId")); }
 			 */
-			LeftNavigationBar lftBar = new LeftNavigationBar(myAccountPage);
+			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
 
@@ -791,7 +790,7 @@ public class prodvalidationtestcases {
 						"Rate Of Return Page is Not Displayed with Proper Data",
 						true);
 			}
-			Web.clickOnElement(ROR, "LOGOUT");
+			//Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -888,11 +887,10 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			leftmenu = new LeftNavigationBar(homePage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
 			balance.get();
 			Thread.sleep(5000);
@@ -1632,8 +1630,7 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
-			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
 			requestWithdrawal.get();
@@ -1681,7 +1678,7 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.INFO,
 						"Verify Request A Withdrawal Page is Displayed",
 						"Request A Withdrawal Page is visible", true);
-			
+			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 			Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 				Thread.sleep(4000);
 			keyBoard.sendKeys(Keys.TAB).perform();
