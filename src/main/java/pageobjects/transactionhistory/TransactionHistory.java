@@ -110,7 +110,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	protected void load() {
 		this.parent.get();
 		
-		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction history");
+		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction History");
 		
 	}
 	
