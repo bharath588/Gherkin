@@ -144,7 +144,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (fieldName.trim().equalsIgnoreCase("Transaction History Contr Summary Table")) {
 			return this.lstTransactionHstContrRows;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Transaction History Contr Details Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Transaction History Contr Detail Table")) {
 			return this.lstTransactionHstContrDetailRows;
 		}
 		return null;

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.Choose;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -302,6 +303,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Post Transfer Balance Graph")) {
 			return this.postTransferBalanceGraph;
 		}
+		// Log out
+		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
+						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+					return this.lnkLogout;
+				}
+
 
 		return null;
 	}
@@ -382,7 +389,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void dollarCostAverageFlow(String frequency, String setupDate,
-			String percent, String amount) {
+			String percent, String amount) throws InterruptedException {
+		Actions keyBoard = new Actions(Web.webdriver);
 		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		WebElement freq = this.getWebElement(frequency);
@@ -426,8 +434,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.waitForElement(txtTransferAmtDollarCost);
 		Web.setTextToTextBox(txtTransferAmtDollarCost, amount);
 		Reporter.logEvent(Status.INFO, "verify if transfer amount is entered",
-				"Entered Transfer amount: " + amount, false);
+				"Entered Transfer amount: " + amount, true);
 		btnContinueToNextStep.click();
+		Thread.sleep(5000);
 		Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
 		lstChkInvestmentOptionDollarCost.get(0).click();
 		toInvestmentOption = lstInvestmentOptionsDollarCost.get(0).getText();
@@ -438,19 +447,20 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"verify Investment Option displayed", "Expected: "
 							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
-					false);
+					true);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"verify Investment Options displayed", "Expected: "
 							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
-
+		Web.clickOnElement(lstInvestmentPercentDollarCost.get(0));
+		keyBoard.sendKeys(Keys.BACK_SPACE).perform();
 		Web.setTextToTextBox(lstInvestmentPercentDollarCost.get(0),
 				Stock.GetParameterValue("percent"));
 		Reporter.logEvent(Status.INFO, "verify investment percent is entered",
 				"investment percent : " + Stock.GetParameterValue("percent"),
-				false);
+				true);
 		btnContinueToNextStep.click();
 		Web.webdriver.switchTo().defaultContent();
 
