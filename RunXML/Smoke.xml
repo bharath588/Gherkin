@@ -4,7 +4,75 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	  <test
+	   <test
+		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC01_Verify_Custom_site_prelogin_data" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+<test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include
+						name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	 <test
+		name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Balance_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Balance_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC018_Verify_ROR_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+			
+	<test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -14,8 +82,7 @@
 			</class>
 		</classes>
 	</test>
-	
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
+		<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -24,4 +91,257 @@
 			</class>
 		</classes>
 	</test> 
+	 	 <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	
+	<test name="Transaction_History_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Transaction_History_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Statement_and_Documents_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Statement_and_Documents_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Manage_My_Investment_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Manage_My_Investment_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Investment_lineup_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Investment_lineup_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="PlanForms_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="PlanForms_Validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Edit_Beneficiary">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Edit_Beneficiary" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Brokerage_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Brokerage_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Edit_MyContribution">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Edit_MyContribution" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+ 
+    <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="HCC_TC009_To_verify_Health_care_costs"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="HDIC_TC010_To_verify_How_do_I_compare_tab"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="Liat_Verify_PayCheckView_Displayed">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include
+						name="LIAT_To_verify_PayCheckView_Displayed" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+    <test name="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Liat_Verify_HowDoICompareTab_Labels_Circles">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_HowDoICompare_Labels_Circles" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="LIAT_Verify_Health_care_costs_helpful_links">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Verify_Health_care_costs_helpful_links" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="LIAT_Verify_Tour_Link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Verify_Tour_Link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<!-- DO not have the test data -->
+	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="LIAT_To_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users" />
+				</methods>
+			</class>
+		</classes>
+	</test> -->
+	
+   <!-- <test name="Payroll_Calendar_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Payroll_Calendar_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	  <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC05_HOmePAge_RPS_PSAP_Setup_Dummy_TestPlan_link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC05_Verify_RPS_PSAP_Setup_Dummy_TestPlan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test> --> 
 </suite>
