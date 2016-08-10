@@ -76,7 +76,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Investment LineUp Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblInvestmentlineup),"Investment LineUp Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

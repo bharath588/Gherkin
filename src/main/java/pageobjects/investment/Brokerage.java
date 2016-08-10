@@ -56,7 +56,7 @@ private LoadableComponent<?> parent;
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Brokerage Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblBrokerage),"Brokerage Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

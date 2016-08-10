@@ -74,7 +74,7 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Balance Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblBalance),"Balance Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;

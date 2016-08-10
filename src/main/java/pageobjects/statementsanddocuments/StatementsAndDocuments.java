@@ -76,7 +76,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Statements And Documents Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblStmtsAndDocs),"Statements And Documents Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

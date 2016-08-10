@@ -117,7 +117,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Benificiary Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries),"Benificiary Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		
 		String userFromDatasheet = null;

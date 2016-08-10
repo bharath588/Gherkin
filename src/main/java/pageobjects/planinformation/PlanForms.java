@@ -68,7 +68,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"PlanForms Page is Not Loaded");
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblPlanForms),"PlanForms Page is Not Loaded");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

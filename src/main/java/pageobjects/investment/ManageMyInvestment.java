@@ -213,7 +213,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyInvestments),"Manage My Investment Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {

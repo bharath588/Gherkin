@@ -229,6 +229,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	public void submitVerificationCode(String verificationCode, boolean OptionDisplayed_rememberDevice, boolean rememberDevice) throws Exception{
 			
 		Thread.sleep(2000);
+		Web.waitForElement(txtCodeInput);
 		this.txtCodeInput.sendKeys(verificationCode);
 		Reporter.logEvent(Status.INFO, "Enter Verification Code", "Verification code ["+ verificationCode +"] has been entered", true);
 		
