@@ -790,7 +790,7 @@ public class prodvalidationtestcases {
 						"Rate Of Return Page is Not Displayed with Proper Data",
 						true);
 			}
-			//Web.clickOnElement(ROR, "LOGOUT");
+			Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
