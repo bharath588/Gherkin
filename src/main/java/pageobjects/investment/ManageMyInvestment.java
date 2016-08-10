@@ -458,6 +458,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					true);
 		Thread.sleep(5000);
 		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElement(lstInvestmentPercentDollarCost.get(0));
 		Web.clickOnElement(lstInvestmentPercentDollarCost.get(0));
 		keyBoard.sendKeys(Keys.BACK_SPACE).perform();
