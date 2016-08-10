@@ -487,11 +487,14 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			/*
-			 * myAccountPage.get(); if(Web.isWebElementDisplayed(myAccountPage,
-			 * "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID(Stock
-			 * .GetParameterValue("groupId")); }
-			 */
+			/*MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
+				 myAccountPage.get();
+				 if(Web.isWebElementDisplayed(myAccountPage,
+				  "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID("332125-01"); 
+				
+				  }
+				}*/
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
@@ -1019,7 +1022,7 @@ public class prodvalidationtestcases {
 					leftmenu);
 
 			statements.get();
-			Thread.sleep(5000);
+			Thread.sleep(8000);
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Statements Summary Table");
 			statements
