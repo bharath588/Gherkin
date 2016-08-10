@@ -83,7 +83,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Landing Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Landing Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;

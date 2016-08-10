@@ -65,7 +65,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblPriorContributions),"My Contribution Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblPriorContributions,true),"My Contribution Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		

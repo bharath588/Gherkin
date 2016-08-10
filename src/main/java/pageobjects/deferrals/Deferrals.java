@@ -178,7 +178,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		protected void isLoaded() throws Error {
 
 			
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyContributions),"My Contribution Page is Not Loaded");
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyContributions,true),"My Contribution Page is Not Loaded");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))

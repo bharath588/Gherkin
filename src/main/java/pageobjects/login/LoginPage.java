@@ -104,10 +104,11 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
+		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
 		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded");
 		String accuCode = null;
 
-		if (Stock.globalTestdata.containsKey("ACCUCODE"))
+	/*	if (Stock.globalTestdata.containsKey("ACCUCODE"))
 
 		{
 			if (Stock.GetParameterValue("AccuCode") != null)
@@ -123,7 +124,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					"Login page for '" + Common.getSponser()
 							+ "' is not loaded.");
 
-		}
+		}*/
 	}
 
 	@Override
