@@ -71,7 +71,13 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(0, ssn.length()-3));
+		ResultSet strUserInfo=null;
+		try {
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
 				
 		try {
 			userFromDatasheet = strUserInfo.getString("FIRST_NAME")+ " " + strUserInfo.getString("LAST_NAME");

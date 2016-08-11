@@ -120,15 +120,20 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
-		
+		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		
+		try {
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		
 		try {

@@ -218,11 +218,16 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
-		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {
+		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
 			userFromDatasheet = Stock.GetParameterValue("lblUserName");
 		} else {
-			ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn
-					.substring(0, ssn.length() - 3));
+			ResultSet strUserInfo=null;
+			try {
+				strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			try {
 				userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "

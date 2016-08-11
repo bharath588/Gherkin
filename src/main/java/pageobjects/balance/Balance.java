@@ -88,8 +88,7 @@ public class Balance extends LoadableComponent<Balance> {
 		}
 		else{
 		 try {
-			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(
-					0, ssn.length() - 3));
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

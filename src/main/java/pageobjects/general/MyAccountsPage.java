@@ -70,13 +70,12 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
-		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {
+		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
 			userFromDatasheet = Stock.GetParameterValue("lblUserName");
 		} else {
 
 			try {
-				strUserInfo = Common.getParticipantInfoFromDataBase(ssn
-						.substring(0, 9));
+				strUserInfo =Common.getParticipantInfoFromDataBase(ssn);;
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

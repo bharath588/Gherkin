@@ -74,8 +74,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		else{
 	
 		try {
-			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(
-					0,9));
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
 		} catch (SQLException e1) {
 						e1.printStackTrace();
 		}
