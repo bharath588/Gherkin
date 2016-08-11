@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.apache.bcel.generic.RETURN;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import core.framework.Globals;
@@ -28,6 +29,7 @@ public class Common {
 	public static final String GC_DEFAULT_SPONSER = "Empower";
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	public static WebElement lblUserName;
+	private static String userName = "";
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
 
 		// query to get the no of plans
@@ -93,13 +95,12 @@ public class Common {
 		ResultSet participantDB = null;
 
 		try {
-			sqlQuery = Stock.getTestQuery("getParticipantDB");
+			sqlQuery = Stock.getTestQuery("getPartcipantDBInfo");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],
-				getParticipantID(ssn));
+		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
 		if (DB.getRecordSetCount(participantDB) > 0) {
 			try {
 				participantDB.last();
@@ -283,18 +284,25 @@ public class Common {
 		return null;
 	}
 	public static boolean verifyLoggedInUserIsSame() {
-		
+		PageFactory.initElements(lib.Web.webdriver, Common.class);
 		boolean lblDisplayed=false;
-		
+		String userLogedIn="";
+		ResultSet strUserInfo=null;
 	String ssn = Stock.GetParameterValue("userName");
+	
 	String userFromDatasheet = null;
 	if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 	{
 		userFromDatasheet=Stock.GetParameterValue("lblUserName");
 	}
-	else{
-	ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-			0, ssn.length() - 3));
+	else if (!userName.equalsIgnoreCase(ssn.trim())){
+	
+	try {
+		strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+	} catch (SQLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 
 	
 	try {
@@ -304,14 +312,24 @@ public class Common {
 		e.printStackTrace();
 	}
 	}
-	String userLogedIn = lblUserName.getText();
+	if(lblUserName.isDisplayed()){
+	 userLogedIn = lblUserName.getText();
+	}
 	/*String sponser = this.lblSponser.getAttribute("Alt");
 	if (sponser.isEmpty()) {
 		sponser = Common.GC_DEFAULT_SPONSER;
 	}*/
-	if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
+	if (!userName.equalsIgnoreCase(ssn.trim())){
+//		 if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
+//			lblDisplayed=true;
+//		 }
+		 userName = ssn.trim();
+	}else{
+		 if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
 		lblDisplayed=true;
+		 }
 	}
+	
 	return lblDisplayed;
 	}
 }

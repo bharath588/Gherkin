@@ -111,7 +111,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		String userLogedIn = this.lblUserName.getText();
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn),"Landing page is not loaded");		
 			//Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
 		} else {
 			this.lnkLogout.click();

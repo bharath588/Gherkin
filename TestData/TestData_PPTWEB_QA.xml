@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="QA">
-	<DateTime value="8/10/2016 5:06:26 PM"></DateTime>
+	<DateTime value="8/11/2016 1:46:28 PM"></DateTime>
 	<Module name="Program"></Module>
 	<Module name="query">
 		<parameter QueryName="fetchContactInformation" DB="ParticipantDataDB_QA"
@@ -91,6 +91,10 @@ where a.PRIMARY_RES_IND='Y'
   and rownum &lt;2100" />
 		<parameter QueryName="fetchIdFromUserNameRegistry" DB="CommonDB_QA"
 			Query="select ID from USERNAME_REGISTRY  where ssn = ?" />
+		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
+			Query="select i.ind_id, i.database_instance, u.ssn, u.username, u.web_default_ga_id from individual_registry i inner join username_registry u on i.usrreg_id= u.id
+where u.username=?
+" />
 	</Module>
 	<Module name="liat">
 		<TestCase
@@ -2020,7 +2024,7 @@ where a.PRIMARY_RES_IND='Y'
 		</TestCase>
 		<TestCase name="Transaction_History_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="024696772ABC" />
+				<parameter name="userName" value="100551518ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="" />
 				<parameter name="Submit_Transaction" value="No" />

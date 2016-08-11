@@ -145,9 +145,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary),"Benificiary Page is Not Loadeed");
 			else
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries),"Benificiary Page is Not Loadeed");
 		} else {
 			this.lnkLogout.click();
 			System.out.println("Clicked on Log Out Beniciary Page");

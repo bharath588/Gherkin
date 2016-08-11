@@ -97,7 +97,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
 			
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			//Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
+			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName,true),"Requuest Loan page is not loadede");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");

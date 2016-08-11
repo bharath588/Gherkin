@@ -31,7 +31,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	private String confirmationNo;
 	
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	@FindBy(xpath="//h1[text()='Transaction history']") private WebElement lblTransactionHistory;
+	@FindBy(xpath="//h1[text()='Transaction History']") private WebElement lblTransactionHistory;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='tranHistFilterOptions']") private WebElement tblTransactionFilterOption;
 	@FindBy(id="tranHistSummaryTable") private WebElement tblTransactionHstSummary;
@@ -100,7 +100,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 				) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory,true),"Transacton History Page is not Loaded\n");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");
@@ -162,9 +162,9 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 //				Reporter.logEvent(Status.PASS, "verify Contribution details displayed", "Contribution details displayed",true);
 //			else
 //				Reporter.logEvent(Status.FAIL, "verify Contribution details displayed", "Contribution details not displayed",true);
-			for(int i=1;i<=lstConfirmationNumber.size();i++){
+			for(int i=0;i<=lstConfirmationNumber.size();i++){
 				System.out.println(lstTransactionType.get(i).getText());
-				if(lstTransactionType.get(i).getText().equalsIgnoreCase("Additional Deposit")){
+				if(lstTransactionType.get(i).getText().equalsIgnoreCase("Additional Deposit")||lstTransactionType.get(i).getText().equalsIgnoreCase("Payroll Contribution")){
 					confirmationNo=lstConfirmationNumber.get(i).getText().trim();
 					System.out.println(confirmationNo);
 					lstConfirmationNumber.get(i).click();

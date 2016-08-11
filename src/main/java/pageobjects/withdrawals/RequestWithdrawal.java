@@ -121,7 +121,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web
-					.isWebElementDisplayed(this.lblRequestAWithdrawal));
+					.isWebElementDisplayed(this.lblRequestAWithdrawal,true),"Requuest Loan page is not loadede");
 		
 		} else {
 			this.lnkLogout.click();

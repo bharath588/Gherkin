@@ -4,31 +4,33 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="Manage_My_Investment_Flow">
+   <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Manage_My_Investment_Flow" />
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-	<test name="Dollar_Cost_Average_Flow">
+	 <test
+		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Dollar_Cost_Average_Flow" />
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
 				</methods>
 			</class>
 		</classes>
 	</test>
-	<test name="FundToFundTransfer">
+	 	 <test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="FundToFundTransfer" />
+					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> 
 </suite>

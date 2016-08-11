@@ -87,8 +87,13 @@ public class Balance extends LoadableComponent<Balance> {
 				
 		}
 		else{
-		 strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		 try {
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn.substring(
+					0, ssn.length() - 3));
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		
 		try {
@@ -106,12 +111,12 @@ public class Balance extends LoadableComponent<Balance> {
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true),"Balance Page is not Loadeed\n");
 		} else {
 			
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out Investements Page");
-			Assert.assertTrue(false,"Logging in with new User");
+			System.out.println("Clicked on Log Out Balance Page");
+			Assert.assertTrue(false,"Logging in with new User\n");
 		}
 	}
 
