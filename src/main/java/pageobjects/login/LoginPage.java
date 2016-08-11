@@ -543,13 +543,13 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 		if (isDisplayed) {
 
-			Reporter.logEvent(Status.PASS, "Verify 'FiledName'  is displayed",
+			Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\'  is displayed",
 					fieldName + " is displayed", false);
 			isDisplayed = true;
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
-					"Verify 'FiledName' header is displayed", fieldName
+					"Verify \'"+fieldName+"\' is displayed", fieldName
 							+ " is not Same", false);
 		}
 

@@ -176,9 +176,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		@Override
 		protected void isLoaded() throws Error {
+			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
 			
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyContributions,true),"My Contribution Page is Not Loaded\n");
+			//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyContributions,true),"My Contribution Page is Not Loaded\n");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -196,11 +197,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					}
-			
+				}
+					
 			String userLogedIn = this.lblUserName.getText();
+			
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
 				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 					Deferrals.waitforLoad = true;
 					throw new Error("'My contributions' page is not loaded");
@@ -209,8 +211,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 			} else {
 				this.lnkLogout.click();
-				Web.waitForElement(this.btnLogin);
-				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+				System.out.println("Clicked on Log Out MyContribution Page");
+				Assert.assertTrue(false,"Logging in with new User");
 			}
 		}
 		

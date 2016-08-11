@@ -62,7 +62,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Legacy Landing Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Legacy Landing Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo=null;
@@ -100,11 +100,8 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 			//Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
-		
-		
 	}
 
 	@Override

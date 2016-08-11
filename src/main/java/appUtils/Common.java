@@ -4,14 +4,20 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import org.apache.bcel.generic.RETURN;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
+
 import core.framework.Globals;
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 import lib.Reporter.Status;
 
 public class Common {
-
+	
 	/**
 	 * <pre>
 	 * Method to return the no of plans associated to a user from db
@@ -20,7 +26,8 @@ public class Common {
 	 */
 	// For Sponsor
 	public static final String GC_DEFAULT_SPONSER = "Empower";
-
+	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
+	public static WebElement lblUserName;
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
 
 		// query to get the no of plans
@@ -274,5 +281,37 @@ public class Common {
 			return Globals.DB_TYPE.get("PROD");
 		}
 		return null;
+	}
+	public static boolean verifyLoggedInUserIsSame() {
+		
+		boolean lblDisplayed=false;
+		
+	String ssn = Stock.GetParameterValue("userName");
+	String userFromDatasheet = null;
+	if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+	{
+		userFromDatasheet=Stock.GetParameterValue("lblUserName");
+	}
+	else{
+	ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+			0, ssn.length() - 3));
+
+	
+	try {
+		userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+				+ strUserInfo.getString("LAST_NAME");
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	}
+	String userLogedIn = lblUserName.getText();
+	/*String sponser = this.lblSponser.getAttribute("Alt");
+	if (sponser.isEmpty()) {
+		sponser = Common.GC_DEFAULT_SPONSER;
+	}*/
+	if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
+		lblDisplayed=true;
+	}
+	return lblDisplayed;
 	}
 }

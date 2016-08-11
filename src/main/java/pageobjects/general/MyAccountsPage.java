@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.testng.Assert;
 
 import core.framework.Globals;
@@ -65,7 +64,9 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"My Accounts Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"My Accounts Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
@@ -87,17 +88,18 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 				e.printStackTrace();
 			}
 
+		}	
 			String userLogedIn = this.lblUserName.getText();
+			
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-				Assert.assertTrue(userFromDatasheet
-						.equalsIgnoreCase(userLogedIn));
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
 				// Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
 			} else {
 				this.lnkLogout.click();
-				Web.waitForElement(this.btnLogin);
-				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+				System.out.println("Clicked on Log Out My Accoounts Page");
+				Assert.assertTrue(false,"Logging in with new User");
 			}
-		}
+		
 	}
 
 	@Override

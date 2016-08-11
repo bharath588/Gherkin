@@ -3,10 +3,12 @@ package pageobjects.investment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,7 +58,9 @@ private LoadableComponent<?> parent;
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblBrokerage,true),"Brokerage Page is Not Loaded\n");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblBrokerage,true),"Brokerage Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -75,19 +79,15 @@ private LoadableComponent<?> parent;
 			e.printStackTrace();
 		}
 		}
+		
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
-		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-				) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
+		
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 

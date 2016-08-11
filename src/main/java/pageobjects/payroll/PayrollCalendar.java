@@ -9,10 +9,12 @@ import java.util.List;
 
 
 
+
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 
 
 
@@ -64,7 +66,9 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblPayrollCalendar),"Payroll Calender Page is Not Loaded");
+			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+			//Assert.assertTrue(Web.isWebElementDisplayed(this.lblPayrollCalendar),"Payroll Calender Page is Not Loaded");
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -83,19 +87,15 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 				e.printStackTrace();
 			}
 			}
+			
 			String userLogedIn = this.lblUserName.getText();
-			String sponser = this.lblSponser.getAttribute("Alt");
-			if (sponser.isEmpty()) {
-				sponser = Common.GC_DEFAULT_SPONSER;
-			}
-			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
-					) {
-				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar,true));
+			
+			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar));
 			} else {
 				this.lnkLogout.click();
-				Web.waitForElement(this.btnLogin);
-				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+				Assert.assertTrue(false,"Logging in with new User");
 			}
 		}
 

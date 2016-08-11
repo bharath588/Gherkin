@@ -6,10 +6,12 @@ import java.util.List;
 
 
 
+
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 
 
 
@@ -74,7 +76,8 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblBalance,true),"Balance Page is Not Loaded\n");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblBalance,true),"Balance Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
@@ -103,11 +106,12 @@ public class Balance extends LoadableComponent<Balance> {
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance));
 		} else {
+			
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out Investements Page");
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 

@@ -65,7 +65,9 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblPriorContributions,true),"My Contribution Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblPriorContributions,true),"My Contribution Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		
@@ -79,14 +81,15 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		
 		String userLogedIn = this.lblUserName.getText();
 		
+			
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			//Assert.assertTrue(Web.isWebElementDisplayed(txtPriorContribution,true));
 			
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out My Contribution Page");
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 	

@@ -4,12 +4,29 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Lone_link">
+    <test name="Manage_My_Investment_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Lone_link" />
+					<include name="Manage_My_Investment_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
 				</methods>
 			</class>
 		</classes>

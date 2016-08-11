@@ -86,8 +86,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestAWithdrawal,
-				true),"Request A WithDrawal Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblRequestAWithdrawal,
+				//true),"Request A WithDrawal Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
@@ -118,14 +120,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
-			/*Assert.assertTrue(Web
-					.isWebElementDisplayed(this.lblRequestAWithdrawal));*/
+			Assert.assertTrue(Web
+					.isWebElementDisplayed(this.lblRequestAWithdrawal));
+		
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
-
 	}
 
 	@Override

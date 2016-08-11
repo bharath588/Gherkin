@@ -117,7 +117,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
 		
 		String userFromDatasheet = null;
@@ -141,17 +142,16 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		}if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary));
 			else
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries,true));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out Beniciary Page");
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 

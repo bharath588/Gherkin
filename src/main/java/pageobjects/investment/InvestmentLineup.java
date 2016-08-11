@@ -21,6 +21,7 @@ import lib.Reporter.Status;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -76,7 +77,9 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblInvestmentlineup,true),"Investment LineUp Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblInvestmentlineup,true),"Investment LineUp Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -95,18 +98,15 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 			e.printStackTrace();
 		}
 		}
+		
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
-		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup,true));
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 

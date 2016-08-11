@@ -213,7 +213,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyInvestments,true),"Manage My Investment Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {
@@ -229,19 +231,19 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				e.printStackTrace();
 			}
 		}
+		
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
-		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments,
-					true));
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments));
 		} else {
+			
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out Investements Page");
+			Assert.assertTrue(false,"Logging in with new User");
+			/*Web.waitForElement(this.btnLogin);
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));*/
 		}
 	}
 

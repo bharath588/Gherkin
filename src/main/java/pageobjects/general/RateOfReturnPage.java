@@ -77,7 +77,9 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn, true),"Rate Of Return Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn, true),"Rate Of Return Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
@@ -101,18 +103,16 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 					e.printStackTrace();
 				}
 			}
+		
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
-		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out RateOfReturn Page");
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 
 	}

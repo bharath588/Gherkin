@@ -1,7 +1,6 @@
 package pageobjects.landingpage;
 
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 
 import lib.DB;
@@ -83,7 +82,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Landing Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Landing Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
@@ -106,18 +107,15 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 				e.printStackTrace();
 			}
 		}
+		
 		String userLogedIn = this.lblUserName.getText();
-		/*String sponser = this.lblSponser.getAttribute("Alt");
-		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}*/
+		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
-			// Assert.assertTrue(Web.isWebElementDisplayed(lblRetirementIncome,true));
+			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			//Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 
 	}

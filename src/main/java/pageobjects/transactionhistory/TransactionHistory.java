@@ -71,7 +71,9 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblTransactionHistory,true),"Transaction History Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblTransactionHistory,true),"Transaction History Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -98,11 +100,10 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 				) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory,true));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblTransactionHistory));
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 

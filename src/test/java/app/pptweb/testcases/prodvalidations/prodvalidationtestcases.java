@@ -1100,7 +1100,7 @@ public class prodvalidationtestcases {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}
-			 Web.clickOnElement(investment, "LOGOUT");
+			// Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
