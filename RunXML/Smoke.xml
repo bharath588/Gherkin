@@ -43,7 +43,7 @@
 			</class>
 		</classes>
 	</test> 
-	</test>
+	
 		<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
