@@ -70,7 +70,7 @@ public class Common {
 		}
 		sqlQuery[0] = getParticipantDBName(ssn) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
-				ssn);
+				ssn.substring(0, 9));
 
 		if (DB.getRecordSetCount(participantInfo) > 0) {
 			try {
