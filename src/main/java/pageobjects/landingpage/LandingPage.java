@@ -89,7 +89,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
-		if (Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD")) {
+		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
 			userFromDatasheet = Stock.GetParameterValue("lblUserName");
 		} else {
 

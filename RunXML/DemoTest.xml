@@ -4,17 +4,8 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-   <test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	 <test
+  
+	  <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -24,7 +15,7 @@
 			</class>
 		</classes>
 	</test>
-	 	 <test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
+	<!-- 	 <test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -32,5 +23,5 @@
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test>  -->
 </suite>

@@ -164,7 +164,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			leftNavLink.get(0).click();
 			success = true;
 		} else {
-			Reporter.logEvent(Status.WARNING,
+			Reporter.logEvent(Status.INFO,
 					"Click the specified link on left navigation bar", "'"
 							+ linkName + "' not found", false);
 		}

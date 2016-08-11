@@ -129,7 +129,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRequestALoan,true),"Requuest Loan page is not loadede");
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRequestALoan,true),"Requuest Loan page is not loadeded\n");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");
