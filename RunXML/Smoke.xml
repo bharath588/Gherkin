@@ -91,7 +91,7 @@
 				</methods>
 			</class>
 		</classes>
-	
+	</test>
 	 	 <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 		<classes>
