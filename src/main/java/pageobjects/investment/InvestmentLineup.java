@@ -120,7 +120,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Investment lineup");
-		
+		lib.Web.isWebElementDisplayed(lblInvestmentlineup,true);
 	}
 	
 	private WebElement getWebElement(String fieldName) {

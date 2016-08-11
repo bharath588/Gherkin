@@ -258,6 +258,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/manage my investments");
+		lib.Web.isWebElementDisplayed(lblMyInvestments,true);
 
 	}
 

@@ -56,6 +56,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+	
 
 	/** Empty args constructor
 	 * 
@@ -122,7 +123,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
-		
+		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
 	}
 	
 	

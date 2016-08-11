@@ -1260,7 +1260,6 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-
 			leftmenu = new LeftNavigationBar(homePage);
 			PlanForms planforms = new PlanForms(leftmenu);
 			planforms.get();
