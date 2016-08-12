@@ -43,16 +43,6 @@
 			</class>
 		</classes>
 	</test> 
-	
-		<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
 	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -92,6 +82,15 @@
 			</class>
 		</classes>
 	</test>
+		<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
 	 	 <test
 		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 		<classes>

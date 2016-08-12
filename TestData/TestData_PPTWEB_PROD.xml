@@ -170,7 +170,7 @@
 				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="SIT_xPPTWEB_Login_ProdValidation_TC_Legacy_Home_Page">
+		<TestCase name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="012345678xyz" />
 				<parameter name="password" value="Test@1234" />
