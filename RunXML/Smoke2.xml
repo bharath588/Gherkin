@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	  
+	<test name="Transaction_History_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Transaction_History_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Statement_and_Documents_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Statement_and_Documents_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Manage_My_Investment_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Manage_My_Investment_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Investment_lineup_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Investment_lineup_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="PlanForms_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="PlanForms_Validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Edit_Beneficiary">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Edit_Beneficiary" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Brokerage_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Brokerage_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Edit_MyContribution">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Edit_MyContribution" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+ 
+   
+</suite>
