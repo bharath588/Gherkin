@@ -120,7 +120,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web
-					.isWebElementDisplayed(this.lblRequestAWithdrawal,true),"Requuest WithDrawal page is not loadede");
+					.isWebElementDisplayed(this.lblRequestAWithdrawal),"Requuest WithDrawal page is not loadede");
 		
 		} else {
 			this.lnkLogout.click();
@@ -130,11 +130,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	@Override
 	protected void load() {
-		
+	/*	
 		if (Web.isWebElementDisplayed(lnkDismiss)) {
 			this.lnkDismiss.click();
 		}
-		
+		*/
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent)
