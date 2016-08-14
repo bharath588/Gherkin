@@ -139,6 +139,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("Request a withdrawal");
+		Web.isWebElementDisplayed(lblRequestAWithdrawal,true);
 
 	}
 

@@ -110,7 +110,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs),"Statements and Documenta page is not loaded");
 		
 		} else {
 			this.lnkLogout.click();

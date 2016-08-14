@@ -1325,7 +1325,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
 					"Yes"))
 				investment.cancelTransfer("F2F");
-			 Web.clickOnElement(investment, "LOGOUT");
+			// Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

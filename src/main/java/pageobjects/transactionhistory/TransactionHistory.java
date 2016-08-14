@@ -31,7 +31,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	private String confirmationNo;
 	
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	@FindBy(xpath="//h1[text()='Transaction History']") private WebElement lblTransactionHistory;
+	@FindBy(xpath="//h1[text()='Transaction history']") private WebElement lblTransactionHistory;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='tranHistFilterOptions']") private WebElement tblTransactionFilterOption;
 	@FindBy(id="tranHistSummaryTable") private WebElement tblTransactionHstSummary;
@@ -116,8 +116,8 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	protected void load() {
 		this.parent.get();
 		
-		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction History");
-		
+		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction history");
+		Web.isWebElementDisplayed(lblTransactionHistory,true);
 	}
 	
 	

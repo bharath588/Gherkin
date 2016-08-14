@@ -241,7 +241,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments),"View/Manage MyInvestments Page is Not Loaded");
 		} else {
 			
 			this.lnkLogout.click();
