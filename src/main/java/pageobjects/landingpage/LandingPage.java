@@ -136,7 +136,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			}
 		}
 
-		if (Web.isWebElementDisplayed(this.btnCloseTutorial)) {
+		if (Web.isWebElementDisplayed(this.btnCloseTutorial,true)) {
 			this.btnCloseTutorial.click();
 		}
 
