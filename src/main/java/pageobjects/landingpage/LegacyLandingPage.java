@@ -96,7 +96,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
 			
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName,true),"Requuest Loan page is not loadede");
+			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"Legacy Landing page is not loaded");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");
@@ -131,6 +131,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		}
 		
 		//Reporter.logEvent(this.getClass(), Level.INFO, "Secure PIN entered.", true);
+		Web.isWebElementDisplayed(lblUserName,true);
 	}
 	
 	

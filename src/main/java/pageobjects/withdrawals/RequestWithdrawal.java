@@ -119,7 +119,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
-			Assert.assertTrue(Web.isWebElementDisplayed(lblRequestAWithdrawal),"Requuest WithDrawal page is not loadede");
+			Assert.assertTrue(Web.isWebElementDisplayed(lblRequestAWithdrawal),"Request WithDrawal page is not loaded");
 		
 		} else {
 			this.lnkLogout.click();
@@ -136,9 +136,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		*/
 		this.parent.get();
 
-		((LeftNavigationBar) this.parent)
-				.clickNavigationLink("Request a withdrawal");
-		Web.isWebElementDisplayed(lblRequestAWithdrawal,true);
+		((LeftNavigationBar) this.parent).clickNavigationLink("Request a withdrawal");
+		if(!Web.isWebElementDisplayed(lblRequestAWithdrawal))
+		    Web.waitForElement(lblRequestAWithdrawal);
 
 	}
 
