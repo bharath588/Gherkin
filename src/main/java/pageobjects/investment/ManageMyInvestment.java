@@ -31,7 +31,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String investmentFundName1;
 	String investmentFundName2;
 	String fromInvestmentOption;
-	String toInvestmentOption;
+	static String toInvestmentOption;
 	String confirmationNo;
 
 	// @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']")
@@ -178,6 +178,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement hdrInvestmentOptionTblForDollarCost;
 	@FindBy(xpath = "//table/tbody/tr[contains(@class,'tableData')]/td[1]")
 	private List<WebElement> lstInvestmentOptionsDollarCost;
+	@FindBy(xpath = "//table/tbody/tr[contains(@class,'tableData')]/td[2]")
+	private List<WebElement> lstToInvestmentOptionsDollarCost;
 	@FindBy(xpath = "//table/tbody/tr[contains(@class,'tableData')]/td/input")
 	private List<WebElement> lstChkInvestmentOptionDollarCost;
 	@FindBy(xpath = "//input[contains(@id,'ID')]")
@@ -445,17 +447,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "verify if transfer amount is entered",
 				"Entered Transfer amount: " + amount, true);
 		btnContinueToNextStep.click();
-		Thread.sleep(7000);
+		//Thread.sleep(7000);
 		Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
 		lstChkInvestmentOptionDollarCost.get(0).click();
-		toInvestmentOption = lstInvestmentOptionsDollarCost.get(0).getText();
+		toInvestmentOption = lstToInvestmentOptionsDollarCost.get(0).getText();
 		btnContinueToNextStep.click();
-		
+		Web.waitForElements(lstInvestmentOptionsDollarCost);
 		if (lstInvestmentOptionsDollarCost.get(0).getText()
 				.contains(toInvestmentOption))
 			Reporter.logEvent(Status.PASS,
 					"verify Investment Option displayed", "Expected: "
-							+ toInvestmentOption + "\n Actual: "
+							+ toInvestmentOption + "\nActual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
 		else
@@ -464,7 +466,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 							+ toInvestmentOption + "\n Actual: "
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElement(lstInvestmentPercentDollarCost);

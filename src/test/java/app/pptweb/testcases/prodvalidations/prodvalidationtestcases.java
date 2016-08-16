@@ -1631,6 +1631,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			Actions keyBoard = new Actions(Web.webdriver);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1638,10 +1639,9 @@ public class prodvalidationtestcases {
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
 			requestWithdrawal.get();
-			Actions keyBoard = new Actions(Web.webdriver);
-			Thread.sleep(5000);
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
+			Web.webdriver.switchTo().defaultContent();
 			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
 				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 						"Request A Withdrawal", true);

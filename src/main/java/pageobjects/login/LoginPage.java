@@ -170,11 +170,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		lib.Web.webdriver.manage().window().maximize();
 
 		// currently not beeing seen
-
+       if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
 
+	}
 	}
 
 	/**
