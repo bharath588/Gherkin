@@ -382,7 +382,7 @@ public class prodvalidationtestcases {
 			Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
 			Web.waitForElement(profilePage, "LOG OUT");
-			Web.clickOnElement(profilePage, "LOG OUT");
+			//Web.clickOnElement(profilePage, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -745,7 +745,7 @@ public class prodvalidationtestcases {
 				}
 			}
 			Web.webdriver.switchTo().defaultContent();
-			Web.clickOnElement(requestLone, "LOGOUT");
+			//Web.clickOnElement(requestLone, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -793,7 +793,7 @@ public class prodvalidationtestcases {
 						"Rate Of Return Page is Not Displayed with Proper Data",
 						true);
 			}
-			Web.clickOnElement(ROR, "LOGOUT");
+			//Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -923,7 +923,7 @@ public class prodvalidationtestcases {
 			balance.verifytableHeaderNotEmpty("Balance Comparison Table Header");
 			balance.verifyTableDataDisplayed("Balance Comparison Table");
 			balance.verifyGraphDisplayed("Balance Comparison Graph");
-			Web.clickOnElement(balance, "LOGOUT");
+		//	Web.clickOnElement(balance, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -982,7 +982,7 @@ public class prodvalidationtestcases {
 					.verifyTableDataDisplayed("Transaction History Contr Detail Table");
 
 			transaction.verifyReferenceNumber();
-			 Web.clickOnElement(transaction, "LOGOUT");
+		//	 Web.clickOnElement(transaction, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1226,7 +1226,7 @@ public class prodvalidationtestcases {
 			brokerage
 					.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
-			Web.clickOnElement(brokerage, "LOGOUT");
+			//Web.clickOnElement(brokerage, "LOGOUT");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1371,7 +1371,7 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("Setup_date"),
 					Stock.GetParameterValue("percent"),
 					Stock.GetParameterValue("amount"));
-			 Web.clickOnElement(investment, "LOGOUT");
+			// Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1846,7 +1846,7 @@ public class prodvalidationtestcases {
 							true);
 				}
 			}
-			Web.clickOnElement(requestWithdrawal, "LOG OUT");
+		//	Web.clickOnElement(requestWithdrawal, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
