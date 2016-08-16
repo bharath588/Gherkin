@@ -208,7 +208,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String userLogedIn = this.lblUserName.getText();
 			
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 					Deferrals.waitforLoad = true;
 					throw new Error("'My contributions' page is not loaded");
@@ -227,6 +227,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.parent.get();	
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
+			Web.isWebElementDisplayed(lblMyContributions,true);
 		}
 		
 		//@SuppressWarnings("unused")
