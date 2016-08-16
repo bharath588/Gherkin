@@ -29,7 +29,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			public float befor_tax;
 			public static String contrbution_rate;
 			//My Contributions Page
-			@FindBy(xpath=".//div[@class='page-title ng-scope']/h1") private WebElement lblMyContributions;
+			@FindBy(xpath=".//h1[text()[normalize-space()='My Contributions']]") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
 			private WebElement tblhdrlblContribution;
 			@FindBy(id="buttonAdd_STANDARD") private WebElement btnAddOrEditStandard;

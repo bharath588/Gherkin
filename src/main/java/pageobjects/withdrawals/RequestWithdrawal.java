@@ -29,7 +29,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private LoadableComponent<?> parent;
 	private static boolean waitforLoad = false;
 
-	@FindBy(xpath = ".//*[@id='account-details-container']//div[@class='page-title']/h1")
+	@FindBy(xpath = ".//h1[text()[normalize-space()='Request a withdrawal']]")
 	private WebElement lblRequestAWithdrawal;
     @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	 @FindBy(xpath = "//img[@class='site-logo']")
