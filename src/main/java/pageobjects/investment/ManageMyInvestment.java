@@ -181,7 +181,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//table/tbody/tr[contains(@class,'tableData')]/td/input")
 	private List<WebElement> lstChkInvestmentOptionDollarCost;
 	@FindBy(xpath = "//input[contains(@id,'ID')]")
-	private List<WebElement> lstInvestmentPercentDollarCost;
+	private WebElement lstInvestmentPercentDollarCost;
 	@FindBy(xpath = "//input[@name='DOLLARS']")
 	private WebElement txtTransferAmtDollarCost;
 	@FindBy(xpath = "//div[contains(@id,'perdTrfFreq')]")
@@ -467,10 +467,10 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Thread.sleep(5000);
 		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
-		Web.waitForElement(lstInvestmentPercentDollarCost.get(0));
-		Web.clickOnElement(lstInvestmentPercentDollarCost.get(0));
+		Web.waitForElement(lstInvestmentPercentDollarCost);
+		Web.clickOnElement(lstInvestmentPercentDollarCost);
 		keyBoard.sendKeys(Keys.BACK_SPACE).perform();
-		Web.setTextToTextBox(lstInvestmentPercentDollarCost.get(0),
+		Web.setTextToTextBox(lstInvestmentPercentDollarCost,
 				Stock.GetParameterValue("percent"));
 		Reporter.logEvent(Status.INFO, "verify investment percent is entered",
 				"investment percent : " + Stock.GetParameterValue("percent"),
