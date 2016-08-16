@@ -382,7 +382,7 @@ public class prodvalidationtestcases {
 			Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
 			Web.waitForElement(profilePage, "LOG OUT");
-			//Web.clickOnElement(profilePage, "LOG OUT");
+			Web.clickOnElement(profilePage, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1226,6 +1226,7 @@ public class prodvalidationtestcases {
 			brokerage
 					.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
+			Web.webdriver.switchTo().defaultContent();
 			//Web.clickOnElement(brokerage, "LOGOUT");
 
 		} catch (Exception e) {
