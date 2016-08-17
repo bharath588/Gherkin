@@ -1023,7 +1023,6 @@ public class prodvalidationtestcases {
 
 			statements.get();
 			//Thread.sleep(8000);
-			Web.waitForElement(statements, "Stmts On Demand Tab");
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Statements Summary Table");
 			statements

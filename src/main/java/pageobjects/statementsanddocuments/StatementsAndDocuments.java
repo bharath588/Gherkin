@@ -261,8 +261,10 @@ public void verifyTableDisplayed(String tableName){
 	
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);;
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		
 		if(tabName.equalsIgnoreCase("Stmts On Demand Tab")){
+			Web.waitForElement(tabStmtsOnDemand);
 			Web.clickOnElement(tabStmtsOnDemand);
 			if(Web.isWebElementDisplayed(tblStmtsSummary,true))
 				isnavigateSuccessful=true;
