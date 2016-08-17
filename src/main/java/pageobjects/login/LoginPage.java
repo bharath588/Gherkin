@@ -290,7 +290,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		this.btnLogin.click();
 
 		try {
-			Thread.sleep(8000);
+			Thread.sleep(4000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -583,7 +583,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			throws InterruptedException {
 		boolean isPageDisplayed = false;
 		Web.clickOnElement(this.getWebElement(linkName));
-		Thread.sleep(3000);
+		Web.waitForElement(txtInnerContainer);
 		isPageDisplayed = Web.VerifyPartialText(linkName,
 				this.txtInnerContainer.getText().toString().trim(), true);
 		if (isPageDisplayed) {
