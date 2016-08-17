@@ -192,7 +192,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 			
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);
 			WebElement table = this.getWebElement(tableName);
-			if(Web.isWebElementDisplayed(table))
+			if(Web.isWebElementDisplayed(table,true))
 				Reporter.logEvent(Status.PASS, "verify "+tableName+" is displayed", tableName+" is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "verify "+tableName+" is displayed", tableName+" is not displayed",true);

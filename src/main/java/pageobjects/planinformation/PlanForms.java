@@ -102,7 +102,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)
 					) {
 				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPlanForms,true),"Planforms page is not loadeed");
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPlanForms,true),"Planforms page is not loadeed\n");
 			} else {
 				this.lnkLogout.click();
 				Assert.assertTrue(false,"Logging in with new User");

@@ -200,7 +200,7 @@ public class Balance extends LoadableComponent<Balance> {
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
 		Web.webdriver.switchTo().defaultContent();
-
+		Web.waitForElement(tabBalance);
 		if(tabName.equalsIgnoreCase("Balance")){
 			Web.clickOnElement(tabBalance);
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);

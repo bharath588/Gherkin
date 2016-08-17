@@ -232,7 +232,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		this.btnContinue.click();
 		Web.webdriver.switchTo().defaultContent();
 		try {
-			Thread.sleep(8000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -272,7 +272,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			this.btnCaluculatePaymentInfo.click();
 			Web.webdriver.switchTo().defaultContent();
 			try {
-				Thread.sleep(8000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

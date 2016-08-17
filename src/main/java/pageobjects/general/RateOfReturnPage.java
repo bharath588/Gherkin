@@ -107,7 +107,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn));
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn),"Rate of return Page is Not Loaded\n");
 		} else {
 			this.lnkLogout.click();
 			System.out.println("Clicked on Log Out RateOfReturn Page");
@@ -185,7 +185,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 					" Verify 'Rate Of Return' Page is displayed",
 					"User 'Rate Of Return' Page is not displayed", true);
 		}
-		Thread.sleep(5000);
+		//Thread.sleep(5000);
 		isElementDisplayed = Web.isWebElementDisplayed(this.tableHeaderFrom,
 				true);
 

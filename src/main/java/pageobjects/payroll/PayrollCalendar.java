@@ -96,7 +96,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar),"PayRoll Calendar Page is Not Loaded\n");
 			} else {
 				this.lnkLogout.click();
 				Assert.assertTrue(false,"Logging in with new User");
@@ -112,6 +112,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		}
 		
 		public void verifyDataIsDiaplyed(){
+			Web.waitForElement(hdrPayrollTable);
 			if(StringUtils.containsIgnoreCase(hdrPayrollTable.getText(), "CUT-OFF DATE EFFECTIVE PAY DATE REMAINING PAY PERIODS"))
 				Reporter.logEvent(Status.PASS, "Verify table header is displayed","Expected Header: CUT-OFF DATE EFFECTIVE PAY DATE REMAINING PAY PERIODS \n Actual: "+hdrPayrollTable.getText(), true);
 			else

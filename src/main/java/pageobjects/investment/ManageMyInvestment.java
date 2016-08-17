@@ -325,6 +325,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void clickChangeMyInvestmentButton() {
+		Web.waitForElement(btnChangeMyInvestment);
 		if (Web.isWebElementDisplayed(btnChangeMyInvestment, true)) {
 			btnChangeMyInvestment.click();
 			Reporter.logEvent(Status.INFO,

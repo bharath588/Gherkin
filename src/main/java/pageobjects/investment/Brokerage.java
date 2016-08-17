@@ -89,7 +89,7 @@ private LoadableComponent<?> parent;
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));			
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage),"Brokerage Page is Not Loaded\n");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");
@@ -137,7 +137,7 @@ private LoadableComponent<?> parent;
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 	 
 		
-	 	
+	 	Web.waitForElement(tblBrokerage);
 	 	if (Web.isWebElementDisplayed(tblBrokerage,true)) {
 			Reporter.logEvent(Status.PASS,"Verify brokerage table is displayed","Table displayed", true);
 			

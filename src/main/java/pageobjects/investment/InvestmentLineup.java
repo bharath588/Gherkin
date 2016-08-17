@@ -108,7 +108,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblInvestmentlineup),"Investment LineUp Page is Not Loaded\n");
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");

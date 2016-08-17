@@ -501,7 +501,7 @@ public class prodvalidationtestcases {
 
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-            Thread.sleep(5000);
+           // Thread.sleep(5000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
 			if (lblDisplayed) {
@@ -701,7 +701,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("submitRequest")
 					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestLone, "I ACCEPT");
-				Thread.sleep(5000);
+				Thread.sleep(3000);
 				lblDisplayed = Web.VerifyPartialText(
 						"Your confirmation number is",
 						requestLone.getWebElementText("TEXT CONFIRMATION"),
@@ -829,7 +829,7 @@ public class prodvalidationtestcases {
 
 			boolean lblDisplayed = false;
 			
-			Thread.sleep(6000);
+			//Thread.sleep(6000);
 			/*Web.webdriver.navigate().refresh();
 			Thread.sleep(6000);*/
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
@@ -897,7 +897,7 @@ public class prodvalidationtestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
 			balance.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			balance.navigateToTab("Balance");
 			// not seeing this table in PRod data
 			/*
@@ -962,7 +962,7 @@ public class prodvalidationtestcases {
 			TransactionHistory transaction = new TransactionHistory(leftmenu);
 
 			transaction.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
 			transaction.clickConfirmationNumber();
@@ -1022,7 +1022,8 @@ public class prodvalidationtestcases {
 					leftmenu);
 
 			statements.get();
-			Thread.sleep(8000);
+			//Thread.sleep(8000);
+			Web.waitForElement(statements, "Stmts On Demand Tab");
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Statements Summary Table");
 			statements
@@ -1079,7 +1080,7 @@ public class prodvalidationtestcases {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 
 			investment.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
@@ -1138,7 +1139,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			PayrollCalendar payroll = new PayrollCalendar(leftmenu);
 			payroll.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			payroll.verifyDataIsDiaplyed();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1177,7 +1178,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			InvestmentLineup investment = new InvestmentLineup(leftmenu);
 			investment.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			investment.viewProspectus();
 		    Web.webdriver.switchTo().defaultContent();
 		} catch (Exception e) {
@@ -1216,7 +1217,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
 
 			brokerage.verifyBrokerageTableDataDisplayed("Provider Name");
@@ -1264,7 +1265,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			PlanForms planforms = new PlanForms(leftmenu);
 			planforms.get();
-			Thread.sleep(7000);
+			//Thread.sleep(7000);
 			planforms.clickOnForm(null);
 			if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
@@ -1409,7 +1410,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			beneficiary.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.",
 					"Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Primary");
@@ -1571,7 +1572,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferral = new Deferrals(leftmenu);
 			deferral.get();
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			if (deferral.clickAddEditButton("Standard Edit"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
@@ -1724,7 +1725,7 @@ public class prodvalidationtestcases {
 
 			requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
 			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
-			Thread.sleep(8000);
+			Thread.sleep(5000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Withdrawal method");
 
@@ -1793,7 +1794,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("submitRequest")
 					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
-				Thread.sleep(8000);
+				Thread.sleep(5000);
 				lblDisplayed = requestWithdrawal
 						.isTextFieldDisplayed("Request submitted!");
 				if (lblDisplayed) {
