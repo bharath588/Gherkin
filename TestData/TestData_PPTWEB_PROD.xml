@@ -38,11 +38,11 @@
 		</TestCase>
 		<TestCase name="Dollar_Cost_Average_Flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444328ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 				<parameter name="Submit_Transaction" value="No" />
 				<parameter name="percent" value="100" />
 				<parameter name="amount" value="1000" />
@@ -155,10 +155,10 @@
 		<TestCase
 			name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444328ABC" />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="loanType" value="General" />
-				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 				<parameter name="submitRequest" value="NO" />
 			</Iteration>
 		</TestCase>
