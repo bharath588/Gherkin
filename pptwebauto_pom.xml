@@ -64,7 +64,6 @@
 								<name>CAPTURESCREENSHOT</name>
 								<value>${CAPTURESCREENSHOT}</value>
 							</property>
-							
 						</systemProperties>
 					</configuration>
 				</plugin>
