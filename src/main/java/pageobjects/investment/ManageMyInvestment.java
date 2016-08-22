@@ -401,7 +401,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void dollarCostAverageFlow(String frequency, String setupDate,
-			String percent, String amount) throws InterruptedException {
+			String percent, String amount) throws InterruptedException,NullPointerException,IndexOutOfBoundsException {
 		Actions keyBoard = new Actions(Web.webdriver);
 		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
@@ -448,11 +448,15 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "verify if transfer amount is entered",
 				"Entered Transfer amount: " + amount, true);
 		btnContinueToNextStep.click();
-		//Thread.sleep(7000);
+		Thread.sleep(5000);
 		Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
 		lstChkInvestmentOptionDollarCost.get(0).click();
 		toInvestmentOption = lstToInvestmentOptionsDollarCost.get(0).getText();
 		btnContinueToNextStep.click();
+		Thread.sleep(5000);
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElements(lstInvestmentOptionsDollarCost);
 		if (lstInvestmentOptionsDollarCost.get(0).getText()
 				.contains(toInvestmentOption))
@@ -468,8 +472,6 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 							+ lstInvestmentOptionsDollarCost.get(0).getText(),
 					true);
 		//Thread.sleep(5000);
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElement(lstInvestmentPercentDollarCost);
 		Web.clickOnElement(lstInvestmentPercentDollarCost);
 		keyBoard.sendKeys(Keys.BACK_SPACE).perform();
