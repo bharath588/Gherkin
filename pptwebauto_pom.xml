@@ -58,6 +58,13 @@
 								<name>testDataPath</name>
 								<value>${testDataPath}</value>
 							</property>
+							</systemProperties>
+						<systemProperties>
+							<property>
+								<name>CAPTURESCREENSHOT</name>
+								<value>${CAPTURESCREENSHOT}</value>
+							</property>
+							
 						</systemProperties>
 					</configuration>
 				</plugin>
