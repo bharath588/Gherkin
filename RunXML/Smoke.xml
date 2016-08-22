@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	   <!-- <test
+	 <test
 		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -120,7 +120,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test> -->
+	</test> 
 	<test name="Manage_My_Investment_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

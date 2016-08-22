@@ -155,10 +155,10 @@
 		<TestCase
 			name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444328ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="loanType" value="General" />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 				<parameter name="submitRequest" value="NO" />
 			</Iteration>
 		</TestCase>
