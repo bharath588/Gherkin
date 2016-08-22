@@ -14,6 +14,16 @@
 			</class>
 		</classes>
 	</test>
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	<test name="Statement_and_Documents_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -23,7 +33,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="Manage_My_Investment_Flow">
+	<!-- <test name="Manage_My_Investment_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -96,7 +106,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test>  -->
  
    
 </suite>
