@@ -613,11 +613,12 @@ public class prodvalidationtestcases {
 			Web.setTextToTextBox("INPUT HOME PREFIX", requestLone, "456");
 			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
+			Web.waitForElement(requestLone, "CHECKBOX I ACCEPT");
 			lblDisplayed = Web
 					.VerifyText(
 							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
 							requestLone
-									.getWebElementText("TEXT VERIFY ALL INFO"),
+									.getWebElementText("TEXT VERIFY ALL INFO").trim(),
 							true);
 
 			if (lblDisplayed) {
