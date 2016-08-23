@@ -157,7 +157,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 				
 			} catch (Exception e) {
 
@@ -283,7 +283,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -384,12 +384,8 @@ public class beneficiariestestcases {
 
 
 
-
-			//delete beneficiary from Database
-			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
-			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 
 
 		}
@@ -410,7 +406,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -647,7 +643,8 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.refresh();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -870,7 +867,7 @@ public class beneficiariestestcases {
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
-					Reporter.logEvent(Status.PASS, "verify Error message displayed for married no allocations beneficiary is matching", "Error Message is matching", false);
+					Reporter.logEvent(Status.PASS, "verify Error message displayed for married no allocations beneficiary is matching", "Error Message is matching", true);
 				else
 					Reporter.logEvent(Status.FAIL, "verify Error message displayed for married no allocations beneficiary is matching", "Error Message is matching", true);
 			}
@@ -939,7 +936,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
 			
 			String error_msg="";
-			error_msg=beneficiary.readErrorMessage("Auth code I Error Msg");
+			error_msg=beneficiary.readErrorMessage("Generic Error Msg");
 			if(lib.Web.VerifyText(Stock.GetParameterValue("Error_msg"), error_msg, true))
 				Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching", false);
 			else
@@ -994,7 +991,7 @@ public class beneficiariestestcases {
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Contingent");
-			if(lib.Web.isWebElementDisplayed(beneficiary, "Delete Checkbox"))
+			if(lib.Web.isWebElementDisplayed(beneficiary, "Delete Checkbox",true))
 				Reporter.logEvent(Status.PASS, "Verify if Delete Check box is present", "Delete Check box is present", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Delete Check box is present", "Delete Check box is not present", true);
@@ -1005,7 +1002,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "Verify if Delete button is present", "Delete button is not present", true);
 			lib.Web.clickOnElement(beneficiary, "Delete button");
 			if(lib.Web.isWebElementDisplayed(beneficiary, "My Beneficiaries"))
-				Reporter.logEvent(Status.PASS, "Verify if My Beneficiaries page is displayed", "My Beneficiaries page is displayed", false);
+				Reporter.logEvent(Status.PASS, "Verify if My Beneficiaries page is displayed", "My Beneficiaries page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if My Beneficiaries page is displayed", "My Beneficiaries page is not displayed", true);
 			
@@ -1091,7 +1088,7 @@ public class beneficiariestestcases {
 			}
 			else
 				Reporter.logEvent(Status.FAIL, "Verify marital status should be null", "Marital status not null", false);
-			
+			Thread.sleep(4000);
 			marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
 			if(marital_status.equalsIgnoreCase("M"))
 				Reporter.logEvent(Status.PASS, "Verify marital status should not be null", "Marital status is not null", false);
@@ -1116,7 +1113,7 @@ public class beneficiariestestcases {
 		finally {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 				
 			} catch (Exception e) {
 
@@ -1229,7 +1226,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
 			} catch (Exception e) {
 				
 				e.printStackTrace();
@@ -1253,8 +1250,8 @@ public class beneficiariestestcases {
 			try{
 				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 				
-//				TestDataFromDB.updateTable("setQjsaAndBeneSpouseRule", "194391");
-//				TestDataFromDB.fetchRegisteredParticipant("194391-01");
+				TestDataFromDB.updateTable("setQjsaAndBeneSpouseRule", Stock.GetParameterValue("qjsa_qosa_qpsa_ind "),Stock.GetParameterValue("bene_spousal_rule_code"),Stock.GetParameterValue("Plan_id"));
+				//TestDataFromDB.fetchRegisteredParticipant("194391-01");
 				LeftNavigationBar leftmenu;
 				LoginPage login = new LoginPage();
 				TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1289,17 +1286,24 @@ public class beneficiariestestcases {
 						Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 					else
 						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
+					if(beneficiary.verifyConfirmationPageDisplayed()){
+						Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);
+						
+						Web.clickOnElement(beneficiary, "View Beneficiary Button");
+						Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
+						beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
+					}
+					else
+						Reporter.logEvent(Status.FAIL, "Verify Confirmation page displayed", "Confirmation page not displayed", true);
 					
-					Web.waitForElement(beneficiary, "View Beneficiary Button");
-					Web.clickOnElement(beneficiary, "View Beneficiary Button");
-					Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
-					beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName"));
+					
 				}
 				else{
 					Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+					Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 					beneficiary.verifyErrorMessage(Stock.GetParameterValue("Error_Message"));
 					beneficiary.enterAllocations(Stock.GetParameterValue("Allocation2"));
-					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("null")){
+					if(Stock.GetParameterValue("bene_spousal_rule_code")== null){
 						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", false);
 						if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg")){
@@ -1315,19 +1319,28 @@ public class beneficiariestestcases {
 							Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
 						
 					}
-					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("100% Mandatory")){
+					if(Stock.GetParameterValue("bene_spousal_rule_code").contains("100%")){
+						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 						beneficiary.verifyErrorMessage(Stock.GetParameterValue("Error_Message2"));
-					if(Stock.GetParameterValue("bene_spousal_rule_code ").equalsIgnoreCase("75% Mandatory")){
+					}
+					if(Stock.GetParameterValue("bene_spousal_rule_code").contains("75%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("66%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("50%") ){
 						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", true);
-						beneficiary.verifyConfirmationPageDisplayed();
-						Web.clickOnElement(beneficiary, "View Beneficiary Button");
-						Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
-						beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
+						if(beneficiary.verifyConfirmationPageDisplayed()){
+							Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);
+							
+							Web.clickOnElement(beneficiary, "View Beneficiary Button");
+							Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
+							beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
+						}
+						else
+							Reporter.logEvent(Status.FAIL, "Verify Confirmation page displayed", "Confirmation page not displayed", true);
+						
 					}
 					
 				}
-				}
+				
 			}
 			catch(Exception e)
 	        {
@@ -1347,7 +1360,8 @@ public class beneficiariestestcases {
 				MyBeneficiaries beneficiary = new MyBeneficiaries();
 				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 					try {
-						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"));
+						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+						beneficiary.refresh();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -1366,11 +1380,96 @@ public class beneficiariestestcases {
 		
 		
 		
-	
-	@AfterSuite
-	public void cleanupSessions() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
+		@Test(dataProvider = "setData")
+		public void create_Married_Spouse_Multiple_Spouse_Error(int itr, Map<String, String> testdata){
+			Stock.globalTestdata = testdata;
+//	      Globals.GBL_CurrentIterationNumber = itr;
+			
+			
+			try{
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				
+				//TestDataFromDB.fetchRegisteredParticipant("194391-01");
+				LeftNavigationBar leftmenu;
+				LoginPage login = new LoginPage();
+				TwoStepVerification mfaPage = new TwoStepVerification(login);
+				LandingPage homePage = new LandingPage(mfaPage);
+				leftmenu = new LeftNavigationBar(homePage);
+				MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+				beneficiary.get();
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation1"));
+				
+				if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("No")){
+					//verify if add another beneficiary button is displayed after adding a beneficiary
+					if(beneficiary.isFieldDisplayed("AddAnotherBeneficiary"))
+						Reporter.logEvent(Status.PASS, "verify add another beneficiary button", "add another beneficiary button displayed", false);
+					else
+						Reporter.logEvent(Status.FAIL, "add another beneficiary button", "add another beneficiary button is not displayed", true);
 
+					//verify if continue and confirm button is displayed after adding a beneficiary
+					if(beneficiary.isFieldDisplayed("ContinueAndConfirm"))
+						Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Confirm and Continue button displayed", false);
+					else
+						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Confirm and Continue button is not displayed", true);
+					//click on continue and confirm button
+					if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
+						Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
+					else
+						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
+					if(beneficiary.verifyConfirmationPageDisplayed()){
+						Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);
+						
+						Web.clickOnElement(beneficiary, "View Beneficiary Button");
+						Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
+						beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
+					}
+					else
+						Reporter.logEvent(Status.FAIL, "Verify Confirmation page displayed", "Confirmation page not displayed", true);
+					
+					
+				}
+				else{
+					Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+					Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+					beneficiary.verifyErrorMessage(Stock.GetParameterValue("Error_Message"));
+					
+					
+			}
+				
+			}
+			catch(Exception e)
+	        {
+	            e.printStackTrace();
+	            Globals.exception = e;
+	            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+	        }
+			catch(Error ae)
+	        {
+	                        ae.printStackTrace();
+	                        Globals.error = ae;
+	                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	                        //throw ae;
+	        }
+			finally {
+				//delete beneficiary from Database
+				MyBeneficiaries beneficiary = new MyBeneficiaries();
+				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+					try {
+						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+						beneficiary.refresh();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				
+	        }
+			try {
+	            Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+	            // TODO Auto-generated catch block
+	            e1.printStackTrace();
+			}
+		
 	}
 }

@@ -14,7 +14,7 @@
 			</class>
 		</classes>
 	</test> 
-<test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+<!-- <test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -314,7 +314,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> -->
 	<!-- DO not have the test data -->
 	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
 		<classes>

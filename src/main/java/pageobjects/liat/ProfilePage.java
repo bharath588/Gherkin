@@ -166,16 +166,16 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			return this.hrdPersonalInfo;
 		}
 		// UserName
-		if (fieldName.trim().equalsIgnoreCase("LABLE USER NAME")) {
+		if (fieldName.trim().equalsIgnoreCase("LABEL USER NAME")) {
 			return this.hrdUserName;
 		}
 
 		// PERSONAL EMAIL ADDRESS
-		if (fieldName.trim().equalsIgnoreCase("LABLE PERSONAL EMAIL ADDRESS")) {
+		if (fieldName.trim().equalsIgnoreCase("LABEL PERSONAL EMAIL ADDRESS")) {
 			return this.lblPersonalEmailAdd;
 		}
 		// MOBILE PHONE NUMBER
-		if (fieldName.trim().equalsIgnoreCase("LABLE MOBILE PHONE NUMBER")) {
+		if (fieldName.trim().equalsIgnoreCase("LABEL MOBILE PHONE NUMBER")) {
 			return this.lblMobileNo;
 		}
 		// TEXT PERSONAL EMAIL ADDRESS
@@ -191,7 +191,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			return this.hrdHomeMaililngAdd;
 		}
 		// HOME ADDRESS
-		if (fieldName.trim().equalsIgnoreCase("LABLE HOME ADDRESS")) {
+		if (fieldName.trim().equalsIgnoreCase("LABEL HOME ADDRESS")) {
 			return this.lblHomeAdd;
 		}
 		// TEXT HOME ADDRESS
@@ -207,7 +207,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			return this.lblUsername;
 		}
 		// PASSWORD
-		if (fieldName.trim().equalsIgnoreCase("LABLE PASSWORD")) {
+		if (fieldName.trim().equalsIgnoreCase("LABEL PASSWORD")) {
 			return this.lblPassword;
 		}
 		// TEXT USER NAME
@@ -265,16 +265,16 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		}
 
 		verifyWebElementDisplayed("PERSONAL CONTACT INFORMATION");
-		verifyWebElementDisplayed("LABLE PERSONAL EMAIL ADDRESS");
-		verifyWebElementDisplayed("LABLE MOBILE PHONE NUMBER");
+		verifyWebElementDisplayed("LABEL PERSONAL EMAIL ADDRESS");
+		verifyWebElementDisplayed("LABEL MOBILE PHONE NUMBER");
 		verifyWebElementText("PERSONAL EMAIL ADDRESS");
 		verifyWebElementText("MOBILE PHONE NUMBER");
 		verifyWebElementDisplayed("HOME MAILING ADDRESS");
-		verifyWebElementDisplayed("LABLE HOME ADDRESS");
+		verifyWebElementDisplayed("LABEL HOME ADDRESS");
 		verifyWebElementText("HOME ADDRESS");
 		verifyWebElementDisplayed("USER NAME AND PASSWORD");
 		verifyWebElementDisplayed("LABEL USER NAME");
-		verifyWebElementDisplayed("LABLE PASSWORD");
+		verifyWebElementDisplayed("LABEL PASSWORD");
 		verifyWebElementText("USER NAME");
 		verifyWebElementText("PASSWORD");
 
@@ -285,11 +285,11 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
 		if (Web.isWebElementDisplayed(this.getWebElement(fieldName), true)) {
 
-			Reporter.logEvent(Status.PASS, "Verify 'FiledName' is displayed",
+			Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\' is displayed",
 					fieldName + " is displayed", false);
 
 		} else {
-			Reporter.logEvent(Status.FAIL, "Verify 'FiledName'  is displayed",
+			Reporter.logEvent(Status.FAIL, "Verify \'"+fieldName+"\' is displayed",
 					fieldName + " is not Same", false);
 		}
 
@@ -314,12 +314,12 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			if (!getText.isEmpty()) {
 
 				Reporter.logEvent(Status.PASS,
-						"Verify Text for 'FiledName'  is displayed",
+						"Verify Text for \'"+fieldName+"\' is displayed",
 						"Text for " + fieldName + " is displayed", false);
 
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify Text for 'FiledName' is displayed", "Text for"
+						"Verify Text for \'"+fieldName+"\' is displayed", "Text for"
 								+ fieldName + " is not Same", false);
 			}
 		}

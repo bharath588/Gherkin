@@ -53,6 +53,7 @@ public class prodvalidationtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
+	static String testdata="";
 
 	@BeforeClass
 	public void ReportInit() {
@@ -70,6 +71,13 @@ public class prodvalidationtestcases {
 				.getName(), Globals.GC_MANUAL_TC_NAME);
 
 	}
+	private String printTestData() throws Exception {
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+		     testdata=testdata+entry.getKey() + "="+ entry.getValue() +" , ";
+		}
+	 return testdata;
+	}
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_Verify_Custom_site_prelogin_data(int itr,
@@ -78,6 +86,12 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter
+			.logEvent(
+					Status.INFO,
+					"Test Data used for this Test Case:",
+					printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			login.get();
 
@@ -213,6 +227,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			login.get();
 
@@ -360,6 +375,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -410,6 +426,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -484,6 +501,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -772,6 +790,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -821,6 +840,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LegacyLandingPage homePage = new LegacyLandingPage(mfaPage);
@@ -891,6 +911,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -953,6 +974,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1012,6 +1034,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1070,6 +1093,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1130,6 +1154,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1169,6 +1194,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1208,6 +1234,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1257,6 +1284,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1301,6 +1329,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1355,6 +1384,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1401,6 +1431,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1564,6 +1595,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1631,6 +1663,7 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			Actions keyBoard = new Actions(Web.webdriver);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1877,6 +1910,7 @@ public class prodvalidationtestcases {
 					itr,
 					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -2002,6 +2036,7 @@ public class prodvalidationtestcases {
 					itr,
 					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String verificationCode = "";
 
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
@@ -2125,6 +2160,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2273,6 +2309,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2334,6 +2371,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2395,6 +2433,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2456,6 +2495,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2521,6 +2561,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			float projectedIncome;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2561,6 +2602,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2593,6 +2635,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2644,6 +2687,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2708,6 +2752,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2829,6 +2874,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2963,6 +3009,7 @@ public class prodvalidationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -3047,6 +3094,7 @@ public class prodvalidationtestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -3107,6 +3155,7 @@ public class prodvalidationtestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);

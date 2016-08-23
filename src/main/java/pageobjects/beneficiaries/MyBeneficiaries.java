@@ -15,10 +15,8 @@ import lib.Reporter.Status;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -71,7 +69,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//span[text()='No']") private WebElement btnUnmarried;
 	@FindBy(xpath="//button[text()='Delete']") private WebElement btnDelete;
 	@FindBy(xpath="//table[@class='beneficiaries primary-beneficiaries table']//*[contains(@class,'beneficiary-name')]/a") private List<WebElement> lstlnkPrimaryBeneficiaryName;
-	@FindBy(xpath="//table[@class='beneficiaries contingent-beneficiaries table']//*[@class='beneficiary-name']/a") private List<WebElement> lstlnkContingentBeneficiaryName;
+	@FindBy(xpath="//table[@class='beneficiaries contingent-beneficiaries table']//*[contains(@class,'beneficiary-name')]/a") private List<WebElement> lstlnkContingentBeneficiaryName;
 	@FindBy(xpath="//*[contains(@class,'contingent')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtContingentAllocation;
 	@FindBy(xpath="//*[contains(@class,'primary')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtPrimaryAllocation;
 	@FindBy(xpath="//div[@class='table-details ng-scope']/table") private List<WebElement> lstTablePrimaryBeneficiary;
@@ -89,7 +87,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(id="btn-view-beneficiaries") private WebElement btnViewBeneficiaries;
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
 	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement GenericErrorMsg;
-	@FindBy(xpath="//div[@class='error-block ng-scope']/p") private WebElement lblErrorMsg;
+	@FindBy(xpath="//div[contains(@class,'error-block')]/p") private WebElement lblErrorMsg;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath = "//img[@class='site-logo']")private WebElement lblSponser;
@@ -97,7 +95,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody/tr")private List<WebElement> lstPrimaryBeneficiaries;
 	@FindBy(xpath = "//input[contains(@id,'primaryBeneficiaryAllocationPercent')]")private List<WebElement> lstPriBeneAllocations;
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody")private WebElement tblPrimaryBeneficiary;
+	
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+
 	/** Empty args constructor
 	 * 
 	 */
@@ -117,23 +117,17 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
-		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
+		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		String ssn = Stock.GetParameterValue("userName");
-		ResultSet strUserInfo = null;
+		
 		String userFromDatasheet = null;
-		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		
-		try {
-			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
+				0, ssn.length() - 3));
 
 		
 		try {
@@ -147,16 +141,17 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		}
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary),"Benificiary Page is Not Loadeed");
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));
 			else
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries),"Benificiary Page is Not Loadeed");
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries,true));
 		} else {
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out Beniciary Page");
-			Assert.assertTrue(false,"Logging in with new User");
+			Web.waitForElement(btnLogin);
+			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
 		}
 	}
 
@@ -261,6 +256,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("Phone number")) {
 			return this.txtPhoneNumber;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Auth code I Error Msg")) {
+			return this.txtPhoneNumber;
+		}
 		return null;
 		
 	}
@@ -287,12 +285,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @param maritalStatus - marital Status of the beneficiary
 	 * @param useMyAddress - whether to use current address
 	 * @param beneficiaryType - Beneficiary type can be primary or contingent
-	 * @throws InterruptedException 
 	 */
-	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent) throws InterruptedException{
+	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent){
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
-		Actions keyBoard = new Actions(Web.webdriver);
-		lib.Web.waitForElement(btnContinue);
+		
+		//lib.Web.waitForElement(btnContinue);
 		if(Web.isWebElementDisplayed(lblDesignateBeneficiary,true)){
 			maritalstatus.click();
 			Reporter.logEvent(Status.INFO, "Select marital status", "marital status selected to :  "+maritalStatus, true);
@@ -330,11 +327,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 			
 		Web.clickOnElement(this.btnSave);
-		/*if(btnSave.isEnabled())
-		{
-			keyBoard.sendKeys(Keys.ENTER).perform();
-		}*/
-		Thread.sleep(5000);
+
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes") &&  Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes")){
 			enterAllocations(allocation_percent);
@@ -528,13 +521,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @return - boolean
 	 * @throws Exception 
 	 */
-	public void deleteBeneficiariesFromDB(String ssn) throws Exception{
+	public void deleteBeneficiariesFromDB(String ssn, String firstName) throws Exception{
 		String[] sqlQuery;
 		String[] sqlQuery_commit;
 		sqlQuery = Stock.getTestQuery("deleteBeneficiaries");
 //		sqlQuery_commit = Stock.getTestQuery("deleteBeneficiaries_commit");
 		
-		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn);
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], ssn, firstName);
 		DB.executeUpdate(sqlQuery[0], "commit");
 		
 	}
@@ -549,6 +542,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public String readErrorMessage(String msgType){
 		String error_msg="";
 		WebElement msg = this.getWebElement(msgType);
+		Web.waitForElement(msg);
 		error_msg=msg.getText();
 		return error_msg;
 	}
@@ -602,11 +596,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	public void verifyErrorMessage(String error_msg){
 		if(Web.isWebElementDisplayed(lblErrorMsg, true)){
-			Reporter.logEvent(Status.PASS, "verify error message displayed", "Error messgae displayed", true);
+			
 			if(Web.VerifyText(error_msg, lblErrorMsg.getText(), true))
-				Reporter.logEvent(Status.PASS, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), false);
+				Reporter.logEvent(Status.PASS, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), true);
 			else
-				Reporter.logEvent(Status.PASS, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), false);
+				Reporter.logEvent(Status.FAIL, "verify error message matching", "EXPECTED : "+error_msg+"\n ACTUAL : "+lblErrorMsg.getText(), true);
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "verify error message displayed", "Error messgae not displayed", true);
@@ -620,9 +614,17 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 			else
 				Web.setTextToTextBox(lstPriBeneAllocations.get(i),Integer.toString(100-(Integer.parseInt(allocation_percent))));
 		}
+		Reporter.logEvent(Status.INFO, "verify allocation percentage entered", "Entered allocation percentage", true);
 	}
 	
-	public void verifyConfirmationPageDisplayed(){
+	public boolean verifyConfirmationPageDisplayed(){
+		boolean isDisplayed=false;
+		Web.waitForElement(lblConfirmation);
+		if(Web.isWebElementDisplayed(this.lblConfirmation,true)){
+			isDisplayed=true;
+		}
+		
+		return isDisplayed;
 		
 	}
 	
