@@ -53,7 +53,7 @@ public class prodvalidationtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
-	static String testdata="";
+	static String printTestData="";
 
 	@BeforeClass
 	public void ReportInit() {
@@ -72,11 +72,12 @@ public class prodvalidationtestcases {
 
 	}
 	private String printTestData() throws Exception {
+		printTestData="";
 		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
 			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
-		     testdata=testdata+entry.getKey() + "="+ entry.getValue() +" , ";
+				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
 		}
-	 return testdata;
+	 return printTestData;
 	}
 
 	@Test(dataProvider = "setData")
