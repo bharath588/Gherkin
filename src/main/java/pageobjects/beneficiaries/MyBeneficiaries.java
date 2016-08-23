@@ -117,17 +117,23 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
+		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
-		
+		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
-		if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
 		else{
-		ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-				0, ssn.length() - 3));
+		
+		try {
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		
 		try {
@@ -141,17 +147,16 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+		}if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary),"Benificiary Page is Not Loadeed");
 			else
-				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries,true));
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries),"Benificiary Page is Not Loadeed");
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			System.out.println("Clicked on Log Out Beniciary Page");
+			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
 
@@ -160,6 +165,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Beneficiaries");
+		Web.isWebElementDisplayed(lblMyBeneficiaries,true);
 		
 	}
 	

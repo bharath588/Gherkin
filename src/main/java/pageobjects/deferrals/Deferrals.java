@@ -35,7 +35,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			public float roth;
 			public static String contrbution_rate;
 			//My Contributions Page
-			@FindBy(xpath=".//div[@class='page-title ng-scope']/h1") private WebElement lblMyContributions;
+			@FindBy(xpath=".//h1[text()[normalize-space()='My Contributions']]") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
 			private WebElement tblhdrlblContribution;
 			@FindBy(id="buttonAdd_STANDARD") private WebElement btnAddOrEditStandard;
@@ -63,7 +63,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//*[contains(@class, 'editable-text-trigger')]")
 			private WebElement lnkContributionRate;
 			@FindBy(id="contributionRateSlider-text-edit") private WebElement txtcontributionRateSlider;
-			@FindBy(xpath=".//span[@class='valueAndEnd']") private WebElement lnksliderValue;
+			@FindBy(xpath=".//span[@class='valueAndEnd']/span[1]") private WebElement lnksliderValue;
 //			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
 			@FindBy(xpath="//button[@class='btn btn-primary reset-padding ng-binding']") private WebElement btnDone;
 //			@FindBy(xpath=".//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
@@ -195,31 +195,34 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		@Override
 		protected void isLoaded() throws Error {
-
-			
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 			String ssn = Stock.GetParameterValue("userName");
+			ResultSet strUserInfo = null;
 			String userFromDatasheet = null;
-			if(Globals.GC_EXECUTION_ENVIRONMENT.equalsIgnoreCase("PROD"))
+			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 			{
-				userFromDatasheet=Stock.GetParameterValue("lblUserName");
-			}
-				else{
-					ResultSet strUserInfo = Common.getParticipantInfoFromDB(ssn.substring(
-							0, ssn.length() - 3));
-
+				userFromDatasheet=Stock.GetParameterValue("lblUserName").toString().trim();
 					
-					try {
-						userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-								+ strUserInfo.getString("LAST_NAME");
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-					}
+			}
+			else{
+			 try {
+				strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			
+			try {
+				userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
+						+ strUserInfo.getString("LAST_NAME");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			}
 			String userLogedIn = this.lblUserName.getText();
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 					Deferrals.waitforLoad = true;
 					throw new Error("'My contributions' page is not loaded");
@@ -228,7 +231,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 			} else {
 				this.lnkLogout.click();
-				Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));
+				System.out.println("Clicked on Log Out MyContribution Page");
+				Assert.assertTrue(false,"Logging in with new User");
 			}
 		}
 		
@@ -237,6 +241,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.parent.get();	
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
+			Web.isWebElementDisplayed(lblMyContributions,true);
 		}
 		
 		//@SuppressWarnings("unused")
