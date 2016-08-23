@@ -168,6 +168,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		Web.webdriver.get(url);
 		Web.webdriver.navigate().refresh();
 		lib.Web.webdriver.manage().window().maximize();
+		System.out.println("Application URL:"+url);
 
 		// currently not beeing seen
        if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
