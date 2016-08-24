@@ -119,7 +119,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
-			//Assert.assertTrue(Web.isWebElementDisplayed(lblRequestAWithdrawal,true),"Request WithDrawal page is not loaded");
+			Assert.assertTrue(Web.isWebElementDisplayed(lblRequestAWithdrawal),"Request WithDrawal page is not loaded");
 		
 		} else {
 			this.lnkLogout.click();
