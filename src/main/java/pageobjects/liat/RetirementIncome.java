@@ -531,7 +531,8 @@ public boolean verifyIfSliderPresent(String sliderName){
 public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws InterruptedException{
 	String modalHeader =null;
 	WebElement element = this.getWebElement(retirementIncomeView);
-
+	Thread.sleep(3000);
+	Web.waitForElement(myGoalPercent);
 	Web.clickOnElement(this.myGoalPercent);
 	Thread.sleep(3000);
 		if(Web.isWebElementDisplayed(element)){
@@ -548,11 +549,11 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 	return modalHeader;
 }
 
-public void verifyTourModals(String modalHeaderTxt){
+public void verifyTourModals(String modalHeaderTxt) throws InterruptedException{
 	boolean isModalHeaderDisplayed=false;
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
-	
+	Thread.sleep(3000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);
