@@ -398,6 +398,7 @@ public class prodvalidationtestcases {
 			}
 			Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
+			Web.waitForElement(profilePage, "LOG OUT");
 			homePage.dismissPopUps(false, true);
 			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
@@ -2135,7 +2136,7 @@ public class prodvalidationtestcases {
 						"Verify landing page is displayed",
 						"Landing page is not displayed", true);
 			}
-
+			landingPage.dismissPopUps(true, true);
 			// Logout if opted
 			landingPage.logout(true);
 

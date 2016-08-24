@@ -163,7 +163,7 @@ protected void isLoaded() throws Error {
 @Override
 protected void load() {
 	this.parent.get();
-	((LandingPage) this.parent).dismissPopUps(true,true);
+	//((LandingPage) this.parent).dismissPopUps(true,true);
 	this.tabRetirementIncome.click();
 }
 
