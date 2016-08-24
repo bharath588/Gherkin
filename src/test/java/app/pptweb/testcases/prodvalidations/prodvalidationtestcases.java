@@ -398,6 +398,7 @@ public class prodvalidationtestcases {
 			}
 			Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
+			homePage.dismissPopUps(false, true);
 			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
 		} catch (Exception e) {
