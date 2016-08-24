@@ -398,8 +398,8 @@ public class prodvalidationtestcases {
 			}
 			Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
-			Web.waitForElement(profilePage, "LOG OUT");
-			homePage.dismissPopUps(false, true);
+			/*Web.waitForElement(profilePage, "LOG OUT");
+			homePage.dismissPopUps(false, true);*/
 			Web.waitForElement(profilePage, "LOG OUT");
 			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
 			Web.clickOnElement(profilePage, "LOG OUT");
@@ -1723,16 +1723,17 @@ public class prodvalidationtestcases {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request A Withdrawal Page is Displayed",
 							"Request A Withdrawal Page is visible", true);
+					if(!Stock.GetParameterValue("USERNAME").equalsIgnoreCase("321444324ABC")){
 					Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-					if(Web.isWebElementDisplayed(requestWithdrawal, "INPUT CURRENT EMPLOYER NO",true)){
-				
+								
 				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 					Thread.sleep(4000);
 				keyBoard.sendKeys(Keys.TAB).perform();
 				keyBoard.sendKeys(Keys.ENTER).perform();
 				Thread.sleep(5000);
 				}
-				}
+		}
+				
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(7000);
 			lblDisplayed = requestWithdrawal
