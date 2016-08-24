@@ -1723,12 +1723,15 @@ public class prodvalidationtestcases {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request A Withdrawal Page is Displayed",
 							"Request A Withdrawal Page is visible", true);
-				Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
+					Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
+					if(Web.isWebElementDisplayed(requestWithdrawal, "INPUT CURRENT EMPLOYER NO",true)){
+				
 				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 					Thread.sleep(4000);
 				keyBoard.sendKeys(Keys.TAB).perform();
 				keyBoard.sendKeys(Keys.ENTER).perform();
 				Thread.sleep(5000);
+				}
 				}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(7000);
