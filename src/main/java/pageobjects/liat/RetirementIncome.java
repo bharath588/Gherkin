@@ -554,10 +554,10 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 
 public void verifyTourModals(String modalHeaderTxt) throws InterruptedException,NoSuchElementException{
 	boolean isModalHeaderDisplayed=false;
-	 Web.waitForElement(btnNext);
+	 Thread.sleep(2000);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	 Web.waitForElement(lblModalHeader);
-	 Thread.sleep(4000);
+	 Thread.sleep(3000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);
