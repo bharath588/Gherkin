@@ -893,7 +893,7 @@ public class prodvalidationtestcases {
 						"Verify INVESTMENTS Link is Displayed",
 						"INVESTMENTS Link is Not Displayed", false);
 			}
-			Web.clickOnElement(homePage, "LOGOUT");
+			//Web.clickOnElement(homePage, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1682,7 +1682,7 @@ public class prodvalidationtestcases {
 			requestWithdrawal.get();
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-			Web.webdriver.switchTo().defaultContent();
+			//Web.webdriver.switchTo().defaultContent();
 			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
 				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 						"Request A Withdrawal", true);
@@ -1725,7 +1725,11 @@ public class prodvalidationtestcases {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request A Withdrawal Page is Displayed",
 							"Request A Withdrawal Page is visible", true);
+					Reporter.logEvent(Status.INFO,
+							"Verify Request A Withdrawal Page is Displayed",
+							"Request A Withdrawal Page is visible for"+Stock.GetParameterValue("USERNAME"), true);
 				if(!Stock.GetParameterValue("USERNAME").equalsIgnoreCase("321444324ABC")){
+					System.out.println("Inside if");
 				Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");	
 				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
 				Thread.sleep(4000);
