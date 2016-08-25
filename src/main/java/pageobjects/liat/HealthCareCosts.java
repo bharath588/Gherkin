@@ -217,7 +217,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * @return - void
 		 */
 	public void verifyPersonalizeBtn() {	
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
 			btnPersonalize.click();				
 			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
