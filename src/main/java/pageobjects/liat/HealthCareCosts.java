@@ -29,7 +29,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	private LoadableComponent<?> parent;
 	
 	@FindBy(xpath=".//*[text()='Health-care costs']") private WebElement lblHelathCareCosts;
-	@FindBy(xpath=".//button[contains(text(),'Personalize')]") private WebElement btnPersonalize;
+	@FindBy(xpath=".//*[@id='healthcare']/div/div/div[1]/button[contains(text(),'Personalize')]") private WebElement btnPersonalize;
 	@FindBy(xpath=".//*[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 	@FindBy(xpath="//div[@id='attainedAgeSlider']//button[@class='sliderThumb']") private WebElement sliderAttainedAge;
 	@FindBy(xpath=".//*[text()[normalize-space()='Personalize your health-care costs']]") private WebElement lblPersonalizeHlthCareCost;
