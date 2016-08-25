@@ -11,6 +11,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -28,7 +29,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	private LoadableComponent<?> parent;
 	
 	@FindBy(xpath=".//*[text()='Health-care costs']") private WebElement lblHelathCareCosts;
-	@FindBy(xpath=".//*[text()[normalize-space()='Personalize']]") private WebElement btnPersonalize;
+	@FindBy(xpath=".//button[contains(text(),'Personalize')]") private WebElement btnPersonalize;
 	@FindBy(xpath=".//*[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 	@FindBy(xpath="//div[@id='attainedAgeSlider']//button[@class='sliderThumb']") private WebElement sliderAttainedAge;
 	@FindBy(xpath=".//*[text()[normalize-space()='Personalize your health-care costs']]") private WebElement lblPersonalizeHlthCareCost;
@@ -215,7 +216,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * </pre>
 		 * @return - void
 		 */
-	public void verifyPersonalizeBtn() {							
+	public void verifyPersonalizeBtn() {	
+		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
 			btnPersonalize.click();				
 			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);

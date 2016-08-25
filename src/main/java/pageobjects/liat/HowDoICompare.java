@@ -118,7 +118,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		protected void load() {
 			this.parent.get();
 			
-			((LandingPage) this.parent).dismissPopUps(true,true);
+			//((LandingPage) this.parent).dismissPopUps(true,true);
 			this.lblHowDoICompare.click();
 			
 			
