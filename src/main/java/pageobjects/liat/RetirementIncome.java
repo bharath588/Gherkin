@@ -553,7 +553,7 @@ public void verifyTourModals(String modalHeaderTxt) throws InterruptedException{
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	 Web.waitForElement(lblModalHeader);
-	 Thread.sleep(4000);
+	 Thread.sleep(5000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);

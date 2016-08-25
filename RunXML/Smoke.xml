@@ -5,7 +5,7 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	 <test
-		name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
+		name="Verify_Login_Page_Images_Banners">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -14,7 +14,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
+	<test name="SendActivationCode_ForgotPasswordFlow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -23,7 +23,7 @@
 			</class>
 		</classes>
 	</test>
-<test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+<test name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -35,7 +35,7 @@
 	</test>
 	
 	 <test
-		name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
+		name="Verify_Custom_site_prelogin_postlogin_data">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -44,7 +44,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+	<test name="User_Profile_Page_Data_Validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -63,7 +63,7 @@
 		</classes>
 	</test>
 	
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+	<test name="RateOfReturn_Validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -74,7 +74,7 @@
 	</test>
 			
 	<test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
+		name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -84,7 +84,7 @@
 		</classes>
 
 	 	 <test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
+		name="Request_Loan_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -308,7 +308,7 @@
 		</classes>
 	</test>
 		</test>
-		<test name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
+		<test name="Legacy_Home_Page_From_Magic_URL">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>

@@ -111,7 +111,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_ProdValidation_TC01_Verify_Login_Page_Images_Banners">
+			name="Verify_Login_Page_Images_Banners">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -122,7 +122,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
+			name="Verify_Custom_site_prelogin_postlogin_data">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -136,7 +136,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_ProdValidation_TC04_Verify_User_Profile_Page_Data">
+			name="User_Profile_Page_Data_Validations">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -153,7 +153,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
+			name="Request_Loan_Flow">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -163,14 +163,14 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+			name="RateOfReturn_Validations">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="SIT_xPPTWEB_Login_ProdValidation_TC_Left_Legacy_Home_Page">
+		<TestCase name="Legacy_Home_Page_From_Magic_URL">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="012345678xyz" />
 				<parameter name="password" value="Test@1234" />
@@ -178,7 +178,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
+			name="Request_A_Withdrawal_Flow">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444324ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -191,7 +191,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+			name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
@@ -201,7 +201,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
+			name="SendActivationCode_ForgotPasswordFlow">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="codeDeliveryOption" value="ALREADY_HAVE_CODE" />
 				<parameter name="SSN" value="321444329" />

@@ -3206,7 +3206,8 @@ public class prodvalidationtestcases {
         {
             e.printStackTrace();
             Globals.exception = e;
-            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+            String message = e.getCause().getMessage();
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.",message, true);
         }
 		catch(Error ae)
         {

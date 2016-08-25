@@ -4,59 +4,13 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-  	 <test name="SIT_PPTWEB_Sanity_Beneficiary_TC002_Married with Spouse One beneficiary use address on record">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Sanity_Beneficiary_TC001_Married with Spouse One beneficiary new address">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC008_Unmarried with One beneficiary use address on record">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC009_UnMarried One Individual beneficiary new address">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   <test name="SIT_PPTWEB_Sanity_Beneficiary_TC012_UnMarried Multiple Individual beneficiary">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="UnMarried_Multiple_Individual_beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Sanity_Beneficiary_TC011_UnMarried Multiple Entity beneficiary">
-        <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
-                <methods>
-                    <include name="UnMarried_Multiple_Entity_beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+  	 <test name="LIAT_Verify_Tour_Link">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Verify_Tour_Link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>
