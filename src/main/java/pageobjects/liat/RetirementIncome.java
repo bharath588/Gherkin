@@ -89,6 +89,7 @@ private LoadableComponent<?> parent;
 
 @FindBy(xpath="//button[text()[normalize-space()='Tour']]") private WebElement btnTour;
 @FindBy(xpath="//button[contains(@class,'nextBtn')]") private WebElement btnNext;
+@FindBy(xpath="//button[@id='nextBtn']") private WebElement btnNext1;
 private String modalHeader="//h3[text()[normalize-space()='webElementText']]";
 
 @FindBy(xpath="//ul[contains(@class,'view-details-list')]//li") private List<WebElement> lstViewDetails;
@@ -277,7 +278,10 @@ private WebElement getWebElement(String fieldName) {
 		return this.btnNext;
 	}
 	if (fieldName.trim().equalsIgnoreCase("Finish Button")) {
-		return this.btnNext;
+		return this.btnNext1;
+	}
+	if (fieldName.trim().equalsIgnoreCase("NextButton")) {
+		return this.btnNext1;
 	}
 	if (fieldName.trim().equalsIgnoreCase("VIEW DETAILS")) {
 		return this.btnViewDetails;
@@ -553,7 +557,7 @@ public void verifyTourModals(String modalHeaderTxt) throws InterruptedException,
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	 Web.waitForElement(lblModalHeader);
-	 Thread.sleep(5000);
+	 Thread.sleep(4000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);

@@ -3185,12 +3185,11 @@ public class prodvalidationtestcases {
 				retirement.verifyTourModals("Your retirement account experience");
 				Web.clickOnElement(retirement, "Next Button");
 				retirement.verifyTourModals("Progress toward your goal");
-				Web.clickOnElement(retirement, "Next Button");
+				Web.clickOnElement(retirement, "NextButton");
 				retirement.verifyTourModals("Your estimated monthly retirement income");
-				Web.clickOnElement(retirement, "Next Button");
+				Web.clickOnElement(retirement, "NextButton");
 				retirement.verifyTourModals("Income sources");
-				Web.clickOnElement(retirement, "Next Button");
-				Thread.sleep(3000);
+				Web.clickOnElement(retirement, "NextButton");
 				retirement.verifyTourModals("Compare your options");
 				Web.clickOnElement(retirement, "Finish Button");
 				if (Web.isWebElementDisplayed(retirement, "Cancel Goal setup", true)) {
