@@ -533,7 +533,7 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 	WebElement element = this.getWebElement(retirementIncomeView);
 	Thread.sleep(3000);
 	Web.waitForElement(myGoalPercent);
-	Web.clickOnElement(this.myGoalPercent);
+	Web.clickOnElement(myGoalPercent);
 	Thread.sleep(3000);
 		if(Web.isWebElementDisplayed(element)){
 			if(!element.isSelected()){
@@ -553,7 +553,7 @@ public void verifyTourModals(String modalHeaderTxt) throws InterruptedException{
 	boolean isModalHeaderDisplayed=false;
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
-	Thread.sleep(3000);
+	 Web.waitForElement(lblModalHeader);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);
