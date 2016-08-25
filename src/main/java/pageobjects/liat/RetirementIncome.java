@@ -56,7 +56,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@id='investment-mix-slider']//button[@class='sliderThumb']") private WebElement sliderInvestmentMix;
 //@FindBy(xpath="//div[@class='svg-wrap']") private WebElement myGoalPercent;
 @FindBy(xpath="//div[@id='contribution-rate-slider']//button[contains(@class,'sliderThumb')]//div[contains(@class,'sliderThumbValue')]") private WebElement sliderContributionRate;
-@FindBy(xpath="//*[@id='progress-to-goal-inner']") private WebElement myGoalPercent;
+@FindBy(xpath="//pw-radial-chart[@goal-label='of my goal']") private WebElement myGoalPercent;//pw-radial-chart[@goal-label='of my goal']
 @FindBy(xpath="//div[@class='modal-header']/h2") private WebElement txtMyGoalPercent;
 @FindBy(xpath="//input[@id='monthlyOption']") private WebElement radButtonMonthly;
 @FindBy(xpath="//input[@id='yearlyOption']") private WebElement radButtonYearly;
@@ -554,6 +554,7 @@ public void verifyTourModals(String modalHeaderTxt) throws InterruptedException{
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	 Web.waitForElement(lblModalHeader);
+	 Thread.sleep(3000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
 	if (isModalHeaderDisplayed)
 		lib.Reporter.logEvent(Status.PASS, "Verify '" + modalHeaderTxt+ "' modal is Displayed", "'"+modalHeaderTxt + "' modal is Displayed",true);
