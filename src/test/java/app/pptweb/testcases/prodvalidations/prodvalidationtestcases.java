@@ -1680,6 +1680,7 @@ public class prodvalidationtestcases {
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
 			requestWithdrawal.get();
+			Thread.sleep(4000);
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
 			//Web.webdriver.switchTo().defaultContent();
@@ -1721,21 +1722,20 @@ public class prodvalidationtestcases {
 				// requestWithdrawal.isTextFieldDisplayed("Max Avail");
 				///Web.webdriver.switchTo().defaultContent();
 				//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
-				if(Stock.getConfigParam("TEST_ENV").contains("PROD")){
-					Reporter.logEvent(Status.INFO,
-							"Verify Request A Withdrawal Page is Displayed",
-							"Request A Withdrawal Page is visible", true);
-					Reporter.logEvent(Status.INFO,
-							"Verify Request A Withdrawal Page is Displayed",
-							"Request A Withdrawal Page is visible for"+Stock.GetParameterValue("USERNAME"), true);
-				if(!Stock.GetParameterValue("USERNAME").equalsIgnoreCase("321444324ABC")){
-					System.out.println("Inside if");
-				Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");	
-				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-				Thread.sleep(4000);
-				keyBoard.sendKeys(Keys.TAB).perform();
-				keyBoard.sendKeys(Keys.ENTER).perform();
-				Thread.sleep(5000);
+			if (Stock.getConfigParam("TEST_ENV").contains("PROD")) {
+				Reporter.logEvent(Status.INFO,
+						"Verify Request A Withdrawal Page is Displayed",
+						"Request A Withdrawal Page is visible", true);
+				if (!Stock.GetParameterValue("USERNAME").equalsIgnoreCase(
+						"321444324ABC")) {
+					Web.waitForElement(requestWithdrawal,
+							"INPUT CURRENT EMPLOYER NO");
+					Web.clickOnElement(requestWithdrawal,
+							"INPUT CURRENT EMPLOYER NO");
+					Thread.sleep(4000);
+					keyBoard.sendKeys(Keys.TAB).perform();
+					keyBoard.sendKeys(Keys.ENTER).perform();
+					Thread.sleep(5000);
 				}
 		}
 			Web.waitForElement(requestWithdrawal, "CONTINUE");		
