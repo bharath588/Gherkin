@@ -1740,7 +1740,8 @@ public class prodvalidationtestcases {
 		}
 			Web.waitForElement(requestWithdrawal, "CONTINUE");		
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
-			Thread.sleep(7000);
+			Thread.sleep(2000);
+			Web.waitForElement(requestWithdrawal, "YES");
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Plan withdrawal");
 
@@ -1772,7 +1773,7 @@ public class prodvalidationtestcases {
 
 			requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
 			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
-			Thread.sleep(5000);
+			Thread.sleep(4000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Withdrawal method");
 
@@ -1802,7 +1803,7 @@ public class prodvalidationtestcases {
 						"Contact Information is Not Displayed", true);
 			}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
-			Thread.sleep(5000);
+			Thread.sleep(4000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Delivery method");
 			if (lblDisplayed) {
@@ -1841,7 +1842,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("submitRequest")
 					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
-				Thread.sleep(5000);
+				Thread.sleep(3000);
 				lblDisplayed = requestWithdrawal
 						.isTextFieldDisplayed("Request submitted!");
 				if (lblDisplayed) {
