@@ -5,12 +5,20 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	   
-<test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
+  <test name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
+        <classes>
+            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                <methods>
+                    <include name="RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="LIAT_Verify_Tour_Link">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
+					<include name="Verify_Tour_Link" />
 				</methods>
 			</class>
 		</classes>
