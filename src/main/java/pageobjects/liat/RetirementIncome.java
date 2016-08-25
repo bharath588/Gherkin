@@ -548,7 +548,7 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 	return modalHeader;
 }
 
-public void verifyTourModals(String modalHeaderTxt) throws InterruptedException{
+public void verifyTourModals(String modalHeaderTxt) throws InterruptedException,NoSuchElementException{
 	boolean isModalHeaderDisplayed=false;
 	 Web.waitForElement(btnNext);
 	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));

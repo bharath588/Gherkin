@@ -3190,6 +3190,7 @@ public class prodvalidationtestcases {
 				Web.clickOnElement(retirement, "Next Button");
 				retirement.verifyTourModals("Income sources");
 				Web.clickOnElement(retirement, "Next Button");
+				Thread.sleep(3000);
 				retirement.verifyTourModals("Compare your options");
 				Web.clickOnElement(retirement, "Finish Button");
 				if (Web.isWebElementDisplayed(retirement, "Cancel Goal setup", true)) {
