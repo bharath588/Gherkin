@@ -1725,17 +1725,16 @@ public class prodvalidationtestcases {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request A Withdrawal Page is Displayed",
 							"Request A Withdrawal Page is visible", true);
-					if(!Stock.GetParameterValue("USERNAME").equalsIgnoreCase("321444324ABC")){
-					Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-								
+				if(!Stock.GetParameterValue("USERNAME").equalsIgnoreCase("321444324ABC")){
+				Web.waitForElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");	
 				Web.clickOnElement(requestWithdrawal, "INPUT CURRENT EMPLOYER NO");
-					Thread.sleep(4000);
+				Thread.sleep(4000);
 				keyBoard.sendKeys(Keys.TAB).perform();
 				keyBoard.sendKeys(Keys.ENTER).perform();
 				Thread.sleep(5000);
 				}
 		}
-				
+			Web.waitForElement(requestWithdrawal, "CONTINUE");		
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			Thread.sleep(7000);
 			lblDisplayed = requestWithdrawal
