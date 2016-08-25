@@ -1817,6 +1817,7 @@ public class prodvalidationtestcases {
 			}
 			requestWithdrawal.selectDelivaryMethod(Stock
 					.GetParameterValue("deliveryMethod"));
+			Thread.sleep(5000);
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {

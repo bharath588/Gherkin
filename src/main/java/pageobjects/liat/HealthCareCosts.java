@@ -112,7 +112,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@Override
 	protected void load() {
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(true,true);
+		//((LandingPage) this.parent).dismissPopUps(true,true);
 	
 		try {
 			Web.waitForElement(this.lblHelathCareCosts);
@@ -216,7 +216,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * @return - void
 		 */
 	public void verifyPersonalizeBtn() {							
-			this.btnPersonalize.click();				
+			btnPersonalize.click();				
 			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 		}else {

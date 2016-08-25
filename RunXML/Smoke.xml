@@ -14,6 +14,15 @@
 			</class>
 		</classes>
 	</test> 
+	<test name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 <test name="SIT_xPPTWEB_Login_ProdValidation_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -24,15 +33,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="SIT_xPPTWEB_Login_ProdValidation_SendActivationCode_ForgotPasswordFlow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+	
 	 <test
 		name="SIT_xPPTWEB_ProdValidation_TC03_Verify_Custom_site_prelogin_postlogin_data">
 		<classes>
