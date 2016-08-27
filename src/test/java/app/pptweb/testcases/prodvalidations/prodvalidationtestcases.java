@@ -204,13 +204,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -352,13 +350,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -408,13 +404,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -483,13 +477,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -569,16 +561,14 @@ public class prodvalidationtestcases {
 						Status.PASS,
 						"Verify Loan Term is Displayed",
 						"Loan Term is Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone
-										.getWebElementText("TEXT LOAN TERM"),
+								+ requestLone.getWebElementText("TEXT LOAN TERM"),
 						false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify Loan Term is Displayed",
 						"Loan Term is Not Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone
-										.getWebElementText("TEXT LOAN TERM"),
+								+ requestLone.getWebElementText("TEXT LOAN TERM"),
 						false);
 			}
 			requestLone.isTextFieldDisplayed("Loan Origination Fee:");
@@ -612,18 +602,15 @@ public class prodvalidationtestcases {
 			requestLone.isTextFieldDisplayed("Mobile Phone:");
 			requestLone.isTextFieldDisplayed("Work Phone/Ext:");
 			requestLone.isTextFieldDisplayed("Email Address:");
-			requestLone
-					.isTextFieldDisplayed("Please review the above contact information and make any necessary changes before you continue.");
+			requestLone.isTextFieldDisplayed("Please review the above contact information and make any necessary changes before you continue.");
 			Web.setTextToTextBox("INPUT HOME AREA CODE", requestLone, "123");
 			Web.setTextToTextBox("INPUT HOME PREFIX", requestLone, "456");
 			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
 			Web.waitForElement(requestLone, "CHECKBOX I ACCEPT");
-			lblDisplayed = Web
-					.VerifyText(
+			lblDisplayed = Web.VerifyText(
 							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
-							requestLone
-									.getWebElementText("TEXT VERIFY ALL INFO").trim(),
+							requestLone.getWebElementText("TEXT VERIFY ALL INFO").trim(),
 							true);
 
 			if (lblDisplayed) {
@@ -637,15 +624,13 @@ public class prodvalidationtestcases {
 						"PLEASE VERIFY ALL INFO..... Text is Not Dispalyed Expected:"
 								+ "PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\"."
 								+ "\nActual:"
-								+ requestLone
-										.getWebElementText("TEXT VERIFY ALL INFO"),
+								+ requestLone.getWebElementText("TEXT VERIFY ALL INFO"),
 						true);
 			}
 			lblDisplayed = Web
 					.VerifyText(
 							"Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions.",
-							requestLone
-									.getWebElementText("TEXT ONCE YOU CLICK"),
+							requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
 							true);
 
 			if (lblDisplayed) {
@@ -660,16 +645,14 @@ public class prodvalidationtestcases {
 						"ONCE YOU CLICK I ACCEPT..... Text is Not Dispalyed Expected:"
 								+ "Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions."
 								+ "\nActual:"
-								+ requestLone
-										.getWebElementText("TEXT ONCE YOU CLICK"),
+								+ requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
 						false);
 			}
 
 			requestLone.isTextFieldDisplayed("Loan Information");
 			requestLone.isTextFieldDisplayed("Loan Amount");
 			requestLone.isTextFieldDisplayed("Total Interest Charge");
-			requestLone
-					.isTextFieldDisplayed("Total Principal and Interest Amount");
+			requestLone.isTextFieldDisplayed("Total Principal and Interest Amount");
 			requestLone.isTextFieldDisplayed("Interest Rate ");
 			requestLone.isTextFieldDisplayed("Loan Type");
 			requestLone.isTextFieldDisplayed("Loan Term");
@@ -697,8 +680,7 @@ public class prodvalidationtestcases {
 			requestLone.isTextFieldDisplayed("Zip");
 			requestLone.isTextFieldDisplayed("Country");
 			requestLone.isTextFieldDisplayed("Express Mail Service");
-			requestLone
-					.isTextFieldDisplayed("I have read and agree to the Plan");
+			requestLone.isTextFieldDisplayed("I have read and agree to the Plan");
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"CHECKBOX I ACCEPT", true);
 			if (lblDisplayed) {
@@ -723,8 +705,7 @@ public class prodvalidationtestcases {
 						"Verify I Accept Button is Displayed",
 						"I ACCEPT Button is Not Displayed", false);
 			}
-			if (Stock.GetParameterValue("submitRequest")
-					.equalsIgnoreCase("YES")) {
+			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestLone, "I ACCEPT");
 				Thread.sleep(3000);
 				lblDisplayed = Web.VerifyPartialText(
@@ -742,24 +723,20 @@ public class prodvalidationtestcases {
 				}
 				if (Web.isWebElementDisplayed(requestLone,
 						"TEXT CONFIRMATION NUMBER", true)) {
-					lblDisplayed = Common
-							.verifyStringIsInNumberFormat(requestLone
-									.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					lblDisplayed = Common.verifyStringIsInNumberFormat(requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"));
 					if (lblDisplayed) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
-										+ requestLone
-												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is Number Format",
 								"Request Confirmation Number is  Not in Number Format"
-										+ requestLone
-												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								true);
 					}
 				} else {
@@ -774,13 +751,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -824,13 +799,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -897,13 +870,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -956,24 +927,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -997,43 +971,40 @@ public class prodvalidationtestcases {
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
 			transaction.clickConfirmationNumber();
 
-			transaction
-					.verifyTableDisplayed("Transaction History Contr Summary Table");
-			transaction
-					.verifytableHeaderNotEmpty("Transaction History Contr Summary Table Header");
-			transaction
-					.verifyTableDataDisplayed("Transaction History Contr Summary Table");
+			transaction.verifyTableDisplayed("Transaction History Contr Summary Table");
+			transaction.verifytableHeaderNotEmpty("Transaction History Contr Summary Table Header");
+			transaction.verifyTableDataDisplayed("Transaction History Contr Summary Table");
 
-			transaction
-					.verifyTableDisplayed("Transaction History Contr Detail Table");
-			transaction
-					.verifytableHeaderNotEmpty("Transaction History Contr Detail Table Header");
-			transaction
-					.verifyTableDataDisplayed("Transaction History Contr Detail Table");
+			transaction.verifyTableDisplayed("Transaction History Contr Detail Table");
+			transaction.verifytableHeaderNotEmpty("Transaction History Contr Detail Table Header");
+			transaction.verifyTableDataDisplayed("Transaction History Contr Detail Table");
 
 			transaction.verifyReferenceNumber();
 		//	 Web.clickOnElement(transaction, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1056,18 +1027,15 @@ public class prodvalidationtestcases {
 			//Thread.sleep(8000);
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Statements Summary Table");
-			statements
-					.verifytableHeaderNotEmpty("Statements Summary Table Header");
+			statements.verifytableHeaderNotEmpty("Statements Summary Table Header");
 			statements.verifyTableDataDisplayed("Statements Summary Table");
 
 			statements.verifyTableDisplayed("Stmts By Money Type Table");
-			statements
-					.verifytableHeaderNotEmpty("Stmts By Money Type Table Header");
+			statements.verifytableHeaderNotEmpty("Stmts By Money Type Table Header");
 			statements.verifyTableDataDisplayed("Stmts By Money Type Table");
 
 			statements.verifyTableDisplayed("Stmts by Fund Detail Table");
-			statements
-					.verifytableHeaderNotEmpty("Stmts by Fund Detail Table Header");
+			statements.verifytableHeaderNotEmpty("Stmts by Fund Detail Table Header");
 			statements.verifyTableDataDisplayed("Stmts by Fund Detail Table");
 
 			statements.clickOnStatementFromTable("Money Type Table");
@@ -1076,24 +1044,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1136,24 +1107,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1176,24 +1150,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1217,24 +1194,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1256,10 +1236,8 @@ public class prodvalidationtestcases {
 
 			brokerage.verifyBrokerageTableDataDisplayed("Provider Name");
 			brokerage.verifyBrokerageTableDataDisplayed("Enroll image");
-			brokerage
-					.verifyBrokerageTableDataDisplayed("Transfer into sda link");
-			brokerage
-					.verifyBrokerageTableDataDisplayed("Transfer from sda link");
+			brokerage.verifyBrokerageTableDataDisplayed("Transfer into sda link");
+			brokerage.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
 			Web.webdriver.switchTo().defaultContent();
 			//Web.clickOnElement(brokerage, "LOGOUT");
@@ -1267,24 +1245,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1312,24 +1293,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1347,8 +1331,7 @@ public class prodvalidationtestcases {
 			investment.get();
 			Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
-			investment
-					.choseInvestmentOption("Change Current Balance Investment");
+			investment.choseInvestmentOption("Change Current Balance Investment");
 			Web.clickOnElement(investment, "Continue button1");
 			investment.navigateToTab("View By Asset Class Tab");
 			investment.verifyIfGraphDisplayed("Current Assets Balance Graph");
@@ -1367,24 +1350,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1414,24 +1400,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1578,24 +1567,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1644,24 +1636,27 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 			// throw ae;
 		} finally {
-
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//			Reporter.finalizeTCReport();
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1697,16 +1692,15 @@ public class prodvalidationtestcases {
 							"Request A Withdrawal Page is NOT visible", true);
 				}
 				*/
-				  lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock
-				  .GetParameterValue("withdrawalType")); if (lblDisplayed) {
+				  lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock.GetParameterValue("withdrawalType")); 
+				  if (lblDisplayed) {
 				  Reporter.logEvent(Status.INFO,
 				  "Verify WithDrawal Type is Selected",
 				  " WithDrawal Type is Selected", true); } else {
 				  Reporter.logEvent(Status.FAIL,
 				  "Verify  WithDrawal Type is Selected",
 				  " WithDrawal Type is Not Selected", true); }
-				  requestWithdrawal.isTextFieldDisplayed
-				  ("Total withdrawal amount");
+				  requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
 				  
 				  lblDisplayed = Web.clickOnElement(requestWithdrawal,
 				  "MAX AMOUNT");
@@ -1755,12 +1749,10 @@ public class prodvalidationtestcases {
 						"Plan Withdrawal Page is Not Displayed", true);
 			}
 
-			requestWithdrawal
-					.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+			requestWithdrawal.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
 			lblDisplayed = Web.clickOnElement(requestWithdrawal, "YES");
 			Thread.sleep(3000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Please enter your Social Security number.");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Please enter your Social Security number.");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Social Security number Field is Displayed.",
@@ -1774,8 +1766,7 @@ public class prodvalidationtestcases {
 			requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
 			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
 			Thread.sleep(4000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Withdrawal method");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal method");
 
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -1786,13 +1777,11 @@ public class prodvalidationtestcases {
 						"Verify Withdrawal Method Page is Displayed",
 						"Withdrawal Method Page is Not Displayed", true);
 			}
-			requestWithdrawal
-					.isTextFieldDisplayed("How would you like your withdrawal distributed?");
+			requestWithdrawal.isTextFieldDisplayed("How would you like your withdrawal distributed?");
 			Web.selectDropDownOption(requestWithdrawal, "WITHDRAWAL METHOD",
 					Stock.GetParameterValue("withdrawalMethod"));
 			Thread.sleep(4000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Confirm your contact information");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Confirm your contact information");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Contact Information is Displayed",
@@ -1804,8 +1793,7 @@ public class prodvalidationtestcases {
 			}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
 			Thread.sleep(4000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Delivery method");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Delivery method");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Delivery Method Page is Displayed",
@@ -1815,11 +1803,9 @@ public class prodvalidationtestcases {
 						"Verify Delivery Method Page is Displayed",
 						"Delivery Method Page is Not Displayed", true);
 			}
-			requestWithdrawal.selectDelivaryMethod(Stock
-					.GetParameterValue("deliveryMethod"));
+			requestWithdrawal.selectDelivaryMethod(Stock.GetParameterValue("deliveryMethod"));
 			Thread.sleep(5000);
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Withdrawal summary");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Withdrawal Summary is Displayed",
@@ -1844,8 +1830,7 @@ public class prodvalidationtestcases {
 					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
 				Thread.sleep(3000);
-				lblDisplayed = requestWithdrawal
-						.isTextFieldDisplayed("Request submitted!");
+				lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Request submitted!");
 				if (lblDisplayed) {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request Submission Page is Displayed",
@@ -1856,8 +1841,7 @@ public class prodvalidationtestcases {
 							"Request Submission is Not Displayed", true);
 				}
 				lblDisplayed = Web.VerifyPartialText(
-						"Your confirmation number is", requestWithdrawal
-								.getWebElementText("TEXT CONFIRMATION"), true);
+						"Your confirmation number is", requestWithdrawal.getWebElementText("TEXT CONFIRMATION"), true);
 				if (lblDisplayed) {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request Confirmation is Displayed",
@@ -1870,24 +1854,20 @@ public class prodvalidationtestcases {
 
 				if (Web.isWebElementDisplayed(requestWithdrawal,
 						"TEXT CONFIRMATION NUMBER", true)) {
-					lblDisplayed = Common
-							.verifyStringIsInNumberFormat(requestWithdrawal
-									.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					lblDisplayed = Common.verifyStringIsInNumberFormat(requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"));
 					if (lblDisplayed) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
-										+ requestWithdrawal
-												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation Number is Not in Number Format"
-										+ requestWithdrawal
-												.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								true);
 					}
 				} else {
@@ -1901,13 +1881,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -1986,8 +1964,7 @@ public class prodvalidationtestcases {
 					lib.Stock.GetParameterValue("STREETADDRESS"));
 
 			// Step 5 - Click on "Already have a code?" link
-			objAuth.selectCodeDeliveryOption(lib.Stock
-					.GetParameterValue("codeDeliveryOption"));
+			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
 
 			// Step 6 and 7 - Enter verification code into
 			// "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue"
@@ -2027,13 +2004,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2093,22 +2068,16 @@ public class prodvalidationtestcases {
 			}
 
 			// Select code delivery option and click continue
-			twoStepVerification.selectCodeDeliveryOption(lib.Stock
-					.GetParameterValue("deliveryOption"));
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("deliveryOption"));
 
 			// Get verification code
-			if (lib.Stock.GetParameterValue("deliveryOption").trim()
-					.equalsIgnoreCase("ALREADY_HAVE_CODE")) {
-				verificationCode = twoStepVerification
-						.getVerificationCode(true);
+			if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+				verificationCode = twoStepVerification.getVerificationCode(true);
 			} else {
-				if (lib.Stock.GetParameterValue("deliveryOption").trim()
-						.equalsIgnoreCase("EMAIL")) {
-					verificationCode = twoStepVerification
-							.getVerificationCode(false);
+				if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+					verificationCode = twoStepVerification.getVerificationCode(false);
 				} else {
-					if (twoStepVerification.isActivationCodeGenerated(lib.Stock
-							.GetParameterValue("deliveryOption"))) {
+					if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("deliveryOption"))) {
 						Reporter.logEvent(Status.PASS,
 								"Verify activation code is generated",
 								"Activation code is successfully generated",
@@ -2131,8 +2100,7 @@ public class prodvalidationtestcases {
 			// Submit verification code
 			Thread.sleep(5000);
 			twoStepVerification.submitVerificationCode(verificationCode, true,
-					Boolean.parseBoolean(lib.Stock
-							.GetParameterValue("rememberDevice")));
+					Boolean.parseBoolean(lib.Stock.GetParameterValue("rememberDevice")));
 
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
@@ -2224,8 +2192,7 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.FAIL, "Verify Investment mix slider",
 						"Investment mix slider not displayed", true);*/
 
-			if (lib.Stock.GetParameterValue("Do It Myself").trim()
-					.equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				Web.clickOnElement(retirement, "Do It Myself");
 				if (retirement.verifyIfSliderPresent("Investment mix slider"))
 					Reporter.logEvent(Status.PASS,
@@ -2246,8 +2213,7 @@ public class prodvalidationtestcases {
 							"Investment mix slider displayed", true);
 			}
 			// verify if we are able to navigate to Help Me Do It Tab
-			if (lib.Stock.GetParameterValue("Help Me Do It").trim()
-					.equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Help Me Do It").trim().equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab",
 							"Able to navigate to Help Me Do It tab", false);
@@ -2264,8 +2230,7 @@ public class prodvalidationtestcases {
 			}
 
 			// verify if we are able to navigate to Do It For Me Tab
-			if (lib.Stock.GetParameterValue("Do It For Me").trim()
-					.equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It For Me").trim().equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab",
 							"Able to navigate to Do It For Me It tab", false);
@@ -2283,8 +2248,7 @@ public class prodvalidationtestcases {
 			}
 
 			// verify if we are able to navigate to Do It Myself Tab
-			if (lib.Stock.GetParameterValue("Do It Myself").trim()
-					.equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab",
 							"Able to navigate to Do It Myself tab", false);
@@ -2303,13 +2267,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2365,13 +2327,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2427,13 +2387,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2489,13 +2447,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2524,10 +2480,8 @@ public class prodvalidationtestcases {
 					"Retirement Income page is displayed", true);
 
 			// verify Percent of my goal section for monthly retirement income
-			String expectedtxtMonthlyIncome = retirement
-					.verifyPercentOfMyGoalSection("Monthly Income");
-			if (expectedtxtMonthlyIncome
-					.contains("My goal for monthly retirement income"))
+			String expectedtxtMonthlyIncome = retirement.verifyPercentOfMyGoalSection("Monthly Income");
+			if (expectedtxtMonthlyIncome.contains("My goal for monthly retirement income"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Check Percent of my goal section for monthly retirement income",
@@ -2539,10 +2493,8 @@ public class prodvalidationtestcases {
 						"Percent of my goal section not displayed", true);
 
 			// verify Percent of my goal section for monthly retirement income
-			String expectedtxtYearlyIncome = retirement
-					.verifyPercentOfMyGoalSection("Yearly Income");
-			if (expectedtxtYearlyIncome
-					.contains("My goal for yearly retirement income"))
+			String expectedtxtYearlyIncome = retirement.verifyPercentOfMyGoalSection("Yearly Income");
+			if (expectedtxtYearlyIncome.contains("My goal for yearly retirement income"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Check Percent of my goal section for yearly retirement income",
@@ -2555,13 +2507,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2596,13 +2546,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2629,13 +2577,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2682,13 +2628,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2747,13 +2691,11 @@ public class prodvalidationtestcases {
 					} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2869,13 +2811,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3002,13 +2942,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3090,13 +3028,11 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
-					.getCause().getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
 
 		} finally {
 			try {
