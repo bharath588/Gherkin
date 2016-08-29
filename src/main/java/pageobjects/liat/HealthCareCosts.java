@@ -217,13 +217,23 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * @return - void
 		 */
 	public void verifyPersonalizeBtn() {	
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+		
+		//	((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+			try{
+			Web.webdriver.switchTo().defaultContent();
 			Web.clickOnElement(btnPersonalize);				
 			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 		}else {
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);
 		}
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				Globals.exception = e;
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.", "Exception", true);
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getMessage(), true);
+			}
 	}
 	
 	
