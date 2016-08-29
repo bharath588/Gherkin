@@ -345,6 +345,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("VIEW ONLY SPLIT CONTRIBUTION TEXT")) {
 				return this.lblViewOnlyCatchUP;	
 			}
+			if(fieldName.trim().equalsIgnoreCase("LOG OUT")) {
+				return this.lnkLogout;	
+			}
 			return null;
 			}		
 		
