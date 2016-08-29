@@ -340,10 +340,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	public void choseInvestmentOption(String investmentOption) {
 		WebElement option = this.getWebElement(investmentOption);
 		if (Web.isWebElementDisplayed(option, true)) {
+			Web.clickOnElement(option);
 			Reporter.logEvent(Status.INFO, "verify " + investmentOption
 					+ " option is displayed", investmentOption
 					+ " option is displayed", true);
-			option.click();
+			
 		} else
 			Reporter.logEvent(Status.FAIL, "verify " + investmentOption
 					+ " option is displayed", investmentOption

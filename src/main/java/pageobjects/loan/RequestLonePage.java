@@ -74,6 +74,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement txtConfirmationNo;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
 	private WebElement btnLogin;
+	@FindBy(id = "legacyFeatureIframe")
+	private WebElement iFrame;
+
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	
 	/**
@@ -222,6 +225,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	 * 
 	 */
 	public void selectLoneType(String loanType) {
+		Web.waitForElement(iFrame);
 		Web.webdriver.switchTo().frame("legacyFeatureIframe");
 		if (loanType.equalsIgnoreCase("GENERAL")) {
 			inputLonatypeGeneral.click();

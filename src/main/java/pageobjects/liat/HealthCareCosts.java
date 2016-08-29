@@ -222,7 +222,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			try{
 			Web.webdriver.switchTo().defaultContent();
 			Web.clickOnElement(btnPersonalize);				
-			if (Web.isWebElementDisplayed(this.btnUpdate, false)) {
+			if (!Web.isWebElementDisplayed(btnUpdate)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 		}else {
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);
