@@ -1632,7 +1632,7 @@ public class prodvalidationtestcases {
 				deferral.myContributions_Confirmation_Page();
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
-			lib.Web.clickOnElement(deferral, "LOG OUT");
+			//lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
