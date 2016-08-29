@@ -221,6 +221,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		//	((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
 			try{
 			Web.webdriver.switchTo().defaultContent();
+			Web.waitForElement(btnPersonalize);
 			Web.clickOnElement(btnPersonalize);				
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);

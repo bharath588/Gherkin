@@ -72,29 +72,7 @@
 			</class>
 		</classes>
 	</test>
-			
-	<test
-		name="Request_A_Withdrawal_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
-				</methods>
-			</class>
-		</classes>
 
-	 	 <test
-		name="Request_Loan_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
-	
 	<test name="Transaction_History_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -122,30 +100,21 @@
 			</class>
 		</classes>
 	</test>
-	<test name="Dollar_Cost_Average_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Dollar_Cost_Average_Flow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 	
-	<test name="FundToFundTransfer">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="FundToFundTransfer" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 	<test name="Investment_lineup_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 					<include name="Investment_lineup_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
 				</methods>
 			</class>
 		</classes>
@@ -189,6 +158,34 @@
 		</classes>
 	</test>
 	
+	 	 <test	name="Request_Loan_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test	name="Request_A_Withdrawal_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
     <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -307,7 +304,7 @@
 			</class>
 		</classes>
 	</test>
-		</test>
+		
 		<test name="Legacy_Home_Page_From_Magic_URL">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
