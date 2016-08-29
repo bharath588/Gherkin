@@ -81,7 +81,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
-			Thread.sleep(6000);
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -16,33 +16,5 @@
 		</classes>
 	</test>
  
-	<test name="Brokerage_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Brokerage_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 	
-	<test name="Dollar_Cost_Average_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Dollar_Cost_Average_Flow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
-	<test	name="Request_A_Withdrawal_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 </suite>
