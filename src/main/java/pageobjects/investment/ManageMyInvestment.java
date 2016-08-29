@@ -405,8 +405,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			String percent, String amount) throws InterruptedException,NullPointerException,IndexOutOfBoundsException {
 		Actions keyBoard = new Actions(Web.webdriver);
 		Web.waitForElement(iframeLegacyFeature);
-		Web.isWebElementDisplayed(iframeLegacyFeature, true);
+		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		else{
+			Web.waitForElement(iframeLegacyFeature);
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		}
 		WebElement freq = this.getWebElement(frequency);
 		WebElement date = this.getWebElement(setupDate);
 		Web.clickOnElement(freq);
@@ -772,7 +776,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	public void navigateToTab(String tabName) {
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
+			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			else{
+				Web.waitForElement(iframeLegacyFeature);
+			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			}
 		WebElement tab = this.getWebElement(tabName);
 		Web.waitForElement(tab);
 		tab.click();

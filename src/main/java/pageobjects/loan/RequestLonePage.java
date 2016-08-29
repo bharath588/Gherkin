@@ -96,7 +96,6 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.webdriver, this);
 	}
-
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
@@ -226,6 +225,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	 */
 	public void selectLoneType(String loanType) {
 		Web.waitForElement(iFrame);
+		if(Web.isWebElementDisplayed(iFrame, true))
 		Web.webdriver.switchTo().frame("legacyFeatureIframe");
 		if (loanType.equalsIgnoreCase("GENERAL")) {
 			inputLonatypeGeneral.click();
