@@ -5,47 +5,27 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 
-    <test name="LIAT_Verify_Tour_Link">
+   <test name="Edit_Beneficiary">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Verify_Tour_Link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<!-- <test name="Balance_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Balance_validations" />
+					<include name="Edit_Beneficiary" />
 				</methods>
 			</class>
 		</classes>
 	</test>
 	
-	<test name="SIT_xPPTWEB_Login_ProdValidation_TC18_Left_Navigation_ROR_link">
+	<test name="Edit_MyContribution">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="SF01_TC018_Verify_ROR_link" />
+					<include name="Edit_MyContribution" />
 				</methods>
 			</class>
 		</classes>
-	</test>
-			
-	<test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC19_Left_Navigation_Request_A_Withdrawal_link">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	 	 <test
-		name="SIT_xPPTWEB_Login_ProdValidation_TC16_Left_Navigation_Request_Loan_link">
+	</test> 
+	
+	 	 <test	name="Request_Loan_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -54,5 +34,34 @@
 			</class>
 		</classes>
 	</test>
- -->
+ 
+	<test name="Brokerage_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Brokerage_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Dollar_Cost_Average_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Dollar_Cost_Average_Flow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test	name="Request_A_Withdrawal_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>

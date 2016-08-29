@@ -74,9 +74,9 @@
 		</TestCase>
 		<TestCase name="Brokerage_validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444328ABC" />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="FOUR TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="PlanForms_Validations">
