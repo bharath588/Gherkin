@@ -5,16 +5,6 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 
-  
-	<test name="Edit_MyContribution">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Edit_MyContribution" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
 	
 	 	 <test	name="Request_Loan_Flow">
 		<classes>
