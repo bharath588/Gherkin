@@ -497,6 +497,7 @@ public class prodvalidationtestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
+			Web.webdriver.manage().deleteAllCookies();
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
@@ -517,7 +518,7 @@ public class prodvalidationtestcases {
 
 			boolean lblDisplayed = false;
 			int confirmationNumber = 0;
-           // Thread.sleep(5000);
+            Thread.sleep(5000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
 			if (lblDisplayed) {
@@ -529,6 +530,7 @@ public class prodvalidationtestcases {
 						"Verify Request A Loan Page is Displayed",
 						"Request A Loan Page is NOT visible", true);
 			}
+			
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web
