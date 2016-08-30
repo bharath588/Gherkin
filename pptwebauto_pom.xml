@@ -65,6 +65,12 @@
 								<value>${CAPTURESCREENSHOT}</value>
 							</property>
 						</systemProperties>
+						<systemProperties>
+							<property>
+								<name>BROWSER</name>
+								<value>${BROWSER}</value>
+							</property>
+						</systemProperties>
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
