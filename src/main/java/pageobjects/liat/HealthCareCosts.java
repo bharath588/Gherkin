@@ -226,9 +226,15 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 		}else {
+			Web.clickOnElement(btnPersonalize);	
+			if (!Web.isWebElementDisplayed(btnUpdate)) {
+				Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
+			}else {
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);
+			}
 		}
 			}
+			
 			catch(Exception e){
 				e.printStackTrace();
 				Globals.exception = e;

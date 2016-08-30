@@ -498,6 +498,8 @@ public class prodvalidationtestcases {
 
 		try {
 			Web.webdriver.manage().deleteAllCookies();
+			Web.webdriver.navigate().refresh();
+			 Thread.sleep(5000);
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
