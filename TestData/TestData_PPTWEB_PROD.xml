@@ -107,7 +107,7 @@
 				<parameter name="password" value="Test@1234" />
 				<parameter name="lblUserName" value="FIVE TESTING" />
 				<parameter name="Contribution Rate" value="10" />
-				<parameter name="Submit_Transaction" value="Yes" />
+				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase

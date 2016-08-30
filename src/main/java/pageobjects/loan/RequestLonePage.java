@@ -27,7 +27,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private LoadableComponent<?> parent;
 	private static boolean waitforLoad = false;
 
-	@FindBy(xpath = ".//h1[text()[normalize-space()='Request a loan']]")
+	@FindBy(xpath = ".//*[@id='account-detail-main-content']//h1")
 	private WebElement lblRequestALoan;
 	@FindBy(xpath = ".//*[@id='genPurp']")
 	private WebElement inputLonatypeGeneral;

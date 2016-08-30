@@ -148,15 +148,6 @@
 		</classes>
 	</test> 
 	
-	 	 <test	name="Request_Loan_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
  
 	<test name="Brokerage_validations">
 		<classes>
@@ -178,6 +169,15 @@
 		</classes>
 	</test>
 	
+	 	 <test	name="Request_Loan_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

@@ -1398,7 +1398,7 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("Setup_date"),
 					Stock.GetParameterValue("percent"),
 					Stock.GetParameterValue("amount"));
-			// Web.clickOnElement(investment, "LOGOUT");
+			 Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1617,8 +1617,9 @@ public class prodvalidationtestcases {
 			deferral.click_Select_Your_Contribution_Rate();
 			deferral.select_ContributionType("Before");
 			lib.Web.clickOnElement(deferral, "Continue button");
+			Thread.sleep(3000);
 			if (deferral.verifyMyContributions(
-					Stock.GetParameterValue("Contribution Rate"), "Before Tax",
+					deferral.contrbution_rate, "Before Tax",
 					"Standard"))
 				Reporter.logEvent(
 						Status.PASS,
@@ -1635,7 +1636,7 @@ public class prodvalidationtestcases {
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
 			Web.webdriver.switchTo().defaultContent();
-			lib.Web.clickOnElement(deferral, "LOG OUT");
+			//lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
