@@ -1399,6 +1399,7 @@ public class prodvalidationtestcases {
 					Stock.GetParameterValue("percent"),
 					Stock.GetParameterValue("amount"));
 			 Web.clickOnElement(investment, "LOGOUT");
+			 Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
