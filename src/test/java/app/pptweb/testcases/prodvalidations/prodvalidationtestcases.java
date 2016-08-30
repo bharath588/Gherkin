@@ -1103,6 +1103,7 @@ public class prodvalidationtestcases {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}
+			Web.webdriver.switchTo().defaultContent();
 			 //Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1346,6 +1347,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
 					"Yes"))
 				investment.cancelTransfer("F2F");
+			Web.webdriver.switchTo().defaultContent();
 			// Web.clickOnElement(investment, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1633,7 +1635,7 @@ public class prodvalidationtestcases {
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
 			Web.webdriver.switchTo().defaultContent();
-			//lib.Web.clickOnElement(deferral, "LOG OUT");
+			lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
