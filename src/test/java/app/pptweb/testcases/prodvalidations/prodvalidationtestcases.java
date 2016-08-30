@@ -1632,6 +1632,7 @@ public class prodvalidationtestcases {
 				deferral.myContributions_Confirmation_Page();
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
+			Web.webdriver.switchTo().defaultContent();
 			//lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1877,6 +1878,7 @@ public class prodvalidationtestcases {
 							true);
 				}
 			}
+			Web.webdriver.switchTo().defaultContent();
 		//	Web.clickOnElement(requestWithdrawal, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
