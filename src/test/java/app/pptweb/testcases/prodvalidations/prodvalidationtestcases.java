@@ -85,14 +85,14 @@ public class prodvalidationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter
-			.logEvent(
-					Status.INFO,
-					"Test Data used for this Test Case:",
-					printTestData(),
-					false);
+//			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+//					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+//			lib.Reporter
+//			.logEvent(
+//					Status.INFO,
+//					"Test Data used for this Test Case:",
+//					printTestData(),
+//					false);
 			LoginPage login = new LoginPage();
 			login.get();
 
@@ -212,7 +212,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-			Reporter.finalizeTCReport();
+//				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -3118,9 +3118,7 @@ public class prodvalidationtestcases {
                         
         }
 		finally { 
-			try { //Reporter.finalizeTCReport(); 
-				
-			}
+			try { Reporter.finalizeTCReport(); }
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 	}
@@ -3175,9 +3173,7 @@ public class prodvalidationtestcases {
                         
         }
 		finally { 
-			try {// Reporter.finalizeTCReport();
-				
-			}
+			try { Reporter.finalizeTCReport(); }
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 	}
