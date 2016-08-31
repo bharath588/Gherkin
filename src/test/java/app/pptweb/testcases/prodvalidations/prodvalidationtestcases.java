@@ -85,14 +85,14 @@ public class prodvalidationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter
-			.logEvent(
-					Status.INFO,
-					"Test Data used for this Test Case:",
-					printTestData(),
-					false);
+//			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+//					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+//			lib.Reporter
+//			.logEvent(
+//					Status.INFO,
+//					"Test Data used for this Test Case:",
+//					printTestData(),
+//					false);
 			LoginPage login = new LoginPage();
 			login.get();
 
@@ -212,7 +212,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Reporter.finalizeTCReport();
+//				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -497,12 +497,12 @@ public class prodvalidationtestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Web.webdriver.manage().deleteAllCookies();
-			Web.webdriver.navigate().refresh();
-			 Thread.sleep(5000);
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+//			Web.webdriver.manage().deleteAllCookies();
+//			Web.webdriver.navigate().refresh();
+//			 Thread.sleep(5000);
+//			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+//					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+//			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -763,7 +763,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Reporter.finalizeTCReport();
+//				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
