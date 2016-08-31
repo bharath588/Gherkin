@@ -1744,6 +1744,7 @@ public class prodvalidationtestcases {
 					Thread.sleep(5000);
 				}
 		}
+<<<<<<< Upstream, based on origin/ProdValidation_AugustRelease2016
 			Web.waitForElement(requestWithdrawal, "CONTINUE");
 			if(Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")){
 			Web.clickOnElement(requestWithdrawal, "CONTINUE");
@@ -1753,6 +1754,16 @@ public class prodvalidationtestcases {
 						throw new Error("'Continue' is not displayed");
 					}
 			
+=======
+			Web.waitForElement(requestWithdrawal, "CONTINUE");		
+			if(Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")){
+				Web.clickOnElement(requestWithdrawal, "CONTINUE");
+				}
+				else{
+					
+							throw new Error("'Continue' is not displayed");
+						}
+>>>>>>> aead5e0 Added exception
 			Thread.sleep(2000);
 			Web.waitForElement(requestWithdrawal, "YES");
 			lblDisplayed = requestWithdrawal
