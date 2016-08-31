@@ -56,7 +56,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement txtConfirmation;
 	@FindBy(xpath = "//p[./i[@class='em-checkbox-icon']]//strong")
 	private WebElement txtConfirmationNo;
-	@FindBy(xpath = "//*[@id='inserviceradiono']")
+	@FindBy(xpath = "//label[./input[@id='inserviceradiono']]")
 	private WebElement inptCurrentEmpNo;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
