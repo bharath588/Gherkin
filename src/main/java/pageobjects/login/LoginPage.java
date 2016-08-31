@@ -167,7 +167,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 		Web.webdriver.get(url);
 		Web.webdriver.navigate().refresh();
-		lib.Web.webdriver.manage().window().maximize();
+		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
+			lib.Web.webdriver.manage().window().maximize();
 		System.out.println("Application URL:"+url);
 
 		// currently not beeing seen
