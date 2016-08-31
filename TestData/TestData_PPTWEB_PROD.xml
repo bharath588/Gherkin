@@ -187,7 +187,7 @@
 				<parameter name="SSN" value="321444324" />
 				<parameter name="withdrawalMethod" value="Payment to self" />
 				<parameter name="deliveryMethod" value="first-class mail" />
-				<parameter name="submitRequest" value="NO" />
+				<parameter name="submitRequest" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase
