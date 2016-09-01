@@ -204,7 +204,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -350,7 +355,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -404,7 +414,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -477,7 +492,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -517,7 +537,7 @@ public class prodvalidationtestcases {
 			requestLone.get();
 
 			boolean lblDisplayed = false;
-			int confirmationNumber = 0;
+//			int confirmationNumber = 0;
             Thread.sleep(5000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
@@ -806,7 +826,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -877,7 +902,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -934,7 +964,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -944,17 +979,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -991,7 +1018,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1001,17 +1033,10 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1051,7 +1076,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1061,17 +1091,10 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1115,7 +1138,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1125,17 +1153,10 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1158,7 +1179,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1168,17 +1194,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1202,7 +1220,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1212,17 +1235,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1253,7 +1268,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1263,17 +1283,10 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1301,7 +1314,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1311,17 +1329,9 @@ public class prodvalidationtestcases {
 			try {
 			//	Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1359,7 +1369,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1369,17 +1384,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1410,7 +1417,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1420,17 +1432,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1577,7 +1581,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1587,17 +1596,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1648,7 +1649,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -1658,17 +1664,9 @@ public class prodvalidationtestcases {
 			try {
 				//Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-
-//		try {
-//			Reporter.finalizeTCReport();
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 	}
 
 	@Test(dataProvider = "setData")
@@ -1689,7 +1687,7 @@ public class prodvalidationtestcases {
 			requestWithdrawal.get();
 			Thread.sleep(4000);
 			boolean lblDisplayed = false;
-			int confirmationNumber = 0;
+//			int confirmationNumber = 0;
 			//Web.webdriver.switchTo().defaultContent();
 			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
 				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
@@ -1744,26 +1742,15 @@ public class prodvalidationtestcases {
 					Thread.sleep(5000);
 				}
 		}
-<<<<<<< Upstream, based on origin/ProdValidation_AugustRelease2016
+
 			Web.waitForElement(requestWithdrawal, "CONTINUE");
 			if(Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")){
-			Web.clickOnElement(requestWithdrawal, "CONTINUE");
+				Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			}
 			else{
-				
-						throw new Error("'Continue' is not displayed");
-					}
+				throw new Error("'Continue' is not displayed");
+			}
 			
-=======
-			Web.waitForElement(requestWithdrawal, "CONTINUE");		
-			if(Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")){
-				Web.clickOnElement(requestWithdrawal, "CONTINUE");
-				}
-				else{
-					
-							throw new Error("'Continue' is not displayed");
-						}
->>>>>>> aead5e0 Added exception
 			Thread.sleep(2000);
 			Web.waitForElement(requestWithdrawal, "YES");
 			lblDisplayed = requestWithdrawal
@@ -1912,7 +1899,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2035,7 +2027,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2298,7 +2295,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2358,7 +2360,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2418,7 +2425,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2478,7 +2490,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2538,7 +2555,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2577,7 +2599,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2608,7 +2635,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2659,7 +2691,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2722,7 +2759,12 @@ public class prodvalidationtestcases {
 					} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2842,7 +2884,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -2973,7 +3020,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -3059,7 +3111,12 @@ public class prodvalidationtestcases {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+			Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
@@ -3119,7 +3176,12 @@ public class prodvalidationtestcases {
         {
             e.printStackTrace();
             Globals.exception = e;
-            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+            Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
         }
 		catch(Error ae)
         {
@@ -3173,8 +3235,12 @@ public class prodvalidationtestcases {
         {
             e.printStackTrace();
             Globals.exception = e;
-            String message = e.getCause().getMessage();
-            Reporter.logEvent(Status.FAIL, "A run time exception occured.",message, true);
+            Throwable t = e.getCause();
+			String msg = "";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.",msg, true);
         }
 		catch(Error ae)
         {
