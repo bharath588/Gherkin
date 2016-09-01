@@ -10,7 +10,9 @@ import lib.Web;
 import lib.Reporter.Status;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -162,7 +164,10 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				.findElements(lnkLeftNavItem);
 
 		if (leftNavLink.size() > 0) {
-			leftNavLink.get(0).click();
+			Actions mouse = new Actions(Web.webdriver);
+			mouse.moveToElement(leftNavLink.get(0));
+			mouse.click().build().perform();
+			//leftNavLink.get(0).click();
 			success = true;
 		} else {
 			Reporter.logEvent(Status.INFO,
