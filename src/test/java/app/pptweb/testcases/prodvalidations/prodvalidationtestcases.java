@@ -85,14 +85,14 @@ public class prodvalidationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter
-			.logEvent(
-					Status.INFO,
-					"Test Data used for this Test Case:",
-					printTestData(),
-					false);
+//			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+//					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+//			lib.Reporter
+//			.logEvent(
+//					Status.INFO,
+//					"Test Data used for this Test Case:",
+//					printTestData(),
+//					false);
 			LoginPage login = new LoginPage();
 			login.get();
 
@@ -205,7 +205,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -217,7 +217,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-			Reporter.finalizeTCReport();
+//			Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -356,7 +356,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -415,7 +415,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -493,7 +493,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -518,9 +518,9 @@ public class prodvalidationtestcases {
 
 		try {
 			
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+//			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+//					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+//			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -774,7 +774,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -786,7 +786,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Reporter.finalizeTCReport();
+//				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -827,7 +827,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -903,7 +903,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -965,7 +965,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1019,7 +1019,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1077,7 +1077,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1139,7 +1139,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1180,7 +1180,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1221,7 +1221,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1269,7 +1269,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1315,7 +1315,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1370,7 +1370,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1418,7 +1418,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1582,7 +1582,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1650,7 +1650,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -1900,7 +1900,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2028,7 +2028,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2296,7 +2296,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2361,7 +2361,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2426,7 +2426,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2491,7 +2491,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2556,7 +2556,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2600,7 +2600,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2636,7 +2636,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2692,7 +2692,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2760,7 +2760,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -2885,7 +2885,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -3021,7 +3021,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -3112,7 +3112,7 @@ public class prodvalidationtestcases {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -3177,7 +3177,7 @@ public class prodvalidationtestcases {
             e.printStackTrace();
             Globals.exception = e;
             Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
@@ -3191,9 +3191,12 @@ public class prodvalidationtestcases {
                         
         }
 		finally { 
-			try { Reporter.finalizeTCReport(); }
-			catch (Exception e1) { e1.printStackTrace(); } 
-			}
+			try {
+//				Reporter.finalizeTCReport();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
 	}
 	
 	@Test(dataProvider = "setData")
@@ -3236,7 +3239,7 @@ public class prodvalidationtestcases {
             e.printStackTrace();
             Globals.exception = e;
             Throwable t = e.getCause();
-			String msg = "Exception returned no stack trace. Possibly 'NullPointerException'";
+            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
