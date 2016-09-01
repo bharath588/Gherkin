@@ -272,9 +272,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					false);
 
 		} else {
+					
 			lib.Reporter.logEvent(Status.FAIL, "Verify " + fieldName
 					+ " is Displayed",
 					fieldName + " is Not Displayed", false);
+			throw new Error(fieldName+" is not displayed");
 		}
 	
 return isTextDisplayed;

@@ -143,6 +143,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
+		System.out.println("Clicked on Request loan");
 		lib.Web.isWebElementDisplayed(lblRequestALoan,true);
 
 	}
@@ -228,9 +229,20 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if(Web.isWebElementDisplayed(iFrame, true))
 		Web.webdriver.switchTo().frame("legacyFeatureIframe");
 		if (loanType.equalsIgnoreCase("GENERAL")) {
-			inputLonatypeGeneral.click();
+			if (Web.isWebElementDisplayed(inputLonatypeGeneral)) {
+				inputLonatypeGeneral.click();
+			} else {
+				Web.webdriver.switchTo().defaultContent();
+				throw new Error("Loan type radio button 'General' is not displayed");
+			}
+			
 		} else if (loanType.equalsIgnoreCase("MORTGAGE")) {
-			this.inputLonatypeMortgage.click();
+			if (Web.isWebElementDisplayed(inputLonatypeMortgage)) {
+				this.inputLonatypeMortgage.click();
+			} else {
+				Web.webdriver.switchTo().defaultContent();
+				throw new Error("Loan type radio button 'Mortgage' is not displayed");
+			}
 		}
 
 		this.btnContinue.click();
