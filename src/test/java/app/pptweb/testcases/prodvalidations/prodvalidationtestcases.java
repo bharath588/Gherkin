@@ -524,16 +524,16 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			/*MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
-			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			/*if(Stock.getConfigParam("TEST_ENV").contains("QA")){
 				 myAccountPage.get();
 				 if(Web.isWebElementDisplayed(myAccountPage,
 				  "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID("332125-01"); 
 				
 				  }
 				}*/
-			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
-			RequestLonePage requestLone = new RequestLonePage(lftBar);
+			//LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
+			RequestLonePage requestLone = new RequestLonePage(myAccountPage);
 			requestLone.get();
 
 			boolean lblDisplayed = false;
@@ -550,6 +550,7 @@ public class prodvalidationtestcases {
 						"Verify Request A Loan Page is Displayed",
 						"Request A Loan Page is NOT visible", true);
 			}
+		
 			
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
 			Web.webdriver.switchTo().frame("legacyFeatureIframe");

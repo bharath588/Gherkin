@@ -179,7 +179,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			}
 
 			mouse.click().build().perform();
-			//leftNavLink.get(0).click();
+			//leftNavLink.get(0).click();;
 			success = true;
 		} else {
 			Reporter.logEvent(Status.INFO,

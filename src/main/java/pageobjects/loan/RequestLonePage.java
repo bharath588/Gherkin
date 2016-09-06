@@ -10,7 +10,9 @@ import lib.Web;
 import lib.Reporter.Status;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -74,6 +76,10 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement txtConfirmationNo;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
 	private WebElement btnLogin;
+	@FindBy(xpath = "//li[@class='ng-scope']//a[text()[normalize-space()='Request a loan']]")
+	private WebElement lnkRequestLoan;
+	@FindBy(xpath = "//li[@class='ng-scope']//a[text()[normalize-space()='Loans summary']]")
+	private WebElement lnkLoanSummary;
 	@FindBy(id = "legacyFeatureIframe")
 	private WebElement iFrame;
 
@@ -142,7 +148,13 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	protected void load() {
 		this.parent.get();
 
-		((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
+		//((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
+		Actions keyBoard = new Actions(Web.webdriver);
+		for(int i=1;i<=25;i++){
+			
+			keyBoard.sendKeys(Keys.TAB);
+		}
+		keyBoard.sendKeys(Keys.ENTER);
 		System.out.println("Clicked on Request loan");
 		lib.Web.isWebElementDisplayed(lblRequestALoan,true);
 
@@ -210,6 +222,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (fieldName.trim().equalsIgnoreCase("Text Confirmation Number")) {
 			return this.txtConfirmationNo;
 		}
+		if (fieldName.trim().equalsIgnoreCase("LOAN TYPE GENERAL")) {
+			return this.inputLonatypeGeneral;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -228,7 +243,22 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		Web.waitForElement(iFrame);
 		if(Web.isWebElementDisplayed(iFrame, true))
 		Web.webdriver.switchTo().frame("legacyFeatureIframe");
+		
+		if (!Web.isWebElementDisplayed(inputLonatypeGeneral)) {
+			Web.webdriver.navigate().refresh();
+			try {
+				Thread.sleep(7000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Web.webdriver.switchTo().defaultContent();
+			Web.waitForElement(iFrame);
+			if(Web.isWebElementDisplayed(iFrame, true))
+			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+		}
 		if (loanType.equalsIgnoreCase("GENERAL")) {
+					
 			if (Web.isWebElementDisplayed(inputLonatypeGeneral)) {
 				inputLonatypeGeneral.click();
 			} else {
@@ -253,6 +283,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			e.printStackTrace();
 		}
 	}
+		
 		/**
 		 * <pre>
 		 * Method to get the text of an webElement
