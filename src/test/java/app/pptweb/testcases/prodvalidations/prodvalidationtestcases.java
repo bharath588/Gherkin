@@ -535,6 +535,10 @@ public class prodvalidationtestcases {
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
+			String parentWindow = Web.webdriver.getWindowHandle();
+			for (String winHandle : Web.webdriver.getWindowHandles()) {
+				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+			}
 
 			boolean lblDisplayed = false;
 //			int confirmationNumber = 0;
@@ -769,6 +773,9 @@ public class prodvalidationtestcases {
 							true);
 				}
 			}
+			Web.webdriver.switchTo().defaultContent();
+			Web.webdriver.close();
+			Web.webdriver.switchTo().window(parentWindow);
 			Web.webdriver.switchTo().defaultContent();
 			Web.clickOnElement(requestLone, "LOGOUT");
 		} catch (Exception e) {
