@@ -134,8 +134,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 *            - Link name as it is displayed on the page
 	 * @return boolean - <b>true</b> if link is successfully found and clicked.
 	 *         <b>false</b> otherwise.
+	 * @throws InterruptedException 
 	 */
-	public boolean clickNavigationLink(String linkName) {
+	public boolean clickNavigationLink(String linkName)  {
 		boolean success = false;
 
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
@@ -170,7 +171,13 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 
 		if (leftNavLink.size() > 0) {
 			Actions mouse = new Actions(Web.webdriver);
-			mouse.moveToElement(leftNavLink.get(0));
+			mouse.moveToElement(leftNavLink.get(0)).build().perform();
+			try {
+				Thread.sleep(4000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			mouse.click().build().perform();
 			//leftNavLink.get(0).click();
 			success = true;
