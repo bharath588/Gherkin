@@ -38,6 +38,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
+	private String lnkRequestLoan="//li[@class='ng-scope']//a[text()[normalize-space()='Request a loan']]";
+	
 
 	/**
 	 * Empty args constructor
@@ -151,14 +153,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
 			strLinkText = "Rate of return";
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
-			strLinkText = "Request a loan";
+			strLinkText=lnkRequestLoan;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
 
 		} else {
 			strLinkText = linkName.trim();
 		}
-
+		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
+			lnkLeftNavItem=By.xpath(strLinkText);
+		}
+		else
 		lnkLeftNavItem = By.linkText(strLinkText);
 		List<WebElement> leftNavLink = weLeftNavSection
 				.findElements(lnkLeftNavItem);
