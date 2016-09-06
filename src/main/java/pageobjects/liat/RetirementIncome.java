@@ -104,6 +104,7 @@ String valueViewDetail="//ul[contains(@class,'view-details-list')]//li[position]
 String lblIncomeType="//div[@class='paycheck-label-inner-container']/h5[contains(text(),'IncomeType')]";
 String valIncomeType="//div[@class='paycheck-label-inner-container'][./h5[contains(text(),'IncomeType')]]//h3";
 
+
 HashMap<String, String> mapViewDetails = new HashMap<String, String>();
 //ul/li[contains(@label,'Employer')]/span[@class='paycheck-item-val ng-binding']
 //div[@id='doItForMeUnenrolled']//a[text()[normalize-space()='Enroll in managed accounts']]
@@ -292,7 +293,12 @@ private WebElement getWebElement(String fieldName) {
 		if (fieldName.trim().equalsIgnoreCase("Review Changes")) {
 		return this.btnReviewChanges;
 	}
-	
+		// Log out
+				if (fieldName.trim().equalsIgnoreCase("LOG OUT")
+								|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
+							return this.lnkLogout;
+						}
+
 	return null;
 
 }

@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-<test	name="Request_A_Withdrawal_Flow">
+<!-- <test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -13,7 +13,7 @@
 			</class>
 		</classes>
 	</test>
-	
+	 -->
 	 	 <test	name="Request_Loan_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

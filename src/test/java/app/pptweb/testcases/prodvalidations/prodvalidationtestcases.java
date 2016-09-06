@@ -3230,7 +3230,7 @@ public class prodvalidationtestcases {
 			}
 			else
 				Reporter.logEvent(Status.FAIL,"Verify TOUR button is displayed","Tour button is displayed", false);
-			
+			Web.clickOnElement(retirement, "LOG OUT");
 			
 			
 		}
