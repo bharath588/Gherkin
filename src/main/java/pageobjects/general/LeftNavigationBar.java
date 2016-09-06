@@ -138,7 +138,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public boolean clickNavigationLink(String linkName)  {
 		boolean success = false;
-
+		Actions mouse = new Actions(Web.webdriver);
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
@@ -163,14 +163,16 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		}
 		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
 			lnkLeftNavItem=By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
+			mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).release().build().perform();
 		}
-		else
+		else{
 		lnkLeftNavItem = By.linkText(strLinkText);
 		List<WebElement> leftNavLink = weLeftNavSection
 				.findElements(lnkLeftNavItem);
 
 		if (leftNavLink.size() > 0) {
-			Actions mouse = new Actions(Web.webdriver);
+		
 			mouse.moveToElement(leftNavLink.get(0)).build().perform();
 			try {
 				Thread.sleep(2000);
@@ -181,10 +183,12 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			mouse.click().build().perform();
 			//leftNavLink.get(0).click();;
 			success = true;
-		} else {
+		} 
+		else {
 			Reporter.logEvent(Status.INFO,
 					"Click the specified link on left navigation bar", "'"
 							+ linkName + "' not found", false);
+		}
 		}
 
 		return success;
