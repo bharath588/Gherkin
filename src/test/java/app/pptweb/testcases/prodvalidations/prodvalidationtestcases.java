@@ -769,7 +769,7 @@ public class prodvalidationtestcases {
 				}
 			}
 			Web.webdriver.switchTo().defaultContent();
-			//Web.clickOnElement(requestLone, "LOGOUT");
+			Web.clickOnElement(requestLone, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

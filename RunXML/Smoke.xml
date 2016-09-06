@@ -4,6 +4,16 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
+	<test	name="Request_Loan_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	 <test
 		name="Verify_Login_Page_Images_Banners">
 		<classes>
@@ -177,16 +187,7 @@
 			</class>
 		</classes>
 	</test>
-	 	 <test	name="Request_Loan_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
+	 	 
     <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
