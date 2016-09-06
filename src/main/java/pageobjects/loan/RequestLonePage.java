@@ -148,14 +148,8 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	protected void load() {
 		this.parent.get();
 
-		//((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
-		Actions keyBoard = new Actions(Web.webdriver);
-		for(int i=1;i<=25;i++){
-			
-			keyBoard.sendKeys(Keys.TAB);
-		}
-		keyBoard.sendKeys(Keys.ENTER);
-		System.out.println("Clicked on Request loan");
+		((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
+		
 		lib.Web.isWebElementDisplayed(lblRequestALoan,true);
 
 	}
