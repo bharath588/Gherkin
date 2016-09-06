@@ -173,7 +173,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			Actions mouse = new Actions(Web.webdriver);
 			mouse.moveToElement(leftNavLink.get(0)).build().perform();
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(2000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
