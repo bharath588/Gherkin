@@ -38,7 +38,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
     @FindBy(id="name") private WebElement lblUserName;
     @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-    @FindBy(id = "fancybox-close")
+    @FindBy(xpath= "//*[@id='fancybox-close']")
 	private WebElement btnClose;
     @FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
@@ -117,8 +117,8 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 				e.printStackTrace();
 			}
 		}
-		
-		if (Web.isWebElementDisplayed(this.btnClose)) {
+		Web.waitForElement(btnClose);
+		if (Web.isWebElementDisplayed(this.btnClose, true)) {
 			this.btnClose.click();
 		}
 		
