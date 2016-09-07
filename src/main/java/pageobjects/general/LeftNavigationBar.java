@@ -10,7 +10,9 @@ import lib.Web;
 import lib.Reporter.Status;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -27,7 +29,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(xpath = ".//a[text()[normalize-space()='Prior plan contributions']]")
 	private WebElement lnkPriorPlanContributions;
 
-	@FindBy(xpath = ".//*[@id='main-page']//*[@role='navigation' and .//h3]")
+	@FindBy(xpath = ".//*[@role='navigation' and .//h3]")
 	private WebElement weLeftNavSection;
 	private By lnkLeftNavItem;
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
@@ -36,6 +38,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
+	private String lnkRequestLoan="//li[@class='ng-scope']//a[text()[normalize-space()='Request a loan']]";
+	
 
 	/**
 	 * Empty args constructor
@@ -65,7 +69,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			e.printStackTrace();
 		}
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true));
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),"Left Navigation Bar is Not Loaded");
 
 	}
 
@@ -74,13 +78,14 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// boolean paramFlag = false;
 
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(true, true);
+		//((LandingPage) this.parent).dismissPopUps(true, true);
 		// if(new
 		// LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
 		// System.out.println("inside");
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,10 +134,11 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 *            - Link name as it is displayed on the page
 	 * @return boolean - <b>true</b> if link is successfully found and clicked.
 	 *         <b>false</b> otherwise.
+	 * @throws InterruptedException 
 	 */
-	public boolean clickNavigationLink(String linkName) {
+	public boolean clickNavigationLink(String linkName)  {
 		boolean success = false;
-
+		Actions mouse = new Actions(Web.webdriver);
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
@@ -148,25 +154,50 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
 			strLinkText = "Rate of return";
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
-			strLinkText = "Request a loan";
+			strLinkText=lnkRequestLoan;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
 
 		} else {
 			strLinkText = linkName.trim();
 		}
-
+		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
+			lnkLeftNavItem=By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
+			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			//mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).build().perform();
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//mouse.release().build().perform();
+			
+		}
+		else{
 		lnkLeftNavItem = By.linkText(strLinkText);
 		List<WebElement> leftNavLink = weLeftNavSection
 				.findElements(lnkLeftNavItem);
 
 		if (leftNavLink.size() > 0) {
-			leftNavLink.get(0).click();
+		
+			mouse.moveToElement(leftNavLink.get(0)).build().perform();
+			try {
+				Thread.sleep(2000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			mouse.click().build().perform();
+			//leftNavLink.get(0).click();;
 			success = true;
-		} else {
-			Reporter.logEvent(Status.WARNING,
+		} 
+		else {
+			Reporter.logEvent(Status.INFO,
 					"Click the specified link on left navigation bar", "'"
 							+ linkName + "' not found", false);
+		}
 		}
 
 		return success;
