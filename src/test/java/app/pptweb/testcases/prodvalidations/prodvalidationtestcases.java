@@ -169,7 +169,7 @@ public class prodvalidationtestcases {
 			boolean windowFound = false;
 			String parentWindow = Web.webdriver.getWindowHandle();
 			Web.clickOnElement(login, "BrokerCheck Notification");
-			Thread.sleep(4000);
+			Thread.sleep(7000);
 			Set<String> handles = Web.webdriver.getWindowHandles();
 			for (String windowHandle : handles) {
 
