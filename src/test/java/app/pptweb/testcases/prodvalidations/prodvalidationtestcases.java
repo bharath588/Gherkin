@@ -2140,9 +2140,8 @@ public class prodvalidationtestcases {
 
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
-			Thread.sleep(7000);
 			landingPage.dismissPopUps(true, true);
-			landingPage.dismissPopUps(false, true);
+			landingPage.dismissPopUps(true, true);
 			Thread.sleep(4000);
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
@@ -2157,7 +2156,7 @@ public class prodvalidationtestcases {
 			}
 			//landingPage.dismissPopUps(true, true);
 			// Logout if opted
-			landingPage.logout(true);
+			Web.clickOnElement(landingPage, "LOGOUT");
 
 		} catch (Exception e) {
 			e.printStackTrace();
