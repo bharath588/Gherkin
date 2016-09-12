@@ -24,16 +24,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="SendActivationCode_ForgotPasswordFlow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-<test name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+	<test name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
@@ -44,6 +35,16 @@
 		</classes>
 	</test>
 	
+	<test name="SendActivationCode_ForgotPasswordFlow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
 	 <test
 		name="Verify_Custom_site_prelogin_postlogin_data">
 		<classes>
