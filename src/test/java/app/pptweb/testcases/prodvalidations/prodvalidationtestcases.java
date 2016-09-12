@@ -2140,7 +2140,8 @@ public class prodvalidationtestcases {
 
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
+			Thread.sleep(7000);
+			landingPage.dismissPopUps(true, true);
 			Thread.sleep(4000);
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
@@ -2153,7 +2154,7 @@ public class prodvalidationtestcases {
 						"Verify landing page is displayed",
 						"Landing page is not displayed", true);
 			}
-			landingPage.dismissPopUps(true, true);
+			//landingPage.dismissPopUps(true, true);
 			// Logout if opted
 			landingPage.logout(true);
 
