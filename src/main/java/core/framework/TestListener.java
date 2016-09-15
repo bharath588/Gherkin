@@ -11,6 +11,7 @@ import lib.Log.Level;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -29,15 +30,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 	Map<String,String> tempMap;
 	int currentTCInvocationCount=0;
 	private static boolean finalTestStatus =  true;
-	private String webBrowser;
-	
-	
-	@Parameters({"browser"})
-	static void getWebDriver(String browser)
-	{
-		Web.getWebDriver(browser);
-	}
-	
+
 	private boolean isFinalTestStatus() {
 		return finalTestStatus;
 	}
@@ -82,7 +75,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			try{
 				Log.Report(Level.INFO,"Web Driver instance found to be inactive for the Test Case :"+
 			               test.getName()+" ,hence re-initiating");
-			//	Web.webdriver = Web.getWebDriver(this.webBrowser);
+				Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
 				Log.Report(Level.INFO,"Web Driver instance re-initiated successfully the Test Case :"+
 			               test.getName());
 			}catch(Exception e){
