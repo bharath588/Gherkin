@@ -2252,7 +2252,7 @@ public class registrationtestcases {
 						"Verify Account setup Header block text",
 						"Header text block is not displayed on the page", true);
 			} else {
-				isMatching = Web.VerifyText("Username and Password",
+				isMatching = Web.VerifyText("Create username and password",
 						hdrBlockText, true);
 
 				if (isMatching) {

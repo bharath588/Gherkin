@@ -536,8 +536,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		Reporter.logEvent(Status.INFO, "", "", true);
 
 		// Verify "Username and Password" header is displayed
-		isMatching = Web.VerifyText("Username and Password",
-				this.lblUsernameAndPassword.getText(), true);
+		isMatching = Web.VerifyText("Create username and password",
+				this.lblUsernameAndPassword.getText().trim(), true);
 		if (isMatching) {
 			Reporter.logEvent(Status.PASS,
 					"Verify 'Username and Password' header is displayed",
