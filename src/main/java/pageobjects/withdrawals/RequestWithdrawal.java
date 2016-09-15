@@ -40,10 +40,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inptMaxAmount;
 	@FindBy(xpath = ".//button[contains(text(),'Continue')]")
 	private WebElement btnContinue;
-	@FindBy(xpath= ".//label[./input[@id='inlineRadio1']]")
+	@FindBy(xpath= ".//label[./input[@value='true']]")
 	private WebElement inpYes;
-	@FindBy(id = "inlineRadio2")
-	private WebElement inpNo;
+	@FindBy(xpath= ".//label[./input[@value='false']]")
+	private WebElement inpNo;	
 	@FindBy(id = "ssnInput")
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
@@ -62,9 +62,33 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath= ".//label[./input[@id='inserviceradioyes']]")
 	private WebElement inpCurrentEmployerYes;
+		
 	private String textField="//*[contains(text(),'webElementText')]";
 	private String inputWithdrawalType = "//div[@id='test_id'][.//span[contains(text(),'Withdrawal Type')]]//input";
 	private String inpMailType="//input[contains(@value,'mailType')]";
+	
+	private String 
+	moneyTypeAmtTxt ="//div[contains(@class,'selected-row-body')][.//span[contains(text(),'Withdrawal Type')]]//div[contains(@class,'source-row')][.//span[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
+	
+	private String 
+	moneyTypeMaxAmtChkBox ="//div[contains(@class,'selected-row-body')][.//span[contains(text(),'Withdrawal Type')]]//div[contains(@class,'source-row')][.//span[text()[normalize-space()='Money Source Type']]]//input[@type='checkbox']"; 
+	private String 
+	txtMoneyTypeAmt ="//div[contains(@class,'selected-row-body')][.//span[contains(text(),'Withdrawal Type')]]//div[contains(@class,'source-row')][.//span[text()[normalize-space()='Money Source Type']]]//div[contains(@class,'col-md-5 cell-container')]";	
+	
+	@FindBy(xpath = ".//select[contains(@ng-model,'companyType')]")
+	private WebElement drpRollOverCompany;	
+	@FindBy(xpath=".//input[contains(@placeholder, 'Enter address line 1')]")
+	private WebElement txtAddressLine1;	
+	@FindBy(xpath=".//input[contains(@placeholder, 'City')]")
+	private WebElement txtCity;
+	@FindBy(xpath=".//select[contains(@ng-model,'address.state')]")
+	private WebElement drpStateCode;
+	@FindBy(xpath=".//input[contains(@placeholder, 'ZIP')]")
+	private WebElement txtZIPCode;
+	@FindBy(xpath=".//input[@type='email']")
+	private WebElement txtEmailAddress;
+	
+	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]";
 	
 	/**
 	 * Default Constructor
@@ -201,6 +225,12 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("INPUT CURRENT EMPLOYER NO")) {
 			return this.inptCurrentEmpNo;
 		}
+		if (fieldName.trim().equalsIgnoreCase("ROLLOVER COMPANY")) {
+			return this.drpRollOverCompany;
+		}
+		if (fieldName.trim().equalsIgnoreCase("EMAIL ADDRESS")) {
+			return this.txtEmailAddress;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -242,6 +272,91 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		return isSelected;
 	}
 	/**
+	 * This method is to select money type source and enter the amount for specified withdrawal type
+	 * @param withdrawalType
+	 * @param moneyType
+	 * @param amount
+	 */
+	public void enterAmountforMoneyTypeSource(String withdrawalType, String moneyType,String amount) {
+	try
+	{
+		WebElement txtAmount = Web.webdriver.findElement(By
+				.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
+						withdrawalType).replaceAll("Money Source Type", moneyType)));
+		Web.setTextToTextBox(txtAmount, amount);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+		
+	}
+	
+	/**
+	 * This method is to select money type source and  Max amount check box for specified withdrawal type
+	 * @param withdrawalType
+	 * @param moneyType
+	 */
+	public void selectMaxAmountForMoneyTypeSource(String withdrawalType, String moneyType) {
+	try
+	{
+		WebElement chkBoxMaxAmount = Web.webdriver.findElement(By
+				.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
+						withdrawalType).replaceAll("Money Source Type", moneyType)));
+		Web.clickOnElement(chkBoxMaxAmount);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+		
+	}
+	/**
+	 * This method is to select money type source and  Max amount check box for specified withdrawal type
+	 * @param withdrawalType
+	 * @param moneyType
+	 */
+	public int getMaxAmountForMoneyTypeSource(String withdrawalType, String moneyType) {
+		int maxAmount=0;
+	try
+	{
+		
+		WebElement txtMaxAmount = Web.webdriver.findElement(By
+				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
+						withdrawalType).replaceAll("Money Source Type", moneyType)));
+		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1]));
+		
+	}
+	
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return maxAmount;
+		
+	}
+	
+	/**
+	 * This method is to enter Address details of the Roll Over Company for Withdrawal
+	 * @param address1
+	 * @param city
+	 * @param stateCode
+	 * @param zipCode
+	 */
+	public void enterAddressDetailsForRollOverCompany(String address1,String city, String stateCode,String zipCode)
+	{
+		try {
+			Web.setTextToTextBox(txtAddressLine1, address1);
+			Web.setTextToTextBox(txtCity, city);
+			Web.selectDropDownOption(drpStateCode, stateCode);
+			Web.setTextToTextBox(txtZIPCode, zipCode);			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * <pre>
 	 * Method to get the text of an webElement
 	 * Returns string webElement is displayed
@@ -281,6 +396,58 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	
 return isTextDisplayed;
 	}
+
+	/**
+	 * Method to Select WithDrawal Distribution type 
+	 * @param withDrawalType
+	 * 
+	 */
+	public void selectWithDrawalMethod(String withDrawalType) {
+		Web.selectDropDownOption(drpWithdrawalType, withDrawalType, true);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Method to Select WithDrawal Distribution type 
+	 * @param withDrawalType
+	 * 
+	 */
+	public void selectRollOverCompany(String rollOverCompany) {
+		Web.selectDropDownOption(drpRollOverCompany, rollOverCompany, true);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * This method is to get the final amount that can be withdrawn for the money type source
+	 * @param withdrawalType
+	 * @param moneyType
+	 */
+	public int getFinalWithdrawalAmountForMoneyTypeSource(String moneyType) {
+	int finalWithdrawalAmount=0;
+	try
+	{		
+		WebElement lblFinalWithdrawalAmount = Web.webdriver.findElement(By
+				.xpath(lblWithdrawalAmount.replace("Money Source Type",
+						moneyType)));
+		finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return finalWithdrawalAmount ;
+	}
+	
+	
 	
 	/**
 	 * Method to Select Delivery Method 
