@@ -142,10 +142,11 @@ public class authenticationtestcases {
 				twoStepVerification.submitVerificationCode(verificationCode, true, false);
 
 				//Verify user is on landing page (Check label 'Retirement income' is displayed on the page)
-				isDisplayed = Web.isWebElementDisplayed(landingPage, "Log out") && Web.isWebElementDisplayed(landingPage, "Retirement income");
-				if (isDisplayed) {
+				Web.waitForElement(landingPage, "LOG OUT");
+				//isDisplayed = Web.isWebElementDisplayed(landingPage, "LOG OUT");
+				if (Web.isWebElementDisplayed(landingPage, "LOG OUT")) {
 					Reporter.logEvent(Status.PASS, "Verify user is on landing page", "user is on landing page", true);
-					Web.clickOnElement(landingPage, "LOGOUT");
+					Web.clickOnElement(landingPage, "LOG OUT");
 				} else {
 					Reporter.logEvent(Status.FAIL, "Verify user is on landing page", "user is not on landing page", true);
 				}
@@ -348,9 +349,5 @@ public class authenticationtestcases {
 	}
 
 
-	@AfterSuite
-	public void cleanupSessions() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
-	}
+	
 }

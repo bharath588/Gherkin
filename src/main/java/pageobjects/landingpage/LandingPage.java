@@ -29,7 +29,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	 */
 
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	@FindBy(id = "home")
+	@FindBy(linkText = "Home")
 	private WebElement lnkHome;
 	@FindBy(linkText = "My Accounts")
 	private WebElement lnkMyAccounts;
