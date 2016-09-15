@@ -24,12 +24,13 @@ public class Globals {
           static{
         	  DB_TYPE = new HashMap<String,String>();
         	  DB_TYPE.put("PROJ","DEV");
-        	  DB_TYPE.put("QA","QA");        	  
+        	  DB_TYPE.put("QA","QA");   
+
           }
 	  	   // FOR CI 
           public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
           public static final String GC_EXECUTION_ENVIRONMENT=System.getProperties().containsKey("env")?System.getProperty("env").toUpperCase(): Stock.getConfigParam(GC_COLNAME_TEST_ENV);
-
+          
 
           
 		//SpreadSheet
@@ -82,6 +83,14 @@ public class Globals {
           public static AssertionError assertionerror = null;
           public  static Error error = null;
           
+          //Reporter
+         // public static final String GC_SCREENSHOT_REQUIRED=System.getProperties().containsKey("ScreenshotCaptureOption")?System.getProperty("ScreenshotCaptureOption").toUpperCase(): Stock.getConfigParam("ScreenshotCaptureOption".toUpperCase());
+          //public static final String GC_SCREENSHOT_REQUIRED="SCREENSHOTONFAILURE";
+          public static String GC_CAPTURE_SCREENSHOT=System.getProperties().containsKey("CAPTURESCREENSHOT")?System.getProperty("CAPTURESCREENSHOT").trim().toUpperCase(): Stock.getConfigParam("CAPTURESCREENSHOT");
+          public static final String optionUserDefault = "USERDEFAULT";
+          public static final String option_Never = "NEVER";
+          public static final String option_OnFailure = "ONFAILURE";
+          public static final String option_Always= "ALWAYS";
         //XML  
           public static final String GC_XML_SUITE = "suite";
           public static final String GC_XML_TEST = "test";

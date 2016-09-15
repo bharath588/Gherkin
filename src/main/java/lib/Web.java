@@ -2,7 +2,6 @@ package lib;
 
 import java.awt.Robot;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +16,6 @@ import lib.Reporter.Status;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -26,17 +24,18 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Parameters;
 
 import core.framework.Globals;
 
@@ -383,10 +382,11 @@ public class Web {
 	 * 	3. <b>CHROME</b>
 	 * </pre>
 	 * 
-	 * @param webBrowser
+	 * @param browser
 	 * @return
 	 */
-	public static WebDriver getWebDriver(String webBrowser) {
+	@Parameters({"browser"})
+	public static WebDriver getWebDriver(String browser) {
 		WebDriver webDriver;
 
 		// try {
@@ -395,25 +395,30 @@ public class Web {
 		// e.printStackTrace();
 		// }
 
-		if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
-				|| webBrowser.trim().equalsIgnoreCase("IEXPLORE")
-				|| webBrowser.trim().equalsIgnoreCase("IE")) {
+		if (browser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+				|| browser.trim().equalsIgnoreCase("IEXPLORE")
+				|| browser.trim().equalsIgnoreCase("IE")) {
 			DesiredCapabilities capabilities = DesiredCapabilities
 					.internetExplorer();
 			capabilities.setCapability("ignoreZoomSetting", true);
 			capabilities.setCapability("ie.ensureCleanSession", true);
+			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+			capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			capabilities.setCapability("EnableNativeEvents",false);
 			System.setProperty("webdriver.ie.driver",
 					Stock.getConfigParam("IEDriverClassPath"));
 			webDriver = new InternetExplorerDriver(capabilities);
+			//webDriver = new InternetExplorerDriver();
 
-		} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+		} else if (browser.trim().equalsIgnoreCase("CHROME")) {
 			System.setProperty("webdriver.chrome.driver",
 					Stock.getConfigParam("ChromeDriverClassPath"));
 			webDriver = new ChromeDriver();
-		} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
-				|| webBrowser.trim().equalsIgnoreCase("FF")) {
+		} else if (browser.trim().equalsIgnoreCase("FIREFOX")
+				|| browser.trim().equalsIgnoreCase("FF")) {
 			
 			ProfilesIni profiles = new ProfilesIni();
+			
 			FirefoxProfile ffProfile = profiles.getProfile("default");
 			// ffProfile.setPreference("signon.autologin.proxy", true);
 
@@ -428,7 +433,7 @@ public class Web {
 			}
 
 		} else {
-			throw new Error("Unknown browser type specified: " + webBrowser);
+			throw new Error("Unknown browser type specified: " + browser);
 		}
 
 		webDriver.manage().window().maximize();

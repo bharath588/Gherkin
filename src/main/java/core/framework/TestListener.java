@@ -20,6 +20,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+import org.testng.annotations.Parameters;
 
 import core.framework.ThrowException.TYPE;
 
@@ -28,6 +29,14 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 	Map<String,String> tempMap;
 	int currentTCInvocationCount=0;
 	private static boolean finalTestStatus =  true;
+	private String webBrowser;
+	
+	
+	@Parameters({"browser"})
+	static void getWebDriver(String browser)
+	{
+		Web.getWebDriver(browser);
+	}
 	
 	private boolean isFinalTestStatus() {
 		return finalTestStatus;
@@ -39,6 +48,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 	
 	public void onStart(ISuite suite) {
 		try{
+		
 			Stock.getParam(Globals.GC_TESTCONFIGLOC+
 			Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
 			/*if(!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty())
@@ -46,6 +56,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
             Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV, Globals.GC_EXECUTION_ENVIRONMENT, true);
             }*/
 			List<ITestNGMethod> methodsList = new LinkedList<>();
+		//	System.out.println(suite.getParameter("browser"));
 			int counter=0;
 			methodsList = suite.getAllMethods();
 			for(ITestNGMethod ite : methodsList)
@@ -60,6 +71,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		}		
 	}
 
+	
 	public void onStart(ITestContext test) {	
 		Globals.GC_MANUAL_TC_NAME = test.getName();
 		try{	
@@ -70,7 +82,7 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			try{
 				Log.Report(Level.INFO,"Web Driver instance found to be inactive for the Test Case :"+
 			               test.getName()+" ,hence re-initiating");
-				Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+			//	Web.webdriver = Web.getWebDriver(this.webBrowser);
 				Log.Report(Level.INFO,"Web Driver instance re-initiated successfully the Test Case :"+
 			               test.getName());
 			}catch(Exception e){

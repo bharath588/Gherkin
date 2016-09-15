@@ -40,7 +40,6 @@ public class DB {
 
 		try {				
 			stmt = DB.getPreparedStatement(dbName, query, queryParameterValues);
-			
 			tempRecordSet = stmt.executeQuery();
 			masterRecordSet.add(tempRecordSet);
 

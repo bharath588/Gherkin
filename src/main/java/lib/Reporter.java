@@ -157,6 +157,8 @@ public class Reporter {
 	 * @param attachScreenshot - <b>true</b> to attach screenshot. <b>false</b> otherwise.
 	 */
 	public static void logEvent(Reporter.Status logStatus, String Step, String Details, boolean attachScreenshot) {
+		Globals.GC_CAPTURE_SCREENSHOT = Stock
+				.getConfigParam("CAPTURESCREENSHOT");
 		if (Step.trim().length() == 0 && Details.trim().length() == 0 && attachScreenshot) {
 			Reporter.objReport.attachScreenshot(Web.captureScreenshot());
 		} else if (Step.trim().length() == 0 && attachScreenshot) {
@@ -207,17 +209,66 @@ public class Reporter {
 					Details += stackTraceLnk; 
 			}
 			
-			if (attachScreenshot) {
+			/*if (attachScreenshot) {
 				Reporter.objReport.log(tmpLogStatus, Step, Details, Web.captureScreenshot());
 			} else {
 				Reporter.objReport.log(tmpLogStatus, Step, Details);
-			}
+			}*/
+			Reporter.methodName(tmpLogStatus, Step, Details, attachScreenshot);
 		}
 		
 //		if (logStatus == Status.FAIL)
 //			Reporter.currIterationStatus = "FAIL";
 	}
+
+	public static void methodName(LogStatus logStatus, String step,
+			String Details, boolean attachScreenshot) {
 	
+		if (Globals.GC_CAPTURE_SCREENSHOT == null) {
+			Globals.GC_CAPTURE_SCREENSHOT = "DEFAULT";
+		}
+		switch (Globals.GC_CAPTURE_SCREENSHOT) {
+		case Globals.option_OnFailure:
+			if (logStatus.name().equalsIgnoreCase("FAIL")) {
+				Reporter.objReport.log(logStatus, step, Details,
+						Web.captureScreenshot());
+			} else {
+				Reporter.objReport.log(logStatus, step, Details);
+			}
+			break;
+
+		case Globals.option_Always:
+			Reporter.objReport.log(logStatus, step, Details,
+					Web.captureScreenshot());
+			break;
+			
+			
+		case Globals.option_Never:
+			Reporter.objReport.log(logStatus, step, Details);
+			break;
+			
+			
+		default:
+			if (attachScreenshot) {
+				Reporter.objReport.log(logStatus, step, Details,
+						Web.captureScreenshot());
+			} else {
+				Reporter.objReport.log(logStatus, step, Details);
+			}
+			break;
+
+		}
+	}
+	
+	public static boolean isScreenshotReqired(LogStatus logStatus,boolean attachScreenshot)
+	{
+		boolean isRequired = false;
+
+		
+		
+		
+		return isRequired;
+	}
 	/**<pre> Method to finalize HTML Report and local results spreadsheet
 	 * This method has to be called at the end of every test iteration
 	 * 	1. End test case in HTML report
