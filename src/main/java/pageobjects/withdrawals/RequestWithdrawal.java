@@ -87,9 +87,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement txtZIPCode;
 	@FindBy(xpath=".//input[@type='email']")
 	private WebElement txtEmailAddress;
-	
+	@FindBy(xpath=".//*[@id='fullWithdrawal']")
+	private WebElement fullWithDrawal;
+	@FindBy(xpath=".//*[@id='partialWithdrawal']")
+	private WebElement partWithDrawal;
 	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]";
-	
+	private String inpAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[@type='text']";
+	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
+	private String maxAmtPWMoneyType="//tr[./td[contains(text(),'Pre-tax')]]//td[3]/span";
 	/**
 	 * Default Constructor
 	 */
@@ -231,6 +236,12 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("EMAIL ADDRESS")) {
 			return this.txtEmailAddress;
 		}
+		if (fieldName.trim().equalsIgnoreCase("VESTED FULL WITHDRAWAL")) {
+			return this.fullWithDrawal;
+		}
+		if (fieldName.trim().equalsIgnoreCase("VESTED PART WITHDRAWAL")) {
+			return this.partWithDrawal;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -316,15 +327,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * @param withdrawalType
 	 * @param moneyType
 	 */
-	public int getMaxAmountForMoneyTypeSource(String withdrawalType, String moneyType) {
+	public int getMaxAmountForPWMoneyTypeSource(String moneyType) {
 		int maxAmount=0;
 	try
 	{
 		
 		WebElement txtMaxAmount = Web.webdriver.findElement(By
-				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
-						withdrawalType).replaceAll("Money Source Type", moneyType)));
-		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1]));
+				.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
+		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
 		
 	}
 	
@@ -476,4 +486,66 @@ return isTextDisplayed;
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * This method is to select money type source and enter the amount for part withdrawal type
+	 * @param moneyType
+	 * @param amount
+	 */
+	public void enterAmountforPartWthdrawalMoneyTypeSource(String moneyType,String amount) {
+	try
+	{
+		WebElement txtAmount = Web.webdriver.findElement(By
+				.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
+		Web.setTextToTextBox(txtAmount, amount);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+		
+	}
+	
+	/**
+	 * This method is to select money type source and  Max amount check box for Part withdrawal type
+	 * @param moneyType
+	 */
+	public void selectMaxAmountForPartWithDrawalMoneyTypeSource(String moneyType) {
+	try
+	{
+		WebElement chkBoxMaxAmount = Web.webdriver.findElement(By
+				.xpath(chkBoxMaxAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
+		Web.clickOnElement(chkBoxMaxAmount);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+		
+	}
+	/**
+	 * This method is to select money type source and  Max amount check box for specified withdrawal type
+	 * @param withdrawalType
+	 * @param moneyType
+	 */
+	public int getMaxAmountForMoneyTypeSource(String withdrawalType, String moneyType) {
+		int maxAmount=0;
+	try
+	{
+		
+		WebElement txtMaxAmount = Web.webdriver.findElement(By
+				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
+						withdrawalType).replaceAll("Money Source Type", moneyType)));
+		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1]));
+		
+	}
+	
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return maxAmount;
+		
+	}
+	
 }

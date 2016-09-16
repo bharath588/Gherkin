@@ -103,4 +103,52 @@ public class withdrawalstestcases {
 				}
 			}
 		}
+	@Test(dataProvider = "setData")
+	public void Withdrawals_TC02_In_Service_Age59_And_Half_Payment_To_Self(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);			
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
+			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
+					lftNavBar);
+			requestWithdrawal.get();
+			Thread.sleep(4000);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				Globals.exception = e;
+				Throwable t = e.getCause();
+				String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+				if (null != t) {
+					msg = t.getMessage();
+				}
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			} catch (Error ae) {
+				ae.printStackTrace();
+				Globals.error = ae;
+				Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
 }
