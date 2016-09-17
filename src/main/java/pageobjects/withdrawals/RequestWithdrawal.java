@@ -91,6 +91,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement fullWithDrawal;
 	@FindBy(xpath=".//*[@id='partialWithdrawal']")
 	private WebElement partWithDrawal;
+	@FindBy(xpath="//div[contains(@ng-show,'showAccountNumberField')]//input[contains(@ng-model,'accountNumber')]")
+	private WebElement inpAccountNumber;	
 	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]";
 	private String inpAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
@@ -353,9 +355,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * @param stateCode
 	 * @param zipCode
 	 */
-	public void enterAddressDetailsForRollOverCompany(String address1,String city, String stateCode,String zipCode)
+	public void enterAddressDetailsForRollOverCompany(String accountNo,String address1,String city, String stateCode,String zipCode)
 	{
 		try {
+			Web.waitForElement(inpAccountNumber);
+			Web.setTextToTextBox(inpAccountNumber, accountNo);
 			Web.setTextToTextBox(txtAddressLine1, address1);
 			Web.setTextToTextBox(txtCity, city);
 			Web.selectDropDownOption(drpStateCode, stateCode);

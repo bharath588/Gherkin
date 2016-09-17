@@ -144,10 +144,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 		}
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;
-		}if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
+			sponser = Common.GC_DEFAULT_SPONSER;}*/
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary),"Benificiary Page is Not Loadeed");
@@ -165,6 +165,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Beneficiaries");
+		Web.waitForElement(lblMyBeneficiaries);
 		Web.isWebElementDisplayed(lblMyBeneficiaries,true);
 		
 	}
@@ -439,8 +440,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
 					
 					if(attribute.equalsIgnoreCase("Address")){
+						String appAddress=lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ;
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-						return Web.VerifyText("Address: "+address, lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ,true);
+						System.out.println("Address from test data:\nAddress:"+address);
+						System.out.println("Address from Application:"+appAddress);
+						return Web.VerifyText("Address: "+address, appAddress ,true);
 					}
 				}
 				
