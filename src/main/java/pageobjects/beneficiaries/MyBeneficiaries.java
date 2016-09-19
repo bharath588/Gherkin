@@ -333,8 +333,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 			}
 		}
 			
-		Web.clickOnElement(this.btnSave);
-
+		Web.clickOnElement(btnSave);
+			if(!Web.isWebElementDisplayed(tblPrimaryBeneficiary, true))
+			{
+				Web.clickOnElement(btnSave);
+			}
 		
 		if(Stock.GetParameterValue("Add_Allocation").equalsIgnoreCase("Yes") &&  Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes")){
 			enterAllocations(allocation_percent);
@@ -441,7 +444,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					
 					if(attribute.equalsIgnoreCase("Address")){
 						String appAddress=lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ;
-						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
+						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("State")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
 						System.out.println("Address from test data:\nAddress:"+address);
 						System.out.println("Address from Application:"+appAddress);
 						return Web.VerifyText("Address: "+address, appAddress ,true);
