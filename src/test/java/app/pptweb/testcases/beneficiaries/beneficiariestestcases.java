@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -862,7 +863,6 @@ public class beneficiariestestcases {
 //		}
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
-			
 			beneficiary.get();
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
@@ -1065,6 +1065,8 @@ public class beneficiariestestcases {
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			LeftNavigationBar leftmenu;
+			String[] sqlQuery = Stock.getTestQuery("updateParticipantMarritalStatus");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("Participant ssn"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1080,7 +1082,7 @@ public class beneficiariestestcases {
 			
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			String marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
+			String marital_status=beneficiary.fetchMaritalStatusFromDB(Stock.GetParameterValue("Participant ssn"));
 			if(marital_status==null){
 				Reporter.logEvent(Status.PASS, "Verify marital status should be null", "Marital status is null", false);
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));

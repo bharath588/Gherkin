@@ -4,86 +4,14 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-     <test name="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message">
+        <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
         <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
-                    <include name="Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message"/>
+                    <include name="withDrawal_SepService_PWD_Roll_IRA"/>
                 </methods>
             </class>
         </classes>
-      </test>
-     <!--  <test name="SIT_PPTWEB_Beneficiary_TC007_Marital status not displayed One beneficiary use address on record">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC007_Marital_status_not_displayed_One_beneficiary_use_address_on_record"/>
-                </methods>
-            </class>
-        </classes>
-      </test> 
-      
-      <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-      <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC039_Create a Married, Spouse, multiple spouse error">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="create_Married_Spouse_Multiple_Spouse_Error"/>
-                </methods>
-            </class>
-        </classes>
-    </test> -->
+    </test> 
+     
     </suite>

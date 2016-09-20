@@ -86,7 +86,6 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Landing Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
-		ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
 		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {

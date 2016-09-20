@@ -93,7 +93,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement partWithDrawal;
 	@FindBy(xpath="//div[contains(@ng-show,'showAccountNumberField')]//input[contains(@ng-model,'accountNumber')]")
 	private WebElement inpAccountNumber;	
-	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]";
+	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]//span";
 	private String inpAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
 	private String maxAmtPWMoneyType="//tr[./td[contains(text(),'Pre-tax')]]//td[3]/span";
