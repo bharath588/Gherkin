@@ -95,9 +95,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="BEFVAR") private WebElement txtSplitBeforeVariable;
 			@FindBy(xpath=".//button[text()[normalize-space()='Continue']]") private WebElement btnContinueBeforeTaxSplitContribution;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
-			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage ng-binding']") private WebElement txtCompanyMatchMyContribution;
+			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage change-percentage']") private WebElement txtCompanyMatchMyContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']") private WebElement txtCompanyMatchContributionAmount;
-			@FindBy(xpath="//div[@class='contribution-percentage ng-binding']") private WebElement txtIRSMyContribution;
+			@FindBy(xpath="//div[@class='contribution-percentage change-percentage']") private WebElement txtIRSMyContribution;
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
@@ -450,7 +450,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				Web.setTextToTextBox(drpDownAutoIncreasePeriod, "10/05/2016");
+				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				this.btnSaveAddAutoIncreaseModal.click();
 				}
 				else

@@ -4,14 +4,83 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-        <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
+        
+ 
+     <test name="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
         <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="withDrawal_SepService_PWD_Roll_IRA"/>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
                 </methods>
             </class>
         </classes>
-    </test> 
-     
+    </test>
+    
+    <test name="SIT_PPTWEB_Deferral_013_Regular_ROTH-Maximize to the company match">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+     <!--<test name="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_017_Regular_SPLIT-Maximize to the company match">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+     <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_014_Regular_ROTH-Maximize to the IRS limit">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_011_Regular_BEFORE-Maximize to the IRS limit">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+      -->
     </suite>
