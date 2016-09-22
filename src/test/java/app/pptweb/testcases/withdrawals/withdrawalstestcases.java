@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import appUtils.Common;
 import core.framework.Globals;
 import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
@@ -116,7 +117,14 @@ public class withdrawalstestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+		
+				 myAccountPage.get();
+			if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+				 myAccountPage.clickPlanNameByGAID("385030-01"); 
+							  }
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
+			 
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
 					lftNavBar);
 			requestWithdrawal.get();

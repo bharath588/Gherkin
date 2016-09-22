@@ -144,10 +144,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				}
 			}
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		}*/
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
 			Assert.assertTrue(Web.isWebElementDisplayed(lblRequestAWithdrawal),"Request WithDrawal page is not loaded");

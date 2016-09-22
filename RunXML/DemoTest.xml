@@ -4,14 +4,15 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-        
-  <test name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
+ 
+      <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
         <classes>
-            <class name="app.pptweb.testcases.liat.liattestcases">
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
-                    <include name="HDIC_TC010_To_verify_How_do_I_compare_tab"/>
+                    <include name="withDrawal_SepService_PWD_Roll_IRA"/>
                 </methods>
             </class>
         </classes>
     </test>
+  
     </suite>

@@ -56,7 +56,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private WebElement lblAddAfterTaxContribution;
 			@FindBy(xpath=".//strong[text()[normalize-space()='Select another contribution rate']]") 
 			private WebElement radioSelectAnotherContributionRate;	
-			@FindBy(xpath=".//strong[contains(text(),'Maximize to the company')]")
+			@FindBy(xpath="//input[@id='contributionTypeMaximizerCompanyMatch']")//.//strong[contains(text(),'Maximize to the company')]
 			private WebElement radioMaximizeToCompanyMatch;
 			@FindBy(xpath=".//strong[contains(text(),'IRS limit')]")
 			private WebElement radioMaximizeToIRSLimit;		
@@ -95,7 +95,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="BEFVAR") private WebElement txtSplitBeforeVariable;
 			@FindBy(xpath=".//button[text()[normalize-space()='Continue']]") private WebElement btnContinueBeforeTaxSplitContribution;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
-			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage change-percentage']") private WebElement txtCompanyMatchMyContribution;
+			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage ng-binding']") private WebElement txtCompanyMatchMyContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']") private WebElement txtCompanyMatchContributionAmount;
 			@FindBy(xpath="//div[@class='contribution-percentage change-percentage']") private WebElement txtIRSMyContribution;
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
@@ -121,7 +121,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//input[@name='increment']") private WebElement txtAutoIncreaseMyContributionPercent;
 			@FindBy(xpath=".//input[@name='maximum']") private WebElement txtAutoIncreaseUntilItReachesPercent;
 //			@FindBy(name="effectiveDate") private WebElement drpDownAutoIncreasePeriod;
-			@FindBy(xpath="//select[@name='effectiveDate']") private WebElement drpDownAutoIncreasePeriod;
+			@FindBy(xpath="//input[@name='effectiveDate']") private WebElement drpDownAutoIncreasePeriod;
 			@FindBy(xpath=".//button[text()[normalize-space()='Save']]") private WebElement btnSaveAddAutoIncreaseModal;
 			@FindBy(xpath=".//button[text()[normalize-space()='Cancel']]") private WebElement btnCancelAddAutoIncreaseModal;
 			@FindBy(xpath=".//h2[text()[normalize-space()='Contribution Details']]") private WebElement lblContributionDetails;
@@ -137,7 +137,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[1]") private WebElement txtRothContributionAmt;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Age Catch-Up Before')]/../td[1]") private WebElement txtCatchupBeforeAmt;
 			
-			
+			//table[@class='uib-daypicker']//th[./button[contains(@class,'pull-right')]]
 			@FindBy(xpath="//table[@class='deferrals-breakdown ng-scope']/tbody") private WebElement tblContributionDetails;
 			@FindBy(xpath="//table[@class='responsive-tables contributions-cart']/tbody") private WebElement tblMyContributions;
 			
@@ -174,7 +174,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(xpath = "//label[@class='radio-inline panel-title']//strong") private WebElement lblViewOnlyCatchUP;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
-			
+			Actions mouse=new Actions(Web.webdriver);
 		/**
 		 * Default Constructor
 		 */
@@ -594,7 +594,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 
 		public void click_MaximizeToCompanyMatch()
 		{
-			lib.Web.clickOnElement(radioMaximizeToCompanyMatch);
+			
+			Web.waitForElement(radioMaximizeToCompanyMatch);
+			mouse.moveToElement(radioMaximizeToCompanyMatch).click(radioMaximizeToCompanyMatch).build().perform();
+			//lib.Web.clickOnElement(radioMaximizeToCompanyMatch);
 			if(this.txtCompanyMatchMyContribution.getText().trim().equalsIgnoreCase("6%"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions percentage ", "My Contributions percentage is  displayed", false);
 			else

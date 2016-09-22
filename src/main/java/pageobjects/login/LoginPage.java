@@ -107,7 +107,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
 		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");
 		String accuCode = null;
-
+		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
+		if (isElementPresent)
+			btnDismiss.click();
 	/*	if (Stock.globalTestdata.containsKey("ACCUCODE"))
 
 		{
@@ -166,7 +168,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		// lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 		Web.webdriver.get(url);
-		Web.webdriver.navigate().refresh();
+		//Web.webdriver.navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
 			lib.Web.webdriver.manage().window().maximize();
 		System.out.println("Application URL:"+url);

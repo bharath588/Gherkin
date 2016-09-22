@@ -108,7 +108,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		this.parent.get();
 		//((LandingPage) this.parent).dismissPopUps(true, true);
 		try {
-			 Web.clickOnElement(land, "MY ACCOUNTS");
+			 //Web.clickOnElement(land, "MY ACCOUNTS");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

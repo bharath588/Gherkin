@@ -39,7 +39,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	private String lnkRequestLoan="//li[@class='ng-scope']//a[text()[normalize-space()='Request a loan']]";
-	
+	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
+	private WebElement lnkPlanName;
 
 	/**
 	 * Empty args constructor
@@ -84,6 +85,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// System.out.println("inside");
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
+			if(!Web.isWebElementDisplayed(weLeftNavSection, true))
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 		
 		} catch (Exception e) {
