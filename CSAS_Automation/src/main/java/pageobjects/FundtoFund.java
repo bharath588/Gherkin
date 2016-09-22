@@ -1,17 +1,23 @@
 package pageobjects;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
 
 public class FundtoFund extends LoadableComponent<FundtoFund> {
@@ -94,6 +100,15 @@ public class FundtoFund extends LoadableComponent<FundtoFund> {
 	
 	@FindBy(xpath = "//input[@value='Submit Cancellation']")
 	private WebElement btnSubmitCancelTransfer;
+
+	@FindBy(css = ".contentTableColumn>input[value = 'Cancel Transfer']")
+	private WebElement btnCancelTransfer;
+
+	@FindBy(css = "input[name = 'checkBoxRoundTripMsg']")
+	private WebElement chckBx_RestrictionType;
+
+	@FindBy(css = "table#table_messageHandlerError div.errorContent")
+	private WebElement errMsg_RestrictionType;
 	
 	private String defInvstOptHdr = "Rule|Criteria|Investment|Option|Percentage"; 
 	
@@ -150,7 +165,7 @@ public class FundtoFund extends LoadableComponent<FundtoFund> {
 		if(Web.isWebElementDisplayed(tabDefInvstOptnHead,true)){
 			if(tabDefInvstOptnHead.getText().replace("\n","|")
 			  .replace(" ","|").contentEquals(defInvstOptHdr)
-			  && tabDefInvstOptnBody.getText().matches("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9$&+,.:;=?@#|% ]+$")){
+			  && !tabDefInvstOptnBody.getText().matches("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9$&+,.:;=?@#|% ]+$")){
 				 Reporter.logEvent(Status.PASS,"Validating partcipant default investment option details"
 						       ,"Participant default investment option validated successfully",false);
 			}else{
@@ -209,4 +224,65 @@ public class FundtoFund extends LoadableComponent<FundtoFund> {
 		}
 	}
 	
+	/**
+	 * <pre>Method to cancel Trasfer from From options page</pre>
+	 */
+	public void cancelTransferFromOptions(){
+		if (Web.isWebElementDisplayed(btnCancelTransfer,true)) {
+			Web.clickOnElement(btnCancelTransfer) ;
+			if (Web.isWebElementDisplayed(ftofTransferPgTitle, true)) {
+				Reporter.logEvent(Status.PASS,
+						"Cancel fund to fund transfer.",
+						"Fund to Fund transfer cancelled successfully", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Cancel fund to fund transfer.",
+						"Fund to Fund transfer didn't cancelled.", true);
+			}
+		}
+	}
+	
+	/**
+	 * <pre>Method to select restriction check box.</pre>
+	 */
+	public void checkRestrictionType(){
+		if (Web.isWebElementDisplayed(chckBx_RestrictionType)) {
+			Web.clickOnElement(chckBx_RestrictionType) ;
+			Reporter.logEvent(Status.PASS,
+					"Select Restriction type check box in F2f From page.",
+					"Restriction type check box selected in F2f From page.", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check Restriction type check box in F2f From page.",
+					"Restriction type check box in F2f From page didn't displayed.", true);
+		}
+	}
+	
+	/**
+	 * <pre>Method to verify Error message for the Fund with restriction type</pre>
+	 */
+	public void verifyRestrictionTypeErrMsg(){
+		if (Web.isWebElementDisplayed(chckBx_RestrictionType)
+				&& Web.isWebElementDisplayed(btnSelectTransferTo)) {
+			Web.clickOnElement(btnSelectTransferTo) ; 
+			if (Web.isWebElementDisplayed(errMsg_RestrictionType)
+					&& errMsg_RestrictionType.getText().trim().equalsIgnoreCase(Stock.GetParameterValue("errMsg_RestrictionType"))) {
+				Reporter.logEvent(Status.PASS,
+						"Verify error message for fund with restriction.",
+						"Error message displayed as expected for the Fund with restriction."+
+						"\nExpected Err Msg: "+Stock.GetParameterValue("errMsg_RestrictionType")+
+						"\n\nActual Err Msg: "+errMsg_RestrictionType.getText().trim(), true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message for fund with restriction.",
+						"Error message didn't display as expected for the Fund with restriction."+
+						"\nExpected Err Msg: "+Stock.GetParameterValue("errMsg_RestrictionType")+
+						"\n\nActual Err Msg: "+errMsg_RestrictionType.getText().trim(), true);
+			}
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check Restriction type check box in F2f From page.",
+					"Restriction type check box in F2f From page didn't displayed.", true);
+		}
+	}
 }

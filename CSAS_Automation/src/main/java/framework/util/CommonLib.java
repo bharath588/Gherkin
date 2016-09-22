@@ -70,6 +70,9 @@ public class CommonLib {
 	public static boolean isAccountBalance_In_ProperFormat(String accountBal) {
 		boolean isAccBal = false;
 		Number number = null;
+		if (accountBal.equalsIgnoreCase("N/A")) {
+			return true ;
+		}
 		try {
 			number = NumberFormat.getCurrencyInstance(Locale.US).parse(
 					accountBal);

@@ -3,17 +3,13 @@ package app.csas.testcases.rebalancer;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import lib.Reporter;
 import lib.Stock;
 import lib.Reporter.Status;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import core.framework.Globals;
-import pageobjects.FundtoFund;
 import pageobjects.ParticipantHome;
 import pageobjects.Rebalancer;
 
@@ -49,27 +45,26 @@ public class validate_rebalancer {
 			participantHomeObj = new ParticipantHome().get();
 
 			// Step2: Searching for a PPT using PPT ID
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-					Stock.GetParameterValue("PPT_ID"));
-
+			if (Stock.GetParameterValue("isChckBx").equalsIgnoreCase("No")) {
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						Stock.GetParameterValue("PPT_ID"));
+			} else {
+				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+						Stock.GetParameterValue("PPT_ID"),Stock.GetParameterValue("ga_id"));
+			}
+			
 			// Step3: Launching Rebalancer
 			rebalancer = new Rebalancer().get();
 
 			// Step4: Setting value for Rebalancer
-			rebalancer.setRebalancingVal();
+			String invtOpt = rebalancer.setRebalancingVal(Stock.GetParameterValue("isChckBx"));
 
+			if (Stock.GetParameterValue("isChckBx").equalsIgnoreCase("Yes")) {
+				rebalancer.verify_RedirectFtrCntr(invtOpt);
+			}
 			// Step5: Submitting Rebalancer
 			rebalancer.submitRebalancing();
-		/*	if (Boolean.valueOf(Stock.GetParameterValue("HasRestrictedFund"))) {
-				rebalancer.submitRebalancing(Stock
-						.GetParameterValue("HasRestrictedFund"));
-
-			} else {
-				rebalancer.submitRebalancing();
-
-				// Step6: Validating Rebalancer
-				rebalancer.validate_Rebalancing_Complete();
-			}*/
+			
 			// Step6: Validating Rebalancer
 			rebalancer.validate_Rebalancing_Complete();
 		} catch (Exception e) {

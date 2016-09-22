@@ -7,18 +7,22 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
+import framework.util.CommonLib;
 
 public class LoanQuote extends LoadableComponent<LoanQuote> {
 
@@ -183,7 +187,7 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 		Map<String, String> resultData = null;
 
 		// Executing query
-		try {
+		/*try {
 			resultset = DB.executeQuery(
 					Stock.getTestQuery("get" + InformationType)[0],
 					Stock.getTestQuery("get" + InformationType)[1],
@@ -206,7 +210,7 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 		} catch (Exception e) {
 			// Throw no exception
 			// To handle a scenario where no queries required
-		}
+		}*/
 
 		// Handles Loan Quote various information validation
 		switch (InformationType) {
@@ -231,8 +235,10 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 								.replace("$", "").replace("%", "")
 								.replace("N/A", "null").replace(",", "")
 								.split(" ");
-						if (!results.get(iRow).values().toString()
-								.equals(Arrays.toString(actualMaxLoanRange))) {
+					//	if (!results.get(iRow).values().toString()
+					//			.equals(Arrays.toString(actualMaxLoanRange))) {
+						if(!CommonLib.isAccountBalance_In_ProperFormat(planMaxLoanAmtDetails.get(iRow)
+								.getText())){
 							return false;
 						}
 					}
@@ -243,8 +249,9 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 			if (Web.isWebElementDisplayed(planMinLoanAmt)) {
 				String minAmt = planMinLoanAmt.getText().replace("$", "")
 						.replace(",", "").replace(".00", "");
-				if (!results.get(1).values().toString()
-						.equals("[" + minAmt + "]")) {
+			//	if (!results.get(1).values().toString()
+			//			.equals("[" + minAmt + "]")) {
+				if (!CommonLib.isAccountBalance_In_ProperFormat(planMinLoanAmt.getText())) {
 					return false;
 				}
 				return true;
@@ -261,8 +268,9 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 		case "MaxLoanAllowed":
 			if (Web.isWebElementDisplayed(planMaxNoOfLoanAllowed)) {
 				String maxNoOfLoans = planMaxNoOfLoanAllowed.getText();
-				if (!results.get(1).values().toString()
-						.equals("[" + maxNoOfLoans + "]")) {
+			//	if (!results.get(1).values().toString()
+			//			.equals("[" + maxNoOfLoans + "]")) {
+				if (!NumberUtils.isNumber(maxNoOfLoans)) {
 					return false;
 				}
 				return true;

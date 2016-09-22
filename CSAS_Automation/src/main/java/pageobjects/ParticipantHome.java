@@ -7,17 +7,20 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -308,7 +311,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(xpath = "//div[contains(@id,'oCMenu')][contains(text(),'Cancel Pending Transfer')]")
 	private WebElement menuCancelF2FLink;
 	
-	@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[contains(text(),'EMPLOYER STOCK')]")
+	//@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[contains(text(),'EMPLOYER STOCK')]")
+	@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[@class = 'messageContent']")
 	private WebElement cancelFndTransferPgHeader;
 	
 	@FindBy(xpath = "//table[@id='table_workLayout']//table[@align='center']//input[@type='checkbox']")
@@ -1821,7 +1825,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		}
 	}
 	
-
 	public void cancelExistingFundTransfers(){
 		Web.mouseHover(menuPPTChanges);
 		if(Web.isWebElementDisplayed(menuCancelF2FLink,true)) menuCancelF2FLink.click();		
@@ -1840,4 +1843,31 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}		
 	}	
+	
+	/**
+	 * <pre>
+	 * Method to get PPT_ID,GA_ID based on restriction type
+	 * </pre>
+	 * 
+	 * @return
+	 * @throws Exception
+	 * @author RANJAN
+	 */
+	public ArrayList<String> getGAID_or_pptID_RestrictionType() throws Exception {
+		ResultSet resultset;
+		ArrayList<String> participant_Info = new ArrayList<String>() ;
+		String plan_Num = null;
+		String ind_id = null ;
+		resultset = DB.executeQuery(Stock.getTestQuery("getGAIDorpptID_RestrictionType")[0],
+				Stock.getTestQuery("getGAIDorpptID_RestrictionType")[1]);
+		if (resultset != null) {
+			while (resultset.next()) {
+				ind_id = resultset.getString("ind_id") ;
+ 				plan_Num = resultset.getString("ga_id") ;
+				participant_Info.add(ind_id) ;
+				participant_Info.add(plan_Num) ;
+			}
+		}
+		return participant_Info;
+	}
 }

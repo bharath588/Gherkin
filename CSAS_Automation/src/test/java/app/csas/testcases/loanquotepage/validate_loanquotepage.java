@@ -126,8 +126,7 @@ public class validate_loanquotepage {
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * 
-	 * @param <br>
-	 *        CSAS Credential</br>
+	 * @param <br>CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Selected_Loan_Type_Details(int itr,
