@@ -1082,7 +1082,7 @@ public class beneficiariestestcases {
 			
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			String marital_status=beneficiary.fetchMaritalStatusFromDB(Stock.GetParameterValue("Participant ssn"));
+			String marital_status=beneficiary.fetchMaritalStatusFromDB(Stock.GetParameterValue("userName"));
 			if(marital_status==null){
 				Reporter.logEvent(Status.PASS, "Verify marital status should be null", "Marital status is null", false);
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
@@ -1091,7 +1091,7 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify marital status should be null", "Marital status not null", false);
 			Thread.sleep(4000);
-			marital_status=beneficiary.fetchMaritalStatusFromDB( Stock.GetParameterValue("Participant ssn"));
+			marital_status=beneficiary.fetchMaritalStatusFromDB(Stock.GetParameterValue("userName"));
 			if(marital_status.equalsIgnoreCase("M"))
 				Reporter.logEvent(Status.PASS, "Verify marital status should not be null", "Marital status is not null", false);
 			else

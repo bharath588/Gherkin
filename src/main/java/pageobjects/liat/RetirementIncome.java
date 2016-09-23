@@ -35,11 +35,12 @@ private LoadableComponent<?> parent;
 
 
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security']") private WebElement lnkSocialSecurity;
-@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security' and @role='tab']") private WebElement lnkSocialSecurity;
+//@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security' and @role='tab']") private WebElement lnkSocialSecurity;
+@FindBy(linkText="Social Security") private WebElement lnkSocialSecurity;
 @FindBy(xpath=".//*[text()='Social Security Administration']") private WebElement lnkSocialSecuirtyAdministration;
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Other Assets']") private WebElement lnkOtherAssets;
 @FindBy(xpath=".//*[text()='Retirement income']") private WebElement tabRetirementIncome;
-@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Other Assets' and @role='tab']") private WebElement lnkOtherAssets;
+@FindBy(linkText="Other Assets") private WebElement lnkOtherAssets;
 @FindBy(xpath=".//button[text()[normalize-space()='Add an account']]") private WebElement btnAddAnAccount;
 @FindBy(xpath=".//*[@class='ng-binding ng-scope' and text() = 'Income Gap']") private WebElement lnkIncomeGap;
 @FindBy(xpath=".//*[text()[normalize-space()='Catch-up contributions']]") private WebElement txtCatchUpContributions;

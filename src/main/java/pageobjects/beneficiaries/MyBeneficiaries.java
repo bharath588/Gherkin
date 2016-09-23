@@ -589,7 +589,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 		ResultSet strUserInfo = null;
 		try {
-			strUserInfo = Common.getParticipantInfoFromDB(ssn);
+			strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
