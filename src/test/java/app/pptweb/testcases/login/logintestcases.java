@@ -76,7 +76,7 @@ public class logintestcases {
 			Reporter.initializeReportForTC(
 					itr,
 					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
-							+ Common.getSponser());
+							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 
 			login = new LoginPage();
 
@@ -137,7 +137,7 @@ public class logintestcases {
 			Reporter.initializeReportForTC(
 					itr,
 					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
-							+ Common.getSponser());
+							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String verificationCode = "";
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			TwoStepVerification twoStepVerification = new TwoStepVerification(

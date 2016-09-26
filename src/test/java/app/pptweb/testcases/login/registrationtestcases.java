@@ -82,7 +82,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String headerText;
 			String activeTab;
 			String actualValue;
@@ -436,7 +436,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			boolean blnIsElePresent;
 			String txtActErrMsg;
 			String headerText;
@@ -820,7 +820,7 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			boolean blnIsElePresent;
 			String txtActErrMsg;
 			String headerText;
@@ -1165,7 +1165,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			precondition();
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
@@ -1306,7 +1306,7 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			String ActErrMessage;
 			Web.webdriver
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -1416,7 +1416,7 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 
 			String actErrMsg;
 			boolean blnTempVar;
@@ -1575,7 +1575,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String activeTab;
 			String actErrMsg;
 			boolean blnTempVar;
@@ -1884,7 +1884,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			if (Common.getSponser().equalsIgnoreCase("Apple")) {
@@ -1943,7 +1943,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
@@ -2070,7 +2070,7 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			String hdrBlockText;
 			Web.webdriver
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -2162,7 +2162,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
@@ -2375,7 +2375,7 @@ public class registrationtestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
-					+ Common.getSponser());
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
