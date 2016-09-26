@@ -4,49 +4,23 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
- <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
+  <test name="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
+                    <include name="Beneficiary_TC016_QJSA_with_Beneficiary"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+     <test name="SIT_PPTWEB_Beneficiary_TC015_QJSA with beneficiary on file">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                    <include name="Beneficiary_TC016_QJSA_with_Beneficiary"/>
                 </methods>
             </class>
         </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC03_Verify_login_Successfully_into_unregistered_Device_CallMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_01_TC05_Verify_login_Successfully_into_unregistered_Device_TextMeOption">
-        <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
-                </methods>
-            </class>
-        </classes>
-    </test> 
-    </suite>
+     </test> 
+       
+        </suite>

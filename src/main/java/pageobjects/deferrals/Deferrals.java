@@ -97,7 +97,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage ng-binding']") private WebElement txtCompanyMatchMyContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']") private WebElement txtCompanyMatchContributionAmount;
-			@FindBy(xpath="//div[@class='contribution-percentage change-percentage']") private WebElement txtIRSMyContribution;
+			@FindBy(xpath="//div[@class='contribution-percentage ng-binding']") private WebElement txtIRSMyContribution;
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    
+      <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="withDrawal_SepService_PWD_Roll_IRA"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+  
+    </suite>
