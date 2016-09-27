@@ -562,24 +562,12 @@ public class deferralstestcases {
 				priorContributions.enterContributionValue(
 						lib.Stock.GetParameterValue("yearToDateContribution"),
 						lib.Stock.GetParameterValue("catchupContribution"));
-
-				if (priorContributions.verifyCoontributionMessage(lib.Stock
-						.GetParameterValue("yearToDateContribution"))) {
-					Reporter.logEvent(
-							Status.PASS,
-							"Verify Year to Date Confirmation Detials verification",
-							"Test data for Year to Date value matched with test data on the confirmation page",
-							true);
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify Year to Date Confirmation Detials verification",
-							"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
-							true);
-				}
+				priorContributions.verifyContributionMessage(lib.Stock
+						.GetParameterValue("yearToDateContribution"));
+				
 				// verify the values for the year to date and catchup
 				// contribution value on the confirmtion page
-				if (priorContributions.verifyCoontributionMessage(lib.Stock
+				if (priorContributions.verifyContributionMessage(lib.Stock
 						.GetParameterValue("yearToDateContribution"))) {
 					Reporter.logEvent(
 							Status.PASS,
@@ -1499,21 +1487,9 @@ public class deferralstestcases {
 					"YEAR TO DATE CONTRIBUTION",
 					lib.Stock.GetParameterValue("yearToDateContribution"));
 			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
-
-			if (priorContributions.verifyCoontributionMessage(lib.Stock
-					.GetParameterValue("yearToDateContribution"))) {
-				Reporter.logEvent(
-						Status.PASS,
-						"Verify Year to Date Confirmation Detials Updated",
-						"Test data for Year to Date value matched with test data on the confirmation page",
-						true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Year to Date Confirmation Detials Updated",
-						"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
-						true);
-			}
+			priorContributions.verifyContributionMessage(lib.Stock
+					.GetParameterValue("yearToDateContribution"));
+			
 
 			if (lib.Web.isWebElementDisplayed(priorContributions, "Edit"))
 				Reporter.logEvent(Status.PASS, "Verify Edit button",
@@ -1594,19 +1570,20 @@ public class deferralstestcases {
 			priorContributions.enterContributionValue("CATCHUP CONTRIBUTION",
 					lib.Stock.GetParameterValue("catchupContribution"));
 			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
-
-			if (priorContributions.verifyCoontributionMessage(lib.Stock
-					.GetParameterValue("totalContribution"))) {
+		boolean updated=	priorContributions.verifyContributionMessage(lib.Stock
+					.GetParameterValue("totalContribution"));
+			
+			if (updated) {
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify Year to Date Confirmation Detials Updated",
-						"Test data for Year to Date value matched with test data on the confirmation page",
+						"Year to Date Confirmation Detials Updated",
 						true);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify Year to Date Confirmation Detials Updated",
-						"Test data for Year to Date value DID NOT matched with test data on the confirmation page",
+						"Year to Date Confirmation Detials Not Updated",
 						true);
 			}
 

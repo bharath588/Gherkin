@@ -48,7 +48,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
 	private WebElement btnConfirmContinue;
-	@FindBy(xpath = ".//select[contains(@ng-model,'withDrawalType')]")
+	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
 	private WebElement drpWithdrawalType;
 	@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	private WebElement btnContinueWithdrawal;
@@ -96,7 +96,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]//span";
 	private String inpAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
-	private String maxAmtPWMoneyType="//tr[./td[contains(text(),'Pre-tax')]]//td[3]/span";
+	private String maxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//td[3]/span";
 	/**
 	 * Default Constructor
 	 */
@@ -264,10 +264,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			if(Web.isWebElementDisplayed(inpCurrentEmployerYes, true))
 			{
 				inpCurrentEmployerYes.click();
+				Thread.sleep(3000);
+				keyBoard.sendKeys(Keys.TAB).perform();
+				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
-			Thread.sleep(3000);
-			keyBoard.sendKeys(Keys.TAB).perform();
-			keyBoard.sendKeys(Keys.ENTER).perform();
+			
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
 				.xpath(inputWithdrawalType.replace("Withdrawal Type",
 						withdrawalType)));
@@ -396,15 +397,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
 		if (isTextDisplayed) {
-			lib.Reporter.logEvent(Status.PASS, "Verify " + fieldName
-					+ "  is Displayed", fieldName + " is Displayed",
+			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
 					false);
 
 		} else {
 					
-			lib.Reporter.logEvent(Status.FAIL, "Verify " + fieldName
-					+ " is Displayed",
-					fieldName + " is Not Displayed", false);
+			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
 			throw new Error(fieldName+" is not displayed");
 		}
 	
@@ -472,12 +472,21 @@ return isTextDisplayed;
 		WebElement inptDeliveryMethod = Web.webdriver.findElement(By
 				.xpath(inpMailType.replace("mailType",
 						deliveryMethod)));
+		try {
 		inptDeliveryMethod.click();
+		
+		Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
+				+ deliveryMethod, "Selected Delivery Method: " + deliveryMethod, false);
+		
 		try {
 			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+	}
 	}
 	public void enterSSN(String ssn) {
 		
@@ -485,6 +494,8 @@ return isTextDisplayed;
 			if(Web.isWebElementDisplayed(this.inputSSN, true))
 			{
 				Web.setTextToTextBox(inputSSN, ssn);
+				Reporter.logEvent(Status.INFO, "Entering SSN "
+						+ ssn, "Entered SSN: " + ssn, false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -502,6 +513,9 @@ return isTextDisplayed;
 		WebElement txtAmount = Web.webdriver.findElement(By
 				.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
 		Web.setTextToTextBox(txtAmount, amount);
+		
+		Reporter.logEvent(Status.INFO, "Entering WithDrawal Amount For'"+moneyType+"'"
+				, "Entered WithDrawal Amount For'"+moneyType+"': " + amount, false);
 	}
 	catch(Exception e)
 	{
@@ -520,6 +534,8 @@ return isTextDisplayed;
 		WebElement chkBoxMaxAmount = Web.webdriver.findElement(By
 				.xpath(chkBoxMaxAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
 		Web.clickOnElement(chkBoxMaxAmount);
+		Reporter.logEvent(Status.INFO, "Selecting Max Amount For'"+moneyType+"'"
+				, "Selected Max Amount For'"+moneyType+"'", false);
 	}
 	catch(Exception e)
 	{

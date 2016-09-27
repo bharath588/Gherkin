@@ -165,9 +165,9 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		Web.waitForElement(txtPriorContribution);
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
-			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching", true);
+			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
 		else
-			Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching", true);
+			Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
 		String toolTip=lnkWhyThisIsImportant.getAttribute("uib-tooltip-html");
 		if(lib.Web.VerifyPartialText(Stock.GetParameterValue("toolTip"),toolTip , true))
 			Reporter.logEvent(Status.PASS, "Verify ToolTip in Prior Contributions page", "ToolTip is matching", false);
@@ -185,9 +185,9 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		this.labelYes.click();
 		actualText = txtYearToDateContribution.getText();
 		if(lib.Web.VerifyPartialText("This includes 401(k) pre-tax, Roth 401(k), 403(b), SARSEP and Simple IRA contributions.",actualText , true))
-			Reporter.logEvent(Status.PASS, "Verify Year to date contributions: text in Prior Contributions page", "text is matching", true);
+			Reporter.logEvent(Status.PASS, "Verify Year to date contributions: text in Prior Contributions page", "text is matching\nExpected:This includes 401(k) pre-tax, Roth 401(k), 403(b), SARSEP and Simple IRA contributions.\nActual:"+actualText, true);
 		else
-			Reporter.logEvent(Status.FAIL, "Verify Year to date contributions: text in Prior Contributions page", "text is not matching", true);
+			Reporter.logEvent(Status.FAIL, "Verify Year to date contributions: text in Prior Contributions page", "text is not matching\nExpected:This includes 401(k) pre-tax, Roth 401(k), 403(b), SARSEP and Simple IRA contributions.\nActual:"+actualText, true);
 		
 		if(lib.Web.isWebElementDisplayed(btnSaveAndClose))
 		{
@@ -230,12 +230,27 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		}
 	}
 	
-	public boolean verifyCoontributionMessage(String value){
+	public boolean verifyContributionMessage(String value){
 		Boolean success = false;
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 			
 		if(Web.isWebElementDisplayed(this.lblContribution, true)){
 			success = lib.Web.VerifyText("I have contributed $"+value+".00 to other retirement plans since 1/1/"+year+".", lblContribution.getText(), true);
+		}
+		
+		if(success){
+			
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify Year to Date Confirmation Detials verification",
+					"Test data for Year to Date value matched withInfo on the confirmation page\nExpectedI have contributed $"+value+".00 to other retirement plans since 1/1/"+year+". \nActual: "+lblContribution.getText(),
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Year to Date Confirmation Detials verification",
+					"Test data for Year to Date value DID NOT matched with Info on the confirmation page\nExpectedI have contributed $"+value+".00 to other retirement plans since 1/1/"+year+". \nActual: "+lblContribution.getText(),
+					true);
 		}
 		return success;
 	}

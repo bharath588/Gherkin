@@ -142,16 +142,17 @@ public class withdrawalstestcases {
 						"Request A Withdrawal Page is NOT visible", true);
 			}
 
-			int enteredAmount = requestWithdrawal
-					.getMaxAmountForPWMoneyTypeSource(Stock
-							.GetParameterValue("moneyTypeSourceRoth"));
+			
 			// Sect Part withdrawal
 			Web.clickOnElement(requestWithdrawal, "VESTED PART WITHDRAWAL");
 			// Enter Amount for Part Withdrawal
 			requestWithdrawal.enterAmountforPartWthdrawalMoneyTypeSource(Stock
 					.GetParameterValue("moneyTypeSourceRoth"), Integer
 					.toString(requestWithdrawal
-							.getMaxAmountForPWMoneyTypeSource("Roth")));
+							.getMaxAmountForPWMoneyTypeSource(Stock.GetParameterValue("moneyTypeSourceRoth"))));
+			int enteredAmount = requestWithdrawal
+					.getMaxAmountForPWMoneyTypeSource(Stock
+							.GetParameterValue("moneyTypeSourceRoth"));
 			if (Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")) {
 				Web.clickOnElement(requestWithdrawal, "CONTINUE");
 			} else {
@@ -236,7 +237,8 @@ public class withdrawalstestcases {
 			// Select delivary method
 			requestWithdrawal.selectDelivaryMethod(Stock
 					.GetParameterValue("deliveryMethod"));
-			Thread.sleep(5000);
+			Thread.sleep(10000);
+			Web.waitForElement(requestWithdrawal, "I AGREE AND SUBMIT");
 			lblDisplayed = requestWithdrawal
 					.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {

@@ -101,7 +101,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
@@ -409,12 +409,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
 			
 			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
-			
-			this.btnDone.click();
+			keyBoard.sendKeys(Keys.TAB).perform();
+			/*btnDone.click();
 			if(btnDone.isEnabled())
 			{
-				keyBoard.sendKeys(Keys.ENTER).perform();
-			}
+				//keyBoard.sendKeys(Keys.ENTER).perform();
+				btnDone.click();
+			}*/
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate, true);
 			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
