@@ -87,7 +87,7 @@ public class Common {
 		return participantInfo;
 	}
 
-	public static String getParticipantDBName(String ssn) throws SQLException {
+	public static String getParticipantDBName(String userName) throws SQLException {
 
 		// query to get the no of plans
 		String[] sqlQuery = null;
@@ -100,7 +100,7 @@ public class Common {
 			e.printStackTrace();
 		}
 
-		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
+		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],userName);
 		if (DB.getRecordSetCount(participantDB) > 0) {
 			try {
 				participantDB.last();
@@ -271,7 +271,7 @@ public class Common {
 		}
 		return lblDisplayed;
 	}
-	private static String checkEnv(String envName) {
+	public static String checkEnv(String envName) {
 		if (envName.contains("PROJ")) {
 			return Globals.DB_TYPE.get("PROJ");
 		}

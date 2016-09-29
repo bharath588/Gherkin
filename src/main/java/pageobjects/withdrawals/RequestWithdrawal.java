@@ -468,7 +468,7 @@ return isTextDisplayed;
 	 * @param deliveryMethod
 	 * 
 	 */
-	public void selectDelivaryMethod(String deliveryMethod) {
+	public void selectDeliveryMethod(String deliveryMethod) {
 		WebElement inptDeliveryMethod = Web.webdriver.findElement(By
 				.xpath(inpMailType.replace("mailType",
 						deliveryMethod)));
@@ -557,7 +557,7 @@ return isTextDisplayed;
 				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 						withdrawalType).replaceAll("Money Source Type", moneyType)));
 		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1]));
-		
+		maxAmount=maxAmount-1;
 	}
 	
 	catch(Exception e)

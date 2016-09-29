@@ -14,5 +14,13 @@
             </class>
         </classes>
     </test>
-  
-    </suite>
+  <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_TC01_In_Service_Age59_And_Half_Payment_To_Self"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+      </suite>

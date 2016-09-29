@@ -96,7 +96,8 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 			} else {
 				this.lnkLogout.click();
 				System.out.println("Clicked on Log Out My Accoounts Page");
-				Assert.assertTrue(false,"Logging in with new User");
+				Web.waitForElement(btnLogin);
+				Assert.assertTrue(false,"Login page is displayed");
 			}
 		
 	}

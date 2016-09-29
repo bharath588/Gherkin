@@ -1828,7 +1828,7 @@ public class prodvalidationtestcases {
 						"Verify Delivery Method Page is Displayed",
 						"Delivery Method Page is Not Displayed", true);
 			}
-			requestWithdrawal.selectDelivaryMethod(Stock.GetParameterValue("deliveryMethod"));
+			requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
 			Thread.sleep(5000);
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {
