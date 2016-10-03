@@ -130,7 +130,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(xpath="//h2[text()[normalize-space()='Bonus']]") private WebElement lblBonus;
 			@FindBy(xpath="//input[@type='checkbox']") private WebElement chkboxMaximize;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]") private WebElement txtMaximizeMeAlwaysBefore;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before-tax')]/../td[3]") private WebElement txtMaximizeMeAlwaysBefore;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[3]") private WebElement txtMaximizeMeAlwaysRoth;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]") private WebElement txtMaximizeMeAlwaysCatchupBefore;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[1]") private WebElement txtBeforeTaxContributionAmt;
@@ -143,7 +143,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			//view only
 			@FindBy(xpath = ".//div[@class='clearfix']/.//h2") private List<WebElement> headersContrPage;
-			@FindBy(xpath = "(//td[@class='ng-scope']/button)[3]") private WebElement btnEditAftertaxNoSplit;
+			@FindBy(xpath = ".//*[@id='account-details-container']/.//td[contains(text(),'after tax')]/../td[4]/button") private WebElement btnEditAftertaxNoSplit;
 			@FindBy(xpath = "//span[contains(text(),'More Options')]") private WebElement linkMoreOptions;
 			@FindBy(id = "AGERTH") private WebElement rothCatchUprate;
 			@FindBy(id = "AGEBEF") private WebElement txtCatchupRate;
@@ -409,9 +409,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
 			
 			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
-			keyBoard.sendKeys(Keys.TAB).perform();
-			/*btnDone.click();
-			if(btnDone.isEnabled())
+			//keyBoard.sendKeys(Keys.TAB).perform();
+			btnDone.click();
+			/*if(btnDone.isEnabled())
 			{
 				//keyBoard.sendKeys(Keys.ENTER).perform();
 				btnDone.click();
@@ -642,11 +642,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is displayed for Standard before contribution", false);
 				else
-					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is displayed for Standard before contribution", true);
+					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is Not displayed for Standard before contribution", true);
 				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Standard Roth contribution", "Maximize Me Always is displayed for Standard Roth contribution", false);
 				else
-					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard Roth contribution", "Maximize Me Always is displayed for Standard Roth contribution", true);
+					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard Roth contribution", "Maximize Me Always is Not displayed for Standard Roth contribution", true);
 				
 //				if(lib.Web.VerifyText(Float.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
 //					Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
@@ -783,7 +783,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.clickOnElement(btnEditCatchUp);
 			click_Select_Your_Contribution_Rate();
 			lib.Web.clickOnElement(btnContinue);
-			if(lib.Web.isWebElementDisplayed(txtViewOnly))
+			/*if(lib.Web.isWebElementDisplayed(txtViewOnly))
 				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Check if view only is displayed for age roth rate", "View only is not displayed for roth catch up rate", true);
@@ -794,7 +794,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.setTextToTextBox(txtCatchupRate,String.valueOf(((Integer.valueOf(myContRate))-Integer.parseInt(Stock.GetParameterValue("Age_roth_Catchup_contr")))));
 			lib.Web.clickOnElement(btnContinue);
 			lib.Web.clickOnElement(btnConfirmAndContinue);
-			myContributions_Confirmation_Page();
+			myContributions_Confirmation_Page();*/
 		}
 		
 		/**<pre> Method to edit Standard contribution having a split  and verify if view only is displayed 

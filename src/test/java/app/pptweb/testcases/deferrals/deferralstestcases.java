@@ -707,10 +707,15 @@ public class deferralstestcases {
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
-			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);150551
 			// leftmenu = new LeftNavigationBar(accountPage);
 			// }
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			myAccountPage.get();
+			if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+				 myAccountPage.clickPlanNameByGAID("150551-01"); 
+							  }
+			leftmenu = new LeftNavigationBar(myAccountPage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			if (lib.Web.isWebElementDisplayed(deferrals,
@@ -1092,8 +1097,8 @@ public class deferralstestcases {
 			int acr = Integer.parseInt(perAgeRothCatchUp.split("%")[0]);
 			String newPerAgeCatchupBefore = Integer.toString(cr - acr);
 			isTextMatching = Web.VerifyText(newPerAgeCatchupBefore
-					+ "% Age Catch- up before contribution with "
-					+ perAgeRothCatchUp + " Age roth catch up", deferrals
+					+ "% "+Stock.GetParameterValue("catchupbeforetax")+" contribution with "
+					+ perAgeRothCatchUp + " "+Stock.GetParameterValue("viewonlyroth"), deferrals
 					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
 					.trim(), true);
 			if (isTextMatching) {
@@ -1101,11 +1106,10 @@ public class deferralstestcases {
 						.logEvent(
 								Status.PASS,
 								"Verify Split Contribution on Select Contribution page",
-								"Split Contribution is Same on Select Contribution page \nExpected"
-										+ newPerAgeCatchupBefore
-										+ "% Age Catch- up before contribution with "
-										+ perAgeRothCatchUp
-										+ " Age roth catch up \nActual:"+deferrals.getWebElementText(
+								"Split Contribution is Same on Select Contribution page \nExpected:"
+										+newPerAgeCatchupBefore
+										+ "% "+Stock.GetParameterValue("catchupbeforetax")+" contribution with "
+										+ perAgeRothCatchUp + " "+Stock.GetParameterValue("viewonlyroth")+" \nActual:"+deferrals.getWebElementText(
 										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
 										.trim(),
 								true);
@@ -1115,11 +1119,10 @@ public class deferralstestcases {
 						.logEvent(
 								Status.FAIL,
 								"Verify Split Contribution on Select Contribution page",
-								"Split Contribution is Same on Select Contribution page. \nExpected"
-										+ newPerAgeCatchupBefore
-										+ "% Age Catch- up before contribution with "
-										+ perAgeRothCatchUp
-										+ " Age roth catch up \n Actual:"+deferrals.getWebElementText(
+								"Split Contribution is Same on Select Contribution page. \nExpected:"
+										+newPerAgeCatchupBefore
+										+ "% "+Stock.GetParameterValue("catchupbeforetax")+" contribution with "
+										+ perAgeRothCatchUp + " "+Stock.GetParameterValue("viewonlyroth")+" \n Actual:"+deferrals.getWebElementText(
 										"VIEW ONLY SPLIT CONTRIBUTION TEXT")
 										.trim(), true);
 			}
