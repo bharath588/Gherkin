@@ -1,12 +1,7 @@
 package pageobjects.login;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import lib.Reporter;
-import lib.Reporter.Status;
-import lib.Stock;
-import lib.Web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,6 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import lib.Reporter;
+import lib.Reporter.Status;
+import lib.Stock;
+import lib.Web;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
@@ -64,40 +63,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement logoEmpower;
 	@FindBy(xpath = ".//*[@id='loginSpinner']")
 	private WebElement loginSpinner;
-	@FindBy(xpath = ".//iframe[@id='fund_iframe']")
-	private WebElement fundIFrame;
-	@FindBy(xpath = ".//table[@id='alphabetTable']")
-	private WebElement tabAlphabet;
-	@FindBy(xpath = ".//div[@id='defaultErrorMessage']//span[contains(text(),'Invalid fund ID')]")
-	private WebElement invalidFundErr;
-	@FindBy(xpath = "html/body")
-	private WebElement fundProspectusText;
-	@FindBy(xpath = ".//a[starts-with(text(),'Prospectus')]")
-	private WebElement fundNav_Prospectus;
-	@FindBy(xpath = ".//a[starts-with(text(),'Annual Report')]")
-	private WebElement fundNav_AnnualReport;
-	@FindBy(xpath = ".//a[starts-with(text(),'Semi Annual Report')]")
-	private WebElement fundNav_SemiAnnualReport;
-	@FindBy(xpath = ".//a[starts-with(text(),'Statement of Additional Information')]")
-	private WebElement fundNav_SOAI;
-	@FindBy(xpath = ".//iframe[@id='documentContentFrame']")
-	private WebElement docContentIFrame;
-	@FindBy(xpath = ".//table[@class='fundProspectusTable']")
-	private WebElement fundTable;
-	@FindBy(xpath = ".//*[@id='printSaveContentPlaceHolder_ctl00_pdfImage']")
-	private WebElement pdfIcon;
-	@FindBy(xpath = ".//h3[contains(text(),'Fund Prospectuses')]")
-	private WebElement fundProsHeader;
-
-	private static String nameFundPros = "fundprospectus";
-	
-	public String getNameFundPros() {
-		return nameFundPros;
-	}
-
-//	public static void setNameFundPros(String nameFundPros) {
-//		LoginPage.nameFundPros = nameFundPros;
-//	}
 
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
@@ -110,23 +75,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		if(Stock.GetParameterValue("link_Footer8").equalsIgnoreCase(getNameFundPros())
-		 ||System.getProperty("URL").contains(getNameFundPros())){
-			Assert.assertEquals(Web.webdriver.getTitle().trim(), "Available Fund Prospectuses");
-		}else{
-			Assert.assertEquals(Web.webdriver.getTitle(), "Empower Retirement - Plan Service Center");
-		}		
+		Assert.assertEquals(Web.webdriver.getTitle(), "Empower Retirement - Plan Service Center");
 	}
 
 	@Override
 	protected void load() {
-				
-		if(System.getProperties().containsKey("URL") &&
-		  !System.getProperty("URL").isEmpty()){
-			Web.webdriver.get(System.getProperty("URL"));
-		}else{
-			Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
-		}			
+		Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));	
 	}
 
 	/**
@@ -236,14 +190,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 * @throws Exception
 	 */
 	public void checkFooterLinkPreLogin() throws Exception {
-		if(Stock.GetParameterValue("link_Footer8").equalsIgnoreCase(getNameFundPros())){
-			List<WebElement> ele = new ArrayList<WebElement>(); 
-			ele.add(fundProsHeader); // Need a dummy element to handle checkHeaderFooterLink linkObjList param
-			checkHeaderFooterLink(ele, "link_Footer");
-		}else{
-			checkHeaderFooterLink(weFooterLinkListPreLogin, "link_Footer");
-		}
-		
+		checkHeaderFooterLink(weFooterLinkListPreLogin, "link_Footer");
 	}
 
 	/**
@@ -252,7 +199,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	public void checkHeaderLinkPreLogin() {
 		checkHeaderFooterLink(weHeaderLinkListPreLogin, "link_Header");
-		Web.webdriver.navigate().back();		
+		Web.webdriver.navigate().back();
 	}
 
 	/**
@@ -376,5 +323,4 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 		Web.webdriver.switchTo().defaultContent();
 	}
-	
 }

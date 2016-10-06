@@ -13,7 +13,11 @@ import lib.Web;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import pageobjects.employeesearch.EmployeeSearch;
@@ -25,6 +29,14 @@ public class employeesearchtestcases_db {
 	String actualErrorMessage = "";
 	ResultSet resultset;
 
+	
+	/*@BeforeTest
+	@Parameters({"browser"})
+	public void getBrowser(String browser)
+	{
+		Web.webdriver = Web.getWebDriver(browser);
+	}
+	*/
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());

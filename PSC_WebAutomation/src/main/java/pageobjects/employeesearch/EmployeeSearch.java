@@ -36,7 +36,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement employeeSearchFrame;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[2]/a")
 	private WebElement tabEmployees;
-	@FindBy(id = "profileLink")
+//	@FindBy(id = "profileLink")
+//	private WebElement linkProfile;
+	@FindBy(id = "angularProfileLink")
 	private WebElement linkProfile;
 	@FindBy(id = "searchSelector")
 	private WebElement drpdwnSearchEmployee;

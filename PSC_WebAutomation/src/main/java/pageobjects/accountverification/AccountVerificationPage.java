@@ -634,12 +634,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 */
 	public void resetPassword(int userAccessToSite, String emailAddress, String recentPlan) throws Exception{
 		if (userAccessToSite == 1) {
-			resetPassword(
+			resetPassword(emailAddress,
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"), recentPlan);
 		} else if (userAccessToSite > 1) {
-			resetPassword(
+			resetPassword(emailAddress,
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));

@@ -3,14 +3,20 @@ package app.psc.testcases.userverification;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.Reporter;
 import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
@@ -23,6 +29,12 @@ public class userverificationtestcases {
 	boolean checkReLoginStats = false;
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;	
 
+/*	@BeforeTest
+	@Parameters({"browser"})
+	public void getBrowser(String browser)
+	{
+		Web.webdriver = Web.getWebDriver(browser);
+	}*/
 	@BeforeClass
 	public void ReportInit(){		
 		Reporter.initializeModule(this.getClass().getName());
