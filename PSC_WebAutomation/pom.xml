@@ -31,6 +31,30 @@
 						<suiteXmlFiles>
 							<suiteXmlFile>RunXML/Regression.xml</suiteXmlFile>
 						</suiteXmlFiles>
+						<systemProperties>
+							<property>
+								<name>env</name>
+								<value>${env}</value>
+							</property>
+						</systemProperties>
+						<systemProperties>
+							<property>
+								<name>testDataPath</name>
+								<value>${testDataPath}</value>
+							</property>
+						</systemProperties>
+						<systemProperties>
+							<property>
+								<name>CAPTURESCREENSHOT</name>
+								<value>${CAPTURESCREENSHOT}</value>
+							</property>
+						</systemProperties>
+						<systemProperties>
+							<property>
+								<name>BROWSER</name>
+								<value>${BROWSER}</value>
+							</property>
+						</systemProperties>
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+                <methods>
+                    <include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
