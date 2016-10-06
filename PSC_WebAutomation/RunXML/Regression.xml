@@ -4,11 +4,155 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
+    <test name="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC006_01_Verify_Force_Login"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid">
+        <classes>
+            <class name="app.psc.testcases.userverification.userverificationtestcases">
+                <methods>
+                    <include name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+        <classes>
+            <class name="app.psc.testcases.userverification.userverificationtestcases">
+                <methods>
+                    <include name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
         <classes>
             <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
                 <methods>
                     <include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_screen_elements">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC017_Verify_the_dropdown_options_And_Screen_elements"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_sorting">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC018_Verify_the_sorting_in_search_results"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_pagination">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC019_Verify_the_Pagination_on_search_results_page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_order">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC020_Verify_the_Order_of_search_results"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_hyperlinks">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC021_Verify_Search_results_are_displayed_as_Hyperlinks"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_redirect">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_limit">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC023_Verify_the_limit_of_search_results_on_searchpage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_filter">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC024_Verify_Filter_Functionality_Search_Results_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ssn_ext">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC025_Verify_search_results_for_ssn_with_extension"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_emp_err_code">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_termed_employee">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC027_Verify_termed_employeedetails_are_displayed"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_valid_res_termed_emp">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC028_Verify_search_results_are_displayed_for_termed_employees"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ssn_masking">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC029_Verify_ssn_masking_for_external_users"/>
                 </methods>
             </class>
         </classes>
