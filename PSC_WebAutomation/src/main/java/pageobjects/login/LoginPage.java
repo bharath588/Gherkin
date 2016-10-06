@@ -364,4 +364,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 	}
 	
+	public void waitForSuccessfulLogin() throws InterruptedException
+	{
+		if(Web.isWebElementDisplayed(frmLogin))
+		{
+		Web.webdriver.switchTo().frame(frmLogin);
+		do
+		{
+		Thread.sleep(3000);	
+		}while(Web.isWebElementDisplayed(loginSpinner));
+		}
+		Web.webdriver.switchTo().defaultContent();
+	}
+	
 }
