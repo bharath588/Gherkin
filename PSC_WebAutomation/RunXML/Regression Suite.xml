@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners> 
+<test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+        <classes>
+            <class name="app.psc.testcases.userverification.userverificationtestcases">
+                <methods>
+                    <include name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input"/>
+                </methods>
+            </class>
+        </classes>
+    </test> <test name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid">
+        <classes>
+            <class name="app.psc.testcases.userverification.userverificationtestcases">
+                <methods>
+                    <include name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="Employee_Search_Sanity_Suite_validssn">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC001_Search_Employee_For_Valid_SSN"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_invalidssn">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC002_Search_Employee_For_Invalid_SSN"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_validname">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC003_Search_Employee_For_Valid_Name_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_invalidname">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC004_Search_Employee_For_Invalid_Name_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_validempid">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC005_Search_Employee_For_Valid_EmployeeID_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_plandiv">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC07_Verify_employee_details_displayed_for_plans_with_divisions"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_valid_ppt">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC08_Verify_employee_details_displayed_for_valid_participant_id"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_invalid_ppt">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC09_Verify_employee_details_displayed_for_invalid_participant_id"/>
+                </methods>
+            </class>
+        </classes>
+    </test> 
+    <test name="Employee_Search_Regression_noduplicatessn">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_noduplicatename">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_noduplicateempid">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_noduplicateppt">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_noduplicatediv">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ppt_planonediv">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC015_Check_For_Plans_With_one_division"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ppt_planmultidiv">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC016_Check_For_Plans_With_multiple_divisions"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Sanity_Suite_invalidempid">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+                <methods>
+                    <include name="TC006_Search_Employee_For_Invalid_EmployeeID_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_screen_elements">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC017_Verify_the_dropdown_options_And_Screen_elements"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_sorting">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC018_Verify_the_sorting_in_search_results"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_pagination">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC019_Verify_the_Pagination_on_search_results_page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_order">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC020_Verify_the_Order_of_search_results"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_hyperlinks">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC021_Verify_Search_results_are_displayed_as_Hyperlinks"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_redirect">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_limit">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC023_Verify_the_limit_of_search_results_on_searchpage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_filter">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC024_Verify_Filter_Functionality_Search_Results_Page"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ssn_ext">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC025_Verify_search_results_for_ssn_with_extension"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_emp_err_code">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_termed_employee">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC027_Verify_termed_employeedetails_are_displayed"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_valid_res_termed_emp">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC028_Verify_search_results_are_displayed_for_termed_employees"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Employee_Search_Regression_ssn_masking">
+        <classes>
+            <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+                <methods>
+                    <include name="TC029_Verify_ssn_masking_for_external_users"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC017_Internal and External User">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC017_01_Internal_Employee_External_Client_Login"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC006_01_Verify_Force_Login"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC014_Footer links_Postlogin">
+        <classes>
+            <class name="app.psc.testcases.login.logintestcases">
+                <methods>
+                    <include name="TC004_02_Verify_Header_and_Footer_Links_PostLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+                <methods>
+                    <include name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC019_Verify_Default_Plan_Prompting"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+                <methods>
+                    <include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+                <methods>
+                    <include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC002_Expired Password_negative">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC002_Expired Password_positive">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
+        <classes>
+            <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+                <methods>
+                    <include name="TC018_Security_Question_Validation_Existing_User"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
