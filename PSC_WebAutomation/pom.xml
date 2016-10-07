@@ -29,7 +29,7 @@
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/Regression.xml</suiteXmlFile>
+							<suiteXmlFile>RunXML/Regression Suite.xml</suiteXmlFile>
 						</suiteXmlFiles>
 						<systemProperties>
 							<property>
