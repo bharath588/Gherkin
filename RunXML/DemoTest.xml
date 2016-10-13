@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     <!-- PART 1 -->
-  <!-- <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+   <!-- <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -163,7 +163,7 @@
             </class>
         </classes>
     </test>
-    -->
+     -->
     
     <!-- PART 2 -->
     
@@ -222,12 +222,12 @@
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test>
     
-    
+     -->
    <!--  Has to execute PART 3 --> 
    
-     <!--  <test name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type_split contribution">
+  <!--  <test name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type_split contribution">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -245,10 +245,10 @@
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test>  -->
  
 
-    <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
+     <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -258,7 +258,7 @@
         </classes>
     </test>
     
-     <test name="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
+    <test name="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -268,7 +268,7 @@
         </classes>
     </test>
     
-     <test name="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
+      <test name="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -296,9 +296,8 @@
                 </methods>
             </class>
         </classes>
-    </test>
-   
-      <!--   <test name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+    </test> 
+    <test name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -307,7 +306,7 @@
             </class>
         </classes>
     </test>
-     <test name="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+      <test name="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -324,7 +323,7 @@
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test> 
     
     <!-- PART 4 -->
     <!-- <test name="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">

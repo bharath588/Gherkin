@@ -103,11 +103,11 @@ public class Balance extends LoadableComponent<Balance> {
 		}
 		}
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if(sponser.isEmpty())
 		{
 			sponser=Common.GC_DEFAULT_SPONSER;
-		}
+		}*/
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBalance,true),"Balance Page is not Loadeed\n");

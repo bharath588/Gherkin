@@ -195,7 +195,7 @@ public class sanityTestCases {
 					Stock.GetParameterValue("ga_PlanId"));
 			
 			SSN = Stock.GetParameterValue("SSN");
-			firstName = Stock.GetParameterValue("FIRSTNAME");
+			//firstName = Stock.GetParameterValue("FIRST_NAME");
 			String hdrBlockText;
 			boolean isMatching=false;
 			LoginPage loginPage = new LoginPage();

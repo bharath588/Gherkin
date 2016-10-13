@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -101,7 +102,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
@@ -162,7 +163,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(xpath="//div[contains(text(),'Carryover my contribution')]") private WebElement lblChainingText;
 			@FindBy(id="buttonAddChaining") private WebElement btnAddChaining;
-			@FindBy(xpath="//h1[text()='Carryover my contribution?']") private WebElement hdrCarryoverContribution;
+			@FindBy(xpath="//h1[text()='Carry over my contribution?']") private WebElement hdrCarryoverContribution;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='Regular Pre-Tax Contribution to After Tax']]") private WebElement radPreTaxToAftTax;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='Regular Pre-Tax Contribution to Non-Qualified Plan']]") private WebElement radPreTaxToNQ;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='ELECT TO AFT TO NQ']]") private WebElement radPreTaxToAftTaxToNQ;
@@ -432,6 +433,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void add_Auto_Increase(String deferralType)
 		{
+			DateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, 1);
+			calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			//System.out.println(dateFormat.format(calendar.getTime()));
+			String date=dateFormat.format(calendar.getTime());
 			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
 			
 			lib.Web.waitForElement(tblhdrlblContribution);
@@ -451,7 +458,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				Web.setTextToTextBox(drpDownAutoIncreasePeriod, "10/05/2016");
+				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
 				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				this.btnSaveAddAutoIncreaseModal.click();
 				}
@@ -638,7 +645,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				
 				select_ContributionType("Split");
 				lib.Web.clickOnElement(btnContinue);
-				
+				Web.waitForElement(txtMaximizeMeAlwaysBefore);
 				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is displayed for Standard before contribution", false);
 				else
@@ -1026,7 +1033,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			click_Maximize_IRS_Limit();
 
 			select_ContributionType(Stock.GetParameterValue("Contribution_type"));
-			Web.clickOnElement(btnContinue);
+			//Web.clickOnElement(btnContinue);
+			Web.waitForElement(txtMaximizeMeAlwaysCatchupBefore);
 			if(Web.isWebElementDisplayed(txtMaximizeMeAlwaysCatchupBefore))
 				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always displayed for catchup", "Maximize Me Always displayed for catchup", false);
 			else
@@ -1232,10 +1240,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(Web.isWebElementDisplayed(hdrConfirmation, true)){
 				Reporter.logEvent(Status.PASS, "Verify Confirmation page is displayed", "Confirmation page displayed", true);
 				
-				if(Web.VerifyText("Your carryover election has been received on "+date+".", lblChainingConfirmationMsg.getText().trim(), true))
-					Reporter.logEvent(Status.PASS, "Verify Chaining Confirmation message is displayed", "Expected : Your carryover election has been received on "+date+" \n Actual : "+lblChainingConfirmationMsg.getText(), false);
+				if(Web.VerifyText("Your carry over election has been received on "+date+".", lblChainingConfirmationMsg.getText().trim(), true))
+					Reporter.logEvent(Status.PASS, "Verify Chaining Confirmation message is displayed", "Expected : Your carry over election has been received on "+date+" \n Actual : "+lblChainingConfirmationMsg.getText(), false);
 				else
-					Reporter.logEvent(Status.FAIL,  "Verify Chaining Confirmation message is displayed", "Expected : Your carryover election has been received on "+date+" \n Actual : "+lblChainingConfirmationMsg.getText() , false);
+					Reporter.logEvent(Status.FAIL,  "Verify Chaining Confirmation message is displayed", "Expected : Your carry over election has been received on "+date+" \n Actual : "+lblChainingConfirmationMsg.getText() , false);
 				
 //				if(StringUtils.containsIgnoreCase(tblChainingConfirmationDetails.getText(), "Plan: Test Plan_"+plan))
 //					Reporter.logEvent(Status.PASS, "Verify Plan number is matching", "Expected : Plan: Test Plan_"+plan+ "\n Actual : "+tblChainingConfirmationDetails.getText(), false);

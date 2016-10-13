@@ -1550,7 +1550,7 @@ public class deferralstestcases {
 			priorContributions.get();
 			//Web.waitForElement(priorContributions, "EDIT");
 			Thread.sleep(5000);
-			if (Web.isWebElementDisplayed(priorContributions, "EDIT")) {
+			/*if (Web.isWebElementDisplayed(priorContributions, "EDIT")) {
 				Web.clickOnElement(priorContributions, "EDIT");
 				priorContributions.enterContributionValue(
 						"YEAR TO DATE CONTRIBUTION", "0");
@@ -1559,7 +1559,7 @@ public class deferralstestcases {
 				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 				Web.waitForElement(priorContributions, "EDIT");
 				Web.clickOnElement(priorContributions, "EDIT");
-			}
+			}*/
 
 			// perform a initial check on the prior plan contribution
 			priorContributions.verifyPriorPlanContributionsPage();

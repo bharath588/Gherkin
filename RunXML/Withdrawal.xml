@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     
-      <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
+  <!--     <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
@@ -13,7 +13,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> -->
   <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">

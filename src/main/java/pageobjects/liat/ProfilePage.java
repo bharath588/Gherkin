@@ -107,10 +107,10 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 				}
 			}
 		String userLogedIn = this.lblProfile.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		}*/
 		if (Web.isWebElementDisplayed(this.lblProfile))
 				 {
 			//Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));

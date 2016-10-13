@@ -154,6 +154,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 		} else {
 			this.lnkLogout.click();
+			Web.waitForElement(btnLogin);
 			Assert.assertTrue(false,"Logging in with new User");
 		}
 	}
@@ -556,8 +557,8 @@ return isTextDisplayed;
 		WebElement txtMaxAmount = Web.webdriver.findElement(By
 				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 						withdrawalType).replaceAll("Money Source Type", moneyType)));
-		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1]));
-		maxAmount=maxAmount-1;
+		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
+		//maxAmount=maxAmount-1;
 	}
 	
 	catch(Exception e)

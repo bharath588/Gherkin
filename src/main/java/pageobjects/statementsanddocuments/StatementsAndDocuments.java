@@ -104,10 +104,10 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		}
 		}
 		String userLogedIn = this.lblUserName.getText();
-		String sponser = this.lblSponser.getAttribute("Alt");
+		/*String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
 			sponser = Common.GC_DEFAULT_SPONSER;
-		}
+		}*/
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs),"Statements and Documenta page is not loaded");

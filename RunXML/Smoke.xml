@@ -35,16 +35,6 @@
 		</classes>
 	</test>
 	
-	<test name="SendActivationCode_ForgotPasswordFlow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
 	 <test
 		name="Verify_Custom_site_prelogin_postlogin_data">
 		<classes>
@@ -93,15 +83,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="Statement_and_Documents_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Statement_and_Documents_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
+	
 	<test name="Manage_My_Investment_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -179,6 +161,15 @@
 			</class>
 		</classes>
 	</test>
+	<test name="Statement_and_Documents_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Statement_and_Documents_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
 	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -317,6 +308,17 @@
 			</class>
 		</classes>
 	</test> 
+	
+	<test name="SendActivationCode_ForgotPasswordFlow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	<!-- DO not have the test data -->
 	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
 		<classes>

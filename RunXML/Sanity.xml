@@ -52,7 +52,7 @@
         </classes>
     </test> 
     
-     <!--   <test name="SIT_ParticipantWeb_Sanity_RIP_TC004_To verify Retirement Income tab_Plan Savings">
+  <test name="SIT_ParticipantWeb_Sanity_RIP_TC004_To verify Retirement Income tab_Plan Savings">
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
@@ -215,5 +215,5 @@
              </methods>
          </class>
      </classes>
- </test>  -->
+ </test> 
 </suite>

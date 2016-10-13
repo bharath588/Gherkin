@@ -280,31 +280,32 @@ public class withdrawalstestcases {
                            "Verify Request Confirmation Number is Displayed",
                            "Request Confirmation Number is Not Displayed", true);
        }
-			} 
-		catch (Exception e) {
-				e.printStackTrace();
-				Globals.exception = e;
-				Throwable t = e.getCause();
-				String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
-				if (null != t) {
-					msg = t.getMessage();
-			}
-				Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
-			} 
-		catch (Error ae) {
-				ae.printStackTrace();
-				Globals.error = ae;
-				Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+				ae.getMessage(), true);
 
-			} finally {
-				try {
-					Reporter.finalizeTCReport();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 		
-		}		
 
 
 	

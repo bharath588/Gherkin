@@ -193,7 +193,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-
+	@FindBy(xpath = "//input[@name='Total']")
+	private WebElement inpTotal;
+	
 	/**
 	 * Empty args constructor
 	 * 
@@ -259,7 +261,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent)
-				.clickNavigationLink("View/manage my investments");
+				.clickNavigationLink("View/Manage my investments");
 		lib.Web.isWebElementDisplayed(lblMyInvestments,true);
 
 	}
@@ -396,7 +398,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify Investment options Table is displayed",
 					"Investment options table not displayed ", true);
-
+		Web.clickOnElement(inpTotal);
 		btnContinue2.click();
 		Web.webdriver.switchTo().defaultContent();
 	}
