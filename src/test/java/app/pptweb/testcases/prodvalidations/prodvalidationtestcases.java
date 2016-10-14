@@ -532,7 +532,13 @@ public class prodvalidationtestcases {
 				
 				  }
 				}*/
-			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			LeftNavigationBar lftBar = new LeftNavigationBar(myAccountPage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
 			String parentWindow = Web.webdriver.getWindowHandle();
@@ -811,7 +817,13 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
 			RateOfReturnPage ROR = new RateOfReturnPage(lftNavBar);
 			ROR.get();
 			boolean isVerified = false;
@@ -939,7 +951,14 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			LeftNavigationBar leftmenu = new LeftNavigationBar(myAccountPage);
+			
 			Balance balance = new Balance(leftmenu);
 			balance.get();
 			//Thread.sleep(5000);
@@ -999,12 +1018,18 @@ public class prodvalidationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			LeftNavigationBar leftmenu;
+			
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			LeftNavigationBar leftmenu = new LeftNavigationBar(myAccountPage);
 			TransactionHistory transaction = new TransactionHistory(leftmenu);
 
 			transaction.get();
@@ -1061,7 +1086,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			StatementsAndDocuments statements = new StatementsAndDocuments(
 					leftmenu);
 
@@ -1120,7 +1151,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 
 			investment.get();
@@ -1183,7 +1220,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			PayrollCalendar payroll = new PayrollCalendar(leftmenu);
 			payroll.get();
 			//Thread.sleep(5000);
@@ -1223,7 +1266,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			InvestmentLineup investment = new InvestmentLineup(leftmenu);
 			investment.get();
 			//Thread.sleep(5000);
@@ -1263,7 +1312,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
 			//Thread.sleep(5000);
@@ -1311,7 +1366,13 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			PlanForms planforms = new PlanForms(leftmenu);
 			planforms.get();
 			//Thread.sleep(7000);
@@ -1356,7 +1417,13 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			Thread.sleep(5000);
@@ -1412,7 +1479,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			Thread.sleep(5000);
@@ -1460,7 +1533,13 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			beneficiary.get();
 			//Thread.sleep(5000);
@@ -1623,7 +1702,13 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			leftmenu = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 leftmenu = new LeftNavigationBar(myAccountPage);
 			Deferrals deferral = new Deferrals(leftmenu);
 			deferral.get();
 			//Thread.sleep(5000);
@@ -1693,9 +1778,15 @@ public class prodvalidationtestcases {
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			LeftNavigationBar lftNavBar = new LeftNavigationBar(homePage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			
+			 myAccountPage.get();
+			 if(Web.isWebElementDisplayed(myAccountPage,"PLAN NAME", true)) { 
+			 myAccountPage.clickPlanNameByGAID("150549-01"); 
+						  }
+			 LeftNavigationBar leftmenu = new LeftNavigationBar(myAccountPage);
 			RequestWithdrawal requestWithdrawal = new RequestWithdrawal(
-					lftNavBar);
+					leftmenu);
 			requestWithdrawal.get();
 			Thread.sleep(4000);
 			boolean lblDisplayed = false;
