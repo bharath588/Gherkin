@@ -5,13 +5,13 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	<test name="Statement_and_Documents_validations">
+	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Statement_and_Documents_validations" />
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test>
 </suite>
