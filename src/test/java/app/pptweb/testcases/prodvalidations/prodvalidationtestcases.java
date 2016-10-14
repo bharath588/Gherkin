@@ -1008,7 +1008,9 @@ public class prodvalidationtestcases {
 			TransactionHistory transaction = new TransactionHistory(leftmenu);
 
 			transaction.get();
-			//Thread.sleep(5000);
+			Thread.sleep(5000);
+			transaction.selectDateFrequency("Two Years");
+			Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
 			transaction.clickConfirmationNumber();
@@ -1064,21 +1066,23 @@ public class prodvalidationtestcases {
 					leftmenu);
 
 			statements.get();
-			//Thread.sleep(8000);
+			Thread.sleep(5000);
+			statements.selectDateFrequency("Two Years");
+			Thread.sleep(5000);
 			statements.navigateToTab("Stmts On Demand Tab");
-			statements.verifyTableDisplayed("Statements Summary Table");
-			statements.verifytableHeaderNotEmpty("Statements Summary Table Header");
-			statements.verifyTableDataDisplayed("Statements Summary Table");
+			statements.verifyTableDisplayed("Account at a Glance Table");
+			statements.verifytableHeaderNotEmpty("Account at a Glance Table Header");
+			statements.verifyTableDataDisplayed("Account at a Glance Table");
 
-			statements.verifyTableDisplayed("Stmts By Money Type Table");
-			statements.verifytableHeaderNotEmpty("Stmts By Money Type Table Header");
-			statements.verifyTableDataDisplayed("Stmts By Money Type Table");
+			statements.verifyTableDisplayed("Activity by Contribution Source Table");
+			statements.verifytableHeaderNotEmpty("Activity by Contribution Source Table Header");
+			statements.verifyTableDataDisplayed("Activity by Contribution Source Table");
 
-			statements.verifyTableDisplayed("Stmts by Fund Detail Table");
-			statements.verifytableHeaderNotEmpty("Stmts by Fund Detail Table Header");
-			statements.verifyTableDataDisplayed("Stmts by Fund Detail Table");
+			statements.verifyTableDisplayed("Activity by Investment Option Table");
+			statements.verifytableHeaderNotEmpty("Activity by Investment Option Table Header");
+			statements.verifyTableDataDisplayed("Activity by Investment Option Table");
 
-			statements.clickOnStatementFromTable("Money Type Table");
+			statements.clickOnStatementFromTable("Activity by Contribution Source");
 			statements.switchToWindow();
 
 		} catch (Exception e) {

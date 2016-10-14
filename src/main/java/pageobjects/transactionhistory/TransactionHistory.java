@@ -13,6 +13,7 @@ import lib.Reporter.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -51,7 +52,13 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-
+	@FindBy(xpath = "//div[@class='executable customDropdown']//div[@class='ddDiv']")
+	private WebElement drpDateFreequency;
+	private String dateFreequency="//div[@class='executable customDropdown']//div[@class='ddDiv']//ul/li[contains(text(),'frequency')]";
+	@FindBy(xpath = "//input[@type='submit']")
+	private WebElement btnSubmitQuery;
+	@FindBy(xpath = ".//*[@id='currentDeferralsEffDateColTitle']/a")
+	private WebElement colConfirmationNumber;
 	/** Empty args constructor
 	 * 
 	 */
@@ -229,5 +236,18 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 			Reporter.logEvent(Status.FAIL, "Verify Reference Number displayed in Contribution Details Table","Expected: "+confirmationNo+" Actual: "+txtConfirmationNo.getText().trim(),true);
 		Web.webdriver.switchTo().defaultContent();
 	}
-	
+	/**
+	 * This Method is to select Date Frequency and click on Submit Query
+	 * @param dateFrequency
+	 */
+	public void selectDateFrequency(String frequency){
+		Actions mouse = new Actions(Web.webdriver);
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.clickOnElement(drpDateFreequency);
+		 WebElement DateFrequency= Web.webdriver.findElement(By.xpath(dateFreequency.replaceAll("frequency", frequency)));
+		mouse.moveToElement(DateFrequency).click().build().perform();
+		Web.clickOnElement(btnSubmitQuery);
+		Web.waitForElement(colConfirmationNumber);
+		Web.webdriver.switchTo().defaultContent();
+	}
 }

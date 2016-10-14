@@ -14,6 +14,7 @@ import lib.Reporter.Status;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -56,7 +57,13 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-	
+	@FindBy(xpath = "//div[@class='executable customDropdown']//div[@class='ddDiv']")
+	private WebElement drpDateFreequency;
+	private String dateFrequency="//div[@class='executable customDropdown']//div[@class='ddDiv']//ul/li[contains(text(),'frequency')]";
+	@FindBy(xpath = "//input[@type='submit']")
+	private WebElement btnSubmitQuery;
+	@FindBy(xpath = ".//*[@id='statementsByMoneyTypeNameColTitle']/a")
+	private WebElement colContributionSource;
 
 	/** Empty args constructor
 	 * 
@@ -131,57 +138,57 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		if (fieldName.trim().equalsIgnoreCase("Stmts On Demand Tab")) {
 			return this.tabStmtsOnDemand;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Statements Summary Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Account at a Glance Table")) {
 			return this.tblStmtsSummary;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts By Money Type Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source Table")) {
 			return this.tblStmtsByMoneyType;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Fund Detail Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option Table")) {
 			return this.tblStmtsByFundDetail;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Statements Summary Table Header")) {
+		if (fieldName.trim().equalsIgnoreCase("Account at a Glance Table Header")) {
 			return this.hdrStmtsSummaryTable;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts By Money Type Table Header")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source Table Header")) {
 			return this.hdrStmtsByMoneyTable;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Fund Detail Table Header")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option Table Header")) {
 			return this.hdrStmtsByFundDetailTable;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Transmission Detail Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Transaction Details Table")) {
 			return this.tblStmtsByTxnDetail;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Transmission Detail Table Header")) {
+		if (fieldName.trim().equalsIgnoreCase("Transaction Details Table Header")) {
 			return this.hdrStmtsByTxnDetailTable;
 		}
 		return null;
 	}
 	
 	private List<WebElement> getWebElementList(String fieldName) {
-		if (fieldName.trim().equalsIgnoreCase("Statements Summary Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Account at a Glance Table")) {
 			return this.lstStmtsSummaryTableRows;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts By Money Type Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source Table")) {
 			return this.lstStmtsByMoneyTableRows;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Fund Detail Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option Table")) {
 			return this.lstStmtsByFundDetailTableRows;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Money Type Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source")) {
 			return this.lstStmtsByMoneyType;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Fund Detail Table")) {
 			return this.lstStmtsByFundDetail;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Stmts by Transmission Detail Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Transaction Details Table")) {
 			return this.lstStmtsByTxnDetailTableRows;
 		}
 		return null;
 	}
 	
 public void verifyTableDisplayed(String tableName){
-		if(tableName.equalsIgnoreCase("Stmts by Transmission Detail Table"))
+		if(tableName.equalsIgnoreCase("Transaction Details Table"))
 			Web.webdriver.switchTo().frame(iframeContentFrame);
 		else
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);
@@ -194,7 +201,7 @@ public void verifyTableDisplayed(String tableName){
 	}
 	
 	public void verifyTableDataDisplayed(String tableName){
-		if(tableName.equalsIgnoreCase("Stmts by Transmission Detail Table"))
+		if(tableName.equalsIgnoreCase("Transaction Details Table"))
 			Web.webdriver.switchTo().frame(iframeContentFrame);
 		else
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);
@@ -210,7 +217,7 @@ public void verifyTableDisplayed(String tableName){
 	
 	public void verifytableHeaderNotEmpty(String tableName){
 	 	
-		if(tableName.equalsIgnoreCase("Stmts by Transmission Detail Table Header"))
+		if(tableName.equalsIgnoreCase("Transaction Details Table Header"))
 			Web.webdriver.switchTo().frame(iframeContentFrame);
 		else
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);  
@@ -228,12 +235,12 @@ public void verifyTableDisplayed(String tableName){
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		List<WebElement> statements = this.getWebElementList(tableName);
 		if(statements.size()>=1){
-			Reporter.logEvent(Status.PASS, "verify statements displayed for "+tableName, "statements displayed",true);
+			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+tableName, "Contribution Source is displayed",true);
+			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(0).getText().trim(),true);
 			statements.get(0).click();
-			
 		}
 		else
-			Reporter.logEvent(Status.FAIL, "verify statement displayed for "+tableName, "statements not displayed",true);
+			Reporter.logEvent(Status.FAIL, "verify Contribution Source displayed in "+tableName, "Contribution Source is not displayed in"+tableName,true);
 		Web.webdriver.switchTo().defaultContent();
 	}
 	
@@ -244,11 +251,11 @@ public void verifyTableDisplayed(String tableName){
 		       {
 		       if(!windowHandle.equals(parentWindow)){
 		         Web.webdriver.switchTo().window(windowHandle);
-		         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opens",true);
+		         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
 		         Web.waitForElement(tblStmtsByTxnDetail);
-		         verifyTableDisplayed("Stmts by Transmission Detail Table");
-		   		 verifytableHeaderNotEmpty("Stmts by Transmission Detail Table Header");
-		   		 verifyTableDataDisplayed("Stmts by Transmission Detail Table");
+		         verifyTableDisplayed("Transaction Details Table");
+		   		 verifytableHeaderNotEmpty("Transaction Details Table Header");
+		   		 verifyTableDataDisplayed("Transaction Details Table");
 		   			
 		         //closing child window
 		   		 Web.webdriver.close();
@@ -273,6 +280,23 @@ public void verifyTableDisplayed(String tableName){
 			Reporter.logEvent(Status.PASS, "verify navigate to "+tabName+"  successfull", "Able to navigate to "+tabName+" tab", true);
 		else
 			Reporter.logEvent(Status.FAIL, "verify navigate to "+tabName+" successfull", " Not Able to navigate to "+tabName+" tab",true);
+		Web.webdriver.switchTo().defaultContent();
+	}
+	
+	/**
+	 * This Method is to select Date Frequency and click on Submit Query
+	 * @param dateFrequency
+	 * @throws InterruptedException 
+	 */
+	public void selectDateFrequency(String frequency) throws InterruptedException{
+		Actions mouse = new Actions(Web.webdriver);
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.clickOnElement(drpDateFreequency);
+		 WebElement DateFrequency= Web.webdriver.findElement(By.xpath(dateFrequency.replaceAll("frequency", frequency)));
+		mouse.moveToElement(DateFrequency).click().build().perform();
+		Thread.sleep(3000);
+		Web.clickOnElement(btnSubmitQuery);
+		Web.waitForElement(colContributionSource);
 		Web.webdriver.switchTo().defaultContent();
 	}
 }

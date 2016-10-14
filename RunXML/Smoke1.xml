@@ -5,13 +5,13 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	<test name="FundToFundTransfer">
+	<test name="Statement_and_Documents_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="FundToFundTransfer" />
+					<include name="Statement_and_Documents_validations" />
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> 
 </suite>
