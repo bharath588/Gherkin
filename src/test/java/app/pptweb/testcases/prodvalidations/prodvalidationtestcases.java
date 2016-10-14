@@ -1377,7 +1377,8 @@ public class prodvalidationtestcases {
 					"Yes"))
 				investment.cancelTransfer("F2F");
 			Web.webdriver.switchTo().defaultContent();
-			// Web.clickOnElement(investment, "LOGOUT");
+			 Web.clickOnElement(investment, "LOGOUT");
+			 Web.waitForElement(investment, "Login");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

@@ -321,7 +321,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
 					return this.lnkLogout;
 				}
-
+		if (fieldName.trim().equalsIgnoreCase("Login")) {
+			return this.btnLogin;
+		}
 
 		return null;
 	}
