@@ -1658,7 +1658,7 @@ public class prodvalidationtestcases {
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
 			Web.webdriver.switchTo().defaultContent();
-			//lib.Web.clickOnElement(deferral, "LOG OUT");
+			lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
