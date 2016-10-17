@@ -125,6 +125,7 @@ public class Balance extends LoadableComponent<Balance> {
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Balance");
 		Web.isWebElementDisplayed(lblBalance,true);
+		Web.waitForPageToLoad(Web.webdriver);
 		
 	}
 	

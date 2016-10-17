@@ -117,6 +117,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 			mfaScreen.selectCodeDeliveryOption("ALREADY_HAVE_CODE");
 			try {
 				mfaScreen.submitVerificationCode(Stock.getConfigParam("defaultActivationCode"), true, false);
+				Web.waitForPageToLoad(Web.webdriver);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

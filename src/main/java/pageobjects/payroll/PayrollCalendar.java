@@ -108,6 +108,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			this.parent.get();
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("Payroll calendar");
+			Web.waitForPageToLoad(Web.webdriver);
 			
 		}
 		

@@ -243,6 +243,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
 			Web.isWebElementDisplayed(lblMyContributions,true);
+			Web.waitForPageToLoad(Web.webdriver);
 		}
 		
 		//@SuppressWarnings("unused")

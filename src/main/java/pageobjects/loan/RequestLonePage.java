@@ -151,6 +151,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
 		
 		lib.Web.isWebElementDisplayed(lblRequestALoan,true);
+		Web.waitForPageToLoad(Web.webdriver);
 
 	}
 

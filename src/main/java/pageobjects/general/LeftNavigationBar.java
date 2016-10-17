@@ -87,6 +87,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		try {
 			if(!Web.isWebElementDisplayed(weLeftNavSection, true))
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+			Web.waitForPageToLoad(Web.webdriver);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -116,7 +117,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-
+		
 	}
 
 	@SuppressWarnings("unused")

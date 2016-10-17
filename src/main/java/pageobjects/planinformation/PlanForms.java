@@ -114,6 +114,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			this.parent.get();
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("Plan forms");
+			Web.waitForPageToLoad(Web.webdriver);
 			
 		}
 		

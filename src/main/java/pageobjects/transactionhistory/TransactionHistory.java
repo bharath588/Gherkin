@@ -124,6 +124,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction history");
+		Web.waitForPageToLoad(Web.webdriver);
 		Web.isWebElementDisplayed(lblTransactionHistory,true);
 	}
 	

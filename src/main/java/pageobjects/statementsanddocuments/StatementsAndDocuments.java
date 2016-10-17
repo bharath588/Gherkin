@@ -131,6 +131,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
 		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
+		Web.waitForPageToLoad(Web.webdriver);
 	}
 	
 	

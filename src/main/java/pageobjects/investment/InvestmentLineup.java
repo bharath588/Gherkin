@@ -121,6 +121,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Investment lineup");
 		lib.Web.isWebElementDisplayed(lblInvestmentlineup,true);
+		Web.waitForPageToLoad(Web.webdriver);
 	}
 	
 	private WebElement getWebElement(String fieldName) {
