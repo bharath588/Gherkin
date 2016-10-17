@@ -178,6 +178,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
+		Web.waitForPageToLoad(Web.webdriver);
 
 	}
 	}
