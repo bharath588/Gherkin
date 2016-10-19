@@ -59,7 +59,6 @@ private LoadableComponent<?> parent;
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
-
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblBrokerage,true),"Brokerage Page is Not Loaded\n");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
@@ -135,6 +134,7 @@ private LoadableComponent<?> parent;
 	}
 	
 	public void verifyBrokerageTableDisplayed(){
+		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 	 
 		

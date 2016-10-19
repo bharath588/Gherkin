@@ -46,6 +46,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement lnkContactNoPreLogin;
 	@FindBy(xpath = ".//*[@id='customerSupport']//span")
 	private WebElement lnkContactNoPostLogin;
+	@FindBy(xpath = "//a[text()='Log out']")
+    private WebElement  lnkLogOut;
+
+
 	/*
 	 * @FindBy(xpath =
 	 * ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img") private
@@ -167,11 +171,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 		// lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
-		Web.webdriver.get(url);
+		 if(Web.isWebElementDisplayed(lnkLogOut))
+		 {
+			Web.clickOnElement(lnkLogOut);
+		 }
+		 else
+		 {			 
+		 	 Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
 			lib.Web.webdriver.manage().window().maximize();
 		System.out.println("Application URL:"+url);
+		 }
 
 		// currently not beeing seen
        if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){

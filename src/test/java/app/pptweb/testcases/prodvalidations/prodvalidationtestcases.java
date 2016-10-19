@@ -1253,6 +1253,76 @@ public class prodvalidationtestcases {
 	}
 
 	@Test(dataProvider = "setData")
+	public void Edit_MyContribution(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferral = new Deferrals(leftmenu);
+			deferral.get();
+			//Thread.sleep(5000);
+			if (deferral.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferral.click_Select_Your_Contribution_Rate();
+			deferral.select_ContributionType("Before");
+			lib.Web.clickOnElement(deferral, "Continue button");
+			Thread.sleep(3000);
+			if (deferral.verifyMyContributions(
+					deferral.contrbution_rate, "Before Tax",
+					"Standard"))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Before contribution percent for Standard deferral",
+						"Before contribution percent matching", true);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Before contribution percent for Standar deferral",
+						"Before contribution percent matching", true);
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes")) {
+				deferral.myContributions_Confirmation_Page();
+				lib.Web.clickOnElement(deferral, "MyContribution Button");
+			}
+			Web.webdriver.switchTo().defaultContent();
+			//lib.Web.clickOnElement(deferral, "LOG OUT");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	
+	
+	@Test(dataProvider = "setData")
 	public void Brokerage_validations(int itr, Map<String, String> testdata) {
 
 		try {
@@ -1614,74 +1684,7 @@ public class prodvalidationtestcases {
 		}
 	}
 
-	@Test(dataProvider = "setData")
-	public void Edit_MyContribution(int itr, Map<String, String> testdata) {
-
-		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			LeftNavigationBar leftmenu;
-			LoginPage login = new LoginPage();
-			TwoStepVerification mfaPage = new TwoStepVerification(login);
-			LandingPage homePage = new LandingPage(mfaPage);
-			leftmenu = new LeftNavigationBar(homePage);
-			Deferrals deferral = new Deferrals(leftmenu);
-			deferral.get();
-			//Thread.sleep(5000);
-			if (deferral.clickAddEditButton("Standard Edit"))
-				Reporter.logEvent(Status.PASS,
-						"Verify Standard contribution page",
-						"Standard Contributions page is  displayed", true);
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Standard contribution page",
-						"Standard Contributions page is not displayed", true);
-			deferral.click_Select_Your_Contribution_Rate();
-			deferral.select_ContributionType("Before");
-			lib.Web.clickOnElement(deferral, "Continue button");
-			Thread.sleep(3000);
-			if (deferral.verifyMyContributions(
-					deferral.contrbution_rate, "Before Tax",
-					"Standard"))
-				Reporter.logEvent(
-						Status.PASS,
-						"Verify Before contribution percent for Standard deferral",
-						"Before contribution percent matching", true);
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Before contribution percent for Standar deferral",
-						"Before contribution percent matching", true);
-			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
-					"Yes")) {
-				deferral.myContributions_Confirmation_Page();
-				lib.Web.clickOnElement(deferral, "MyContribution Button");
-			}
-			Web.webdriver.switchTo().defaultContent();
-			lib.Web.clickOnElement(deferral, "LOG OUT");
-		} catch (Exception e) {
-			e.printStackTrace();
-			Globals.exception = e;
-			Throwable t = e.getCause();
-			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
-			if (null != t) {
-				msg = t.getMessage();
-			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
-		} catch (Error ae) {
-			ae.printStackTrace();
-			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
-			// throw ae;
-		} finally {
-			try {
-				Reporter.finalizeTCReport();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
-
+	
 	@Test(dataProvider = "setData")
 	public void SF01_TC019_Verify_Request_A_Withdrawal_link(int itr,
 			Map<String, String> testdata) {

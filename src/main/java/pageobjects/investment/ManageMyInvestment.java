@@ -415,6 +415,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		else{
 			Web.waitForElement(iframeLegacyFeature);
+			Web.waitForLoad();
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		}
 		WebElement freq = this.getWebElement(frequency);
@@ -689,10 +690,16 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.webdriver.switchTo().defaultContent();
 	}
 
-	public void ReviewFundToFundTransfer(String fromPercent, String toPercent) {
+	public void ReviewFundToFundTransfer(String fromPercent, String toPercent) throws InterruptedException {
 		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(hdrVerifyTransferFromTable);
+		
+		do{
+			Thread.sleep(3000);
+		}while(!((JavascriptExecutor)Web.webdriver).
+				executeScript("return document.readyState").toString().equalsIgnoreCase("complete"));
+		
 		if (Web.VerifyText("Investment Option Balance Percent",
 				hdrVerifyTransferFromTable.getText(), true)) {
 			Reporter.logEvent(Status.PASS,
