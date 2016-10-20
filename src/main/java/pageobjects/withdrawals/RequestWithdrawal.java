@@ -48,7 +48,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
 	private WebElement btnConfirmContinue;
-	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
+//	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
+	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
 	private WebElement drpWithdrawalType;
 	@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	private WebElement btnContinueWithdrawal;
@@ -75,6 +76,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private String 
 	txtMoneyTypeAmt ="//div[contains(@class,'selected-row-body')][.//span[contains(text(),'Withdrawal Type')]]//div[contains(@class,'source-row')][.//span[text()[normalize-space()='Money Source Type']]]//div[contains(@class,'col-md-5 cell-container')]";	
 	
+	private String 
+	moneyTypeSourceSection=" //div[contains(@class,'selected-row-body')][.//span[contains(text(),'Withdrawal Type')]]//div[contains(@class,' source-row')][.//span[text()[normalize-space()='Money Source Type']]]";
+	;
 	@FindBy(xpath = ".//select[contains(@ng-model,'companyType')]")
 	private WebElement drpRollOverCompany;	
 	@FindBy(xpath=".//input[contains(@placeholder, 'Enter address line 1')]")
@@ -91,12 +95,29 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement fullWithDrawal;
 	@FindBy(xpath=".//*[@id='partialWithdrawal']")
 	private WebElement partWithDrawal;
-	@FindBy(xpath="//div[contains(@ng-show,'showAccountNumberField')]//input[contains(@ng-model,'accountNumber')]")
+	@FindBy(xpath="//div[@ng-show='wtCtrl.showBothAccountNumberFields()']//input[contains(@ng-model,'accountNumber')]")
 	private WebElement inpAccountNumber;	
+	@FindBy(xpath="//div[@ng-show='wtCtrl.showBothAccountNumberFields()']//input[contains(@ng-model,'rothAccountNumber')]")
+	private WebElement inpRothAccountNumber;
+	@FindBy(xpath=".//label[contains(text(),'Roth IRA Account Number')]")
+	private WebElement lblRothAccountNumber;
 	private String lblWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]//span";
 	private String inpAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
 	private String maxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//td[3]/span";
+	@FindBy(xpath="//tr[./th[contains(text(),'Estimated ')]]/td")
+	private WebElement confirmationPageRollOverAmount;
+	@FindBy(xpath="//tr[./th[contains(text(),'Type')]]/td")
+	private WebElement confirmationPageDeliveryType;
+	@FindBy(xpath="//tr[./th[contains(text(),'Payable')]]/td")
+	private WebElement confirmationPagePayableTo;
+	@FindBy(xpath="//tr[./th[contains(text(),'Delivery method')]]/td")
+	private WebElement confirmationPageDeliveryMethod;
+	@FindBy(xpath="//tr[./th[contains(text(),'Sent to')]]/td")
+	private WebElement confirmationPageSentToAddress;
+	
+	
+	
 	/**
 	 * Default Constructor
 	 */
@@ -246,6 +267,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("VESTED PART WITHDRAWAL")) {
 			return this.partWithDrawal;
 		}
+		if (fieldName.trim().equalsIgnoreCase("LABEL ROTH ACCOUNT NUMBER")) {
+			return this.lblRothAccountNumber;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INPUT ROTH ACCOUNT NUMBER")) {
+			return this.inpRothAccountNumber;
+		}
+		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -270,7 +298,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				keyBoard.sendKeys(Keys.TAB).perform();
 				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
-			
+			Thread.sleep(5000);	
 		WebElement inptWithdrawalType = Web.webdriver.findElement(By
 				.xpath(inputWithdrawalType.replace("Withdrawal Type",
 						withdrawalType)));
@@ -287,6 +315,25 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		return isSelected;
 	}
+	
+	/**
+	 * This method is to validate if Pre-tax or Roth Money Type Source section is displayed for the respective withdrawal type
+	 * @param withdrawalType
+	 * @param moneyType
+	 * @return
+	 */
+	public boolean isMoneyTypeSourceAvailable(String withdrawalType,String moneyType)
+	{
+		WebElement moneyTypeSoruceAvailable=Web.webdriver.findElement
+				(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
+						withdrawalType).replaceAll("Money Source Type", moneyType)));
+		if(moneyTypeSoruceAvailable.isDisplayed())
+			return true;
+		else
+			return false;
+	}
+	
+	
 	/**
 	 * This method is to select money type source and enter the amount for specified withdrawal type
 	 * @param withdrawalType
@@ -559,7 +606,7 @@ return isTextDisplayed;
 				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 						withdrawalType).replaceAll("Money Source Type", moneyType)));
 		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
-		//maxAmount=maxAmount-1;
+		maxAmount=maxAmount-1;
 	}
 	
 	catch(Exception e)
@@ -568,6 +615,85 @@ return isTextDisplayed;
 	}
 	return maxAmount;
 		
+	}
+	
+	public void verifyWithdrawalConfirmationPage
+	(int totalWithdrawalAmount, String deliveryType,String payableTo, String deliveryMethod, String address )
+	{
+		//Verify total Withdrawal Amount
+		int confirmationPageAmount= (int)Math.round(Web.getIntegerCurrency(confirmationPageRollOverAmount.getText()));
+		System.out.println("A: "+confirmationPageAmount);
+		System.out.println("E: "+totalWithdrawalAmount);
+		if(confirmationPageAmount == totalWithdrawalAmount)
+			Reporter.logEvent(Status.PASS, "Verify the Total Withdrawal Amount in the Confirmation Page", 
+					"The Total Withdrawal Amount is displayed as:\n"
+					+ "Expected Amount: "+ totalWithdrawalAmount +"\n"
+					+ "Actual Amount: "+confirmationPageAmount, false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify the Total Withdrawal Amount in the Confirmation Page", 
+					"The Total Withdrawal Amount is displayed as:\n"
+					+ "Expected Amount: "+ totalWithdrawalAmount +"\n"
+					+ "Actual Amount: "+confirmationPageAmount, false);
+		
+		//Verify delivery Type
+		if(confirmationPageDeliveryType.getText().equalsIgnoreCase(deliveryType))
+			Reporter.logEvent(Status.PASS, "Verify the Delivery Type in the Confirmation Page", 
+					"The Delivery Type is displayed as:\n"
+					+ "Expected Delivery Type: "+ deliveryType +"\n"
+					+ "Actual Delivery type: "+confirmationPageDeliveryType.getText(), false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify the Delivery Type in the Confirmation Page", 
+					"The Delivery Type is displayed as:\n"
+					+ "Expected Delivery Type: "+ deliveryType +"\n"
+					+ "Actual Delivery type: "+confirmationPageDeliveryType.getText(), false);
+		
+		//Verify Payable To 
+		if(confirmationPagePayableTo.getText().contains(payableTo.replace("?", " ")))
+			Reporter.logEvent(Status.PASS, "Verify the Payable To in the Confirmation Page", 
+					"The Payable To Field is displayed as:\n"
+					+ "Expected: "+ payableTo.replace("-", " ") +"\n"
+					+ "Actual : "+confirmationPagePayableTo.getText(), false);
+		else	
+			Reporter.logEvent(Status.FAIL, "Verify the Payable To in the Confirmation Page", 
+					"The Payable To Field is displayed as:\n"
+					+ "Expected: "+ payableTo +"\n"
+					+ "Actual : "+confirmationPagePayableTo.getText(), false);
+		
+		
+		//Verify delivery Method	
+		String deliveryMthd=deliveryMethod.contains("-")? deliveryMethod.replace("-", " ") : deliveryMethod;
+		if(confirmationPageDeliveryMethod.getText().equalsIgnoreCase(deliveryMthd))
+			Reporter.logEvent(Status.PASS, "Verify the Delivery Method in the Confirmation Page", 
+					"The Delivery Method is displayed as:\n"
+					+ "Expected Delivery Method: "+ deliveryMthd +"\n"
+					+ "Actual Delivery Method: "+confirmationPageDeliveryMethod.getText(), false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify the Delivery Method in the Confirmation Page", 
+					"The Delivery Method is displayed as:\n"
+					+ "Expected Delivery Method: "+ deliveryMthd +"\n"
+					+ "Actual Delivery Method: "+confirmationPageDeliveryMethod.getText(), false);
+		
+		
+		//Verify Address
+		/*String sentToAddress=confirmationPageSentToAddress.getText().trim();
+		System.out.println("A "+sentToAddress);
+		System.out.println("E "+address.toString().trim());
+		if(sentToAddress.contains(address.toString()))
+			Reporter.logEvent(Status.PASS, "Verify the Sent To Address in the Confirmation Page", 
+					"The Address is displayed as:\n"
+					+ "Expected Address: "+ address +"\n"
+					+ "Actual Address: "+sentToAddress, false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify the Sent To Address in the Confirmation Page", 
+					"The Address is displayed as:\n"
+					+ "Expected Address: "+ address +"\n"
+					+ "Actual Address: "+sentToAddress, false);*/
+		String sentToAddress=confirmationPageSentToAddress.getText().trim();
+		Reporter.logEvent(Status.PASS, "Verify the Sent To Address in the Confirmation Page", 
+				"The Address is displayed as:\n"+
+			"Address: "+sentToAddress, false);
+		
+				
 	}
 	
 }

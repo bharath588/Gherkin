@@ -4,16 +4,17 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    
-  <!--     <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="withDrawal_SepService_PWD_Roll_IRA"/>
-                </methods>
-            </class>
-        </classes>
-    </test> -->
+      <!--
+   <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_Over_To_Traditional_IRA">
+       <classes>
+           <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+               <methods>
+                   <include name="WithDrawals_TC02_SepService_PWD_Roll_Over_To_Traditional_IRA"/>
+               </methods>
+           </class>
+       </classes>
+   </test>  
+  -->
   <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
@@ -23,4 +24,61 @@
             </class>
         </classes>
     </test>
+ 
+     <test name="DDTC_TC_03_In_Service_Roll_Qual">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_TC03_In_Service_Age59_And_Half_Roll_Qual"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+  
+   <test name="DDTC_TC_04_In_Service_Roll_Over_To_Traditional_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_TC04_In_Service_Age59_And_Half_Roll_Over_To_Traditional_IRA"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+    <!-- 
+      <test name="DDTC_TC_05_In_Service_Roll_Over_To_External_Roth_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_TC05_In_Service_Age59_And_Half_Roll_Over_To_External_Roth_IRA"/>
+               </methods>
+            </class>
+        </classes>
+    </test>    
+     <test name="DDTC-TC06_withDrawal_SepService_PWD_Payment_To_Self">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="WithDrawals_TC06_SepService_PWD_Payment_to_Self"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="DDTC-TC07_withDrawal_SepService_PWD_Roll_Over_To_External_Roth_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="WithDrawals_TC07_SepService_PWD_Roll_Over_To_External_Roth_IRA"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+     <test name="DDTC-TC08_withDrawal_SepService_PWD_Roll_Qual">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="WithDrawals_TC08_SepService_PWD_Roll_Qual"/>
+               </methods>
+            </class>
+        </classes>
+    </test> -->
       </suite>
