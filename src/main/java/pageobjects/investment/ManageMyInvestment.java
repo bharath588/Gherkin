@@ -259,7 +259,6 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@Override
 	protected void load() {
 		this.parent.get();
-
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/Manage my investments");
 		Web.waitForPageToLoad(Web.webdriver);
