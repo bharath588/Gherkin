@@ -4,7 +4,6 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	
  	<test name="Brokerage_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -160,7 +159,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test> 	
 	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -307,7 +306,6 @@
 			</class>
 		</classes>
 	</test>
-
 	<!-- DO not have the test data -->
 	<!-- <test name="LIAT_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users">
 		<classes>
