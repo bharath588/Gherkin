@@ -262,8 +262,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/Manage my investments");
 		Web.waitForPageToLoad(Web.webdriver);
-		lib.Web.isWebElementDisplayed(lblMyInvestments,true);
-		
+		lib.Web.isWebElementDisplayed(lblMyInvestments,true);	
 
 	}
 
@@ -413,8 +412,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		else{
-			Web.waitForElement(iframeLegacyFeature);
-			Web.waitForLoad();
+			Web.waitForElement(iframeLegacyFeature);			
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		}
 		WebElement freq = this.getWebElement(frequency);
