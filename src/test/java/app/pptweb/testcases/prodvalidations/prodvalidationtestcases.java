@@ -942,6 +942,7 @@ public class prodvalidationtestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
 			balance.get();
+			Web.waitForPageToLoad(Web.webdriver);
 			//Thread.sleep(5000);
 			balance.navigateToTab("Balance");
 			// not seeing this table in PRod data
