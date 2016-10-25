@@ -130,8 +130,9 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
-		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
+		Common.waitForProgressBar(30);
 		Web.waitForPageToLoad(Web.webdriver);
+		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
 	}
 	
 	
@@ -253,6 +254,7 @@ public void verifyTableDisplayed(String tableName){
 		       if(!windowHandle.equals(parentWindow)){
 		         Web.webdriver.switchTo().window(windowHandle);
 		         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
+		         Web.waitForPageToLoad(Web.webdriver);
 		         Web.waitForElement(tblStmtsByTxnDetail);
 		         verifyTableDisplayed("Transaction Details Table");
 		   		 verifytableHeaderNotEmpty("Transaction Details Table Header");

@@ -5,6 +5,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import org.apache.bcel.generic.RETURN;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -332,4 +333,36 @@ public class Common {
 	
 	return lblDisplayed;
 	}
+	
+
+    private static String progressBar ="//*[@class='loader']";
+/*
+    * @Author :- Siddartha 
+     * @Date  :- 17 - Oct -2016
+    * @ Method:- 
+     */
+    
+      public static void waitForProgressBar(int iTimeInSecond){
+           try{
+                  int iCount = 0;
+                  while (FindElement(progressBar).isDisplayed()){
+                         if(iCount ==iTimeInSecond){
+                               break;
+                         }   
+                         
+                         System.out.println("Progress Bar displaying..");
+                         Thread.sleep(1000);                       
+                         iCount++;
+                  }
+                  
+           }catch(Exception e){
+                  
+           }
+           
+        }
+        
+        public static WebElement FindElement(String sElement){
+           return lib.Web.webdriver.findElement(By.xpath(sElement));
+        }
+
 }

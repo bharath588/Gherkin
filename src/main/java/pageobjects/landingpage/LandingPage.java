@@ -129,6 +129,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 				mfaScreen.submitVerificationCode(
 						Stock.getConfigParam("defaultActivationCode"), true,
 						false);
+				Common.waitForProgressBar(30);
 				Web.waitForPageToLoad(Web.webdriver);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
