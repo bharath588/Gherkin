@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1" preserver-order="true" parallel="true" thread-count="10">
-      <suite-files  preserver-order="true" >
-   <suite-file path="./RunXML/DemoTest.xml" />
-    <suite-file path="./RunXML/Liat.xml" />
-   </suite-files>
-</suite>
