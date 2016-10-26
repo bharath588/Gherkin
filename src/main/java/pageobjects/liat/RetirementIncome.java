@@ -168,6 +168,8 @@ protected void load() {
 	this.parent.get();
 	//((LandingPage) this.parent).dismissPopUps(true,true);
 	this.tabRetirementIncome.click();
+	Common.waitForProgressBar();
+	Web.waitForPageToLoad(Web.webdriver);
 }
 
 /**<pre>Method to read the projected income value from the retirement income page

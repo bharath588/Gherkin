@@ -129,6 +129,8 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 
 		((LandingPage) this.parent).dismissPopUps(false, false);
 		this.lblUserName.click();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 
 	}
 

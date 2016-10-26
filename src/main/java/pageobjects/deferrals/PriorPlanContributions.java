@@ -104,6 +104,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		this.parent.get();	
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
+		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 	}
 	/** <pre> Method to return WebElement object corresponding to specified field name

@@ -130,7 +130,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
-		Common.waitForProgressBar(30);
+		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
 	}

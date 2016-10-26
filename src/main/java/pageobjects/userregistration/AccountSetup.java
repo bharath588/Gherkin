@@ -135,6 +135,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 				e.printStackTrace();
 			}
 		}
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 	}
 
 	/**

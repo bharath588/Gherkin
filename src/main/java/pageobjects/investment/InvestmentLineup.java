@@ -120,7 +120,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Investment lineup");
-		Common.waitForProgressBar(30);
+		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 		lib.Web.isWebElementDisplayed(lblInvestmentlineup,true);
 

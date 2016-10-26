@@ -121,6 +121,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		}
 				
 		this.lblHelathCareCosts.click();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		
 	}
 	

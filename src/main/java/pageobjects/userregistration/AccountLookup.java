@@ -87,6 +87,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		
 		this.parent.get();
 		((LoginPage) this.parent).clickRegister();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 	}
 	
 	/** <pre> Method to return WebElement object corresponding to specified field name

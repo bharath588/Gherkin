@@ -1814,7 +1814,7 @@ public class prodvalidationtestcases {
 			requestWithdrawal.isTextFieldDisplayed("How would you like your withdrawal distributed?");
 			Web.selectDropDownOption(requestWithdrawal, "WITHDRAWAL METHOD",
 					Stock.GetParameterValue("withdrawalMethod"));
-			Thread.sleep(4000);
+			Common.waitForProgressBar();
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Confirm your contact information");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -1826,7 +1826,7 @@ public class prodvalidationtestcases {
 						"Contact Information is Not Displayed", true);
 			}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
-			Thread.sleep(4000);
+			Common.waitForProgressBar();
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Delivery method");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -1838,7 +1838,7 @@ public class prodvalidationtestcases {
 						"Delivery Method Page is Not Displayed", true);
 			}
 			requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
-			Thread.sleep(5000);
+			Common.waitForProgressBar();
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,

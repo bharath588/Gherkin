@@ -120,6 +120,8 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			
 			//((LandingPage) this.parent).dismissPopUps(true,true);
 			this.lblHowDoICompare.click();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			
 			
 		}

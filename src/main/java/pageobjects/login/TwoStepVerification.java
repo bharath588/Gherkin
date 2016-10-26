@@ -18,6 +18,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import appUtils.Common;
+
 
 public class TwoStepVerification extends LoadableComponent<TwoStepVerification> {
 	
@@ -103,6 +105,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 		if (!isPageMandatory)
             isMandatoryAfterLoad = false;
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 	}
 	
 	/** <pre> Method to return WebElement object corresponding to specified field name

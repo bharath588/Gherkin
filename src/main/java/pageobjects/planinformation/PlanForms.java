@@ -114,7 +114,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			this.parent.get();
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("Plan forms");
-			Common.waitForProgressBar(30);
+			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
 			
 			

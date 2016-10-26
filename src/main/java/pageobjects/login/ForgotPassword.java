@@ -79,6 +79,8 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		LoginPage objLogin = (LoginPage) this.parent;
 		objLogin.get();
 		objLogin.clickForgotPassword();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		
 	}
 

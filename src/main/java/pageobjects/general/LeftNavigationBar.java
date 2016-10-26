@@ -87,6 +87,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		try {
 			if(!Web.isWebElementDisplayed(weLeftNavSection, true))
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
 		
 		} catch (Exception e) {

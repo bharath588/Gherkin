@@ -126,6 +126,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Rate Of Return");
 		Web.waitForPageToLoad(Web.webdriver);
+		Common.waitForProgressBar();
 
 	}
 

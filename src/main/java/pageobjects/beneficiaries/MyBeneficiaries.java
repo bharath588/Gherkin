@@ -165,9 +165,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Beneficiaries");
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		Web.waitForElement(lblMyBeneficiaries);
 		Web.isWebElementDisplayed(lblMyBeneficiaries,true);
-		Web.waitForPageToLoad(Web.webdriver);
+		
 		
 	}
 	

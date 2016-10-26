@@ -100,6 +100,7 @@ private LoadableComponent<?> parent;
 		this.parent.get();
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Brokerage");
+		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 		lib.Web.isWebElementDisplayed(lblBrokerage,true);
 		

@@ -342,7 +342,8 @@ public class Common {
     * @ Method:- 
      */
     
-      public static void waitForProgressBar(int iTimeInSecond){
+      public static void waitForProgressBar(){
+    	  int iTimeInSecond=100;
            try{
                   int iCount = 0;
                   while (FindElement(progressBar).isDisplayed()){
