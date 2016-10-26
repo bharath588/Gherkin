@@ -268,7 +268,9 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			for (String windowHandle : handles) {
 
 				if (!windowHandle.equals(parentWindow)) {
-					if (Web.webdriver.switchTo().window(windowHandle).getTitle().contains("Medicare.gov: the official U.S. government site for Medicare")) {
+					Web.webdriver.switchTo().window(windowHandle);
+					Web.waitForPageToLoad(Web.webdriver);
+					if (Web.webdriver.getTitle().contains("Medicare.gov: the official U.S. government site for Medicare")) {
 						windowFound = true;
 						break;
 					}

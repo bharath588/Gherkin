@@ -6,14 +6,13 @@
 	</listeners>
  
 	
-	<test name="Edit_MyContribution">
+	<test name="FundToFundTransfer">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Edit_MyContribution" />
+					<include name="FundToFundTransfer" />
 				</methods>
 			</class>
 		</classes>
-	</test> 
-	
+	</test>
 </suite>

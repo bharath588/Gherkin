@@ -411,6 +411,7 @@ public class prodvalidationtestcases {
 			Web.waitForElement(profilePage, "LOG OUT");
 			/*if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
 			Web.clickOnElement(profilePage, "LOG OUT");*/
+			Web.webdriver.quit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1148,6 +1149,7 @@ public class prodvalidationtestcases {
 			}
 			Web.webdriver.switchTo().defaultContent();
 			 //Web.clickOnElement(investment, "LOGOUT");
+			Web.webdriver.quit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
