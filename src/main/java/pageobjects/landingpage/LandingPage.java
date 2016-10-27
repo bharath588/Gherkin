@@ -110,7 +110,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn),"Landing page is not loaded");		
-			//Assert.assertTrue(lib.Web.isWebElementDisplayed(lblBrokerage,true));
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
 			this.lnkLogout.click();
 			Assert.assertTrue(false,"Logging in with new User");

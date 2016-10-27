@@ -402,14 +402,16 @@ public class prodvalidationtestcases {
 						"Verify All Of the Fields in User Profile is Displayed",
 						"Info User Profile page is not Proper", false);
 			}
-			Web.webdriver.navigate().back();
+			Web.clickOnElement(profilePage, "HOME");
+			Common.waitForProgressBar();
+			/*Web.webdriver.navigate().back();
 			Web.webdriver.navigate().refresh();
-			/*if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME")){*/
+			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME")){
 			Web.waitForElement(profilePage, "LOG OUT");
 			homePage.dismissPopUps(false, true);
 			//}
 			Web.waitForElement(profilePage, "LOG OUT");
-			/*if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
+			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
 			Web.clickOnElement(profilePage, "LOG OUT");*/
 			
 		} catch (Exception e) {

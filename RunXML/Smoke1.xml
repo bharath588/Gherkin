@@ -5,14 +5,22 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	
-	<test name="FundToFundTransfer">
+	<test name="User_Profile_Page_Data_Validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="FundToFundTransfer" />
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
 				</methods>
 			</class>
 		</classes>
-	</test>
+	</test> 
+	<test name="Balance_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Balance_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>	
 </suite>

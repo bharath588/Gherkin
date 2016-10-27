@@ -59,7 +59,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	private WebElement txtUsername;
 	@FindBy(xpath = ".//div[contains(@class,'login-information')]//div[2]//div[1]")
 	private WebElement txtPassword;
-	@FindBy(linkText = "Home")
+	@FindBy(xpath = "//a[text()='Home']")
 	private WebElement lblHome;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
