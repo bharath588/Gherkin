@@ -189,7 +189,9 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		   for(String windowHandle  : handles)
 		       {
 		       if(!windowHandle.equals(parentWindow)){
-		    	   if(Web.webdriver.switchTo().window(windowHandle).getTitle().equalsIgnoreCase(title)){
+		    	   Web.webdriver.switchTo().window(windowHandle);
+		    	   Web.waitForPageToLoad(Web.webdriver);
+		    	   if(Web.webdriver.getTitle().equalsIgnoreCase(title)){
 		    		   windowFound=true;
 		    		   break;
 		    	   } 
