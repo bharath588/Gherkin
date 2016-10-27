@@ -491,7 +491,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "verify investment percent is entered",
 				"investment percent : " + Stock.GetParameterValue("percent"),
 				true);
-		
+		Web.webdriver.switchTo().defaultContent();
+		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
 		Web.clickOnElement(inpTotal);
 		keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
