@@ -4,6 +4,16 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
+	 <test
+		name="Verify_Login_Page_Images_Banners">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC01_Verify_Custom_site_prelogin_data" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
  	<test name="Brokerage_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -22,16 +32,7 @@
 			</class>
 		</classes>
 	</test>		
-	 <test
-		name="Verify_Login_Page_Images_Banners">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC01_Verify_Custom_site_prelogin_data" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
+	
 	<test name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

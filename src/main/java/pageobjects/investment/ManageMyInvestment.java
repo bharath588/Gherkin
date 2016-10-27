@@ -494,7 +494,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.webdriver.switchTo().defaultContent();
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
-		Web.clickOnElement(inpTotal);
+		Web.setTextToTextBox(inpTotal,
+				Stock.GetParameterValue("percent"));
 		keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
 		//Web.clickOnElement(btnContinueToNextStep);
 		Web.webdriver.switchTo().defaultContent();
