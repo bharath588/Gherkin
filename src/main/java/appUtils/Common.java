@@ -5,7 +5,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import org.apache.bcel.generic.RETURN;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -365,5 +367,25 @@ public class Common {
         public static WebElement FindElement(String sElement){
            return lib.Web.webdriver.findElement(By.xpath(sElement));
         }
+        public static boolean isAlerPresent(){
+            try{
+                   Web.webdriver.switchTo().alert();
+                   return true;
+            }catch(NoAlertPresentException ex){
+                   return false;
+            }
+            
+      }
+      public  static void HandlePopAlert(){
+            try{
+                   Alert alert = Web.webdriver.switchTo().alert();
+                   String sPopText = alert.getText();
+                   System.out.println(sPopText);
+                   alert.accept();
+            }catch(Exception e){
+            
+            }
+      }
+
 
 }

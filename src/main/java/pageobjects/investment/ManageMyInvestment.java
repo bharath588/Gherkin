@@ -497,6 +497,23 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.setTextToTextBox(inpTotal,
 				Stock.GetParameterValue("percent"));
 		keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
+				
+		// to handle allert
+		for(int i=0;i<3;i++){
+            if(Common.isAlerPresent()){
+            Common.HandlePopAlert();
+            Web.clickOnElement(lstInvestmentPercentDollarCost);
+            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+            Web.setTextToTextBox(lstInvestmentPercentDollarCost,Stock.GetParameterValue("percent"));  
+            keyBoard.sendKeys(Keys.TAB).perform();                  
+            keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
+            Web.clickOnElement(inpTotal);
+            keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
+            }
+    }
+
 		//Web.clickOnElement(btnContinueToNextStep);
 		Web.webdriver.switchTo().defaultContent();
 
