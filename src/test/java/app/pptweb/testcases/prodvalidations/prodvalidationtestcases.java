@@ -413,6 +413,8 @@ public class prodvalidationtestcases {
 			Web.waitForElement(profilePage, "LOG OUT");
 			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
 			Web.clickOnElement(profilePage, "LOG OUT");*/
+			Web.waitForElement(profilePage, "LOG OUT");
+			Web.clickOnElement(profilePage, "LOG OUT");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
