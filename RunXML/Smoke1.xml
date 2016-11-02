@@ -5,20 +5,11 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	<test name="User_Profile_Page_Data_Validations">
+	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
-	<test name="Balance_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Balance_validations" />
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" />
 				</methods>
 			</class>
 		</classes>
