@@ -1343,6 +1343,10 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
+			String parentWindow = Web.webdriver.getWindowHandle();
+			for (String winHandle : Web.webdriver.getWindowHandles()) {
+				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+			}
 			//Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
 
@@ -1351,6 +1355,9 @@ public class prodvalidationtestcases {
 			brokerage.verifyBrokerageTableDataDisplayed("Transfer into sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
+			Web.webdriver.switchTo().defaultContent();
+			Web.webdriver.close();
+			Web.webdriver.switchTo().window(parentWindow);
 			Web.webdriver.switchTo().defaultContent();
 			//Web.clickOnElement(brokerage, "LOGOUT");
 

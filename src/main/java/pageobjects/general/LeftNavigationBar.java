@@ -165,7 +165,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else {
 			strLinkText = linkName.trim();
 		}
-		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
+		if(linkName.equalsIgnoreCase("REQUEST A LOAN")||linkName.equalsIgnoreCase("Brokerage")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
 			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
