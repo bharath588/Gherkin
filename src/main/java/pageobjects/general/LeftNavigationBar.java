@@ -165,7 +165,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else {
 			strLinkText = linkName.trim();
 		}
-		if(linkName.equalsIgnoreCase("REQUEST A LOAN")||linkName.equalsIgnoreCase("Brokerage")){
+		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
 			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
@@ -179,7 +179,22 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			//mouse.release().build().perform();
 			
 		}
-		else{
+		else if(linkName.equalsIgnoreCase("Brokerage")){
+			lnkLeftNavItem=By.linkText(strLinkText);
+			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
+			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			//mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).build().perform();
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//mouse.release().build().perform();
+			
+			
+		}
+		else {
 		lnkLeftNavItem = By.linkText(strLinkText);
 		List<WebElement> leftNavLink = weLeftNavSection
 				.findElements(lnkLeftNavItem);
