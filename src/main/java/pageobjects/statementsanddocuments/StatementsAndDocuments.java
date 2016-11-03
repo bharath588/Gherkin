@@ -242,6 +242,18 @@ public void verifyTableDisplayed(String tableName){
 			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+tableName, "Contribution Source is displayed",true);
 			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(0).getText().trim(),true);
 			statements.get(0).click();
+			String parentWindow = Web.webdriver.getWindowHandle();
+			Set<String> handles =  Web.webdriver.getWindowHandles();
+			   for(String windowHandle  : handles)
+			       {
+			       if(!windowHandle.equals(parentWindow)){
+			         Web.webdriver.switchTo().window(windowHandle);
+			         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
+			         Common.waitForProgressBar();
+			         Web.waitForPageToLoad(Web.webdriver);
+			        
+			       }
+			       }
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "verify Contribution Source displayed in "+tableName, "Contribution Source is not displayed in"+tableName,true);

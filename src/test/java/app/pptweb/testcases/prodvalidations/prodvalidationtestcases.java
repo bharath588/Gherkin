@@ -1078,6 +1078,7 @@ public class prodvalidationtestcases {
 
 			statements.get();
 			Thread.sleep(5000);
+			String parentWindow = Web.webdriver.getWindowHandle();
 			statements.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
 			statements.navigateToTab("Stmts On Demand Tab");
@@ -1094,7 +1095,14 @@ public class prodvalidationtestcases {
 			statements.verifyTableDataDisplayed("Activity by Investment Option Table");
 
 			statements.clickOnStatementFromTable("Activity by Contribution Source");
-			statements.switchToWindow();
+			statements.verifyTableDisplayed("Transaction Details Table");
+			statements.verifytableHeaderNotEmpty("Transaction Details Table Header");
+			statements. verifyTableDataDisplayed("Transaction Details Table");
+			//closing child window
+	   		 Web.webdriver.close();
+	          //cntrl to parent window
+	      	  Web.webdriver.switchTo().window(parentWindow);
+			//statements.switchToWindow();
 
 		} catch (Exception e) {
 			e.printStackTrace();
