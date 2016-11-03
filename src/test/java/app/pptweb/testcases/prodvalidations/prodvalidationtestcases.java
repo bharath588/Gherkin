@@ -788,6 +788,7 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(requestLone, "LOGOUT");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForElement(login, "SIGN IN");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
