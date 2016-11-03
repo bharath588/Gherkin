@@ -34,6 +34,15 @@
 			</class>
 		</classes>
 	</test>		
+	<test name="RateOfReturn_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC018_Verify_ROR_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 	<test name="Balance_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -73,15 +82,7 @@
 		</classes>
 	</test> 
 	
-	<test name="RateOfReturn_Validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC018_Verify_ROR_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
+	
 	<test name="Transaction_History_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
