@@ -114,8 +114,9 @@ public class Balance extends LoadableComponent<Balance> {
 		} else {
 			
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out Balance Page");
-			Assert.assertTrue(false,"Logging in with new User\n");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

@@ -415,6 +415,8 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(profilePage, "LOG OUT");*/
 			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
