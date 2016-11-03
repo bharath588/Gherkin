@@ -545,6 +545,7 @@ public class prodvalidationtestcases {
 			String parentWindow = Web.webdriver.getWindowHandle();
 			for (String winHandle : Web.webdriver.getWindowHandles()) {
 				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+				Web.waitForPageToLoad(Web.webdriver);
 			}
 
 			boolean lblDisplayed = false;
@@ -1348,8 +1349,9 @@ public class prodvalidationtestcases {
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
 			String parentWindow = Web.webdriver.getWindowHandle();
-			for (String winHandle : Web.webdriver.getWindowHandles()) {
+						for (String winHandle : Web.webdriver.getWindowHandles()) {
 				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+				Web.waitForPageToLoad(Web.webdriver);
 			}
 			//Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();

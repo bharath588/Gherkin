@@ -99,7 +99,9 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblPayrollCalendar),"PayRoll Calendar Page is Not Loaded\n");
 			} else {
 				this.lnkLogout.click();
-				Assert.assertTrue(false,"Logging in with new User");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.webdriver);
+				Assert.assertTrue(false,"Login Page is not loaded\n");
 			}
 		}
 

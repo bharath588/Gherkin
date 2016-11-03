@@ -104,7 +104,9 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"Legacy Landing page is not loaded");
 		} else {
 			this.lnkLogout.click();
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

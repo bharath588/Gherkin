@@ -118,7 +118,9 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		} else {
 			this.lnkLogout.click();
 			Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName, true));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
 	}

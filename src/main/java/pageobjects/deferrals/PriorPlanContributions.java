@@ -94,8 +94,9 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 			
 		} else {
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out My Contribution Page");
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 	

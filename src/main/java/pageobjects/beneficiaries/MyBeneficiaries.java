@@ -155,8 +155,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyBeneficiaries),"Benificiary Page is Not Loadeed");
 		} else {
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out Beniciary Page");
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

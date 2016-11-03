@@ -232,8 +232,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 			} else {
 				this.lnkLogout.click();
-				System.out.println("Clicked on Log Out MyContribution Page");
-				Assert.assertTrue(false,"Logging in with new User");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.webdriver);
+				Assert.assertTrue(false,"Login Page is not loaded\n");
 			}
 		}
 		

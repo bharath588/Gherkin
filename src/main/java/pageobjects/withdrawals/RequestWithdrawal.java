@@ -175,8 +175,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 		} else {
 			this.lnkLogout.click();
-			Web.waitForElement(btnLogin);
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

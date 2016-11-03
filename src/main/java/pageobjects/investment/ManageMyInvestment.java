@@ -249,10 +249,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		} else {
 			
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out Investements Page");
-			Assert.assertTrue(false,"Logging in with new User");
-			/*Web.waitForElement(this.btnLogin);
-			Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName));*/
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

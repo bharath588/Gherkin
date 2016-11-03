@@ -139,7 +139,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRequestALoan),"Requuest Loan page is not loadeded\n");
 		} else {
 			this.lnkLogout.click();
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
 	}

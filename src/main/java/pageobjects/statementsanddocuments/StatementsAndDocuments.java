@@ -121,7 +121,9 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		
 		} else {
 			this.lnkLogout.click();
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
 

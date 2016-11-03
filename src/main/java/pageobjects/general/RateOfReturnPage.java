@@ -110,8 +110,9 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn),"Rate of return Page is Not Loaded\n");
 		} else {
 			this.lnkLogout.click();
-			System.out.println("Clicked on Log Out RateOfReturn Page");
-			Assert.assertTrue(false,"Logging in with new User");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
 	}
