@@ -72,15 +72,6 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="User_Profile_Page_Data_Validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
 	
 	
 	<test name="Transaction_History_validations">
@@ -173,6 +164,16 @@
 			</class>
 		</classes>
 	</test>	
+	<test name="User_Profile_Page_Data_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	
     <test name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
         <classes>
             <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
