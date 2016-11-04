@@ -34,9 +34,9 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	private WebElement lblContactInformation;
 	@FindBy(xpath = ".//*[@id='registration-form']/h2[2]")
 	private WebElement lblUsernameAndPassword;
-	@FindBy(id = "emailInput")
+	@FindBy(id = "emailId")
 	private WebElement txtEmail;
-	@FindBy(id = "phoneNumberInput")
+	@FindBy(id = "phoneNumberIdD")
 	private WebElement txtPhone;
 	// @FindBy(id="usernameInput") private WebElement txtUserName;
 	@FindBy(xpath = ".//*[@id='usernameInput' and @name='username']")

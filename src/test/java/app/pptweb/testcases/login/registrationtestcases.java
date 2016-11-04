@@ -546,7 +546,7 @@ public class registrationtestcases {
 
 			objAccountLookup.setTextToFields("Social Security Number",
 					"ab12CD34e");
-			keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(objAccountLookup, "ZIP CODE");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup
 					.getFieldErrorMsg("Social Security Number");
@@ -577,7 +577,7 @@ public class registrationtestcases {
 
 			// Step 8 - Enter SSN less than 9 digits and move the cursor out
 			objAccountLookup.setTextToFields("Social Security Number", "1252");
-			keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(objAccountLookup, "ZIP CODE");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup
 					.getFieldErrorMsg("Social Security Number");
@@ -634,7 +634,7 @@ public class registrationtestcases {
 			// move the cursor out of the field..
 
 			objAccountLookup.setTextToFields("ZIP CODE", "abc23");
-			keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(objAccountLookup, "Social Security Number");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup.getFieldErrorMsg("ZIP CODE");
 			expectedErrMsg = "Please enter valid ZIP Code.";
@@ -673,7 +673,7 @@ public class registrationtestcases {
 			// should be allowed in the fields.
 
 			objAccountLookup.setTextToFields("Date of Birth", "123123aa");
-			keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(objAccountLookup, "Social Security Number");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup.getFieldErrorMsg("Date of Birth");
 			expectedErrMsg = "Please enter a valid date.";
