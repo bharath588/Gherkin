@@ -135,9 +135,9 @@
 		</TestCase>
 		<TestCase name="User_Profile_Page_Data_Validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444326ABC" />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase
