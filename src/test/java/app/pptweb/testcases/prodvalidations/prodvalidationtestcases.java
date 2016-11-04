@@ -785,10 +785,10 @@ public class prodvalidationtestcases {
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
 			Web.webdriver.switchTo().defaultContent();
-			Web.clickOnElement(requestLone, "LOGOUT");
+			/*Web.clickOnElement(requestLone, "LOGOUT");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
-			Web.waitForElement(login, "SIGN IN");
+			Web.waitForElement(login, "SIGN IN");*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
