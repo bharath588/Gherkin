@@ -304,6 +304,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 
 		this.btnLogin.click();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 
 		try {
 			Thread.sleep(4000);
