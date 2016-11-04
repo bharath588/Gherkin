@@ -283,16 +283,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test>		
-		<test name="Legacy_Home_Page_From_Magic_URL">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
-				</methods>
-			</class>
-		</classes>
-	</test> 
+	</test>	
 	<test name="User_Profile_Page_Data_Validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -302,7 +293,17 @@
 			</class>
 		</classes>
 	</test> 
-		
+			
+		<test name="Legacy_Home_Page_From_Magic_URL">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC19_Verify_Legacy_Home_Page" />
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	
 	<test name="SendActivationCode_ForgotPasswordFlow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">

@@ -146,6 +146,10 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		if (fieldName.trim().equalsIgnoreCase("Transaction History Contr Detail Table Header")) {
 			return this.hdrTransactionHstContrDetailTable;
 		}
+		if (fieldName.trim().equalsIgnoreCase("DropDown Frequency")) {
+			return this.drpDateFreequency;
+		}
+		
 		// Log out
 				if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {

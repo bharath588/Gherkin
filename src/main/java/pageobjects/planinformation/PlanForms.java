@@ -22,6 +22,7 @@ import lib.Reporter.Status;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -120,6 +121,13 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			Web.waitForPageToLoad(Web.webdriver);
 			
 			
+		}
+		
+		private WebElement getWebElement(String fieldName) {
+			if (fieldName.trim().equalsIgnoreCase("Tabel Planforms")) {
+				return this.tblPlanForms;
+			}
+			return null;
 		}
 		
 		public void clickOnForm(String planfrom) throws InterruptedException{

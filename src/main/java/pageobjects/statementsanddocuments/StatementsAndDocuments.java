@@ -308,6 +308,10 @@ public void verifyTableDisplayed(String tableName){
 	public void selectDateFrequency(String frequency) throws InterruptedException{
 		Actions mouse = new Actions(Web.webdriver);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.waitForElement(drpDateFreequency);
+		if(!Web.isWebElementDisplayed(drpDateFreequency)){
+		
+		}
 		Web.clickOnElement(drpDateFreequency);
 		 WebElement DateFrequency= Web.webdriver.findElement(By.xpath(dateFrequency.replaceAll("frequency", frequency)));
 		mouse.moveToElement(DateFrequency).click().build().perform();

@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import pageobjects.general.LeftNavigationBar;
 import core.framework.Globals;
 import lib.DB;
 import lib.Reporter;
@@ -32,6 +33,7 @@ public class Common {
 	public static final String GC_DEFAULT_SPONSER = "Empower";
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	public static WebElement lblUserName;
+	@FindBy(id="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
 	private static String userName = "";
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
 
@@ -385,7 +387,33 @@ public class Common {
             }catch(Exception e){
             
             }
+            
       }
 
-
+      public  static void handlePageToLoad(String pageName){
+          try{
+                 LeftNavigationBar lftbar=new LeftNavigationBar();
+                 lftbar.clickNavigationLink("Rate Of Return");
+                 waitForProgressBar();
+                 Web.waitForPageToLoad(Web.webdriver);
+                 lftbar.clickNavigationLink(pageName);
+                 waitForProgressBar();
+                 Web.waitForPageToLoad(Web.webdriver);
+          }catch(Exception e){
+          
+          }
+          
+    }
+      public static boolean switchToLegacyFutureFrame(){
+          try{
+        	  if(Web.isWebElementDisplayed(iframeLegacyFeature)){
+        	  Web.webdriver.switchTo().frame(iframeLegacyFeature);
+        	         	  }
+        	  return true;
+          }  
+          catch(Exception e){
+                 return false;
+          }
+          
+    }
 }

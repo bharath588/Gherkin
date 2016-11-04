@@ -955,6 +955,11 @@ public class prodvalidationtestcases {
 			balance.get();
 			Web.waitForPageToLoad(Web.webdriver);
 			//Thread.sleep(5000);
+			
+				if(!Web.isWebElementDisplayed(balance, "Balance",true)){
+					Common.handlePageToLoad("Balance");
+				}
+				
 			balance.navigateToTab("Balance");
 			// not seeing this table in PRod data
 			/*
@@ -1021,6 +1026,14 @@ public class prodvalidationtestcases {
 
 			transaction.get();
 			Thread.sleep(5000);
+			if(Common.switchToLegacyFutureFrame()){
+				if(!Web.isWebElementDisplayed(transaction, "DropDown Frequency",true)){
+					Common.handlePageToLoad("Transaction history");
+				}
+				}
+				else
+					Common.handlePageToLoad("Transaction history");
+				
 			transaction.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
@@ -1080,6 +1093,13 @@ public class prodvalidationtestcases {
 			statements.get();
 			Thread.sleep(5000);
 			String parentWindow = Web.webdriver.getWindowHandle();
+			if(Common.switchToLegacyFutureFrame()){
+			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
+				Common.handlePageToLoad("Statements and documents");
+			}
+			}
+			else
+				Common.handlePageToLoad("Statements and documents");
 			statements.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
 			statements.navigateToTab("Stmts On Demand Tab");
@@ -1148,6 +1168,8 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			investment.rebalanceInvestment(
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"),
@@ -1207,6 +1229,7 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			PayrollCalendar payroll = new PayrollCalendar(leftmenu);
 			payroll.get();
+			
 			//Thread.sleep(5000);
 			payroll.verifyDataIsDiaplyed();
 		} catch (Exception e) {
@@ -1247,6 +1270,11 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			InvestmentLineup investment = new InvestmentLineup(leftmenu);
 			investment.get();
+			
+				if(!Web.isWebElementDisplayed(investment, "Options tab",true)){
+					Common.handlePageToLoad("Investment lineup");
+				}
+				
 			//Thread.sleep(5000);
 			investment.viewProspectus();
 		    Web.webdriver.switchTo().defaultContent();
@@ -1414,6 +1442,11 @@ public class prodvalidationtestcases {
 			PlanForms planforms = new PlanForms(leftmenu);
 			planforms.get();
 			//Thread.sleep(7000);
+			
+				if(!Web.isWebElementDisplayed(planforms, "Tabel Planforms",true)){
+					Common.handlePageToLoad("Plan forms");
+				}
+				
 			planforms.clickOnForm(null);
 			if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
@@ -1462,6 +1495,8 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Current Balance Investment");
 			Web.clickOnElement(investment, "Continue button1");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			investment.navigateToTab("View By Asset Class Tab");
 			investment.verifyIfGraphDisplayed("Current Assets Balance Graph");
 			investment.verifyIfGraphDisplayed("Post Transfer Balance Graph");
@@ -1519,6 +1554,8 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Dollar Cost");
 			Web.clickOnElement(investment, "Continue button1");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			investment.dollarCostAverageFlow(
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"),
