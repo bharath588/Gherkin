@@ -407,6 +407,7 @@ public class Common {
     }
       public static boolean switchToLegacyFutureFrame(){
           try{
+        	  Web.waitForElement(iframeLegacyFeature);
         	  if(Web.isWebElementDisplayed(iframeLegacyFeature)){
         	  Web.webdriver.switchTo().frame(iframeLegacyFeature);
         	         	  }

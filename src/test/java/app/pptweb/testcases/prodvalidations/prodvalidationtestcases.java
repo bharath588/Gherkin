@@ -1026,6 +1026,8 @@ public class prodvalidationtestcases {
 
 			transaction.get();
 			Thread.sleep(5000);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			if(Common.switchToLegacyFutureFrame()){
 				if(!Web.isWebElementDisplayed(transaction, "DropDown Frequency",true)){
 					Common.handlePageToLoad("Transaction history");
@@ -1092,6 +1094,8 @@ public class prodvalidationtestcases {
 
 			statements.get();
 			Thread.sleep(5000);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			String parentWindow = Web.webdriver.getWindowHandle();
 			if(Common.switchToLegacyFutureFrame()){
 			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
