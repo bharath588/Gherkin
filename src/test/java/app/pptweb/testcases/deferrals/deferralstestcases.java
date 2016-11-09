@@ -804,8 +804,11 @@ public class deferralstestcases {
 						"Standard Contributions page is not displayed", true);
 
 			deferrals.click_Maximize_IRS_Limit();
+			/**
+			 * This step is not applicable as new functionalitychange
+			 */
 
-			if (lib.Web.isWebElementDisplayed(deferrals, "Maximize Checkbox"))
+			/*if (lib.Web.isWebElementDisplayed(deferrals, "Maximize Checkbox"))
 				Reporter.logEvent(Status.PASS,
 						"Check if Maximize me always check box is present",
 						"Maximize me always check box is present", false);
@@ -813,7 +816,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Check if Maximize me always check box is present",
 						"Maximize me always check box is not present", true);
-
+*/
 			deferrals.regular_maximize_me_always("Yes");
 
 			deferrals.myContributions_Confirmation_Page();

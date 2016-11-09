@@ -35,6 +35,7 @@ public class Common {
 	public static WebElement lblUserName;
 	@FindBy(id="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
 	private static String userName = "";
+	static String userFromDatasheet = null;
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
 
 		// query to get the no of plans
@@ -295,7 +296,7 @@ public class Common {
 		ResultSet strUserInfo=null;
 	String ssn = Stock.GetParameterValue("userName");
 	
-	String userFromDatasheet = null;
+	
 	if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 	{
 		userFromDatasheet=Stock.GetParameterValue("lblUserName");
@@ -317,7 +318,7 @@ public class Common {
 		e.printStackTrace();
 	}
 	}
-	if(lblUserName.isDisplayed()){
+	if(Web.isWebElementDisplayed(lblUserName)){
 	 userLogedIn = lblUserName.getText();
 	}
 	/*String sponser = this.lblSponser.getAttribute("Alt");
@@ -325,9 +326,9 @@ public class Common {
 		sponser = Common.GC_DEFAULT_SPONSER;
 	}*/
 	if (!userName.equalsIgnoreCase(ssn.trim())){
-//		 if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
-//			lblDisplayed=true;
-//		 }
+		 if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){
+		lblDisplayed=true;
+		 }
 		 userName = ssn.trim();
 	}else{
 		 if (userFromDatasheet.equalsIgnoreCase(userLogedIn)){

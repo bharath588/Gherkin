@@ -676,14 +676,19 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void fundToFundTransfer(String fromPercent, String toPercent) {
-
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		if (Web.isWebElementDisplayed(tblTransferFundFrom)) {
 			Reporter.logEvent(Status.INFO,
 					"Verify 'Transfer Fund From' Table is displayed",
 					"Table is displayed", true);
 			btnPercent.click();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			fromInvestmentOption = lnkTransferFromInvestmentOption.getText();
 		} else
 			Reporter.logEvent(Status.FAIL,

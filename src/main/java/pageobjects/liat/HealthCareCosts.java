@@ -13,6 +13,7 @@ import lib.Reporter.Status;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -219,22 +220,27 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * @return - void
 		 */
 	public void verifyPersonalizeBtn() {	
-		
+		Actions mouse = new Actions(Web.webdriver);
 		//	((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
 			try{
 			Web.webdriver.switchTo().defaultContent();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			Web.waitForElement(btnPersonalize);
-			Web.clickOnElement(btnPersonalize);				
+			mouse.moveToElement(btnPersonalize).clickAndHold(btnPersonalize).build().perform();
+			
+			//Web.clickOnElement(btnPersonalize);				
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
+			mouse.release(btnPersonalize).build().perform();
 		}else {
-			Web.clickOnElement(btnPersonalize);	
+			/*Web.clickOnElement(btnPersonalize);	
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
 				Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
-			}else {
+			}else {*/
 			Reporter.logEvent(Status.FAIL, "Click Personalize button", "Persnozalize button is not available",true);
 			}
-		}
+		//}
 			}
 			
 			catch(Exception e){
