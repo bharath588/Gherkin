@@ -14,7 +14,7 @@
             </class>
         </classes>
     </test>
-   <!--  <test name="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
+     <test name="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -32,9 +32,9 @@
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test> 
     
-   <!--  <test name="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
+    <test name="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -153,5 +153,5 @@
             </class>
         </classes>
     </test>
-     -->
+    
 </suite>

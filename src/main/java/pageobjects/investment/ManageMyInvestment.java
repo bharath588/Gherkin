@@ -683,7 +683,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.INFO,
 					"Verify 'Transfer Fund From' Table is displayed",
 					"Table is displayed", true);
-			btnPercent.click();
+			((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+			Web.clickOnElement(btnPercent);
+			//btnPercent.click();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
