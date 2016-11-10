@@ -1499,6 +1499,7 @@ public class prodvalidationtestcases {
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Current Balance Investment");
 			Web.clickOnElement(investment, "Continue button1");
+			Thread.sleep(5000);
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
 			investment.navigateToTab("View By Asset Class Tab");
