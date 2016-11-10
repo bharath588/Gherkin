@@ -200,7 +200,9 @@ public class prodvalidationtestcases {
 
 			Web.webdriver.close();
 			Web.webdriver.switchTo().window(parentWindow);
-
+			Web.webdriver.navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
