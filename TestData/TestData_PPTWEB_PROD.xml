@@ -122,14 +122,14 @@
 		</TestCase>
 		<TestCase name="Verify_Custom_site_prelogin_postlogin_data">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444326ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="ExpectedCustomerSupportInfo_Pre_Login"
 					value="To speak with a Participant Services Representative, please contact us." />
 				<parameter name="ExpectedContactNo_Pre_login" value="" />
 				<parameter name="ExpectedCustomerSupportInfo_Post_Login"
 					value="To speak with a Participant Services Representative, please contact us between 8:00 AM and 10:00 PM EST." />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="WEB TESTING" />
 				<parameter name="sponsor" value="Empower" />
 			</Iteration>
 		</TestCase>
@@ -187,11 +187,11 @@
 		<TestCase
 			name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444329ABC" />
+				<parameter name="userName" value="321444326ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="deliveryOption" value="ALREADY_HAVE_CODE" />
 				<parameter name="rememberDevice" value="false" />
-				<parameter name="lblUserName" value="FIVE TESTING" />
+				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SendActivationCode_ForgotPasswordFlow">

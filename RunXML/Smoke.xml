@@ -14,44 +14,6 @@
 			</class>
 		</classes>
 	</test> 
-	
- 	<test name="Brokerage_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Brokerage_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>	
-	
-		<test name="Request_Loan_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>		
-	<test name="RateOfReturn_Validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="SF01_TC018_Verify_ROR_link" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="Balance_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Balance_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>	
 	<test name="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -73,12 +35,58 @@
 		</classes>
 	</test> 
 	
+	<test name="RateOfReturn_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC018_Verify_ROR_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+ 	<test name="Brokerage_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Brokerage_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>	
 	
+		<test name="Request_Loan_Flow">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" />
+				</methods>
+			</class>
+		</classes>
+	</test>		
+	
+	<test name="Balance_validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Balance_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>	
 	<test name="Transaction_History_validations">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 					<include name="Transaction_History_validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>	
+	<test name="Edit_Beneficiary">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="Edit_Beneficiary" />
 				</methods>
 			</class>
 		</classes>
@@ -92,6 +100,16 @@
 			</class>
 		</classes>
 	</test>	
+		<test name="PlanForms_Validations">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="PlanForms_Validations" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 	<test name="Dollar_Cost_Average_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -119,24 +137,7 @@
 			</class>
 		</classes>
 	</test>
-	<test name="PlanForms_Validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="PlanForms_Validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="Edit_Beneficiary">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Edit_Beneficiary" />
-				</methods>
-			</class>
-		</classes>
-	</test>	
+
 	<test name="Edit_MyContribution">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
@@ -155,6 +156,7 @@
 			</class>
 		</classes>
 	</test> 	
+	
 	<test	name="Request_A_Withdrawal_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
