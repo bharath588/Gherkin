@@ -5,13 +5,13 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	 <test name="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
-        <classes>
-            <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-                <methods>
-                    <include name="HCC_TC009_To_verify_Health_care_costs"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+	<test name="FundToFundTransfer">
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<include name="FundToFundTransfer" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite>

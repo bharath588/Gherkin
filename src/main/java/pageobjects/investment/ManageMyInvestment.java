@@ -678,11 +678,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	public void fundToFundTransfer(String fromPercent, String toPercent) {
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForElement(iframeLegacyFeature);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		if (Web.isWebElementDisplayed(tblTransferFundFrom)) {
 			Reporter.logEvent(Status.INFO,
 					"Verify 'Transfer Fund From' Table is displayed",
 					"Table is displayed", true);
+			((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
 			((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
 			Web.clickOnElement(btnPercent);
 			//btnPercent.click();
@@ -813,6 +815,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void navigateToTab(String tabName) {
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		Web.waitForElement(iframeLegacyFeature);
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);
@@ -821,6 +825,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Web.webdriver.switchTo().frame(iframeLegacyFeature);
 			}
 		WebElement tab = this.getWebElement(tabName);
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		Web.waitForElement(tab);
 		tab.click();
 		Reporter.logEvent(Status.INFO, "Navigate To " + tabName,
