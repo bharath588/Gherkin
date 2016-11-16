@@ -3348,5 +3348,68 @@ public class prodvalidationtestcases {
 			}
 	}
 	
+	@Test(dataProvider = "setData")
+	public void Manage_My_Investment_Flow_New(int itr, Map<String, String> testdata) {
 
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+
+			investment.get();
+			//Thread.sleep(5000);
+			investment.clickChangeMyInvestmentButton();
+			investment.choseInvestmentOption("Rebalance Currnet Balance");
+			Web.clickOnElement(investment, "Continue button1");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			investment.rebalanceInvestment(
+					Stock.GetParameterValue("Frequency_Period"),
+					Stock.GetParameterValue("Setup_date"),
+					Stock.GetParameterValue("investment_percent"));
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar cal = Calendar.getInstance();
+			System.out.println(dateFormat.format(cal.getTime()));
+			String date = dateFormat.format(cal.getTime()).toUpperCase();
+			investment.verifyRebalanceInvestmentDetails(
+					Stock.GetParameterValue("Frequency_Period"),
+					Stock.GetParameterValue("Setup_date"), date,
+					Stock.GetParameterValue("investment_percent"));
+			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+					"Yes")) {
+				investment.verifyRebalanceInvestmentConfirmationDetails();
+				investment.cancelTransfer("Rebalance Currnet Balance");
+			}
+			Web.webdriver.switchTo().defaultContent();
+			 //Web.clickOnElement(investment, "LOGOUT");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 }

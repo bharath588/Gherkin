@@ -30,7 +30,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	@FindBy(xpath="//button[contains(text(),'Cancel')]") private WebElement btnCancel;
 	@FindBy(xpath="//button[contains(@ng-click,'editPrevContribution')]") private WebElement btnEdit;
 //	@FindBy(xpath="//div[@class='page-title ng-scope']/p']") private WebElement txtPriorContribution;
-	@FindBy(xpath="//td[@class='col-sm-9']//div[contains(@class,'title ng-binding')]") private WebElement txtPriorContribution;
+	@FindBy(xpath="//td[@class='col-sm-9']//div[contains(@class,'title')]") private WebElement txtPriorContribution;
 	@FindBy(xpath=".//a[./font[contains(text(),'Why is this important?')]]") private WebElement lnkWhyThisIsImportant;
 	
 	@FindBy(xpath="//input[@id='catchup']") private WebElement txtCatchupContribution;

@@ -85,7 +85,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName,true),"Landing Page is Not Loaded");
-		String ssn = Stock.GetParameterValue("userName");
+		/*String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
 		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
@@ -108,9 +108,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		
 		String userLogedIn = this.lblUserName.getText();
 		
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn),"Landing page is not loaded");		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRetirementIncome,true));
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn))*/if(Common.verifyLoggedInUserIsSame()) {
+			   Assert.assertTrue(true,"Landing page is not loaded");		
+			//Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();

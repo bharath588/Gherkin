@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-   <!--  <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
+    <test name="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password">
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
@@ -22,7 +22,8 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_01_TC03_Verify_login_Successfully_into_unregistered_Device_CallMeOption">
+    <!-- Not in scope -->
+    <!-- <test name="SIT_xPPTWEB_Login_01_TC03_Verify_login_Successfully_into_unregistered_Device_CallMeOption">
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
@@ -30,7 +31,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> -->
     <test name="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption">
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
@@ -40,7 +41,8 @@
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_01_TC05_Verify_login_Successfully_into_unregistered_Device_TextMeOption">
+    <!-- Not in scope -->
+    <!-- <test name="SIT_xPPTWEB_Login_01_TC05_Verify_login_Successfully_into_unregistered_Device_TextMeOption">
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
@@ -48,7 +50,7 @@
                 </methods>
             </class>
         </classes>
-    </test>  -->
+    </test>   -->
       <test name="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
@@ -199,6 +201,7 @@
 			</class>
 		</classes>
 	</test> 
+	<!-- Not in scope -->
    <!--  <test name="SIT_xPPTWEB_Login_03_01_TC01_Send Activation Code by Text through Login flow">
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
@@ -216,7 +219,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>-->
     <test name="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow">
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
@@ -270,5 +273,5 @@
                 </methods>
             </class>
         </classes>
-    </test>  -->
+    </test> 
 </suite>

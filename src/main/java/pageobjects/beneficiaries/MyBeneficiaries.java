@@ -72,7 +72,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//table[@class='beneficiaries contingent-beneficiaries table']//*[contains(@class,'beneficiary-name')]/a") private List<WebElement> lstlnkContingentBeneficiaryName;
 	@FindBy(xpath="//*[contains(@class,'contingent')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtContingentAllocation;
 	@FindBy(xpath="//*[contains(@class,'primary')]//*[@class='beneficiary-allocation']//input") private List<WebElement> lsttxtPrimaryAllocation;
-	@FindBy(xpath="//div[@class='table-details ng-scope']/table") private List<WebElement> lstTablePrimaryBeneficiary;
+	@FindBy(xpath="//div[contains(@ng-if,'Primary')]/table") private List<WebElement> lstTablePrimaryBeneficiary;
 	@FindBy(xpath="//div[@class='table-details']/table/tbody/tr") private List<WebElement> lstTblConfirmationDetails;
 	@FindBy(xpath=".//*[text()='Confirmation #:']") private WebElement lblConfirmation;
 	@FindBy(xpath="//input[@id='primaryBeneficiaryAllocationPercent0']") private WebElement txtAllocationBeneficiary1;
@@ -119,7 +119,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblMyBeneficiaries,true),"Benificiary Page is Not Loaded\n");
-		String ssn = Stock.GetParameterValue("userName");
+		/*String ssn = Stock.GetParameterValue("userName");
 		ResultSet strUserInfo = null;
 		String userFromDatasheet = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -144,11 +144,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 		}
 		String userLogedIn = this.lblUserName.getText();
-		/*String sponser = this.lblSponser.getAttribute("Alt");
+		String sponser = this.lblSponser.getAttribute("Alt");
 		if (sponser.isEmpty()) {
-			sponser = Common.GC_DEFAULT_SPONSER;}*/
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+			sponser = Common.GC_DEFAULT_SPONSER;}
+		if (userFromDatasheet.equalsIgnoreCase(userLogedIn))*/ if(Common.verifyLoggedInUserIsSame()) {
+			//Assert.assertTrue(true,"Beneficiary Page is Not Loaded\n");		
 			if(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary,true))
 				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblDesignateBeneficiary),"Benificiary Page is Not Loadeed");
 			else
@@ -425,13 +425,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				if(lstTablePrimaryBeneficiary.get(i).getText().contains(beneficiaryName)){
 						
 					if(attribute.equalsIgnoreCase("Name"))
-						return Web.VerifyText("Name: "+beneficiaryName+", "+Stock.GetParameterValue("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
+						return Web.VerifyText("NAME: "+beneficiaryName+", "+Stock.GetParameterValue("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
 					
 					if(attribute.equalsIgnoreCase("Allocation"))	
-						return Web.VerifyText("Allocation: "+Stock.GetParameterValue("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
+						return Web.VerifyText("ALLOCATION: "+Stock.GetParameterValue("Allocation")+"%", lstTablePrimaryBeneficiary.get(i).getText().split("\n")[1], true);
 					
 					if(attribute.equalsIgnoreCase("Relationship"))	
-						return Web.VerifyText("Relationship: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
+						return Web.VerifyText("RELATIONSHIP: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
@@ -451,7 +451,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("State")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
 						System.out.println("Address from test data:\nAddress:"+address);
 						System.out.println("Address from Application:"+appAddress);
-						return Web.VerifyText("Address: "+address, appAddress ,true);
+						return Web.VerifyText("ADDRESS: "+address, appAddress ,true);
 					}
 				}
 				

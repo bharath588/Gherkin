@@ -66,7 +66,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="contributionRateSlider-text-edit") private WebElement txtcontributionRateSlider;
 			@FindBy(xpath=".//span[@class='valueAndEnd']/span[1]") private WebElement lnksliderValue;
 //			@FindBy(xpath=".//button[text()[normalize-space()='Done']]") private WebElement btnDone;
-			@FindBy(xpath="//button[@class='btn btn-primary reset-padding ng-binding']") private WebElement btnDone;
+			@FindBy(xpath="//button[@class='btn btn-primary reset-padding']") private WebElement btnDone;
 //			@FindBy(xpath=".//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
 //			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement lnkPercent;
 			@FindBy(xpath="//label[text()[normalize-space()='Percent']]") private WebElement lnkPercent;
@@ -96,13 +96,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(id="BEFVAR") private WebElement txtSplitBeforeVariable;
 			@FindBy(xpath=".//button[text()[normalize-space()='Continue']]") private WebElement btnContinueBeforeTaxSplitContribution;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
-			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage ng-binding']") private WebElement txtCompanyMatchMyContribution;
+			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage']") private WebElement txtCompanyMatchMyContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']") private WebElement txtCompanyMatchContributionAmount;
-			@FindBy(xpath="//div[@class='contribution-percentage ng-binding']") private WebElement txtIRSMyContribution;
-			@FindBy(xpath="//div[@class='contribution-amount']/p[@class='ng-binding']") private WebElement txtIRSContributionAmount;
+			@FindBy(xpath="//div[@class='contribution-percentage']") private WebElement txtIRSMyContribution;
+			@FindBy(xpath="//div[@class='contribution-amount']/a[@class='max-links']") private WebElement txtIRSContributionAmount;
 							
 			//Add Auto Increase		
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After-Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
@@ -121,8 +121,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(xpath=".//input[@name='increment']") private WebElement txtAutoIncreaseMyContributionPercent;
 			@FindBy(xpath=".//input[@name='maximum']") private WebElement txtAutoIncreaseUntilItReachesPercent;
-//			@FindBy(name="effectiveDate") private WebElement drpDownAutoIncreasePeriod;
-			@FindBy(xpath="//input[@name='effectiveDate']") private WebElement drpDownAutoIncreasePeriod;
+			@FindBy(name="effectiveDate") private WebElement drpDownAutoIncreasePeriod;
+			//@FindBy(xpath="//input[@name='effectiveDate']") private WebElement drpDownAutoIncreasePeriod;
 			@FindBy(xpath=".//button[text()[normalize-space()='Save']]") private WebElement btnSaveAddAutoIncreaseModal;
 			@FindBy(xpath=".//button[text()[normalize-space()='Cancel']]") private WebElement btnCancelAddAutoIncreaseModal;
 			@FindBy(xpath=".//h2[text()[normalize-space()='Contribution Details']]") private WebElement lblContributionDetails;
@@ -174,6 +174,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//table[@class='table-details']/tbody") private WebElement tblChainingConfirmationDetails;
 			
 			@FindBy(xpath = "//label[@class='radio-inline panel-title']//strong") private WebElement lblViewOnlyCatchUP;
+			@FindBy(xpath="//label[contains(text(),'Yes')]") private WebElement lblMaximizeYes;
+			@FindBy(xpath="//label[contains(text(),'No')]") private WebElement lblMaximizeNo;
+			@FindBy(xpath="//div[contains(@class,'alert-warning')]") private WebElement txtMaximizeAllert;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			Actions mouse=new Actions(Web.webdriver);
 		/**
@@ -197,7 +200,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		@Override
 		protected void isLoaded() throws Error {
 			Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
-			String ssn = Stock.GetParameterValue("userName");
+			/*	String ssn = Stock.GetParameterValue("userName");
 			ResultSet strUserInfo = null;
 			String userFromDatasheet = null;
 			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
@@ -222,8 +225,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			}
 			String userLogedIn = this.lblUserName.getText();
-			if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-				Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));
+			if (userFromDatasheet.equalsIgnoreCase(userLogedIn))*/if(Common.verifyLoggedInUserIsSame()) {
+				   Assert.assertTrue(true,"Mycontribution page is not loaded\n");
 				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 					Deferrals.waitforLoad = true;
 					throw new Error("'My contributions' page is not loaded");
@@ -415,12 +418,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
 			//keyBoard.sendKeys(Keys.TAB).perform();
-			btnDone.click();
-			/*if(btnDone.isEnabled())
+			Web.clickOnElement(btnDone);
+			if(btnDone.isDisplayed())
 			{
 				//keyBoard.sendKeys(Keys.ENTER).perform();
-				btnDone.click();
-			}*/
+				Web.clickOnElement(btnDone);
+			}
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate, true);
 			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
@@ -462,8 +465,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
-				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				//Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
+				lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				this.btnSaveAddAutoIncreaseModal.click();
 				}
 				else
@@ -644,8 +647,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void regular_maximize_me_always(String maximizeMeAlways){
 			if(maximizeMeAlways.equalsIgnoreCase("Yes")){
-				if(!this.chkboxMaximize.isSelected())
-					this.chkboxMaximize.click();
+				if(!this.txtMaximizeAllert.isDisplayed())
+					this.lblMaximizeYes.click();
 				
 				select_ContributionType("Split");
 				lib.Web.clickOnElement(btnContinue);
@@ -677,8 +680,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
 			}
 			else{
-				if(this.chkboxMaximize.isSelected())
-					this.chkboxMaximize.click();
+				if(this.txtMaximizeAllert.isDisplayed())
+					this.lblMaximizeNo.click();
 			}
 		}
 		

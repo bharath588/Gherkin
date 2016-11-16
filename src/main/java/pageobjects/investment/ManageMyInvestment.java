@@ -11,6 +11,7 @@ import lib.Reporter.Status;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.Choose;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -195,6 +196,19 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath = "//input[@name='Total']")
 	private WebElement inpTotal;
+	@FindBy(xpath = ".//button[@id='portfolio-link']") private WebElement btnChooseIndividualFunds;
+	@FindBy(xpath = ".//a[@id='view-all-funds']") private WebElement lnkAddViewAllFunds;
+	@FindBy(xpath = "//div[@class='allocation-table-wrapper']") private WebElement tableAllocationFund;
+	
+	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[contains(@class,'allocation-add-portfolio')]//input") private List<WebElement> inpInvestmentOption;
+	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
+	@FindBy(xpath = ".//*[@id='add-funds-button']") private WebElement btnAdd;
+	@FindBy(xpath = ".//*[@id='submit-button']") private WebElement btnSubmit;
+	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private List<WebElement> btnRemoveInvestment;
+	@FindBy(xpath = "//span[@class='allocation-funds-portfolio-total']") private WebElement txttotalInvestmentPercent;
+	@FindBy(xpath = "//tr[contains(@ng-repeat,'rebalanceCurrentFunds')]//span[@class='fund-overview-url']//a") private List<WebElement> txtCurrentFunds;
+	String inputAllocationPercrntage=".//*[@id='allocation-current-funds-table']//tbody//tr[1][.//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
+	String buttonlock=".//*[@id='allocation-current-funds-table']//tbody//tr[1][.//td//span[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	
 	/**
 	 * Empty args constructor
@@ -889,5 +903,100 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "Verify Transfer Cancelled",
 				"Transfer Cancelled", true);
 		Web.webdriver.switchTo().defaultContent();
+	}
+	public void rebalanceInvestment_New(String[] investmentoptions,String[] percent) {
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForElement(btnChooseIndividualFunds);
+		Web.clickOnElement(btnChooseIndividualFunds);
+		Web.waitForPageToLoad(Web.webdriver);
+		if(Web.isWebElementDisplayed(lnkAddViewAllFunds, true)){
+		Reporter.logEvent(Status.PASS,
+				"verify if Build Your Own Portfolio Page is Displayed",
+				"Build Your Own Portfolio Page is Displayed", true);
+		}
+		else{
+		Reporter.logEvent(Status.FAIL,
+				"verify if Build Your Own Portfolio Page is Displayed",
+				"Build Your Own Portfolio Page is Not Displayed", true);
+		}
+		if(Web.isWebElementsDisplayed(btnRemoveInvestment))
+		{
+			for(int i=0;i<btnRemoveInvestment.size();i++){
+				btnRemoveInvestment.get(i).click();
+			}
+		}
+				Web.clickOnElement(lnkAddViewAllFunds);
+				Web.waitForPageToLoad(Web.webdriver);
+				
+		if (Web.isWebElementDisplayed(tableAllocationFund, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify Investment Allocation table is displayed",
+					"Investment Allocation table is displayed ", true);
+			////////////////////////////////////////////
+			int noOfRows = lstInvestmentOptions.size();
+			if (noOfRows >= 2) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment options are available",
+						"Investment options available ", false);
+				investmentFundName1 = txtInvestmentOption.get(1).getText()
+						.trim();
+				investmentFundName2 = txtInvestmentOption.get(2).getText()
+						.trim();
+				System.out.println(investmentFundName1);
+				System.out.println(investmentFundName2);
+				Web.clickOnElement(lstInvestmentOptions.get(1));
+				Web.clickOnElement(lstInvestmentOptions.get(2));
+				Reporter.logEvent(Status.INFO, "Selected Investment Options",
+						"Selected Investment Options : " 
+								+ investmentFundName1 + "and"
+								+ investmentFundName2 , true);
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment options are available",
+						"Investment options not available ", true);
+
+		} else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Investment options Table is displayed",
+					"Investment options table not displayed ", true);
+		Web.clickOnElement(btnAdd);
+		WebElement inptAllocationPercent1 = Web.webdriver.findElement(By
+				.xpath(inputAllocationPercrntage.replace("Investment Option",
+						investmentFundName1)));
+		Web.setTextToTextBox(inptAllocationPercent1, percent[0]);
+		WebElement inptAllocationPercent2 = Web.webdriver.findElement(By
+				.xpath(inputAllocationPercrntage.replace("Investment Option",
+						investmentFundName2)));
+		Web.setTextToTextBox(inptAllocationPercent2, percent[1]);
+		Web.waitForPageToLoad(Web.webdriver);
+		if(txttotalInvestmentPercent.getText().contains("100")){
+			Reporter.logEvent(Status.PASS,
+					"Verify Investment Percentage is Entered and Matching",
+					"Investment Percentage is Matching and equals to 100", true);
+		}
+		else 
+			{
+			Reporter.logEvent(Status.FAIL,
+							"Verify Investment Percentage is Entered and Matching",
+				"Investment Percentage is not Matching", true);
+			}
+		btnSubmit.click();
+	Common.waitForProgressBar();
+	Web.waitForPageToLoad(Web.webdriver);
+	String currentFund1=txtCurrentFunds.get(0).getText().trim();
+	String currentFund2=txtCurrentFunds.get(1).getText().trim();
+	if(currentFund1.equalsIgnoreCase(investmentFundName1)&&currentFund2.equalsIgnoreCase(investmentFundName2)){
+		
+		Reporter.logEvent(Status.PASS,
+				"Verify Selected Investment Options are Matching in Review your changes Page",
+				"Investment Options are Matching in Review your changes Page", true);
+	}
+	else 
+		{
+		Reporter.logEvent(Status.FAIL,
+				"Verify Selected Investment Options are Matching in Review your changes Page",
+				"Investment Options are Not Matching in Review your changes Page", true);
+		}
 	}
 }
