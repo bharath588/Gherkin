@@ -42,7 +42,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath=".//*[text()='Retirement income']") private WebElement tabRetirementIncome;
 @FindBy(linkText="Other Assets") private WebElement lnkOtherAssets;
 @FindBy(xpath=".//button[text()[normalize-space()='Add an account']]") private WebElement btnAddAnAccount;
-@FindBy(xpath=".//*[@class='ng-binding ng-scope' and text() = 'Income Gap']") private WebElement lnkIncomeGap;
+@FindBy(xpath="//a[./span[text()='Income Gap']]") private WebElement lnkIncomeGap;
 @FindBy(xpath=".//*[text()[normalize-space()='Catch-up contributions']]") private WebElement txtCatchUpContributions;
 
 @FindBy(xpath="//h1[text()='My Estimated Retirement Income']") private WebElement lblRetirementIncome;
@@ -56,7 +56,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@id='retirement-age-slider']//button[@class='sliderThumb']") private WebElement sliderRetirementAge;
 @FindBy(xpath="//div[@id='investment-mix-slider']//button[@class='sliderThumb']") private WebElement sliderInvestmentMix;
 //@FindBy(xpath="//div[@class='svg-wrap']") private WebElement myGoalPercent;
-@FindBy(xpath="//div[@id='contribution-rate-slider']//button[contains(@class,'sliderThumb')]//div[contains(@class,'sliderThumbValue')]") private WebElement sliderContributionRate;
+@FindBy(xpath="//div[contains(@id,'contribution-rate-slider')]//button[contains(@class,'sliderThumb')]//div[contains(@class,'sliderThumbValue')]") private WebElement sliderContributionRate;
 @FindBy(xpath="//pw-radial-chart[@goal-label='of my goal']") private WebElement myGoalPercent;//pw-radial-chart[@goal-label='of my goal']
 @FindBy(xpath="//div[@class='modal-header']/h2") private WebElement txtMyGoalPercent;
 @FindBy(xpath="//input[@id='monthlyOption']") private WebElement radButtonMonthly;

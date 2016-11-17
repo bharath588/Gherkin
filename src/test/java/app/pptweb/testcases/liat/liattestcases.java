@@ -62,7 +62,7 @@ public class liattestcases {
 			retirement.get();
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Retirement Incomep page.", "Retirement Income page is displayed", true);
-			
+			Web.clickOnElement(retirement, "Plan Savings");
 			//verify if we are able to navigate to Plan Savings Tab
 			if(retirement.isFieldDisplayed("Plan Savings"))
 				Reporter.logEvent(Status.PASS, "Verify Plan Savings tab", "Plan Savings tab is displayed and able to click on it", false);
