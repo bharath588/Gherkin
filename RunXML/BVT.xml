@@ -5,13 +5,13 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
        
-    <test name="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
+             <test name="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment">
         <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
+                    <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment"/>
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> 
 </suite>

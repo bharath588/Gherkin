@@ -116,7 +116,7 @@
             </class>
         </classes>
     </test>
-    <!-- <test name="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file">
+    <test name="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
@@ -133,7 +133,7 @@
                 </methods>
             </class>
         </classes>
-     </test>  -->
+     </test>  
      <test name="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
@@ -231,6 +231,15 @@
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
                     <include name="create_Married_Spouse_Multiple_Spouse_Error"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment"/>
                 </methods>
             </class>
         </classes>
