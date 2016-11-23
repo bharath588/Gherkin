@@ -3369,11 +3369,9 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.webdriver);
-			investment.rebalanceInvestment(
-					Stock.GetParameterValue("Frequency_Period"),
-					Stock.GetParameterValue("Setup_date"),
-					Stock.GetParameterValue("investment_percent"));
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			String[] percentage={"50","50"};
+			investment.rebalanceInvestment_New(2,percentage);
+			/*DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar cal = Calendar.getInstance();
 			System.out.println(dateFormat.format(cal.getTime()));
 			String date = dateFormat.format(cal.getTime()).toUpperCase();
@@ -3385,7 +3383,7 @@ public class prodvalidationtestcases {
 					"Yes")) {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
-			}
+			}*/
 			Web.webdriver.switchTo().defaultContent();
 			 //Web.clickOnElement(investment, "LOGOUT");
 			

@@ -198,7 +198,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement inpTotal;
 	@FindBy(xpath = ".//button[@id='portfolio-link']") private WebElement btnChooseIndividualFunds;
 	@FindBy(xpath = ".//a[@id='view-all-funds']") private WebElement lnkAddViewAllFunds;
-	@FindBy(xpath = "//div[@class='allocation-table-wrapper']") private WebElement tableAllocationFund;
+	@FindBy(xpath = ".//div[@class='allocation-table-wrapper']//table[@id='allocation-all-funds-table']") private WebElement tableAllocationFund;
 	
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[contains(@class,'allocation-add-portfolio')]//input") private List<WebElement> inpInvestmentOption;
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
@@ -904,7 +904,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				"Transfer Cancelled", true);
 		Web.webdriver.switchTo().defaultContent();
 	}
-	public void rebalanceInvestment_New(String[] investmentoptions,String[] percent) {
+	public void rebalanceInvestment_New(int noOfInvestmentoptions,String[] percent) {
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 		Web.waitForElement(btnChooseIndividualFunds);
@@ -929,13 +929,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				Web.clickOnElement(lnkAddViewAllFunds);
 				Web.waitForPageToLoad(Web.webdriver);
 				
-		if (Web.isWebElementDisplayed(tableAllocationFund, true)) {
+		if (Web.isWebElementDisplayed(tableAllocationFund)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify Investment Allocation table is displayed",
 					"Investment Allocation table is displayed ", true);
 			////////////////////////////////////////////
-			int noOfRows = lstInvestmentOptions.size();
-			if (noOfRows >= 2) {
+			int noOfRows = inpInvestmentOption.size();
+			if (noOfRows >= noOfInvestmentoptions) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Investment options are available",
 						"Investment options available ", false);
@@ -945,8 +945,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 						.trim();
 				System.out.println(investmentFundName1);
 				System.out.println(investmentFundName2);
-				Web.clickOnElement(lstInvestmentOptions.get(1));
-				Web.clickOnElement(lstInvestmentOptions.get(2));
+				Web.clickOnElement(inpInvestmentOption.get(1));
+				Web.clickOnElement(inpInvestmentOption.get(2));
 				Reporter.logEvent(Status.INFO, "Selected Investment Options",
 						"Selected Investment Options : " 
 								+ investmentFundName1 + "and"
@@ -954,7 +954,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			} else
 				Reporter.logEvent(Status.FAIL,
 						"Verify Investment options are available",
-						"Investment options not available ", true);
+						noOfInvestmentoptions+"Investment options not available ", true);
 
 		} else
 			Reporter.logEvent(Status.FAIL,

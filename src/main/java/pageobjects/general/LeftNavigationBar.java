@@ -39,6 +39,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	private String lnkRequestLoan="//li[@class='ng-scope']//a[text()[normalize-space()='Request a loan']]";
+	private String lnkBrokerage="//li[@class='ng-scope']//a[text()[normalize-space()='Brokerage']]";
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
 
@@ -159,6 +160,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "Rate of return";
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
 			strLinkText=lnkRequestLoan;
+		} else if (linkName.trim().equalsIgnoreCase("BROKERAGE")) {
+			strLinkText=lnkBrokerage;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
 
@@ -180,7 +183,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			
 		}
 		else if(linkName.equalsIgnoreCase("Brokerage")){
-			lnkLeftNavItem=By.linkText(strLinkText);
+			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
 			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
 			
