@@ -45,7 +45,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lnkLogout;
 	@FindBy(xpath = "//button[text()[normalize-space()='Change My Investments']]")
 	private WebElement btnChangeMyInvestment;
-	@FindBy(xpath = ".//strong[text()[normalize-space()='Rebalance my current balance']]")
+	@FindBy(xpath = ".//strong[text()[normalize-space()='Rebalance my investments']]")
 	private WebElement radioRebalanceCurrBal;
 	@FindBy(xpath = ".//strong[text()[normalize-space()='Change how my future contributions will be invested']]")
 	private WebElement radioChangeFutureContr;
@@ -197,18 +197,18 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//input[@name='Total']")
 	private WebElement inpTotal;
 	@FindBy(xpath = ".//button[@id='portfolio-link']") private WebElement btnChooseIndividualFunds;
-	@FindBy(xpath = ".//a[@id='view-all-funds']") private WebElement lnkAddViewAllFunds;
+	@FindBy(xpath = ".//a[@id='rebalance-view-all-funds']") private WebElement lnkAddViewAllFunds;
 	@FindBy(xpath = ".//div[@class='allocation-table-wrapper']//table[@id='allocation-all-funds-table']") private WebElement tableAllocationFund;
 	
-	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[contains(@class,'allocation-add-portfolio')]//input") private List<WebElement> inpInvestmentOption;
+	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label[@class='add-view-label']]//input") private List<WebElement> inpInvestmentOption;
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
 	@FindBy(xpath = ".//*[@id='add-funds-button']") private WebElement btnAdd;
-	@FindBy(xpath = ".//*[@id='submit-button']") private WebElement btnSubmit;
+	@FindBy(xpath = ".//*[@id='submitButton submit']") private WebElement btnSubmit;
 	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private List<WebElement> btnRemoveInvestment;
 	@FindBy(xpath = "//span[@class='allocation-funds-portfolio-total']") private WebElement txttotalInvestmentPercent;
 	@FindBy(xpath = "//tr[contains(@ng-repeat,'rebalanceCurrentFunds')]//span[@class='fund-overview-url']//a") private List<WebElement> txtCurrentFunds;
-	String inputAllocationPercrntage=".//*[@id='allocation-current-funds-table']//tbody//tr[1][.//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
-	String buttonlock=".//*[@id='allocation-current-funds-table']//tbody//tr[1][.//td//span[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
+	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
+	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	
 	/**
 	 * Empty args constructor
@@ -909,16 +909,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.waitForPageToLoad(Web.webdriver);
 		Web.waitForElement(btnChooseIndividualFunds);
 		Web.clickOnElement(btnChooseIndividualFunds);
+		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.webdriver);
 		if(Web.isWebElementDisplayed(lnkAddViewAllFunds, true)){
 		Reporter.logEvent(Status.PASS,
-				"verify if Build Your Own Portfolio Page is Displayed",
-				"Build Your Own Portfolio Page is Displayed", true);
+				"verify if Rebalance Your Portfolio Page is Displayed",
+				"Rebalance Your Portfolio Page is Displayed", true);
 		}
 		else{
 		Reporter.logEvent(Status.FAIL,
-				"verify if Build Your Own Portfolio Page is Displayed",
-				"Build Your Own Portfolio Page is Not Displayed", true);
+				"verify if Rebalance Your Portfolio Page is Displayed",
+				"Rebalance Your Portfolio Page is Not Displayed", true);
 		}
 		if(Web.isWebElementsDisplayed(btnRemoveInvestment))
 		{
@@ -938,7 +939,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			if (noOfRows >= noOfInvestmentoptions) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Investment options are available",
-						"Investment options available ", false);
+						"Investment options are available ", false);
 				investmentFundName1 = txtInvestmentOption.get(1).getText()
 						.trim();
 				investmentFundName2 = txtInvestmentOption.get(2).getText()
@@ -948,18 +949,18 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				Web.clickOnElement(inpInvestmentOption.get(1));
 				Web.clickOnElement(inpInvestmentOption.get(2));
 				Reporter.logEvent(Status.INFO, "Selected Investment Options",
-						"Selected Investment Options : " 
-								+ investmentFundName1 + "and"
+						"Selected Investment Options : \n" 
+								+ investmentFundName1 + ",\n"
 								+ investmentFundName2 , true);
 			} else
 				Reporter.logEvent(Status.FAIL,
 						"Verify Investment options are available",
-						noOfInvestmentoptions+"Investment options not available ", true);
+						noOfInvestmentoptions+"Investment options are not available ", true);
 
 		} else
 			Reporter.logEvent(Status.FAIL,
 					"Verify Investment options Table is displayed",
-					"Investment options table not displayed ", true);
+					"Investment options table is not displayed ", true);
 		Web.clickOnElement(btnAdd);
 		WebElement inptAllocationPercent1 = Web.webdriver.findElement(By
 				.xpath(inputAllocationPercrntage.replace("Investment Option",
@@ -972,8 +973,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.waitForPageToLoad(Web.webdriver);
 		if(txttotalInvestmentPercent.getText().contains("100")){
 			Reporter.logEvent(Status.PASS,
-					"Verify Investment Percentage is Entered and Matching",
-					"Investment Percentage is Matching and equals to 100", true);
+					"Verify Investment Percentage is Entered and Equals to 100",
+					"Investment Percentage is Matching and Equals to 100", true);
 		}
 		else 
 			{
@@ -990,13 +991,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		
 		Reporter.logEvent(Status.PASS,
 				"Verify Selected Investment Options are Matching in Review your changes Page",
-				"Investment Options are Matching in Review your changes Page", true);
+				"Investment Options are Matching in Review your changes Page\nExpected\n:"+investmentFundName1+",\n"+investmentFundName2+"\nActual:\n"+currentFund1+",\n "+currentFund2, true);
 	}
 	else 
 		{
 		Reporter.logEvent(Status.FAIL,
 				"Verify Selected Investment Options are Matching in Review your changes Page",
-				"Investment Options are Not Matching in Review your changes Page", true);
+				"Investment Options are Matching in Review your changes Page\nExpected:"+investmentFundName1+" and "+investmentFundName2+"\nActual:"+currentFund1+" and "+currentFund2, true);
 		}
 	}
 }
