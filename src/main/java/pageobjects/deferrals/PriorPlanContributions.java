@@ -166,6 +166,8 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 		Web.waitForElement(txtPriorContribution);
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
 			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);

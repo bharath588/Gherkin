@@ -163,7 +163,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p") private WebElement lblAlertMsg;
 			
 			@FindBy(xpath="//div[contains(text(),'Carryover my contribution')]") private WebElement lblChainingText;
-			@FindBy(id="buttonAddChaining") private WebElement btnAddChaining;
+			@FindBy(xpath=".//*[@id='buttonEditChaining' or @id='buttonAddChaining']") private WebElement btnAddChaining;
 			@FindBy(xpath="//h1[text()='Carry over my contribution?']") private WebElement hdrCarryoverContribution;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='Regular Pre-Tax Contribution to After Tax']]") private WebElement radPreTaxToAftTax;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='Regular Pre-Tax Contribution to Non-Qualified Plan']]") private WebElement radPreTaxToNQ;
@@ -171,7 +171,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[contains(@class,'radio')]//strong[text()[normalize-space()='No, do not carryover my contribution']]") private WebElement radDoNotCarryoverContr;
 			@FindBy(xpath="//button[text()[normalize-space()='Submit']]") private WebElement btnSubmit;
 			@FindBy(xpath="//h1[text()[normalize-space()='Confirmation']]") private WebElement hdrConfirmation;
-			@FindBy(xpath="//div[@id='account-details-container']//div[@class='ng-binding']") private WebElement lblChainingConfirmationMsg;
+			@FindBy(xpath="//div[@id='account-details-container']//div[@class='page-title']//div") private WebElement lblChainingConfirmationMsg;
 			@FindBy(xpath="//table[@class='table-details']/tbody") private WebElement tblChainingConfirmationDetails;
 			
 			@FindBy(xpath = "//label[@class='radio-inline panel-title']//strong") private WebElement lblViewOnlyCatchUP;
@@ -466,8 +466,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
-				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				//Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
+				lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				this.btnSaveAddAutoIncreaseModal.click();
 				}
 				else
