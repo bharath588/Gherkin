@@ -5,74 +5,12 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
        
-         <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% for QJSA">
+        
+     <test name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
         <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-      <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC039_Create a Married, Spouse, multiple spouse error">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="create_Married_Spouse_Multiple_Spouse_Error"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment"/>
+                    <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral"/>
                 </methods>
             </class>
         </classes>
