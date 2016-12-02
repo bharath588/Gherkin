@@ -3,6 +3,8 @@ package core.framework;
 
 
 import java.io.FileReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -25,29 +27,40 @@ import lib.Web;
 
 
 
+
+
+
+
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.testng.IAnnotationTransformer;
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
+import org.testng.IRetryAnalyzer;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+import org.testng.annotations.ITestAnnotation;
 
 import core.framework.ThrowException.TYPE;
 
-public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener{
+public class TestListener implements ITestListener, IConfigurationListener2, ISuiteListener, IInvokedMethodListener
+,IRetryAnalyzer,IAnnotationTransformer{
 
 	public static Set<String> webDriverNameList = new LinkedHashSet<>();
 	Map<String,String> tempMap;
 	int currentTCInvocationCount=0;
+	static int suiteInvCount = 0;
 	private static boolean finalTestStatus =  true;
 	public static Map<Long,String> browserMap = new LinkedHashMap<>();
 	public static Map<Long,String> portMap = new LinkedHashMap<>();
+	static Map<Integer, Map<String, String>> failedXmlMap = new LinkedHashMap<>();
 	//Iterator iter = webDriverNameList.iterator();
 	static int i =0;
 	static Map<String,Map<String,String>> gridMap;
@@ -99,11 +112,16 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 			               test.getName()+" ,hence re-initiating");
 				
 				
-				Web.getWebDriver("FF");
-				
-				//Web.getRemoteWebDriver(getBrowser()[0], getBrowser()[1]);
-				//Web.getRemoteWebDriver(browserMap.get(Thread.currentThread().getId()).get("Browser"),browserMap.get(Thread.currentThread().getId()).get("Port"));
-				
+				if(Stock.getConfigParam("type").equalsIgnoreCase("grid"))
+				{
+				if(!browserMap.containsKey(Thread.currentThread().getId()) || !portMap.containsKey(Thread.currentThread().getId()))
+				{
+				getBrowser();
+				}
+				Web.getRemoteWebDriver(browserMap.get(Thread.currentThread().getId()),portMap.get(Thread.currentThread().getId()));
+				}else{
+					Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+				}
 				Log.Report(Level.INFO,"Web Driver instance re-initiated successfully the Test Case :"+
 			               test.getName());
 			}catch(Exception e){
@@ -150,8 +168,25 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onFinish(ITestContext context) {
-		
-	}
+		System.out.println(context.getPassedTests().size());
+		Iterator<ITestResult> failedTestCases =context.getFailedTests().getAllResults().iterator();
+        while (failedTestCases.hasNext()) {
+          //  System.out.println("failedTestCases");
+            ITestResult failedTestCase = failedTestCases.next();
+            ITestNGMethod method = failedTestCase.getMethod();
+            if (context.getFailedTests().getResults(method).size() > 1) {
+                //System.out.println("failed test case remove as dup:" + failedTestCase.getTestClass().toString());
+                failedTestCases.remove();
+            } else {
+
+                if (context.getPassedTests().getResults(method).size() > 0) {
+                    //System.out.println("failed test case remove as pass retry:" + failedTestCase.getTestClass().toString());
+                    failedTestCases.remove();
+                }
+            }
+        }
+    }
+	
 
 	
 	public void onConfigurationSuccess(ITestResult result) {
@@ -172,14 +207,13 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 
 	
 	public void onFinish(ISuite suite) {
-		//Reporter.objReport.endTest(Reporter.grandMap.get(Thread.currentThread().getId()));
 		Reporter.objReport.flush();
-		/*try {
-			if (Web.webdriver.getWindowHandles().size() >= 0)
-				Web.webdriver.quit();
+		try {
+			if (Web.getDriver().getWindowHandles().size() >= 0)
+				Web.getDriver().quit();
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION,"Failed to quit Web Driver :" +e.getMessage());
-		}*/
+		}
 		
 	}
 
@@ -195,11 +229,29 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		}
 	}
 	
+	@SuppressWarnings({ "serial", "static-access" })
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
 		if(method.getTestMethod().isTest()){
 			if(!isFinalTestStatus()){
 				testResult.setStatus(ITestResult.FAILURE);
-			}			
+			}	
+			if(suiteInvCount == 0)
+			{
+			if(testResult.getStatus() == testResult.FAILURE)
+			{
+				final String className = testResult.getTestClass().getName();
+				final String methodName = method.getTestMethod().getMethodName();
+				final String testName = testResult.getTestContext().getName();
+
+				
+				
+				failedXmlMap.put(i++, new HashMap<String, String>(){{put("className",className);
+										put("methodName", methodName);
+										put("testName", testName);}});
+				
+				
+			}		
+		}
 		}
 	}
 
@@ -255,6 +307,29 @@ public class TestListener implements ITestListener, IConfigurationListener2, ISu
 		    	e.printStackTrace();
 		    }
 			return configMap;
+	}
+
+int retryCount = 0,maxRetryCount = 1;
+	@Override
+	public boolean retry(ITestResult result) {
+		 if (retryCount < maxRetryCount) {
+	            System.out.println("Retrying test " + result.getName() + " with status "+
+	                     " for the " + (retryCount+1) + " time(s).");
+	            retryCount++;
+	            return true;
+	        }
+	        return false;
+	}
+	
+	
+	@Override
+	public void transform(ITestAnnotation annotation, Class testClass,
+			Constructor testConstructor, Method testMethod) {
+		IRetryAnalyzer retry =annotation.getRetryAnalyzer();
+
+		if (retry == null)	{
+			annotation.setRetryAnalyzer(RetryAnalyzer.class);
+		}
 	}
 
 
