@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import lib.Log.Level;
 import lib.Reporter.Status;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -24,28 +24,30 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Parameters;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import core.framework.Globals;
 
+
 public class Web {
-	public static WebDriver webdriver = null;
+	private static WebDriver webdriver = null;
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
 	private static boolean isLastIteration = false;
-    static DesiredCapabilities capabilities;
+
+	private static ThreadLocal<WebDriver> multiDriver = new ThreadLocal<WebDriver>();
+	private static ThreadLocal<RemoteWebDriver> multiRemoteDriver = new ThreadLocal<RemoteWebDriver>();
 	
 	public static boolean isLastIteration() {
 		return isLastIteration;
@@ -116,7 +118,7 @@ public class Web {
 				// Do nothing
 			}
 			try {
-				if ((new WebDriverWait(Web.webdriver, Long.parseLong("1")))
+				if ((new WebDriverWait(Web.getDriver(), Long.parseLong("1")))
 						.ignoring(StaleElementReferenceException.class)
 						.until(ExpectedConditions
 								.visibilityOfAllElements(elements)).size() == elements
@@ -146,18 +148,18 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static boolean isWebElementDisplayed(Object pageClassObj,
-			String fieldName,boolean... waitForEle)  {
+			String fieldName, boolean... waitForEle) {
 		boolean blnElementDisplayed = false;
 		try {
 			WebElement displayedElement = getPageObjectFields(pageClassObj,
 					fieldName);
-			try{
+			try {
 				if (waitForEle.length > 0) {
 					if (waitForEle[0] == true) {
 						Web.waitForElement(displayedElement);
 					}
-				}	
-			}catch(Exception t){
+				}
+			} catch (Exception t) {
 				// nothing
 			}
 			blnElementDisplayed = displayedElement.isDisplayed();
@@ -306,7 +308,8 @@ public class Web {
 			element = (WebElement) getWebElementMethod.invoke(pageObjectClass,
 					fieldName);
 		} catch (Exception e) {
-			throw new Error("Error getting page obejct fields : "+ e.getMessage());
+			throw new Error("Error getting page obejct fields : "
+					+ e.getMessage());
 		}
 		return element;
 	}
@@ -319,12 +322,12 @@ public class Web {
 	 */
 	public static void waitForElement(WebElement element) {
 		try {
-			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+			(new WebDriverWait(Web.getDriver(), Long.parseLong(Stock
 					.getConfigParam("objectSyncTimeout")))).ignoring(
 					StaleElementReferenceException.class).until(
 					ExpectedConditions.visibilityOf(element));
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -336,12 +339,12 @@ public class Web {
 	 */
 	public static void waitForElements(List<WebElement> elements) {
 		try {
-			(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+			(new WebDriverWait(Web.getDriver(), Long.parseLong(Stock
 					.getConfigParam("objectSyncTimeout")))).ignoring(
 					StaleElementReferenceException.class).until(
 					ExpectedConditions.visibilityOfAllElements(elements));
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -355,7 +358,7 @@ public class Web {
 			throws Exception {
 		WebElement presentElement = getPageObjectFields(pageClassObj,
 				webElementName);
-		(new WebDriverWait(Web.webdriver, Long.parseLong(Stock
+		(new WebDriverWait(Web.getDriver(), Long.parseLong(Stock
 				.getConfigParam("objectSyncTimeout"))))
 				.until(ExpectedConditions.visibilityOf(presentElement));
 	}
@@ -373,6 +376,15 @@ public class Web {
 		return presentElement;
 	}
 
+	//To access WebDriver directly
+	public static WebDriver getDriver(){
+		if(Stock.getConfigParam("type").equalsIgnoreCase("grid"))
+		{
+		return multiRemoteDriver.get();
+		}else{
+		return multiDriver.get();
+	}
+	}	
 	/**
 	 * <pre>
 	 * Method to initiate webDriver object based on used specified browser type
@@ -382,64 +394,113 @@ public class Web {
 	 * 	3. <b>CHROME</b>
 	 * </pre>
 	 * 
-	 * @param browser
+	 * @param webBrowser
 	 * @return
 	 */
-	@Parameters({"browser"})
-	public static WebDriver getWebDriver(String browser) {
-		WebDriver webDriver;
+	public static WebDriver getWebDriver(String webBrowser) {
+		WebDriver webDriver = multiDriver.get();
 
-		// try {
-		// robot = new Robot();
-		// } catch (AWTException e) {
-		// e.printStackTrace();
-		// }
+		if(webDriver == null){
+			if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+					|| webBrowser.trim().equalsIgnoreCase("IEXPLORE")
+					|| webBrowser.trim().equalsIgnoreCase("IE")) {
+				DesiredCapabilities capabilities = DesiredCapabilities
+						.internetExplorer();
+				capabilities.setCapability("ignoreZoomSetting", true);
+				capabilities.setCapability("ie.ensureCleanSession", true);
+				System.setProperty("webdriver.ie.driver",
+						Stock.getConfigParam("IEDriverClassPath"));
+				webDriver = new InternetExplorerDriver(capabilities);
 
-		if (browser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
-				|| browser.trim().equalsIgnoreCase("IEXPLORE")
-				|| browser.trim().equalsIgnoreCase("IE")) {
-			DesiredCapabilities capabilities = DesiredCapabilities
-					.internetExplorer();
-			capabilities.setCapability("ignoreZoomSetting", true);
-			capabilities.setCapability("ie.ensureCleanSession", true);
-			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-			capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-			capabilities.setCapability("EnableNativeEvents",false);
-			System.setProperty("webdriver.ie.driver",
-					Stock.getConfigParam("IEDriverClassPath"));
-			webDriver = new InternetExplorerDriver(capabilities);
-			//webDriver = new InternetExplorerDriver();
+			} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+				System.setProperty("webdriver.chrome.driver",
+						Stock.getConfigParam("ChromeDriverClassPath"));
+				String userProfile="C:\\Users\\KRSBHR\\AppData\\Local\\Google\\Chrome\\User Data";
+				ChromeOptions opt = new ChromeOptions();
+				//opt.addArguments("disable-extensions");
+				opt.addArguments("--start-maximized");
+	            opt.addArguments("--user-data-dir="+userProfile);
+	           
+	            webDriver = new ChromeDriver(opt);
 
-		} else if (browser.trim().equalsIgnoreCase("CHROME")) {
-			System.setProperty("webdriver.chrome.driver",
-					Stock.getConfigParam("ChromeDriverClassPath"));
-			webDriver = new ChromeDriver();
-		} else if (browser.trim().equalsIgnoreCase("FIREFOX")
-				|| browser.trim().equalsIgnoreCase("FF")) {
-			
-			ProfilesIni profiles = new ProfilesIni();
-			
-			FirefoxProfile ffProfile = profiles.getProfile("default");
-			// ffProfile.setPreference("signon.autologin.proxy", true);
+			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
+					|| webBrowser.trim().equalsIgnoreCase("FF")) {
+				ProfilesIni profiles = new ProfilesIni();
+				FirefoxProfile ffProfile = profiles.getProfile("default");
+				// ffProfile.setPreference("signon.autologin.proxy", true);
 
-			if (ffProfile == null) {
-				System.out.println("Initiating Firefox with dynamic profile");
-				
-				webDriver = new FirefoxDriver();
-				
+				if (ffProfile == null) {
+					System.out.println("Initiating Firefox with dynamic profile");
+					webDriver = new FirefoxDriver();
+				} else {
+					System.out.println("Initiating Firefox with default profile");
+					webDriver = new FirefoxDriver(ffProfile);
+				}
+
 			} else {
-				System.out.println("Initiating Firefox with default profile");
-				webDriver = new FirefoxDriver(ffProfile);
+				throw new Error("Unknown browser type specified: " + webBrowser);
 			}
-
-		} else {
-			throw new Error("Unknown browser type specified: " + browser);
+			Capabilities cap = ((RemoteWebDriver) webDriver).getCapabilities();
+	        String browserName = cap.getBrowserName().toUpperCase();
+	        System.out.println("BROWSER NAME:"+browserName);
+	        String os = cap.getPlatform().toString();
+	        System.out.println("OPERATING SYSTEM:"+os);
+	        String browserVersion = cap.getVersion().toString().substring(0, 4);
+	        System.out.println("BROWSER VERSION:"+browserVersion);
+			webDriver.manage().window().maximize();
+	       
 		}
-
-		webDriver.manage().window().maximize();
+		multiDriver.set(webDriver);
 		return webDriver;
 	}
 
+	public static WebDriver getRemoteWebDriver(String webBrowser,String nodeUrl) throws MalformedURLException {		
+		RemoteWebDriver remoteWebDriver = multiRemoteDriver.get();
+
+        if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+                     || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
+                     || webBrowser.trim().equalsIgnoreCase("IE")) {
+             DesiredCapabilities  capabilities = DesiredCapabilities.internetExplorer();
+               capabilities.setCapability("ignoreZoomSetting", true);
+               capabilities.setCapability("ie.ensureCleanSession", true);
+               //setCapabilities(webBrowser,Platform.XP);
+               System.setProperty("webdriver.ie.driver",Stock.getConfigParam("IEDriverClassPath"));
+               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+
+        } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+               System.setProperty("webdriver.chrome.driver",Stock.getConfigParam("ChromeDriverClassPath"));
+          DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+             //  setCapabilities(webBrowser,Platform.XP);
+               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+        } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
+                     || webBrowser.trim().equalsIgnoreCase("FF")) {
+               ProfilesIni profiles = new ProfilesIni();
+               FirefoxProfile ffProfile = profiles.getProfile("default");
+             DesiredCapabilities capabilities = DesiredCapabilities
+                            .firefox();
+               capabilities.setBrowserName("firefox");
+               capabilities.setCapability(FirefoxDriver.PROFILE, ffProfile);
+               //capabilities.setPlatform(Platform.XP);
+               System.out.println("node url is"+nodeUrl);
+               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+        } else {
+
+               throw new Error("Unknown browser type specified: " + webBrowser);
+        }
+
+        /*String nodeUrl="http://143.199.162.200:5566/wd/hub";
+
+        DesiredCapabilities capability = DesiredCapabilities.firefox();
+
+        capability.setBrowserName("firefox");
+
+        capability.setPlatform(Platform.XP);
+
+        webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
+        remoteWebDriver.manage().window().maximize();
+        multiRemoteDriver.set(remoteWebDriver);
+        return remoteWebDriver;
+ }
 	/**
 	 * <pre>
 	 * Method to verify two strings. 
@@ -571,7 +632,7 @@ public class Web {
 	 * @param itemValue
 	 *            - Value of the item listed in Dropdown box
 	 */
-	private static int getDropDownItemIndex(String itemValue) {
+	private static int getDropDownItemIndex(String itemValue, boolean... args) {
 		int iCntr = 0;
 		boolean selected = false;
 
@@ -580,9 +641,16 @@ public class Web {
 		while (lstIter.hasNext()) {
 			WebElement currElement = lstIter.next();
 			String txt = currElement.getText();
-			if (txt.toUpperCase().contains(itemValue.toUpperCase())) {
-				selected = true;
-				break;
+			if (args.length > 0) {
+				if (txt.toUpperCase().contains(itemValue.toUpperCase())) {
+					selected = true;
+					break;
+				}
+			} else {
+				if (txt.toUpperCase().equalsIgnoreCase(itemValue.toUpperCase())) {
+					selected = true;
+					break;
+				}
 			}
 			iCntr++;
 		}
@@ -608,13 +676,14 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static boolean selectDropDownOption(Object pageClassObj,
-			String dropDownElementName, String selValue) throws Exception {
+			String dropDownElementName, String selValue, boolean... args)
+			throws Exception {
 		int itemIndex = -1;
 		boolean selected = false;
 		String selectedItemText;
 
 		initDropDownObj(pageClassObj, dropDownElementName);
-		itemIndex = getDropDownItemIndex(selValue);
+		itemIndex = getDropDownItemIndex(selValue, args);
 
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
@@ -643,13 +712,13 @@ public class Web {
 	 *         <b>false</b> otherwise
 	 */
 	public static boolean selectDropDownOption(WebElement dropDownElement,
-			String selValue) {
+			String selValue, boolean... args) {
 		int itemIndex = -1;
 		boolean selected = false;
 		String selectedItemText;
 
 		initDropDownObj(dropDownElement);
-		itemIndex = getDropDownItemIndex(selValue);
+		itemIndex = getDropDownItemIndex(selValue, args);
 
 		if (itemIndex > -1) {
 			selectedItemText = objSelect.getOptions().get(itemIndex).getText();
@@ -681,9 +750,10 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static boolean verifyDropDownOptionExists(Object pageClassObj,
-			String dropDownElementName, String selValue) throws Exception {
+			String dropDownElementName, String selValue, boolean... args)
+			throws Exception {
 		initDropDownObj(pageClassObj, dropDownElementName);
-		int itemIndex = getDropDownItemIndex(selValue);
+		int itemIndex = getDropDownItemIndex(selValue, args);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
@@ -713,9 +783,9 @@ public class Web {
 	 *         <b>false</b> otherwise
 	 */
 	public static boolean verifyDropDownOptionExists(
-			WebElement dropDownElement, String selValue) {
+			WebElement dropDownElement, String selValue, boolean... args) {
 		initDropDownObj(dropDownElement);
-		int itemIndex = getDropDownItemIndex(selValue);
+		int itemIndex = getDropDownItemIndex(selValue, args);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
@@ -748,9 +818,10 @@ public class Web {
 	 * @throws Exception
 	 */
 	public static String getDropDownOptionAsText(Object pageClassObj,
-			String dropDownElementName, String selValue) throws Exception {
+			String dropDownElementName, String selValue, boolean... args)
+			throws Exception {
 		initDropDownObj(pageClassObj, dropDownElementName);
-		int itemIndex = getDropDownItemIndex(selValue);
+		int itemIndex = getDropDownItemIndex(selValue, args);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
@@ -774,9 +845,9 @@ public class Web {
 	 *         is found <b>Empty string</b> otherwise
 	 */
 	public static String getDropDownOptionAsText(WebElement dropDownElement,
-			String selValue) {
+			String selValue, boolean... args) {
 		initDropDownObj(dropDownElement);
-		int itemIndex = getDropDownItemIndex(selValue);
+		int itemIndex = getDropDownItemIndex(selValue, args);
 		String selectedItemText;
 
 		if (itemIndex > -1) {
@@ -855,13 +926,26 @@ public class Web {
 			Globals.GBL_strScreenshotsFolderPath = "./TestReport/"
 					+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
 					+ "\\Screenshots";
-			
-			File screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
+
+			// File screenShotDir = new
+			// File(Globals.GBL_strScreenshotsFolderPath);
 			if (!new File(Globals.GBL_strScreenshotsFolderPath).exists())
 				new File(Globals.GBL_strScreenshotsFolderPath).mkdirs();
+			File screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
+			if (!screenShotDir.exists()) {
+				// Try any one of these conditions
+				System.out.println("SCREENSHOT DIRECTORY IS NOT EXISTS");
+				Globals.GBL_strScreenshotsFolderPath = System
+						.getProperty("user.dir")
+						+ "/TestReport/"
+						+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
+						+ "\\Screenshots";
+
+				screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
+			}
 
 			int randomInt = screenShotDir.listFiles().length;
-			File scrFile = ((TakesScreenshot) Web.webdriver)
+			File scrFile = ((TakesScreenshot) Web.getDriver())
 					.getScreenshotAs(OutputType.FILE);
 
 			fileName = Globals.GBL_TestCaseName + "_Itr"
@@ -873,12 +957,14 @@ public class Web {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
+
 		return "./" + Globals.GBL_TestCaseName.replaceAll(" ", "_")
 				+ "\\Screenshots" + "\\" + fileName;
 	}
@@ -892,68 +978,51 @@ public class Web {
 	 */
 	public static void mouseHover(WebElement webElement) {
 		Actions actions;
-		actions = new Actions(Web.webdriver);
+		actions = new Actions(Web.getDriver());
 		actions.moveToElement(webElement);
 		actions.build().perform();
 	}
-	public static WebDriver getRemoteWebDriver(String nodeUrl,String webBrowser ) throws MalformedURLException {
-        WebDriver webDriver;
+	
 
-Log.Report(Level.INFO, "entered in to getRemoteMethod");
-        if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
-                     || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
-                     || webBrowser.trim().equalsIgnoreCase("IE")) {
-               capabilities = DesiredCapabilities
-                            .internetExplorer();
-               capabilities.setCapability("ignoreZoomSetting", true);
-               capabilities.setCapability("ie.ensureCleanSession", true);
-               setCapabilities(webBrowser,Platform.XP);
-               System.setProperty("webdriver.ie.driver",
-                            Stock.getConfigParam("IEDriverClassPath"));
-               webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+    /**
+    * <pre>
+    * Method to select a specified item in Dropdown box on Multiple options basis
+    * </pre>
+    * 
+     * @param dropDownElement
+    *            - Dropdown WebElement
+    * @param selValue
+    *            - Value of the item listed in Dropdown box
+    * @return <b>boolean</b> - true</b> if the specified element is selected
+    *         <b>false</b> otherwise
+    */
+    public static boolean selectDropDownOptionVarArgs(
+                  WebElement dropDownElement, String... selValue) {
+           int itemIndex = -1;
+           boolean selected = false;
+           String selectedItemText;
 
-        } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
-               System.setProperty("webdriver.chrome.driver",
-                            Stock.getConfigParam("ChromeDriverClassPath"));
-               capabilities = DesiredCapabilities
-                            .chrome();
-               setCapabilities(webBrowser,Platform.XP);
-               webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
-        } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
-                     || webBrowser.trim().equalsIgnoreCase("FF")) {
-               ProfilesIni profiles = new ProfilesIni();
-               FirefoxProfile ffProfile = profiles.getProfile("default");
-               capabilities = DesiredCapabilities
-                            .firefox();
-               //setCapabilities(webBrowser,Platform.XP);
-               capabilities.setBrowserName("firefox");
-               capabilities.setCapability(FirefoxDriver.PROFILE, ffProfile);
-               capabilities.setPlatform(Platform.XP);
-               
-        
-               // ffProfile.setPreference("signon.autologin.proxy", true);
-
-               
-                     System.out.println("Initiating Firefox with default profile");
-                     System.out.println("node url is"+nodeUrl);
-                     webDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
-               
-
-        } else {
-               throw new Error("Unknown browser type specified: " + webBrowser);
-        }
-        /*String nodeUrl="http://143.199.162.200:5566/wd/hub";
-        DesiredCapabilities capability = DesiredCapabilities.firefox();
-        capability.setBrowserName("firefox");
-        capability.setPlatform(Platform.XP);
-        webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
-
-        webDriver.manage().window().maximize();
-        return webDriver;
- }
-
-	private static void setCapabilities(String webBrowser, Platform xp) {
-	capabilities.setCapability(webBrowser, xp);
-	}
+           initDropDownObj(dropDownElement);
+           if (selValue.length > 0) {
+                  for (int i = 0; i < selValue.length; i++) {
+                        itemIndex = getDropDownItemIndex(selValue[i]);
+                        if (itemIndex > 0) {
+                               break;
+                        }
+                  }
+           }
+           if (itemIndex > -1) {
+                  selectedItemText = objSelect.getOptions().get(itemIndex).getText();
+                  objSelect.selectByIndex(itemIndex);
+                  Reporter.logEvent(Status.INFO, "Select drop down box item: "
+                               + selValue, "Selected item: " + selectedItemText, false);
+                  selected = true;
+           } else {
+                  Reporter.logEvent(Status.WARNING, "Select drop down box item: "
+                               + selValue, "Option not present in the drop down box",
+                               false);
+           }
+           return selected;
+    }
 
 }

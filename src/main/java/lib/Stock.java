@@ -14,15 +14,18 @@ import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
 public class Stock {
-	private static Map<String, String> globalParam = new LinkedHashMap<String, String>();
-	private static int dataProviderIterations;
-	public static Map<String, String> globalTestdata;
-	public static String globalManualTCName;
-	public static int iterationNumber = 0;
+	public static   Map<String, String> globalParam = new LinkedHashMap<String, String>();
+	private static   int dataProviderIterations;
+	//public static   Map<Integer,Map<String, String>> globalTestdata;
+	public static  Map<Long,Map<String, String>> globalTestdata = new LinkedHashMap<>();
+	
+
+	public   String globalManualTCName;
+	public static   int iterationNumber = 0;
+	public static Map<Integer,Map<Integer, Map<String, String>>> map = new LinkedHashMap<>();
 	
 	
-	
-	public static Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
+	public static   Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
 		// Converting Map to Object[][] to handle @DataProvider
 		Object[][] tdObject = null;
 		try{
@@ -43,11 +46,11 @@ public class Stock {
 		return new Object[][] { {} }; // As null cannot be returned in DataProvider
 	}
 	
-	public static int getIterations(){
+	public static   int getIterations(){
 		return dataProviderIterations;
 	}
 	
-	private static String checkEnv(String envName){
+	private static   String checkEnv(String envName){
 		if(envName.contains("PROJ")){
 			return Globals.DB_TYPE.get("PROJ");
 		}
@@ -57,7 +60,7 @@ public class Stock {
 		return null;
 	}
 
-	public static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) {
+	public  static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) {
 		Stock.iterationNumber = 0;
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
@@ -131,6 +134,7 @@ public class Stock {
 								}
 							}
 							mapData.remove("");
+							
 							td.put(Integer.valueOf(itrNo), mapData);
 							break;
 						}
@@ -140,6 +144,9 @@ public class Stock {
 			} else {
 				Log.Report(Level.DEBUG, tcName + " not found in test data : " + modName + " sheet");
 			}
+			map.put((int) Thread.currentThread().getId(), td);
+			
+			
 			return td;
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Exception occurred while preparing test data : " + e.getMessage());
@@ -147,7 +154,7 @@ public class Stock {
 		return null;
 	}
 
-	public static Map<String, String> getLoopIndex(String indexString) {
+	public static   Map<String, String> getLoopIndex(String indexString) {
 		String GET_INDEX_PATTERN = "[0-9,>temp]+";
 		String[] arrFirstSplit = null;
 		Pattern pattern = null;
@@ -197,7 +204,7 @@ public class Stock {
 		return null;
 	}
 
-	public static void getParam(String configPath) {
+	public static   void getParam(String configPath) {
 		String key = Globals.GC_EMPTY;
 		String val = Globals.GC_EMPTY;
 		XL_ReadWrite xlRW = null;
@@ -225,18 +232,44 @@ public class Stock {
 	}
 	
 	public static String GetParameterValue(String strParamName) {
-		String value = null;
-		if (globalTestdata.containsKey(strParamName.toUpperCase().trim())){
-			if (globalTestdata.get(strParamName.toUpperCase().trim()).length() > 0)
-				value = globalTestdata.get(strParamName.trim().toUpperCase());
+		//LinkedHashMap<String,String> temp = new LinkedHashMap<String,String>(globalTestdata);
+		
+		/*String value = null;
+				if (temp.containsKey(strParamName.toUpperCase().trim())){
+			if (temp.get(strParamName.toUpperCase().trim()).length() > 0)
+				value = temp.get(strParamName.trim().toUpperCase());
 		}	
 		else {
 			throw new Error("Parameter '" + strParamName + "' does not exist in Test data!\nStopping script execution!");
 		}
+		return value;*/
+		String value = null;
+		if(globalTestdata.get(Thread.currentThread().getId()).containsKey(strParamName.toUpperCase().trim())){
+			if(globalTestdata.get(Thread.currentThread().getId()).get(strParamName.trim().toUpperCase()).length() > 0)
+				value = globalTestdata.get(Thread.currentThread().getId()).get(strParamName.trim().toUpperCase());		
+		}else{
+			throw new Error(
+					"Parameter '"
+							+ strParamName
+							+ "' does not exist in Test data!\nStopping script execution!");
+		}		
 		return value;
 	}
 	
-	public static String[] getTestQuery(String queryName)	{
+		/*for(Map.Entry<String,String> refMap : temp.entrySet())
+		{
+		if(refMap.getKey() == (int)Thread.currentThread().getId())
+		{
+			
+			if (refMap.getValue().containsKey(strParamName.toUpperCase().trim())){
+			if (refMap.getValue().get(strParamName.toUpperCase().trim()).length() > 0)
+				value = refMap.getValue().get(strParamName.trim().toUpperCase());
+		}	
+		}
+		}
+		return value;*/
+	
+	public static   String[] getTestQuery(String queryName)	{
 		try{
 			String[] queryData;
 			String appName = getConfigParam("AUT");
@@ -259,7 +292,7 @@ public class Stock {
 		return null;
 	}
 	
-	public static String getConfigParam(String parameterName){
+	public static   String getConfigParam(String parameterName){
 		return globalParam.get(parameterName.trim().toUpperCase()) ;
 	}
 	
@@ -272,15 +305,15 @@ public class Stock {
 	 * <b> - false</b> to ignore updating value to already existing property.
 	 * Default is <b>true</b></pre>
 	 */
-	public static void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
+	public   void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
 		
 		if (overWriteExisting.length > 0) {
 			if (!overWriteExisting[0])
-				if (Stock.globalParam.containsKey(parameterName.trim().toUpperCase())) {
+				if (globalParam.containsKey(parameterName.trim().toUpperCase())) {
 					return;
 				}
 		}	
-		Stock.globalParam.put(parameterName.trim().toUpperCase(), parameterValue);
+		globalParam.put(parameterName.trim().toUpperCase(), parameterValue);
 	}
 
 	/**
@@ -288,7 +321,7 @@ public class Stock {
 	 * @param globalTestData<pre>It is the testdata map for the respective testcase</pre>
 	 * @return <pre><b>Returns the data for the running iteration number</b></pre>
 	 */
-	public static Map<String,String> getIterationTestData(
+	public   Map<String,String> getIterationTestData(
 			LinkedHashMap<Integer, Map<String, String>> globalTestData) {
 		LinkedList<Integer> keyList = new LinkedList<>(globalTestData.keySet());
 		int index = keyList.get(iterationNumber);
@@ -296,7 +329,7 @@ public class Stock {
 		return globalTestData.get(index);
 	}
 	
-	public static LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) {
+	public   LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) {
 		Stock.iterationNumber = 0;
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
