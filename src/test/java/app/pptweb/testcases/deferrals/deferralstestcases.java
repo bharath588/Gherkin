@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import appUtils.Common;
 import appUtils.TestDataFromDB;
 import lib.Reporter;
 import lib.Reporter.Status;
@@ -1511,6 +1512,9 @@ public class deferralstestcases {
 						"YEAR TO DATE CONTRIBUTION", "0");
 				Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 				Web.clickOnElement(priorContributions, "EDIT");
+				Web.clickOnElement(priorContributions, "LOGOUT");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.webdriver);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

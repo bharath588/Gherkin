@@ -5,7 +5,7 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     <!-- PART 1 -->
-   <!--  <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+    <!-- <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -162,12 +162,12 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> -->
      
-     -->
+    
     <!-- PART 2 -->
     
-   <!--  <test name="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
+<!--   <test name="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -220,12 +220,12 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test> 
      -->
     
    <!--  Has to execute PART 3 --> 
    
- <test name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type_split contribution">
+  <test name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type_split contribution">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -295,7 +295,7 @@
             </class>
         </classes>
     </test> 
-      <!-- <test name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+       <test name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
@@ -321,11 +321,11 @@
                 </methods>
             </class>
         </classes>
-    </test>  --> 
+    </test> 
     
     
     <!-- PART 4 -->
-    <!--  <test name="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
+     <!-- <test name="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>

@@ -466,8 +466,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				}
 				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				//Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
-				lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
+				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				this.btnSaveAddAutoIncreaseModal.click();
 				}
 				else

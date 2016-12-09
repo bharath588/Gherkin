@@ -23,7 +23,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@for='ssnInput']") private WebElement lblSSN;
 	@FindBy(xpath=".//*[@for='zipCodeInput']") private WebElement lblZipCode;
 	@FindBy(xpath=".//*[@for='lastNameInput']") private WebElement lblLastName;
-	@FindBy(xpath=".//*[@for='dateOfBirth']") private WebElement lblDateofBirth;
+	@FindBy(xpath=".//*[@for='dateOfBirthInput']") private WebElement lblDateofBirth;
 	@FindBy(xpath=".//*[@for='streetAddressInput']") private WebElement lblStreetAddress;
 	@FindBy(xpath=".//form[@name='registerForm']/.//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='ssnInput']") private WebElement txtSSN;
@@ -139,7 +139,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		} 
 		
 		if (Web.isWebElementDisplayed(this.lblZipCode)) {
-			if (!this.lblZipCode.getText().equalsIgnoreCase("ZIP CODE")) {
+			if (!this.lblZipCode.getText().equalsIgnoreCase("ZIP / Postal Code")) {
 				iselementDisplayed = false;
 			}
 		} 

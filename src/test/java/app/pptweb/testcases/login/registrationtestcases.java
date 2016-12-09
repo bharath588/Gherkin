@@ -632,8 +632,10 @@ public class registrationtestcases {
 			// Step 10 - In the zip code field, enter alphanumeric
 			// characters and
 			// move the cursor out of the field..
-
-			objAccountLookup.setTextToFields("ZIP CODE", "abc23");
+/*
+ * this assertion has been removed due to functionality cahnged as zip code field is accepting alphanumeric
+ */
+			/*objAccountLookup.setTextToFields("ZIP CODE", "abc23");
 			Web.clickOnElement(objAccountLookup, "Social Security Number");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup.getFieldErrorMsg("ZIP CODE");
@@ -656,7 +658,7 @@ public class registrationtestcases {
 									+ txtActErrMsg, false);
 				}
 			}
-
+*/
 			/*
 			 * // step 11 and 12 are UI validations that cannot be done // Step
 			 * 13 - Verfiy that the placeholder text for the three boxes in the
