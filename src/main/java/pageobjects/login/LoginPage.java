@@ -57,7 +57,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	@FindBy(xpath = ".//*[@class='banner-wrapper']/img")
 	private WebElement imgBanner;
-	@FindBy(xpath = ".//*[@class='copyright ng-binding']")
+	@FindBy(xpath = ".//*[@class='copyright']")
 	private WebElement txtCopyRightInfo;
 	@FindBy(linkText = "Requirements and Security")
 	private WebElement lnkSystemRequirements;

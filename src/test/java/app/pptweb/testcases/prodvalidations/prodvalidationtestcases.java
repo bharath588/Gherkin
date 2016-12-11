@@ -145,7 +145,7 @@ public class prodvalidationtestcases {
 						.logEvent(
 								Status.FAIL,
 								"Check CopyRight Information on the Login Page",
-								"CopyRight Informatio is Same on the Login Page",
+								"CopyRight Informatio is Not Same on the Login Page",
 								false);
 			}
 			if (!Common.getSponser().equalsIgnoreCase("Apple")) {

@@ -38,8 +38,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
-	private String lnkRequestLoan="//li[@class='nav-item']//a[./span[text()[normalize-space()='Request a loan']]]";
-	private String lnkBrokerage="//li[@class='nav-item']//a[./span[text()[normalize-space()='Brokerage']]]";
+	private String lnkRequestLoan="//a[text()[normalize-space()='Request a loan']]";
+	private String lnkBrokerage="//a[text()[normalize-space()='Brokerage']]";
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
 
