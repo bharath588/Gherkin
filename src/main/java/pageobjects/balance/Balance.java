@@ -34,9 +34,9 @@ public class Balance extends LoadableComponent<Balance> {
 	//@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']") private WebElement lblUserName;
 	@FindBy(xpath="//h1[text()='Balance']") private WebElement lblBalance;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
-	@FindBy(xpath="//li[contains(@class,'tab ng-scope')]//a[text()[normalize-space()='Balance']]") private WebElement tabBalance;
-	@FindBy(xpath="//li[contains(@class,'tab ng-scope')]//a[text()[normalize-space()='Balance over time']]") private WebElement tabBalanceOverTime;
-	@FindBy(xpath="//li[contains(@class,'tab ng-scope')]//a[text()[normalize-space()='Balance comparison']]") private WebElement tabBalanceComparison;
+	@FindBy(xpath="//li[contains(@class,'tab')]//a[text()[normalize-space()='Balance']]") private WebElement tabBalance;
+	@FindBy(xpath="//li[contains(@class,'tab')]//a[text()[normalize-space()='Balance over time']]") private WebElement tabBalanceOverTime;
+	@FindBy(xpath="//li[contains(@class,'tab')]//a[text()[normalize-space()='Balance comparison']]") private WebElement tabBalanceComparison;
 	@FindBy(id="balanceByMoneyTypeTable") private WebElement tblBalanceByMoney;
 	@FindBy(id="balanceByFundDetailTable") private WebElement tblBalanceByInvestment;
 	@FindBy(id="balanceHistoryTable") private WebElement tblBalanceHistory;

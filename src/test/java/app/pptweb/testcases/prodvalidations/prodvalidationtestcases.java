@@ -192,9 +192,9 @@ public class prodvalidationtestcases {
 			} else {
 				lib.Reporter
 						.logEvent(
-								Status.FAIL,
+								Status.INFO,
 								"Verifying Broker Check Notification is Opened in New Window",
-								"Broker Check Notification is Not Opened in New Window",
+								"Broker Check Notification is Not Opened Properly in New Window",
 								true);
 			}
 
@@ -274,7 +274,7 @@ public class prodvalidationtestcases {
 						.logEvent(
 								Status.FAIL,
 								"Check Customer Support Information on the Login Page",
-								"Customer Support Information isnot same on the Login Page\nExpected:"
+								"Customer Support Information is not same on the Login Page\nExpected:"
 										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")
 										+ "\nActual:" + customerSupportInfo,
 								false);
@@ -290,7 +290,7 @@ public class prodvalidationtestcases {
 			} else {
 				lib.Reporter.logEvent(Status.FAIL,
 						"Check Contact Us Information on the Login Page",
-						"Contact Us Information is not not on the Login Page",
+						"Contact Us Information is not same on the Login Page",
 						true);
 			}
 			List<String> telePhoneNo = login.getPreLoginTelePhoneNo(Stock
