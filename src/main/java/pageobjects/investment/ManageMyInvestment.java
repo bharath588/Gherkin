@@ -203,6 +203,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label[@class='add-view-label']]//input") private List<WebElement> inpInvestmentOption;
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
 	@FindBy(xpath = ".//*[@id='add-funds-button']") private WebElement btnAdd;
+	@FindBy(xpath = ".//*[@id='pptGrpModalSubmit']") private WebElement btnAlertContinue;
 	@FindBy(xpath = ".//*[@id='submitButton submit']") private WebElement btnSubmit;
 	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private List<WebElement> btnRemoveInvestment;
 	@FindBy(xpath = "//span[@class='allocation-funds-portfolio-total']") private WebElement txttotalInvestmentPercent;
@@ -925,6 +926,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		{
 			for(int i=0;i<btnRemoveInvestment.size();i++){
 				btnRemoveInvestment.get(i).click();
+				Web.waitForPageToLoad(Web.webdriver);
 			}
 		}
 				Web.clickOnElement(lnkAddViewAllFunds);
@@ -962,6 +964,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"Verify Investment options Table is displayed",
 					"Investment options table is not displayed ", true);
 		Web.clickOnElement(btnAdd);
+			
 		WebElement inptAllocationPercent1 = Web.webdriver.findElement(By
 				.xpath(inputAllocationPercrntage.replace("Investment Option",
 						investmentFundName1)));
@@ -983,6 +986,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				"Investment Percentage is not Matching", true);
 			}
 		btnSubmit.click();
+		if(Web.isWebElementDisplayed(btnAlertContinue, true)){
+			Web.clickOnElement(btnAlertContinue);
+		}
 	Common.waitForProgressBar();
 	Web.waitForPageToLoad(Web.webdriver);
 	String currentFund1=txtCurrentFunds.get(0).getText().trim();

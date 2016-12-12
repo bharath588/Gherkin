@@ -111,11 +111,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
+		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg))
 		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");
+	    
+		else{
+			Assert.assertTrue(false);
+		}
 		String accuCode = null;
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
+		 
 	/*	if (Stock.globalTestdata.containsKey("ACCUCODE"))
 
 		{

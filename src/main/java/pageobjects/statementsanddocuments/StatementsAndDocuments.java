@@ -307,6 +307,7 @@ public void verifyTableDisplayed(String tableName){
 	 */
 	public void selectDateFrequency(String frequency) throws InterruptedException{
 		Actions mouse = new Actions(Web.webdriver);
+		Web.webdriver.switchTo().defaultContent();
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(drpDateFreequency);
 		if(!Web.isWebElementDisplayed(drpDateFreequency)){

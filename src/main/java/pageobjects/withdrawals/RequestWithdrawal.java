@@ -49,8 +49,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
 	private WebElement btnConfirmContinue;
-	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
-	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
+	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
+	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
 	private WebElement drpWithdrawalType;
 	@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	private WebElement btnContinueWithdrawal;
@@ -294,6 +294,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("INPUT ROTH ACCOUNT NUMBER")) {
 			return this.inpRothAccountNumber;
+		}
+		if (fieldName.trim().equalsIgnoreCase("FIRST CLASS MAIL")) {
+			return this.inpFirstClassMail;
 		}
 		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"

@@ -219,7 +219,8 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-			Reporter.finalizeTCReport();
+				Web.webdriver.switchTo().defaultContent();
+			    Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -370,6 +371,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -436,6 +438,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -514,6 +517,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -807,6 +811,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -860,6 +865,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -936,6 +942,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1004,6 +1011,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1070,6 +1078,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1147,6 +1156,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1212,6 +1222,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1254,6 +1265,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1300,6 +1312,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1368,6 +1381,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1426,6 +1440,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1449,10 +1464,8 @@ public class prodvalidationtestcases {
 			planforms.get();
 			//Thread.sleep(7000);
 			
-				if(!Web.isWebElementDisplayed(planforms, "Tabel Planforms",true)){
-					Common.handlePageToLoad("Plan forms");
-				}
-				
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			planforms.clickOnForm(null);
 			if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
@@ -1477,6 +1490,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1536,6 +1550,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1586,6 +1601,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1750,6 +1766,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1899,7 +1916,7 @@ public class prodvalidationtestcases {
 			}
 			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
 			Common.waitForProgressBar();
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Delivery method");
+			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("delivery method");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify Delivery Method Page is Displayed",
@@ -1909,7 +1926,8 @@ public class prodvalidationtestcases {
 						"Verify Delivery Method Page is Displayed",
 						"Delivery Method Page is Not Displayed", true);
 			}
-			requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
+			Web.clickOnElement(requestWithdrawal, "FIRST CLASS MAIL");
+			//requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
 			Common.waitForProgressBar();
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {
@@ -2001,6 +2019,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2129,6 +2148,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2251,6 +2271,7 @@ public class prodvalidationtestcases {
 					ae.getMessage(), true);
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2398,6 +2419,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2463,6 +2485,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2528,6 +2551,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2593,6 +2617,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2658,6 +2683,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2702,6 +2728,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2738,6 +2765,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2794,6 +2822,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2862,6 +2891,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2987,6 +3017,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3123,6 +3154,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3214,6 +3246,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3282,6 +3315,7 @@ public class prodvalidationtestcases {
         }
 		finally { 
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -3343,7 +3377,9 @@ public class prodvalidationtestcases {
                         
         }
 		finally { 
-			try { Reporter.finalizeTCReport(); }
+			try { 
+				Web.webdriver.switchTo().defaultContent();
+				Reporter.finalizeTCReport(); }
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 	}
@@ -3403,6 +3439,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
+				Web.webdriver.switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();

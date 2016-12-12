@@ -69,7 +69,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//div[@id='helpMeDoItUnenrolled']//ul/li/a[text()='Target Date Funds']") private WebElement lblTargetDateFunds;
 @FindBy(xpath="//label[@id='investments-chooser-label']") private WebElement lblInvestment;
 @FindBy(xpath="//div[@id='paycheck-breakdown']") private WebElement paycheckRainbowLine;
-@FindBy(xpath="//button[@ng-click='viewDetailsClick()']/span[@class='ng-binding ng-scope' and text()[normalize-space()='View Details']]") private WebElement btnViewDetails;
+@FindBy(xpath="//button[@ng-click='viewDetailsClick()']/span[text()[normalize-space()='View Details']]") private WebElement btnViewDetails;
 @FindBy(xpath="//ul/li[@label='My Current Savings']/span[@class='paycheck-item-val ng-binding']") private WebElement lblCurentSavings;
 @FindBy(xpath="//ul/li[@label='My Future Savings']/span[@class='paycheck-item-val ng-binding']") private WebElement lblFutureSavings;
 //@FindBy(xpath="//ul/li[@label='Employer Past Contribution']/span[@class='paycheck-item-val ng-binding']") private WebElement lblEmployerPastContribution;
