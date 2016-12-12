@@ -111,7 +111,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
-		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg))
+		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
 		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");
 	    
 		else{

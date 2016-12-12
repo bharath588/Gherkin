@@ -3421,7 +3421,7 @@ public class prodvalidationtestcases {
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}*/
 			Web.webdriver.switchTo().defaultContent();
-			 //Web.clickOnElement(investment, "LOGOUT");
+			 Web.clickOnElement(investment, "LOGOUT");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
