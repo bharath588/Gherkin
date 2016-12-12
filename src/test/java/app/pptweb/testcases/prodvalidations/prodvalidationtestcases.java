@@ -2258,7 +2258,8 @@ public class prodvalidationtestcases {
 			//landingPage.dismissPopUps(true, true);
 			// Logout if opted
 			Web.clickOnElement(landingPage, "LOGOUT");
-
+			Common.waitForProgressBar();
+			 Web.waitForPageToLoad(Web.webdriver);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3422,6 +3423,8 @@ public class prodvalidationtestcases {
 			}*/
 			Web.webdriver.switchTo().defaultContent();
 			 Web.clickOnElement(investment, "LOGOUT");
+			 Common.waitForProgressBar();
+			 Web.waitForPageToLoad(Web.webdriver);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
