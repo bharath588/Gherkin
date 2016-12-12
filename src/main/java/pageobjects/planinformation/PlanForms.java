@@ -42,9 +42,9 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(xpath="//h1[text()='Plan forms']") private WebElement lblPlanForms;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
-		@FindBy(xpath="//table[@class='table ng-scope']") private WebElement tblPlanForms;
-		@FindBy(xpath="//table[@class='table ng-scope']/tbody/tr") private List<WebElement> lstPlanforms;
-		@FindBy(xpath="//table[@class='table ng-scope']/tbody//a") private List<WebElement> lstPlanformName;
+		@FindBy(xpath="//table[@class='table']") private WebElement tblPlanForms;
+		@FindBy(xpath="//table[@class='table']/tbody/tr") private List<WebElement> lstPlanforms;
+		@FindBy(xpath="//table[@class='table']/tbody//a") private List<WebElement> lstPlanformName;
 		@FindBy(xpath = "//img[@class='site-logo']")
 		private WebElement lblSponser;
 		@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
