@@ -179,7 +179,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 }
 		 else
 		 {	
-			 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg))
+			 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
 			 {
 				 Web.webdriver.get(url);
 			 }

@@ -33,7 +33,7 @@ public class Common {
 	public static final String GC_DEFAULT_SPONSER = "Empower";
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	public static WebElement lblUserName;
-	@FindBy(id="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
+	@FindBy(name="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
 	private static String userName = "";
 	static String userFromDatasheet = null;
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
@@ -407,6 +407,7 @@ public class Common {
     }
       public static boolean switchToLegacyFutureFrame(){
           try{
+        	  Web.webdriver.switchTo().defaultContent();
         	  Web.waitForElement(iframeLegacyFeature);
         	  if(Web.isWebElementDisplayed(iframeLegacyFeature)){
         	  Web.webdriver.switchTo().frame(iframeLegacyFeature);
