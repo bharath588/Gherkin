@@ -247,6 +247,8 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	 * @param dateFrequency
 	 */
 	public void selectDateFrequency(String frequency){
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);
 		Actions mouse = new Actions(Web.webdriver);
 		Web.webdriver.switchTo().frame(iframeLegacyFeature);
 		Web.clickOnElement(drpDateFreequency);

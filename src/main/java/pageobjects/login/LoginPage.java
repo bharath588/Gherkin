@@ -57,6 +57,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	@FindBy(xpath = ".//*[@class='banner-wrapper']/img")
 	private WebElement imgBanner;
+	@FindBy(id="helpBlock")
+	private WebElement sessionTimeOutErrMsg;
 	@FindBy(xpath = ".//*[@class='copyright']")
 	private WebElement txtCopyRightInfo;
 	@FindBy(linkText = "Requirements and Security")
@@ -176,7 +178,11 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Web.clickOnElement(lnkLogOut);
 		 }
 		 else
-		 {			 
+		 {	
+			 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg))
+			 {
+				 Web.webdriver.get(url);
+			 }
 		 	 Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
