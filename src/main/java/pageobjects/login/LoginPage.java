@@ -112,8 +112,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	protected void isLoaded() throws Error {
 		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
 		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
-		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");
-	    
+		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");	    
 		else{
 			Assert.assertTrue(false);
 		}
@@ -143,12 +142,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	@Override
 	protected void load() {
-
-		/*
-		 * try { Thread.sleep(2000); } catch (InterruptedException e1) { // TODO
-		 * Auto-generated catch block }
-		 */
-
 		/*
 		 * lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		 * lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
@@ -182,14 +175,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 if(Web.isWebElementDisplayed(lnkLogOut))
 		 {
 			Web.clickOnElement(lnkLogOut);
-		 }
+			Web.waitForPageToLoad(Web.webdriver);
+		 }		
 		 else
 		 {	
-			 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
-			 {
-				 Web.webdriver.get(url);
-			 }
-		 	 Web.webdriver.get(url);
+		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
+		 {
+			 Web.webdriver.close();
+			 Web.webdriver.get(url);
+			}
+		  Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
 			lib.Web.webdriver.manage().window().maximize();
