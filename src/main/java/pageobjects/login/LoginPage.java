@@ -180,10 +180,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 else
 		 {	
 		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
-		 {
-			 Web.webdriver.close();
+		 {			 
 			 Web.webdriver.get(url);
-			}
+		}
 		  Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))

@@ -15,6 +15,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
@@ -85,6 +86,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private String 
 	moneyTypeSourceSection="//div[contains(@class,'selected-row-body')][.//input[contains(@value,'Withdrawal Type')]]//div[contains(@class,' source-row')][.//label[text()[normalize-space()='Money Source Type']]]";
 	
+	@FindBy(xpath=".//div[contains(@ng-if,'FULL WD')]")
+	private WebElement totalFWDVestedBalance;
 	
 	@FindBy(xpath = ".//select[contains(@ng-model,'companyType')]")
 	private WebElement drpRollOverCompany;	
