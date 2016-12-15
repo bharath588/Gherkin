@@ -50,8 +50,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
 	private WebElement btnConfirmContinue;
-	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
+	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
 	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
+	@FindBy(xpath=".//select[contains(@class,'ng-pristine')]")
 	private WebElement drpWithdrawalType;
 	@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	private WebElement btnContinueWithdrawal;
