@@ -8,6 +8,7 @@ import lib.Stock;
 import lib.Web;
 import lib.Reporter.Status;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -180,11 +181,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 else
 		 {	
 		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
-		 {			 
-			 //Web.webdriver.close();
-			 //Web.webdriver.get(Stock.getConfigParam("BROWSER"));
-			 //Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));
-			 Web.webdriver.get(url);
+		 {
+			 Web.webdriver.close();
+			 try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROSWER"));			 
+			 Web.webdriver.navigate().to(url);
+			 Web.waitForPageToLoad(Web.webdriver);
 		 }
 		  Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
@@ -199,7 +206,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		if (isElementPresent)
 			btnDismiss.click();
 		Web.waitForPageToLoad(Web.webdriver);
-
 	}
 	}
 
