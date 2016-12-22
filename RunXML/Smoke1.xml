@@ -5,13 +5,13 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	<test name="Manage_My_Investment_Flow_New">
+	<test name="Dollar_Cost_Average_Flow">
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Manage_My_Investment_Flow_New" />
+					<include name="Dollar_Cost_Average_Flow" />
 				</methods>
 			</class>
 		</classes>
-	</test>	
+	</test>
 </suite>

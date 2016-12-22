@@ -176,7 +176,7 @@ public class beneficiariestestcases {
 
 	@Test(dataProvider = "setData")
 	public void UnMarried_Multiple_Individual_beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 
@@ -424,7 +424,7 @@ public class beneficiariestestcases {
 	}
 	@Test(dataProvider = "setData")
 	public void Date_of_Birth_Error_Messages(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -488,7 +488,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC005_Married_no_Spouse_Error_message(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -550,7 +550,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC013_UnMarried_Trust_beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -663,7 +663,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void UnMarried_Trust_warning_message(int itr, Map<String, String> testdata){
-//		Stock.globalTestdata = testdata;
+//		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -722,7 +722,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC016_QJSA_with_Beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -843,7 +843,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -899,7 +899,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC020_Participants_with_auth_code_I(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -968,7 +968,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC017_Ability_to_remove_a_beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -1058,7 +1058,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC007_Marital_status_not_displayed_One_beneficiary_use_address_on_record(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -1132,7 +1132,7 @@ public class beneficiariestestcases {
 	
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC018_Add_beneficiary_after_enrollment(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
@@ -1245,7 +1245,7 @@ public class beneficiariestestcases {
 		
 		@Test(dataProvider = "setData")
 		public void Married_multiple_Primary_Beneficiary(int itr, Map<String, String> testdata){
-			Stock.globalTestdata = testdata;
+			
 //	      Globals.GBL_CurrentIterationNumber = itr;
 			
 			
@@ -1384,7 +1384,7 @@ public class beneficiariestestcases {
 		
 		@Test(dataProvider = "setData")
 		public void create_Married_Spouse_Multiple_Spouse_Error(int itr, Map<String, String> testdata){
-			Stock.globalTestdata = testdata;
+			
 //	      Globals.GBL_CurrentIterationNumber = itr;
 			
 			
