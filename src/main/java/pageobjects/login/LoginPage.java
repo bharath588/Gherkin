@@ -182,16 +182,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 {	
 		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
 		 {
-			 Web.webdriver.close();
+			 Web.webdriver.navigate().to(url);
+			 Web.webdriver.navigate().refresh();
+			 Web.waitForPageToLoad(Web.webdriver);
 			 try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			 Web.getWebDriver(Stock.getConfigParam("BROWSER"));			 
-			 Web.webdriver.navigate().to(url);
-			 Web.waitForPageToLoad(Web.webdriver);
+			// Web.getWebDriver(Stock.getConfigParam("BROWSER"));			 
+			
 		 }
 		  Web.webdriver.get(url);
 		//Web.webdriver.navigate().refresh();
