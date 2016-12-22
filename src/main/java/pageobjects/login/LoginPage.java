@@ -189,7 +189,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			 Web.webdriver = Web.getWebDriver(Stock.getConfigParam("BROWSER"));			 
+			 Web.getWebDriver(Stock.getConfigParam("BROWSER"));			 
 			 Web.webdriver.navigate().to(url);
 			 Web.waitForPageToLoad(Web.webdriver);
 		 }
