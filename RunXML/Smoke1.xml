@@ -5,22 +5,13 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	<test name="Dollar_Cost_Average_Flow">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Dollar_Cost_Average_Flow" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	<test name="Brokerage_validations">
-		<classes>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-				<methods>
-					<include name="Brokerage_validations" />
-				</methods>
-			</class>
-		</classes>
-	</test>	
+	  <test name="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>

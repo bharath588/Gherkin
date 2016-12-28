@@ -244,4 +244,13 @@
             </class>
         </classes>
     </test>
+    <test name="SIT_PPTWEB_Beneficiary_TC040_Beneficiary error messages">
+        <classes>
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+                <methods>
+                    <include name="validate_Beneficiary_ErrorMessages"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>

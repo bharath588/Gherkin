@@ -98,6 +98,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath="//div[contains(@ng-if,'Contingent')]/table") private List<WebElement> lstTablecontingentBeneficiary;
+	private String lblerrorMessage="//*[contains(text(),'webElementText')]";
 	/** Empty args constructor
 	 * 
 	 */
@@ -436,7 +437,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						
 						if(attribute.equalsIgnoreCase("SSN")){
 //							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
+							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
 						}
 						if(attribute.equalsIgnoreCase("DOB")){
 							if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
@@ -472,7 +473,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					
 					if(attribute.equalsIgnoreCase("SSN")){
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
@@ -510,7 +511,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					
 					if(attribute.equalsIgnoreCase("SSN")){
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").substring(Stock.GetParameterValue("ssn").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
@@ -581,7 +582,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
-		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("SSN"));
+		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("BenificiarySSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
 		Reporter.logEvent(Status.INFO, "Verify beneficiary details entered", "Entered beneficiary details", true);
 	}
@@ -733,5 +734,22 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	public void refresh(){
 		lib.Web.webdriver.navigate().refresh();
 	}
+	public boolean isErrorMessageDisplayed(String errorMessage) {
+		boolean isTextDisplayed=false;
+		 WebElement txterrorMessage= Web.webdriver.findElement(By.xpath(lblerrorMessage.replace("webElementText", errorMessage)));
 	
+		isTextDisplayed = Web.isWebElementDisplayed(txterrorMessage, true);
+		/*if (isTextDisplayed) {
+			lib.Reporter.logEvent(Status.PASS, "Verify " + errorMessage
+					+ "  is Displayed", errorMessage + " is Displayed",
+					false);
+
+		} else {
+			lib.Reporter.logEvent(Status.FAIL, "Verify " + errorMessage
+					+ " is Displayed",
+					errorMessage + " is Not Displayed", false);
+		}*/
+	
+return isTextDisplayed;
+	}
 }

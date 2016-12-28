@@ -46,6 +46,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(linkText="Didn't receive the code?") private WebElement lnkDidntReceiveCode;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help']]") private WebElement lblLoginHelp;
 	@FindBy(xpath="//button[contains(text(),'Continue to My Account')]") private WebElement btnContinueToMyAccount;
+	@FindBy(xpath="//h1[contains(text(),'Confirm your contact information')]") private WebElement txtConfirmContactInfo;
 	
 	/** Empty args constructor
 	 * 
@@ -179,6 +180,11 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public void selectCodeDeliveryOption(String deliveryOption,boolean... args){
 		
+		if(Web.isWebElementDisplayed(txtConfirmContactInfo)){
+			Web.clickOnElement(btnContinue);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+		}
 		if (deliveryOption.trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 			
 			try {

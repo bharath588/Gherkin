@@ -1,36 +1,40 @@
 package app.pptweb.testcases.beneficiaries;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
+import lib.Reporter.Status;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
 
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
-import pageobjects.deferrals.Deferrals;
 import pageobjects.enrollment.Enrollment;
 import pageobjects.general.LeftNavigationBar;
-import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+import appUtils.Common;
+import appUtils.TestDataFromDB;
 import core.framework.Globals;
 
 public class beneficiariestestcases {
 	
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
+	public static String participant_SSN = null;
+	public static String first_Name = null;
+	static String printTestData="";
 	
 	@BeforeClass
     public void ReportInit(){               
@@ -49,6 +53,25 @@ public class beneficiariestestcases {
 
     }
     
+    public void prepareBeneficiaryTestData(String quesryNmae,String... queryParam) {
+		try {
+			testDataFromDB = TestDataFromDB.getParticipantDetails(
+					quesryNmae, queryParam);
+			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+    
+    private String printTestData() throws Exception {
+		printTestData="";
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+		}
+	 return printTestData;
+	}
 
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
@@ -56,7 +79,8 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -72,8 +96,8 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
-
-
+			participant_SSN = Stock.GetParameterValue("SSN");
+			first_Name=Stock.GetParameterValue("FIRST_NAME");
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 
 			//			// add a beneficiary
@@ -102,7 +126,8 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			//verify beneficiary name
-
+			Common.waitForProgressBar();
+            Web.waitForPageToLoad(Web.webdriver);
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
@@ -158,7 +183,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
 				
 			} catch (Exception e) {
 
@@ -182,6 +207,12 @@ public class beneficiariestestcases {
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -227,6 +258,8 @@ public class beneficiariestestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			//verify beneficiary name
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
@@ -284,7 +317,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -308,6 +341,11 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -386,7 +424,7 @@ public class beneficiariestestcases {
 
 
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 
 
 		}
@@ -407,7 +445,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -430,6 +468,11 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -494,6 +537,11 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -556,6 +604,11 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -644,7 +697,7 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 					beneficiary.refresh();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -669,6 +722,11 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -721,19 +779,23 @@ public class beneficiariestestcases {
 
 	
 	@Test(dataProvider = "setData")
-	public void Beneficiary_TC016_QJSA_with_Beneficiary(int itr, Map<String, String> testdata){
+	public void Beneficiary_TC016_QJSA_with_Beneficiary(int itr, Map<String, String> testdata) throws Exception{
 		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-		
-						
+					
 //			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //			leftmenu = new LeftNavigationBar(homePage);			
 //		else {
@@ -744,6 +806,16 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
+			if(Stock.GetParameterValue("BeneficiaryOnFile").equalsIgnoreCase("Yes")){
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.clickOnElement(beneficiary, "View Beneficiary Button");
+			}
+			String[] sqlQuery = Stock.getTestQuery("updateQJSA");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("gc_id"));	
+			Web.webdriver.navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg",true )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -832,6 +904,19 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			String[] sqlQuery = Stock.getTestQuery("resetQJSA");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("gc_id"));
+			beneficiary.refresh();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
+					beneficiary.refresh();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
         }
 		try {
             Reporter.finalizeTCReport();
@@ -842,19 +927,22 @@ public class beneficiariestestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message(int itr, Map<String, String> testdata){
+	public void Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message(int itr, Map<String, String> testdata) throws Exception{
 		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-		
-						
+								
 //			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 //			leftmenu = new LeftNavigationBar(homePage);			
 //		else {
@@ -864,6 +952,18 @@ public class beneficiariestestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			beneficiary.get();
+			
+			if(Stock.GetParameterValue("addBeneficiary").equalsIgnoreCase("Yes")){
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.clickOnElement(beneficiary, "View Beneficiary Button");
+			}
+			String[] sqlQuery = Stock.getTestQuery("updateAllocationsToNull");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
+			Web.webdriver.navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -888,6 +988,19 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			String[] sqlQuery = Stock.getTestQuery("updateAllocationsTo100");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], participant_SSN);
+			beneficiary.refresh();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
+					beneficiary.refresh();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
         }
 		try {
             Reporter.finalizeTCReport();
@@ -898,13 +1011,18 @@ public class beneficiariestestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void Beneficiary_TC020_Participants_with_auth_code_I(int itr, Map<String, String> testdata){
+	public void Beneficiary_TC020_Participants_with_auth_code_I(int itr, Map<String, String> testdata) throws Exception{
 		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -920,6 +1038,13 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
+			
+			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
+			Web.webdriver.navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
+			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			
 			// add a beneficiary
@@ -957,6 +1082,10 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], participant_SSN);
+			beneficiary.refresh();
         }
 		try {
             Reporter.finalizeTCReport();
@@ -967,13 +1096,19 @@ public class beneficiariestestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void Beneficiary_TC017_Ability_to_remove_a_beneficiary(int itr, Map<String, String> testdata){
+	public void Beneficiary_TC017_Ability_to_remove_a_beneficiary(int itr, Map<String, String> testdata) throws Exception{
 		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -989,6 +1124,15 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
+			
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.clickOnElement(beneficiary, "View Beneficiary Button");
+				
+				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), "Child", Stock.GetParameterValue("Use Current Address"), "Contingent",Stock.GetParameterValue("Allocation"));
+				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.clickOnElement(beneficiary, "View Beneficiary Button");
+			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Contingent");
 			if(lib.Web.isWebElementDisplayed(beneficiary, "Delete Checkbox",true))
@@ -1047,6 +1191,9 @@ public class beneficiariestestcases {
                         //throw ae;
         }
 		finally {
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
+			beneficiary.refresh();
         }
 		try {
             Reporter.finalizeTCReport();
@@ -1064,9 +1211,14 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			String[] sqlQuery = Stock.getTestQuery("updateParticipantMarritalStatus");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("Participant ssn"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], participant_SSN);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1115,7 +1267,7 @@ public class beneficiariestestcases {
 		finally {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 				
 			} catch (Exception e) {
 
@@ -1138,6 +1290,10 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1228,7 +1384,7 @@ public class beneficiariestestcases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 			} catch (Exception e) {
 				
 				e.printStackTrace();
@@ -1251,7 +1407,11 @@ public class beneficiariestestcases {
 			
 			try{
 				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-				
+				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+				participant_SSN = Stock.GetParameterValue("SSN");
+			    first_Name=Stock.GetParameterValue("FIRST_NAME");
 				TestDataFromDB.updateTable("setQjsaAndBeneSpouseRule", Stock.GetParameterValue("qjsa_qosa_qpsa_ind"),Stock.GetParameterValue("bene_spousal_rule_code"),Stock.GetParameterValue("Plan_id"));
 				//TestDataFromDB.fetchRegisteredParticipant("194391-01");
 				LeftNavigationBar leftmenu;
@@ -1290,7 +1450,7 @@ public class beneficiariestestcases {
 						Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 					if(beneficiary.verifyConfirmationPageDisplayed()){
 						Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);
-						
+					
 						Web.clickOnElement(beneficiary, "View Beneficiary Button");
 						Reporter.logEvent(Status.INFO, "Click View Beneficiary Button", "Clicked on View Beneficiary Button", false);
 						beneficiary.verifyBeneficiaryDisplayed("Primary",Stock.GetParameterValue("FirstName")+" "+Stock.GetParameterValue("MiddleName")+" "+Stock.GetParameterValue("LastName"));
@@ -1362,7 +1522,7 @@ public class beneficiariestestcases {
 				MyBeneficiaries beneficiary = new MyBeneficiaries();
 				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 					try {
-						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+						beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 						beneficiary.refresh();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -1390,7 +1550,11 @@ public class beneficiariestestcases {
 			
 			try{
 				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-				
+				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+				participant_SSN = Stock.GetParameterValue("SSN");
+			    first_Name=Stock.GetParameterValue("FIRST_NAME");
 				//TestDataFromDB.fetchRegisteredParticipant("194391-01");
 				LeftNavigationBar leftmenu;
 				LoginPage login = new LoginPage();
@@ -1457,7 +1621,92 @@ public class beneficiariestestcases {
 				MyBeneficiaries beneficiary = new MyBeneficiaries();
 				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 					try {
-						beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("Participant ssn"), Stock.GetParameterValue("Participant first name")+"%");
+						beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
+						beneficiary.refresh();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				
+	        }
+			try {
+	            Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+	            // TODO Auto-generated catch block
+	            e1.printStackTrace();
+			}
+		
+	}
+
+		@Test(dataProvider = "setData")
+		public void validate_Beneficiary_ErrorMessages(int itr, Map<String, String> testdata){
+			
+//	      Globals.GBL_CurrentIterationNumber = itr;
+			
+			
+			try{
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+				participant_SSN = Stock.GetParameterValue("SSN");
+			    first_Name=Stock.GetParameterValue("FIRST_NAME");
+				//TestDataFromDB.fetchRegisteredParticipant("194391-01");
+				LeftNavigationBar leftmenu;
+				LoginPage login = new LoginPage();
+				TwoStepVerification mfaPage = new TwoStepVerification(login);
+				LandingPage homePage = new LandingPage(mfaPage);
+				leftmenu = new LeftNavigationBar(homePage);
+				MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+				beneficiary.get();
+				Web.waitForElement(beneficiary, "Married");
+				if(Web.isWebElementDisplayed(beneficiary, "Married")){
+					Web.clickOnElement(beneficiary, "Married");
+				}
+				Web.selectDropDownOption(beneficiary,"Beneficiary Relation", "Spouse");
+				Web.waitForElement(beneficiary, "First name");
+				Web.clickOnElement(beneficiary, "Save button");
+				Web.waitForPageToLoad(Web.webdriver);
+				//verify All Error Messages Displayed properly
+				if(beneficiary.isErrorMessageDisplayed("First name is required."))
+					Reporter.logEvent(Status.PASS, "verify 'First name is required' Error Message is Displayed", "'First name is required' Error Message is Displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify 'First name is required' Error Message is Displayed", "'First name is required' Error Message is Not Displayed", true);
+
+				if(beneficiary.isErrorMessageDisplayed("Last name is required."))
+					Reporter.logEvent(Status.PASS, "verify 'Last name is required.' Error Message is Displayed", "'Last name is required.' Error Message is Displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify 'Last name is required.' Error Message is Displayed", "'Last name is required.' Error Message is Not Displayed", true);	
+				if(beneficiary.isErrorMessageDisplayed("Date of birth is required."))
+					Reporter.logEvent(Status.PASS, "verify 'Date of birth is required.' Error Message is Displayed", "'Date of birth is required.' Error Message is Displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify 'Date of birth is required.' Error Message is Displayed", "'Date of birth is required.' Error Message is Not Displayed", true);	
+				if(beneficiary.isErrorMessageDisplayed("Social Security number is required."))
+					Reporter.logEvent(Status.PASS, "verify 'Social Security number is required.' Error Message is Displayed", "'Social Security number is required.' Error Message is Displayed", false);
+				else
+					Reporter.logEvent(Status.FAIL, "verify 'Social Security number is required.' Error Message is Displayed", "'Social Security number is required.' Error Message is Not Displayed", true);	
+					
+			}
+			catch(Exception e)
+	        {
+	            e.printStackTrace();
+	            Globals.exception = e;
+	            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+	        }
+			catch(Error ae)
+	        {
+	                        ae.printStackTrace();
+	                        Globals.error = ae;
+	                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+	                        //throw ae;
+	        }
+			finally {
+				//delete beneficiary from Database
+				MyBeneficiaries beneficiary = new MyBeneficiaries();
+				if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+					try {
+						beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 						beneficiary.refresh();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
