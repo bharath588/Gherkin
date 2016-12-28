@@ -219,7 +219,7 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Manage_My_Investment_Flow" />
+					<include name="Manage_My_Investment_Flow_New" />
 				</methods>
 			</class>
 		</classes>

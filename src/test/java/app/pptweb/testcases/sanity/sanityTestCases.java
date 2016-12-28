@@ -37,8 +37,9 @@ import core.framework.Globals;
 public class sanityTestCases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	private static HashMap<String, String> testDataFromDB = null;
-	public static String SSN = null;
-	public static String firstName = null;
+	public static String participant_SSN = null;
+	public static String first_Name = null;
+	static String printTestData="";
 	LoginPage login;
 	String tcName;
 
@@ -88,6 +89,26 @@ public class sanityTestCases {
 		}
 
 	}
+	
+	 public void prepareBeneficiaryTestData(String quesryNmae,String... queryParam) {
+			try {
+				testDataFromDB = TestDataFromDB.getParticipantDetails(
+						quesryNmae, queryParam);
+				TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+	    
+	    private String printTestData() throws Exception {
+			printTestData="";
+			for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+				if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+					printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+			}
+		 return printTestData;
+		}
 	@Test(dataProvider = "setData")
 	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device(int itr, Map<String, String> testdata){
 		
@@ -194,7 +215,7 @@ public class sanityTestCases {
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			
-			SSN = Stock.GetParameterValue("SSN");
+			participant_SSN = Stock.GetParameterValue("SSN");
 			//firstName = Stock.GetParameterValue("FIRST_NAME");
 			String hdrBlockText;
 			boolean isMatching=false;
@@ -306,7 +327,7 @@ public class sanityTestCases {
 
 		} finally {
 			try {
-				ExecuteQuery.UnRegisterParticipant(SSN);
+				ExecuteQuery.UnRegisterParticipant(participant_SSN);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -875,14 +896,15 @@ public class sanityTestCases {
 	@Test(dataProvider = "setData")
 	public void Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
 	
+		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));			
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			MyAccountsPage accpage=new MyAccountsPage(homePage);
 
 			//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 			//			leftmenu = new LeftNavigationBar(homePage);			
@@ -890,13 +912,12 @@ public class sanityTestCases {
 			//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
 			//			leftmenu = new LeftNavigationBar(accountPage);
 			//		}
-			leftmenu = new LeftNavigationBar(accpage);
+			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
-
-			SSN = Stock.GetParameterValue("SSN");
-			firstName = Stock.GetParameterValue("FIRSTNAME");
+			participant_SSN = Stock.GetParameterValue("SSN");
+			first_Name=Stock.GetParameterValue("FIRST_NAME");
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 
 			//			// add a beneficiary
@@ -925,7 +946,8 @@ public class sanityTestCases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			//verify beneficiary name
-
+			Common.waitForProgressBar();
+            Web.waitForPageToLoad(Web.webdriver);
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
@@ -963,9 +985,6 @@ public class sanityTestCases {
 					Reporter.logEvent(Status.FAIL, "verify beneficiary Address", "beneficiary Address not matching", true);
 			}
 
-//			beneficiary.verifyBeneficiaryDetailsFromDB(Stock.GetParameterValue("SSN"));
-
-
 		}
 		catch(Exception e)
 		{
@@ -984,7 +1003,7 @@ public class sanityTestCases {
 			//delete beneficiary from Database
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			try {
-				beneficiary.deleteBeneficiariesFromDB(SSN,firstName);
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
 				
 			} catch (Exception e) {
 
@@ -1002,18 +1021,23 @@ public class sanityTestCases {
 
 	@Test(dataProvider = "setData")
 	public void UnMarried_Multiple_Individual_beneficiary(int itr, Map<String, String> testdata){
-		Stock.globalTestdata = testdata;
+		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
 
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));		
+			
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			MyAccountsPage accpage=new MyAccountsPage(homePage);
+
 
 			//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
 			//			leftmenu = new LeftNavigationBar(homePage);			
@@ -1021,15 +1045,14 @@ public class sanityTestCases {
 			//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
 			//			leftmenu = new LeftNavigationBar(accountPage);
 			//		}
-			leftmenu = new LeftNavigationBar(accpage);
+			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 
 			beneficiary.get();
-			SSN = Stock.GetParameterValue("SSN");
-			firstName = Stock.GetParameterValue("FIRSTNAME");
+
 
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"), Stock.GetParameterValue("Allocation"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 
 			try {
 				Thread.sleep(5000);
@@ -1055,6 +1078,8 @@ public class sanityTestCases {
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.webdriver);
 			//verify beneficiary name
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
@@ -1112,7 +1137,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(SSN,firstName);
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1129,13 +1154,18 @@ public class sanityTestCases {
 		
 		
 	}
+
 	@Test(dataProvider = "setData")
 	public void UnMarried_Multiple_Entity_beneficiary(int itr, Map<String, String> testdata){
 	
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			prepareDynamicTestData("getRegisteredUser",Stock.GetParameterValue("ga_PlanId"));		
+			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			participant_SSN = Stock.GetParameterValue("SSN");
+		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1153,10 +1183,9 @@ public class sanityTestCases {
 
 			beneficiary.get();
 
-			SSN = Stock.GetParameterValue("SSN");
-			firstName = Stock.GetParameterValue("FIRSTNAME");
+
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
-			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"), Stock.GetParameterValue("Allocation"));
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
 
 			try {
 				Thread.sleep(5000);
@@ -1214,12 +1243,8 @@ public class sanityTestCases {
 
 
 
-
-			//delete beneficiary from Database
-			//			if(Stock.GetParameterValue("Iteration").equalsIgnoreCase("2"))
-			//				beneficiary.deleteBeneficiariesFromDB(Stock.GetParameterValue("SSN"), Stock.GetParameterValue("Participant first name")+"%");
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
-				beneficiary.deleteBeneficiariesFromDB(SSN,firstName);
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 
 
 		}
@@ -1240,7 +1265,7 @@ public class sanityTestCases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
 				try {
-					beneficiary.deleteBeneficiariesFromDB(SSN,firstName);
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
