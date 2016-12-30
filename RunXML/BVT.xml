@@ -5,49 +5,13 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     
-      <test name="SIT_xPPTWEB_Login_03_04_TC01_already have an Activation Code">
+      <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
         <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
+            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <test name="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text">
-        <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
-                <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_03_04_TC03_Send Activation Code by Voice">
-        <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
-                <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email">
-        <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
-                <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code">
-        <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
-                <methods>
-                    <include name="SF04_TC05_ForgotPassword_DidntReceiveActivationCode"/>
-                </methods>
-            </class>
-        </classes>
-    </test> 
 </suite>

@@ -1924,5 +1924,178 @@ public class deferralstestcases {
 			}
 		}
 	}
+	
+	/**
+	 * The following script Standard Deferral and confirms it and Verify Plan rules
+	 * 
+	 * Covered Manual Test Cases: SIT_PPTWEB_Deferral_010M_Verify combined rules on 
+	 * deferral types with election greater than zero
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_010M_Verify_combined_rules_with_election_greater_than_zero(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// <= 2)
+			// leftmenu = new LeftNavigationBar(homePage);
+			// else {
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// leftmenu = new LeftNavigationBar(accountPage);
+			// }
+
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+
+			
+			
+			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "PLAN RULE");
+			Web.waitForElement(deferrals, "Header PlanRule");
+
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Header PlanRule"))
+				Reporter.logEvent(Status.PASS, "Verify Pan Rule PopUp is Displayed",
+						"Pan Rule PopUp is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Pan Rule PopUp is Displayed",
+						"Pan Rule PopUp is Not Displayed", true);
+			
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Text PlanRule"))
+				Reporter.logEvent(Status.PASS, "Verify Pan Rule Text is Displayed and Proper",
+						"Pan Rule Text is Displayed and Proper", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Pan Rule Text is Displayed and Proper",
+						"Pan Rule Text is Not Proper", true);
+			Web.clickOnElement(deferrals, "OK BUTTON");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * The following script Standard Deferral and confirms it and Verify Plan rules
+	 * 
+	 * Covered Manual Test Cases: SIT_PPTWEB_Deferral_011M_Verify combined rules 
+	 * on deferral types with zero election
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_011M_Verify_combined_rules_with_zero_election(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// <= 2)
+			// leftmenu = new LeftNavigationBar(homePage);
+			// else {
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// leftmenu = new LeftNavigationBar(accountPage);
+			// }
+
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			try {
+				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			if (lib.Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions Page is Displayed and combined rules a1re not checked on deferral types ",
+						"My Contributions page is  displayed and combined rules are not checked on deferral types ", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions Page is Displayed and combined rules a1re not checked on deferral types ",
+						"My Contributions page is not displayed and combined rules are checked on deferral types ", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }
 

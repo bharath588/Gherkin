@@ -59,13 +59,13 @@
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-						<suiteXmlFiles>
+						<!-- <suiteXmlFiles>
 						<suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile> 
-							<!--  <suiteXmlFile>RunXML/Login.xml</suiteXmlFile>  
+							 <suiteXmlFile>RunXML/Login.xml</suiteXmlFile>  
 							<suiteXmlFile>RunXML/Liat.xml</suiteXmlFile>
 							<suiteXmlFile>RunXML/Beneficiary.xml</suiteXmlFile>
-							<suiteXmlFile>RunXML/Deferrals.xml</suiteXmlFile> -->
-						</suiteXmlFiles>
+							<suiteXmlFile>RunXML/Deferrals.xml</suiteXmlFile>
+						</suiteXmlFiles> -->
 						<systemProperties>
 							<property>
 								<name>env</name>

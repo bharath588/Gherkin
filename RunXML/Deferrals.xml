@@ -375,4 +375,33 @@
             </class>
         </classes>
     </test>
+     <test name="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferrals_Participant_Prior_Contributions8"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
+        <classes>
+            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
+                <methods>
+                    <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+  
     </suite>

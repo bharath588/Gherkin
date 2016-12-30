@@ -18,6 +18,7 @@ public class ThreadInvocation {
 			final TestNG testng = new TestNG();
 			List<String> suites = new ArrayList<String>();
 			String xml=System.getProperty("user.dir")+"\\RunXML\\"+System.getProperty("suiteFile")+".xml";
+           // suites.add(System.getProperty("user.dir")+"\\RunXML\\BVT.xml");
             suites.add(xml);
             testng.setTestSuites(suites);
 			Runnable threadRunnable = new Runnable() {
@@ -30,7 +31,7 @@ public class ThreadInvocation {
 			};
 
 				//Runnable runnable = new DriverScript();
-			    Thread[] threads = new Thread[2];
+			    Thread[] threads = new Thread[1];
 		
 			for (int i = 0; i < threads.length; i++) {
 			    threads[i] = new Thread(threadRunnable);

@@ -178,6 +178,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//label[contains(text(),'Yes')]") private WebElement lblMaximizeYes;
 			@FindBy(xpath="//label[contains(text(),'No')]") private WebElement lblMaximizeNo;
 			@FindBy(xpath="//div[contains(@class,'alert-warning')]") private WebElement txtMaximizeAllert;
+			@FindBy(xpath="//div[@class='modal-body rules']") private WebElement txtPlanRule;
+			@FindBy(xpath="//div[@class='modal-header rules']") private WebElement headerPlanRule;
+			@FindBy(xpath="//button[text()[normalize-space()='Ok']]") private WebElement btnOk;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			Actions mouse=new Actions(Web.getDriver());
 		/**
@@ -356,6 +359,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			if(fieldName.trim().equalsIgnoreCase("LOG OUT")) {
 				return this.lnkLogout;	
+			}
+			if(fieldName.trim().equalsIgnoreCase("PLAN RULE")) {
+				return this.lnkPlanRules;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Header PlanRule")) {
+				return this.headerPlanRule;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Text PlanRule")) {
+				return this.txtPlanRule;
+			}
+			if(fieldName.trim().equalsIgnoreCase("OK BUTTON")) {
+				return this.btnOk;
 			}
 			return null;
 			}		
