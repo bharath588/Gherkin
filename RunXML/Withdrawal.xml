@@ -3,28 +3,9 @@
 <suite name="testsuite" verbose="1">
     <listeners>
         <listener class-name="core.framework.TestListener"/>
-    </listeners>
-  
-   <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_Over_To_Traditional_IRA">
-       <classes>
-           <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-               <methods>
-                   <include name="WithDrawals_TC02_SepService_PWD_Roll_Over_To_Traditional_IRA"/>
-               </methods>
-           </class>
-       </classes>
-   </test>
-     <test name="DDTC-TC06_withDrawal_SepService_PWD_Payment_To_Self">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="WithDrawals_TC06_SepService_PWD_Payment_to_Self"/>
-               </methods>
-            </class>
-        </classes>
-    </test>  
-  <!--
-  <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
+    </listeners>  
+     <!--   
+    <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
@@ -32,8 +13,7 @@
                </methods>
             </class>
         </classes>
-    </test>
- 
+    </test> 
      <test name="DDTC_TC_03_In_Service_Roll_Qual">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
@@ -42,8 +22,7 @@
                </methods>
             </class>
         </classes>
-    </test>
-  
+    </test>  
    <test name="DDTC_TC_04_In_Service_Roll_Over_To_Traditional_IRA">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
@@ -53,7 +32,8 @@
             </class>
         </classes>
     </test>
-   
+ 
+ 
       <test name="DDTC_TC_05_In_Service_Roll_Over_To_External_Roth_IRA">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
@@ -63,9 +43,17 @@
             </class>
         </classes>
     </test>  
- 
-      
-     <test name="DDTC-TC06_withDrawal_SepService_PWD_Payment_To_Self">
+      -->
+    <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_Over_To_Traditional_IRA">
+       <classes>
+           <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+               <methods>
+                   <include name="WithDrawals_TC02_SepService_PWD_Roll_Over_To_Traditional_IRA"/>
+               </methods>
+           </class>
+       </classes>
+   </test>  
+      <test name="DDTC-TC06_withDrawal_SepService_PWD_Payment_To_Self">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
@@ -73,9 +61,8 @@
                </methods>
             </class>
         </classes>
-    </test>
-     
-     <test name="DDTC-TC07_withDrawal_SepService_PWD_Roll_Over_To_External_Roth_IRA">
+    </test> 
+  <test name="DDTC-TC07_withDrawal_SepService_PWD_Roll_Over_To_External_Roth_IRA">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
                 <methods>
@@ -83,7 +70,7 @@
                </methods>
             </class>
         </classes>
-    </test>
+    </test>   
      <test name="DDTC-TC08_withDrawal_SepService_PWD_Roll_Qual">
         <classes>
             <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
@@ -92,6 +79,53 @@
                </methods>
             </class>
         </classes>
+    </test>
+    <test name="DDTC-TC08_withDrawal_SepService_FWD_Payment_To_Self">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="WithDrawals_TC09_SepService_FWD_Payment_To_Self"/>
+               </methods>
+            </class>
+        </classes>
     </test> 
-    -->
-      </suite>
+    <test name="SepService_FWD_RollOver_Roll_Qual">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_Sep_Service_FWD_RollOver_Roll_Qual"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="SepService_FWD_RollOver_Roll_Over_To_Traditional_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_SepService_RollOver_Roll_Over_To_Traditional_IRA"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+   <test name="SepService_PWD_Max_Amount_PTS">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_SepService_PWD_Max_Amount_PTS"/>
+               </methods>
+            </class>
+        </classes>
+    </test>
+    <!-- 
+     <test name="DDTC-23672_SepService_FWD Combo_PTS_And_Roll_IRA">
+        <classes>
+            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+                <methods>
+                    <include name="Withdrawals_SepService_Combo_PTS_And_Roll_IRA"/>
+               </methods>
+            </class>
+        </classes>
+    </test>    
+       
+      -->
+       </suite>

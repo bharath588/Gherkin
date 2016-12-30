@@ -12,10 +12,10 @@ import lib.Reporter.Status;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
@@ -49,13 +49,15 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	@FindBy(id = "ssnInput")
 	private WebElement inputSSN;
 	@FindBy(xpath = ".//button[contains(text(),'Confirm and continue')]")
-	private WebElement btnConfirmContinue;
-	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
+	private WebElement btnConfirmContinue;	
 	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
 	@FindBy(xpath=".//select[contains(@class,'ng-pristine')]")
+	//@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
 	private WebElement drpWithdrawalType;
 	@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	private WebElement btnContinueWithdrawal;
+	@FindBy(id="btn-confirm")
+	private WebElement btnIAgreeAndSubmit; 
 	@FindBy(xpath = "//p[./i[@class='em-checkbox-icon']]")
 	private WebElement txtConfirmation;
 	@FindBy(xpath = "//p[./i[@class='em-checkbox-icon']]//strong")
@@ -75,6 +77,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement inpFirstClassMail;
 	@FindBy(id="deliveryOptionsExpress")
 	private WebElement inpExpressMail;
+	@FindBy(id="partialWithdrawalCheckbox") private List<WebElement> lstMaxCheckBox;
 	private String 
 	moneyTypeAmtTxt ="//div[contains(@class,'selected-row-body')][.//input[contains(@value,'Withdrawal Type')]]//div[contains(@class,'source-row')][.//label[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
 	
@@ -89,7 +92,6 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	
 	@FindBy(xpath=".//div[contains(@ng-if,'FULL WD')]")
 	private WebElement totalFWDVestedBalance;
-	
 	@FindBy(xpath = ".//select[contains(@ng-model,'companyType')]")
 	private WebElement drpRollOverCompany;	
 	@FindBy(xpath=".//input[contains(@placeholder, 'Enter address line 1')]")
@@ -126,6 +128,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private String inpAmtPWMoneyType="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
 	private String maxAmtPWMoneyType="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//div[contains(@ng-if,'isGenericDisbRuleForSepService')]";
+	private String inpMaxAmountPWChkBox=
+			"//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//input[@id='partialWithdrawalCheckbox']";
 	@FindBy(xpath="//tr[./th[contains(text(),'ESTIMATED ')]]/td")
 	private WebElement confirmationPageRollOverAmount;
 	@FindBy(xpath="//tr[./th[contains(text(),'TYPE')]]/td")
@@ -136,6 +140,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement confirmationPageDeliveryMethod;
 	@FindBy(xpath="//tr[./th[contains(text(),'Sent to')]]/td")
 	private WebElement confirmationPageSentToAddress;
+	@FindBy(xpath=".//input[contains(@ng-model,'withdrawalPayToSelfAmount')]")
+	private WebElement inpPayToSelfAmt;
 	
 	private static int enteredRothWithdrawalAmt = 0;
 	private static int enteredPreTaxWithdrawalAmt = 0;
@@ -299,9 +305,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("INPUT ROTH ACCOUNT NUMBER")) {
 			return this.inpRothAccountNumber;
 		}
-		if (fieldName.trim().equalsIgnoreCase("FIRST CLASS MAIL")) {
-			return this.inpFirstClassMail;
-		}
+		if (fieldName.trim().equalsIgnoreCase("TOTAL VESTED BALANCE AMOUNT")) {
+			return this.totalFWDVestedBalance;
+		}		
 		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -345,7 +351,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
 					maxAmount=maxAmount-1;	
 					enteredRothWithdrawalAmt=maxAmount;
-			//	enteredRothWithdrawalAmt = 2000;
+			//enteredRothWithdrawalAmt = 2000;
 					WebElement txtAmount = Web.webdriver.findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", "Roth")));
@@ -403,30 +409,132 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				}
 		}
 		else			
-			enteredPreTaxWithdrawalAmt = 0;
-		
-		// Click on Continue
-		if (Web.isWebElementDisplayed(btnContinue, true)) {
-			Web.clickOnElement(btnContinue);
-			Reporter.logEvent(
-					Status.PASS,
-					"Select "+ withdrawalType+ " option, and enter withdrawal amount for multiple / single  money type sources and click Continue",
-					"User enters the withdrawal amount for multiple money types source and clicked on continue button",
-					false);
-		} else {
-			Reporter.logEvent(
-					Status.FAIL,
-					"Select "+ withdrawalType+ " option, and enter withdrawal amount for both Roth and Pre-tax  money type sources and Click Continue",
-					"Continue button is not displayed in Request a Withdrawal Page",
-					true);
-			throw new Error("'Continue' is not displayed");
+			enteredPreTaxWithdrawalAmt = 0;		
 		}
-		Thread.sleep(2000);			
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
+		catch(Exception e)
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
 		}
-		catch(Exception e){
-		e.printStackTrace();}	
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}	
 		
 	}
+	
+	public void selectMaxAmountCheckBoxForWithdrawalType(String rothSection,String preTaxSection)
+	{
+		try {
+			if(Web.isWebElementDisplayed(partWithDrawal))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Vested Part Withdrawal section is Displayed",
+						"Vested Part Withdrawal section is displayed", false);
+				Web.clickOnElement(partWithDrawal);
+				Web.waitForPageToLoad(Web.webdriver);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Vested Part/Full Withdrawal section is Displayed",
+						"Vested Part/Full  Withdrawal section is NOT displayed", true);
+				throw new Error("Vested Full/Part Withdrawal Section is NOT displayed");
+			}
+			
+			//Identify Max Amount Elements for Pre-tax and Roth
+			WebElement rothMaxAmountChkBox=Web.webdriver.findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Roth")));
+			WebElement preTaxMaxAmountChkBox=Web.webdriver.findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Pre-tax")));
+			//Select MaxAmount checkbox for Pre-Tax or Roth
+			if (rothSection.equalsIgnoreCase("Yes")){				
+				if(Web.isWebElementDisplayed(rothMaxAmountChkBox, true))				{
+					Web.clickOnElement(rothMaxAmountChkBox);
+					Web.waitForPageToLoad(Web.webdriver);				
+					enteredRothWithdrawalAmt=0;
+					WebElement txtMaxAmount = Web.webdriver.findElement(By
+							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
+					enteredRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
+					Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type",
+							 "Max Amount Been Selected For Pre-Tax: " + enteredRothWithdrawalAmt, false);
+					if(lstMaxCheckBox.size()==1)
+						Reporter.logEvent(Status.PASS, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
+								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is NOT Displayed", true);
+					else
+						Reporter.logEvent(Status.FAIL, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
+								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is Displayed", false);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify if User entered withdrawal amount for Roth Money Type",
+							"Roth Money Type section is NOT Displayed", false);
+					throw new Error("Roth Money Type Section is NOT displayed");
+				}
+		}
+		else			
+			enteredRothWithdrawalAmt = 0;
+			
+		if (preTaxSection.equalsIgnoreCase("Yes")){				
+		if(Web.isWebElementDisplayed(preTaxMaxAmountChkBox, true))
+		{
+					Web.clickOnElement(preTaxMaxAmountChkBox);
+					Thread.sleep(1000);					
+					enteredPreTaxWithdrawalAmt=0;
+					WebElement txtMaxAmount = Web.webdriver.findElement(By
+							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
+					enteredPreTaxWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
+					Reporter.logEvent(Status.INFO, "Select Max Amount For Pre-Tax Money Type",
+							 "Max Amount Been Selected For Pre-Tax: " + enteredPreTaxWithdrawalAmt, false);
+					if(lstMaxCheckBox.size()==1)
+						Reporter.logEvent(Status.PASS, "Verify if Roth Max Amount Check box is NOT displayed",
+								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is NOT Displayed", true);
+					else
+						Reporter.logEvent(Status.FAIL, "Verify if Roth Max Amount Check box is NOT displayed",
+								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is Displayed", false);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify if User entered withdrawal amount for Pre-Tax Money Type",
+							"Pre-Tax Money Type section is NOT Displayed", false);
+					throw new Error("Pre-Tax Money Type Section is NOT displayed");
+				}
+		}
+		else			
+			enteredPreTaxWithdrawalAmt = 0;
+		}
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
+		catch(Exception e)
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}	
+	}
+	
+	
 	
 	public void selectWithdrawalTypeForSepService(String withdrawalType, String rothSection,String preTaxSection)
 	{
@@ -436,14 +544,18 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Reporter.logEvent(Status.PASS,
 					"Verify Vested Part Withdrawal section is Displayed",
 					"Vested Part Withdrawal section is displayed", false);
-			partWithDrawal.click();
+			Web.clickOnElement(partWithDrawal);
+			Web.waitForPageToLoad(Web.webdriver);
 		}
 		else if(Web.isWebElementDisplayed(fullWithDrawal)&& withdrawalType.equalsIgnoreCase("fwd"))
 		{
 			Reporter.logEvent(Status.PASS,
 					"Verify Vested Full Withdrawal section is Displayed",
 					"Vested Full withdrawal section is displayed", false);
-			fullWithDrawal.click();
+			Web.clickOnElement(fullWithDrawal);
+			Web.waitForPageToLoad(Web.webdriver);		
+			enteredTotalWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(totalFWDVestedBalance.getText()));
+			System.out.println("FWD Total Vested Balance: "+enteredTotalWithdrawalAmt);	
 		}
 		else
 		{
@@ -455,7 +567,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			
 		Thread.sleep(2000);	
 		//enter Amount for Part Withdrawal
-		if (rothSection.equalsIgnoreCase("Yes")) {
+		if (rothSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd")) {
 			WebElement partWithdrawalMoneySourceAvailable=Web.webdriver.findElement
 					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Roth")));
 			if(Web.isWebElementDisplayed(partWithdrawalMoneySourceAvailable, true))
@@ -485,7 +597,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	else			
 		enteredRothWithdrawalAmt = 0;
 		
-	 if(preTaxSection.equalsIgnoreCase("Yes"))
+	 if(preTaxSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd"))
 	{
 			WebElement partWithdrawalMoneySourceAvailable=Web.webdriver.findElement
 					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Pre-tax")));
@@ -514,30 +626,50 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			}
 	}
 	else			
-	enteredPreTaxWithdrawalAmt = 0;	
-		// Click on Continue
-	 
-	 if (Web.isWebElementDisplayed(btnContinue, true)) {
-		 Web.clickOnElement(btnContinue);
-		 Reporter.logEvent(Status.PASS,
-					"Verify if user enters withdrawal amount for multiple / single  money type sources and click Continue button",
-					"User enters the withdrawal amount for multiple money types source and clicked on continue button",
-					false);
-		} else {
-			 Reporter.logEvent(Status.FAIL,"Verify if user enters withdrawal amount for multiple / single  money type sources and click Continue button",
-						"User enters the withdrawal amount for multiple money types source and clicked on continue button",
-						false);
-			throw new Error("'Continue' is not displayed");
+	enteredPreTaxWithdrawalAmt = 0;
 		}
-		Thread.sleep(2000);			
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
+		catch(Exception e)
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
 		}
-		catch(Exception e){
-		e.printStackTrace();}	
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}
+		
 	}
 	
 	public void citizenShipValidation(String SSN)
 	{
 		try {	
+			// Click on Continue
+			if (Web.isWebElementDisplayed(btnContinue, true)) {
+				Web.clickOnElement(btnContinue);
+				Reporter.logEvent(
+						Status.PASS,
+						"Enter withdrawal amount for multiple / single  money type sources and click Continue",
+						"User enters the withdrawal amount for multiple money types source and clicked on continue button",
+						false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Enter withdrawal amount for both Roth and Pre-tax  money type sources and Click Continue",
+						"Continue button is not displayed in Request a Withdrawal Page",
+						true);
+				throw new Error("'Continue' is not displayed");
+			}
+			Thread.sleep(2000);		
 		//US Citizenship and SSN Validation
 		if(isTextFieldDisplayed("Plan withdrawal"))
 			isTextFieldDisplayed("Are you a U.S. citizen or resident?");	
@@ -556,64 +688,110 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					"User enters Social Security number "+ SSN+ " in the field which is displayed", true);
 
 		// Click on Confirm and Continue
-		Web.clickOnElement(btnConfirmContinue);
-		Thread.sleep(4000);
+		if (Web.isWebElementDisplayed(btnConfirmContinue, true)) {
+			Web.clickOnElement(btnConfirmContinue);
+			Thread.sleep(2000);
 		}
-		catch(Exception e){
-		e.printStackTrace();}	
+		else
+			throw new Error("'Confirm and Continue' is not displayed");		
+		}
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
+		catch(Exception e)
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}	
 	}
 	
-	public void verifyWithdrawalMethodPage(String withdrawalMethodType,String emailAddress)
+	public void verifyWithdrawalMethodPage(String withdrawalMethodType,String emailAddress,String rollingOverAccount)
 	{
 		try {
 		if (isTextFieldDisplayed("Withdrawal method"))
 		{
 		isTextFieldDisplayed("How would you like your withdrawal distributed?");
+		
+		//Web.clickOnElement(drpWithdrawalType);
 		if (Web.selectDropDownOption(drpWithdrawalType,withdrawalMethodType,true))
 		Reporter.logEvent(Status.PASS,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
 						"User selects "+withdrawalMethodType+" withdrawal distribution option",true);
 		else
 		Reporter.logEvent(Status.FAIL,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
 						"User did NOT select "+withdrawalMethodType+" withdrawal distribution option",true);
-			Thread.sleep(1000);
+		Thread.sleep(1000);
+		if(withdrawalMethodType.equalsIgnoreCase("ROLLOVER"))
+		{
+		if(Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount,true))
+			Reporter.logEvent(Status.PASS,"Verify if User selects "+rollingOverAccount+" rolling over account",
+					"User selects "+rollingOverAccount+" withdrawal distribution option",true);
+		else
+			Reporter.logEvent(Status.FAIL,"Verify if User selects "+rollingOverAccount+" rolling over account",
+					"User did NOT select "+rollingOverAccount+" rolling over account",true);
 		
-			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self"))
-			{
-			String mailingAddressLine1=null;
-			String state=null;
-			String city=null;
-			String postalCode=null;			
-
-			Web.isWebElementDisplayed(drpRollOverCompany, true);
-			Web.selectDropnDownOptionAsIndex(drpRollOverCompany, "5");		
-			Thread.sleep(1000);
-			mailingAddressLine1=txtInpAddress1.getText();
-			state=txtState.getText();
-			city=txtInpCity.getText();
-			postalCode=txtPostalCode.getText().split("-")[0];
+		Thread.sleep(1000);	
 			
-			//Setting text box
-			Web.waitForElement(inpAccountNumber);
-			Web.setTextToTextBox(inpAccountNumber, "123456");
-			Web.setTextToTextBox(txtAddressLine1, mailingAddressLine1);
-			Web.setTextToTextBox(txtCity, city);
-			Web.selectDropDownOption(drpStateCode, state);
-			Web.setTextToTextBox(txtZIPCode, postalCode);	
-			}
-		// Verify if Confirm your contact information section is displayed
-		isTextFieldDisplayed("Confirm your contact information");
-		Thread.sleep(2000);
-		// Enter participant email address and click on continue
-		Web.setTextToTextBox(txtEmailAddress,emailAddress);
+		}
+		else if (withdrawalMethodType.equalsIgnoreCase("PARTIAL PAYMENT TO SELF AND ROLLOVER REMAINING BALANCE"))
+		{
+			System.out.println("FWD to be entered for Payment to Self: " +enteredTotalWithdrawalAmt);
+			int inputPTS=enteredTotalWithdrawalAmt-5;
+			String amountPaytToSel=Integer.toString(inputPTS);
+			Web.setTextToTextBox(inpPayToSelfAmt, amountPaytToSel);
+			if(Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount,true))
+				Reporter.logEvent(Status.PASS,"Verify if User selects "+rollingOverAccount+" rolling over account",
+						"User selects "+rollingOverAccount+" withdrawal distribution option",true);
+			else
+				Reporter.logEvent(Status.FAIL,"Verify if User selects "+rollingOverAccount+" rolling over account",
+						"User did NOT select "+rollingOverAccount+" rolling over account",true);
+			
+		}
+		enterAddressDetailsForRollOverCompany(withdrawalMethodType, emailAddress);	
+		}
+		
+		if(Web.isWebElementDisplayed(btnContinueWithdrawal, true))
+		{
 		Web.clickOnElement(btnContinueWithdrawal);
+		Web.waitForPageToLoad(Web.webdriver);
 		Thread.sleep(4000);
-		}		
-	}
+		}
+		else
+			throw new Error("Continue withdrawal is not Displayed");
+		}	
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
 		catch(Exception e)
-		{ e.printStackTrace();}
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}
 	}
 	
-	public void verifyWithdrawalSummary(String mailDeliverytype)
+	
+	public void verifyWithdrawalSummary(String mailDeliverytype,boolean... isFWDTotalVerification)
 	{
 		try
 		{
@@ -621,20 +799,27 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			{				
 				if(mailDeliverytype.equalsIgnoreCase("firstClass"))
 				{
-					inpFirstClassMail.click();
 					deliveryMthd=inpFirstClassMail.getAttribute("value");
+					Web.clickOnElement(inpFirstClassMail);
+					Common.waitForProgressBar();
+					Web.waitForPageToLoad(Web.webdriver);
+					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
+							+ mailDeliverytype, "Selected Delivery Method: " + inpFirstClassMail.getAttribute("value"), false);
 				}
 				else if(mailDeliverytype.equalsIgnoreCase("expressMail"))
 				{
-					inpExpressMail.click();
+					Web.clickOnElement(inpExpressMail);
 					deliveryMthd=inpExpressMail.getAttribute("value");
+					Common.waitForProgressBar();
+					Web.waitForPageToLoad(Web.webdriver);
+					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
+							+ mailDeliverytype, "Selected Delivery Method: " + inpExpressMail.getAttribute("value"), false);
 				}
-				Thread.sleep(2000);
-				Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
-						+ mailDeliverytype, "Selected Delivery Method: " + inpFirstClassMail.getAttribute("value"), false);
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 				if(isTextFieldDisplayed("Withdrawal summary"))
-				{
+				{					
+					if(isFWDTotalVerification[0] || isFWDTotalVerification.length==0)
+					{
 					enteredTotalWithdrawalAmt = 0;
 					enteredTotalWithdrawalAmt = enteredPreTaxWithdrawalAmt
 							+ enteredRothWithdrawalAmt;
@@ -644,7 +829,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
 					if (enteredTotalWithdrawalAmt == finalWithdrawalAmount) {
 						Reporter.logEvent(Status.PASS,
-								"Verify Withdrawal Amount is Displayed",
+								"Verify Withdrawal Amount is Displayed for Part Withdrawal",
 								"Withdrawal Amount is Displayed and Macthing \nExpected:$"
 										+ enteredTotalWithdrawalAmt + "\nActual:$"
 										+ finalWithdrawalAmount, false);
@@ -655,28 +840,48 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 										+ enteredTotalWithdrawalAmt + "\nActual:$"
 										+ finalWithdrawalAmount, true);
 					}
-					btnContinueWithdrawal.click();
-					Thread.sleep(8000);	
-					
+					}
 				}
-				//check for GDR section or throw error and stop execution
 				else
-					System.out.println("GDR Section needs to be implemented");
+					throw new Error("Withdrawal Summary is NOT displayed");
+				//check for GDR section or throw error and stop execution
+//				else
+//					System.out.println("GDR Section needs to be implemented");
 				
-			}			
+			}
+			
 			
 		}
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
 		catch(Exception e)
-		{ e.printStackTrace();}
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}
 	}
 	
-	public void verifyWithdrawalConfirmation(String withdrawalType,String userName,String IndId,String deliveryType,String mailDeliveryType)
+	public void verifyWithdrawalConfirmation(String withdrawalType,String userName,
+			String IndId,String deliveryType,String mailDeliveryType, boolean...isFWDTotalVerification)
 	{
 		try {		
 		String confirmationNo=null;
 		String pptFirstName=null;		
 		String dbName= Common.getParticipantDBName(userName);
-		ResultSet getPptFullName=DB.executeQuery(dbName+"DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV")), Stock.getTestQuery("getParticipantFullName")[1],
+		ResultSet getPptFullName=DB.executeQuery(dbName+"DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV")),
+				Stock.getTestQuery("getParticipantFullName")[1],
 				IndId);
 		if(getPptFullName!=null)
 		{
@@ -684,7 +889,15 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			{
 				pptFirstName=getPptFullName.getString("first_name");
 			}
-		}	
+		}
+		if(Web.isWebElementDisplayed(btnIAgreeAndSubmit, true))
+		{
+			System.out.println("The element is identified");
+		}
+		Web.clickOnElement(btnIAgreeAndSubmit);		
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.webdriver);	
+						
 		if(isTextFieldDisplayed("Request submitted!"))
 		{
 		Web.waitForElement(txtConfirmationNo);
@@ -709,7 +922,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		verifyWithdrawalDisbursementRecords();
 		}
 		
-		//Verify other fields in confirmation Page
+				//Verify other fields in confirmation Page
 		int confirmationPageAmount= (int)Math.round(Web.getIntegerCurrency(confirmationPageRollOverAmount.getText()));
 		System.out.println("A: "+confirmationPageAmount);
 		System.out.println("E: "+enteredTotalWithdrawalAmt);
@@ -722,8 +935,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Reporter.logEvent(Status.FAIL, "Verify the Total Withdrawal Amount in the Confirmation Page", 
 					"The Total Withdrawal Amount is displayed as:\n"
 					+ "Expected Amount: "+ enteredTotalWithdrawalAmt +"\n"
-					+ "Actual Amount: "+confirmationPageAmount, false);
-		
+					+ "Actual Amount: "+confirmationPageAmount, false);		
 		//Verify delivery Type
 				if(confirmationPageDeliveryType.getText().equalsIgnoreCase(deliveryType))
 					Reporter.logEvent(Status.PASS, "Verify the Delivery Type in the Confirmation Page", 
@@ -765,13 +977,31 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 						"The Address is displayed as:\n"+
 					"Address: "+confirmationPageSentToAddress.getText().trim(), false);
 			}
+	
 		}catch (SQLException e) {
 					
 					e.printStackTrace();
 				}	
 
+		catch(NoSuchElementException e)		
+		{ 
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+					msg, true); }
 		catch(Exception e)
-		{ e.printStackTrace();}
+		{ Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				msg, true);}
 	}
 	
 	
@@ -843,106 +1073,6 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		return isSelected;
 	}
 	
-	/**
-	 * This method is to validate if Pre-tax or Roth Money Type Source section is displayed for the In-Service withdrawal type
-	 * @param withdrawalType
-	 * @param moneyType
-	 * @return
-	 */
-	public boolean isMoneyTypeSourceAvailable(String withdrawalType,String moneyType)
-	{
-		WebElement moneyTypeSoruceAvailable=Web.webdriver.findElement
-				(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
-						withdrawalType).replaceAll("Money Source Type", moneyType)));
-		if(moneyTypeSoruceAvailable.isDisplayed())
-			return true;
-		else
-			return false;
-	}
-	
-	/**
-	 * This method is to validate if Pre-tax or Roth Money Type Source section is displayed for the 
-	 * Sept -Service Part Withdrawal Type
-	 * @param withdrawalType
-	 * @param moneyType
-	 * @return
-	 */
-	public boolean isPartWithdrawalMoneyTypeSourceAvailable(String moneyType)
-	{
-	WebElement partWithdrawalMoneySourceAvailable=Web.webdriver.findElement
-					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", moneyType)));
-			if(partWithdrawalMoneySourceAvailable.isDisplayed())			
-			return true;
-		else
-			return false;
-	}
-	
-	
-	
-	/**
-	 * This method is to select money type source and enter the amount for specified withdrawal type
-	 * @param withdrawalType
-	 * @param moneyType
-	 * @param amount
-	 */
-	public void enterAmountforMoneyTypeSource(String withdrawalType, String moneyType,String amount) {
-	try
-	{
-		WebElement txtAmount = Web.webdriver.findElement(By
-				.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-						withdrawalType).replaceAll("Money Source Type", moneyType)));
-		Web.setTextToTextBox(txtAmount, amount);
-	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-		
-	}
-	
-	/**
-	 * This method is to select money type source and  Max amount check box for specified withdrawal type
-	 * @param withdrawalType
-	 * @param moneyType
-	 */
-	public void selectMaxAmountForMoneyTypeSource(String withdrawalType, String moneyType) {
-	try
-	{
-		WebElement chkBoxMaxAmount = Web.webdriver.findElement(By
-				.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-						withdrawalType).replaceAll("Money Source Type", moneyType)));
-		Web.clickOnElement(chkBoxMaxAmount);
-	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-		
-	}
-	/**
-	 * This method is to select money type source and  Max amount check box for specified withdrawal type
-	 * @param withdrawalType
-	 * @param moneyType
-	 */
-	public int getMaxAmountForPWMoneyTypeSource(String moneyType) {
-		int maxAmount=0;
-	try
-	{
-		
-		WebElement txtMaxAmount = Web.webdriver.findElement(By
-				.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
-		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
-		maxAmount=maxAmount-1;
-		
-	}
-	
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
-	return maxAmount;
-		
-	}
 	
 	/**
 	 * This method is to enter Address details of the Roll Over Company for Withdrawal
@@ -951,10 +1081,37 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * @param stateCode
 	 * @param zipCode
 	 */
-	public void enterAddressDetailsForRollOverCompany(String accountNo,String address1,String city, String stateCode,String zipCode)
+	public void enterAddressDetailsForRollOverCompany(String withdrawalMethodType,String emailAddress)
 	{
 		try {
-					
+			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self"))
+			{
+			String mailingAddressLine1=null;
+			String state=null;
+			String city=null;
+			String postalCode=null;		
+
+			Web.isWebElementDisplayed(drpRollOverCompany, true);
+			Web.selectDropnDownOptionAsIndex(drpRollOverCompany, "5");		
+			Thread.sleep(1000);
+			mailingAddressLine1=txtInpAddress1.getText();
+			state=txtState.getText();
+			city=txtInpCity.getText();
+			postalCode=txtPostalCode.getText().split("-")[0];
+			
+			//Setting text box
+			Web.waitForElement(inpAccountNumber);
+			Web.setTextToTextBox(inpAccountNumber, "123456");
+			Web.setTextToTextBox(txtAddressLine1, mailingAddressLine1);
+			Web.setTextToTextBox(txtCity, city);
+			Web.selectDropDownOption(drpStateCode, state);
+			Web.setTextToTextBox(txtZIPCode, postalCode);	
+			}
+		// Verify if Confirm your contact information section is displayed
+		isTextFieldDisplayed("Confirm your contact information");
+		Thread.sleep(2000);
+		// Enter participant email address and click on continue
+		Web.setTextToTextBox(txtEmailAddress,emailAddress);		
 		}
 		catch(Exception e)
 		{
