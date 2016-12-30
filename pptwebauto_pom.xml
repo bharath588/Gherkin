@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
-			<version>2.0.3-SNAPSHOT</version>
+			<version>3.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -28,11 +28,33 @@
 			<!-- Source directory configuration -->
 
 			<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                    <executions>
+   					 <execution>
+     				 <goals>
+       				 <goal>java</goal>
+     				 </goals>
+    					</execution>
+  					</executions>
+					<configuration>
+					  
+						<mainClass>test.framework.ThreadInvocation</mainClass>
+						 <classpathScope>test</classpathScope>
+                    <arguments>
+                    <argument>foo</argument>
+                    <argument>bar</argument>
+                     </arguments>
+                     </configuration>
+                     </plugin>
 				<!-- Following plugin executes the testng tests -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.18.1</version>
+					
 					<configuration>
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
@@ -109,6 +131,7 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
+				
 			</plugins>
 		</pluginManagement>
 	</build>
