@@ -64,7 +64,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	 */
 	public TransactionHistory() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -73,7 +73,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	 */
 	public TransactionHistory(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -125,7 +125,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Transaction history");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(lblTransactionHistory,true);
 	}
 	
@@ -171,7 +171,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	
 		
 	public void clickConfirmationNumber(){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if(lstConfirmationNumber.size()>=1){
 //			Reporter.logEvent(Status.PASS, "verify confirmation number displayed", "Confirmation number is displayed",true);
 //			confirmationNo=lstConfirmationNumber.get(0).getText().trim();
@@ -198,49 +198,49 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 			Reporter.logEvent(Status.FAIL, "verify confirmation number displayed", "Confirmation number not displayed",true);
 		
 		
-		Web.webdriver.switchTo().defaultContent();		
+		Web.getDriver().switchTo().defaultContent();		
 	}
 	
 	public void verifyTableDisplayed(String tableName){
 			
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			WebElement table = this.getWebElement(tableName);
 			if(Web.isWebElementDisplayed(table,true))
 				Reporter.logEvent(Status.PASS, "verify "+tableName+" is displayed", tableName+" is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "verify "+tableName+" is displayed", tableName+" is not displayed",true);
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifyTableDataDisplayed(String tableName){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		List<WebElement> table = this.getWebElementList(tableName);
 		int noOfRows=table.size();
 		if(noOfRows>=1)
 			Reporter.logEvent(Status.PASS, "verify data is displayed for "+tableName, "Data is displayed for "+tableName, false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify data is displayed for "+tableName, "Data is not displayed for "+tableName,true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifytableHeaderNotEmpty(String tableName){
 		 	
-		 	Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		 	Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		 	WebElement tableHeader = this.getWebElement(tableName);
 		 	if(!tableHeader.getText().isEmpty())
 		 		Reporter.logEvent(Status.PASS, "verify "+tableName+" Header displayed",tableName+" Header is displayed" , false);
 			else
 				Reporter.logEvent(Status.FAIL, "verify "+tableName+" Header displayed", tableName+" Header not displayed",true);
-		 	Web.webdriver.switchTo().defaultContent();
+		 	Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void verifyReferenceNumber(){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if(txtConfirmationNo.getText().trim().equalsIgnoreCase(confirmationNo))
 			Reporter.logEvent(Status.PASS, "Verify Reference Number displayed in Contribution Details Table" , "Expected: "+confirmationNo+" Actual: "+txtConfirmationNo.getText().trim(),false);
 		else
 			Reporter.logEvent(Status.FAIL, "Verify Reference Number displayed in Contribution Details Table","Expected: "+confirmationNo+" Actual: "+txtConfirmationNo.getText().trim(),true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	/**
 	 * This Method is to select Date Frequency and click on Submit Query
@@ -248,15 +248,15 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 	 */
 	public void selectDateFrequency(String frequency){
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
-		Web.webdriver.switchTo().defaultContent();
-		Actions mouse = new Actions(Web.webdriver);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Actions mouse = new Actions(Web.getDriver());
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.clickOnElement(drpDateFreequency);
-		 WebElement DateFrequency= Web.webdriver.findElement(By.xpath(dateFreequency.replaceAll("frequency", frequency)));
+		 WebElement DateFrequency= Web.getDriver().findElement(By.xpath(dateFreequency.replaceAll("frequency", frequency)));
 		mouse.moveToElement(DateFrequency).click().build().perform();
 		Web.clickOnElement(btnSubmitQuery);
 		Web.waitForElement(colConfirmationNumber);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 }

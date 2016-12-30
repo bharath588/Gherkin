@@ -179,14 +179,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//label[contains(text(),'No')]") private WebElement lblMaximizeNo;
 			@FindBy(xpath="//div[contains(@class,'alert-warning')]") private WebElement txtMaximizeAllert;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
-			Actions mouse=new Actions(Web.webdriver);
+			Actions mouse=new Actions(Web.getDriver());
 		/**
 		 * Default Constructor
 		 */
 		public Deferrals() {
 		
 			this.parent = new LeftNavigationBar();
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		/** Argument Constructor with parent as input
@@ -195,7 +195,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public Deferrals(LoadableComponent<?> parent) {
 			this.parent = parent;			
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		@Override
@@ -237,7 +237,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			} else {
 				this.lnkLogout.click();
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 				Assert.assertTrue(false,"Login Page is not loaded\n");
 			}
 		}
@@ -248,7 +248,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.isWebElementDisplayed(lblMyContributions,true);
 			
 		}
@@ -399,7 +399,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void click_Select_Your_Contribution_Rate() throws InterruptedException
 		{	
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 			lib.Web.waitForElement(radioSelectAnotherContributionRate);
 			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
@@ -1294,7 +1294,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public String getContributionPercentage(String contibutionName) {
 			String Percentage=null;
 			boolean isTextDisplayed=false;
-			 WebElement textAgeCatchupRoth= Web.webdriver.findElement(By.xpath(txtAgeCatchupRoth.replace("webElement", contibutionName)));
+			 WebElement textAgeCatchupRoth= Web.getDriver().findElement(By.xpath(txtAgeCatchupRoth.replace("webElement", contibutionName)));
 		
 			isTextDisplayed = Web.isWebElementDisplayed(textAgeCatchupRoth, true);
 			if (isTextDisplayed) {
@@ -1325,7 +1325,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 
 		}
 		public void refresh(){
-			lib.Web.webdriver.navigate().refresh();
+			lib.Web.getDriver().navigate().refresh();
 		}
 		
 	}		

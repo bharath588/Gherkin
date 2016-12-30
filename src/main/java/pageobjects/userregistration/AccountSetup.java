@@ -80,7 +80,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	 */
 	public AccountSetup() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	 */
 	public AccountSetup(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			}
 		}
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	 */
 	public ProfilePage() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	 */
 	public ProfilePage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 			this.lnkLogout.click();
 			Web.waitForElement(this.btnLogin);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
@@ -132,7 +132,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 		((LandingPage) this.parent).dismissPopUps(false, false);
 		this.lblUserName.click();
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 
 	}
 

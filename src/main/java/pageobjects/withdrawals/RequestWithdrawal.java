@@ -154,7 +154,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 */
 	public RequestWithdrawal() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 */
 	public RequestWithdrawal(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Request a withdrawal");
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Common.waitForProgressBar();
 		Web.isWebElementDisplayed(lblRequestAWithdrawal,true);
 		   
@@ -338,21 +338,21 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		//Enter Amount For Roth Money Section
 		if(rothSection.equalsIgnoreCase("Yes"))
 		{
-			WebElement rothMoneyTypeSourceAvailable=Web.webdriver.findElement
+			WebElement rothMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
 							withdrawalType).replaceAll("Money Source Type", "Roth")));
 			if(Web.isWebElementDisplayed(rothMoneyTypeSourceAvailable, true))
 			{
 				int maxAmount=0;			
 				enteredRothWithdrawalAmt = 0;
-					WebElement txtMaxAmount = Web.webdriver.findElement(By
+					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", "Roth")));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
 					maxAmount=maxAmount-1;	
 					enteredRothWithdrawalAmt=maxAmount;
 			//enteredRothWithdrawalAmt = 2000;
-					WebElement txtAmount = Web.webdriver.findElement(By
+					WebElement txtAmount = Web.getDriver().findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", "Roth")));
 					Web.setTextToTextBox(txtAmount, Integer.toString(enteredRothWithdrawalAmt));
@@ -376,21 +376,21 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		//enter Amount for Pre-tax Amount Section
 		if(preTaxSection.equalsIgnoreCase("Yes"))
 		{
-			WebElement preTaxMoneyTypeSourceAvailable=Web.webdriver.findElement
+			WebElement preTaxMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
 							withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
 			if(Web.isWebElementDisplayed(preTaxMoneyTypeSourceAvailable, true))
 			{
 				int maxAmount=0;			
 				enteredPreTaxWithdrawalAmt = 0;
-					WebElement txtMaxAmount = Web.webdriver.findElement(By
+					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
 					maxAmount=maxAmount-1;	
 					enteredPreTaxWithdrawalAmt=maxAmount;
 			//	enteredPreTaxWithdrawalAmt = 2000;
-					WebElement txtAmount = Web.webdriver.findElement(By
+					WebElement txtAmount = Web.getDriver().findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
 					Web.setTextToTextBox(txtAmount, Integer.toString(enteredPreTaxWithdrawalAmt));
@@ -442,7 +442,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 						"Verify Vested Part Withdrawal section is Displayed",
 						"Vested Part Withdrawal section is displayed", false);
 				Web.clickOnElement(partWithDrawal);
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 			else
 			{
@@ -453,17 +453,17 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			}
 			
 			//Identify Max Amount Elements for Pre-tax and Roth
-			WebElement rothMaxAmountChkBox=Web.webdriver.findElement
+			WebElement rothMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Roth")));
-			WebElement preTaxMaxAmountChkBox=Web.webdriver.findElement
+			WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Pre-tax")));
 			//Select MaxAmount checkbox for Pre-Tax or Roth
 			if (rothSection.equalsIgnoreCase("Yes")){				
 				if(Web.isWebElementDisplayed(rothMaxAmountChkBox, true))				{
 					Web.clickOnElement(rothMaxAmountChkBox);
-					Web.waitForPageToLoad(Web.webdriver);				
+					Web.waitForPageToLoad(Web.getDriver());				
 					enteredRothWithdrawalAmt=0;
-					WebElement txtMaxAmount = Web.webdriver.findElement(By
+					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
 					enteredRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
 					Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type",
@@ -491,7 +491,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					Web.clickOnElement(preTaxMaxAmountChkBox);
 					Thread.sleep(1000);					
 					enteredPreTaxWithdrawalAmt=0;
-					WebElement txtMaxAmount = Web.webdriver.findElement(By
+					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
 					enteredPreTaxWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
 					Reporter.logEvent(Status.INFO, "Select Max Amount For Pre-Tax Money Type",
@@ -545,7 +545,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					"Verify Vested Part Withdrawal section is Displayed",
 					"Vested Part Withdrawal section is displayed", false);
 			Web.clickOnElement(partWithDrawal);
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 		}
 		else if(Web.isWebElementDisplayed(fullWithDrawal)&& withdrawalType.equalsIgnoreCase("fwd"))
 		{
@@ -553,7 +553,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					"Verify Vested Full Withdrawal section is Displayed",
 					"Vested Full withdrawal section is displayed", false);
 			Web.clickOnElement(fullWithDrawal);
-			Web.waitForPageToLoad(Web.webdriver);		
+			Web.waitForPageToLoad(Web.getDriver());		
 			enteredTotalWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(totalFWDVestedBalance.getText()));
 			System.out.println("FWD Total Vested Balance: "+enteredTotalWithdrawalAmt);	
 		}
@@ -568,19 +568,19 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		Thread.sleep(2000);	
 		//enter Amount for Part Withdrawal
 		if (rothSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd")) {
-			WebElement partWithdrawalMoneySourceAvailable=Web.webdriver.findElement
+			WebElement partWithdrawalMoneySourceAvailable=Web.getDriver().findElement
 					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Roth")));
 			if(Web.isWebElementDisplayed(partWithdrawalMoneySourceAvailable, true))
 			{
 				int maxAmount=0;
 				enteredRothWithdrawalAmt=0;
-				WebElement txtMaxAmount = Web.webdriver.findElement(By
+				WebElement txtMaxAmount = Web.getDriver().findElement(By
 						.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
 				maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
 				maxAmount=maxAmount-1;
 				enteredRothWithdrawalAmt=maxAmount;
 				
-				WebElement txtAmount = Web.webdriver.findElement(By
+				WebElement txtAmount = Web.getDriver().findElement(By
 						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
 				Web.setTextToTextBox(txtAmount, Integer.toString(enteredRothWithdrawalAmt));
 				
@@ -599,19 +599,19 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 	 if(preTaxSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd"))
 	{
-			WebElement partWithdrawalMoneySourceAvailable=Web.webdriver.findElement
+			WebElement partWithdrawalMoneySourceAvailable=Web.getDriver().findElement
 					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Pre-tax")));
 			if(Web.isWebElementDisplayed(partWithdrawalMoneySourceAvailable, true))
 			{
 				int maxAmount=0;
 				enteredPreTaxWithdrawalAmt=0;
-				WebElement txtMaxAmount = Web.webdriver.findElement(By
+				WebElement txtMaxAmount = Web.getDriver().findElement(By
 						.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
 				maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
 				maxAmount=maxAmount-1;
 				enteredPreTaxWithdrawalAmt=maxAmount;
 				
-				WebElement txtAmount = Web.webdriver.findElement(By
+				WebElement txtAmount = Web.getDriver().findElement(By
 						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
 				Web.setTextToTextBox(txtAmount, Integer.toString(enteredPreTaxWithdrawalAmt));
 				
@@ -763,7 +763,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if(Web.isWebElementDisplayed(btnContinueWithdrawal, true))
 		{
 		Web.clickOnElement(btnContinueWithdrawal);
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Thread.sleep(4000);
 		}
 		else
@@ -802,7 +802,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					deliveryMthd=inpFirstClassMail.getAttribute("value");
 					Web.clickOnElement(inpFirstClassMail);
 					Common.waitForProgressBar();
-					Web.waitForPageToLoad(Web.webdriver);
+					Web.waitForPageToLoad(Web.getDriver());
 					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
 							+ mailDeliverytype, "Selected Delivery Method: " + inpFirstClassMail.getAttribute("value"), false);
 				}
@@ -811,7 +811,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					Web.clickOnElement(inpExpressMail);
 					deliveryMthd=inpExpressMail.getAttribute("value");
 					Common.waitForProgressBar();
-					Web.waitForPageToLoad(Web.webdriver);
+					Web.waitForPageToLoad(Web.getDriver());
 					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
 							+ mailDeliverytype, "Selected Delivery Method: " + inpExpressMail.getAttribute("value"), false);
 				}
@@ -823,7 +823,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					enteredTotalWithdrawalAmt = 0;
 					enteredTotalWithdrawalAmt = enteredPreTaxWithdrawalAmt
 							+ enteredRothWithdrawalAmt;
-					WebElement lblFinalWithdrawalAmount = Web.webdriver.findElement(By
+					WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
 							.xpath(lblTotalWithdrawalAmount.replace("Money Source Type",
 									"Total withdrawal amount")));
 					finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
@@ -896,7 +896,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		Web.clickOnElement(btnIAgreeAndSubmit);		
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);	
+		Web.waitForPageToLoad(Web.getDriver());	
 						
 		if(isTextFieldDisplayed("Request submitted!"))
 		{
@@ -1046,7 +1046,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 */
 	public boolean selectWithdrawalType(String withdrawalType) {
 		boolean isSelected=false;
-		Actions keyBoard = new Actions(Web.webdriver);
+		Actions keyBoard = new Actions(Web.getDriver());
 		try {
 			if(Web.isWebElementDisplayed(inpCurrentEmployerYes, true))
 			{
@@ -1056,7 +1056,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				keyBoard.sendKeys(Keys.ENTER).perform();
 			}
 			Thread.sleep(5000);	
-		WebElement inptWithdrawalType = Web.webdriver.findElement(By
+		WebElement inptWithdrawalType = Web.getDriver().findElement(By
 				.xpath(inputWithdrawalType.replace("Withdrawal Type",
 						withdrawalType)));
 	
@@ -1140,7 +1140,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	}
 	public boolean isTextFieldDisplayed(String fieldName) {
 		boolean isTextDisplayed=false;
-		 WebElement txtField= Web.webdriver.findElement(By.xpath(textField.replace("webElementText", fieldName)));
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
 		if (isTextDisplayed) {
@@ -1195,7 +1195,7 @@ return isTextDisplayed;
 	int finalWithdrawalAmount=0;
 	try
 	{		
-		WebElement lblFinalWithdrawalAmount = Web.webdriver.findElement(By
+		WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
 				.xpath(lblTotalWithdrawalAmount.replace("Money Source Type",
 						moneyType)));
 		finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
@@ -1216,7 +1216,7 @@ return isTextDisplayed;
 	 * 
 	 */
 	public void selectDeliveryMethod(String deliveryMethod) {
-		WebElement inptDeliveryMethod = Web.webdriver.findElement(By
+		WebElement inptDeliveryMethod = Web.getDriver().findElement(By
 				.xpath(inpMailType.replace("mailType",
 						deliveryMethod)));
 		try {
@@ -1257,7 +1257,7 @@ return isTextDisplayed;
 	public void enterAmountforPartWthdrawalMoneyTypeSource(String moneyType,String amount) {
 	try
 	{
-		WebElement txtAmount = Web.webdriver.findElement(By
+		WebElement txtAmount = Web.getDriver().findElement(By
 				.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
 		Web.setTextToTextBox(txtAmount, amount);
 		
@@ -1278,7 +1278,7 @@ return isTextDisplayed;
 	public void selectMaxAmountForPartWithDrawalMoneyTypeSource(String moneyType) {
 	try
 	{
-		WebElement chkBoxMaxAmount = Web.webdriver.findElement(By
+		WebElement chkBoxMaxAmount = Web.getDriver().findElement(By
 				.xpath(chkBoxMaxAmtPWMoneyType.replaceAll("Money Source Type", moneyType)));
 		Web.clickOnElement(chkBoxMaxAmount);
 		Reporter.logEvent(Status.INFO, "Selecting Max Amount For'"+moneyType+"'"
@@ -1300,7 +1300,7 @@ return isTextDisplayed;
 	try
 	{
 		
-		WebElement txtMaxAmount = Web.webdriver.findElement(By
+		WebElement txtMaxAmount = Web.getDriver().findElement(By
 				.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 						withdrawalType).replaceAll("Money Source Type", moneyType)));
 		maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));

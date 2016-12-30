@@ -55,7 +55,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 		 */
 		public PlanForms() {
 			this.parent = new LeftNavigationBar();
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		/** Constructor taking parent as input
@@ -64,7 +64,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 		 */
 		public PlanForms(LoadableComponent<?> parent) {
 			this.parent = parent;
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		@Override
@@ -107,7 +107,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			} else {
 				this.lnkLogout.click();
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 				Assert.assertTrue(false,"Login Page is not loaded\n");
 			}
 		}
@@ -118,7 +118,7 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("Plan forms");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			
 		}
@@ -157,22 +157,22 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			e.printStackTrace();
 		}
 		boolean windowFound = false;
-		String parentWindow = Web.webdriver.getWindowHandle();
-		Set<String> handles = Web.webdriver.getWindowHandles();
+		String parentWindow = Web.getDriver().getWindowHandle();
+		Set<String> handles = Web.getDriver().getWindowHandles();
 
 		for (String windowHandle : handles) {
 
 			if (!windowHandle.equals(parentWindow)) {
-				Web.webdriver.switchTo().window(windowHandle);
+				Web.getDriver().switchTo().window(windowHandle);
 
 				windowFound = true;
 				break;
 			}
 				}
 		// closing child window
-		Web.webdriver.close(); 
+		Web.getDriver().close(); 
 		//Switching to main window
-		Web.webdriver.switchTo().window(parentWindow);
+		Web.getDriver().switchTo().window(parentWindow);
 		return windowFound;
 	}
 }

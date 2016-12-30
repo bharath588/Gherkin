@@ -56,7 +56,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public AccountLookup() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -65,7 +65,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public AccountLookup(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		this.parent.get();
 		((LoginPage) this.parent).clickRegister();
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 	}
 	
 	/** <pre> Method to return WebElement object corresponding to specified field name
@@ -419,7 +419,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (element == null) {
 			errMsg = "";
 		} else {
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(element);
 			if (Web.isWebElementDisplayed(element)) {
 				errMsg = element.getText();

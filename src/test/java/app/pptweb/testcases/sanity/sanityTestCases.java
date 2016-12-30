@@ -103,7 +103,7 @@ public class sanityTestCases {
 	    
 	    private String printTestData() throws Exception {
 			printTestData="";
-			for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+			for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
 				if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
 					printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
 			}
@@ -947,7 +947,7 @@ public class sanityTestCases {
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			//verify beneficiary name
 			Common.waitForProgressBar();
-            Web.waitForPageToLoad(Web.webdriver);
+            Web.waitForPageToLoad(Web.getDriver());
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
@@ -1079,7 +1079,7 @@ public class sanityTestCases {
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			//verify beneficiary name
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);

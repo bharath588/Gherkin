@@ -16,7 +16,7 @@ import lib.Stock;
 import lib.Reporter.Status;
 
 public class TestDataFromDB {
-	private static Map<String, String> tempMap = null;
+	private static HashMap<String, String> tempMap = null;
 
 	@SuppressWarnings("null")
 	public static HashMap<String, String> getParticipantDetails(
@@ -90,14 +90,14 @@ public class TestDataFromDB {
 
 	public static void addUserDetailsToGlobalMap(Map<String, String> paramMap) {
 
-		tempMap = Stock.globalTestdata;
+		tempMap = Stock.globalTestdata.get(Thread.currentThread().getId());
 		// System.out.println("TEST DATA FROM EXCEL"+tempMap);
 		for (Entry<String, String> entry : paramMap.entrySet()) {
 			tempMap.put(entry.getKey(), entry.getValue());
 
 		}
 
-		Stock.globalTestdata = tempMap;
+		Stock.globalTestdata.put(Thread.currentThread().getId(),tempMap);
 		System.out.println("TEST DATA FROM BOTH" + tempMap);
 
 	}

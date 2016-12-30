@@ -258,7 +258,7 @@ public class logintestcases {
 
 	@AfterSuite
 	public void cleanupSessions() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
+		lib.Web.getDriver().close();
+		lib.Web.getDriver().quit();
 	}
 }

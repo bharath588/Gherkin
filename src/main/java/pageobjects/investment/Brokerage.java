@@ -44,7 +44,7 @@ private LoadableComponent<?> parent;
 	 */
 	public Brokerage() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -53,7 +53,7 @@ private LoadableComponent<?> parent;
 	 */
 	public Brokerage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -92,7 +92,7 @@ private LoadableComponent<?> parent;
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -103,7 +103,7 @@ private LoadableComponent<?> parent;
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Brokerage");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(lblBrokerage);
 		
 		
@@ -139,7 +139,7 @@ private LoadableComponent<?> parent;
 	
 	public void verifyBrokerageTableDisplayed(){
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 	 
 		
 	 	Web.waitForElement(tblBrokerage);
@@ -153,14 +153,14 @@ private LoadableComponent<?> parent;
 			
 		} else
 			Reporter.logEvent(Status.FAIL,"Verify brokerage table is displayed","Table is not displayed", true);
-	 	Web.webdriver.switchTo().defaultContent();
+	 	Web.getDriver().switchTo().defaultContent();
 		
 		
 		
 	}
 	
 	public void verifyBrokerageTableDataDisplayed(String dataName){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement data = this.getWebElement(dataName);
 		
 		if(Web.isWebElementDisplayed(data))
@@ -168,7 +168,7 @@ private LoadableComponent<?> parent;
 		else
 			Reporter.logEvent(Status.PASS, "Verify "+dataName+" is displayed", dataName+" is not displayed",true);
 	
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 }

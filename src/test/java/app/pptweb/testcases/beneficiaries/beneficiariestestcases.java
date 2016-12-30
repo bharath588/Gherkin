@@ -66,7 +66,7 @@ public class beneficiariestestcases {
     
     private String printTestData() throws Exception {
 		printTestData="";
-		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
 			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
 				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
 		}
@@ -127,7 +127,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			//verify beneficiary name
 			Common.waitForProgressBar();
-            Web.waitForPageToLoad(Web.webdriver);
+            Web.waitForPageToLoad(Web.getDriver());
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
 			else
@@ -259,7 +259,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
 			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			//verify beneficiary name
 			if(beneficiary.verifyBeneficiaryDetails("Name"))
 				Reporter.logEvent(Status.PASS, "verify beneficiary name", "beneficiary name is matching", true);
@@ -813,9 +813,9 @@ public class beneficiariestestcases {
 			}
 			String[] sqlQuery = Stock.getTestQuery("updateQJSA");
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("gc_id"));	
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg",true )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -960,9 +960,9 @@ public class beneficiariestestcases {
 			}
 			String[] sqlQuery = Stock.getTestQuery("updateAllocationsToNull");
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
@@ -1041,9 +1041,9 @@ public class beneficiariestestcases {
 			
 			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 			
@@ -1667,7 +1667,7 @@ public class beneficiariestestcases {
 				Web.selectDropDownOption(beneficiary,"Beneficiary Relation", "Spouse");
 				Web.waitForElement(beneficiary, "First name");
 				Web.clickOnElement(beneficiary, "Save button");
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 				//verify All Error Messages Displayed properly
 				if(beneficiary.isErrorMessageDisplayed("First name is required."))
 					Reporter.logEvent(Status.PASS, "verify 'First name is required' Error Message is Displayed", "'First name is required' Error Message is Displayed", false);

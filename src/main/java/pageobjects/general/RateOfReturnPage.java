@@ -62,7 +62,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	 */
 	public RateOfReturnPage() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	 */
 	public RateOfReturnPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
@@ -126,7 +126,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 		this.parent.get();
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Rate Of Return");
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Common.waitForProgressBar();
 
 	}

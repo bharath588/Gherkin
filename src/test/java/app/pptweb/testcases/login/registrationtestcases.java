@@ -542,7 +542,7 @@ public class registrationtestcases {
 			// Step 7 - In the social security field, enter alphanumeric
 			// characters
 			// and move the cursor out of the field.
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 
 			objAccountLookup.setTextToFields("Social Security Number",
 					"ab12CD34e");
@@ -829,7 +829,7 @@ public class registrationtestcases {
 			String activeTab;
 			String expectedErrMsg;
 
-			Web.webdriver
+			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 			AccountLookup objAccountLookup = new AccountLookup();
 
@@ -920,7 +920,7 @@ public class registrationtestcases {
 			// Step 7 - In the social security field, enter alphanumeric
 			// characters
 			// and move the cursor out of the field.
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 			objAccountLookup.setTextToFields("Social Security Number",
 					"ab12CD34e");
 			keyBoard.sendKeys(Keys.TAB).perform();
@@ -949,7 +949,7 @@ public class registrationtestcases {
 				}
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 
 			// Step 8 - Enter SSN less than 9 digits and move the cursor out
 			objAccountLookup.setTextToFields("Social Security Number", "1252");
@@ -978,7 +978,7 @@ public class registrationtestcases {
 				}
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 
 			// Step 9 - Enter SSN more than 9 digits
 			txtActErrMsg = objAccountLookup.setTextToFields(
@@ -1001,7 +1001,7 @@ public class registrationtestcases {
 						false);
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			// Step 10 - In the zip code field, enter alphanumeric
 			// characters and
 			// move the cursor out of the field..
@@ -1029,7 +1029,7 @@ public class registrationtestcases {
 									+ txtActErrMsg, false);
 				}
 			}
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			/*
 			 * // step 11 and 12 are UI validations that cannot be done // Step
 			 * 13 - Verfiy that the placeholder text for the three boxes in the
@@ -1066,7 +1066,7 @@ public class registrationtestcases {
 				}
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 
 			// step 15 cannot be automated
 			// Step 16 -Verify text entry box for the Street Address and
@@ -1092,7 +1092,7 @@ public class registrationtestcases {
 								+ txtActErrMsg, false);
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			// Step 16 -Verify text entry box for the Street Address and
 			// that the
 			// Street Address field allows for text entry of just the house
@@ -1117,7 +1117,7 @@ public class registrationtestcases {
 						"Some error was displayed for Street address for entering only house number and street name\nActual Message: "
 								+ txtActErrMsg, false);
 			}
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			// Step 17 - Click on the "I have a PIN" tab at the top of the
 			// page
 
@@ -1310,7 +1310,7 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			String ActErrMessage;
-			Web.webdriver
+			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 			AccountLookup accLookup = new AccountLookup();
 			// Steps
@@ -1426,7 +1426,7 @@ public class registrationtestcases {
 			String expNoPinUsrLockmsgTwo = "Error: The entries you provided do not match our records. Please try again. You have 1 attempt(s) remaining.";
 			String expNoPinUsrLockmsg = "You have exceeded the maximum number of login attempts allowed. For security reasons, Internet access to your account has been temporarily disabled.";
 
-			Web.webdriver
+			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 			AccountLookup objAccountLookup = new AccountLookup();
 
@@ -1469,7 +1469,7 @@ public class registrationtestcases {
 
 			// avoid staleElementException
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 
 			// verify the second error message that the user gets on
 			// entering invalid pin
@@ -1504,7 +1504,7 @@ public class registrationtestcases {
 				}
 			}
 
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 
 			// verify the final error message that the user gets on entering
 			// invalid pin,where the user is locked
@@ -1890,7 +1890,7 @@ public class registrationtestcases {
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			if (Common.getSponser().equalsIgnoreCase("Apple")) {
-				Web.webdriver
+				Web.getDriver()
 						.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 				AccountLookup objAccountLookup = new AccountLookup();
 				AccountSetup objAccountSetup = new AccountSetup(
@@ -2074,7 +2074,7 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			String hdrBlockText;
-			Web.webdriver
+			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
 			AccountLookup accLookup = new AccountLookup();
 			AccountSetup accSetup = new AccountSetup(accLookup);
@@ -2169,7 +2169,7 @@ public class registrationtestcases {
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -2382,7 +2382,7 @@ public class registrationtestcases {
 					Stock.GetParameterValue("ga_PlanId"));
 			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
 			AccountLookup accLookup = new AccountLookup(loginPage);
@@ -2640,7 +2640,7 @@ public class registrationtestcases {
 
 	@AfterSuite
 	public void cleanupSessions() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
+		lib.Web.getDriver().close();
+		lib.Web.getDriver().quit();
 	}
 }

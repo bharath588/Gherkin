@@ -114,7 +114,7 @@ HashMap<String, String> mapViewDetails = new HashMap<String, String>();
  */
 public RetirementIncome() {
 	this.parent = new LandingPage();
-	PageFactory.initElements(lib.Web.webdriver, this);
+	PageFactory.initElements(lib.Web.getDriver(), this);
 }
 
 /** Constructor taking parent as input
@@ -123,7 +123,7 @@ public RetirementIncome() {
  */
 public RetirementIncome(LoadableComponent<?> parent) {
 	this.parent = parent;
-	PageFactory.initElements(lib.Web.webdriver, this);
+	PageFactory.initElements(lib.Web.getDriver(), this);
 }
 
 @Override
@@ -169,7 +169,7 @@ protected void load() {
 	//((LandingPage) this.parent).dismissPopUps(true,true);
 	this.tabRetirementIncome.click();
 	Common.waitForProgressBar();
-	Web.waitForPageToLoad(Web.webdriver);
+	Web.waitForPageToLoad(Web.getDriver());
 }
 
 /**<pre>Method to read the projected income value from the retirement income page
@@ -564,7 +564,7 @@ public String verifyPercentOfMyGoalSection(String retirementIncomeView) throws I
 public void verifyTourModals(String modalHeaderTxt) throws InterruptedException,NoSuchElementException{
 	boolean isModalHeaderDisplayed=false;
 	 Thread.sleep(2000);
-	 WebElement lblModalHeader= Web.webdriver.findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
+	 WebElement lblModalHeader= Web.getDriver().findElement(By.xpath(modalHeader.replace("webElementText", modalHeaderTxt)));
 	 Web.waitForElement(lblModalHeader);
 	 Thread.sleep(3000);
 	 isModalHeaderDisplayed = Web.isWebElementDisplayed(lblModalHeader, true);
@@ -589,8 +589,8 @@ public void verifyPayCheckContributionInColorBarForNonZeroValue(String label) th
 	int listofelements=lstViewDetails.size();
 for( i=1;i<=listofelements;i++)
 {
-	WebElement lblViewDetail= Web.webdriver.findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
-	WebElement valViewDetail= Web.webdriver.findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
+	WebElement lblViewDetail= Web.getDriver().findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
+	WebElement valViewDetail= Web.getDriver().findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
 	mapViewDetails.put(lblViewDetail.getText(), valViewDetail.getText());
 	
 }
@@ -599,7 +599,7 @@ if(mapViewDetails.containsKey(label)){
 		if(!mapViewDetails.get(label).equalsIgnoreCase("$0.00")){
 	if(label.contains("Saving"))
 	{
-			WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")));
+			WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")));
 			if(Web.isWebElementDisplayed(lblincomeType, true))
 			{
 				
@@ -610,7 +610,7 @@ if(mapViewDetails.containsKey(label)){
 	}
 	else if(label.contains("Employer"))
 	{
-		WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")));
+		WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")));
 		if(Web.isWebElementDisplayed(lblincomeType, true))
 		{
 			
@@ -621,7 +621,7 @@ if(mapViewDetails.containsKey(label)){
 	}
 	else
 	{
-		WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
+		WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
 		if(Web.isWebElementDisplayed(lblincomeType, true))
 		{
 			
@@ -638,7 +638,7 @@ if(mapViewDetails.containsKey(label)){
 			if(label.contains("Saving"))
 			{
 				if(mapViewDetails.get("My Current Savings").equalsIgnoreCase("$0.00") && mapViewDetails.get("My Future Savings").equalsIgnoreCase("$0.00")){
-					if(Web.isWebElementDisplayed(Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")))))
+					if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")))))
 					{
 						Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "My Savings is not Displayed on Color Bar", false);
 					} else {
@@ -648,7 +648,7 @@ if(mapViewDetails.containsKey(label)){
 			}
 			else if(label.contains("Employer"))
 			{
-				if(Web.isWebElementDisplayed(Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")))))
+				if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")))))
 				{
 					
 					Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is not Displayed on Color Bar", false);
@@ -661,7 +661,7 @@ if(mapViewDetails.containsKey(label)){
 			boolean blnElementDisplayed=true;
 			
 			try{
-				WebElement lblincomeType= Web.webdriver.findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
+				WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType",label)));
 				if(lblincomeType.isDisplayed())
 					blnElementDisplayed=true;
 			}
@@ -699,8 +699,8 @@ public void verifyValueInColorBarForNonZeroValue(String label) throws Interrupte
 	mapViewDetails.clear();
 for( int i=1;i<=listofelements;i++)
 {
-	WebElement lblViewDetail= Web.webdriver.findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
-	WebElement valViewDetail= Web.webdriver.findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
+	WebElement lblViewDetail= Web.getDriver().findElement(By.xpath(labelViewDetail.replace("position",Integer.toString(i) )));
+	WebElement valViewDetail= Web.getDriver().findElement(By.xpath(valueViewDetail.replace("position",Integer.toString(i) )));
 	if(!valViewDetail.getText().equalsIgnoreCase("$0.00")){
 	mapViewDetails.put(lblViewDetail.getText(), valViewDetail.getText());
 }
@@ -717,7 +717,7 @@ if(mapViewDetails.containsKey("My Future Savings")){
 	futureSavings=Double.parseDouble(mapViewDetails.get("My Future Savings").substring(1).replaceAll(",", ""));
 }
 mySavings=(int)Math.round((currentSavings+futureSavings));
-			WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType","My Savings")));
+			WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","My Savings")));
 			int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
 			if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
 							
@@ -736,7 +736,7 @@ mySavings=(int)Math.round((currentSavings+futureSavings));
 				futureContribution=Double.parseDouble(mapViewDetails.get("Employer Future Contribution").substring(1).replaceAll(",", ""));
 			}
 			mySavings=(int)Math.round((currentContribution+futureContribution));
-						WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType","Employer Contributions")));
+						WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","Employer Contributions")));
 						int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
 						if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
 												
@@ -749,7 +749,7 @@ mySavings=(int)Math.round((currentSavings+futureSavings));
 	{
 		if(mapViewDetails.containsKey(label)){
 		mySavings=(int)Math.round((Double.parseDouble(mapViewDetails.get(label).substring(1).replaceAll(",", ""))));
-		WebElement valincomeType= Web.webdriver.findElement(By.xpath(valIncomeType.replace("IncomeType",label)));
+		WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType",label)));
 		int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
 		if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
 										
@@ -787,7 +787,7 @@ public boolean verifyIfSliderEnabled(String sliderName){
  */
 
 public void enterContributionRate(String contributionRate,boolean... args) throws InterruptedException{
-	Actions keyBoard = new Actions(Web.webdriver);
+	Actions keyBoard = new Actions(Web.getDriver());
 	Web.waitForElement(lnkContributionPercent);
 	if (args.length > 0) {
 		Web.clickOnElement(this.lnkContributionPercent);

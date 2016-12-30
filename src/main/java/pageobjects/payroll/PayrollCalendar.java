@@ -52,7 +52,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		 */
 		public PayrollCalendar() {
 			this.parent = new LeftNavigationBar();
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		/** Constructor taking parent as input
@@ -61,7 +61,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 		 */
 		public PayrollCalendar(LoadableComponent<?> parent) {
 			this.parent = parent;
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		@Override
@@ -100,7 +100,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			} else {
 				this.lnkLogout.click();
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 				Assert.assertTrue(false,"Login Page is not loaded\n");
 			}
 		}
@@ -110,7 +110,7 @@ public class PayrollCalendar extends LoadableComponent<PayrollCalendar> {
 			this.parent.get();
 			
 			((LeftNavigationBar) this.parent).clickNavigationLink("Payroll calendar");
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 		}
 		

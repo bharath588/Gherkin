@@ -62,7 +62,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	public HealthCareCosts()
 	{
 		this.parent=new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Parameter Constructor
@@ -71,7 +71,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	 */
 	public HealthCareCosts(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 				
 		this.lblHelathCareCosts.click();
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		
 	}
 	
@@ -220,12 +220,12 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		 * @return - void
 		 */
 	public void verifyPersonalizeBtn() {	
-		Actions mouse = new Actions(Web.webdriver);
-		//	((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+		Actions mouse = new Actions(Web.getDriver());
+		//	((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 			try{
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(btnPersonalize);
 			mouse.moveToElement(btnPersonalize).clickAndHold(btnPersonalize).build().perform();
 			
@@ -267,16 +267,16 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 				Reporter.logEvent(Status.FAIL,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), true);
 			
 			boolean windowFound = false;
-			String parentWindow = Web.webdriver.getWindowHandle();
+			String parentWindow = Web.getDriver().getWindowHandle();
 			btnContinue.click();
 			
-			Set<String> handles = Web.webdriver.getWindowHandles();
+			Set<String> handles = Web.getDriver().getWindowHandles();
 			for (String windowHandle : handles) {
 
 				if (!windowHandle.equals(parentWindow)) {
-					Web.webdriver.switchTo().window(windowHandle);
-					Web.waitForPageToLoad(Web.webdriver);
-					if (Web.webdriver.getTitle().contains("Medicare.gov: the official U.S. government site for Medicare")) {
+					Web.getDriver().switchTo().window(windowHandle);
+					Web.waitForPageToLoad(Web.getDriver());
+					if (Web.getDriver().getTitle().contains("Medicare.gov: the official U.S. government site for Medicare")) {
 						windowFound = true;
 						break;
 					}
@@ -286,8 +286,8 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 				lib.Reporter.logEvent(Status.PASS,"Verifying Medicare site is Opened in New Window","Medicare site is Opened in New Window",true);
 			else 
 				lib.Reporter.logEvent(Status.FAIL,"Verifying Medicare site is Opened in New Window","Medicare site is Not Opened in New Window",true);
-			Web.webdriver.close();
-			Web.webdriver.switchTo().window(parentWindow);
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
 		}
 		else
 			Reporter.logEvent(Status.FAIL,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", true);

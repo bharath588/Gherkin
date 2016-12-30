@@ -47,7 +47,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 */
 	public ForgotPassword(){
 		this.parent = new LoginPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -56,7 +56,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	 */
 	public ForgotPassword(LoadableComponent<?> parent){
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	
@@ -80,7 +80,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		objLogin.get();
 		objLogin.clickForgotPassword();
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		
 	}
 

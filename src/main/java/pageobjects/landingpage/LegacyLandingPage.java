@@ -52,7 +52,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
      */
     public LegacyLandingPage() {
     	this.parent = new TwoStepVerification();
-    	PageFactory.initElements(lib.Web.webdriver, this);
+    	PageFactory.initElements(lib.Web.getDriver(), this);
     }
     
     /** Constructor taking parent as input
@@ -62,7 +62,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 	public LegacyLandingPage(LoadableComponent<?> parent){
 		//this.driver = DriveSuite.webDriver;
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -105,7 +105,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -120,7 +120,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 			try {
 				mfaScreen.submitVerificationCode(Stock.getConfigParam("defaultActivationCode"), true, false);
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

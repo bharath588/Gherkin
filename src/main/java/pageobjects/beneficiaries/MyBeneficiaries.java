@@ -104,7 +104,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public MyBeneficiaries() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -113,7 +113,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 */
 	public MyBeneficiaries(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -157,7 +157,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -168,7 +168,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Beneficiaries");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(lblMyBeneficiaries);
 		Web.isWebElementDisplayed(lblMyBeneficiaries,true);
 		
@@ -732,11 +732,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	
 	public void refresh(){
-		lib.Web.webdriver.navigate().refresh();
+		lib.Web.getDriver().navigate().refresh();
 	}
 	public boolean isErrorMessageDisplayed(String errorMessage) {
 		boolean isTextDisplayed=false;
-		 WebElement txterrorMessage= Web.webdriver.findElement(By.xpath(lblerrorMessage.replace("webElementText", errorMessage)));
+		 WebElement txterrorMessage= Web.getDriver().findElement(By.xpath(lblerrorMessage.replace("webElementText", errorMessage)));
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txterrorMessage, true);
 		/*if (isTextDisplayed) {

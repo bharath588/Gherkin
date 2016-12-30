@@ -70,7 +70,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	 */
 	public StatementsAndDocuments() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -79,7 +79,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	 */
 	public StatementsAndDocuments(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -122,7 +122,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -133,7 +133,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
 	}
 	
@@ -193,22 +193,22 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	
 public void verifyTableDisplayed(String tableName){
 		if(tableName.equalsIgnoreCase("Transaction Details Table"))
-			Web.webdriver.switchTo().frame(iframeContentFrame);
+			Web.getDriver().switchTo().frame(iframeContentFrame);
 		else
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement table = this.getWebElement(tableName);
 		if(Web.isWebElementDisplayed(table))
 			Reporter.logEvent(Status.PASS, "verify "+tableName+" is displayed", tableName+" is displayed", false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify "+tableName+" is displayed", tableName+" is not displayed",true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifyTableDataDisplayed(String tableName){
 		if(tableName.equalsIgnoreCase("Transaction Details Table"))
-			Web.webdriver.switchTo().frame(iframeContentFrame);
+			Web.getDriver().switchTo().frame(iframeContentFrame);
 		else
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		
 		List<WebElement> table = this.getWebElementList(tableName);
 		int noOfRows=table.size();
@@ -216,76 +216,76 @@ public void verifyTableDisplayed(String tableName){
 			Reporter.logEvent(Status.PASS, "verify data is displayed for "+tableName, "Data is displayed for "+tableName, false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify data is displayed for "+tableName, "Data is not displayed for "+tableName,true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifytableHeaderNotEmpty(String tableName){
 	 	
 		if(tableName.equalsIgnoreCase("Transaction Details Table Header"))
-			Web.webdriver.switchTo().frame(iframeContentFrame);
+			Web.getDriver().switchTo().frame(iframeContentFrame);
 		else
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);  
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);  
 	 	WebElement tableHeader = this.getWebElement(tableName);
 	 	if(!tableHeader.getText().isEmpty())
 	 		Reporter.logEvent(Status.PASS, "verify "+tableName+" displayed",tableName+" is displayed" , false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify "+tableName+" displayed", tableName+" not displayed",true);
-	 	Web.webdriver.switchTo().defaultContent();
+	 	Web.getDriver().switchTo().defaultContent();
 
 
 	}	
 	
 	public void clickOnStatementFromTable(String tableName){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		List<WebElement> statements = this.getWebElementList(tableName);
 		if(statements.size()>=1){
 			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+tableName, "Contribution Source is displayed",true);
 			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(0).getText().trim(),true);
 			statements.get(0).click();
-			String parentWindow = Web.webdriver.getWindowHandle();
-			Set<String> handles =  Web.webdriver.getWindowHandles();
+			String parentWindow = Web.getDriver().getWindowHandle();
+			Set<String> handles =  Web.getDriver().getWindowHandles();
 			   for(String windowHandle  : handles)
 			       {
 			       if(!windowHandle.equals(parentWindow)){
-			         Web.webdriver.switchTo().window(windowHandle);
+			         Web.getDriver().switchTo().window(windowHandle);
 			         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
 			         Common.waitForProgressBar();
-			         Web.waitForPageToLoad(Web.webdriver);
+			         Web.waitForPageToLoad(Web.getDriver());
 			        
 			       }
 			       }
 		}
 		else
 			Reporter.logEvent(Status.FAIL, "verify Contribution Source displayed in "+tableName, "Contribution Source is not displayed in"+tableName,true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void switchToWindow(){
-		String parentWindow = Web.webdriver.getWindowHandle();
-		Set<String> handles =  Web.webdriver.getWindowHandles();
+		String parentWindow = Web.getDriver().getWindowHandle();
+		Set<String> handles =  Web.getDriver().getWindowHandles();
 		   for(String windowHandle  : handles)
 		       {
 		       if(!windowHandle.equals(parentWindow)){
-		         Web.webdriver.switchTo().window(windowHandle);
+		         Web.getDriver().switchTo().window(windowHandle);
 		         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
-		         Web.waitForPageToLoad(Web.webdriver);
+		         Web.waitForPageToLoad(Web.getDriver());
 		         Web.waitForElement(tblStmtsByTxnDetail);
 		         verifyTableDisplayed("Transaction Details Table");
 		   		 verifytableHeaderNotEmpty("Transaction Details Table Header");
 		   		 verifyTableDataDisplayed("Transaction Details Table");
 		   			
 		         //closing child window
-		   		 Web.webdriver.close();
+		   		 Web.getDriver().close();
 		          //cntrl to parent window
 		       }
 		      
 		       }
-		   Web.webdriver.switchTo().window(parentWindow);
+		   Web.getDriver().switchTo().window(parentWindow);
 	}
 	
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		
 		if(tabName.equalsIgnoreCase("Stmts On Demand Tab")){
 			Web.waitForElement(tabStmtsOnDemand);
@@ -297,7 +297,7 @@ public void verifyTableDisplayed(String tableName){
 			Reporter.logEvent(Status.PASS, "verify navigate to "+tabName+"  successfull", "Able to navigate to "+tabName+" tab", true);
 		else
 			Reporter.logEvent(Status.FAIL, "verify navigate to "+tabName+" successfull", " Not Able to navigate to "+tabName+" tab",true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	/**
@@ -306,19 +306,19 @@ public void verifyTableDisplayed(String tableName){
 	 * @throws InterruptedException 
 	 */
 	public void selectDateFrequency(String frequency) throws InterruptedException{
-		Actions mouse = new Actions(Web.webdriver);
-		Web.webdriver.switchTo().defaultContent();
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Actions mouse = new Actions(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(drpDateFreequency);
 		if(!Web.isWebElementDisplayed(drpDateFreequency)){
 		
 		}
 		Web.clickOnElement(drpDateFreequency);
-		 WebElement DateFrequency= Web.webdriver.findElement(By.xpath(dateFrequency.replaceAll("frequency", frequency)));
+		 WebElement DateFrequency= Web.getDriver().findElement(By.xpath(dateFrequency.replaceAll("frequency", frequency)));
 		mouse.moveToElement(DateFrequency).click().build().perform();
 		Thread.sleep(3000);
 		Web.clickOnElement(btnSubmitQuery);
 		Web.waitForElement(colContributionSource);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 }

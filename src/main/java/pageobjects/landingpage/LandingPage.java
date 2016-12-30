@@ -66,7 +66,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	 */
 	public LandingPage() {
 		this.parent = new TwoStepVerification();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	public LandingPage(LoadableComponent<?> parent) {
 		// this.driver = DriveSuite.webDriver;
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
@@ -132,7 +132,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 						Stock.getConfigParam("defaultActivationCode"), true,
 						false);
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

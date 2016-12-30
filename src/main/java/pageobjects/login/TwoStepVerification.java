@@ -53,7 +53,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public TwoStepVerification() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/**Constructor taking parent as input
@@ -62,13 +62,13 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 */
 	public TwoStepVerification(LoadableComponent<?> parent){
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	public TwoStepVerification(String username, String password){
 		this.username = username;
 		this.password = password;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Getter for isPageMandatory flag
@@ -107,7 +107,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		if (!isPageMandatory)
             isMandatoryAfterLoad = false;
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 	}
 	
 	/** <pre> Method to return WebElement object corresponding to specified field name
@@ -183,7 +183,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		if(Web.isWebElementDisplayed(txtConfirmContactInfo)){
 			Web.clickOnElement(btnContinue);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 		}
 		if (deliveryOption.trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 			

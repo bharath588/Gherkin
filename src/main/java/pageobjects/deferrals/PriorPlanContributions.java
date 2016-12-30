@@ -51,7 +51,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	public PriorPlanContributions() {
 	
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Argument Constructor with parent as input
@@ -60,7 +60,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 	 */
 	public PriorPlanContributions(LoadableComponent<?> parent) {
 		this.parent = parent;			
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -106,7 +106,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("My contributions");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 	}
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
@@ -167,7 +167,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 		String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 		Web.waitForElement(txtPriorContribution);
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
 			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);

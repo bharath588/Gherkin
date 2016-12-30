@@ -44,7 +44,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
      */
     public Enrollment() {
     	this.parent = new TwoStepVerification();
-    	PageFactory.initElements(lib.Web.webdriver, this);
+    	PageFactory.initElements(lib.Web.getDriver(), this);
     }
     
     /** Constructor taking parent as input
@@ -54,7 +54,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	public Enrollment(LoadableComponent<?> parent){
 		//this.driver = DriveSuite.webDriver;
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override

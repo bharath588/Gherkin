@@ -57,7 +57,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		public HowDoICompare()
 		{
 			this.parent=new LandingPage();
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		
@@ -68,7 +68,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		public HowDoICompare(LoadableComponent<?> parent)
 		{
 			this.parent=parent;
-			PageFactory.initElements(lib.Web.webdriver, this);
+			PageFactory.initElements(lib.Web.getDriver(), this);
 		}
 		
 		@Override
@@ -121,7 +121,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			//((LandingPage) this.parent).dismissPopUps(true,true);
 			this.lblHowDoICompare.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 			
 		}

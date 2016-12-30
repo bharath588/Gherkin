@@ -100,18 +100,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public LoginPage() {
 		// this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	public LoginPage(String username, String password) {
 		this.username = username;
 		this.password = password;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		//Assert.assertTrue(Web.webdriver.getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
+		//Assert.assertTrue(Web.getDriver().getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
 		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
 		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");	    
 		else{
@@ -134,7 +134,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					"Empower", accuCode);
 
 			Assert.assertTrue(
-					Web.webdriver.getCurrentUrl().equalsIgnoreCase(url),
+					Web.getDriver().getCurrentUrl().equalsIgnoreCase(url),
 					"Login page for '" + Common.getSponser()
 							+ "' is not loaded.");
 
@@ -151,7 +151,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		// lib.Web.robot.keyPress(KeyEvent.VK_ESCAPE);
 		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
-		// lib.Web.webdriver.get(Stock.getConfigParam("AppURL"));
+		// lib.Web.getDriver().get(Stock.getConfigParam("AppURL"));
 		if (Stock.globalTestdata.containsKey("ACCUCODE")
 				&& Stock.GetParameterValue("AccuCode") != null) {
 
@@ -176,15 +176,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 if(Web.isWebElementDisplayed(lnkLogOut))
 		 {
 			Web.clickOnElement(lnkLogOut);
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 		 }		
 		 else
 		 {	
 		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
 		 {
-			 Web.webdriver.navigate().to(url);
-			 Web.webdriver.navigate().refresh();
-			 Web.waitForPageToLoad(Web.webdriver);
+			 Web.getDriver().navigate().to(url);
+			 Web.getDriver().navigate().refresh();
+			 Web.waitForPageToLoad(Web.getDriver());
 			 try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
@@ -194,10 +194,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			// Web.getWebDriver(Stock.getConfigParam("BROWSER"));			 
 			
 		 }
-		  Web.webdriver.get(url);
-		//Web.webdriver.navigate().refresh();
+		  Web.getDriver().get(url);
+		//Web.getDriver().navigate().refresh();
 		if (!Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME"))
-			lib.Web.webdriver.manage().window().maximize();
+			lib.Web.getDriver().manage().window().maximize();
 		System.out.println("Application URL:"+url);
 		 }
 
@@ -206,7 +206,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 	}
 	}
 
@@ -321,7 +321,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 		this.btnLogin.click();
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 
 		try {
 			Thread.sleep(4000);
@@ -630,7 +630,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					+ " Page is Displayed",
 					linkName + " Page is Not Displayed", true);
 		}
-		Web.webdriver.navigate().back();
+		Web.getDriver().navigate().back();
 
 	}
 

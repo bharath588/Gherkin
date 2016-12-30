@@ -52,7 +52,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public LeftNavigationBar() {
 		this.parent = new MyAccountsPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public LeftNavigationBar(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				
 			}
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 		
 		} catch (Exception e) {
@@ -154,7 +154,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 */
 	public boolean clickNavigationLink(String linkName)  {
 		boolean success = false;
-		Actions mouse = new Actions(Web.webdriver);
+		Actions mouse = new Actions(Web.getDriver());
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {

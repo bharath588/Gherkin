@@ -419,7 +419,7 @@ public class deferralstestcases {
 					"Assertion Failed!!", true);
 
 		} finally {
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			Deferrals deferrals = new Deferrals();
 			Web.waitForElement(deferrals, "My Contributions");
 			try {
@@ -1436,8 +1436,8 @@ public class deferralstestcases {
 
 	@AfterSuite
 	public void cleanupSessions() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
+		lib.Web.getDriver().close();
+		lib.Web.getDriver().quit();
 	}
 
 	/**
@@ -1514,7 +1514,7 @@ public class deferralstestcases {
 				Web.clickOnElement(priorContributions, "EDIT");
 				Web.clickOnElement(priorContributions, "LOGOUT");
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

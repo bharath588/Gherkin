@@ -63,7 +63,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	 */
 	public InvestmentLineup() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -72,7 +72,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	 */
 	public InvestmentLineup(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -112,7 +112,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -123,7 +123,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Investment lineup");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		lib.Web.isWebElementDisplayed(lblInvestmentlineup,true);
 
 	}
@@ -143,7 +143,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	
 	public void viewProspectus(){
 		String investmentName;
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(radShowAll);
 		radShowAll.click();
 		if(Web.isWebElementDisplayed(tblFundOverviewTable, true)){
@@ -167,8 +167,8 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 							Reporter.logEvent(Status.PASS, "Verify if we are able to view the prospectus", "Prospectus displayed for : "+lblFundDocTitle.getText()+"\n Expected : "+investmentName,true);
 						else
 							Reporter.logEvent(Status.FAIL, "Verify if we are able to view the prospectus", "Prospectus displayed for : "+lblFundDocTitle.getText()+"\n Expected : "+investmentName,true);
-						 Web.webdriver.close(); //closing child window
-				         Web.webdriver.switchTo().window(parentWindow);
+						 Web.getDriver().close(); //closing child window
+				         Web.getDriver().switchTo().window(parentWindow);
 				         break;
 					}
 					else
@@ -186,19 +186,19 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 	
 	public boolean switchToWindow(String title){
 		boolean windowFound=false;
-		parentWindow = Web.webdriver.getWindowHandle();
-		Set<String> handles =  Web.webdriver.getWindowHandles();
+		parentWindow = Web.getDriver().getWindowHandle();
+		Set<String> handles =  Web.getDriver().getWindowHandles();
 		   for(String windowHandle  : handles)
 		       {
 		       if(!windowHandle.equals(parentWindow)){
-		    	   Web.webdriver.switchTo().window(windowHandle);
-		    	   Web.waitForPageToLoad(Web.webdriver);
-		    	   if(Web.webdriver.getTitle().equalsIgnoreCase(title)){
+		    	   Web.getDriver().switchTo().window(windowHandle);
+		    	   Web.waitForPageToLoad(Web.getDriver());
+		    	   if(Web.getDriver().getTitle().equalsIgnoreCase(title)){
 		    		   windowFound=true;
 		    		   break;
 		    	   } 
-//		    	   Web.webdriver.close(); //closing child window
-//		           Web.webdriver.switchTo().window(parentWindow); //cntrl to parent window
+//		    	   Web.getDriver().close(); //closing child window
+//		           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
 		       }
 		     
 		    }

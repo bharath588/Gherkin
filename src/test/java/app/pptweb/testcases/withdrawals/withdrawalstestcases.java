@@ -53,7 +53,7 @@ public class withdrawalstestcases {
 
 	private String printTestData() throws Exception {
 		printTestData = "";
-		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
 			if (!entry.getKey().equalsIgnoreCase("PASSWORD"))
 				printTestData = printTestData + entry.getKey() + "="
 						+ entry.getValue() + "\n";

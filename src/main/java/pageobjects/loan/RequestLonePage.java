@@ -90,7 +90,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	 */
 	public RequestLonePage() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	 */
 	public RequestLonePage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	@Override
 	protected void isLoaded() throws Error {
@@ -140,7 +140,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		} else {
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 
@@ -152,7 +152,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 
 		((LeftNavigationBar) this.parent).clickNavigationLink("Request a loan");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		lib.Web.isWebElementDisplayed(lblRequestALoan,true);
 		
 
@@ -240,27 +240,27 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	public void selectLoneType(String loanType) {
 		Web.waitForElement(iFrame);
 		if(Web.isWebElementDisplayed(iFrame, true))
-		Web.webdriver.switchTo().frame("legacyFeatureIframe");
+		Web.getDriver().switchTo().frame("legacyFeatureIframe");
 		
 		if (!Web.isWebElementDisplayed(inputLonatypeGeneral)) {
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().navigate().refresh();
 			try {
 				Thread.sleep(7000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			Web.waitForElement(iFrame);
 			if(Web.isWebElementDisplayed(iFrame, true))
-			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 		}
 		if (loanType.equalsIgnoreCase("GENERAL")) {
 					
 			if (Web.isWebElementDisplayed(inputLonatypeGeneral)) {
 				inputLonatypeGeneral.click();
 			} else {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				throw new Error("Loan type radio button 'General' is not displayed");
 			}
 			
@@ -268,13 +268,13 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			if (Web.isWebElementDisplayed(inputLonatypeMortgage)) {
 				this.inputLonatypeMortgage.click();
 			} else {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				throw new Error("Loan type radio button 'Mortgage' is not displayed");
 			}
 		}
 
 		this.btnContinue.click();
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -311,11 +311,11 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		 * 
 		 */
 		public void EnterLoanAmtAndTerm(String loanAmount,String loanTerm) {
-			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
 			Web.setTextToTextBox(this.inputLoanTerm, loanTerm);
 			this.btnCaluculatePaymentInfo.click();
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -325,7 +325,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		
 		public boolean isTextFieldDisplayed(String fieldName) {
 			boolean isTextDisplayed=false;
-			 WebElement txtLoanQuote= Web.webdriver.findElement(By.xpath(loanQuote.replace("webElementText", fieldName)));
+			 WebElement txtLoanQuote= Web.getDriver().findElement(By.xpath(loanQuote.replace("webElementText", fieldName)));
 		
 			isTextDisplayed = Web.isWebElementDisplayed(txtLoanQuote, true);
 			if (isTextDisplayed) {

@@ -73,7 +73,7 @@ public class prodvalidationtestcases {
 	}
 	private String printTestData() throws Exception {
 		printTestData="";
-		for (Map.Entry<String, String> entry : Stock.globalTestdata.entrySet()) {
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
 			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
 				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
 		}
@@ -167,14 +167,14 @@ public class prodvalidationtestcases {
 			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading");
 			login.verifyLinkIsNotBroken("FINRA Investor Education");
 			boolean windowFound = false;
-			String parentWindow = Web.webdriver.getWindowHandle();
+			String parentWindow = Web.getDriver().getWindowHandle();
 			Web.clickOnElement(login, "BrokerCheck Notification");
 			Thread.sleep(7000);
-			Set<String> handles = Web.webdriver.getWindowHandles();
+			Set<String> handles = Web.getDriver().getWindowHandles();
 			for (String windowHandle : handles) {
 
 				if (!windowHandle.equals(parentWindow)) {
-					if (Web.webdriver.switchTo().window(windowHandle)
+					if (Web.getDriver().switchTo().window(windowHandle)
 							.getTitle().contains("BrokerCheck")) {
 						windowFound = true;
 						break;
@@ -198,11 +198,11 @@ public class prodvalidationtestcases {
 								true);
 			}
 
-			Web.webdriver.close();
-			Web.webdriver.switchTo().window(parentWindow);
-			Web.webdriver.navigate().refresh();
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
+			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -219,7 +219,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 			    Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -371,7 +371,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -408,8 +408,8 @@ public class prodvalidationtestcases {
 			}
 			Web.clickOnElement(profilePage, "HOME");
 			Common.waitForProgressBar();
-			/*Web.webdriver.navigate().back();
-			Web.webdriver.navigate().refresh();
+			/*Web.getDriver().navigate().back();
+			Web.getDriver().navigate().refresh();
 			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME")){
 			Web.waitForElement(profilePage, "LOG OUT");
 			homePage.dismissPopUps(false, true);
@@ -420,7 +420,7 @@ public class prodvalidationtestcases {
 			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -438,7 +438,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -477,7 +477,7 @@ public class prodvalidationtestcases {
 			}
 			lblDisplayed = Web.VerifyPartialText(
 					Stock.GetParameterValue("groupId"),
-					Web.webdriver.getCurrentUrl(), false);
+					Web.getDriver().getCurrentUrl(), false);
 			if (lblDisplayed) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -517,7 +517,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -548,10 +548,10 @@ public class prodvalidationtestcases {
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
-			String parentWindow = Web.webdriver.getWindowHandle();
-			for (String winHandle : Web.webdriver.getWindowHandles()) {
-				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
-				Web.waitForPageToLoad(Web.webdriver);
+			String parentWindow = Web.getDriver().getWindowHandle();
+			for (String winHandle : Web.getDriver().getWindowHandles()) {
+				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 
 			boolean lblDisplayed = false;
@@ -571,7 +571,7 @@ public class prodvalidationtestcases {
 		
 			
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
-			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web
 					.VerifyPartialText(
 							"Selected Loan Type:\nGeneral Purpose (Available for any purpose.)",
@@ -592,9 +592,9 @@ public class prodvalidationtestcases {
 								+ Stock.GetParameterValue("loanType")
 								+ " is Not visible", true);
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
-			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
 			if (lblDisplayed) {
@@ -621,8 +621,8 @@ public class prodvalidationtestcases {
 			requestLone.isTextFieldDisplayed("Payment Method:");
 			requestLone.isTextFieldDisplayed("Payment Amount:");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
-			Web.webdriver.switchTo().defaultContent();
-			Web.webdriver.switchTo().frame("legacyFeatureIframe");
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = requestLone
 					.isTextFieldDisplayed("MAILING AND CONTACT INFORMATION:");
 
@@ -787,13 +787,13 @@ public class prodvalidationtestcases {
 							true);
 				}
 			}
-			Web.webdriver.switchTo().defaultContent();
-			Web.webdriver.close();
-			Web.webdriver.switchTo().window(parentWindow);
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
+			Web.getDriver().switchTo().defaultContent();
 			/*Web.clickOnElement(requestLone, "LOGOUT");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(login, "SIGN IN");*/
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -811,7 +811,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -847,7 +847,7 @@ public class prodvalidationtestcases {
 						"Rate Of Return Page is Not Displayed with Proper Data",
 						true);
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			//Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -865,7 +865,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -890,7 +890,7 @@ public class prodvalidationtestcases {
 			boolean lblDisplayed = false;
 			
 			//Thread.sleep(6000);
-			/*Web.webdriver.navigate().refresh();
+			/*Web.getDriver().navigate().refresh();
 			Thread.sleep(6000);*/
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
@@ -942,7 +942,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -962,7 +962,7 @@ public class prodvalidationtestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
 			balance.get();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			//Thread.sleep(5000);
 			
 				if(!Web.isWebElementDisplayed(balance, "Balance",true)){
@@ -1011,7 +1011,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1037,7 +1037,7 @@ public class prodvalidationtestcases {
 			transaction.get();
 			Thread.sleep(5000);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			if(Common.switchToLegacyFutureFrame()){
 				if(!Web.isWebElementDisplayed(transaction, "DropDown Frequency",true)){
 					Common.handlePageToLoad("Transaction history");
@@ -1078,7 +1078,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1106,8 +1106,8 @@ public class prodvalidationtestcases {
 			statements.get();
 			Thread.sleep(5000);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
-			String parentWindow = Web.webdriver.getWindowHandle();
+			Web.waitForPageToLoad(Web.getDriver());
+			String parentWindow = Web.getDriver().getWindowHandle();
 			if(Common.switchToLegacyFutureFrame()){
 			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
 				Common.handlePageToLoad("Statements and documents");
@@ -1135,9 +1135,9 @@ public class prodvalidationtestcases {
 			statements.verifytableHeaderNotEmpty("Transaction Details Table Header");
 			statements. verifyTableDataDisplayed("Transaction Details Table");
 			//closing child window
-	   		 Web.webdriver.close();
+	   		 Web.getDriver().close();
 	          //cntrl to parent window
-	      	  Web.webdriver.switchTo().window(parentWindow);
+	      	  Web.getDriver().switchTo().window(parentWindow);
 			//statements.switchToWindow();
 
 		} catch (Exception e) {
@@ -1156,7 +1156,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1185,7 +1185,7 @@ public class prodvalidationtestcases {
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			investment.rebalanceInvestment(
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"),
@@ -1203,7 +1203,7 @@ public class prodvalidationtestcases {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			 //Web.clickOnElement(investment, "LOGOUT");
 			
 		} catch (Exception e) {
@@ -1222,7 +1222,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1265,7 +1265,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1295,7 +1295,7 @@ public class prodvalidationtestcases {
 				
 			//Thread.sleep(5000);
 			investment.viewProspectus();
-		    Web.webdriver.switchTo().defaultContent();
+		    Web.getDriver().switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1312,7 +1312,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1363,7 +1363,7 @@ public class prodvalidationtestcases {
 				deferral.myContributions_Confirmation_Page();
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			//lib.Web.clickOnElement(deferral, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1381,7 +1381,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1405,10 +1405,10 @@ public class prodvalidationtestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
-			String parentWindow = Web.webdriver.getWindowHandle();
-						for (String winHandle : Web.webdriver.getWindowHandles()) {
-				Web.webdriver.switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
-				Web.waitForPageToLoad(Web.webdriver);
+			String parentWindow = Web.getDriver().getWindowHandle();
+						for (String winHandle : Web.getDriver().getWindowHandles()) {
+				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 			//Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
@@ -1418,10 +1418,10 @@ public class prodvalidationtestcases {
 			brokerage.verifyBrokerageTableDataDisplayed("Transfer into sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
-			Web.webdriver.switchTo().defaultContent();
-			Web.webdriver.close();
-			Web.webdriver.switchTo().window(parentWindow);
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
+			Web.getDriver().switchTo().defaultContent();
 			//Web.clickOnElement(brokerage, "LOGOUT");
 
 		} catch (Exception e) {
@@ -1440,7 +1440,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1465,7 +1465,7 @@ public class prodvalidationtestcases {
 			//Thread.sleep(7000);
 			
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			planforms.clickOnForm(null);
 			if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
@@ -1490,7 +1490,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1517,7 +1517,7 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(investment, "Continue button1");
 			Thread.sleep(5000);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			investment.navigateToTab("View By Asset Class Tab");
 			investment.verifyIfGraphDisplayed("Current Assets Balance Graph");
 			investment.verifyIfGraphDisplayed("Post Transfer Balance Graph");
@@ -1531,7 +1531,7 @@ public class prodvalidationtestcases {
 			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
 					"Yes"))
 				investment.cancelTransfer("F2F");
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			 //Web.clickOnElement(investment, "LOGOUT");
 			// Web.waitForElement(investment, "Login");
 		} catch (Exception e) {
@@ -1550,7 +1550,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1577,7 +1577,7 @@ public class prodvalidationtestcases {
 			investment.choseInvestmentOption("Dollar Cost");
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			investment.dollarCostAverageFlow(
 					Stock.GetParameterValue("Frequency_Period"),
 					Stock.GetParameterValue("Setup_date"),
@@ -1601,7 +1601,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1766,7 +1766,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1783,7 +1783,7 @@ public class prodvalidationtestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			Actions keyBoard = new Actions(Web.webdriver);
+			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1794,7 +1794,7 @@ public class prodvalidationtestcases {
 			Thread.sleep(4000);
 			boolean lblDisplayed = false;
 //			int confirmationNumber = 0;
-			//Web.webdriver.switchTo().defaultContent();
+			//Web.getDriver().switchTo().defaultContent();
 			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
 				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
 						"Request A Withdrawal", true);
@@ -1830,7 +1830,7 @@ public class prodvalidationtestcases {
 				}
 				 
 				// requestWithdrawal.isTextFieldDisplayed("Max Avail");
-				///Web.webdriver.switchTo().defaultContent();
+				///Web.getDriver().switchTo().defaultContent();
 				//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
 			if (Stock.getConfigParam("TEST_ENV").contains("PROD")) {
 				Reporter.logEvent(Status.INFO,
@@ -2001,7 +2001,7 @@ public class prodvalidationtestcases {
 							true);
 				}
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		//	Web.clickOnElement(requestWithdrawal, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2019,7 +2019,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2148,7 +2148,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2259,7 +2259,7 @@ public class prodvalidationtestcases {
 			// Logout if opted
 			Web.clickOnElement(landingPage, "LOGOUT");
 			Common.waitForProgressBar();
-			 Web.waitForPageToLoad(Web.webdriver);
+			 Web.waitForPageToLoad(Web.getDriver());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -2272,7 +2272,7 @@ public class prodvalidationtestcases {
 					ae.getMessage(), true);
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2420,7 +2420,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2486,7 +2486,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2552,7 +2552,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2618,7 +2618,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2684,7 +2684,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2729,7 +2729,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2766,7 +2766,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2823,7 +2823,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2892,7 +2892,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3018,7 +3018,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3155,7 +3155,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3247,7 +3247,7 @@ public class prodvalidationtestcases {
 
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3274,20 +3274,20 @@ public class prodvalidationtestcases {
 				Reporter.logEvent(Status.PASS,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", false);
 				Web.clickOnElement(healthCareCost, "Your full report(PDF)");
 				Reporter.logEvent(Status.INFO,"Verify 'Your full report(PDF)' link is clicked","clicked on 'Your full report(PDF)' link", false);
-				String parentWindow = Web.webdriver.getWindowHandle();
-				Set<String> handles = Web.webdriver.getWindowHandles();
+				String parentWindow = Web.getDriver().getWindowHandle();
+				Set<String> handles = Web.getDriver().getWindowHandles();
 
 				for (String windowHandle : handles) {
 
 					if (!windowHandle.equals(parentWindow)) {
-						Web.webdriver.switchTo().window(windowHandle);
+						Web.getDriver().switchTo().window(windowHandle);
 						break;
 					}
 				}
 				// closing child window
-				Web.webdriver.close(); 
+				Web.getDriver().close(); 
 				//Switching to main window
-				Web.webdriver.switchTo().window(parentWindow);
+				Web.getDriver().switchTo().window(parentWindow);
 			}
 			else
 				Reporter.logEvent(Status.FAIL,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", true);
@@ -3316,7 +3316,7 @@ public class prodvalidationtestcases {
         }
 		finally { 
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -3379,7 +3379,7 @@ public class prodvalidationtestcases {
         }
 		finally { 
 			try { 
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport(); }
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
@@ -3405,7 +3405,7 @@ public class prodvalidationtestcases {
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			String[] percentage={"50","50"};
 			investment.rebalanceInvestment_New(2,percentage);
 			/*DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -3421,10 +3421,10 @@ public class prodvalidationtestcases {
 				investment.verifyRebalanceInvestmentConfirmationDetails();
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}*/
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			 Web.clickOnElement(investment, "LOGOUT");
 			 Common.waitForProgressBar();
-			 Web.waitForPageToLoad(Web.webdriver);
+			 Web.waitForPageToLoad(Web.getDriver());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3442,7 +3442,7 @@ public class prodvalidationtestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();

@@ -290,7 +290,7 @@ public class Common {
 		return null;
 	}
 	public static boolean verifyLoggedInUserIsSame() {
-		PageFactory.initElements(lib.Web.webdriver, Common.class);
+		PageFactory.initElements(lib.Web.getDriver(), Common.class);
 		boolean lblDisplayed=false;
 		String userLogedIn="";
 		ResultSet strUserInfo=null;
@@ -368,11 +368,11 @@ public class Common {
         }
         
         public static WebElement FindElement(String sElement){
-           return lib.Web.webdriver.findElement(By.xpath(sElement));
+           return lib.Web.getDriver().findElement(By.xpath(sElement));
         }
         public static boolean isAlerPresent(){
             try{
-                   Web.webdriver.switchTo().alert();
+                   Web.getDriver().switchTo().alert();
                    return true;
             }catch(NoAlertPresentException ex){
                    return false;
@@ -381,7 +381,7 @@ public class Common {
       }
       public  static void HandlePopAlert(){
             try{
-                   Alert alert = Web.webdriver.switchTo().alert();
+                   Alert alert = Web.getDriver().switchTo().alert();
                    String sPopText = alert.getText();
                    System.out.println(sPopText);
                    alert.accept();
@@ -396,10 +396,10 @@ public class Common {
                  LeftNavigationBar lftbar=new LeftNavigationBar();
                  lftbar.clickNavigationLink("Rate Of Return");
                  waitForProgressBar();
-                 Web.waitForPageToLoad(Web.webdriver);
+                 Web.waitForPageToLoad(Web.getDriver());
                  lftbar.clickNavigationLink(pageName);
                  waitForProgressBar();
-                 Web.waitForPageToLoad(Web.webdriver);
+                 Web.waitForPageToLoad(Web.getDriver());
           }catch(Exception e){
           
           }
@@ -407,10 +407,10 @@ public class Common {
     }
       public static boolean switchToLegacyFutureFrame(){
           try{
-        	  Web.webdriver.switchTo().defaultContent();
+        	  Web.getDriver().switchTo().defaultContent();
         	  Web.waitForElement(iframeLegacyFeature);
         	  if(Web.isWebElementDisplayed(iframeLegacyFeature)){
-        	  Web.webdriver.switchTo().frame(iframeLegacyFeature);
+        	  Web.getDriver().switchTo().frame(iframeLegacyFeature);
         	         	  }
         	  return true;
           }  

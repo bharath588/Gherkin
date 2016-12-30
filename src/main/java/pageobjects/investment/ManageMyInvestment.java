@@ -217,7 +217,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	 */
 	public ManageMyInvestment() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	 */
 	public ManageMyInvestment(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override
@@ -265,7 +265,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -276,7 +276,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/Manage my investments");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		lib.Web.isWebElementDisplayed(lblMyInvestments,true);	
 
 	}
@@ -373,7 +373,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	public void rebalanceInvestment(String frequency, String setupDate,
 			String percent) {
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement freq = this.getWebElement(frequency);
 		WebElement date = this.getWebElement(setupDate);
 		Web.clickOnElement(freq);
@@ -383,7 +383,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.clickOnElement(date);
 		Reporter.logEvent(Status.INFO, "Specify the Rebalancer Setup Date",
 				"Setup Date : " + setupDate, false);
-		// Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		// Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		btnContinue2.click();
 		if (Web.isWebElementDisplayed(tblInvestmentOptionsTable, true)) {
 			Reporter.logEvent(Status.PASS,
@@ -417,18 +417,18 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"Investment options table not displayed ", true);
 		Web.clickOnElement(inpTotal);
 		btnContinue2.click();
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void dollarCostAverageFlow(String frequency, String setupDate,
 			String percent, String amount) throws InterruptedException,NullPointerException,IndexOutOfBoundsException {
-		Actions keyBoard = new Actions(Web.webdriver);
+		Actions keyBoard = new Actions(Web.getDriver());
 		Web.waitForElement(iframeLegacyFeature);
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		else{
 			Web.waitForElement(iframeLegacyFeature);			
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		}
 		WebElement freq = this.getWebElement(frequency);
 		WebElement date = this.getWebElement(setupDate);
@@ -440,7 +440,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO,
 				"Specify the Dollar Cost Average Setup Date", "Setup Date : "
 						+ setupDate, false);
-		// Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		// Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		btnContinueToNextStep.click();
 		Web.waitForElement(radioDoNoTerminate);
 		radioDoNoTerminate.click();
@@ -479,9 +479,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		toInvestmentOption = lstToInvestmentOptionsDollarCost.get(0).getText();
 		btnContinueToNextStep.click();
 		Thread.sleep(5000);
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElements(lstInvestmentOptionsDollarCost);
 		if (lstInvestmentOptionsDollarCost.get(0).getText()
 				.contains(toInvestmentOption))
@@ -505,8 +505,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Reporter.logEvent(Status.INFO, "verify investment percent is entered",
 				"investment percent : " + Stock.GetParameterValue("percent"),
 				true);
-		Web.webdriver.switchTo().defaultContent();
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
 		Web.setTextToTextBox(inpTotal,
 				Stock.GetParameterValue("percent"));
@@ -529,13 +529,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
     }
 
 		//Web.clickOnElement(btnContinueToNextStep);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 
 	}
 
 	public void verifyDollarCostInvestmentDetails(String frequency,
 			String date, String percent) {
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(lblDollarCostFreq);
 		if (Web.VerifyText("Your chosen Dollar Cost Average frequency is: "
 				+ frequency, "Your chosen Dollar Cost Average frequency is: "
@@ -571,7 +571,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	public void verifyRebalanceInvestmentDetails(String frequency,
 			String setupDate, String date, String percent) {
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(lblRebalancerFrequency);
 		if (Web.VerifyText("Your chosen Rebalancer frequency is: " + frequency,
 				lblRebalancerFrequency.getText().trim() + " "
@@ -639,7 +639,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
 				"Yes")) {
 			btnSubmitForRebalancer.click();
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			Web.waitForElement(btnBack);
 			Reporter.logEvent(Status.INFO, "Submit TRansfer Details",
 					"Transfer Details Submitted", true);
@@ -648,7 +648,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	public void verifyRebalanceInvestmentConfirmationDetails() {
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if (StringUtils.containsIgnoreCase(lblTransactionDetails.getText(),
 				"Your Confirmation Number is")) {
 			confirmationNo = lblConfirmationNumber.getText();
@@ -665,11 +665,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"verify Confirmation Number Displayed",
 					"Confirmation Number not displayed", true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void verifyF2FConfirmationDetails() {
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if (StringUtils.containsIgnoreCase(lblConfirmationNumberF2F.getText(),
 				"Your Confirmation Number is")) {
 			confirmationNo = lblConfirmationNumberF2F.getText().split(":")[1]
@@ -687,27 +687,27 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"verify Confirmation Number Displayed",
 					"Confirmation Number not displayed", true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void fundToFundTransfer(String fromPercent, String toPercent) {
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if (Web.isWebElementDisplayed(tblTransferFundFrom)) {
 			Reporter.logEvent(Status.INFO,
 					"Verify 'Transfer Fund From' Table is displayed",
 					"Table is displayed", true);
-			((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
-			((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 			Web.clickOnElement(btnPercent);
 			//btnPercent.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			fromInvestmentOption = lnkTransferFromInvestmentOption.getText();
 		} else
 			Reporter.logEvent(Status.FAIL,
@@ -724,22 +724,22 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is not displayed", true);
-		((JavascriptExecutor) Web.webdriver).executeScript("window.scrollBy(0,250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 		Web.waitForElement(btnReviewTransfer.get(1));
 		btnReviewTransfer.get(1).click();
 		// Web.waitForElement(btnPreValidationOK);
 		// btnPreValidationOK.click();
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void ReviewFundToFundTransfer(String fromPercent, String toPercent) throws InterruptedException {
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		Web.waitForElement(hdrVerifyTransferFromTable);
 		
 		do{
 			Thread.sleep(3000);
-		}while(!((JavascriptExecutor)Web.webdriver).
+		}while(!((JavascriptExecutor)Web.getDriver()).
 				executeScript("return document.readyState").toString().equalsIgnoreCase("complete"));
 		
 		if (Web.VerifyText("Investment Option Balance Percent",
@@ -821,7 +821,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
 				"Yes")) {
 			btnSubmitForF2F.click();
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			Web.waitForElement(btnBack);
 			Reporter.logEvent(Status.INFO, "Submit TRansfer Details",
 					"Transfer Details Submitted", true);
@@ -831,26 +831,26 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	public void navigateToTab(String tabName) {
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(iframeLegacyFeature);
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			else{
 				Web.waitForElement(iframeLegacyFeature);
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			}
 		WebElement tab = this.getWebElement(tabName);
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(tab);
 		tab.click();
 		Reporter.logEvent(Status.INFO, "Navigate To " + tabName,
 				"Navigated to " + tabName, true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void verifyIfGraphDisplayed(String graphName) {
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement graph = this.getWebElement(graphName);
 		if (Web.isWebElementDisplayed(graph, true))
 			Reporter.logEvent(Status.PASS, "Verify " + graphName
@@ -858,7 +858,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		else
 			Reporter.logEvent(Status.FAIL, "Verify " + graphName
 					+ "is displayed", graphName + "is not displayed", true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void cancelTransfer(String transferType) {
@@ -867,11 +867,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		btnContinue1.click();
 		if (transferType.equalsIgnoreCase("Rebalance Currnet Balance")) {
 			Web.waitForElement(iframeLegacyFeature);
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			radioOnce.click();
 			btnContinue2.click();
 			btnViewPendingTransfer.click();
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		}
 		if (transferType.equalsIgnoreCase("F2F")) {
 			Web.waitForElement(btnCancelTransfer);
@@ -880,8 +880,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 
 		Web.waitForElement(iframeLegacyFeature);
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
-		// Web.webdriver.switchTo().frame(theIframe);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		// Web.getDriver().switchTo().frame(theIframe);
 		btnCont.click();
 		if (StringUtils.containsIgnoreCase(
 				lblConfirmationNumberForCancel.getText(),
@@ -903,15 +903,15 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		btnCancelTransferF2F.click();
 		Reporter.logEvent(Status.INFO, "Verify Transfer Cancelled",
 				"Transfer Cancelled", true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	public void rebalanceInvestment_New(int noOfInvestmentoptions,String[] percent) {
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(btnChooseIndividualFunds);
 		Web.clickOnElement(btnChooseIndividualFunds);
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		if(Web.isWebElementDisplayed(lnkAddViewAllFunds, true)){
 		Reporter.logEvent(Status.PASS,
 				"verify if Rebalance Your Portfolio Page is Displayed",
@@ -926,11 +926,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		{
 			for(int i=0;i<btnRemoveInvestment.size();i++){
 				btnRemoveInvestment.get(i).click();
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 		}
 				Web.clickOnElement(lnkAddViewAllFunds);
-				Web.waitForPageToLoad(Web.webdriver);
+				Web.waitForPageToLoad(Web.getDriver());
 				
 		if (Web.isWebElementDisplayed(tableAllocationFund)) {
 			Reporter.logEvent(Status.PASS,
@@ -965,15 +965,15 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"Investment options table is not displayed ", true);
 		Web.clickOnElement(btnAdd);
 			
-		WebElement inptAllocationPercent1 = Web.webdriver.findElement(By
+		WebElement inptAllocationPercent1 = Web.getDriver().findElement(By
 				.xpath(inputAllocationPercrntage.replace("Investment Option",
 						investmentFundName1)));
 		Web.setTextToTextBox(inptAllocationPercent1, percent[0]);
-		WebElement inptAllocationPercent2 = Web.webdriver.findElement(By
+		WebElement inptAllocationPercent2 = Web.getDriver().findElement(By
 				.xpath(inputAllocationPercrntage.replace("Investment Option",
 						investmentFundName2)));
 		Web.setTextToTextBox(inptAllocationPercent2, percent[1]);
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		if(txttotalInvestmentPercent.getText().contains("100")){
 			Reporter.logEvent(Status.PASS,
 					"Verify Investment Percentage is Entered and Equals to 100",
@@ -990,7 +990,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Web.clickOnElement(btnAlertContinue);
 		}
 	Common.waitForProgressBar();
-	Web.waitForPageToLoad(Web.webdriver);
+	Web.waitForPageToLoad(Web.getDriver());
 	String currentFund1=txtCurrentFunds.get(0).getText().trim();
 	String currentFund2=txtCurrentFunds.get(1).getText().trim();
 	if(currentFund1.equalsIgnoreCase(investmentFundName1)&&currentFund2.equalsIgnoreCase(investmentFundName2)){

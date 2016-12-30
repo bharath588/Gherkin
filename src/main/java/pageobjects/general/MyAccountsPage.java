@@ -49,7 +49,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 */
 	public MyAccountsPage() {
 		this.parent = new LandingPage();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 */
 	public MyAccountsPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
 	@Override

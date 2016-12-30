@@ -62,7 +62,7 @@ public class Balance extends LoadableComponent<Balance> {
 	 */
 	public Balance() {
 		this.parent = new LeftNavigationBar();
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	/** Constructor taking parent as input
@@ -71,7 +71,7 @@ public class Balance extends LoadableComponent<Balance> {
 	 */
 	public Balance(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(lib.Web.webdriver, this);
+		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 	
 	@Override
@@ -115,7 +115,7 @@ public class Balance extends LoadableComponent<Balance> {
 			
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.webdriver);
+			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
 		}
 	}
@@ -126,7 +126,7 @@ public class Balance extends LoadableComponent<Balance> {
 		
 		((LeftNavigationBar) this.parent).clickNavigationLink("Balance");
 		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.webdriver);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(lblBalance,true);	
 		
 	}
@@ -202,25 +202,25 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		Web.waitForElement(tabBalance);
 		if(tabName.equalsIgnoreCase("Balance")){
 			Web.clickOnElement(tabBalance);
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			if(Web.isWebElementDisplayed(tblBalanceByInvestment,true))
 				isnavigateSuccessful=true;
 		}
 		if(tabName.equalsIgnoreCase("Balance over time")){
 			Web.clickOnElement(tabBalanceOverTime);
 			Web.waitForElement(tabBalanceOverTime);
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			if(Web.isWebElementDisplayed(tblBalanceHistory,true))
 				isnavigateSuccessful=true;
 		}
 		if(tabName.equalsIgnoreCase("Balance comparison")){
 			Web.clickOnElement(tabBalanceComparison);
 			Web.waitForElement(tabBalanceComparison);
-			Web.webdriver.switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			if(Web.isWebElementDisplayed(tblBalanceComparison,true))
 				isnavigateSuccessful=true;
 		}
@@ -228,18 +228,18 @@ public class Balance extends LoadableComponent<Balance> {
 			Reporter.logEvent(Status.PASS, "verify navigate to "+tabName+" tab successfull", "Able to navigate to "+tabName+" tab", true);
 		else
 			Reporter.logEvent(Status.FAIL, "verify navigate to "+tabName+" tab successfull", " Not Able to navigate to "+tabName+" tab",true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifytableHeaderNotEmpty(String tableName){
 	 	
-	 	Web.webdriver.switchTo().frame(iframeLegacyFeature);
+	 	Web.getDriver().switchTo().frame(iframeLegacyFeature);
 	 	WebElement tableHeader = this.getWebElement(tableName);
 	 	if(!tableHeader.getText().isEmpty())
 	 		Reporter.logEvent(Status.PASS, "verify "+tableName+" displayed",tableName+" is displayed" , false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify "+tableName+" displayed", tableName+" not displayed",true);
-	 	Web.webdriver.switchTo().defaultContent();
+	 	Web.getDriver().switchTo().defaultContent();
 
 
 	}	
@@ -247,34 +247,34 @@ public class Balance extends LoadableComponent<Balance> {
 	
 	public void verifyTableDisplayed(String tableName){
 		
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement table = this.getWebElement(tableName);
 		if(Web.isWebElementDisplayed(table))
 			Reporter.logEvent(Status.PASS, "verify "+tableName+" is displayed", tableName+" is displayed", false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify "+tableName+" is displayed", tableName+" is not displayed",true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifyTableDataDisplayed(String tableName){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		List<WebElement> table = this.getWebElementList(tableName);
 		int noOfRows=table.size();
 		if(noOfRows>=1)
 			Reporter.logEvent(Status.PASS, "verify data is displayed for "+tableName, "Data is displayed for "+tableName, false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify data is displayed for "+tableName, "Data is not displayed for "+tableName,true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifyGraphDisplayed(String graphName){
-		Web.webdriver.switchTo().frame(iframeLegacyFeature);
+		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		WebElement graph = this.getWebElement(graphName);
 		if(Web.isWebElementDisplayed(graph))
 			Reporter.logEvent(Status.PASS, "verify "+graphName+" is displayed", graphName+" is displayed", false);
 		else
 			Reporter.logEvent(Status.FAIL, "verify "+graphName+" is displayed", graphName+" is not displayed",true);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 }
