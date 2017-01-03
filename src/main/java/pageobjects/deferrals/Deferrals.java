@@ -395,10 +395,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
             WebElement deferral = this.getWebElement(deferralsType);
             if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions,true))
             	this.lnkMoreOptions.click();
-           
-			lib.Web.waitForElement(deferral);
-			
-            lib.Web.clickOnElement(deferral);
+        			lib.Web.waitForElement(deferral);
+		            lib.Web.clickOnElement(deferral);
             Web.waitForElement(btnContinue);
 			if(lib.Web.isWebElementDisplayed(btnContinue, true))				
              isDisplayed = true;			
