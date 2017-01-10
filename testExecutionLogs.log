@@ -1,0 +1,289 @@
+INFO  (2016-04-29 14:45:48) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ERROR (2016-04-29 14:45:48) Log:34 - Exception occurred java.lang.Exception: Unable to read Config :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at lib.Stock.getParam(Stock.java:221)
+	at core.framework.DriverScript.ReadTestConfig(DriverScript.java:72)
+	at core.framework.DriverScript.<init>(DriverScript.java:53)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:46:15) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ERROR (2016-04-29 14:46:15) Log:34 - Exception occurred java.lang.Exception: Unable to read Config :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at lib.Stock.getParam(Stock.java:221)
+	at core.framework.DriverScript.ReadTestConfig(DriverScript.java:72)
+	at core.framework.DriverScript.<init>(DriverScript.java:53)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:46:32) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ERROR (2016-04-29 14:46:51) Log:34 - Exception occurred java.lang.Exception: Unable to read Config :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at lib.Stock.getParam(Stock.java:221)
+	at core.framework.DriverScript.ReadTestConfig(DriverScript.java:72)
+	at core.framework.DriverScript.<init>(DriverScript.java:53)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:48:25) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+INFO  (2016-04-29 14:48:36) Log:26 - reading H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls file
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AUT -- value :psc
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :TEST_ENV -- value :QAB
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :TESTTYPE -- value :RRT
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :H:\common\Automation-Selenium\NewAutoFrmwrkResource
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_QAB -- value :https://qab-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_QAA -- value :https://qaa-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_PROJ-2 -- value :https://proj2-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_PROJ-4 -- value :https://proj4-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_PROJ-5 -- value :https://proj5-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_PROJ-7 -- value :https://proj7-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :AppURL_PROJ-8 -- value :https://proj8-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :ChromeDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\chromedriver.exe
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :DBUSERID -- value :krsbhr
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :DBPASSWORD -- value :db123
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :CommonDB -- value :D_CMNM
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :ISISDB -- value :D_ISIS
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :ParticipantDataDB -- value :Q_ISIS
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :CommonDB_QA -- value :Q_CMNM
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :INSTDB_DEV -- value :D_INST
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :BROWSER -- value :FIREFOX
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :Overwrite_Existing_Report -- value :true
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :objectSyncTimeout -- value :10
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :RUNXML -- value :
+DEBUG (2016-04-29 14:48:36) Log:22 - setting @globalParam with key :IEDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\IEDriverServer.exe
+INFO  (2016-04-29 14:48:44) Log:26 - building TestNG XML to execute automation tests for application : psc
+DEBUG (2016-04-29 14:48:46) Log:22 - Initialize SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:48:46) Log:22 - Initialize LISTENRS node to build TestNG XML 
+DEBUG (2016-04-29 14:48:46) Log:22 - Initialize LISTENER node to build TestNG XML 
+DEBUG (2016-04-29 14:48:46) Log:22 - Setting attribute to SUITE node (name--testsuite) to build TestNG XML
+DEBUG (2016-04-29 14:48:46) Log:22 - Append child node LISTENERS to SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:48:46) Log:22 - Append child node LISTENER to LISTENERS node to build TestNG XML 
+DEBUG (2016-04-29 14:48:46) Log:22 - Setting attribute to LISTENER node (name--core.framework.TestListener) to build TestNG XML
+ERROR (2016-04-29 14:48:46) Log:34 - Exception occurred java.lang.Exception: Unable to read Run Order sheet :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.ReadRunOrder(DriverScript.java:100)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:153)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+ERROR (2016-04-29 14:48:46) Log:34 - Exception occurred java.lang.Exception: Exception occurred while building TestNG XML : Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:292)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:48:51) Log:26 - preparing correct TestNG XML to execute
+ERROR (2016-04-29 14:48:54) Log:34 - Exception occurred java.lang.Exception: Exception occurred while running TestNG XML : null
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.RunTestNG(DriverScript.java:458)
+	at core.framework.DriverScript.<init>(DriverScript.java:60)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:49:45) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+INFO  (2016-04-29 14:49:47) Log:26 - reading H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls file
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AUT -- value :psc
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :TEST_ENV -- value :QAB
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :TESTTYPE -- value :RRT
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :H:\common\Automation-Selenium\NewAutoFrmwrkResource
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_QAB -- value :https://qab-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_QAA -- value :https://qaa-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_PROJ-2 -- value :https://proj2-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_PROJ-4 -- value :https://proj4-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_PROJ-5 -- value :https://proj5-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_PROJ-7 -- value :https://proj7-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :AppURL_PROJ-8 -- value :https://proj8-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :ChromeDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\chromedriver.exe
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :DBUSERID -- value :krsbhr
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :DBPASSWORD -- value :db123
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :CommonDB -- value :D_CMNM
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :ISISDB -- value :D_ISIS
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :ParticipantDataDB -- value :Q_ISIS
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :CommonDB_QA -- value :Q_CMNM
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :INSTDB_DEV -- value :D_INST
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :BROWSER -- value :FIREFOX
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :Overwrite_Existing_Report -- value :true
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :objectSyncTimeout -- value :10
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :RUNXML -- value :
+DEBUG (2016-04-29 14:49:47) Log:22 - setting @globalParam with key :IEDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\IEDriverServer.exe
+INFO  (2016-04-29 14:49:47) Log:26 - building TestNG XML to execute automation tests for application : psc
+DEBUG (2016-04-29 14:49:47) Log:22 - Initialize SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:49:47) Log:22 - Initialize LISTENRS node to build TestNG XML 
+DEBUG (2016-04-29 14:49:47) Log:22 - Initialize LISTENER node to build TestNG XML 
+DEBUG (2016-04-29 14:49:47) Log:22 - Setting attribute to SUITE node (name--testsuite) to build TestNG XML
+DEBUG (2016-04-29 14:49:47) Log:22 - Append child node LISTENERS to SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:49:47) Log:22 - Append child node LISTENER to LISTENERS node to build TestNG XML 
+DEBUG (2016-04-29 14:49:47) Log:22 - Setting attribute to LISTENER node (name--core.framework.TestListener) to build TestNG XML
+ERROR (2016-04-29 14:49:47) Log:34 - Exception occurred java.lang.Exception: Unable to read Run Order sheet :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.ReadRunOrder(DriverScript.java:100)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:153)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+ERROR (2016-04-29 14:49:47) Log:34 - Exception occurred java.lang.Exception: Exception occurred while building TestNG XML : Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:292)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-04-29 14:49:55) Log:26 - preparing correct TestNG XML to execute
+INFO  (2016-04-29 14:52:08) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+INFO  (2016-04-29 14:52:09) Log:26 - reading H:\git\FrameworkUpdated\Framework\testexecutionconfig.xls file
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AUT -- value :psc
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :TEST_ENV -- value :QAB
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :TESTTYPE -- value :RRT
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :H:\common\Automation-Selenium\NewAutoFrmwrkResource
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_QAB -- value :https://qab-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_QAA -- value :https://qaa-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_PROJ-2 -- value :https://proj2-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_PROJ-4 -- value :https://proj4-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_PROJ-5 -- value :https://proj5-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_PROJ-7 -- value :https://proj7-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :AppURL_PROJ-8 -- value :https://proj8-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :ChromeDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\chromedriver.exe
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :DBUSERID -- value :krsbhr
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :DBPASSWORD -- value :db123
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :CommonDB -- value :D_CMNM
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :ISISDB -- value :D_ISIS
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :ParticipantDataDB -- value :Q_ISIS
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :CommonDB_QA -- value :Q_CMNM
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :INSTDB_DEV -- value :D_INST
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :BROWSER -- value :FIREFOX
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :Overwrite_Existing_Report -- value :true
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :objectSyncTimeout -- value :10
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :RUNXML -- value :
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :IEDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\IEDriverServer.exe
+DEBUG (2016-04-29 14:52:09) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :C:\\NewAutoFrmwrkResource
+INFO  (2016-04-29 14:52:09) Log:26 - building TestNG XML to execute automation tests for application : psc
+DEBUG (2016-04-29 14:52:09) Log:22 - Initialize SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:52:09) Log:22 - Initialize LISTENRS node to build TestNG XML 
+DEBUG (2016-04-29 14:52:09) Log:22 - Initialize LISTENER node to build TestNG XML 
+DEBUG (2016-04-29 14:52:09) Log:22 - Setting attribute to SUITE node (name--testsuite) to build TestNG XML
+DEBUG (2016-04-29 14:52:09) Log:22 - Append child node LISTENERS to SUITE node to build TestNG XML 
+DEBUG (2016-04-29 14:52:09) Log:22 - Append child node LISTENER to LISTENERS node to build TestNG XML 
+DEBUG (2016-04-29 14:52:09) Log:22 - Setting attribute to LISTENER node (name--core.framework.TestListener) to build TestNG XML
+ERROR (2016-04-29 14:52:09) Log:34 - Exception occurred java.lang.Exception: Unable to read Run Order sheet :Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.ReadRunOrder(DriverScript.java:100)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:153)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+ERROR (2016-04-29 14:52:09) Log:34 - Exception occurred java.lang.Exception: Exception occurred while building TestNG XML : Exception occurred while finding the file : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : H:\git\FrameworkUpdated\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the file specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:292)
+	at core.framework.DriverScript.<init>(DriverScript.java:57)
+	at core.framework.DriverScript.main(DriverScript.java:47)
+
+INFO  (2016-12-06 15:02:24) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+INFO  (2016-12-06 15:02:24) Log:26 - reading C:\Automation\Framework\testexecutionconfig.xls file
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AUT -- value :psc
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :TEST_ENV -- value :QAB
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :TESTTYPE -- value :RRT
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :H:\common\Automation-Selenium\NewAutoFrmwrkResource
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_QAB -- value :https://qab-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_QAA -- value :https://qaa-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_PROJ-2 -- value :https://proj2-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_PROJ-4 -- value :https://proj4-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_PROJ-5 -- value :https://proj5-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_PROJ-7 -- value :https://proj7-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :AppURL_PROJ-8 -- value :https://proj8-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :ChromeDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\chromedriver.exe
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :DBUSERID -- value :krsbhr
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :DBPASSWORD -- value :db123
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :CommonDB -- value :D_CMNM
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :ISISDB -- value :D_ISIS
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :ParticipantDataDB -- value :Q_ISIS
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :CommonDB_QA -- value :Q_CMNM
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :INSTDB_DEV -- value :D_INST
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :BROWSER -- value :FIREFOX
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :Overwrite_Existing_Report -- value :true
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :objectSyncTimeout -- value :10
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :RUNXML -- value :SelectXML
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :IEDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\IEDriverServer.exe
+DEBUG (2016-12-06 15:02:24) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :C:\\NewAutoFrmwrkResource
+INFO  (2016-12-06 15:02:24) Log:26 - building TestNG XML to execute automation tests for application : psc
+DEBUG (2016-12-06 15:02:25) Log:22 - Initialize SUITE node to build TestNG XML 
+DEBUG (2016-12-06 15:02:25) Log:22 - Initialize LISTENRS node to build TestNG XML 
+DEBUG (2016-12-06 15:02:25) Log:22 - Initialize LISTENER node to build TestNG XML 
+DEBUG (2016-12-06 15:02:25) Log:22 - Setting attribute to SUITE node (name--testsuite) to build TestNG XML
+DEBUG (2016-12-06 15:02:25) Log:22 - Append child node LISTENERS to SUITE node to build TestNG XML 
+DEBUG (2016-12-06 15:02:25) Log:22 - Append child node LISTENER to LISTENERS node to build TestNG XML 
+DEBUG (2016-12-06 15:02:25) Log:22 - Setting attribute to LISTENER node (name--core.framework.TestListener) to build TestNG XML
+ERROR (2016-12-06 15:02:25) Log:34 - Exception occurred java.lang.Exception: Unable to read Run Order sheet :Exception occurred while finding the file : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.ReadRunOrder(DriverScript.java:128)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:181)
+	at core.framework.DriverScript.<init>(DriverScript.java:82)
+	at core.framework.Main.main(Main.java:10)
+
+ERROR (2016-12-06 15:02:25) Log:34 - Exception occurred java.lang.Exception: Exception occurred while building TestNG XML : Exception occurred while finding the file : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:320)
+	at core.framework.DriverScript.<init>(DriverScript.java:82)
+	at core.framework.Main.main(Main.java:10)
+
+INFO  (2016-12-06 15:02:25) Log:26 - preparing correct TestNG XML to execute
+DEBUG (2016-12-06 15:02:25) Log:22 - Setting data validation for RunXML in test config sheet 
+ERROR (2016-12-06 15:02:25) Log:34 - Exception occurred java.lang.Exception: Exception occurred while running TestNG XML : null
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.RunTestNG(DriverScript.java:475)
+	at core.framework.DriverScript.<init>(DriverScript.java:84)
+	at core.framework.Main.main(Main.java:10)
+
+INFO  (2016-12-06 15:05:11) Log:26 - @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ STARTING TEST EXECUTION @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+INFO  (2016-12-06 15:05:12) Log:26 - reading C:\Automation\Framework\testexecutionconfig.xls file
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AUT -- value :psc
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :TEST_ENV -- value :QAB
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :TESTTYPE -- value :RRT
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :H:\common\Automation-Selenium\NewAutoFrmwrkResource
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_QAB -- value :https://qab-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_QAA -- value :https://qaa-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_PROJ-2 -- value :https://proj2-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_PROJ-4 -- value :https://proj4-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_PROJ-5 -- value :https://proj5-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_PROJ-7 -- value :https://proj7-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :AppURL_PROJ-8 -- value :https://proj8-plan.retirementpartner.com/static/PlanEmpower/welcome.html
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :ChromeDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\chromedriver.exe
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :DBUSERID -- value :krsbhr
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :DBPASSWORD -- value :db123
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :CommonDB -- value :D_CMNM
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :ISISDB -- value :D_ISIS
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :ParticipantDataDB -- value :Q_ISIS
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :CommonDB_QA -- value :Q_CMNM
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :INSTDB_DEV -- value :D_INST
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :BROWSER -- value :FIREFOX
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :Overwrite_Existing_Report -- value :true
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :objectSyncTimeout -- value :10
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :RUNXML -- value :SelectXML
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :IEDriverClassPath -- value :H:\\common\\Automation-Selenium\\WebDrivers\\IEDriverServer.exe
+DEBUG (2016-12-06 15:05:12) Log:22 - setting @globalParam with key :TESTRESOURCES -- value :C:\\NewAutoFrmwrkResource
+INFO  (2016-12-06 15:05:12) Log:26 - building TestNG XML to execute automation tests for application : psc
+DEBUG (2016-12-06 15:05:13) Log:22 - Initialize SUITE node to build TestNG XML 
+DEBUG (2016-12-06 15:05:13) Log:22 - Initialize LISTENRS node to build TestNG XML 
+DEBUG (2016-12-06 15:05:13) Log:22 - Initialize LISTENER node to build TestNG XML 
+DEBUG (2016-12-06 15:05:13) Log:22 - Setting attribute to SUITE node (name--testsuite) to build TestNG XML
+DEBUG (2016-12-06 15:05:13) Log:22 - Append child node LISTENERS to SUITE node to build TestNG XML 
+DEBUG (2016-12-06 15:05:13) Log:22 - Append child node LISTENER to LISTENERS node to build TestNG XML 
+DEBUG (2016-12-06 15:05:13) Log:22 - Setting attribute to LISTENER node (name--core.framework.TestListener) to build TestNG XML
+ERROR (2016-12-06 15:05:13) Log:34 - Exception occurred java.lang.Exception: Unable to read Run Order sheet :Exception occurred while finding the file : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.ReadRunOrder(DriverScript.java:128)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:181)
+	at core.framework.DriverScript.<init>(DriverScript.java:82)
+	at core.framework.Main.invokeMultiThreading(Main.java:14)
+	at core.framework.Main.main(Main.java:9)
+
+ERROR (2016-12-06 15:05:13) Log:34 - Exception occurred java.lang.Exception: Exception occurred while building TestNG XML : Exception occurred while finding the file : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls while XLS initialize .Exception details : C:\Automation\Framework\RunOrderSheets\runorder_psc.xls (The system cannot find the path specified)
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.BuildTestNGXML(DriverScript.java:320)
+	at core.framework.DriverScript.<init>(DriverScript.java:82)
+	at core.framework.Main.invokeMultiThreading(Main.java:14)
+	at core.framework.Main.main(Main.java:9)
+
+INFO  (2016-12-06 15:05:13) Log:26 - preparing correct TestNG XML to execute
+DEBUG (2016-12-06 15:05:13) Log:22 - Setting data validation for RunXML in test config sheet 
+ERROR (2016-12-06 15:05:13) Log:34 - Exception occurred java.lang.Exception: Exception occurred while running TestNG XML : null
+	at core.framework.ThrowException.Report(ThrowException.java:28)
+	at core.framework.DriverScript.RunTestNG(DriverScript.java:475)
+	at core.framework.DriverScript.<init>(DriverScript.java:84)
+	at core.framework.Main.invokeMultiThreading(Main.java:14)
+	at core.framework.Main.main(Main.java:9)
+

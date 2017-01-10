@@ -1,54 +1,49 @@
 package lib;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
+import shell.utils.SftpUtils;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.google.common.base.Throwables;
-import com.relevantcodes.extentreports.DisplayOrder;
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
-import com.relevantcodes.extentreports.NetworkMode;
 
 import core.framework.Globals;
 import core.framework.TestListener;
 
 public class Reporter{
-	public static Map<Long,ExtentTest> parentMap = new LinkedHashMap<>();
-	public static Map<Long,ExtentTest> childMap = new LinkedHashMap<>();
+	
+	public static Map<Long,ExtentTest> testCaseMap = new LinkedHashMap<>();
 	public static String strLogFolderPath;
-	public static ExtentTest test = null;
+	public static ExtentTest objTestCaseNode = null;
 	private static int iRandTraceCntr = 0;
-	public static ExtentTest parent = null;
-	public static ExtentTest machineDetails = null;
-	public static Map<Long,String> suiteMap = new LinkedHashMap<Long,String>();
-	public static Map<Long,String> suiteMapParent = new LinkedHashMap<Long,String>();
+	public static ExtentTest objModuleNameNode = null;
+	public static Map<Long,String> moduleRefMap = new LinkedHashMap<Long,String>();
 	public static ExtentReports objReport;
-	public static Map<Long,ExtentTest> grandMap = new LinkedHashMap<Long, ExtentTest>();
-	public static ExtentTest grandParent;
-	public static Map<String,ExtentTest> mainMap = new HashMap<String, ExtentTest>();
+	public static Map<Long,ExtentTest> machineDetMap = new LinkedHashMap<Long, ExtentTest>();
+	public static ExtentTest objMachineDetNode;
+	public static Map<String,ExtentTest> moduleNameMap = new HashMap<String, ExtentTest>();
+	
 
-
-	public enum Status {
-		PASS, FAIL, WARNING, INFO
+	private static Map<Long,Boolean> checkTestStatusMap = new LinkedHashMap<Long, Boolean>();
+	static{
+	checkTestStatusMap.put(Thread.currentThread().getId(), true);
 	}
 
-	private static boolean checkTestStatus = true;
-
-	
 	 public static boolean isCheckTestStatus() {
-	 return checkTestStatus;
-	 }
-	
-	 public static void setCheckTestStatus(boolean checkTestStatus) {
-	 Reporter.checkTestStatus = checkTestStatus;
-	 }
-
+		 return checkTestStatusMap.get(Thread.currentThread().getId());
+		 }
+		
+		 public static void setCheckTestStatus(boolean checkTestStatus) {
+			 checkTestStatusMap.put(Thread.currentThread().getId(),checkTestStatus);
+		 }
 	/**
 	 * <pre>
 	 * Method to initiate 
@@ -80,24 +75,31 @@ public class Reporter{
 			
 			 if(objReport == null)
 			 {
-			objReport = new ExtentReports(reportFilePath, Boolean.parseBoolean(Globals.GBL_REPLACE_EXISTING_HTML_REPORT),
-					DisplayOrder.OLDEST_FIRST, NetworkMode.ONLINE,
-					Locale.ENGLISH);
+		objReport = new ExtentReports();
+		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportFilePath);
+        objReport.attachReporter(htmlReporter);
+
 			 }
 			
-			if(mainMap == null || !mainMap.containsKey(className))
+			if(moduleNameMap == null || !moduleNameMap.containsKey(className))
 			{
-				parent = objReport.startTest(className);
-				mainMap.put(className, parent);
+				
+				objModuleNameNode = objReport.createTest(className).assignCategory(className);
+				moduleNameMap.put(className, objModuleNameNode);
 			}
 			 
-			 if(grandMap == null || grandMap.get(Thread.currentThread().getId()) == null || !suiteMap.get(Thread.currentThread().getId()).equalsIgnoreCase(className))
+			 if(machineDetMap == null || machineDetMap.get(Thread.currentThread().getId()) == null || !moduleRefMap.get(Thread.currentThread().getId()).equalsIgnoreCase(className))
 			 {
+
+			if(Stock.getConfigParam("type").equalsIgnoreCase("grid"))
+			{
+			objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname(TestListener.portMap.get(Thread.currentThread().getId())));
+			}else{
+			objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname()).assignCategory("Machine Details");
+			}
+			machineDetMap.put(Thread.currentThread().getId(), objMachineDetNode);
+			moduleRefMap.put(Thread.currentThread().getId(), className);
 			
-			grandParent = objReport.startTest("Thread +"+Thread.currentThread().getId());
-			grandMap.put(Thread.currentThread().getId(), grandParent);
-			suiteMap.put(Thread.currentThread().getId(), className);
-			mainMap.get(className).appendChild(grandParent);
 			 } 
 		}
 	
@@ -128,9 +130,8 @@ public class Reporter{
 	 */
 	public static synchronized void initializeReportForTC(int currentIterationNumber,
 			String testCaseName,String... description) throws Exception {
-		Globals.GBL_TestCaseName = testCaseName;
+		testCaseName = Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId());
 		Globals.GBL_CurrentIterationNumber = currentIterationNumber;
-
 		String tmpStr1 = "", tmpStr2 = "", tmpStr3 = "";
 		
 		if (testCaseName.length() > 50) {
@@ -149,20 +150,22 @@ public class Reporter{
 
 		if(description.length > 0)
 		{
-			test = objReport.startTest(tmpStr1
+			objTestCaseNode = machineDetMap.get(Thread.currentThread().getId()).createNode(tmpStr1
 					+ (tmpStr2.length() > 0 ? ("<br>     " + tmpStr2) : "")
 					+ (tmpStr3.length() > 0 ? ("<br>     " + tmpStr3) : "")
 					+ "<br>Iteration " + Globals.GBL_CurrentIterationNumber,description[0]);
-			childMap.put(Thread.currentThread().getId(), test);
+			testCaseMap.put(Thread.currentThread().getId(), objTestCaseNode);
 		}else{
-		test = objReport.startTest(tmpStr1
+		objTestCaseNode = machineDetMap.get(Thread.currentThread().getId()).createNode(tmpStr1
 				+ (tmpStr2.length() > 0 ? ("<br>     " + tmpStr2) : "")
 				+ (tmpStr3.length() > 0 ? ("<br>     " + tmpStr3) : "")
-				+ "<br>Iteration " + Globals.GBL_CurrentIterationNumber);
-		childMap.put(Thread.currentThread().getId(), test);
+				+ "<br>Iteration " + Globals.GBL_CurrentIterationNumber).assignCategory("TestCases");
+		testCaseMap.put(Thread.currentThread().getId(), objTestCaseNode);
 		}
+		
 		//Categories can be assigned to the extent test object
-		checkTestStatus = true;
+		//checkTestStatus = true;
+		checkTestStatusMap.put(Thread.currentThread().getId(), true);
 	}
 
 	/**
@@ -184,7 +187,7 @@ public class Reporter{
 	 * @param attachScreenshot
 	 *            - <b>true</b> to attach screenshot. <b>false</b> otherwise.
 	 */
-	public static void logEvent(Reporter.Status logStatus, String Step,
+	public static synchronized void logEvent(Status logStatus, String Step,
 			String Details, boolean attachScreenshot) {
 		
 		  Globals.GC_CAPTURE_SCREENSHOT = Stock
@@ -197,120 +200,101 @@ public class Reporter{
 			Web.captureScreenshot();
 		} else if (Step.trim().length() == 0 && attachScreenshot) {
 			Web.captureScreenshot();
-			childMap.get(Thread.currentThread().getId()).addScreenCapture(Web.captureScreenshot());
+			try {
+				testCaseMap.get(Thread.currentThread().getId()).addScreenCaptureFromPath(Web.captureScreenshot());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
-			LogStatus tmpLogStatus;
+			Status tmpLogStatus;
 			String stackTrace = "";
 
-			if (Globals.exception != null) {
-				stackTrace = Throwables
-						.getStackTraceAsString(Globals.exception);
-				Globals.exception = null;
-			} else if (Globals.assertionerror != null) {
-				stackTrace = Throwables
-						.getStackTraceAsString(Globals.assertionerror);
-				Globals.assertionerror = null;
-			} else
-				stackTrace = Throwables.getStackTraceAsString(new Throwable());
-
-			iRandTraceCntr = new Random().nextInt(10000);
-			/*String stackTraceLnk = "<br><a href=\"#div"
-					+ iRandTraceCntr
-					+ "\" onclick=\"var el=getElementById('div"
-					+ iRandTraceCntr
-					+ "');"
-					+ "(el.style.display=='none')? (el.style.display='block') : (el.style.display='none'); "
-					+ "(this.text == '+ Show stack trace')? "
-					+ "(this.text='- Hide stack trace') : (this.text='+ Show stack trace'); this.style.fontSize='small'\"><font size='1'>+ Show stack trace</font></a>"
-					+ "<div id=\"div" + iRandTraceCntr
-					+ "\" style=\"display:none\"><pre>" + stackTrace
-					+ "</pre></div>";*/
-			String stackTraceLnk = "<br>"
-					+ iRandTraceCntr
-					+ "\" onclick=\"var el=getElementById('div"
-					+ iRandTraceCntr
-					+ "');"
-					+ "(el.style.display=='none')? (el.style.display='block') : (el.style.display='none'); "
-					+ "(this.text == '+ Show stack trace')? "
-					+ "(this.text='- Hide stack trace') : (this.text='+ Show stack trace'); this.style.fontSize='small'\"><font size='1'>+ Show stack trace</font></a>"
-					+ "<div id=\"div" + iRandTraceCntr
-					+ "\" style=\"display:none\"><pre>" + stackTrace
-					+ "</pre></div>";
+			
 			switch (logStatus) {
 			case PASS:
-				tmpLogStatus = LogStatus.PASS;
+				tmpLogStatus = Status.PASS;
 				Details = "<font size=\"3\" color=\"green\"><pre>" + Details
 						+ "</pre></font>";
 				break;
 			case FAIL:
-				tmpLogStatus = LogStatus.FAIL;
+				tmpLogStatus = Status.FAIL;
 				Details = "<font size=\"3\" color=\"red\"><pre>" + Details
 						+ "</pre></font>";
-				checkTestStatus = false;
-				Details += stackTraceLnk;
+				checkTestStatusMap.put(Thread.currentThread().getId(), false);
+				Details += stackTrace;
 				break;
 			case WARNING:
-				tmpLogStatus = LogStatus.WARNING;
+				tmpLogStatus = Status.WARNING;
 				Details = "<font size=\"3\" color=\"amber\"><pre>" + Details
 						+ "</pre></font>";
-				Details += stackTraceLnk;
+				Details += stackTrace;
 				break;
 			case INFO:
-				tmpLogStatus = LogStatus.INFO;
+				tmpLogStatus = Status.INFO;
 				Details = "<pre>" + Details + "</pre>";
 				break;
 			default:
-				tmpLogStatus = LogStatus.WARNING;
+				tmpLogStatus = Status.WARNING;
 				Details = "<pre>" + Details + "</pre>";
-				Details += stackTraceLnk;
+				Details += stackTrace;
 			}
 
+
+			if(Globals.exception != null)
+			{
+				testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL, Globals.exception);
+			Globals.exception = null;
+			}
+			if(Globals.error !=null)
+			{
+				testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL, Globals.error);
+				Globals.error = null;
+			}
+			
 			if (isScreenshotRequired(tmpLogStatus, attachScreenshot)) {
-			childMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Step, Details);
-			childMap.get(Thread.currentThread().getId()).log(
-						LogStatus.INFO,
-						"Screenshot below: "
-								+ test.addScreenCapture(Web.captureScreenshot()));
-				
-				if(Globals.exception != null)
-				{
-					childMap.get(Thread.currentThread().getId()).log(LogStatus.FAIL, Globals.exception);
-				Globals.exception = null;
-				}
-				if(Globals.error !=null)
-				{
-					childMap.get(Thread.currentThread().getId()).log(LogStatus.FAIL, Globals.error);
-					Globals.error = null;
-				}
-				
+			testCaseMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Details);
+			try {
+				testCaseMap.get(Thread.currentThread().getId()).log(
+						Status.INFO,
+							"Screenshot below: "
+									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			} else {
-				childMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Step, Details);
+				testCaseMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Details);
 				if(Globals.exception != null)
 				{
-				test.log(LogStatus.FAIL, Globals.exception);
+				objTestCaseNode.log(Status.FAIL, Globals.exception);
 				Globals.exception = null;
-				childMap.get(Thread.currentThread().getId()).log(
-						LogStatus.INFO,
-						"Screenshot below: "
-								+ test.addScreenCapture(Web.captureScreenshot()));
+				try {
+					testCaseMap.get(Thread.currentThread().getId()).log(
+							Status.INFO,
+							"Screenshot below: "
+									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				}
 				if(Globals.error !=null)
 				{
-					test.log(LogStatus.FAIL, Globals.error);
+					objTestCaseNode.log(Status.FAIL, Globals.error);
 					Globals.error = null;
-					childMap.get(Thread.currentThread().getId()).log(
-						LogStatus.INFO,
-						"Screenshot below: "
-								+ test.addScreenCapture(Web.captureScreenshot()));
+					try {
+						testCaseMap.get(Thread.currentThread().getId()).log(
+								Status.INFO,
+							"Screenshot below: "
+									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 
-		// if (logStatus == Status.FAIL)
-		// Reporter.currIterationStatus = "FAIL";
 	}
 
-	public static boolean isScreenshotRequired(LogStatus logStatus,
+	public static boolean isScreenshotRequired(Status logStatus,
 			boolean attachScreenshot) {
 		boolean isRequired = false;
 
@@ -349,13 +333,11 @@ public class Reporter{
 	 */
 	public static synchronized void finalizeTCReport() throws Exception {
 		// Checking final report status
-		if (!checkTestStatus) {
+		if (!checkTestStatusMap.get(Thread.currentThread().getId())) {
 			TestListener.setFinalTestStatus(false);
 		}else{
 			TestListener.setFinalTestStatus(true);
 		}
-		grandMap.get(Thread.currentThread().getId()).appendChild(childMap.get(Thread.currentThread().getId()));
-		objReport.endTest(childMap.get(Thread.currentThread().getId()));
 	}
 
 }

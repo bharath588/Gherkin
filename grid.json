@@ -1,0 +1,13 @@
+[{
+	"Browser": "Chrome",
+	"Port": "5561",
+	"Platform": "VIsta"
+}, {
+	"Browser": "Firefox",
+	"Port": "5560",
+	"Platform": "Windows.xp"
+}, {
+	"Browser": "IE",
+	"Port": "4444",
+	"Platform": "XP"
+}]

@@ -21,6 +21,7 @@ public class Globals {
           public static final String GC_VAL_RUNALLITR = "ALL";
           public static final String GC_AUT_TYPE = "WEB";
           public static final Map<String,String> DB_TYPE;
+          public static Map<String,Map<String,String>> manualtoAutoTCMap = new LinkedHashMap<>();
           static{
         	  DB_TYPE = new HashMap<String,String>();
         	  DB_TYPE.put("PROJ","DEV");
@@ -80,6 +81,7 @@ public class Globals {
           public static int GBL_CurrentIterationNumber = 1;
           public static String GBL_strScreenshotsFolderPath = "";
           public static Exception exception = null;
+          public static Map<Long,Exception> exceptionMap = new LinkedHashMap<>();
           public static AssertionError assertionerror = null;
           public  static Error error = null;
           
@@ -107,6 +109,8 @@ public class Globals {
           public static final String GC_XML_ATTR_VAL_SUITE = "testsuite";
           public static final String GC_XML_ATTR_VAL_TEST = "testXML";
           public static String GC_MANUAL_TC_NAME ;
+          public static Map<Long,String> GC_MANUAL_TC_REPORTER_MAP = new LinkedHashMap<>();
+          public static Map<Long,String> GC_MANUAL_TC_NAME_MAP = new LinkedHashMap<Long,String>();
           public static final String GC_COL_MANUAL_TC = "ManualTestCaseName";
           
         //LOGGER
@@ -185,7 +189,8 @@ public class Globals {
     	  
     	  public static final Map<String, String> databaseConnectionStrings;
 		public static final String option_UserDefault = null;
-    	  public static Map<Long,String> GC_MANUAL_TC_NAME_MAP = null;
+		public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
+    	  
     	  static
     	  {
   	    	databaseConnectionStrings = new Hashtable<String, String>();

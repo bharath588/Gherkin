@@ -7,11 +7,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Map;
 
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -383,6 +385,7 @@ public class Web {
 		return multiRemoteDriver.get();
 		}else{
 		return multiDriver.get();
+			//return webdriverMap.get(Thread.currentThread().getId());
 	}
 	}	
 	/**
@@ -415,13 +418,13 @@ public class Web {
 			} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
 				System.setProperty("webdriver.chrome.driver",
 						Stock.getConfigParam("ChromeDriverClassPath"));
-				String userProfile="C:\\Users\\KRSBHR\\AppData\\Local\\Google\\Chrome\\User Data";
+				/*String userProfile="C:\\Users\\KRSBHR\\AppData\\Local\\Google\\Chrome\\User Data";
 				ChromeOptions opt = new ChromeOptions();
 				//opt.addArguments("disable-extensions");
 				opt.addArguments("--start-maximized");
-	            opt.addArguments("--user-data-dir="+userProfile);
+	            opt.addArguments("--user-data-dir="+userProfile);*/
 	           
-	            webDriver = new ChromeDriver(opt);
+	            webDriver = new ChromeDriver();
 
 			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 					|| webBrowser.trim().equalsIgnoreCase("FF")) {
@@ -450,6 +453,7 @@ public class Web {
 			webDriver.manage().window().maximize();
 	       
 		}
+		//webdriverMap.put(Thread.currentThread().getId(), webDriver);
 		multiDriver.set(webDriver);
 		return webDriver;
 	}
@@ -498,6 +502,7 @@ public class Web {
 
         webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
         remoteWebDriver.manage().window().maximize();
+       // webdriverMap.put(Thread.currentThread().getId(), remoteWebDriver);
         multiRemoteDriver.set(remoteWebDriver);
         return remoteWebDriver;
  }

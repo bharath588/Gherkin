@@ -4,6 +4,8 @@ package shell.utils;
 //import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 //import java.io.FileWriter;
 //import java.io.IOException;
 //import java.io.InputStreamReader;
@@ -15,6 +17,12 @@ import java.util.Arrays;
 //import org.apache.commons.io.FileUtils;
 
 
+
+
+
+
+import lib.Log;
+import lib.Log.Level;
 import lib.Stock;
 
 import com.jcraft.jsch.Channel;
@@ -38,6 +46,8 @@ public class SftpUtils {
     private static Channel sftpChannel=null;
     private static boolean isSFTPConnected;
     private static ChannelSftp sftp = null;  
+    static InetAddress addr;
+    static String hostname = null;
  
     /*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
    	FUNCTION:			establishSFTPConnection()	
@@ -185,4 +195,32 @@ public class SftpUtils {
                     sftpChannel.disconnect();                              
                     sftpSession.disconnect();
        		}
+       
+       public static String getHostname() 
+       {
+    	  try{
+    	    addr = InetAddress.getLocalHost();
+    	    hostname = addr.getHostName();
+    	  }catch(Exception e)
+    	  {
+    		  Globals.exception= e;
+    		  Log.Report(Level.ERROR, "Exception occured while getting the hostname");
+    	  }
+		    return hostname;
+    	   
+       }
+       
+       public static String getHostname(String ipAddress)
+       {
+    	   try{
+    	   String hostAddress = (ipAddress.split("[/]")[2]).split(":")[0];
+    	   addr = InetAddress.getByName(hostAddress);
+    	   hostname = addr.getHostName();
+    	   }catch(Exception e)
+    	   {
+    		  Globals.exception= e;
+     		  Log.Report(Level.ERROR, "Exception occured while getting the hostname");
+    	   }
+    	   return hostname;
+       }
 }
