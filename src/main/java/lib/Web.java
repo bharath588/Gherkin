@@ -15,9 +15,13 @@ import java.util.Map;
 
 import com.aventstack.extentreports.*;
 
+import mobile.IOSDriverManager;
+import mobile.Mobile;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -33,11 +37,11 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import core.framework.Globals;
 
 
@@ -404,7 +408,13 @@ public class Web {
 		WebDriver webDriver = multiDriver.get();
 
 		if(webDriver == null){
-			if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+			 if(Mobile.mobilePlatform){			 
+				 webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;				
+				multiDriver.set(webdriver);
+				 return webdriver ;
+				
+			}
+			 else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
 					|| webBrowser.trim().equalsIgnoreCase("IEXPLORE")
 					|| webBrowser.trim().equalsIgnoreCase("IE")) {
 				DesiredCapabilities capabilities = DesiredCapabilities
@@ -460,8 +470,13 @@ public class Web {
 
 	public static WebDriver getRemoteWebDriver(String webBrowser,String nodeUrl) throws MalformedURLException {		
 		RemoteWebDriver remoteWebDriver = multiRemoteDriver.get();
-
-        if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+		 if(Mobile.mobilePlatform){			 
+			 webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;				
+			multiDriver.set(webdriver);
+			 return webdriver ;
+			
+		}
+		 else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
                      || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
                      || webBrowser.trim().equalsIgnoreCase("IE")) {
              DesiredCapabilities  capabilities = DesiredCapabilities.internetExplorer();
@@ -928,10 +943,10 @@ public class Web {
 	public static String captureScreenshot() {
 		String fileName = null;
 		try {
-			Globals.GBL_strScreenshotsFolderPath = "./TestReport/"
+			Globals.GBL_strScreenshotsFolderPath = Globals.GC_TEST_REPORT_DIR
 					+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
-					+ "\\Screenshots";
-
+					+ File.separator+"Screenshots";
+			
 			// File screenShotDir = new
 			// File(Globals.GBL_strScreenshotsFolderPath);
 			if (!new File(Globals.GBL_strScreenshotsFolderPath).exists())
@@ -942,9 +957,9 @@ public class Web {
 				System.out.println("SCREENSHOT DIRECTORY IS NOT EXISTS");
 				Globals.GBL_strScreenshotsFolderPath = System
 						.getProperty("user.dir")
-						+ "/TestReport/"
+						+ File.separator+"TestReport"+File.separator
 						+ Globals.GBL_TestCaseName.replaceAll(" ", "_")
-						+ "\\Screenshots";
+						+ File.separator+"Screenshots";
 
 				screenShotDir = new File(Globals.GBL_strScreenshotsFolderPath);
 			}
@@ -957,7 +972,7 @@ public class Web {
 					+ Globals.GBL_CurrentIterationNumber + "_" + randomInt
 					+ ".png";
 			FileUtils.copyFile(scrFile, new File(
-					Globals.GBL_strScreenshotsFolderPath + "\\" + fileName));
+					Globals.GBL_strScreenshotsFolderPath + File.separator + fileName));
 
 			try {
 				Thread.sleep(5000);
@@ -971,7 +986,7 @@ public class Web {
 		}
 
 		return "./" + Globals.GBL_TestCaseName.replaceAll(" ", "_")
-				+ "\\Screenshots" + "\\" + fileName;
+				+ File.separator+"Screenshots" + File.separator + fileName;
 	}
 
 	/*
@@ -1029,5 +1044,26 @@ public class Web {
            }
            return selected;
     }
+    /**
+	 * <pre>
+	 * Method to wait until page loads
+	 * </pre>
+	 * 
+	 * @param driver
+	 */
+	public static void waitForPageToLoad(WebDriver driver) {
+		ExpectedCondition<Boolean> pageLoad = new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver driver) {
+				return ((JavascriptExecutor) driver).executeScript(
+						"return document.readyState").equals("complete");
+			}
+		};
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		try {
+			wait.until(pageLoad);
+		} catch (Throwable pageLoadWaitError) {
+			pageLoadWaitError.printStackTrace();
+		}
+	}
 
 }

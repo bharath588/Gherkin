@@ -5,15 +5,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Random;
 
+import mobile.IOSDeviceConfiguration;
+import mobile.IOSDriverManager;
+import mobile.Mobile;
 import shell.utils.SftpUtils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.google.common.base.Throwables;
 
 import core.framework.Globals;
 import core.framework.TestListener;
@@ -77,10 +78,22 @@ public class Reporter{
 			 {
 		objReport = new ExtentReports();
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportFilePath);
-        objReport.attachReporter(htmlReporter);
+        htmlReporter.config().setDocumentTitle(Stock.getConfigParam("AUT")+"Reports");
+        htmlReporter.config().setReportName(Stock.getConfigParam("AUT")+"Reports");
+		objReport.attachReporter(htmlReporter);
 
 			 }
-			
+		//Added by Siddartha 
+			 objReport.setSystemInfo("PLATFORM", Stock.getConfigParam("PLATFORM"));
+			objReport.setSystemInfo("Environment", Stock.getConfigParam("TEST_ENV"));
+			 objReport.setSystemInfo("Selenium Version", "3.0.1");
+			 objReport.setSystemInfo("Type ", Stock.getConfigParam("type"));
+		      
+			if(Mobile.mobilePlatform){
+				 objReport.setSystemInfo("AppiumClient", "4.1.2");
+				 objReport.setSystemInfo("AppiumServer", "1.6.3");
+				
+			 }
 			if(moduleNameMap == null || !moduleNameMap.containsKey(className))
 			{
 				
@@ -95,8 +108,20 @@ public class Reporter{
 			{
 			objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname(TestListener.portMap.get(Thread.currentThread().getId())));
 			}else{
-			objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname()).assignCategory("Machine Details");
-			}
+				if(Mobile.mobilePlatform){
+					String deviceInfo="";
+					try {
+						deviceInfo = IOSDeviceConfiguration.getDeviceName(IOSDriverManager.deviceName)+"_"+IOSDriverManager.deviceName;
+					} catch (InterruptedException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					objMachineDetNode = moduleNameMap.get(className).createNode(deviceInfo).assignCategory("Machine Details");
+					
+				}else{
+					objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname()).assignCategory("Machine Details");
+				}
+				}
 			machineDetMap.put(Thread.currentThread().getId(), objMachineDetNode);
 			moduleRefMap.put(Thread.currentThread().getId(), className);
 			
@@ -338,6 +363,16 @@ public class Reporter{
 		}else{
 			TestListener.setFinalTestStatus(true);
 		}
+		if(Mobile.mobilePlatform){
+			objModuleNameNode.log(Status.INFO, "<a target=\"_parent\" href="
+	                    + IOSDriverManager.getDeviceName().replaceAll("\\W", "_") + "__AppiumLog.txt"+ ">AppiumServerLogs</a>");
+//			Reporter.parent.log(LogStatus.INFO,
+//	                "<a target=\"_parent\" href="
+//	                    + IOSDriverManager.getDeviceName().replaceAll("\\W", "_") + "__AppiumLog.txt"+ ">AppiumServerLogs</a>");
+		}
 	}
 
 }
+
+	
+

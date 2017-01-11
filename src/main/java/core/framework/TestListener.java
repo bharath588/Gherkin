@@ -29,7 +29,9 @@ import lib.Log.Level;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+import mobile.Mobile;
 
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -85,6 +87,10 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 					+ Globals.GC_CONFIGFILEANDSHEETNAME + ".properties");
 			Globals.GC_MANUAL_TC_NAME_MAP = new HashMap<Long, String>();
 			readGridConfigFile("grid.json");
+			 if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
+				 Mobile.mobilePlatform = true; 
+			 }
+			 
 			List<ITestNGMethod> methodsList = new LinkedList<>();
 			methodsList = suite.getAllMethods();
 			generateTestcaseReferenceMap(suite);
@@ -98,6 +104,14 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Log.Report(Level.INFO,
 					"Test Configuration initialized successfully");
+			if (new File(Globals.GC_TEST_REPORT_DIR).exists()) {
+				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
+				System.out.println("Deleted report folder from directory : "
+						+ new File(Globals.GC_TEST_REPORT_DIR)
+								.getAbsolutePath());
+				Log.Report(Level.INFO,
+						"Test Report folder removed on exist on suite level");
+			}
 			counter = 0;
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, e.getMessage());
@@ -212,7 +226,8 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		}
 			if (Web.getDriver().getWindowHandles().size() >= 0)
 				Web.getDriver().quit();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Failed to quit Web Driver :"
 					+ e.getMessage());
 

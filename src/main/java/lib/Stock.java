@@ -2,6 +2,7 @@ package lib;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -71,6 +72,9 @@ public class Stock {
 		if(envName.contains("QA")){
 			return Globals.DB_TYPE.get("QA");
 		}
+		if(envName.contains("PROD")){
+			return Globals.DB_TYPE.get("PROD");
+		}
 		return null;
 	}
 
@@ -79,7 +83,6 @@ public class Stock {
 		Stock.iterationNumber = 0;
 		tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
-
 		// Getting Application name and Module name so that the
 		// correct excel is picked up
 		LinkedHashMap<Integer, Map<String, String>> td = null;
@@ -98,7 +101,7 @@ public class Stock {
 					&& System.getProperty("testDataPath").equalsIgnoreCase(
 							"true")) {
 				xmlfile = new File(Globals.GC_COMMON_TESTDATALOC + appName
-						+ "\\\\" + Globals.GC_TESTDATAPREFIX + appName + "_"
+						+ File.separator + Globals.GC_TESTDATAPREFIX + appName + "_"
 						+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
 			} else {
 				xmlfile = new File(Globals.GC_TESTDATALOC
@@ -176,7 +179,12 @@ public class Stock {
 			} //
 			System.out.println(td);
 			return td;
-		} catch (Exception e) {
+		} 
+	catch(FileNotFoundException ex){
+		ThrowException.Report(TYPE.EXCEPTION,
+				"Not able to Find suite File: "+  ex.getMessage());
+	}
+		catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION,
 					"Exception at getLoopIndex() : " + e.getMessage());
 		}

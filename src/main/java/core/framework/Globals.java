@@ -1,5 +1,6 @@
 package core.framework;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -26,7 +27,7 @@ public class Globals {
         	  DB_TYPE = new HashMap<String,String>();
         	  DB_TYPE.put("PROJ","DEV");
         	  DB_TYPE.put("QA","QA");   
-
+        	  DB_TYPE.put("PROD", "PROD");
           }
 	  	   // FOR CI 
           public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
@@ -55,25 +56,31 @@ public class Globals {
           public static final String GC_COLNAME_CLASSPATH = "ClassPath";
           public static String GC_OBJECT_SYNC_TIMEOUT = null ;
           
-    //FileLocations
-          public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+"\\RunOrderSheets\\";
-          public static final String GC_TESTDATALOC = System.getProperty("user.dir")+"\\TestData\\";
-          public static final String GC_TESTNG_XML_PATH = System.getProperty("user.dir")+"\\RunXML";
-          public static final String GC_PROJECT_BIN_DIR = System.getProperty("user.dir")+"\\bin";         
+    //FileLocations          
+        //  public static final String GC_APP_RELPATH =  "app.";       
+          
+          public static final String GC_COMMON_TESTDATALOC = "\\\\its\\\\fss\\\\DEVGHOME\\\\Automation-Selenium\\\\TestData\\\\" ;
+          public static final String GC_TESTCASESLOC = System.getProperty("user.dir")+File.separator+"RunOrderSheets"+File.separator;
+          public static final String GC_TESTDATALOC = System.getProperty("user.dir")+File.separator+"TestData"+File.separator;
+          public static final String GC_TESTNG_XML_PATH = System.getProperty("user.dir")+File.separator+"RunXML";
+          public static final String GC_PROJECT_BIN_DIR = System.getProperty("user.dir")+File.separator+"bin";         
           public static final String GC_TESTCASE_RELPATH =  ".testcases.";
           public static final String GC_LISTENERS_CLASSNAME =  "core.framework.TestListener";      
-        //  public static final String GC_APP_RELPATH =  "app.";
-          public static final String GC_PROJECT_DIR = System.getProperty("user.dir")+"\\";
+          public static final String GC_PROJECT_DIR = System.getProperty("user.dir")+File.separator;
           public static final String GC_TESTCONFIGLOC = GC_PROJECT_DIR;
-          public static final String GC_TESTNG_TEST_OUTPUT = System.getProperty("user.dir")+"\\test-output";
-          public static final String GC_TEST_REPORT_DIR =  GC_PROJECT_DIR+"TestReport\\";
-          public static final String GC_TEST_REPORT_RESOURCE = GC_PROJECT_DIR+"src\\devresource\\reports\\";
+          public static final String GC_TESTNG_TEST_OUTPUT = System.getProperty("user.dir")+File.separator+"test-output";
+          public static final String GC_TEST_REPORT_DIR =  GC_PROJECT_DIR+"TestReport"+File.separator;
+          public static final String GC_TEST_REPORT_RESOURCE = GC_PROJECT_DIR+"src"+File.separator+"devresource"+File.separator+"reports"+File.separator;
           public static final String GC_TEST_REPORT_CSS_RESOURCE = GC_TEST_REPORT_RESOURCE+"CSS";
           public static final String GC_TEST_REPORT_JS_RESOURCE = GC_TEST_REPORT_RESOURCE+"JS";
           public static final String GC_TEST_REPORT_FONTS_RESOURCE = GC_TEST_REPORT_RESOURCE+"FONTS";
           public static final String GC_TEST_REPORT_HTML_RESOURCE = GC_TEST_REPORT_RESOURCE+"HTML";
           public static final String GC_TEST_REPORT_IMG_RESOURCE = GC_TEST_REPORT_RESOURCE+"IMG";
-          public static String GBL_SuiteName = "";
+          public static String GBL_SuiteName = "";           
+          
+          
+          
+          
           
 //          public static String GBL_REPLACE_EXISTING_HTML_REPORT = "true";
           public static String GBL_REPLACE_EXISTING_HTML_REPORT = Stock.getConfigParam("Overwrite_Existing_Report");
@@ -189,7 +196,7 @@ public class Globals {
     	  
     	  public static final Map<String, String> databaseConnectionStrings;
 		public static final String option_UserDefault = null;
-		public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
+	//	public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
     	  
     	  static
     	  {
