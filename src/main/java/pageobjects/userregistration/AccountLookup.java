@@ -3,7 +3,7 @@ package pageobjects.userregistration;
 
 import lib.Reporter;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

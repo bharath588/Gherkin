@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 

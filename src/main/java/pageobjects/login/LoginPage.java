@@ -6,7 +6,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +29,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement txtPassword;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
 	private WebElement btnLogin;
-	@FindBy(css = "a[href*='register']")
+	@FindBy(xpath = ".//a[text()[normalize-space()='Register']]")
 	private WebElement btnRegister;
 	@FindBy(id = "helpBlock")
 	private WebElement weHelpBlock;

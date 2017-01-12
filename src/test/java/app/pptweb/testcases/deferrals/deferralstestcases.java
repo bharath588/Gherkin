@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import appUtils.Common;
 import appUtils.TestDataFromDB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Web;
 import pageobjects.general.*;
 import pageobjects.login.*;

@@ -19,7 +19,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 public class Common {
 	
@@ -84,7 +84,7 @@ public class Common {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
-						Status.WARNING,
+						com.aventstack.extentreports.Status.WARNING,
 						"Query Participant Info from DB:" + sqlQuery[0],
 						"The Query did not return any results. Please check participant test data as the appropriate data base.",
 						false);

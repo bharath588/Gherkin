@@ -15,7 +15,7 @@ import pageobjects.general.LeftNavigationBar;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 
 public class PriorPlanContributions extends LoadableComponent<PriorPlanContributions>{

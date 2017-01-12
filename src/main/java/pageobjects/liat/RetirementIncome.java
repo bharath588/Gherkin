@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 

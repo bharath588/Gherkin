@@ -8,7 +8,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -142,7 +142,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement confirmationPageSentToAddress;
 	@FindBy(xpath=".//input[contains(@ng-model,'withdrawalPayToSelfAmount')]")
 	private WebElement inpPayToSelfAmt;
-	
+	@FindBy(xpath="//div[contains(@ng-include,'SummaryPayToSelfDelivery')]//input[@value='First-class mail']")
+	private WebElement inpPayToSelfFirstClassMail;
+	@FindBy(xpath="//div[contains(@ng-include,'SummaryPayToSelfDelivery')]//input[@value='Express mail']")
+	private WebElement inpPayToSelfExpressMail;
+	@FindBy(xpath="//div[contains(@ng-include,'SummaryRolloverDelivery')]//input[@value='First-class mail']")
+	private WebElement inpRollOverFirstClassMail;
+	@FindBy(xpath="//div[contains(@ng-include,'SummaryRolloverDelivery')]//input[@value='Express mail']")
+	private WebElement inpRollOverExpressMail;
 	private static int enteredRothWithdrawalAmt = 0;
 	private static int enteredPreTaxWithdrawalAmt = 0;
 	private static int enteredTotalWithdrawalAmt = 0;
@@ -309,6 +316,18 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			return this.totalFWDVestedBalance;
 		}		
 		
+		if (fieldName.trim().equalsIgnoreCase("PAYMENT TO SELF FIRST CLASS MAIL")) {
+			return this.inpPayToSelfFirstClassMail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("PAYMENT TO SELF EXPRESS MAIL")) {
+			return this.inpPayToSelfExpressMail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ROLLOVER FIRST CLASS MAIL")) {
+			return this.inpRollOverFirstClassMail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ROLLOVER EXPRESS MAIL")) {
+			return this.inpRollOverExpressMail;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -1453,6 +1472,25 @@ return isTextDisplayed;
 		} catch (SQLException e) {		
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * This method is to enter amount for Full withdrawal payment to self 
+	 * @param amount
+	 */
+	public void enterFullWithDrawalPaymentToSelfAmount(String amount) {
+		
+	try
+	{
+		
+		Web.setTextToTextBox(inpPayToSelfAmt, amount);
+	}
+	
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	
+		
 	}
 	
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -49,7 +49,7 @@ public class beneficiariestestcases {
     }
 
     private void prepTestData(Method testCase) throws Exception {
-        this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+        this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
 
     }
     

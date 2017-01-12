@@ -7,7 +7,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.Choose;

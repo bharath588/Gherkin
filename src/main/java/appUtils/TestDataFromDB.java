@@ -11,9 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import lib.DB;
-import lib.Reporter;
 import lib.Stock;
-import lib.Reporter.Status;
 
 public class TestDataFromDB {
 	private static HashMap<String, String> tempMap = null;

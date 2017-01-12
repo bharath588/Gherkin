@@ -10,7 +10,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;

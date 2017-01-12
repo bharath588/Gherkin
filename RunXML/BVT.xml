@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1" parallel="tests" thread-count="2">
+<suite name="testsuite" verbose="1" >
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    
+         
       <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"><parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity"></parameter></include>
                 </methods>
             </class>
         </classes>
@@ -19,7 +19,7 @@
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"><parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC008_Unmarried with One beneficiary use address on record_Sanity"></parameter></include>
                 </methods>
             </class>
         </classes>
@@ -28,7 +28,7 @@
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
+                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"><parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC009_UnMarried One Individual beneficiary new address_Sanity"></parameter></include>
                 </methods>
             </class>
         </classes>

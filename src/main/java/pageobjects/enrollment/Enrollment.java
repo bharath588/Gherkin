@@ -8,7 +8,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;

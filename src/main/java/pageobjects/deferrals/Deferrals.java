@@ -23,7 +23,7 @@ import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.*;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 public class Deferrals extends LoadableComponent<Deferrals> {
 	
