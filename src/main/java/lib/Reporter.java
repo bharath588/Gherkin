@@ -2,9 +2,11 @@ package lib;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import mobile.IOSDeviceConfiguration;
 import mobile.IOSDriverManager;
@@ -15,6 +17,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.google.common.base.Throwables;
 
 import core.framework.Globals;
 import core.framework.TestListener;
@@ -172,26 +175,37 @@ public class Reporter{
 		} else {
 			tmpStr1 = testCaseName;
 		}
-
+		
+	     
 		if(description.length > 0)
 		{
 			objTestCaseNode = machineDetMap.get(Thread.currentThread().getId()).createNode(tmpStr1
 					+ (tmpStr2.length() > 0 ? ("<br>     " + tmpStr2) : "")
 					+ (tmpStr3.length() > 0 ? ("<br>     " + tmpStr3) : "")
 					+ "<br>Iteration " + Globals.GBL_CurrentIterationNumber,description[0]);
+			
+			
 			testCaseMap.put(Thread.currentThread().getId(), objTestCaseNode);
 		}else{
 		objTestCaseNode = machineDetMap.get(Thread.currentThread().getId()).createNode(tmpStr1
 				+ (tmpStr2.length() > 0 ? ("<br>     " + tmpStr2) : "")
 				+ (tmpStr3.length() > 0 ? ("<br>     " + tmpStr3) : "")
 				+ "<br>Iteration " + Globals.GBL_CurrentIterationNumber).assignCategory("TestCases");
+		
+		
 		testCaseMap.put(Thread.currentThread().getId(), objTestCaseNode);
 		}
+		
+		
+		
+		
 		
 		//Categories can be assigned to the extent test object
 		//checkTestStatus = true;
 		checkTestStatusMap.put(Thread.currentThread().getId(), true);
 	}
+	
+	
 
 	/**
 	 * <pre>
@@ -233,7 +247,28 @@ public class Reporter{
 		} else {
 			Status tmpLogStatus;
 			String stackTrace = "";
+			if (Globals.exception != null) {
+				stackTrace = Throwables
+						.getStackTraceAsString(Globals.exception);
+				Globals.exception = null;
+			} else if (Globals.assertionerror != null) {
+				stackTrace = Throwables
+						.getStackTraceAsString(Globals.assertionerror);
+				Globals.assertionerror = null;
+			} else
+				stackTrace = Throwables.getStackTraceAsString(new Throwable());
+			
+			stackTrace=stackTrace.replace("\n", "").replace("\r", "");
 
+			iRandTraceCntr = new Random().nextInt(10000);
+			String stackTraceLnk = "<br>"
+					+"<a href=\"#\" onclick=\"var el=getElementById('div"
+					+ iRandTraceCntr
+					+ "');  alert('"+stackTrace+"');"
+					+ "\"><font size='1'>+ Show stack trace</font></a>"
+					+ "<div id=\"div" + iRandTraceCntr
+					+ "\" style=\"display:none\">" + stackTrace
+					+ "</div>";
 			
 			switch (logStatus) {
 			case PASS:
@@ -246,13 +281,13 @@ public class Reporter{
 				Details = "<font size=\"3\" color=\"red\"><pre>" + Details
 						+ "</pre></font>";
 				checkTestStatusMap.put(Thread.currentThread().getId(), false);
-				Details += stackTrace;
+				Details += stackTraceLnk;
 				break;
 			case WARNING:
 				tmpLogStatus = Status.WARNING;
 				Details = "<font size=\"3\" color=\"amber\"><pre>" + Details
 						+ "</pre></font>";
-				Details += stackTrace;
+				Details += stackTraceLnk;
 				break;
 			case INFO:
 				tmpLogStatus = Status.INFO;
@@ -261,28 +296,30 @@ public class Reporter{
 			default:
 				tmpLogStatus = Status.WARNING;
 				Details = "<pre>" + Details + "</pre>";
-				Details += stackTrace;
+				Details += stackTraceLnk;
 			}
 
 
 			if(Globals.exception != null)
 			{
-				testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL, Globals.exception);
+				
 			Globals.exception = null;
 			}
 			if(Globals.error !=null)
-			{
-				testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL, Globals.error);
+			{	
+				
+			
 				Globals.error = null;
 			}
 			
 			if (isScreenshotRequired(tmpLogStatus, attachScreenshot)) {
 			testCaseMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Details);
 			try {
-				testCaseMap.get(Thread.currentThread().getId()).log(
-						Status.INFO,
-							"Screenshot below: "
-									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+				testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
+//				testCaseMap.get(Thread.currentThread().getId()).log(
+//						Status.INFO,
+//						"Screenshot below: "
+//								+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -293,10 +330,7 @@ public class Reporter{
 				objTestCaseNode.log(Status.FAIL, Globals.exception);
 				Globals.exception = null;
 				try {
-					testCaseMap.get(Thread.currentThread().getId()).log(
-							Status.INFO,
-							"Screenshot below: "
-									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+					testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -306,10 +340,7 @@ public class Reporter{
 					objTestCaseNode.log(Status.FAIL, Globals.error);
 					Globals.error = null;
 					try {
-						testCaseMap.get(Thread.currentThread().getId()).log(
-								Status.INFO,
-							"Screenshot below: "
-									+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
+						testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -371,6 +402,9 @@ public class Reporter{
 //	                    + IOSDriverManager.getDeviceName().replaceAll("\\W", "_") + "__AppiumLog.txt"+ ">AppiumServerLogs</a>");
 		}
 	}
+	
+	
+   
 
 }
 

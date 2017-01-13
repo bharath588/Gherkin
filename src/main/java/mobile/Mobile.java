@@ -28,6 +28,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.Status;
 import com.github.lalyos.jfiglet.FigletFont;
 
+//208 Error :- Run this command in terminal :- ps -ax|grep -i "8100"|grep -v grep|awk '{print "kill -9 " $1}'|sh
+
+
 public class Mobile {
 	
 	public static boolean mobilePlatform = false;
@@ -535,4 +538,5 @@ public class Mobile {
 	        System.out.println(asciiArt1);
 	    }
 	
+	 
 }
