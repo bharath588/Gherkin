@@ -1065,5 +1065,35 @@ public class Web {
 			pageLoadWaitError.printStackTrace();
 		}
 	}
+	 /**
+     * <pre>
+     * Method to set password to specified text box element.
+     * Returns value of <b>Value</b> attribute after setting provided text.
+     * Returns empty string if unable to set text.
+     * </pre>
+     * 
+      * @param textBoxField
+     *            - Text box WebElement
+     * @param valueToSet
+     *            - Value/String to be set
+     * @return <b>Value</b> - Text set in <b>value</b> attribute of text box.
+     */
+     public static String setPassWordToTextBox(WebElement textBoxField,
+                   String valueToSet) {
+            String fieldTextValue = "";
+            if (Web.isWebElementDisplayed(textBoxField)) {
+                   textBoxField.clear();
+                   textBoxField.click();
+                   try {
+                         textBoxField.sendKeys( new PassWord().decrypt(valueToSet));
+                   } catch (Exception e) {
+                   
+                   }
+                   textBoxField.click();
+                   fieldTextValue = textBoxField.getAttribute("value");
+            }
+            return fieldTextValue;
+     }
+
 
 }

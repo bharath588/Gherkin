@@ -21,6 +21,7 @@ public class Globals {
           public static final String GC_KEY_RUNXML = "RUNXML";
           public static final String GC_VAL_RUNALLITR = "ALL";
           public static final String GC_AUT_TYPE = "WEB";
+          public static final String GC_COLNAME_BROWSER="BROWSER";
           public static final Map<String,String> DB_TYPE;
           public static Map<String,Map<String,String>> manualtoAutoTCMap = new LinkedHashMap<>();
           static{
@@ -31,7 +32,13 @@ public class Globals {
           }
 	  	   // FOR CI 
           public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
-          public static final String GC_EXECUTION_ENVIRONMENT=System.getProperties().containsKey("env")?System.getProperty("env").toUpperCase(): Stock.getConfigParam(GC_COLNAME_TEST_ENV);
+          public static final String GC_EXECUTION_ENVIRONMENT = System.getProperties().containsKey("env")?
+						System.getProperty("env").toUpperCase()  :
+						Stock.getConfigParam(GC_COLNAME_TEST_ENV); 
+
+		 public static final String GC_EXECUTION_BROWSER = System.getProperties().containsKey("BROWSER")?
+         System.getProperty("BROWSER").toUpperCase()  :
+         Stock.getConfigParam(GC_COLNAME_BROWSER); 
           
 
           

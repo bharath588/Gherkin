@@ -334,27 +334,51 @@ public class Stock {
 	}
 	
 		
-	public static   String[] getTestQuery(String queryName)	{
-		try{
-			String[] queryData;
+	public static String[] getTestQuery(String queryName) {
+		try {
+			String[] queryData = new String[3];
 			String appName = getConfigParam("AUT");
-			XL_ReadWrite XL = new XL_ReadWrite(Globals.GC_TESTDATALOC +
-			          Globals.GC_TESTDATAPREFIX + appName +"_"+checkEnv(getConfigParam("TEST_ENV"))+".xls");
-			int queryColNo = XL.getColNum("query", 0,"QueryName");
-			int queryPointer = 0;
 
-			for (; queryPointer < XL.getRowCount("query"); queryPointer++) {
-				if(XL.getCellData("query",queryPointer, queryColNo).equalsIgnoreCase(queryName)){
-					break;
+			File xmlfile = new File(Globals.GC_TESTDATALOC
+					+ Globals.GC_TESTDATAPREFIX + appName + "_"
+					+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
+
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(xmlfile);
+			doc.getDocumentElement().normalize();
+
+			NodeList nList = doc.getElementsByTagName("Module");
+
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+
+				Node nNode = nList.item(temp);
+				Element eElement = (Element) nNode;
+				String name = eElement.getAttribute("name");
+				if (name.equalsIgnoreCase("query")) {
+					NodeList parameterList = eElement
+							.getElementsByTagName("parameter");
+
+					for (int temp1 = 0; temp1 < parameterList.getLength(); temp1++) {
+						Node pNode = parameterList.item(temp1);
+						Element pElement = (Element) pNode;
+
+						String pName = pElement.getAttribute("QueryName");
+						if (pName.equalsIgnoreCase(queryName)) {
+							queryData[0] = pElement.getAttribute("DB");
+							queryData[1] = pElement.getAttribute("Query");
+						}
+					}
 				}
 			}
-			queryData = new String[]{XL.getCellData("query",queryPointer, queryColNo+1)
-					,XL.getCellData("query",queryPointer, queryColNo+2)};		
 			return queryData;
-		}catch(Exception e){
-			ThrowException.Report(TYPE.EXCEPTION, "Unable to get test query :" + e.getMessage());
+		} catch (Exception e) {
+			ThrowException.Report(TYPE.EXCEPTION, "Unable to get test query :"
+					+ e.getMessage());
 		}
 		return null;
+
 	}
 	
 	public static   String getConfigParam(String parameterName){
@@ -370,7 +394,7 @@ public class Stock {
 	 * <b> - false</b> to ignore updating value to already existing property.
 	 * Default is <b>true</b></pre>
 	 */
-	public   void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
+	public static  void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
 		
 		if (overWriteExisting.length > 0) {
 			if (!overWriteExisting[0])

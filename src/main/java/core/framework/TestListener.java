@@ -85,6 +85,29 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		try {
 			Stock.readConfigProperty(Globals.GC_TESTCONFIGLOC
 					+ Globals.GC_CONFIGFILEANDSHEETNAME + ".properties");
+			if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
+				Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV,
+						Globals.GC_EXECUTION_ENVIRONMENT, true);
+			}
+			if (!Globals.GC_EXECUTION_BROWSER.isEmpty()) {
+				Stock.setConfigParam(Globals.GC_COLNAME_BROWSER,
+						Globals.GC_EXECUTION_BROWSER, true);
+			}
+			 if(new File(Globals.GC_TEST_REPORT_DIR).exists()) {
+
+				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
+
+				System.out.println("Deleted report folder from directory : "
+
+				+ new File(Globals.GC_TEST_REPORT_DIR)
+
+				.getAbsolutePath());
+
+				Log.Report(Level.INFO,
+
+				"Test Report folder removed on exist on suite level");
+
+			}
 			Globals.GC_MANUAL_TC_NAME_MAP = new HashMap<Long, String>();
 			readGridConfigFile("grid.json");
 			 if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
