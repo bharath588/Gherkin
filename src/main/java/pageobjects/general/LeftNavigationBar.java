@@ -89,19 +89,25 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// System.out.println("inside");
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
-			if(!Web.isWebElementDisplayed(weLeftNavSection, true)){
-				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
-			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
-			}
-			else{
-				if(Web.isWebElementsDisplayed(lstlnkPlanName, true))
-				lstlnkPlanName.get(1).click();
+			
+				if(!Web.isWebElementDisplayed(weLeftNavSection, true)){
+					/*if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
+				  Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+				}
+					else{*/
+						MyAccountsPage acc= new MyAccountsPage();
+						acc.clickPlanNameByGAID("150550-01");
+					//}
+				}
+				else{
+					/*if(Web.isWebElementsDisplayed(lstlnkPlanName, true))
+					lstlnkPlanName.get(1).click();*/
+					
+					
+				}
+					Common.waitForProgressBar();
+					Web.waitForPageToLoad(Web.getDriver());
 				
-			}
-				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.getDriver());
-			}
-		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

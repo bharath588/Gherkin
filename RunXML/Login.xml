@@ -8,7 +8,8 @@
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password"/>
+                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
                 </methods>
             </class>
         </classes>
@@ -17,7 +18,8 @@
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
                 </methods>
             </class>
         </classes>
@@ -36,7 +38,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"/>
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -55,7 +59,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC01_User_has_PIN"/>
+                    <include name="SF01_TC01_User_has_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -64,7 +70,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC02_User_does_not_have_PIN"/>
+                    <include name="SF01_TC02_User_does_not_have_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC002_UI_Validation_User_does_not_have_PIN"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -73,7 +81,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC03_NegativeFlow_WithAndWithoutPINTabs"/>
+                    <include name="SF01_TC03_NegativeFlow_WithAndWithoutPINTabs">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC003_Functionality_With_PIN__Negative_flow"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -82,7 +92,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC03_NegativeFlow_WithAndWithoutPINTabs"/>
+                    <include name="SF01_TC03_NegativeFlow_WithAndWithoutPINTabs">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -91,7 +103,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN"/>
+                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -100,7 +114,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN"/>
+                    <include name="SF01_TC05_UserLock_WithAndWithoutPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC006_Functionality_With_PIN_lock_User"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -109,7 +125,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
+                    <include name="SF04_TC01_AccountLookup_PositiveFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -118,7 +136,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF04_TC01_AccountLookup_PositiveFlow"/>
+                    <include name="SF04_TC01_AccountLookup_PositiveFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -128,7 +148,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
+                    <include name="SF03_TC01_AccountSetup">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -137,7 +159,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
+                    <include name="SF03_TC01_AccountSetup">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC003_UI_Validation_WithPin_Username_Password"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -146,7 +170,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
+                    <include name="SF03_TC01_AccountSetup">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC002_UI_Validation_WithoutPin_Contact_information"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -156,7 +182,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF03_TC01_AccountSetup"/>
+                    <include name="SF03_TC01_AccountSetup">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC004_UI_Validation_WithOutPin_Username_Password"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -166,7 +194,9 @@
 		<classes>
 			<class name="app.pptweb.testcases.login.registrationtestcases">
 				<methods>
-					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration" />
+					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin"></parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>
@@ -176,7 +206,9 @@
 		<classes>
 			<class name="app.pptweb.testcases.login.registrationtestcases">
 				<methods>
-					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration" />
+					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Ihavepin"></parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>
@@ -186,7 +218,9 @@
 		<classes>
 			<class name="app.pptweb.testcases.login.registrationtestcases">
 				<methods>
-					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration" />
+					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin"></parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>
@@ -196,7 +230,9 @@
 		<classes>
 			<class name="app.pptweb.testcases.login.registrationtestcases">
 				<methods>
-					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration" />
+					<include name="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>
@@ -224,7 +260,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF01_TC01_SendActivationCodeThroughLoginFlow"/>
+                    <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -233,7 +271,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC01_already have an Activation Code"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -242,7 +282,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -251,7 +293,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC03_Send Activation Code by Voice"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -260,7 +304,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow"/>
+                    <include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
@@ -269,7 +315,9 @@
         <classes>
             <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
-                    <include name="SF04_TC05_ForgotPassword_DidntReceiveActivationCode"/>
+                    <include name="SF04_TC05_ForgotPassword_DidntReceiveActivationCode">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>

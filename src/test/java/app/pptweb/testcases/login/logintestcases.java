@@ -9,6 +9,7 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
@@ -256,9 +257,80 @@ public class logintestcases {
 		}
 	}
 
-	@AfterSuite
-	public void cleanupSessions() {
-		lib.Web.getDriver().close();
-		lib.Web.getDriver().quit();
+	@Test(dataProvider = "setData")
+	public void Login_CallCenter_timings(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			LoginPage login = new LoginPage();
+			login.get();
+
+			
+			// TODO Add code to verify text displayed on Two step verification
+			// page
+
+			String customerSupportInfo = "";
+			boolean isTextMatching = false;
+			
+			customerSupportInfo = login.isValidCustomerSupportInfo();
+
+			if (customerSupportInfo.trim().isEmpty()) {
+				lib.Reporter.logEvent(Status.FAIL,
+						"Check Customer Support Information on the Login Page",
+						"No Customer Support Information on the Login Page",
+						true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.INFO,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information on the Login Page is displayed ",
+								true);
+			}
+
+			isTextMatching = Web
+					.VerifyText(
+							Stock.GetParameterValue("Expected_CallCenterTimings_Pre_Login"),
+							customerSupportInfo, true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information is Same on the Login Page",
+								false);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information is not same on the Login Page\nExpected:"
+										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")
+										+ "\nActual:" + customerSupportInfo,
+								false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 }

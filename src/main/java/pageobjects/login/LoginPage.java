@@ -118,11 +118,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Assert.assertTrue(false);
 		}
 		String accuCode = null;
+		 Web.waitForElement(btnDismiss);
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
 		 
-	/*	if (Stock.globalTestdata.containsKey("ACCUCODE"))
+		/*if (Stock.globalTestdata.containsKey("ACCUCODE"))
 
 		{
 			if (Stock.GetParameterValue("AccuCode") != null)
@@ -138,7 +139,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					"Login page for '" + Common.getSponser()
 							+ "' is not loaded.");
 
-		}*/
+		}
+		 Web.getDriver().get(url);
+		 Web.getDriver().navigate().refresh();
+		 Web.waitForPageToLoad(Web.getDriver());*/
 	}
 
 	@Override
@@ -203,6 +207,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 		// currently not beeing seen
        if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+    	   Web.waitForElement(btnDismiss);
 		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
 		if (isElementPresent)
 			btnDismiss.click();
