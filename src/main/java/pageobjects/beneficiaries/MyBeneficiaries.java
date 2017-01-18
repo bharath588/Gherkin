@@ -169,7 +169,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(lblMyBeneficiaries);
-		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Web.isWebElementDisplayed(lblMyBeneficiaries,true);
 		
 		
