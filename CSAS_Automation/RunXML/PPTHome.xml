@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1"  >
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="Regression Suite" parallel="classes" thread-count="2">
+		<classes>
+			<class
+				name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+				<methods>
+					<include name="Validate_Employment_Status_As_Active_Or_Terminated">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"></parameter>
+					</include>
+					<include name="Validate_Employment_Status_As_Active_Or_Terminated">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt Home Page_Employment_Status_TERMINATED"></parameter>
+					</include>
+					<include name="Validate_PPT_HomePage_Instance">
+						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_Instance"></parameter>
+					</include>
+					<include name="Validate_Personal_Data_On_PPT_Home">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_info_Ppt_Home_Page_Personal_Data"></parameter>
+					</include>
+					<include name="Validate_Registration_Status_On_PPT_Home_Page">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status"></parameter>
+					</include>
+					<include name="Validate_Managed_Account_Status_On_PPT_Home_Page">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Enrolled"></parameter>
+					</include>
+					<include name="Validate_Managed_Account_Status_On_PPT_Home_Page">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_UnEnrolled"></parameter>
+					</include>
+					<include name="Validate_Managed_Account_Status_On_PPT_Home_Page">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Not_Offered_By_Plan"></parameter>
+					</include>
+					<include name="Validate_PDI_Status_On_PPT_Home">
+						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_PDI_Status"></parameter>
+					</include>
+					<include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_PIN_Button_NonRegistered"></parameter>
+					</include>
+					<include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_Registered"></parameter>
+					</include>
+					<include name="Validate_PPT_Home_Account_Balance">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Balance_Details"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+				<methods>
+					<include name="Validate_LoanStatus_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance"></parameter>
+					</include>
+					<include name="Validate_LoanStatus_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Payment_Frequency"></parameter>
+					</include>
+					<include name="Validate_LoanStatus_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Payment_Frequency_Method"></parameter>
+					</include>
+					<include name="Validate_LoanStatus_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Default_Indicator"></parameter>
+					</include>
+					<include name="Validate_PaymentHistory">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Loan_History_Unpaid"></parameter>
+					</include>
+					<include name="Validate_PaymentHistory">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Loan_History_paid"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
+				<methods>
+					<include
+						name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote">
+						<parameter name="ManualTCName"
+							value="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote"></parameter>
+					</include>
+					<include name="Validate_Selected_Loan_Type_Details">
+						<parameter name="ManualTCName" value="Validate_Selected_Loan_Type_Details"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class
+				name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
+				<methods>
+					<include name="Validate_Active_Allocation_Percentage">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Allocation_Percentage"></parameter>
+					</include>
+					<include name="Validate_Variable_Investment_Money_Type_Link">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Variable_Investments_Money_Type_Link"></parameter>
+					</include>
+					<include name="Verify_Variable_Invstment_Balance">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Variable_Investments_Balance"></parameter>
+					</include>
+					<include name="Verify_Fixed_Invstment_Balance">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Fixed_Investments_Balance"></parameter>
+					</include>
+					<include name="Verify_Money_Type_Totals">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class
+				name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
+				<methods>
+					<include name="Verify_Disbursement_History_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"></parameter>
+					</include>
+					<include name="Verify_Disbursement_History_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"></parameter>
+					</include>
+					<include name="Verify_Disbursement_History_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class
+				name="app.csas.testcases.contributionallocationchange.validate_contributionallocationchange">
+				<methods>
+					<include name="Validate_Default_Investment_Option_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Cont_Allc_Chg_Default_Invest_Option"></parameter>
+					</include>
+					<include name="Validate_Current_Deposite_Allocation_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Cont_Allc_Chg_Current_Deposit_Allc"></parameter>
+					</include>
+					<include name="Validate_ProcessAcc_Rebalancer_ChckBx_Details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Cont_Allc_Chg_Rebalancer_Process_Checkbox"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
+				<methods>
+					<include name="Validate_Fund_to_Fund_Confirm_Transfer">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"></parameter>
+					</include>
+					<include name="Validate_Fund_to_Fund_Confirm_Transfer">
+						<parameter name="ManualTCName" value="Basic_Transfer"></parameter>
+					</include>
+					<include name="Validate_Fund_to_Fund_Confirm_Transfer">
+						<parameter name="ManualTCName" value="Cancel_Transfer"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_NO_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type">
+						<parameter name="ManualTCName"
+							value="Trnf_with_Dollar_amt_greater_Prior_Day_balance"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type">
+						<parameter name="ManualTCName" value="Trnf_with_gtr_100_pct"></parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.csas.testcases.rebalancer.validate_rebalancer">
+				<methods>
+					<include name="Perform_and_validate_Rebalancer_Completion_details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT Change_Custom Xfer &amp; Renewal_Rebalancer_Transfer Restrictions display"></parameter>
+					</include>
+					<include name="Perform_and_validate_Rebalancer_Completion_details">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

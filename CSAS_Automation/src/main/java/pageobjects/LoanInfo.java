@@ -10,7 +10,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -115,7 +115,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	LoadableComponent<?> parent;
 
 	public LoanInfo() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override

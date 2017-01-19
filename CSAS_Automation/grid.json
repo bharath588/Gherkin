@@ -1,0 +1,10 @@
+[ {
+	"Browser": "FF",
+	"Port": "http://143.199.162.106:5555/wd/hub",
+	"Platform": "Windows.xp"
+},
+{
+	"Browser": "FF",
+	"Port": "http://143.199.162.106:5556/wd/hub",
+	"Platform": "Windows.xp"
+}]

@@ -8,7 +8,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -197,7 +197,7 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 
 	public MoneyTypeBalance() {
 
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
@@ -403,8 +403,8 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 						moneyType);
 				Web.mouseHover(VIMoneyTypeVal);
 			/*	// String al =
-				// Web.webdriver.findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
-				JavascriptExecutor js = (JavascriptExecutor) Web.webdriver;
+				// Web.getDriver().findElements(By.cssSelector("script[language = 'javascript']:nth-of-type(4)")).get(0).getText();
+				JavascriptExecutor js = (JavascriptExecutor) Web.getDriver();
 				// Object obj =js.executeScript("variableMTFunc(0)") ;
 				Object obj = js
 						.executeScript("function variableMTFunc(index){overlib( variableMTArray[index],  HAUTO, VAUTO);}; variableMTFunc(0)");

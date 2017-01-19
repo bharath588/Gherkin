@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -40,7 +40,7 @@ public class validate_participanthomepage {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class validate_participanthomepage {
 			// Step1:Launch and logged into CSAS application..
 			participantHomeObj = new ParticipantHome().get();
 			// Step2:Querying for ID and GA_ID and performing search with ID  
-			if(Web.webdriver.getWindowHandles().size()==1){
+			if(Web.getDriver().getWindowHandles().size()==1){
 			//	sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
 			//			      GetParameterValue("web_reg_status"),"ID","GA_ID");
 				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),true,"ID","GA_ID");
@@ -458,8 +458,8 @@ public class validate_participanthomepage {
 	 */
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }

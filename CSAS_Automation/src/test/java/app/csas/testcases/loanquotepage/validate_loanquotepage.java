@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -40,7 +40,7 @@ public class validate_loanquotepage {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	/**
@@ -55,7 +55,6 @@ public class validate_loanquotepage {
 	 * Author:Souvik     Date : 05-04-16    
 	 * --------------------------------------------------------------------
 	 * </pre>
-	 * 
 	 * @param <br>
 	 *        CSAS Credential</br>
 	 */

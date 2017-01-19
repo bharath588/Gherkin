@@ -7,7 +7,8 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
+import net.sourceforge.htmlunit.corejs.javascript.ast.SwitchCase;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -39,7 +40,7 @@ public class validate_fundtofundtransfer {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class validate_fundtofundtransfer {
 	 * </pre>
 	 * 
 	 * @param <br>
-	 *        CSAS Credential</br>
+	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Fund_to_Fund_Confirm_Transfer(int itr,
@@ -79,28 +80,26 @@ public class validate_fundtofundtransfer {
 
 			fund2fund_Obj.NavToTrnsfrFundsPg();
 
-			// Step4: Cancel Fund to fund transfer..
-			if (Stock.GetParameterValue("TrasactionType").equalsIgnoreCase(
-					"Cancel")) {
+			switch (Stock.GetParameterValue("TrasactionType")) {
+			case "Cancel":
 				fund2fund_Obj.cancelTransferFromOptions();
-			} else {
-
-				// Step4: Validating default investment option
-				fund2fund_Obj.ChkDefInvstOpt();
-
-				// Step5: Enter Transfer from fund val
+				break;
+			case "Complete":
+				// Step4: Enter Transfer from fund val
 				fund2fund_Obj.EnterTransferFromFundVal(Stock
 						.GetParameterValue("TransferFromVal"));
-
-				// Step6: Enter Transfer to fund val
+				// Step5: Enter Transfer to fund val
 				fund2fund_Obj.EnterTransferToFundVal(Stock
 						.GetParameterValue("TransferToVal"));
-
-				// Step7: Validating confirmation page
+				// Step6: Validating confirmation page
 				fund2fund_Obj.ConfirmFundTransfer();
-
-				// Step8: Validate fund to fund transfer complete page
+				// Step7: Validate fund to fund transfer complete page
 				fund2fund_Obj.validate_FundTransfer_Complete();
+				break;
+			default:
+				// Step8: Validating default investment option
+				fund2fund_Obj.ChkDefInvstOpt();
+				break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -121,9 +120,10 @@ public class validate_fundtofundtransfer {
 			}
 		}
 	}
-	
+
 	/**
 	 * -------------------------------------------------------------------
+	 * 
 	 * <pre>
 	 * TESTCASE:	
 	 * DESCRIPTION:	  
@@ -133,22 +133,23 @@ public class validate_fundtofundtransfer {
 	 * Author:Souvik    Date : 27-02-16    
 	 * --------------------------------------------------------------------
 	 * </pre>
-	 * @param <br>CSAS Credential</br>
+	 * 
+	 * @param <br>
+	 *            CSAS Credential</br>
 	 */
 	@Test(dataProvider = "setData")
 	public void Validate_Fund2Fund_Transfer_Restriction_Type(int itr,
 			Map<String, String> testdata) {
-
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			// Step1: Launch and logged into CSAS application.
 			participantHomeObj = new ParticipantHome().get();
-			
 
 			// Step2: Searching for a PPT using PPT ID
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-					participantHomeObj.getGAID_or_pptID_RestrictionType().get(0),
-					participantHomeObj.getGAID_or_pptID_RestrictionType().get(1));
+					participantHomeObj.getGAID_or_pptID_RestrictionType()
+							.get(0), participantHomeObj
+							.getGAID_or_pptID_RestrictionType().get(1));
 
 			participantHomeObj.cancelExistingFundTransfers();
 
@@ -163,20 +164,37 @@ public class validate_fundtofundtransfer {
 				fund2fund_Obj.cancelTransferFromOptions();
 			} else {
 
+				// Step 8: Verify greater prior day amount error message
 				// Step5: Validating default investment option
 				fund2fund_Obj.ChkDefInvstOpt();
-				if (Stock.GetParameterValue("isRestrictionChckBxSelected").equalsIgnoreCase("NO")) {
+
+				if (Stock.GetParameterValue("isRestrictionChckBxSelected")
+						.equalsIgnoreCase("NO")) {
 					// Step6: Enter Transfer from fund val
 					fund2fund_Obj.EnterTransferFromFundVal(Stock
 							.GetParameterValue("TransferFromVal"));
 					// Step7: Verify error message
 					fund2fund_Obj.verifyRestrictionTypeErrMsg();
-					
+
 				} else {
 					fund2fund_Obj.checkRestrictionType();
-					fund2fund_Obj.EnterTransferFromFundVal(Stock
-							.GetParameterValue("TransferFromVal"));
-					
+					switch (Stock.GetParameterValue("isErrMsg")) {
+					case "grtrPriordayBal":
+						fund2fund_Obj.enter$AmtGrtPriordayBal();
+						fund2fund_Obj.EnterTransferToFundVal(Stock
+								.GetParameterValue("TransferToVal"));
+						fund2fund_Obj.verifyErrMsg$AmtGrtPriordayBal();
+						break;
+					case "grtr100Perc":
+						fund2fund_Obj.EnterTransferFromPer(Stock
+								.GetParameterValue("TransferFromVal"));
+						fund2fund_Obj.verifyErrMsgPercentageGrtPriordayBal();
+						break;
+					default:
+						fund2fund_Obj.EnterTransferFromFundVal(Stock
+								.GetParameterValue("TransferFromVal"));
+						break;
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -208,8 +226,8 @@ public class validate_fundtofundtransfer {
 	 */
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }

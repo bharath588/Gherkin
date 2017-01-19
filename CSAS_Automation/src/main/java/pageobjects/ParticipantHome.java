@@ -10,7 +10,7 @@ import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -312,7 +312,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private WebElement menuCancelF2FLink;
 	
 	//@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[contains(text(),'EMPLOYER STOCK')]")
-	@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[@class = 'messageContent']")
+	//@FindBy(xpath = "//table[@id='table_messageHandlerMessage']//div[@class = 'messageContent']")
+	@FindBy(xpath = "//td[contains(text(),'Select Pending Transfer To Cancel')]")
 	private WebElement cancelFndTransferPgHeader;
 	
 	@FindBy(xpath = "//table[@id='table_workLayout']//table[@align='center']//input[@type='checkbox']")
@@ -400,19 +401,19 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	}
 
 	public ParticipantHome() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.webdriver.getTitle().contains("CSAS v12.03.2"));
+		Assert.assertTrue(Web.getDriver().getTitle().contains("CSAS v12.03.2"));
 	}
 
 	@Override
 	protected void load() {
 		try {
-			// Web.webdriver.get(Stock.getConfigParam("AppURL"));
-			Web.webdriver.get(Stock.getConfigParam("AppURL" + "_"
+			// Web.getDriver().get(Stock.getConfigParam("AppURL"));
+			Web.getDriver().get(Stock.getConfigParam("AppURL" + "_"
 					+ Stock.getConfigParam("TEST_ENV")));
 			/*
 			 * System.out.println(Stock.getConfigParam("AppURL" + "_" +
@@ -1015,12 +1016,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		boolean msgValidate = false;
 
 		initTempandOrderPINMsg();
-		if (Web.webdriver.getWindowHandles().size() == 1) {
+		if (Web.getDriver().getWindowHandles().size() == 1) {
 			Web.waitForElement(lnkOrderPIN);
 			Web.clickOnElement(lnkOrderPIN);
-			parentWindow = Web.webdriver.getWindowHandle();
-			for (String childWindow : Web.webdriver.getWindowHandles()) {
-				Web.webdriver.switchTo().window(childWindow);
+			parentWindow = Web.getDriver().getWindowHandle();
+			for (String childWindow : Web.getDriver().getWindowHandles()) {
+				Web.getDriver().switchTo().window(childWindow);
 			}
 
 		}
@@ -1094,10 +1095,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 							+ Stock.GetParameterValue("btnName").replaceAll(
 									"_", " ") + " is not displayed", true);
 		}
-		Web.webdriver.navigate().back();
+		Web.getDriver().navigate().back();
 		if (Web.isLastIteration()) {
-			Web.webdriver.close();
-			Web.webdriver.switchTo().window(parentWindow);
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
 		}
 	}
 
@@ -1756,7 +1757,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 											+ tempIndx
 											+ ")>td:nth-of-type("
 											+ colIndx + ")";
-									String balance = Web.webdriver
+									String balance = Web.getDriver()
 											.findElement(
 													By.cssSelector(webElement))
 											.getText().trim();

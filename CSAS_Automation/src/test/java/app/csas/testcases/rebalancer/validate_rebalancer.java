@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -32,7 +32,7 @@ public class validate_rebalancer {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	@Test(dataProvider = "setData")

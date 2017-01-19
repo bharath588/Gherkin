@@ -10,7 +10,7 @@ import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -29,7 +29,7 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 	@FindBy(xpath = "//*[@id='oCMenu_316'][contains(text(),'Participant Changes')]")
 	private WebElement menuPPTChanges;
 
-	@FindBy(xpath = ".//*[@id='oCMenu_327'][contains(text(),'Loan Quote')]")
+	@FindBy(xpath = ".//*[@id='oCMenu_11664'][contains(text(),'Loan Quote')]")
 	private WebElement menuLoanQuote;
 
 	@FindBy(xpath = "//*[@id='table_Loan Quote']//td[contains(text() , 'Loan Quote')]")
@@ -79,13 +79,21 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 	private String existingLoanTypeMsg = "The maximum available loan amount is VAL"
 			+ "Submitting a loan application through your employer to obtain your current vesting percentage may qualify you for a higher loan amount."
 			+ "The plan allows for:"
+			//+ "A General Purpose loan may be obtained for a term of 12 to 60 months."
 			+ "A General Purpose loan may be obtained for a term of 12 to 60 months."
+			+ "Note: A maximum of 5 quotes can be run and viewed at the same time.";
+	
+	private String existingLoanTypeMsg1 = "The maximum available loan amount is VAL"
+			+ "Submitting a loan application through your employer to obtain your current vesting percentage may qualify you for a higher loan amount."
+			+ "The plan allows for:"
+			//+ "A General Purpose loan may be obtained for a term of 12 to 60 months."
+			+ "A General Purpose loan may be obtained for a term of 1 to 5 years."
 			+ "Note: A maximum of 5 quotes can be run and viewed at the same time.";
 
 	LoadableComponent<?> parent;
 
 	public LoanQuote() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
@@ -174,7 +182,11 @@ public class LoanQuote extends LoadableComponent<LoanQuote> {
 			existingLoanMsg = existingLoanTypeText.getText()
 					.replaceAll("\\$.*.", "VAL").replaceAll("\\n", "")
 					.replaceAll(" ", "");
-			if (existingLoanMsg.equals(existingLoanTypeMsg.replaceAll(" ", ""))) {
+			existingLoanMsg = existingLoanTypeText.getText()
+					.replaceAll("\\$.*.", "VAL").replaceAll("\\n", "")
+					.replaceAll(" ", "");
+			if (existingLoanMsg.equals(existingLoanTypeMsg.replaceAll(" ", ""))
+					|| existingLoanMsg.equals(existingLoanTypeMsg1.replaceAll(" ", ""))) {
 				return true;
 			}
 		}

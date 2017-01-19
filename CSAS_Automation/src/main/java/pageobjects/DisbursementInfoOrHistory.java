@@ -14,7 +14,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -140,7 +140,7 @@ public class DisbursementInfoOrHistory extends
 	LoadableComponent<?> parent;
 
 	public DisbursementInfoOrHistory() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override

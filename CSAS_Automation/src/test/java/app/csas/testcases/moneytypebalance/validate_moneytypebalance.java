@@ -7,7 +7,7 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -39,7 +39,7 @@ public class validate_moneytypebalance {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 	
 	/**
@@ -309,8 +309,8 @@ public class validate_moneytypebalance {
 	 */
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }
