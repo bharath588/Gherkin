@@ -1095,5 +1095,8 @@ public class Web {
             return fieldTextValue;
      }
 
+     public static void removeWebDriverInstance(){
+    	 multiDriver.set(null);
+     }
 
 }
