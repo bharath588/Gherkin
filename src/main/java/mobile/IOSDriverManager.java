@@ -67,6 +67,13 @@ public class IOSDriverManager {
 
 				 ArrayList<String> list =	  IOSDeviceConfiguration.getIOSUDID();
 				 
+//				 if (!Reader.getConfigParam("DEVICE").equalsIgnoreCase("RealDevice")){
+//					 driver = new IOSDriver<>(new URL(sURL), iosNative());
+//				 }
+//				 
+//				 else{
+				 
+				 
 				 if(list == null){
 					 Mobile.figlet("No Devices Connected");
 			            System.exit(0);
@@ -85,15 +92,22 @@ public class IOSDriverManager {
 				   System.out.println("****************Device*************" + deviceName);
 				   
 				 try {
-				//	IOSDeviceConfiguration.closeAllIProxy();
+						if (Reader.getConfigParam("APPIUMSEVER").equalsIgnoreCase("PROGRAM")) {
+					IOSDeviceConfiguration.closeAllIProxy();
 					appiumMan.appiumServerForIOS(deviceName,iosDevice.startIOSWebKit(deviceName));
+					driver = new IOSDriver<>(appiumMan.getAppiumUrl(), iosNative());
+						}
+						else{
+							driver = new IOSDriver<>(new URL(sURL), iosNative());
+						}
 				} catch (Exception e) {					
 					System.out.println("Not able to Initialize Appium deriver");
 					e.printStackTrace();
 					return driver;
 				}
+			//	 }
 				 
-				driver = new IOSDriver<>(appiumMan.getAppiumUrl(), iosNative());
+			
 
 			} else if (Reader.getConfigParam("MOBILE_PLATFORM")
 					.equalsIgnoreCase("andriod")) {

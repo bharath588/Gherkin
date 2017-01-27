@@ -32,7 +32,7 @@ public class IOSDeviceConfiguration {
 	    
 	  
 	  public static void main(String a[]) throws Exception{
-		System.out.println( getDeviceName("bd4f254c81b0ca007f813a4a59f5433dce8a9446"));
+		//System.out.println( getDeviceName("bd4f254c81b0ca007f813a4a59f5433dce8a9446"));
 //		  ArrayList<String> list =	  getIOSUDID();
 //		  for (String string : list) {
 //			  if(checkiOSDevice(string))
@@ -43,8 +43,7 @@ public class IOSDeviceConfiguration {
 	//		new   IOSDeviceConfiguration().setIOSWebKitProxyPorts("bd4f254c81b0ca007f813a4a59f5433dce8a9446");
 //		new   IOSDeviceConfiguration().startIOSWebKit("bd4f254c81b0ca007f813a4a59f5433dce8a9446");
 //		new IOSDeviceConfiguration().destroyIOSWebKitProxy();
-	    Map<String, String> iOSdevices = new HashMap<String, String>();
-		  iOSdevices = new   IOSDeviceConfiguration().getIOSUDIDHash();
+		  closeAllIProxy();
 		  
 	  }
 	  
@@ -97,13 +96,25 @@ public class IOSDeviceConfiguration {
 	        }
 	    }
 	    
-	    public static void closeAllIProxy()throws IOException, InterruptedException {
-	    	   String process = "ps -ax|grep -i \"iproxy\"|grep -v grep";
-	    	    Process p2 = Runtime.getRuntime().exec(process);
-	            BufferedReader r = new BufferedReader(new InputStreamReader(p2.getInputStream()));
-	            String command =  r.readLine()+"|awk '{print \"kill -9 \" $1}'|sh";
-	            Runtime.getRuntime().exec(command);
+	    public static void closeAllIProxy()throws IOException, InterruptedException {	    	 
+	    	    String[] args = new String[] {"/bin/bash", "-c", "ps -ax | grep -i '8100'|grep -v grep|awk '{print \"kill -9 \" $1}'|sh"};
+	    	    Process proc;
+	    	    try{
+	        	   String[] arg2 = new String[] {"/bin/bash", "-c", "ps -ax | grep -i '8100'|grep -v grep"};
+	        	    proc = new ProcessBuilder(arg2).start();   
+	        	    BufferedReader r = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+	        	    if(r.readLine() != null){
+	        	    proc = new ProcessBuilder(args).start();     
+	        	    }
+	           
+	           }catch(Exception e){
+	    	    
+	    	        
+	           }
+	        
 	    }
+	    
+	    
 
 	  public int getPid(Process process) {
 

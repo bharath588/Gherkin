@@ -19,9 +19,10 @@ public class CommandPrompt {
     private List<String> cmd = new ArrayList<String>();
     ProcessBuilder builder;
     public static void main(String s[]) throws InterruptedException, IOException{
-    	String[] cmd = {"ps -ax" };	
-    	   String process = "ps -ax|grep -i \"iproxy\"|grep -v grep";
-    	System.out.println(new CommandPrompt().runCommand1("ps -ax|grep -i 'iproxy'"));
+    	String[] cmd = {"sh ","ps -ax","grep -i '8100'" };	
+    	   String process = "ps -ax|grep -i \"8100\"|grep -v grep";
+   	System.out.println(new CommandPrompt().runCommand(cmd));
+ 
     }
 
 
@@ -42,6 +43,7 @@ public class CommandPrompt {
         return allLine;
 
     }
+
     
     public String runCommand1(String command) throws InterruptedException, IOException {
         p = Runtime.getRuntime().exec(command);

@@ -33,6 +33,8 @@ import com.github.lalyos.jfiglet.FigletFont;
 
 public class Mobile {
 	
+	
+	
 	public static boolean mobilePlatform = false;
 	//public static AppiumDriver<MobileElement> appiumDriver;
 
@@ -159,6 +161,48 @@ public class Mobile {
 
 	}
 
+	/*@Author :Siddartha 
+	 * @Date = 18/Jan /2017
+	 * This method will verify expected text with actual text.
+	 */
+	
+	public static void  verifyText(String locator,String sExpText){		
+		IOSElement ele = findElement(locator);
+		if (ele != null) {
+			String sActText = ele.getText();
+		  if(sActText.contains(sExpText))
+			  Reporter.logEvent(Status.PASS, "Found Text :"+sExpText,"", false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText +"But Actual was :"+sActText,"", true);
+		}
+	}
+	
+	
+	
+	public static void  verifyElementEnable(String locator){		
+		IOSElement ele = findElement(locator);
+		if (ele != null) {
+		  if(ele.isEnabled())
+			  Reporter.logEvent(Status.PASS, "Element was enable","", false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Element is not enable","", true);
+		}
+	
+		
+  		
+  	}
+	public static void  verifyElementISDisable(String locator){	
+		IOSElement ele = findElement(locator);
+		if (ele != null) {
+		  if(!ele.isEnabled())
+			  Reporter.logEvent(Status.PASS, "Element is disable","", false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Element is not disable","", true);
+		}
+	
+		
+  		
+  	}
 	// pressed x axis & y axis of seekbar and move seekbar till the end
 
 	public static void slider(String locator, int toPercentage) {
@@ -208,6 +252,10 @@ public class Mobile {
 			}
 		} 
 		return flag;
+		
+	}
+	public static IOSElement findElementBy(By link){
+		return (IOSElement) getDriver().findElement(link);
 	}
 	
 	public static boolean assertElementPresent(By link) {
@@ -311,6 +359,12 @@ public class Mobile {
 
 	public static void hideKeyboard() {
 		getDriver().getKeyboard().pressKey("\n");
+		try {
+			wait(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
