@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -43,7 +43,7 @@ public class logintestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);	
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(),testCase.getName());	
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class logintestcases {
 			// same
 			// page-GWRS
 
-			Web.webdriver.get(Stock.GetParameterValue("ForceLoginTrueURL"));
+			Web.getDriver().get(Stock.GetParameterValue("ForceLoginTrueURL"));
 			isUsernameFieldDisplayed = Web.isWebElementDisplayed(login, "FORCELOGIN USERNAME");
 			
 			if(isUsernameFieldDisplayed){
@@ -150,7 +150,7 @@ public class logintestcases {
 			// to
 			// Empower site and verify modal window
 
-			Web.webdriver.get(Stock.GetParameterValue("ForceLoginFalseURL"));
+			Web.getDriver().get(Stock.GetParameterValue("ForceLoginFalseURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
 			
 			if(isGWRSLogoDisplayed){
@@ -171,7 +171,7 @@ public class logintestcases {
 
 
 			// Step-3:Check for forcelogin with dummyvalues
-			Web.webdriver.get(Stock.GetParameterValue("ForceLoginDummyURL"));
+			Web.getDriver().get(Stock.GetParameterValue("ForceLoginDummyURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
 
 			if(isGWRSLogoDisplayed){
@@ -189,7 +189,7 @@ public class logintestcases {
 				Reporter.logEvent(Status.FAIL, "Check if the Login Frame is displayed",
 						"Login frame is not displayed",true);
 			}		
-			Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
+			Web.getDriver().get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -232,6 +232,7 @@ public class logintestcases {
 			login = new LoginPage().get();
 			
 		login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+		Thread.sleep(4000);
 			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -281,7 +282,7 @@ public class logintestcases {
 					"Verify the pre login Header and footer links", false);
 			login = new LoginPage().get();
 			login.checkHeaderLinkPreLogin();
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 			login.checkFooterLinkPreLogin();			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -353,10 +354,13 @@ public class logintestcases {
 			}
 		}
 	}
+	
+	/*@Test(dataProvider = "setData")
+	public void */
 
 	@AfterSuite
 	public void DriverQuite() {
-//		Web.webdriver.close();
-//		Web.webdriver.quit();
+//		Web.getDriver().close();
+//		Web.getDriver().quit();
 	}
 }

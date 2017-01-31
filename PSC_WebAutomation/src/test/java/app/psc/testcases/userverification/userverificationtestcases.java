@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -33,7 +33,7 @@ public class userverificationtestcases {
 	@Parameters({"browser"})
 	public void getBrowser(String browser)
 	{
-		Web.webdriver = Web.getWebDriver(browser);
+		Web.getDriver() = Web.getWebDriver(browser);
 	}*/
 	@BeforeClass
 	public void ReportInit(){		
@@ -48,7 +48,7 @@ public class userverificationtestcases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);	
+				.getName(), testCase.getName());	
 	}
 	
 	/**
@@ -87,14 +87,14 @@ public class userverificationtestcases {
 			Web.clickOnElement(userverification, "CANCEL");
 			// Verify if the user id displayed same as logged in id
 			
-			if(Web.isWebElementDisplayed(login, "LOGIN FRAME")){
+			if(Web.isWebElementDisplayed(login, "LOGIN FRAME",true)){
 				Reporter.logEvent(Status.PASS, "Check if user is navigated to splash screen when it clicks cancel",
 						"The user is navigated to splash screen when cancel is clicked", false);
 			}else{
 				Reporter.logEvent(Status.FAIL, "Check if user is navigated to splash screen when it clicks cancel",
 						"The user is not navigated to splash screen when cancel is clicked", true);
 			}
-			userverification.get();
+			userverification = new UserVerificationPage().get();
 			userverification.verifyUserIdDisplayed(Stock.GetParameterValue("username"));
 			// Enter Valid user secondary answer and email
 			userverification.performVerification(
@@ -213,8 +213,8 @@ public class userverificationtestcases {
 			
 			userverification = new UserVerificationPage();
 			home = new HomePage();			
-			if(!checkReLoginStats && !Web.webdriver.getWindowHandle().isEmpty() 
-					              &&  Web.webdriver.getCurrentUrl().contains("http")){
+			if(!checkReLoginStats && !Web.getDriver().getWindowHandle().isEmpty() 
+					              &&  Web.getDriver().getCurrentUrl().contains("http")){
 				//If already in Jump Page
 				if(Web.isWebElementDisplayed(home,"JUMP_PAGE_NXTGEN_LINK",false)){
 					Web.clickOnElement(home,"JUMP_PAGE_NXTGEN_LINK");
@@ -265,7 +265,7 @@ public class userverificationtestcases {
 	
 	@AfterSuite
 	public void DriverQuite() {
-		Web.webdriver.quit();
+		Web.getDriver().quit();
 	}
 
 }

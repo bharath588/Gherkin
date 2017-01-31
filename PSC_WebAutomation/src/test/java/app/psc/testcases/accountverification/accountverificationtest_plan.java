@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -42,7 +42,7 @@ public class accountverificationtest_plan {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 	/**
 	 * <pre>
@@ -168,7 +168,7 @@ public class accountverificationtest_plan {
 	@Test(dataProvider = "setData")
 	public void TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input(int itr,
 			Map<String, String> testdata) {
-		Stock.globalTestdata = testdata;
+	//	Stock.globalTestdata = testdata;
 		try {
 			userverification = new UserVerificationPage();
 			accountverificationpage = new AccountVerificationPage();
@@ -219,8 +219,8 @@ public class accountverificationtest_plan {
 
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }

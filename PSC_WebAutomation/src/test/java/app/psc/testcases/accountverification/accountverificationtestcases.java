@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -45,7 +45,7 @@ public class accountverificationtestcases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	/**
@@ -573,8 +573,8 @@ public class accountverificationtestcases {
 
 	@AfterSuite
 	public void DriverQuite() {
-		lib.Web.webdriver.close();
-		lib.Web.webdriver.quit();
+		lib.Web.getDriver().close();
+		lib.Web.getDriver().quit();
 	}
 
 }

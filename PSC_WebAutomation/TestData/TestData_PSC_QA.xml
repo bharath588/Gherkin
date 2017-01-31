@@ -17,7 +17,7 @@
 				<parameter name="username" value="" />
 				<parameter name="password" value="" />
 				<parameter name="errorMessages"
-					value="User ID is required.Password is required." />
+					value="User ID is required.&#10;Password is required." />
 			</Iteration>
 			<Iteration Execution="Yes" id="4">
 				<parameter name="username" value="1USER" />
@@ -82,7 +82,7 @@
 	</Module>
 	<Module name="userverification">
 		<TestCase
-			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid">
+			name="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Valid">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="7ISIS" />
 				<parameter name="password" value="testing1" />
@@ -91,16 +91,14 @@
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+			name="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="" />
 				<parameter name="expectedErrorMessage"
-					value="Email is Required
-
-Security Answer is Required" />
+					value="Email is Required&#10;&#10;Security Answer is Required" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="1ISIS" />
@@ -129,9 +127,7 @@ Security Answer is Required" />
 				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
 				<parameter name="UserSecondaryAns" value="invalid" />
 				<parameter name="expectedErrorMessage"
-					value="Email is invalid
-
-If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.
+					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.
 " />
 			</Iteration>
 		</TestCase>
@@ -264,9 +260,7 @@ If you have forgotten your security answer, please contact Plan Technical Suppor
 				<parameter name="thirdDrpdwnAns" value="test" />
 				<parameter name="regUsername" value="" />
 				<parameter name="expectedErrorMessage"
-					value="Registered Username is Required
-
-The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
+					value="Registered Username is Required&#10;&#10;The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
 				<parameter name="CurrentPassword" value="testing1" />
 				<parameter name="newPassword" value="Testing1" />
 				<parameter name="confirmPassword" value="Testing1" />
@@ -315,11 +309,7 @@ The Registered Username format is invalid. A Registered Username can contain bot
 				<parameter name="newPassword" value="" />
 				<parameter name="confirmPassword" value="" />
 				<parameter name="expectedErrorMessage"
-					value="Current password is required.
-
-New Password is required
-
-Confirm Password is required" />
+					value="Current password is required.&#10;&#10;New Password is required&#10;&#10;Confirm Password is required" />
 			</Iteration>
 			<Iteration Execution="Yes" id="3">
 				<parameter name="username" value="5116M" />

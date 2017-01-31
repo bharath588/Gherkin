@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import pageobjects.employeesearch.EmployeeSearch;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 import core.framework.Globals;
@@ -38,7 +38,7 @@ public class employeesearchtestcases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-								.getName(), Globals.GC_MANUAL_TC_NAME);
+								.getName(), testCase.getName());
 	}
 
 	/**
@@ -840,8 +840,8 @@ public class employeesearchtestcases {
 
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }

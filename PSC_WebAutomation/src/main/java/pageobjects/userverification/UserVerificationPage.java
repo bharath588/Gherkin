@@ -9,7 +9,7 @@ import org.testng.Assert;
 import pageobjects.login.LoginPage;
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Web;
 import lib.Stock;
 
@@ -43,17 +43,17 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 
 	public UserVerificationPage() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	public UserVerificationPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		try {
 			Assert.assertTrue(Web.isWebElementDisplayed(txtUserVerificationEmail));
 		} catch (Exception e) {			
@@ -139,7 +139,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	public void performVerification(String[] userVerfiData) {
 		new UserVerificationPage();	
 		
-		if (Web.isWebElementDisplayed(txtUserVerificationEmail)) {			
+		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
 			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
@@ -180,7 +180,14 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	 */
 
 	public String getErrorMessageText() {
-		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox);
+		try{
+		if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("IE"))
+			Web.waitForPageToLoad(Web.getDriver());
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox,true);
 
 		if (isElementPresent)
 			return this.errorMsgBox.getText();

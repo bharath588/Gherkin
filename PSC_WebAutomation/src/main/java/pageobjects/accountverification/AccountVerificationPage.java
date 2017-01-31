@@ -16,7 +16,9 @@ import org.testng.Assert;
 import lib.DB;
 import lib.Reporter;
 import lib.Web;
-import lib.Reporter.Status;
+
+import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
@@ -102,12 +104,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 
 	public AccountVerificationPage() {
 		this.parent = new LoginPage();
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	public AccountVerificationPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
@@ -120,7 +122,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		LoginPage login = (LoginPage) this.parent;
 		this.parent.get();
 		try {
-			login.submitLoginCredentials(new String[]{Stock.globalTestdata.get("USERNAME"), Stock.globalTestdata.get("PASSWORD")});
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("USERNAME"), Stock.GetParameterValue("PASSWORD")});
 			Web.waitForElement(empowerPscLogo);
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Login for PSC failed : " + e.getMessage());
@@ -197,8 +199,11 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * </pre>
 	 * 
 	 * @return
+	 * @throws InterruptedException 
 	 */
-	public String getErrorMessageText() {
+	public String getErrorMessageText() throws InterruptedException {
+		if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("IE"))
+			Thread.sleep(5000);
 		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox);
 		if (isElementPresent)
 			return this.errorMsgBox.getText();
@@ -224,12 +229,14 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * @param ansFirstDropdown
 	 * @param ansSecondDropdown
 	 * @param ansThirdDropdown
+	 * @throws InterruptedException 
 	 */
-	public void answerSecurityQuestions(String ansFirstDropdown, String ansSecondDropdown, String ansThirdDropdown) {
+	public void answerSecurityQuestions(String ansFirstDropdown, String ansSecondDropdown, String ansThirdDropdown) throws InterruptedException {
 		Web.setTextToTextBox(txtFirstDropdownBox, ansFirstDropdown);
 		Web.setTextToTextBox(txtSecondDropdownBox, ansSecondDropdown);
 		Web.setTextToTextBox(txtThirdDropdownBox, ansThirdDropdown);
 		Web.clickOnElement(btnNext);
+		Thread.sleep(2000);
 	}
 
 	/**
@@ -383,6 +390,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * questions equal
 	 */
 	public void selectSameSecurityQuestions() {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dropDownSelect = new Select(drpdownFirstSecurityQues);
 		dropDownSelect.selectByIndex(2);
 		dropDownSelect = new Select(drpdownSecondSecurityQues);

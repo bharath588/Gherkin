@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -50,17 +50,17 @@ public class HomePage extends LoadableComponent<HomePage>{
 		this.ifUserOrAccntVerificationMandate = performVerification;
 		this.userData = userData; 
 		this.userVeriData = new String[2];		
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 	
 	public HomePage(){
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 	
 	
 	@Override
 	protected void isLoaded() throws Error {	
-	    if(!Web.isWebElementDisplayed(weGreeting)){
+	    if(!Web.isWebElementDisplayed(weGreeting,true)){
 	    	throw new AssertionError("Plan service center landing page not loaded.");
 	    }else{
 	    //	Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
@@ -79,10 +79,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}else{
 				//Performing Login
 				Object login = this.parent.getClass().newInstance(); 				
-				Web.webdriver.switchTo().frame(Web.returnElement(login,"LOGIN FRAME"));
+				Web.getDriver().switchTo().frame(Web.returnElement(login,"LOGIN FRAME"));
 				Web.waitForElement(login,"USERNAME");
 				Web.waitForElement(login,"PASSWORD");
-				Web.webdriver.switchTo().defaultContent();
+				Web.getDriver().switchTo().defaultContent();
 				invokeMethod = this.parent.getClass().getDeclaredMethod("submitLoginCredentials", String[].class);
 				invokeMethod.invoke(this.parent.getClass().newInstance(),new Object[]{userData});
 				loginObj.waitForSuccessfulLogin();
@@ -156,18 +156,18 @@ public class HomePage extends LoadableComponent<HomePage>{
 						//Thread.sleep(2000);
 											
 						if(Web.isWebElementDisplayed(frmModalWindow,true)){
-							Web.webdriver.switchTo().frame(frmModalWindow);
+							Web.getDriver().switchTo().frame(frmModalWindow);
 							//testData = TestDataContainer.GetParameterValue("link_Footer"+(iLoopCnt+1)); 
 							testData=Stock.GetParameterValue("link_Footer"+(iLoopCnt+1));
 							
 							if(testData.equalsIgnoreCase("PSCUserAuthorizationForm")){
-								Web.webdriver.switchTo().defaultContent();	
+								Web.getDriver().switchTo().defaultContent();	
 								textMatch = Web.VerifyPartialText(testData, frmModalWindow.getAttribute("src"),true);
 								modalWindowHeaderText = "PSC User Authorization Form";
 							}else{
 								textMatch = Web.VerifyPartialText(testData, weModalWindowHeadertxt.getText(),true);
 								modalWindowHeaderText = weModalWindowHeadertxt.getText();
-								Web.webdriver.switchTo().defaultContent();								
+								Web.getDriver().switchTo().defaultContent();								
 							}							
 							linkModalClose.click();						
 						}else{
@@ -191,7 +191,7 @@ public class HomePage extends LoadableComponent<HomePage>{
     public void validate_if_homepage_loaded(String ifSingleSiteUser) throws Exception {
         if(ifSingleSiteUser.equalsIgnoreCase("false")){
                if(Web.isWebElementDisplayed(urlJumpPage, true)){
-                     urlJumpPage.click();
+            	  Web.clickOnElement(urlJumpPage);
                      Web.waitForElement(weGreeting);
                      isLoaded();
                }else{

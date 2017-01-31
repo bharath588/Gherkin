@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 import org.testng.annotations.AfterSuite;
@@ -39,7 +39,7 @@ public class accountverification_existingusr {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	
@@ -399,7 +399,7 @@ public class accountverification_existingusr {
 
 	@AfterSuite
 	public void DriverQuite() {
-		Web.webdriver.quit();
+		Web.getDriver().quit();
 	}
 
 }

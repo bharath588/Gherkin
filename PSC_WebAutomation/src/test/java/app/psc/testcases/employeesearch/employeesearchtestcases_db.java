@@ -2,12 +2,13 @@ package app.psc.testcases.employeesearch;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -34,7 +35,7 @@ public class employeesearchtestcases_db {
 	@Parameters({"browser"})
 	public void getBrowser(String browser)
 	{
-		Web.webdriver = Web.getWebDriver(browser);
+		Web.getDriver() = Web.getWebDriver(browser);
 	}
 	*/
 	@BeforeClass
@@ -50,7 +51,7 @@ public class employeesearchtestcases_db {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	/**
@@ -554,8 +555,8 @@ public class employeesearchtestcases_db {
  */
 	@Test(dataProvider = "setData")
 	public void TC027_Verify_termed_employeedetails_are_displayed(int itr,
-			Map<String, String> testdata) {
-		Stock.globalTestdata = testdata;
+		HashMap<String, String> testdata) {
+	//	Stock.globalTestdata = testdata;
 		String employeeId = "";
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -613,7 +614,7 @@ public class employeesearchtestcases_db {
 			int itr, Map<String, String> testdata) {
 		String planNumber = "";
 		ResultSet tempResultSet;
-		Stock.globalTestdata = testdata;
+	//	Stock.globalTestdata = testdata;
 		String employeeId = "";
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -735,8 +736,8 @@ public class employeesearchtestcases_db {
 
 	@AfterSuite
 	public void cleanUpSession() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 }

@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+
+import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 import core.framework.ThrowException;
@@ -31,13 +33,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement lnkForgotPassword;
 	@FindBy(css = "a[href*='register']")
 	private WebElement btnRegister;
-	@FindBy(css = "footer[class='page-footer'] div[class='nav-disclosure'] ul li")
+	@FindBy(css = "footer div[role='navigation'] ul li")
 	private List<WebElement> weFooterLinkListPreLogin;
 	@FindBy(css = "div[class='col-sm-6 col-md-5 no-pad-right'] span[class='tagline text-uppercase']")
 	private WebElement wePSCHeader;
 	@FindBy(css = "div[class='breadcrumbs'] strong")
 	private WebElement wePSCBreadCrum;
-	@FindBy(css = "div[class='breadcrumbs'] a")
+	/*@FindBy(css = "div[class='breadcrumbs'] a")
+	private WebElement linkPSCBreadCrumHome;*/
+	@FindBy(css = "div[class='container'] a")
 	private WebElement linkPSCBreadCrumHome;
 	@FindBy(css = "iframe[id='mpwr_login']")
 	private WebElement frmLogin;
@@ -70,17 +74,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private List<String> getFooterLinkList = null;
 
 	public LoginPage() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertEquals(Web.webdriver.getTitle(), "Empower Retirement - Plan Service Center");
+		Assert.assertEquals(Web.getDriver().getTitle(), "Empower Retirement - Plan Service Center");
 	}
 
 	@Override
 	protected void load() {
-		Web.webdriver.get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));	
+		Web.getDriver().get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));	
 	}
 
 	/**
@@ -152,15 +156,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 * @throws InterruptedException
 	 */
 	public void submitLoginCredentials(String[] loginData) {
-		Web.webdriver.switchTo().frame(frmLogin);
+		Web.getDriver().switchTo().frame(frmLogin);
 		// common.webDriver.switchTo().frame(frmLogin);
 		Web.setTextToTextBox(this.txtUserName, loginData[0]);
 		Web.setTextToTextBox(this.txtPassword, loginData[1]);
 		Web.clickOnElement(this.btnLogin);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		// driver.switchTo().defaultContent();
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			ThrowException.Report(TYPE.INTERRUPTED, "Exception occurred for thread sleep");
 		}
@@ -199,7 +203,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 */
 	public void checkHeaderLinkPreLogin() {
 		checkHeaderFooterLink(weHeaderLinkListPreLogin, "link_Header");
-		Web.webdriver.navigate().back();
+		Web.getDriver().navigate().back();
 	}
 
 	/**
@@ -221,8 +225,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		boolean textMatch = false;
 		try {
 			new LoginPage();
-			Web.webdriver.switchTo().frame(frmLogin);			
-			textMatch = Web.VerifyPartialText(errorMsg, wePreLoginError.getText().replace("\n", ""), true);
+			Web.getDriver().switchTo().frame(frmLogin);			
+			textMatch = Web.VerifyPartialText(errorMsg, wePreLoginError.getText(), true);
 		
 			if(textMatch){
 				Reporter.logEvent(Status.PASS, "Check if the appropiate error displayed",
@@ -231,7 +235,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				Reporter.logEvent(Status.FAIL, "Check if the appropiate error displayed",
 						"Failed to display expected error message", true);
 			}		
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -274,18 +278,19 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				Thread.sleep(500);
 				if (Web.isWebElementDisplayed(linkObjList.get(iLoopCnt).findElement(By.cssSelector("a")), true)) {
 					Web.clickOnElement((linkObjList.get(iLoopCnt).findElement(By.cssSelector("a"))));
+					Thread.sleep(3000);
 				}
 
 				if ((testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")) {
-					String winHandleBefore = Web.webdriver.getWindowHandle();
-					for (String winHandle : Web.webdriver.getWindowHandles()) {
-						Web.webdriver.switchTo().window(winHandle);
-						currentURL = Web.webdriver.getCurrentUrl();
+					String winHandleBefore = Web.getDriver().getWindowHandle();
+					for (String winHandle : Web.getDriver().getWindowHandles()) {
+						Web.getDriver().switchTo().window(winHandle);
+						currentURL = Web.getDriver().getCurrentUrl();
 					}
-					Web.webdriver.close();
-					Web.webdriver.switchTo().window(winHandleBefore);
+					Web.getDriver().close();
+					Web.getDriver().switchTo().window(winHandleBefore);
 				} else {
-					currentURL = Web.webdriver.getCurrentUrl();
+					currentURL = Web.getDriver().getCurrentUrl();
 				}
 
 				// Verification against redirected URLs
@@ -315,12 +320,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	{
 		if(Web.isWebElementDisplayed(frmLogin))
 		{
-		Web.webdriver.switchTo().frame(frmLogin);
+		Web.getDriver().switchTo().frame(frmLogin);
 		do
 		{
 		Thread.sleep(3000);	
 		}while(Web.isWebElementDisplayed(loginSpinner));
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 }

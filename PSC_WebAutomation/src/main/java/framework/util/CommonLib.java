@@ -58,7 +58,7 @@ public class CommonLib {
 						Thread.sleep(500);
 						Web.setTextToTextBox(
 								parentNode.findElement(By.id(colNm)),
-								Stock.globalTestdata.get(colNm));
+								Stock.GetParameterValue(colNm));
 					} else if (parentNode.findElement(By.id(colNm))
 							.getAttribute("type").equals("radio")) {
 						Thread.sleep(500);
@@ -70,7 +70,7 @@ public class CommonLib {
 							.id(colNm)));
 					for (WebElement opt : select.getOptions()) {
 						if (Web.VerifyPartialText(
-								Stock.globalTestdata.get(colNm), opt.getText(),
+								Stock.GetParameterValue(colNm), opt.getText(),
 								true)) {
 							opt.click();
 							break;

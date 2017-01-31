@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -141,12 +141,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	List<String> actualListofElements;
 
 	public EmployeeSearch() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
 	protected void isLoaded() throws Error {
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
 	}
 
@@ -162,8 +162,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Check if the user has landed on homepage",
 					"The user has landed on homepage", true);
+			//actions = new Actions(Web.getDriver());
+			//actions.moveToElement(tabEmployees).click();
+			//actions.click();
 			Web.clickOnElement(tabEmployees);
-			actions = new Actions(Web.webdriver);
+			Web.waitForElement(drpdwnSearchEmployee);
+			actions = new Actions(Web.getDriver());
 			actions.moveToElement(linkProfile);
 			actions.build().perform();
 
@@ -233,14 +237,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeBySSN(String SSN) throws InterruptedException {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		Thread.sleep(2000);
-		btnGoEmployeeSearch.click();
+		Web.clickOnElement(btnGoEmployeeSearch);
+		//btnGoEmployeeSearch.click();
 		Thread.sleep(2500);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		dismissErrorBox();
 	}
 
@@ -251,11 +256,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public boolean isSearchResultsDisplayed() throws InterruptedException {
 		boolean isSearchttableDisplayed;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Thread.sleep(5000);
 		isSearchttableDisplayed = Web
-				.isWebElementDisplayed(searchResultsTablerow);
-		Web.webdriver.switchTo().defaultContent();
+				.isWebElementDisplayed(searchResultsTablerow,true);
+		Web.getDriver().switchTo().defaultContent();
 		return isSearchttableDisplayed;
 	}
 
@@ -266,14 +271,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeByName(String Name) throws InterruptedException {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Name");
 		Web.setTextToTextBox(txtSearchbox, Name);		
 		Thread.sleep(2000);
 		btnGoEmployeeSearch.click();
 		Thread.sleep(2500);		
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	/**
 	 * This method used to search the employee by EmployeeID
@@ -281,14 +286,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeByEmployeeId(String EmployeeID) throws InterruptedException {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Employee ID");
 		Web.setTextToTextBox(txtSearchbox, EmployeeID);
 		Thread.sleep(2000);
 		btnGoEmployeeSearch.click();	
 		Thread.sleep(2500);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	/**
@@ -297,13 +302,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public String getErrorMessageTextforInvalidSearch() {
 		String errorText;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		if (Web.isWebElementDisplayed(errortxtSearchResults)) {
 			errorText = errortxtSearchResults.getText();
 		} else {
 			errorText = "";
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return errorText;
 	}
 
@@ -406,7 +411,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void navigateToEmployeeTab() throws InterruptedException {
 		Web.clickOnElement(tabEmployees);
 		Thread.sleep(2000);
-		actions = new Actions(Web.webdriver);
+		actions = new Actions(Web.getDriver());
 		actions.moveToElement(linkProfile);
 		actions.build().perform();
 		Thread.sleep(2000);
@@ -418,7 +423,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	
 	public void searchByDivision() throws InterruptedException {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Division");
 		if (Web.isWebElementDisplayed(tableDivresults)) {
@@ -435,7 +440,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"The employee details are polpulated for the selected diviosion",
 					false);
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 	/**
 	 * This method used to search the employee by Participant ID
@@ -443,7 +448,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchByParticipantID(String pptID) throws InterruptedException {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Participant ID");
 		Web.setTextToTextBox(txtSearchbox, pptID);
@@ -454,7 +459,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		btnGoEmployeeSearch.click();		
 		Thread.sleep(2500);		
-		lib.Web.webdriver.switchTo().defaultContent();
+		lib.Web.getDriver().switchTo().defaultContent();
 	}
 	/**
 	 * This method converts the List of WebElements to List of string
@@ -491,7 +496,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @return
 	 */
 	public boolean checkIfduplicateExists() {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		boolean isDuplateRowFound = false;
 		listSSN = getMultipleWebElementstoListofStrings(searchResultsSSNMItable);
 		setSSN = new TreeSet<>(listSSN);
@@ -500,7 +505,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} else {
 			isDuplateRowFound = false;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return isDuplateRowFound;
 	}
 
@@ -512,10 +517,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division" ,"--------------------","Name - all plans","SSN - all plans"};
+				"Participant ID", "Division","--------------------","Name - all plans","SSN - all plans"};
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.getOptions();
 		for (WebElement tempWebElement : select.getOptions()) {
@@ -526,7 +531,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} else {
 			areDropdownOptionsSame = false;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return areDropdownOptionsSame;
 	}
 
@@ -536,7 +541,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void verifyScreenElements() {
 		String[] verifyElements = new String[] {"BTN_GO_EMP_SEARCH",
 				"ICON_PRINT", "TXT_SEARCH_BOX" };
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 
 		for (String ele : verifyElements) {
 			if (Web.isWebElementDisplayed(getWebElement(ele))) {			
@@ -549,7 +554,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"The "+ele+" button is not displayed on search page", true);
 			}			
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	/**
@@ -557,7 +562,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws Exception
 	 */
 	public void verifyColumnHeaders() throws Exception {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		String[] headersArray = new String[] { "Last name", "First name",
 				"M.I.", "SSN", "Ext", "Emp ID", "Part ID", "Division" };
 		expectedListofElements = Arrays.asList(headersArray);
@@ -579,7 +584,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"The headers are not displayed as expected" + "Actual:"
 							+ actualListofElements + "& Expected :"
 							+ expectedListofElements, true);
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		}
 	}
 	/**
@@ -589,7 +594,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	public boolean verifySearchResultsasLinks() {
 		boolean areResultsdisplayedLinks;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(searchResultsFirstName);
 		Web.waitForElement(searchResdivLastname);
 		String tagNameLastNm = searchResultsFirstName.getTagName();
@@ -601,7 +606,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} else {
 			areResultsdisplayedLinks = false;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return areResultsdisplayedLinks;
 	}
 
@@ -612,7 +617,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public boolean verifyEmployeeredirectOverviewPage() throws InterruptedException {
 		boolean isRedirected;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.clickOnElement(searchResultsFirstName);	
 		Thread.sleep(5000);
 		Web.waitForElement(txtOverview);		
@@ -621,7 +626,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}else{
 			isRedirected = false;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return isRedirected;
 	}
 
@@ -648,7 +653,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			isPaginationCorrect = false;
 		}
 
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return isPaginationCorrect;
 	}
 
@@ -663,14 +668,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		int resultsSize;
 		boolean isLimitcorrect;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		resultsSize = searchResultsSSNTable.size();
 		if (resultsSize <= 1000) {
 			isLimitcorrect = true;
 		} else {
 			isLimitcorrect = false;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return isLimitcorrect;
 
 	}
@@ -691,7 +696,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		WebElement sortElement = null;
 		List<String> sortedList;
 		List<String> afterSortList;
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		switch (sortOption) {
 		case "FirstName":
 			listTobeSorted = listFirstName;
@@ -721,7 +726,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"The search results are not sorted correctly for "
 							+ sortOption.toUpperCase() + " column", true);
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return true;
 	}
 
@@ -729,13 +734,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * Used to switch to the Employeesearch frame 
 	 */
 	public void switchToFrame() {
-		Web.webdriver.switchTo().frame(employeeSearchFrame);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 	}
 	/**
 	 * Used to switch to the Default content
 	 */
 	public void switchToDefaultContent() {
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	/**
