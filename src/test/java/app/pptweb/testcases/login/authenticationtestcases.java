@@ -41,7 +41,7 @@ public class authenticationtestcases {
 	}
 
 	private void prepTestData(Method testCase) throws Exception {
-		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), Globals.GC_MANUAL_TC_NAME);
+		this.testData = Stock.getTestData(this.getClass().getPackage().getName(), testCase.getName());
 	}
 	
 	public void prepareLoginTestData(String quesryNmae,String... queryParam) {

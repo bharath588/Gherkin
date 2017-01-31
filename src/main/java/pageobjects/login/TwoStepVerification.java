@@ -10,6 +10,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
@@ -47,6 +48,18 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help']]") private WebElement lblLoginHelp;
 	@FindBy(xpath="//button[contains(text(),'Continue to My Account')]") private WebElement btnContinueToMyAccount;
 	@FindBy(xpath="//h1[contains(text(),'Confirm your contact information')]") private WebElement txtConfirmContactInfo;
+	@FindBy(xpath="//p[contains(@ng-if,'editContactInfoAllowed')]") private WebElement txtConfirmIdentity;
+	@FindBy(xpath="//div[contains(text(),'Change communication preference')]") private WebElement txtChangeCommuniPrefer;
+	@FindBy(xpath="//label[@for='pptConsentForElectronic']") private WebElement txtYesIPrefer;
+	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private WebElement inpPlanName;
+	@FindBy(xpath="//div[@class='checkbox']//label") private WebElement txtPlanName;
+	@FindBy(xpath=".//*[@id='emailChoice']") private WebElement drpEmail;
+	@FindBy(className="document-review") private WebElement txtagreementForm;
+	@FindBy(xpath="//header[@class='contained-form-header']//h1") private WebElement hdrContactInfo;
+	@FindBy(xpath=".//*[@id='emailId']") private WebElement inpPersonalEmail;
+	@FindBy(xpath=".//*[@id='ContactCountryNameD']") private WebElement drpCountry;
+	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
+	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
 	
 	/** Empty args constructor
 	 * 
@@ -163,7 +176,44 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE TO MY ACCOUNT")) {
 			return this.btnContinueToMyAccount;
 		}
+		if (fieldName.trim().equalsIgnoreCase("CONTACT INFORMATION HEADER")) {
+			return this.hdrContactInfo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INPUT PERSONAL EMAIL")) {
+			return this.inpPersonalEmail;
+		}
 		
+		if (fieldName.trim().equalsIgnoreCase("DROP DOWN COUNTRY")) {
+			return this.drpCountry;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("INPUT PHONE NUMBER")) {
+			return this.inpPhoneNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT COUNTRY CODE")) {
+			return this.txtCountryCode;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT CONFIRM IDENTITY")) {
+			return this.txtConfirmIdentity;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT I PREFER")) {
+			return this.txtYesIPrefer;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CHECKBOX PLAN NAME")) {
+			return this.inpPlanName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("EMAIL DROP DOWN")) {
+			return this.drpEmail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT PLAN NAME")) {
+			return this.txtPlanName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TEXT AGREEMENT FROM")) {
+			return this.txtagreementForm;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Label Communication Preference")) {
+			return this.txtChangeCommuniPrefer;
+		}
 		
 		return null;
 	}
@@ -220,7 +270,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		
 		this.btnSendMeACode.click();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -261,7 +311,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 		
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -349,5 +399,24 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		
 		return isGenerated;
 	}
+	/**
+	 * <pre>
+	 * Method to get the text of an webElement
+	 * Returns string webElement is displayed
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getWebElementText(String fieldName) {
+		String getText = "";
 
+		if (Web.isWebElementDisplayed(this.getWebElement(fieldName))) {
+
+			getText = this.getWebElement(fieldName).getText().trim();
+
+		}
+
+		return getText;
+
+	}
 }

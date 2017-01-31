@@ -5,13 +5,161 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
  
-	  <test name="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+	     <test	name="ProdTestCases">
+     
+		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+					<!-- <include name="SF01_TC01_Verify_Custom_site_prelogin_data">
+					 <parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
+                    </parameter>
+                    </include>
+				<include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+						 <parameter name="ManualTCName" value="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+                    </parameter>
+                    </include>
+				
+					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
+					 <parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
+                    </parameter>
+                    </include>
+				
+					<include name="SF01_TC018_Verify_ROR_link" >
+					<parameter name="ManualTCName" value="RateOfReturn_Validations">
+                    </parameter>
+                    </include>
+				
+					<include name="Brokerage_validations" >
+					<parameter name="ManualTCName" value="Brokerage_validations">
+                    </parameter>
+                    </include>
+				
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link">
+					<parameter name="ManualTCName" value="Request_Loan_Flow">
+                    </parameter>
+                    </include>
+				
+					<include name="Balance_validations">
+					<parameter name="ManualTCName" value="Balance_validations">
+                    </parameter>
+                    </include>
+			
+					<include name="Transaction_History_validations">
+					<parameter name="ManualTCName" value="Transaction_History_validations">
+                    </parameter>
+                    </include>
+				
+					<include name="Manage_My_Investment_Flow_New">
+					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+				
+					<include name="PlanForms_Validations">
+					<parameter name="ManualTCName" value="PlanForms_Validations">
+                    </parameter>
+                    </include>
+				
+					<include name="Dollar_Cost_Average_Flow">
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+                    </parameter>
+                    </include>
+				
+					<include name="Investment_lineup_validations">
+					<parameter name="ManualTCName" value="Investment_lineup_validations">
+                    </parameter>
+                    </include>
+		
+					<include name="FundToFundTransfer">
+					<parameter name="ManualTCName" value="FundToFundTransfer">
+                    </parameter>
+                    </include>
+			
+					<include name="Statement_and_Documents_validations">
+					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+                    </parameter>
+                    </include>
+		
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
+					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
+                    </parameter>
+                    </include> -->
+	
+                    <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
+                    </parameter>
+                    </include>
+                
+                    <include name="RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
+                    </parameter>
+                     </include>
+                     
+                    <include name="RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap_Prod">
+                    </parameter>
+                     </include>
+               
+                    <include name="RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
+                    </parameter>
+                     </include>
+            
+                    <include name="HCC_TC009_To_verify_Health_care_costs">
+                   <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
+                    </parameter>
+                     </include>
+               
+                    <include name="HDIC_TC010_To_verify_How_do_I_compare_tab">
+                   <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab_Prod">
+                    </parameter>
+                     </include>
+                
+                    <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
+                   <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings_Prod">
+                    </parameter>
+                     </include>
+                
+     				<include name="LIAT_To_verify_PayCheckView_Displayed">
+					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed">
+                    </parameter>
+                     </include>
+				
+                    <include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar">
+					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+                    </parameter>
+                     </include>
+				
+					<include name="LIAT_To_verify_HowDoICompare_Labels_Circles">
+					<parameter name="ManualTCName" value="Liat_Verify_HowDoICompareTab_Labels_Circles">
+                    </parameter>
+                     </include>
+				
+					<include name="LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
+					<parameter name="ManualTCName" value="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
+                    </parameter>
+                     </include>
+				
+					<include name="Verify_Health_care_costs_helpful_links">
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+                    </parameter>
+                     </include>
+				
+	 				<include name="Verify_Tour_Link">
+					<parameter name="ManualTCName" value="LIAT_Verify_Tour_Link">
+                    </parameter>
+                     </include>
+				
+					<!-- <include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
+					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
+                    </parameter>
+				   </include>
+			
+					<include name="SF01_TC19_Verify_Legacy_Home_Page">
+					<parameter name="ManualTCName" value="Legacy_Home_Page_From_Magic_URL">
+                    </parameter>
+				</include> -->
+				</methods>
+			</class>
+		</classes>
+	</test> 
 </suite>

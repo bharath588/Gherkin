@@ -49,6 +49,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement lnkContactNoPostLogin;
 	@FindBy(xpath = "//a[text()='Log out']")
     private WebElement  lnkLogOut;
+	@FindBy(xpath = "//a[.//i[contains(@class,'facebook')]]")
+    private WebElement  lnkFaceBook;
+	@FindBy(xpath = "//a[.//i[contains(@class,'twitter')]]")
+    private WebElement  lnkTwitter;
+	@FindBy(xpath = "//a[.//i[contains(@class,'linkedin')]]")
+    private WebElement  lnkLinkedin;
+	@FindBy(xpath = "//a[.//i[contains(@class,'instagram')]]")
+    private WebElement  lnkInstagram;
+	@FindBy(xpath = "//a[.//i[contains(@class,'youtube')]]")
+    private WebElement  lnkYoutube;
 
 
 	/*
@@ -84,7 +94,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement imgBrowserSupport;
 	@FindBy(xpath = ".//*[@id='prelogin-contact-modal-button'][contains(text(),'Dismiss')]")
 	private WebElement lnkDismiss;
-	@FindBy(xpath = ".//div[contains(@class,'inner-container')]//h2")
+	@FindBy(xpath = ".//div[contains(@class,'inner-container')]//h1")
 	private WebElement txtInnerContainer;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
@@ -298,7 +308,24 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		if (fieldName.trim().equalsIgnoreCase("Inner Container")) {
 			return this.txtInnerContainer;
 		}
-
+		if (fieldName.trim().equalsIgnoreCase("FACEBOOK")) {
+			return this.lnkFaceBook;
+		}
+		if (fieldName.trim().equalsIgnoreCase("TWITTER")) {
+			return this.lnkTwitter;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LINKEDIN")) {
+			return this.lnkLinkedin;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INSTAGRAM")) {
+			return this.lnkInstagram;
+		}
+		if (fieldName.trim().equalsIgnoreCase("YOUTUBE")) {
+			return this.lnkYoutube;
+		}
+		if (fieldName.trim().equalsIgnoreCase("DISMISS")) {
+			return this.btnDismiss;
+		}
 		return null;
 	}
 
@@ -636,6 +663,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					linkName + " Page is Not Displayed", true);
 		}
 		Web.getDriver().navigate().back();
+	    Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
 
 	}
 
@@ -654,6 +683,19 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 		
 		return telPhoneNos;
+	}
+	public void clickDismissLink()
+			throws InterruptedException {
+		
+		
+		if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+	    	   Web.waitForElement(btnDismiss);
+			boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
+			if (isElementPresent)
+				btnDismiss.click();
+		}
+	 		Web.waitForPageToLoad(Web.getDriver());
+
 	}
 
 }

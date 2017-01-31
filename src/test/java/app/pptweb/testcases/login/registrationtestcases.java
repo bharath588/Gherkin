@@ -51,7 +51,7 @@ public class registrationtestcases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 	}
 
 	public void prepareLoginTestData() {
@@ -2011,7 +2011,7 @@ public class registrationtestcases {
 						Stock.GetParameterValue("BIRTH_DATE"));
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
-						Stock.GetParameterValue("FIRST_LINE_MAILING"));
+						Stock.GetParameterValue("FIRST_LINE_MAILING").split(" ")[0]);
 			}
 
 			// Click on Continue button

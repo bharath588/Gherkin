@@ -2,6 +2,7 @@ package pageobjects.login;
 
 import lib.Reporter;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
@@ -25,7 +26,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@for='lastNameInput']") private WebElement lblLastName;
 	@FindBy(xpath=".//*[@for='dateOfBirthInput']") private WebElement lblDateofBirth;
 	@FindBy(xpath=".//*[@for='streetAddressInput']") private WebElement lblStreetAddress;
-	@FindBy(xpath=".//form[@name='registerForm']/.//*[@id='submit']") private WebElement btnContinue;
+	@FindBy(xpath=".//*[@id='login-help-submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='ssnInput']") private WebElement txtSSN;
 	@FindBy(xpath=".//*[@id='zipCodeInput']") private WebElement txtZipCode;
 	@FindBy(xpath=".//*[@id='lastNameInput']") private WebElement txtLastName;
@@ -187,7 +188,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		
 		this.btnContinue.click();
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -230,6 +231,11 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 			this.txtPassword.sendKeys(password);
 			this.txtReEnterPassword.sendKeys(reEnterPassword);
 			this.btnContinueAccRecovery.click();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// Do Nothing
+			}
 		
 	} 
 	

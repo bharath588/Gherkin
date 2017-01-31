@@ -993,7 +993,33 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	Web.waitForPageToLoad(Web.getDriver());
 	String currentFund1=txtCurrentFunds.get(0).getText().trim();
 	String currentFund2=txtCurrentFunds.get(1).getText().trim();
-	if(currentFund1.equalsIgnoreCase(investmentFundName1)&&currentFund2.equalsIgnoreCase(investmentFundName2)){
+	boolean iscurrentFund1Matching=false;
+	boolean iscurrentFund2Matching=false;
+	for(int i=0;i<txtCurrentFunds.size();i++){
+		if(txtCurrentFunds.get(i).getText().trim().equalsIgnoreCase(investmentFundName1)){
+			iscurrentFund1Matching=true;
+			break;
+		}
+	}
+	for(int i=0;i<txtCurrentFunds.size();i++){
+		if(txtCurrentFunds.get(i).getText().trim().equalsIgnoreCase(investmentFundName2)){
+			iscurrentFund2Matching=true;
+			break;
+		}
+	}
+if(iscurrentFund1Matching&&iscurrentFund2Matching){
+		
+		Reporter.logEvent(Status.PASS,
+				"Verify Selected Investment Options are Matching in Review your changes Page",
+				"Investment Options are Matching in Review your changes Page\nInvestment Options:"+investmentFundName1+",\n"+investmentFundName2, true);
+	}
+	else 
+		{
+		Reporter.logEvent(Status.FAIL,
+				"Verify Selected Investment Options are Matching in Review your changes Page",
+				"Investment Options are Not Matching in Review your changes Page\nInvestment Options:"+investmentFundName1+",\n"+investmentFundName2, true);
+		}
+	/*if(currentFund1.equalsIgnoreCase(investmentFundName1)&&currentFund2.equalsIgnoreCase(investmentFundName2)){
 		
 		Reporter.logEvent(Status.PASS,
 				"Verify Selected Investment Options are Matching in Review your changes Page",
@@ -1005,5 +1031,6 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				"Verify Selected Investment Options are Matching in Review your changes Page",
 				"Investment Options are Matching in Review your changes Page\nExpected:"+investmentFundName1+" and "+investmentFundName2+"\nActual:"+currentFund1+" and "+currentFund2, true);
 		}
+	*/
 	}
 }

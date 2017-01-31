@@ -7,7 +7,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import com.aventstack.extentreports.*;
+import com.aventstack.extentreports.Status;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -44,6 +44,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private WebElement lnkPlanName;
 	@FindBy(xpath = ".//*[@id='myAccountList']/ul/li/a[./span[text()[normalize-space()='RPS PSAP Setup Dummy Test Plan']]]")
 	private List<WebElement> lstlnkPlanName;
+	private String lnkStatementDocument="//a[text()[normalize-space()='Statements and documents']]";
 	
 
 	/**
@@ -89,25 +90,21 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// System.out.println("inside");
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
-			
-				if(!Web.isWebElementDisplayed(weLeftNavSection, true)){
-					/*if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
-				  Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+			if(!Web.isWebElementDisplayed(weLeftNavSection, true)){
+				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
+			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+			}
 				}
-					else{*/
-						MyAccountsPage acc= new MyAccountsPage();
-						acc.clickPlanNameByGAID("150550-01");
-					//}
-				}
-				else{
-					/*if(Web.isWebElementsDisplayed(lstlnkPlanName, true))
-					lstlnkPlanName.get(1).click();*/
-					
-					
-				}
-					Common.waitForProgressBar();
-					Web.waitForPageToLoad(Web.getDriver());
+			else{
+				/*if(Web.isWebElementsDisplayed(lstlnkPlanName, true))
+				lstlnkPlanName.get(1).click();*/
 				
+				
+			}
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+			
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,6 +178,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText=lnkBrokerage;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
+		} else if (linkName.trim().equalsIgnoreCase("STATEMENTS AND DOCUMENTS")) {
+			strLinkText = lnkStatementDocument;
 
 		} else {
 			strLinkText = linkName.trim();
@@ -205,6 +204,20 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
 			
 			//mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).build().perform();
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//mouse.release().build().perform();
+			
+			
+		}
+		else if(linkName.equalsIgnoreCase("Statements and documents")){
+			lnkLeftNavItem=By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
+			Web.clickOnElement(leftNavLink);
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {

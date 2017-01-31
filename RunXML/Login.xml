@@ -9,7 +9,7 @@
             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                     <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter></include>
                 </methods>
             </class>
         </classes>

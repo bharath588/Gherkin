@@ -68,7 +68,7 @@ public class prodvalidationtestcases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 
 	}
 	private String printTestData() throws Exception {

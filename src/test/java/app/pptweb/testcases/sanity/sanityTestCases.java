@@ -56,7 +56,7 @@ public class sanityTestCases {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), Globals.GC_MANUAL_TC_NAME);
+				.getName(), testCase.getName());
 
 	}
 	public void prepareLoginTestData() {
@@ -279,7 +279,7 @@ public class sanityTestCases {
 						Stock.GetParameterValue("BIRTH_DATE"));
 				// Enter Street Address
 				accLookup.setTextToFields("Street Address",
-						Stock.GetParameterValue("FIRST_LINE_MAILING"));
+						Stock.GetParameterValue("FIRST_LINE_MAILING").split(" ")[0]);
 			}
 
 			// Click on Continue button
@@ -1292,7 +1292,7 @@ public class sanityTestCases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
+			//prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1391,7 +1391,7 @@ public class sanityTestCases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
+			//prepareDynamicTestData("getDeferralParticipant",Stock.GetParameterValue("ga_PlanId"));
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);

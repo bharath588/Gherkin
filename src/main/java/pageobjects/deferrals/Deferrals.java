@@ -23,6 +23,7 @@ import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
 import lib.*;
+
 import com.aventstack.extentreports.*;
 
 public class Deferrals extends LoadableComponent<Deferrals> {
@@ -181,6 +182,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='modal-body rules']") private WebElement txtPlanRule;
 			@FindBy(xpath="//div[@class='modal-header rules']") private WebElement headerPlanRule;
 			@FindBy(xpath="//button[text()[normalize-space()='Ok']]") private WebElement btnOk;
+			@FindBy(xpath="//div[contains(@ng-if,'hasCompanyMatch')]//div[@class='contribution-percentage']//strong") private WebElement txtCompanyMatch;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			Actions mouse=new Actions(Web.getDriver());
 		/**
@@ -372,6 +374,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("OK BUTTON")) {
 				return this.btnOk;
 			}
+			if(fieldName.trim().equalsIgnoreCase("TEXT COMPANY MATCH")) {
+				return this.txtCompanyMatch;
+			}
 			return null;
 			}		
 		
@@ -450,9 +455,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		/**<pre> Method to add auto increase.
 		 *.</pre>
+		 * @throws InterruptedException 
 		 * 
 		 */
-		public void add_Auto_Increase(String deferralType)
+		public void add_Auto_Increase(String deferralType) throws InterruptedException
 		{
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
 			Calendar calendar = Calendar.getInstance();         
@@ -481,7 +487,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
 				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
 				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
-				this.btnSaveAddAutoIncreaseModal.click();
+				Thread.sleep(3000);
+				Web.clickOnElement(btnSaveAddAutoIncreaseModal);
+				Thread.sleep(5000);
 				}
 				else
 				Reporter.logEvent(Status.FAIL, "Verify if Add Auto Increase link is displayed for : "+"'"+deferralType+"'", "Add Auto Increase link is not displayed", true);
@@ -562,7 +570,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					
 					
 					if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
-//	//					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
+//					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
 //						befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
 //						lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
 //						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
@@ -1341,6 +1349,48 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			lib.Web.getDriver().navigate().refresh();
 		}
 		
+		
+		/**<pre> Method to verify company Match Changes Dynamically.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public void verifyCompanyMatchChangesDynamically() throws InterruptedException
+		{	
+			String companyMacthBefore="";
+			String companyMacthAfter="";
+			boolean isMatching=true;
+			lib.Web.waitForElement(radioSelectAnotherContributionRate);
+			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
+			
+			lib.Web.waitForElement(lnkContributionRate);
+			
+			if(Web.isWebElementDisplayed(lnkPercent))
+				this.lnkPercent.click();			
+			this.lnkContributionRate.click();
+			
+			lib.Web.waitForElement(txtcontributionRateSlider);
+			lib.Web.setTextToTextBox(txtcontributionRateSlider, "0");
+			Web.clickOnElement(btnDone);
+			Thread.sleep(3000);
+			companyMacthBefore=txtCompanyMatch.getText().toString().trim();
+            this.lnkContributionRate.click();
+			lib.Web.waitForElement(txtcontributionRateSlider);
+			lib.Web.setTextToTextBox(txtcontributionRateSlider, "6");
+			Web.clickOnElement(btnDone);
+			Thread.sleep(3000);
+			companyMacthAfter=txtCompanyMatch.getText().toString().trim();
+			Thread.sleep(5000);
+			isMatching=Web.VerifyText(companyMacthBefore, companyMacthAfter);
+			if(!isMatching)
+			
+				Reporter.logEvent(Status.PASS, "Verify the company match changes dynamically as the slider for the contribution rate is changed", "Company Match is Changed As Expected\nBefore:"+companyMacthBefore+"\nAfter"+companyMacthAfter, true);
+			else
+				Reporter.logEvent(Status.INFO, "Verify the company match changes dynamically as the slider for the contribution rate is changed", "Company Match is Not Changed As Expected\nBefore:"+companyMacthBefore+"\nAfter"+companyMacthAfter, true);
+			
+		}
 	}		
 	
 

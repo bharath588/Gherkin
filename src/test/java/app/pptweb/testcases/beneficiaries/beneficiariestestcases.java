@@ -956,7 +956,9 @@ public class beneficiariestestcases {
 			
 			if(Stock.GetParameterValue("addBeneficiary").equalsIgnoreCase("Yes")){
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+				Web.waitForElement(beneficiary, "ContinueAndConfirm");
 				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.waitForElement(beneficiary, "View Beneficiary Button");
 				Web.clickOnElement(beneficiary, "View Beneficiary Button");
 			}
 			String[] sqlQuery = Stock.getTestQuery("updateAllocationsToNull");

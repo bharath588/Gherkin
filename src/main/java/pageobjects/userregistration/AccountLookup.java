@@ -38,7 +38,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(id="streetAddressInput") private WebElement txtStreetAddress;
 	//@FindBy(id="pinInput") private WebElement txtPINInput;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[@id='pinInput']") private WebElement txtPINInput;
-//	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinue;
+	@FindBy(xpath=".//*[@id='login-help-submit']") private WebElement btnContinueDoNotHavePin;
+	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='noPin']/a") private WebElement btnContinueOnGroupAccPasswordTab;
 	@FindBy(xpath=".//ng-message[@class='form-validation-rule']//span[contains(text(),'Social Security Number')]") private WebElement lblSSNErrMsg;
@@ -195,7 +196,11 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			if (this.getActiveTabName().equalsIgnoreCase("I have a group account password")) {
 				//Continue on "I have a group account password" Tab
 				return this.btnContinueOnGroupAccPasswordTab;
-			} else {
+			}
+			else if(this.getActiveTabName().equalsIgnoreCase("I do not have a PIN")){
+				return this.btnContinueDoNotHavePin ;
+				
+			}else if(this.getActiveTabName().equalsIgnoreCase("I have a PIN")) {
 				return this.btnContinue;
 			}
 		}
@@ -395,7 +400,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 */
 	public boolean clickOnFields(String fieldName) {
 		WebElement element = this.getWebElement(fieldName);
-		return Web.clickOnElement(element);
+		Web.clickOnElement(element);
+		return true;
 	}
 
 	/**<pre> Method to return error message displayed for the corresponding field.
