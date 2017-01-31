@@ -81,6 +81,13 @@ public class Reporter{
 			 {
 		objReport = new ExtentReports();
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportFilePath);
+		//Option for appending on the existing reporter
+		
+		if(Globals.GBL_REPLACE_EXISTING_HTML_REPORT.equalsIgnoreCase("false"))
+		{
+			htmlReporter.setAppendExisting(true);
+		}
+		
         htmlReporter.config().setDocumentTitle(Stock.getConfigParam("AUT")+"Reports");
         htmlReporter.config().setReportName(Stock.getConfigParam("AUT")+"Reports");
 		objReport.attachReporter(htmlReporter);
@@ -269,6 +276,14 @@ public class Reporter{
 					+ "<div id=\"div" + iRandTraceCntr
 					+ "\" style=\"display:none\">" + stackTrace
 					+ "</div>";
+			
+			
+			Details = "<table style border = \"1px\" >"
+					  +"<tr> <th>Step</th><th>Details</th>" 
+					  +"</tr>"
+					  +"<tr> <td  border = \"1px\">"+Step+"</td> <td word-wrap:break:word>"+Details+"</td></tr>"
+					+"</table>";
+			
 			
 			switch (logStatus) {
 			case PASS:

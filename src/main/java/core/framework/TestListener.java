@@ -85,7 +85,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		try {
 			Stock.readConfigProperty(Globals.GC_TESTCONFIGLOC
 					+ Globals.GC_CONFIGFILEANDSHEETNAME + ".properties");
-			if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
+			/*if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
 				Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV,
 						Globals.GC_EXECUTION_ENVIRONMENT, true);
 			}
@@ -107,7 +107,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 				"Test Report folder removed on exist on suite level");
 
-			}
+			}*/
 			Globals.GC_MANUAL_TC_NAME_MAP = new HashMap<Long, String>();
 			readGridConfigFile("grid.json");
 			 if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
@@ -127,14 +127,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Log.Report(Level.INFO,
 					"Test Configuration initialized successfully");
-			if (new File(Globals.GC_TEST_REPORT_DIR).exists()) {
-				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
-				System.out.println("Deleted report folder from directory : "
-						+ new File(Globals.GC_TEST_REPORT_DIR)
-								.getAbsolutePath());
-				Log.Report(Level.INFO,
-						"Test Report folder removed on exist on suite level");
-			}
 			counter = 0;
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, e.getMessage());
@@ -296,7 +288,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 		}
 		if (method.getTestMethod().isTest()) {
-			Globals.GC_MANUAL_TC_REPORTER_MAP.put(Thread.currentThread().getId(), method.getTestMethod().findMethodParameters(method.getTestMethod().getXmlTest()).get("ManualTCName"));
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult
 					.getParameters()[1];
 			Stock.globalTestdata.put(Thread.currentThread().getId(),
