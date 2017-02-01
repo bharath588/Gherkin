@@ -238,7 +238,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.btnContinue.click();
+		this.btnContinueDoNotHavePin.click();
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -439,7 +439,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	
 	public String getMainErrorMsg() {
 		String errMsg = "";
-		
+		Web.waitForElement(lblMainErrMsg);
 			if (Web.isWebElementDisplayed(this.lblMainErrMsg)) {
 				errMsg = this.lblMainErrMsg.getText();
 			}

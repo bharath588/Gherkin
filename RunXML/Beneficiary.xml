@@ -5,299 +5,115 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
    
-    <test name="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity">
+    <test name="Beneficiaries">
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                    <include name="Beneficiary_TC002_Married_with_Spouse_One_beneficiary_use_address_on_record_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+   
                     <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC008_Unmarried with One beneficiary use address on record_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                    
+                    <include name="Beneficiary_TC008_Unmarried_with_One_beneficiary_use_address_on_record_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC008_Unmarried with One beneficiary use address on record_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC009_UnMarried One Individual beneficiary new address_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                
+                    <include name="Beneficiary_TC009_UnMarried_One_Individual_beneficiary_new_address_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC009_UnMarried One Individual beneficiary new address_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC012_UnMarried Multiple Individual beneficiary_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="UnMarried_Multiple_Individual_beneficiary">
+                
+                    <include name="Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC012_UnMarried Multiple Individual beneficiary_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC011_UnMarried Multiple Entity beneficiary_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="UnMarried_Multiple_Entity_beneficiary">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC011_UnMarried Multiple Entity beneficiary_Sanity"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC003_Married with Spouse One beneficiary Date of Birth Error messages">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Date_of_Birth_Error_Messages">
+               
+                    <include name="TC003_Married_with_Spouse_One_eneficiary_Date_of_Birth_Error_messages">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC003_Married with Spouse One beneficiary Date of Birth Error messages"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   <!--  
-    <test name="SIT_PPTWEB_Beneficiary_TC005_Married no Spouse Error message">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC005_Married_no_Spouse_Error_message"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    -->
-    <test name="SIT_PPTWEB_Beneficiary_TC010_UnMarried One Individual beneficiary Date of Birth error message">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Date_of_Birth_Error_Messages">
+                
+                   <!--  <include name="Beneficiary_TC005_Married_no_Spouse_Error_message">
+                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC005_Married no Spouse Error message"></parameter>
+                    </include> -->
+                
+   
+                    <include name="TC010_UnMarried_One_Individual_beneficiary_Date_of_Birth_error_message">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC010_UnMarried One Individual beneficiary Date of Birth error message"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC013_UnMarried Trust beneficiary">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="Beneficiary_TC013_UnMarried_Trust_beneficiary">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC013_UnMarried Trust beneficiary"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Beneficiary_TC014_UnMarried Trust warning message">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+               
                     <include name="UnMarried_Trust_warning_message">'
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC014_UnMarried Trust warning message"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC004_Married with Spouse Multiple beneficiaries">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="UnMarried_Multiple_Individual_beneficiary">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC004_Married with Spouse Multiple beneficiaries"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="Beneficiary_TC016_QJSA_with_Beneficiary">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC016_QJSA with Beneficiary not on file"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC015_QJSA with beneficiary on file">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Beneficiary_TC016_QJSA_with_Beneficiary">
+               
+                    <include name="Beneficiary_TC015_QJSA_with_Beneficiary">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC015_QJSA with beneficiary on file"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-     </test>  
-     <test name="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+               
                     <include name="Beneficiary_TC017_Ability_to_remove_a_beneficiary">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-      </test>
-    
-      <test name="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+               
                     <include name="Beneficiary_TC020_Participants_with_auth_code_I">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-      </test>
-      <test name="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-      </test>
-      <test name="SIT_PPTWEB_Beneficiary_TC007_Marital status not displayed One beneficiary use address on record">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+               
                     <include name="Beneficiary_TC007_Marital_status_not_displayed_One_beneficiary_use_address_on_record">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC007_Marital status not displayed One beneficiary use address on record"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-      </test> 
-      
-      <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+               
+                    <include name="TC024_Create_100_Percent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+                
+                    <include name="TC024_Create_100_Percent_or_Consent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC024_Create a Married, Spouse, multiple beneficiaries, 100% or Consent for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-      <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+                
+                    <include name="TC026_Create_75_Percent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+              
+                    <include name="TC026_Create_75_Percent_or_Consent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC026_Create a Married, Spouse, multiple beneficiaries, 75% or Consent for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+                
+                    <include name="TC030_Create_50_Percent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% or Consent for QJSA">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
-                    <include name="Married_multiple_Primary_Beneficiary">
+               
+                    <include name="TC030_Create_50_Percent_or_Consent_for_QJSA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC030_Create a Married, Spouse, multiple beneficiaries, 50% or Consent for QJSA"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Beneficiary_TC039_Create a Married, Spouse, multiple spouse error">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+               
                     <include name="create_Married_Spouse_Multiple_Spouse_Error">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC039_Create a Married, Spouse, multiple spouse error"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Beneficiary_TC040_Beneficiary error messages">
-        <classes>
-            <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
-                <methods>
+                
                     <include name="validate_Beneficiary_ErrorMessages">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC040_Beneficiary error messages"></parameter>
                     </include>

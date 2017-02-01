@@ -7,6 +7,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.Keys;
@@ -71,7 +72,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	private WebElement lblSponser;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
 	private WebElement btnLogin;
-	@FindBy(xpath = ".//*[@id='registration-form']/h1")
+	@FindBy(xpath = "//*[text()[normalize-space()='Create username and password']]")
 	private WebElement lblCreateUsernameAndPassword;
 
 	/**
@@ -485,19 +486,19 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		if (Web.isWebElementDisplayed(this.lblEmailErrMsg)) {
 			actualErrorText = "";
 			actualErrorText = this.lblEmailErrMsg.getText();
-			isMatching = Web.VerifyText("Please enter a valid email address",
+			isMatching = Web.VerifyText("Please enter a valid email address.",
 					actualErrorText, true);
 			if (isMatching) {
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify error message is displayed when invalid email address is entered.",
-						"Expected: Please enter a valid email address\nActual: "
+						"Expected: Please enter a valid email address.\nActual: "
 								+ actualErrorText, true);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify error message is displayed when invalid email address is entered.",
-						"Expected: Please enter a valid email address\nActual: "
+						"Expected: Please enter a valid email address.\nActual: "
 								+ actualErrorText, true);
 			}
 		} else {
@@ -957,5 +958,26 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		}
 
 		return headerText;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get the text of an webElement
+	 * Returns string webElement is displayed
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getWebElementText(String fieldName) {
+		String getText = "";
+
+	
+
+			getText = this.getWebElement(fieldName).getAttribute("value").trim();
+
+		
+
+		return getText;
+
 	}
 }

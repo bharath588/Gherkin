@@ -93,7 +93,7 @@
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF01_TC03_NegativeFlow_WithAndWithoutPINTabs">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User"></parameter>
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC004_Functionality_Without_PIN__Negative_flow"></parameter>
                     </include>
                 </methods>
             </class>

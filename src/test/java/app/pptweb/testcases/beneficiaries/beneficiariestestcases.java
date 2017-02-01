@@ -462,7 +462,7 @@ public class beneficiariestestcases {
 
 	}
 	@Test(dataProvider = "setData")
-	public void Date_of_Birth_Error_Messages(int itr, Map<String, String> testdata){
+	public void TC003_Married_with_Spouse_One_eneficiary_Date_of_Birth_Error_messages(int itr, Map<String, String> testdata){
 		
 //      Globals.GBL_CurrentIterationNumber = itr;
 		
@@ -1726,4 +1726,72 @@ public class beneficiariestestcases {
 			}
 		
 	}
+		
+		
+		@Test(dataProvider = "setData")
+		public void TC030_Create_50_Percent_or_Consent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void TC030_Create_50_Percent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void TC028_Create_66_2_3Percent_or_Consent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void TC028_Create_66_2_3_Percent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void TC026_Create_75_Percent_or_Consent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		@Test(dataProvider = "setData")
+		public void TC026_Create_75_Percent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		@Test(dataProvider = "setData")
+		public void TC024_Create_100_Percent_or_Consent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		@Test(dataProvider = "setData")
+		public void TC024_Create_100_Percent_for_QJSA(int itr, Map<String, String> testdata){
+			Married_multiple_Primary_Beneficiary(itr, testdata);
+		}
+		@Test(dataProvider = "setData")
+		public void Beneficiary_TC015_QJSA_with_Beneficiary(int itr, Map<String, String> testdata) throws Exception{
+			Beneficiary_TC016_QJSA_with_Beneficiary(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void TC010_UnMarried_One_Individual_beneficiary_Date_of_Birth_error_message(int itr, Map<String, String> testdata){
+			TC003_Married_with_Spouse_One_eneficiary_Date_of_Birth_Error_messages(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void Beneficiary_TC002_Married_with_Spouse_One_beneficiary_use_address_on_record_Sanity(int itr, Map<String, String> testdata){
+			Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void Beneficiary_TC008_Unmarried_with_One_beneficiary_use_address_on_record_Sanity(int itr, Map<String, String> testdata){
+			Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void Beneficiary_TC009_UnMarried_One_Individual_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
+			Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+		}
+		
+		@Test(dataProvider = "setData")
+		public void Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity(int itr, Map<String, String> testdata){
+			UnMarried_Multiple_Individual_beneficiary(itr, testdata);
+		}
+		
 }

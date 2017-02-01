@@ -1238,6 +1238,7 @@ public class registrationtestcases {
 					"Enter participant details and click on Continue button.",
 					"Submitted participant details and clicked on Continue button",
 					true);
+			Thread.sleep(4000);
 
 			// Verify error message displayed
 			ActErrMessage = accLookup.getMainErrorMsg();
@@ -2304,7 +2305,16 @@ public class registrationtestcases {
 						"Verify 'Re-Enter Password' text field is displayed",
 						"'Re-Enter Password' is not displayed", false);
 			}
-
+			
+            String email=accSetup.getWebElementText("EMAIL ADDRESS");
+            String phoneNo=accSetup.getWebElementText("MOBILE PHONE NUMBER");
+           
+            if(email.isEmpty()||!email.contains("@")||!email.contains(".com")){
+            	Web.setTextToTextBox("EMAIL ADDRESS", accSetup, "discard@gwl.com");
+            }
+            if(phoneNo.isEmpty()||phoneNo.length()<10){
+            	Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup, "9999999999");
+            }
 			Web.setTextToTextBox("USERNAME", accSetup,
 					Stock.GetParameterValue("SSN") + "ABC");
 			Web.setTextToTextBox("PASSWORD", accSetup,

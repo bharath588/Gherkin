@@ -45,7 +45,7 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//a[./span[text()='Income gap']]") private WebElement lnkIncomeGap;
 @FindBy(xpath=".//*[text()[normalize-space()='Catch-up contributions']]") private WebElement txtCatchUpContributions;
 
-@FindBy(xpath="//h1[text()='My Estimated Retirement Income']") private WebElement lblRetirementIncome;
+@FindBy(xpath="//h1[text()='My estimated retirement income']") private WebElement lblRetirementIncome;
 @FindBy(xpath=".//*[text()='Retirement income']") private WebElement lnkRetirementIncome;
 @FindBy(xpath="//div[@id='paycheck-breakdown']") private WebElement paycheckBreakdown;
 @FindBy(xpath="//div[@class='marker section-savings-marker']") private WebElement barMySavings;
