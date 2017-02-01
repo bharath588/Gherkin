@@ -116,6 +116,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			 
 			List<ITestNGMethod> methodsList = new LinkedList<>();
 			methodsList = suite.getAllMethods();
+			
 			generateTestcaseReferenceMap(suite);
 			int counter = 0;
 			
@@ -134,7 +135,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	private void generateTestcaseReferenceMap(ISuite suite) {
-		List<XmlTest> testNames = suite.getXmlSuite().getTests();
+		/*List<XmlTest> testNames = suite.getXmlSuite().getTests();
 		List<XmlClass> classNames;
 		List<XmlInclude> methodNames;
 		Map<String,String> methodsAndParamsMap;
@@ -154,8 +155,12 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Globals.manualtoAutoTCMap.put(refTest.getName(), methodsAndParamsMap);
 		}
-		
-		
+		*/
+		List<ITestNGMethod> methods = suite.getAllMethods();
+		for(ITestNGMethod method : methods)
+		{
+			Globals.manualtoAutoTCMap.put(method.getMethodName(), method.findMethodParameters(method.getXmlTest()).get("ManualTCName"));
+		}
 	}
 
 	public void onStart(ITestContext test) {

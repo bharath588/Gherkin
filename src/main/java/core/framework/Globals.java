@@ -23,7 +23,7 @@ public class Globals {
           public static final String GC_AUT_TYPE = "WEB";
           public static final String GC_COLNAME_BROWSER="BROWSER";
           public static final Map<String,String> DB_TYPE;
-          public static Map<String,Map<String,String>> manualtoAutoTCMap = new LinkedHashMap<>();
+          public static Map<String,String> manualtoAutoTCMap = new LinkedHashMap<>();
           static{
         	  DB_TYPE = new HashMap<String,String>();
         	  DB_TYPE.put("PROJ","DEV");
