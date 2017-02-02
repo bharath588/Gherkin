@@ -85,7 +85,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		try {
 			Stock.readConfigProperty(Globals.GC_TESTCONFIGLOC
 					+ Globals.GC_CONFIGFILEANDSHEETNAME + ".properties");
-			if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
+			/*if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
 				Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV,
 						Globals.GC_EXECUTION_ENVIRONMENT, true);
 			}
@@ -107,7 +107,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 				"Test Report folder removed on exist on suite level");
 
-			}
+			}*/
 			Globals.GC_MANUAL_TC_NAME_MAP = new HashMap<Long, String>();
 			readGridConfigFile("grid.json");
 			 if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
@@ -116,6 +116,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			 
 			List<ITestNGMethod> methodsList = new LinkedList<>();
 			methodsList = suite.getAllMethods();
+			
 			generateTestcaseReferenceMap(suite);
 			int counter = 0;
 			
@@ -127,14 +128,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Log.Report(Level.INFO,
 					"Test Configuration initialized successfully");
-			if (new File(Globals.GC_TEST_REPORT_DIR).exists()) {
-				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
-				System.out.println("Deleted report folder from directory : "
-						+ new File(Globals.GC_TEST_REPORT_DIR)
-								.getAbsolutePath());
-				Log.Report(Level.INFO,
-						"Test Report folder removed on exist on suite level");
-			}
 			counter = 0;
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, e.getMessage());
@@ -142,7 +135,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	private void generateTestcaseReferenceMap(ISuite suite) {
-		List<XmlTest> testNames = suite.getXmlSuite().getTests();
+		/*List<XmlTest> testNames = suite.getXmlSuite().getTests();
 		List<XmlClass> classNames;
 		List<XmlInclude> methodNames;
 		Map<String,String> methodsAndParamsMap;
@@ -162,8 +155,12 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Globals.manualtoAutoTCMap.put(refTest.getName(), methodsAndParamsMap);
 		}
-		
-		
+		*/
+		List<ITestNGMethod> methods = suite.getAllMethods();
+		for(ITestNGMethod method : methods)
+		{
+			Globals.manualtoAutoTCMap.put(method.getMethodName(), method.findMethodParameters(method.getXmlTest()).get("ManualTCName"));
+		}
 	}
 
 	public void onStart(ITestContext test) {
@@ -296,7 +293,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 		}
 		if (method.getTestMethod().isTest()) {
-			Globals.GC_MANUAL_TC_REPORTER_MAP.put(Thread.currentThread().getId(), method.getTestMethod().findMethodParameters(method.getTestMethod().getXmlTest()).get("ManualTCName"));
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult
 					.getParameters()[1];
 			Stock.globalTestdata.put(Thread.currentThread().getId(),

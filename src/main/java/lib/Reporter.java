@@ -15,6 +15,7 @@ import shell.utils.SftpUtils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.google.common.base.Throwables;
@@ -81,6 +82,13 @@ public class Reporter{
 			 {
 		objReport = new ExtentReports();
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportFilePath);
+		//Option for appending on the existing reporter
+		
+		if(Globals.GBL_REPLACE_EXISTING_HTML_REPORT.equalsIgnoreCase("false"))
+		{
+			htmlReporter.setAppendExisting(true);
+		}
+		
         htmlReporter.config().setDocumentTitle(Stock.getConfigParam("AUT")+"Reports");
         htmlReporter.config().setReportName(Stock.getConfigParam("AUT")+"Reports");
 		objReport.attachReporter(htmlReporter);
@@ -270,6 +278,14 @@ public class Reporter{
 					+ "\" style=\"display:none\">" + stackTrace
 					+ "</div>";
 			
+			
+			Details = "<table style border = \"1px\" >"
+					  +"<tr> <th>Step</th><th>Details</th>" 
+					  +"</tr>"
+					  +"<tr> <td  border = \"1px\">"+Step+"</td> <td word-wrap:break:word>"+Details+"</td></tr>"
+					+"</table>";
+			
+			
 			switch (logStatus) {
 			case PASS:
 				tmpLogStatus = Status.PASS;
@@ -311,43 +327,42 @@ public class Reporter{
 			
 				Globals.error = null;
 			}
-			
+			try{
 			if (isScreenshotRequired(tmpLogStatus, attachScreenshot)) {
 			testCaseMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Details);
-			try {
-				testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
-//				testCaseMap.get(Thread.currentThread().getId()).log(
-//						Status.INFO,
-//						"Screenshot below: "
-//								+ objTestCaseNode.addScreenCaptureFromPath(Web.captureScreenshot()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		
+				//testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
+				
+				testCaseMap.get(Thread.currentThread().getId()).
+				info("Screenshot Below : ", MediaEntityBuilder.createScreenCaptureFromPath(Web.captureScreenshot()).build());
+			
 			} else {
 				testCaseMap.get(Thread.currentThread().getId()).log(tmpLogStatus, Details);
+				
 				if(Globals.exception != null)
 				{
 				objTestCaseNode.log(Status.FAIL, Globals.exception);
+				objTestCaseNode.fail(Globals.exception);
 				Globals.exception = null;
-				try {
-					testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				testCaseMap.get(Thread.currentThread().getId()).
+				info("Screenshot Below : ", MediaEntityBuilder.createScreenCaptureFromPath(Web.captureScreenshot()).build());
 				}
 				if(Globals.error !=null)
 				{
 					objTestCaseNode.log(Status.FAIL, Globals.error);
+					objTestCaseNode.fail(Globals.error);
 					Globals.error = null;
-					try {
-						testCaseMap.get(Thread.currentThread().getId()).info("Screenshot below:").addScreenCaptureFromPath(Web.captureScreenshot());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					
+						testCaseMap.get(Thread.currentThread().getId()).
+						info("Screenshot Below : ", MediaEntityBuilder.createScreenCaptureFromPath(Web.captureScreenshot()).build());
 				}
 			}
+		}catch(Exception e)
+			{
+			objTestCaseNode.log(Status.FAIL, e);
+			e.printStackTrace();
+			}
 		}
-
 	}
 
 	public static boolean isScreenshotRequired(Status logStatus,

@@ -81,7 +81,8 @@ public class Stock {
 	public  static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) throws ParserConfigurationException {
 		
 		Stock.iterationNumber = 0;
-		tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
+		tcName = Globals.manualtoAutoTCMap.get(tcName);
+		Globals.GC_MANUAL_TC_REPORTER_MAP.put(Thread.currentThread().getId(),tcName);
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 		// Getting Application name and Module name so that the
 		// correct excel is picked up
@@ -410,7 +411,7 @@ public class Stock {
 	 * @param globalTestData<pre>It is the testdata map for the respective testcase</pre>
 	 * @return <pre><b>Returns the data for the running iteration number</b></pre>
 	 */
-	public   Map<String,String> getIterationTestData(
+	public static   Map<String,String> getIterationTestData(
 			LinkedHashMap<Integer, Map<String, String>> globalTestData) {
 		LinkedList<Integer> keyList = new LinkedList<>(globalTestData.keySet());
 		int index = keyList.get(iterationNumber);
@@ -418,9 +419,10 @@ public class Stock {
 		return globalTestData.get(index);
 	}
 	
-	public   LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) throws ParserConfigurationException {
+	public static   LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) throws ParserConfigurationException {
 		Stock.iterationNumber = 0;
-		tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
+		//tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
+		tcName = Globals.manualtoAutoTCMap.get(tcName);
 		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
 
 		// Getting Application name and Module name so that the

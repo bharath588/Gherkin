@@ -393,134 +393,142 @@ public class Web {
 	}
 	}	
 	/**
-	 * <pre>
-	 * Method to initiate webDriver object based on used specified browser type
-	 * Browser Types:
-	 * 	1. <b>INTERNET_EXPLORER</b> or <b>IEXPLORE</b> or <b>IE</b>
-	 * 	2. <b>FIREFOX</b> or <b>FF</b>
-	 * 	3. <b>CHROME</b>
-	 * </pre>
-	 * 
-	 * @param webBrowser
-	 * @return
-	 */
-	public static WebDriver getWebDriver(String webBrowser) {
-		WebDriver webDriver = multiDriver.get();
+     * <pre>
+     * Method to initiate webDriver object based on used specified browser type
+     * Browser Types:
+     *     1. <b>INTERNET_EXPLORER</b> or <b>IEXPLORE</b> or <b>IE</b>
+     *     2. <b>FIREFOX</b> or <b>FF</b>
+     *     3. <b>CHROME</b>
+     * </pre>
+     * 
+      * @param webBrowser
+     * @return
+     */
+     public static WebDriver getWebDriver(String webBrowser) {
+            WebDriver webDriver = multiDriver.get();
 
-		if(webDriver == null){
-			 if(Mobile.mobilePlatform){			 
-				 webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;				
-				multiDriver.set(webdriver);
-				 return webdriver ;
-				
-			}
-			 else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
-					|| webBrowser.trim().equalsIgnoreCase("IEXPLORE")
-					|| webBrowser.trim().equalsIgnoreCase("IE")) {
-				DesiredCapabilities capabilities = DesiredCapabilities
-						.internetExplorer();
-				capabilities.setCapability("ignoreZoomSetting", true);
-				capabilities.setCapability("ie.ensureCleanSession", true);
-				System.setProperty("webdriver.ie.driver",
-						Stock.getConfigParam("IEDriverClassPath"));
-				webDriver = new InternetExplorerDriver(capabilities);
+            if(webDriver == null){
+                   if(Mobile.mobilePlatform){               
+                         webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;                         
+                         multiDriver.set(webdriver);
+                         return webdriver ;
 
-			} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
-				System.setProperty("webdriver.chrome.driver",
-						Stock.getConfigParam("ChromeDriverClassPath"));
-				/*String userProfile="C:\\Users\\KRSBHR\\AppData\\Local\\Google\\Chrome\\User Data";
-				ChromeOptions opt = new ChromeOptions();
-				//opt.addArguments("disable-extensions");
-				opt.addArguments("--start-maximized");
-	            opt.addArguments("--user-data-dir="+userProfile);*/
-	           
-	            webDriver = new ChromeDriver();
+                   }
+                   else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+                                || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
+                                || webBrowser.trim().equalsIgnoreCase("IE")) {
+                         System.setProperty("webdriver.ie.driver",
+                                       Stock.getConfigParam("IEDriverClassPath"));
+                         DesiredCapabilities capabilities = DesiredCapabilities
+                                       .internetExplorer();
+                         capabilities.setCapability("ignoreZoomSetting", true);
+                         capabilities.setCapability("ie.ensureCleanSession", true);
+                         capabilities.setCapability("requireWindowFocus", true);
+                         capabilities.setCapability(InternetExplorerDriver.
+                                         INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+                         
+                         
+                         webDriver = new InternetExplorerDriver(capabilities);
 
-			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
-					|| webBrowser.trim().equalsIgnoreCase("FF")) {
-				ProfilesIni profiles = new ProfilesIni();
-				FirefoxProfile ffProfile = profiles.getProfile("default");
-				// ffProfile.setPreference("signon.autologin.proxy", true);
+                   } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+                         System.setProperty("webdriver.chrome.driver",
+                                       Stock.getConfigParam("ChromeDriverClassPath"));
+                         webDriver = new ChromeDriver();
 
-				if (ffProfile == null) {
-					System.out.println("Initiating Firefox with dynamic profile");
-					webDriver = new FirefoxDriver();
-				} else {
-					System.out.println("Initiating Firefox with default profile");
-					webDriver = new FirefoxDriver(ffProfile);
-				}
+                   } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
+                                || webBrowser.trim().equalsIgnoreCase("FF")) {
+                         System.setProperty("webdriver.firefox.marionette", Stock.getConfigParam("GeckoDriverClassPath"));
+                         ProfilesIni profiles = new ProfilesIni();
+                         FirefoxProfile ffProfile = profiles.getProfile("default");
 
-			} else {
-				throw new Error("Unknown browser type specified: " + webBrowser);
-			}
-			Capabilities cap = ((RemoteWebDriver) webDriver).getCapabilities();
-	        String browserName = cap.getBrowserName().toUpperCase();
-	        System.out.println("BROWSER NAME:"+browserName);
-	        String os = cap.getPlatform().toString();
-	        System.out.println("OPERATING SYSTEM:"+os);
-	        String browserVersion = cap.getVersion().toString().substring(0, 4);
-	        System.out.println("BROWSER VERSION:"+browserVersion);
-			webDriver.manage().window().maximize();
-	       
-		}
-		//webdriverMap.put(Thread.currentThread().getId(), webDriver);
-		multiDriver.set(webDriver);
-		return webDriver;
-	}
+                         // ffProfile.setPreference("signon.autologin.proxy", true);
 
-	public static WebDriver getRemoteWebDriver(String webBrowser,String nodeUrl) throws MalformedURLException {		
-		RemoteWebDriver remoteWebDriver = multiRemoteDriver.get();
-		 if(Mobile.mobilePlatform){			 
-			 webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;				
-			multiDriver.set(webdriver);
-			 return webdriver ;
-			
-		}
-		 else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
-                     || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
-                     || webBrowser.trim().equalsIgnoreCase("IE")) {
-             DesiredCapabilities  capabilities = DesiredCapabilities.internetExplorer();
-               capabilities.setCapability("ignoreZoomSetting", true);
-               capabilities.setCapability("ie.ensureCleanSession", true);
-               //setCapabilities(webBrowser,Platform.XP);
-               System.setProperty("webdriver.ie.driver",Stock.getConfigParam("IEDriverClassPath"));
-               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+                         if (ffProfile == null) {
+                                System.out.println("Initiating Firefox with dynamic profile");
+                                webDriver = new FirefoxDriver();
+                         } else {
+                                System.out.println("Initiating Firefox with default profile");
+                                webDriver = new FirefoxDriver(ffProfile);
+                         }
 
-        } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
-               System.setProperty("webdriver.chrome.driver",Stock.getConfigParam("ChromeDriverClassPath"));
-          DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-             //  setCapabilities(webBrowser,Platform.XP);
-               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
-        } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
-                     || webBrowser.trim().equalsIgnoreCase("FF")) {
-               ProfilesIni profiles = new ProfilesIni();
-               FirefoxProfile ffProfile = profiles.getProfile("default");
-             DesiredCapabilities capabilities = DesiredCapabilities
-                            .firefox();
-               capabilities.setBrowserName("firefox");
-               capabilities.setCapability(FirefoxDriver.PROFILE, ffProfile);
-               //capabilities.setPlatform(Platform.XP);
-               System.out.println("node url is"+nodeUrl);
-               remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
-        } else {
+                   } else {
+                         throw new Error("Unknown browser type specified: " + webBrowser);
+                   }
+                   Capabilities cap = ((RemoteWebDriver) webDriver).getCapabilities();
+            /*     String browserName = cap.getBrowserName().toUpperCase();
+                   System.out.println("BROWSER NAME:"+browserName);
+                   String os = cap.getPlatform().toString();
+                   System.out.println("OPERATING SYSTEM:"+os);
+                   String browserVersion = cap.getVersion().toString().substring(0, 4);
+                   System.out.println("BROWSER VERSION:"+browserVersion);*/
+                   webDriver.manage().window().maximize();
 
-               throw new Error("Unknown browser type specified: " + webBrowser);
-        }
+            }
+            //webdriverMap.put(Thread.currentThread().getId(), webDriver);
+            multiDriver.set(webDriver);
+            return webDriver;
+     }
 
-        /*String nodeUrl="http://143.199.162.200:5566/wd/hub";
+     public static WebDriver getRemoteWebDriver(String webBrowser,String nodeUrl) throws MalformedURLException {           
+            RemoteWebDriver remoteWebDriver = multiRemoteDriver.get();
+            if(Mobile.mobilePlatform){               
+                   webdriver=  IOSDriverManager.setIOSNativeCapabilities() ;                         
+                   multiDriver.set(webdriver);
+                   return webdriver ;
 
-        DesiredCapabilities capability = DesiredCapabilities.firefox();
+            }
+            else if (webBrowser.trim().equalsIgnoreCase("INTERNET_EXPLORER")
+                         || webBrowser.trim().equalsIgnoreCase("IEXPLORE")
+                         || webBrowser.trim().equalsIgnoreCase("IE")) {
+                   System.setProperty("webdriver.ie.driver",Stock.getConfigParam("IEDriverClassPath"));
+                   DesiredCapabilities  capabilities = DesiredCapabilities.internetExplorer();
+                   capabilities.setCapability("ignoreZoomSetting", true);
+                   capabilities.setCapability("ie.ensureCleanSession", true);
+                   capabilities.setCapability("requireWindowFocus", true);
+                   capabilities.setCapability(InternetExplorerDriver.
+                                  INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+                   capabilities.setCapability("enablePersistentHover", true);
+                   //setCapabilities(webBrowser,Platform.XP);
+                   
+                   remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
 
-        capability.setBrowserName("firefox");
+            } else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+                   System.setProperty("webdriver.chrome.driver",Stock.getConfigParam("ChromeDriverClassPath"));
+                   DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+                   //  setCapabilities(webBrowser,Platform.XP);
+                   remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+            } else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
+                         || webBrowser.trim().equalsIgnoreCase("FF")) {
+                   System.setProperty("webdriver.firefox.marionette", Stock.getConfigParam("GeckoDriverClassPath"));
+                   ProfilesIni profiles = new ProfilesIni();
+                   FirefoxProfile ffProfile = profiles.getProfile("default");
+                   DesiredCapabilities capabilities = DesiredCapabilities
+                                .firefox();
+                   capabilities.setBrowserName("firefox");
+                   capabilities.setCapability(FirefoxDriver.PROFILE, ffProfile);
+                   //capabilities.setPlatform(Platform.XP);
+                   System.out.println("node url is"+nodeUrl);
+                   remoteWebDriver = new RemoteWebDriver(new URL(nodeUrl),capabilities);
+            } else {
 
-        capability.setPlatform(Platform.XP);
+                   throw new Error("Unknown browser type specified: " + webBrowser);
+            }
 
-        webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
-        remoteWebDriver.manage().window().maximize();
-       // webdriverMap.put(Thread.currentThread().getId(), remoteWebDriver);
-        multiRemoteDriver.set(remoteWebDriver);
-        return remoteWebDriver;
- }
+            /*String nodeUrl="http://143.199.162.200:5566/wd/hub";
+
+      DesiredCapabilities capability = DesiredCapabilities.firefox();
+
+      capability.setBrowserName("firefox");
+
+      capability.setPlatform(Platform.XP);
+
+      webDriver=new  RemoteWebDriver(new URL(nodeUrl), capability);*/
+            remoteWebDriver.manage().window().maximize();
+            // webdriverMap.put(Thread.currentThread().getId(), remoteWebDriver);
+            multiRemoteDriver.set(remoteWebDriver);
+            return remoteWebDriver;
+     }
+
 	/**
 	 * <pre>
 	 * Method to verify two strings. 
