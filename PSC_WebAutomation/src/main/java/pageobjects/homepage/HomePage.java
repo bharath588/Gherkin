@@ -35,6 +35,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
 	@FindBy(xpath=".//a[@id='logOutLink']") private WebElement logoutLink;
+	@FindBy(xpath=".//*[@id='planSearchAc_input']")
+	private WebElement searchPlansInput;
+	@FindBy(xpath=".//*[@id='planSearchAutocompleteButton']")
+	private WebElement searchPlanButton;
+	@FindBy(xpath=".//*[@id='headerInfo_xhtml']")
+	private WebElement planHeaderInfo;
 
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
@@ -43,7 +49,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private Method invokeMethodforUserVerification;
 	private String[] userData;
 	private String[] userVeriData;
-	
+
 	// userVeriData is optional for HomePage constructor
 	public HomePage(LoadableComponent<?> parent,boolean performVerification,String... userData){
 		this.parent = parent;
@@ -52,19 +58,19 @@ public class HomePage extends LoadableComponent<HomePage>{
 		this.userVeriData = new String[2];		
 		PageFactory.initElements(Web.getDriver(), this);
 	}
-	
+
 	public HomePage(){
 		PageFactory.initElements(Web.getDriver(), this);
 	}
-	
-	
+
+
 	@Override
 	protected void isLoaded() throws Error {	
-	    if(!Web.isWebElementDisplayed(weGreeting,true)){
-	    	throw new AssertionError("Plan service center landing page not loaded.");
-	    }else{
-	    //	Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
-	    }	
+		if(!Web.isWebElementDisplayed(weGreeting,true)){
+			throw new AssertionError("Plan service center landing page not loaded.");
+		}else{
+			//	Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
+		}	
 	}
 
 	@Override
@@ -88,11 +94,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 				loginObj.waitForSuccessfulLogin();
 				//Check if UserVerification Pages appears then performVerification
 				if(Web.isWebElementDisplayed(Web.returnElement(userVeriPg,"EMAIL ADDRESS"))){
-				   userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
+					userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"));
-				   userVeriData[1] = Stock.GetParameterValue("userVerificationAns");
-				   invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
-				   invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
+					userVeriData[1] = Stock.GetParameterValue("userVerificationAns");
+					invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
+					invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
 				}else{
 					//navigate to Home
 				}
@@ -108,7 +114,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}
 		}
 	}
-	
+
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
 	 *  </pre>
@@ -129,7 +135,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return null;
 	}
-		
+
 	/**Method to open each footer link after login and validate if the 
 	 * respective page is opening
 	 * 
@@ -150,36 +156,36 @@ public class HomePage extends LoadableComponent<HomePage>{
 				Web.waitForElement(footerLinks.get(iLoopCnt).findElement(By.cssSelector("a")));				
 				footerlink =  footerLinks.get(iLoopCnt).findElement(By.cssSelector("a"));
 				footerLinkText = footerlink.getText();
-				
-					if(FooterLinks.get(iLoopCnt).equals(footerlink.getText())){	
-						Web.clickOnElement(footerlink);		
-						//Thread.sleep(2000);
-											
-						if(Web.isWebElementDisplayed(frmModalWindow,true)){
-							Web.getDriver().switchTo().frame(frmModalWindow);
-							//testData = TestDataContainer.GetParameterValue("link_Footer"+(iLoopCnt+1)); 
-							testData=Stock.GetParameterValue("link_Footer"+(iLoopCnt+1));
-							
-							if(testData.equalsIgnoreCase("PSCUserAuthorizationForm")){
-								Web.getDriver().switchTo().defaultContent();	
-								textMatch = Web.VerifyPartialText(testData, frmModalWindow.getAttribute("src"),true);
-								modalWindowHeaderText = "PSC User Authorization Form";
-							}else{
-								textMatch = Web.VerifyPartialText(testData, weModalWindowHeadertxt.getText(),true);
-								modalWindowHeaderText = weModalWindowHeadertxt.getText();
-								Web.getDriver().switchTo().defaultContent();								
-							}							
-							linkModalClose.click();						
+
+				if(FooterLinks.get(iLoopCnt).equals(footerlink.getText())){	
+					Web.clickOnElement(footerlink);		
+					//Thread.sleep(2000);
+
+					if(Web.isWebElementDisplayed(frmModalWindow,true)){
+						Web.getDriver().switchTo().frame(frmModalWindow);
+						//testData = TestDataContainer.GetParameterValue("link_Footer"+(iLoopCnt+1)); 
+						testData=Stock.GetParameterValue("link_Footer"+(iLoopCnt+1));
+
+						if(testData.equalsIgnoreCase("PSCUserAuthorizationForm")){
+							Web.getDriver().switchTo().defaultContent();	
+							textMatch = Web.VerifyPartialText(testData, frmModalWindow.getAttribute("src"),true);
+							modalWindowHeaderText = "PSC User Authorization Form";
 						}else{
-							Reporter.logEvent(Status.FAIL,"Verify if respective modal window opens from footer link", 
-							"No such modal window opended for " + footerLinkText + " link", true);
-						}
+							textMatch = Web.VerifyPartialText(testData, weModalWindowHeadertxt.getText(),true);
+							modalWindowHeaderText = weModalWindowHeadertxt.getText();
+							Web.getDriver().switchTo().defaultContent();								
+						}							
+						linkModalClose.click();						
+					}else{
+						Reporter.logEvent(Status.FAIL,"Verify if respective modal window opens from footer link", 
+								"No such modal window opended for " + footerLinkText + " link", true);
 					}
+				}
 				if(textMatch)Reporter.logEvent(Status.PASS,"Verify if footer link opens respective modal window", 
-			    "Modal window " +  modalWindowHeaderText+ " opended from footer link : " + footerLinkText, false);	
-				
+						"Modal window " +  modalWindowHeaderText+ " opended from footer link : " + footerLinkText, false);	
+
 				if(!textMatch)Reporter.logEvent(Status.FAIL,"Verify if footer link opens respective modal window", 
-				"No Modal window from footer link : " + footerLinkText, true);
+						"No Modal window from footer link : " + footerLinkText, true);
 				textMatch = false;
 			}
 		}catch(Exception e){
@@ -187,29 +193,45 @@ public class HomePage extends LoadableComponent<HomePage>{
 					"Exception Occurred while checking footer links : "+e.getMessage() , true);
 		}
 	}
-	
-    public void validate_if_homepage_loaded(String ifSingleSiteUser) throws Exception {
-        if(ifSingleSiteUser.equalsIgnoreCase("false")){
-               if(Web.isWebElementDisplayed(urlJumpPage, true)){
-            	  Web.clickOnElement(urlJumpPage);
-                     Web.waitForElement(weGreeting);
-                     isLoaded();
-               }else{
-                     throw new Exception("Expected Jump page not loaded");
-               }                                 
-        }else if (ifSingleSiteUser.equalsIgnoreCase("true")){
-               Web.waitForElement(weGreeting);
-               isLoaded();
-        }
- }
- 
- public void logoutPSC(){
-        if(Web.isWebElementDisplayed(logoutLink,true)){
-               logoutLink.click();
-               Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
-        }else{
-               Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
-        }
- }
+
+	public void validate_if_homepage_loaded(String ifSingleSiteUser) throws Exception {
+		if(ifSingleSiteUser.equalsIgnoreCase("false")){
+			if(Web.isWebElementDisplayed(urlJumpPage, true)){
+				Web.clickOnElement(urlJumpPage);
+				Web.waitForElement(weGreeting);
+				isLoaded();
+			}else{
+				throw new Exception("Expected Jump page not loaded");
+			}                                 
+		}else if (ifSingleSiteUser.equalsIgnoreCase("true")){
+			Web.waitForElement(weGreeting);
+			isLoaded();
+		}
+	}
+
+	public void logoutPSC(){
+		if(Web.isWebElementDisplayed(logoutLink,true)){
+			logoutLink.click();
+			Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
+		}else{
+			Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
+		}
+	}
+
+	public boolean searchPlan()
+	{ boolean planTextDisplayed = false;
+	try{
+		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber"));
+		Web.clickOnElement(searchPlanButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
+			return planTextDisplayed = true;
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return planTextDisplayed;
+	}
 
 }

@@ -1,6 +1,17 @@
 <TestData Application="PSC" environment="QA">
 	<DateTime value="10/6/2016 7:08:42 PM"></DateTime>
 	<Module name="Program"></Module>
+	<Module name="plan">
+		<TestCase name="Plan_Search_Redirection_Plan_Summary_Page">
+			<Iteration Execution="Yes " id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="planNumber" value="331045-01" />
+			</Iteration>
+		</TestCase>
+	</Module>
 	<Module name="login">
 		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 			<Iteration Execution="Yes" id="1">
@@ -151,19 +162,21 @@
 		<TestCase
 			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="5BC5G
-" />
+				<parameter name="username" value="5C84G" />
 				<parameter name="password" value="testing1" />
-				<parameter name="UserVeriEmail" value="discard@gwl.com" />
-				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="UserVeriEmail" value="ravi.pandey@greatwest.com" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ifSingleSiteUser" value="True" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="username" value="5BC5G
-" />
+				<parameter name="username" value="5C84G" />
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="" />
-				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="ifSingleSiteUser" value="True" />
 			</Iteration>
 		</TestCase>

@@ -1,0 +1,601 @@
+<TestData Application="PSC" environment="QA">
+	<DateTime value="11/29/2016 4:33:33 PM"></DateTime>
+	<Module name="Program"></Module>
+	<Module name="login">
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="" />
+				<parameter name="errorMessages" value="Password is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="errorMessages" value="User ID is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="" />
+				<parameter name="password" value="" />
+				<parameter name="errorMessages"
+					value="User ID is required.&#10;Password is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1USER" />
+				<parameter name="password" value="badpassword" />
+				<parameter name="errorMessages"
+					value="Please enter a valid Username / Password combination." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="link_Footer1" value="sponsor-security" />
+				<parameter name="link_Footer2" value="sponsor-privacy" />
+				<parameter name="link_Footer3" value="sponsor-terms-and-conditions" />
+				<parameter name="link_Footer4" value="sponsor-business-continuity" />
+				<parameter name="link_Footer5" value="sponsor-broker-check" />
+				<parameter name="link_Footer6" value="sponsor-excessive-trading" />
+				<parameter name="link_Footer7"
+					value="Plan_Service_Center_User_Authorization_Form" />
+				<parameter name="link_Header1" value="sponsor-faq" />
+				<parameter name="link_Header2"
+					value="https://participant.empower-retirement.com/participant/#/login" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC014_Footer links_Postlogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="txtUserVeriEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="link_Footer1" value="Security" />
+				<parameter name="link_Footer2" value="Privacy" />
+				<parameter name="link_Footer3" value="Terms and conditions" />
+				<parameter name="link_Footer4" value="Business Continuity Plan" />
+				<parameter name="link_Footer5" value="BrokerCheck" />
+				<parameter name="link_Footer6"
+					value="Market timing and excessive trading policies" />
+				<parameter name="link_Footer7" value="PSCUserAuthorizationForm" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="ForceLoginTrueURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=true" />
+				<parameter name="ForceLoginFalseURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=false" />
+				<parameter name="ForceLoginDummyURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=1234ascd" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC017_Internal and External User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="Comments" value="User ID for Internal users" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="Comments" value="User ID for External users" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="userverification">
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="" />
+				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="expectedErrorMessage"
+					value="Email is Required&#10;&#10;Security Answer is Required" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="expectedErrorMessage" value="Email is Required" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="expectedErrorMessage" value="Security Answer is Required" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="Invalid" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="expectedErrorMessage" value="Email format is invalid" />
+			</Iteration>
+			<Iteration Execution="Yes" id="5">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
+				<parameter name="UserSecondaryAns" value="invalid" />
+				<parameter name="expectedErrorMessage"
+					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive." />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_multiple_site_within_same_browser_session">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="ifSingleSiteUser" value="False" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="" />
+				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="ifSingleSiteUser" value="False" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="ifSingleSiteUser" value="True" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="" />
+				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="ifSingleSiteUser" value="True" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	
+	<Module name="employeesearch">
+		<TestCase name="Employee_Search_Sanity_Suite_validssn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="1" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_invalidssn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="423423" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_validname">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="s" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_invalidname">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="jack" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_validempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="0" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_invalidempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="21131" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_plandiv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_valid_ppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ParticipantId" value="1" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_invalid_ppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ParticipantId" value="dsq" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicatessn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="12" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicatename">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="a" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicateempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="1" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicateppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Participant ID" value="2" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicatediv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ppt_planonediv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ppt_planmultidiv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_screen_elements">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_sorting">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_pagination">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="002143838" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_order">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_hyperlinks">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_redirect">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_limit">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_filter">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="FilterText" value="a" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ssn_ext">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_emp_err_code">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_termed_employee">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_valid_res_termed_emp">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ssn_masking">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="query">
+		<parameter QueryName="setDefaultPlanNullQuery" DB="ParticipantDataDB"
+			Query="update users set default_ga_id=null where logon_id = ?" />
+		<parameter QueryName="getNumberOfPlansQuery" DB="ParticipantDataDB"
+			Query="select distinct uda.ga_id
+from user_data_access uda
+join(select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') reftable 
+ON uda.ga_id = reftable.ga_id 
+where uda.user_logon_id = ?" />
+		<parameter QueryName="deleteSecurityAnsQuery" DB="ParticipantDataDB"
+			Query="delete from user_security_questions where user_logon_id =?" />
+		<parameter QueryName="updateUserEffdateQuery" DB="ParticipantDataDB"
+			Query="update ISIS_PASSWORD set effdate =effdate-360 where user_logon_id = ?" />
+		<parameter QueryName="getEmailaddressQuery" DB="ParticipantDataDB"
+			Query="select email_address from users where logon_id = ?" />
+		<parameter QueryName="deleteFriendlyUsernameQuery" DB="CommonDB"
+			Query="delete from FRIENDLY_USERNAME
+where user_logon_id =?
+and FRIENDLY_USERNAME in
+( select  FRIENDLY_USERNAME from users where logon_id = ?)" />
+		<parameter QueryName="updateAttributesQuery" DB="ParticipantDataDB"
+			Query="update users
+set LAST_LOGIN_DATE_TIME = null ,
+cas_web_agreement_accept_ind=null,
+CAS_WEB_AGREEMENT_DPDATE_TIME = null ,
+DEFAULT_GA_ID = null ,
+FRIENDLY_USERNAME = null ,
+FRIENDLY_USERNAME_OPT_OUT_IND = null
+where logon_id =?
+" />
+		<parameter QueryName="getRecentPlanQuery" DB="ParticipantDataDB"
+			Query="select ga_id from user_data_access where dpdate_time = (select max(dpdate_time) from user_data_access where user_logon_id= ? )  and ga_id is not null" />
+		<parameter QueryName="addPlanNumberQuery" DB="ParticipantDataDB"
+			Query="insert into std_restrc
+  values (std_restrcq.nextval,
+     ?, 'GA', 'Y', 'Y',
+     null, null, null,?, 
+     null, null, null, null, null, null, null,
+     null, null, null, null, null, 0, null)" />
+		<parameter QueryName="getPlanswithDivisions" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join (select distinct ga.id, 'no division' from group_account ga 
+where termdate is null minus select distinct ga.id, 
+'no division' from group_account ga, gc_subset gs where ga.gc_id = GS.GC_ID and 
+ga.termdate is null union select distinct ga.id, 'has divisions' from group_account ga, gc_subset gs where 
+ga.gc_id = GS.GC_ID and ga.termdate is null order by id) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getPlanswithMorethanSingleDivision"
+			DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
+      (SELECT GA.ID,
+       count(GS.BASIS) as count 
+ FROM GC_SUBSET GS, GROUP_CLIENT GC, GROUP_ACCOUNT GA
+ WHERE GA. GC_ID = GC.ID
+       AND GC .ID = GS .GC_ID
+      AND GS .BASIS IS NOT NULL
+      AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ? and reftable.count &gt; '1') ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getPlanswithSingleDivision" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
+      (SELECT GA.ID,
+       count(GS.BASIS) as count 
+ FROM GC_SUBSET GS, GROUP_CLIENT GC, GROUP_ACCOUNT GA
+ WHERE GA. GC_ID = GC.ID
+       AND GC .ID = GS .GC_ID
+      AND GS .BASIS IS NOT NULL
+      AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ? and reftable.count = '1') ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="selectDefaultPlanQuery" DB="ParticipantDataDB"
+			Query="select default_ga_id from users where logon_id = ?" />
+		<parameter QueryName="selectSSNwithExt" DB="ParticipantDataDB"
+			Query="SELECT  A.ID,
+        A.SSN  ,
+        A.SSN_EXT  ,
+        A.LAST_NAME  ,
+        B.GA_ID ,
+        B.STATUS_CODE ,
+        B.STATUS_SUBCODE
+    FROM INDIVIDUAL A, PART_AGRMT B
+   WHERE  A.ID  =  B.  IND_ID AND  B.  GA_ID =  ?  AND  A.  SSN_EXT IS  NOT  NULL
+ORDER BY A.LAST_NAME" />
+		<parameter QueryName="getPlansForErrCode" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select ga_id from part_agrmt where status_subcode = 'ERR') reftable ON userdatatable.ga_id = reftable.ga_id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getEmployeeIDErr" DB="ParticipantDataDB"
+			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id  = ? and status_subcode='ERR'and a.ind_id=b.id" />
+		<parameter QueryName="getPlanForTermedEmployees" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select p.ga_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
+order by emp_termdate desc) reftable ON userdatatable.ga_id = reftable.ga_id where
+userdatatable.user_logon_id =?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getEmpIdforTermedEmployee" DB="ParticipantDataDB"
+			Query="select e.ind_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
+and p.ga_id= ?
+order by emp_termdate desc" />
+		<parameter QueryName="selectPlanForSSNMasking" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select ga.id,
+pv.SSN_MASKING_ALLOWED_IND as ssnMaskingAllowedInd, 
+pv.SSN_MASKING_FORMAT_VIEW_MODE as ssnMaskingFormatViewMode, 
+pv.SSN_MASKING_FORMAT_INPUT_MODE as ssnMaskingFormatInputMode, prov_company
+from PROV_COMPANY pv, product p, group_account ga 
+where pv.code = p.PROV_COMPANY 
+and pv.SSN_MASKING_ALLOWED_IND = 'Y'
+and p.id = ga.prod_id) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="updateDefaultPlanQuery" DB="ParticipantDataDB"
+			Query="update users set DEFAULT_GA_ID=? where logon_id=?" />
+		<parameter QueryName="getMoneySourceCols" DB="ParticipantDataDB"
+			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
+gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai 
+where std.code = gm.sdmt_code 
+AND gm.ga_id = ?
+AND ai.ga_id = gm.ga_id  
+AND ai.sdmt_code = gm.sdmt_code 
+AND ai.gdmt_seqnbr = gm.seqnbr
+AND ai.sddety_code = 'REG' 
+AND ai.effdate &lt;= sysdate 
+AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)  
+AND ai.part_allocn_ind = 'Y'
+AND gm.SDMT_CODE IN (?)
+AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR" />
+		<parameter QueryName="getMoneySources" DB="ParticipantDataDB"
+			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
+gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai where std.code = gm.sdmt_code 
+AND gm.ga_id = ? 
+AND ai.ga_id = gm.ga_id  
+AND ai.sdmt_code = gm.sdmt_code 
+AND ai.gdmt_seqnbr = gm.seqnbr
+AND ai.sddety_code = 'REG' 
+AND ai.effdate &lt;= sysdate 
+AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)  
+AND ai.part_allocn_ind = 'Y'
+AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR " />
+		<parameter QueryName="getTermedEmployees" DB="ParticipantDataDB"
+			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id = ? and status_code='T'and a.ind_id=b.id
+" />
+		<parameter QueryName="queryChangeUserCategory" DB="ParticipantDataDB"
+			Query="update users set user_category = 'PLAN EMPLOYEE' where logon_id=?" />
+		<parameter QueryName="getDefaultPlanUser" DB="ParticipantDataDB"
+			Query="select default_ga_id from users where logon_id=?" />
+		<parameter QueryName="checkIfSSNExist" DB="ParticipantDataDB"
+			Query="select ssn from individual where ssn = ?" />
+		<parameter QueryName="getGSCBasisAndValue" DB="ParticipantDataDB"
+			Query="select distinct gcs_basis,gcs_value from user_data_access where ga_id=?" />
+		<parameter QueryName="deleteOldPasswordRows" DB="ParticipantDataDB"
+			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
+not IN(select max(EFFDATE) 
+from isis_password 
+where user_logon_id=?) " />
+		<parameter QueryName="deleteRecentPasswordRows" DB="ParticipantDataDB"
+			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
+not IN(select min(EFFDATE) 
+from isis_password 
+where user_logon_id=?) " />
+		<parameter QueryName="queryToNumberOfrows" DB="ParticipantDataDB"
+			Query="select * from isis_password where user_logon_id = ?" />
+		<parameter QueryName="queryTosetOldPassword" DB="ParticipantDataDB"
+			Query="update ISIS_PASSWORD set effdate =sysdate where user_logon_id = ?" />
+		<parameter QueryName="getNumberofSiteAccess" DB="ParticipantDataDB"
+			Query="select distinct av.accu_code,ud.prod_id, ud.prov_company from user_data_access ud join access_customization_view av on ud.ga_id = av.ga_id where 
+user_logon_id = ? and av.access_type_code='PSC_WEB'" />
+		<parameter QueryName="queryTofindPlansForUser" DB="ParticipantDataDB"
+			Query="select distinct GA_ID from access_customization_view where  
+GA_ID in (select DISTINCT GA_ID from user_data_access where 
+user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
+		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
+			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
+	</Module>
+</TestData>

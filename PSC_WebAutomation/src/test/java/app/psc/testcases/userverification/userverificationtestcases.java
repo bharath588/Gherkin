@@ -209,7 +209,7 @@ public class userverificationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
-					"Verify the user is navigated directly to the Jump page while re-login within same session", false);									
+					"Verify the user is navigated directly to the home while re-login within same session", false);									
 			
 			userverification = new UserVerificationPage();
 			home = new HomePage();			
@@ -233,9 +233,18 @@ public class userverificationtestcases {
 						
 			if(itr==1){
 				userverification.get();
-				userverification.performVerification(
+				if(userverification.getSecurityQuestion().equalsIgnoreCase("car"))
+					userverification.performVerification(
 						        new String[] {Stock.GetParameterValue("UserVeriEmail"),
-								              Stock.GetParameterValue("UserSecondaryAns")});				
+								              Stock.GetParameterValue("dreamCar")});
+				else if(userverification.getSecurityQuestion().equalsIgnoreCase("drink"))
+					userverification.performVerification(
+					        new String[] {Stock.GetParameterValue("UserVeriEmail"),
+							              Stock.GetParameterValue("favDrink")});
+				else
+					userverification.performVerification(
+					        new String[] {Stock.GetParameterValue("UserVeriEmail"),
+							              Stock.GetParameterValue("spouseMidName")});
 				home.validate_if_homepage_loaded(Stock.GetParameterValue("ifSingleSiteUser"));
 			}
 			if(itr==2){

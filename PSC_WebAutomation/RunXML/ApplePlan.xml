@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">
+<suite name="testsuite" parallel="classes" thread-count="2">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Yellow_Period_Exec1">
+	<test name="Regression_Orange_Period_Exec1">
 		<classes>
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>

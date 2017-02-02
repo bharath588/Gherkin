@@ -35,7 +35,9 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	@FindBy(xpath = ".//*[@id='branding-topnav']/div/div[1]/h2/a/span")
 	private WebElement linkPSC;
 	@FindBy(xpath = ".//*[@id='gritter-item-1']/div/div[1]")
-	private WebElement dismissErrorBox;
+	private WebElement dismissErrorBox;	
+	@FindBy(xpath=".//*[@class='verificationTable']/tbody/tr[1]/td/table/tbody/tr[3]/td[2]/label")
+	private WebElement securityQuestion;
 	/* variable declaration */
 	LoadableComponent<?> parent;
 	ResultSet resultset;
@@ -211,5 +213,23 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			}
 		}
 		return emailAddr;
+	}
+	
+	public String getSecurityQuestion()
+	{
+		String securityQuestionText = "";
+		try{
+			if(securityQuestion.getText().contains("car"))
+				return securityQuestionText="car";
+			else if(securityQuestion.getText().contains("drink"))
+				return securityQuestionText="drink";
+			else
+				return securityQuestionText="spouse";
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return securityQuestionText;
 	}
 }
