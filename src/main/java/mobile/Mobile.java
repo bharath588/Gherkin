@@ -173,7 +173,7 @@ public class Mobile {
 		  if(sActText.contains(sExpText))
 			  Reporter.logEvent(Status.PASS, "Found Text :"+sExpText,"", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText +"But Actual was :"+sActText,"", true);
+			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText +" \n But Actual was :"+sActText,"", true);
 		}
 	}
 	
@@ -269,7 +269,7 @@ public class Mobile {
 			if (ele.isDisplayed()) {
 				flag = true;
 			} else {
-				System.out.println("Not Display :" );
+				System.out.println("Not Displaying : "+link );
 				flag = false;
 			}
 		} 
