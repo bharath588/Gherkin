@@ -103,7 +103,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 					//navigate to Home
 				}
 			}
-			urlJumpPage.click();
+			//urlJumpPage.click();
+			Web.clickOnElement(urlJumpPage);
 			Web.waitForElement(weGreeting);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
 		} catch (Exception e) {
