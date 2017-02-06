@@ -7,6 +7,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.apache.commons.lang3.StringUtils;
@@ -45,8 +46,10 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lnkLogout;
 	@FindBy(xpath = "//button[text()[normalize-space()='Change My Investments']]")
 	private WebElement btnChangeMyInvestment;
-	@FindBy(xpath = ".//strong[text()[normalize-space()='Rebalance my investments']]")
+	@FindBy(xpath = ".//strong[text()[normalize-space()='Rebalance my current balance']]")
 	private WebElement radioRebalanceCurrBal;
+	//@FindBy(xpath = ".//strong[text()[normalize-space()='Rebalance my investments']]")
+	//private WebElement radioRebalanceCurrBal;
 	@FindBy(xpath = ".//strong[text()[normalize-space()='Change how my future contributions will be invested']]")
 	private WebElement radioChangeFutureContr;
 	@FindBy(xpath = ".//strong[text()[normalize-space()='Change how my current balance is invested']]")
@@ -193,6 +196,11 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblDollarCostSetupDate;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(id = "mtgRadioBtn0")
+	private WebElement radioMTG1;
+	@FindBy(xpath = "//input[@value='MTG1']")
+	private WebElement radioF2fMTG1;
+	
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath = "//input[@name='Total']")
 	private WebElement inpTotal;
@@ -300,6 +308,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Submit button Rebalancer")) {
 			return this.btnSubmitForRebalancer;
+		}
+		if (fieldName.trim().equalsIgnoreCase("F2F MTG1")) {
+			return this.radioF2fMTG1;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Submit button F2F")) {
 			return this.btnSubmitForF2F;
@@ -905,7 +916,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				"Transfer Cancelled", true);
 		Web.getDriver().switchTo().defaultContent();
 	}
-	public void rebalanceInvestment_New(int noOfInvestmentoptions,String[] percent) {
+	public void rebalanceInvestment_New(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
+		if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+			Web.clickOnElement(radioMTG1);
+			Thread.sleep(2000);
+			Web.clickOnElement(btnContinue1);
+		}
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(btnChooseIndividualFunds);

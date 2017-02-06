@@ -5,400 +5,238 @@
         <listener class-name="core.framework.TestListener"/>
     </listeners>
     
-      <test name="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__AfterTax"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     
-   <test name="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Deferral_013_Regular_ROTH-Maximize to the company match">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_017_Regular_SPLIT-Maximize to the company match">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    
-     <test name="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_014_Regular_ROTH-Maximize to the IRS limit">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_011_Regular_BEFORE-Maximize to the IRS limit">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Regular"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Deferral_005_Catch up_Maximize to the IRS limit">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Participant_not_elegible_for_Bonus_type_contribution"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
-    <test name="Catchup_MaximizeToIRSLimit_Split">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Catchup_SelectAnotherContribution_Split">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Catchup_SelectAnotherContribution_Roth">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Catchup_MaximizeToIRSLimit_Roth">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Catch_up"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Bonus"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Bonus_SelectAnotherContribution_before">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Bonus"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Bonus_SelectAnotherContribution_split">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral__Bonus"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Other"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Other_SelectAnotherContribution_Before">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Other"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="Other_SelectAnotherContribution_split">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_Other"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
-    <test name="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type, split contribution">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Multiple_deferral_split_contribution"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Deferral_023_Multiple_Change contribution rate for multiple deferral type, split contributions">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Multiple_deferral_split_contribution"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
- 
-
-     <test name="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Regular_SPLIT_Maximize_me_always"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-     <test name="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_008_Catch_up_Maximize_me_always"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-     <test name="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_006_Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <test name="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_020_Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
-    <test name="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
-    
-    
-    <test name="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Standard_Contribution_with_Chaining"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Standard_Contribution_with_Chaining"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Standard_Contribution_with_Chaining"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-  <test name="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions6"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-      <test name="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions7"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-   <test name="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions8"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+      <test name="Deferrals">
+      
+    <!-- PART 1 -->
   
-     <test name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
         <classes>
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-                    <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-     <test name="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferrals_Participant_Prior_Contributions8"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+                   <!--  <include name="SIT_PPTWEB_Deferral__AfterTax">
+                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_016_Regular_SPLIT_Select_Another_contributiont_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_010_Regular_BEFORE_Maximize_to_the_company_match">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_013_Regular_ROTH_Maximize_to_the_company_match">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013_Regular_ROTH-Maximize to the company match">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_015_Regular_ROTH_Select_Another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_015_Regular_ROTH-Select Another contribution rate">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_017_Regular_SPLIT_Maximize_to_the_company_match">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017_Regular_SPLIT-Maximize to the company match">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_012_Regular_BEFORE_Select_Another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_014_Regular_ROTH_Maximize_to_the_IRS_limit">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014_Regular_ROTH-Maximize to the IRS limit">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_011_Regular_BEFORE_Maximize_to_the_IRS_limit">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011_Regular_BEFORE-Maximize to the IRS limit">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_005_Catch_up_Maximize_to_the_IRS_limit">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005_Catch up_Maximize to the IRS limit">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_004_Catch_up_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
+                    </parameter>
+                    </include>
+               
+                    <include name="Participant_not_elegible_for_Bonus_type_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
+                    </parameter>
+                    </include>
+                
+                    <include name="Catchup_MaximizeToIRSLimit_Split">
+                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Split">
+                    </parameter>
+                    </include>
+                
+                    <include name="Catchup_SelectAnotherContribution_Split">
+                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Split">
+                    </parameter>
+                    </include>
+                
+                    <include name="Catchup_SelectAnotherContribution_Roth">
+                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Roth">
+                    </parameter>
+                    </include>
+               
+                    <include name="Catchup_MaximizeToIRSLimit_Roth">
+                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Roth">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_009_Other_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
+                    </parameter>
+                    </include>
+               
+                    <include name="Other_SelectAnotherContribution_Catchup_Roth">
+                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_Catchup_Roth">
+                    </parameter>
+                    </include>
+               
+                    <include name="Other_SelectAnotherContribution_split">
+                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_split">
+                    </parameter>
+                    </include> -->
+             
+    <!--  PART 2-->
     
-    <test name="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
-        <classes>
-            <class name="app.pptweb.testcases.deferrals.deferralstestcases">
-                <methods>
-                    <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero"/>
+                  <!--  <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
+                    </parameter>
+                    </include>
+                
+                    <include name="Bonus_SelectAnotherContribution_after">
+                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_after">
+                    </parameter>
+                    </include>
+                
+                    <include name="Bonus_SelectAnotherContribution_split">
+                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
+                    </parameter>
+                    </include> 
+                 -->
+      
+    
+   <!--  PART 3--> 
+   
+  
+                    <include name="Create_Multiple_deferral_split_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_022_Multiple_Create contribution rate for multiple deferral type, split contribution">
+                    </parameter>
+                    </include>
+                
+                    <include name="Edit_Multiple_deferral_split_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_023_Multiple_Change contribution rate for multiple deferral type, split contributions">
+                    </parameter>
+                    </include>
+               
+                    <include name="Regular_SPLIT_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_008_Catch_up_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_006_Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_020_Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
+                    </parameter>
+                    </include>
+               
+   <!--  PART 4-->
+   
+                  <!--   <include name="Deferrals_Participant_Prior_Contributions6">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferrals_Participant_Prior_Contributions7">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferrals_Participant_Prior_Contributions8">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
+                    </parameter>
+                    </include> -->
+               
+   <!--  PART 5 -->
+   
+                  <!--   <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+                    </parameter>
+                    </include>
+                
+                    <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+                    </parameter>
+                    </include>
+                
+                    <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
+                    </parameter>
+                    </include>
+               
+                    <include name="Deferrals_Participant_Prior_Contributions8">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
+                    </parameter>
+                    </include>-->
+              <!--  PART 6-->   
+                 <!--    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
+                    </parameter>
+                    </include>
+                
+                    <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
+                    </parameter>
+                    </include> 
+                    include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
+                    </parameter>
+                    </include>
+                    -->
                 </methods>
             </class>
         </classes>

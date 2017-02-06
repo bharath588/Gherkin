@@ -260,6 +260,25 @@ public class authenticationtestcases {
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 	}
+	
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Activation_Code_Text(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
+
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Activation_Code_Voice(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Activation_Code_Email(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Have_Activation_Code(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
 
 	@Test(dataProvider = "setData")
 	public void SF04_TC05_ForgotPassword_DidntReceiveActivationCode(int itr, Map<String, String> testdata){

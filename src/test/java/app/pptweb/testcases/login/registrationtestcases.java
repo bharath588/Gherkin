@@ -1303,7 +1303,16 @@ public class registrationtestcases {
 			}
 		}
 	}
-
+	@Test(dataProvider = "setData")
+	public void SF01_TC03_NegativeFlow_WithoutPINTab(int itr,
+			Map<String, String> testdata) {
+		SF01_TC03_NegativeFlow_WithAndWithoutPINTabs(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void SF01_TC03_NegativeFlow_WithPINTab(int itr,
+			Map<String, String> testdata) {
+		SF01_TC03_NegativeFlow_WithAndWithoutPINTabs(itr, testdata);
+	}
 	@Test(dataProvider = "setData")
 	public void SF01_TC03_NegativeFlow_WithoutPINTab_Apple(int itr,
 			Map<String, String> testdata) {
@@ -1881,7 +1890,19 @@ public class registrationtestcases {
 			}
 		}
 	}
-
+	
+	@Test(dataProvider = "setData")
+	public void SF01_TC05_UserLock_WithPIN(int itr,
+			Map<String, String> testdata) {
+		SF01_TC05_UserLock_WithAndWithoutPIN(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void SF01_TC05_UserLock_WithOutPIN(int itr,
+			Map<String, String> testdata) {
+		SF01_TC05_UserLock_WithAndWithoutPIN(itr, testdata);
+	}
+	
 	@Test(dataProvider = "setData")
 	public void SF03_TC01_AccountSetup(int itr, Map<String, String> testdata) {
 
@@ -2068,6 +2089,37 @@ public class registrationtestcases {
 		}
 	}
 
+	@Test(dataProvider = "setData")
+	public void AccountSetup_WithPin_Validate_ContactInfo(int itr, Map<String, String> testdata) {
+		SF03_TC01_AccountSetup(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void AccountSetup_WithPin_Validate_UserNameInfo(int itr, Map<String, String> testdata) {
+		SF03_TC01_AccountSetup(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void AccountSetup_WithOutPin_Validate_ContactInfo(int itr, Map<String, String> testdata) {
+		SF03_TC01_AccountSetup(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void AccountSetup_WithOutPin_Validate_UserNameInfo(int itr, Map<String, String> testdata) {
+		SF03_TC01_AccountSetup(itr, testdata);
+	}
+		
+	@Test(dataProvider = "setData")
+	public void AccountLookup_PositiveFlow_WithPIN(int itr,
+			Map<String, String> testdata) {
+		SF04_TC01_AccountLookup_PositiveFlow(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void AccountLookup_PositiveFlow_WithOutPIN(int itr,
+			Map<String, String> testdata) {
+		SF04_TC01_AccountLookup_PositiveFlow(itr, testdata);
+	}
+	
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_AccountLookup_PositiveFlow_Apple(int itr,
 			Map<String, String> testdata) {
@@ -2380,7 +2432,30 @@ public class registrationtestcases {
 			}
 		}
 	}
-
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_ON_5Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_ON_2Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_OFF_5Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_OFF_2Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(itr, testdata);
+	}
 	@Test(dataProvider = "setData")
 	public void SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(int itr,
 			Map<String, String> testdata) {

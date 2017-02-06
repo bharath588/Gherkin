@@ -4,14 +4,19 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -1480,4 +1485,613 @@ public class sanityTestCases {
 			}
 		}
 	}
+	
+	@Test(dataProvider = "setData")
+	public void Pre_Login_Page_footer_links_check(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			lib.Reporter
+			.logEvent(
+					Status.INFO,
+					"Test Data used for this Test Case:",
+					printTestData(),
+					false);
+			LoginPage login = new LoginPage();
+			login.get();
+
+			String copyRightInfo = "";
+			boolean isLogoDisplayed = false;
+			boolean isBannerDisplayed = false;
+			boolean isTextMatching = false;
+			isLogoDisplayed = login.isSponsorLogoDisplayed(Stock
+					.GetParameterValue("logoName"));
+			if (isLogoDisplayed) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Sponsor Logo Displayed on the Login Page",
+						"Sponsor Logo is Same on the Login Page", true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Sponsor Logo Displayed on the Login Page",
+								"Sponsor Logo is not Displayed on the Login Page",
+								true);
+			}
+			isBannerDisplayed = login.isSponsorBannerDisplayed();
+			if (isBannerDisplayed) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Sponsor Banner Displayed on the Login Page",
+						"Sponsor Banner is Same on the Login Page", false);
+
+			} else {
+				lib.Reporter.logEvent(Status.FAIL,
+						"Sponsor Banner Displayed on the Login Page",
+						"Sponsor Banner is not Displayed on the Login Page",
+						false);
+			}
+			copyRightInfo = login.getWebElementText("copyright info");
+			isTextMatching = Web.VerifyText(
+					Stock.GetParameterValue("copyright info"), copyRightInfo,
+					true);
+
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Check CopyRight Information on the Login Page",
+								"CopyRight Informatio is Same on the Login Page",
+								false);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Check CopyRight Information on the Login Page",
+								"CopyRight Informatio is Not Same on the Login Page",
+								false);
+			}
+			if (!Common.getSponser().equalsIgnoreCase("Apple")) {
+				login.verifyWebElementDisplayed("image participant Savings rates");
+				login.verifyWebElementDisplayed("image participant Rollover options");
+				login.verifyWebElementDisplayed("image participant Browser Support");
+			}
+			//Step 2
+			
+			login.verifyWebElementDisplayed(/* "System Requirements and Security" */"Requirements and Security");
+			login.verifyWebElementDisplayed("Privacy");
+			login.verifyWebElementDisplayed(/* "Terms and Conditions" */"Terms");
+			login.verifyWebElementDisplayed(/* "Business Continuity Plan" */"Business Continuity");
+			login.verifyWebElementDisplayed(/* "Market Timing and Excessive Trading Policies" */"Market Timing and Excessive Trading");
+			login.verifyWebElementDisplayed("BrokerCheck Notification");
+			login.verifyWebElementDisplayed("FINRA Investor Education");
+			login.verifyLinkIsNotBroken("Requirements and Security");
+			login.clickDismissLink();
+			login.verifyLinkIsNotBroken("Privacy");
+			login.clickDismissLink();
+			login.verifyLinkIsNotBroken("Terms");
+			login.clickDismissLink();
+			login.verifyLinkIsNotBroken("Business Continuity");
+			login.clickDismissLink();
+			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading");
+			login.clickDismissLink();
+			login.verifyLinkIsNotBroken("FINRA Investor Education");
+			login.clickDismissLink();
+			//Step 3
+			login.verifyWebElementDisplayed("FACEBOOK");
+			login.verifyWebElementDisplayed("TWITTER");
+			login.verifyWebElementDisplayed("INSTAGRAM");
+			login.verifyWebElementDisplayed("LINKEDIN");
+			login.verifyWebElementDisplayed("YOUTUBE");
+			boolean windowFound = false;
+			String parentWindow = Web.getDriver().getWindowHandle();
+			Web.clickOnElement(login, "BrokerCheck Notification");
+			Thread.sleep(7000);
+			Set<String> handles = Web.getDriver().getWindowHandles();
+			for (String windowHandle : handles) {
+
+				if (!windowHandle.equals(parentWindow)) {
+					if (Web.getDriver().switchTo().window(windowHandle)
+							.getTitle().contains("BrokerCheck")) {
+						windowFound = true;
+						break;
+					}
+				}
+			}
+			if (windowFound) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verifying Broker Check Notification is Opened in New Window",
+								"Broker Check Notification is Opened in New Window",
+								true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.INFO,
+								"Verifying Broker Check Notification is Opened in New Window",
+								"Broker Check Notification is Not Opened Properly in New Window",
+								true);
+			}
+
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
+			Web.getDriver().navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			login.clickDismissLink();
+			String customerSupportInfo = "";
+			boolean isContactNoMatching = false;
+			customerSupportInfo = login.isValidCustomerSupportInfo();
+
+			if (customerSupportInfo.trim().isEmpty()) {
+				lib.Reporter.logEvent(Status.FAIL,
+						"Check Customer Support Information on the Login Page",
+						"No Customer Support Information on the Login Page",
+						true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.INFO,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information on the Login Page is displayed ",
+								true);
+			}
+
+			isTextMatching = Web
+					.VerifyText(
+							Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login"),
+							customerSupportInfo, true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information is Same on the Login Page",
+								false);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Check Customer Support Information on the Login Page",
+								"Customer Support Information is not same on the Login Page\nExpected:"
+										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")
+										+ "\nActual:" + customerSupportInfo,
+								false);
+			}
+			isContactNoMatching = login.isValidContactUsInfo(Stock
+					.GetParameterValue("ExpectedContactNo_Pre_login"));
+			if (isContactNoMatching) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Check Contact Us Information on the Login Page",
+						"Contact Us Information is Same on the Login Page",
+						true);
+
+			} else {
+				lib.Reporter.logEvent(Status.FAIL,
+						"Check Contact Us Information on the Login Page",
+						"Contact Us Information is not same on the Login Page",
+						true);
+			}
+			List<String> telePhoneNo = login.getPreLoginTelePhoneNo(Stock
+					.GetParameterValue("Sponsor"));
+			Web.clickOnElement(login, "dismiss");
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			homePage.get();
+			//Step 6
+			login.verifyWebElementDisplayed(/* "System Requirements and Security" */"Requirements and Security");
+			login.verifyWebElementDisplayed("Privacy");
+			login.verifyWebElementDisplayed(/* "Terms and Conditions" */"Terms");
+			login.verifyWebElementDisplayed(/* "Business Continuity Plan" */"Business Continuity");
+			login.verifyWebElementDisplayed(/* "Market Timing and Excessive Trading Policies" */"Market Timing and Excessive Trading");
+			//login.verifyWebElementDisplayed("BrokerCheck Notification");
+			login.verifyWebElementDisplayed("FINRA Investor Education");
+			login.verifyLinkIsNotBroken("Requirements and Security");
+			login.verifyLinkIsNotBroken("Privacy");
+			login.verifyLinkIsNotBroken("Terms");
+			login.verifyLinkIsNotBroken("Business Continuity");
+			login.verifyLinkIsNotBroken("Market Timing and Excessive Trading");
+			login.verifyLinkIsNotBroken("FINRA Investor Education");
+			
+			login.verifyWebElementDisplayed("FACEBOOK");
+			login.verifyWebElementDisplayed("TWITTER");
+			login.verifyWebElementDisplayed("INSTAGRAM");
+			login.verifyWebElementDisplayed("LINKEDIN");
+			login.verifyWebElementDisplayed("YOUTUBE");
+			
+			customerSupportInfo = login.isValidCustomerSupportInfo();
+
+			if (customerSupportInfo.trim().isEmpty()) {
+				lib.Reporter.logEvent(Status.FAIL,
+						"Check Customer Support Information on the Home Page",
+						"No Customer Support Information on the Home Page",
+						true);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.INFO,
+								"Check Customer Support Information on the Home Page",
+								"Customer Support Information on the Home Page is displayed ",
+								true);
+			}
+			isTextMatching = Web.VerifyText(
+					Stock.GetParameterValue(
+							"ExpectedCustomerSupportInfo_Post_Login")
+							.toString().trim(), customerSupportInfo, true);
+			if (isTextMatching) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Check Customer Support Information on the Home Page",
+								"Customer Support Information is Same on the Home Page",
+								false);
+
+			} else {
+				lib.Reporter
+						.logEvent(
+								Status.FAIL,
+								"Check Customer Support Information on the Home Page",
+								"Customer Support Information is not Same on the Home Page. Expected/ "
+										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Post_Login")
+										+ " Actual/ " + customerSupportInfo,
+								false);
+			}
+
+			isContactNoMatching = login
+					.isValidContactUsInfoPostLogin(telePhoneNo);
+			if (isContactNoMatching) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Check Contact Us Information on the Home Page",
+						"Contact Us Information is Same on the Home Page",
+						false);
+
+			} else {
+				lib.Reporter.logEvent(Status.INFO,
+						"Check Contact Us Information on the Home Page",
+						"Contact Us Information is not Same on the Home Page",
+						false);
+			}
+			// Logout if opted
+						homePage.logout(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+			    Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Beneficiary_TC008_Unmarried_with_One_beneficiary_use_address_on_record_Sanity(int itr, Map<String, String> testdata){
+		Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Beneficiary_TC009_UnMarried_One_Individual_beneficiary_new_address_Sanity(int itr, Map<String, String> testdata){
+		Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity(int itr, Map<String, String> testdata){
+		UnMarried_Multiple_Individual_beneficiary(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void Beneficiary_TC002_Married_with_Spouse_One_beneficiary_use_address_on_record_Sanity(int itr, Map<String, String> testdata){
+		Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void AccountLookup_PositiveFlow_WithPIN(int itr,
+			Map<String, String> testdata) {
+		SF04_TC01_AccountLookup_PositiveFlow(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void AccountLookup_PositiveFlow_WithOutPIN(int itr,
+			Map<String, String> testdata) {
+		SF04_TC01_AccountLookup_PositiveFlow(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Activation_Code_Email(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void ForgotPasswordFlow_SendActivationCode_Have_Activation_Code(int itr, Map<String, String> testdata){
+		SF04_TC01_SendActivationCode_ForgotPasswordFlow(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void Deferral_016_Regular_SPLIT_Select_Another_contributiont_rate(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_OFF_5Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Registration_MFA_OFF_2Point_registration(int itr,
+			Map<String, String> testdata) {
+		SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			participant_SSN = Stock.GetParameterValue("SSN");
+			String hdrBlockText;
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			AccountSetup accSetup = new AccountSetup(accLookup);
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			LandingPage homePage = new LandingPage(objAuth);
+			// Steps
+			// Step 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			boolean isMatching = false;
+			String verificationCode = null;
+			boolean isDisplayed = false;
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 - Click on "I have a PIN" or "I do not have a PIN" tab
+			accLookup.clickOnFields(Stock.GetParameterValue("TabName"));
+
+			// Step 4 - Verify user is on opted tab
+			if (accLookup.getActiveTabName().trim()
+					.equalsIgnoreCase(Stock.GetParameterValue("TabName"))) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify user is on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						"User is on \"" + Stock.GetParameterValue("TabName")
+								+ "\" tab", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify user is on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						"User is not on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						true);
+			}
+
+			// Step 5 - Enter a valid participant details and click continue
+			if (Stock.GetParameterValue("TabName").trim()
+					.equalsIgnoreCase("I have a PIN")) {
+				// Enter SSN
+				accLookup
+						.setTextToFields("SSN", Stock.GetParameterValue("SSN"));
+				// Enter PIN
+				accLookup
+						.setTextToFields("PIN", Stock.GetParameterValue("PIN"));
+
+			} else if (Stock.GetParameterValue("TabName").trim()
+					.equalsIgnoreCase("I do not have a PIN")) {
+				// Enter SSN
+				accLookup.setTextToFields("Social Security Number",
+						Stock.GetParameterValue("SSN"));
+				// Enter Zip Code
+				accLookup.setTextToFields("Zip Code",
+						Stock.GetParameterValue("ZIP_CODE"));
+				// Enter Last Name
+				accLookup.setTextToFields("Last Name",
+						Stock.GetParameterValue("LAST_NAME"));
+				// Enter Date of Birth
+				accLookup.setTextToFields("Date of Birth",
+						Stock.GetParameterValue("BIRTH_DATE"));
+				// Enter Street Address
+				accLookup.setTextToFields("Street Address",
+						Stock.GetParameterValue("FIRST_LINE_MAILING"));
+
+			}
+
+			// Click on Continue button
+			accLookup.clickOnFields("Continue");
+
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter participant details and click on Continue button.",
+					"Submitted participant details and clicked on Continue button",
+					false);
+			Thread.sleep(5000);
+			// Verify set up your account page is displayed
+			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
+			if (hdrBlockText == null) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Account setup Header block text",
+						"Header text block is not displayed on the page", true);
+			} else {
+				isMatching = Web
+						.VerifyText(
+								"We found you!\nVerification codes for enhanced security will be sent to the email address or phone number you provide below.",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'We found you!' header is displayed",
+							"user successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'We found you!' header is displayed",
+							"We found you! Header is not displayed", true);
+				}
+			}
+
+			// Verify Provide contact information Header
+			hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+			isMatching = Web.VerifyText("Provide contact information",
+					hdrBlockText, true);
+			if (isMatching) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is displayed",
+						false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is not displayed",
+						false);
+			}
+
+			// Verify 'Email Address' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "EMAIL ADDRESS")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
+
+			// Verify 'Mobile Phone Number' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "MOBILE PHONE NUMBER")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
+			// Verify 'Username' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "USERNAME")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Username' text field is displayed",
+						"'Username' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Username' text field is displayed",
+						"'Username' is not displayed", false);
+			}
+
+			// Verify 'Password' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "PASSWORD")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Password' text field is displayed",
+						"'Password' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Password' text field is displayed",
+						"'Password' is not displayed", false);
+			}
+
+			// Verify 'Re-Enter Password' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "RE-ENTER PASSWORD")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Re-Enter Password' text field is displayed",
+						"'Re-Enter Password' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Re-Enter Password' text field is displayed",
+						"'Re-Enter Password' is not displayed", false);
+			}
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup,
+					Stock.GetParameterValue("SSN") + "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(5000);
+			objAuth.selectCodeDeliveryOption(Stock
+					.GetParameterValue("codeDeliveryOption"));
+			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
+					.equalsIgnoreCase("EMAIL")) {
+				verificationCode = objAuth.getVerificationCode(false);
+			}
+			objAuth.submitVerificationCode(verificationCode, false, false);
+
+			Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
+			Thread.sleep(5000);
+			Web.waitForElement(homePage, "Log out");
+			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")
+					&& Web.isWebElementDisplayed(homePage, "Retirement income");
+			if (isDisplayed) {
+				Reporter.logEvent(Status.PASS,
+						"Verify user is on landing page",
+						"user is navigated to landing page", true);
+				Web.clickOnElement(homePage, "LOGOUT");
+			} else if (Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify user is on landing page",
+						"user is navigated to MyACCOUNTS page", true);
+				Web.clickOnElement(homePage, "LOGOUT");
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify user is on landing page",
+						"user is not navigated to Landing page", true);
+			}
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				ExecuteQuery.UnRegisterParticipant(participant_SSN);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 }

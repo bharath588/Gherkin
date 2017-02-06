@@ -6,29 +6,16 @@
     </listeners>
  
            
-    <test
-		name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin">
-		<classes>
-			<class name="app.pptweb.testcases.login.registrationtestcases">
-				<methods>
-					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration">
-					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin"></parameter>
+   <test name="Pre_Login_Page_footer_links_check">
+        <classes>
+            <class name="app.pptweb.testcases.sanity.sanityTestCases">
+                <methods>
+                    <include name="Pre_Login_Page_footer_links_check"> <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check">
+                    </parameter>
                     </include>
-				</methods>
-			</class>
-		</classes>
-	</test>  
-	 <test
-		name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Ihavepin">
-		<classes>
-			<class name="app.pptweb.testcases.login.registrationtestcases">
-				<methods>
-					<include name="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration">
-					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Ihavepin"></parameter>
-                    </include>
-				</methods>
-			</class>
-		</classes>
-	</test> 
+                </methods>
+            </class>
+        </classes>
+    </test>
 	  
 </suite>

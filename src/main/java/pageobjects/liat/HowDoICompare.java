@@ -30,11 +30,11 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		
 		@FindBy(xpath=".//*[text()='How do I compare']") private WebElement lblHowDoICompare;
 		@FindBy(xpath=".//*[text()='How do I compare to other people like me?']") private WebElement lblHwDoCmpOthrPplLikMe;
-		@FindBy(xpath="//button[@ng-click='clickViewDetailsEvent()']/span[text()[normalize-space()='View Details']]") private WebElement btnViewDetails;
-		@FindBy(xpath=".//*[contains(text(),'Additional Contributions')]") private WebElement lblAdditionalContribution;
+		@FindBy(xpath="//button[@ng-click='clickViewDetailsEvent()']/span[text()[normalize-space()='View details']]") private WebElement btnViewDetails;
+		@FindBy(xpath=".//*[contains(text(),'additional contributions')]") private WebElement lblAdditionalContribution;
 		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
-		@FindBy(xpath="//td[@class='target-my-peers']//div[contains(text(),'My Peers')]") private WebElement lblMyPeers;
+		@FindBy(xpath="//td[@class='target-my-peers']//div[contains(text(),'My peers')]") private WebElement lblMyPeers;
 		@FindBy(xpath="//td[@class='target-top-peers']//strong") private WebElement lblTopPeers;
 		@FindBy(xpath="//td[contains(text(),'Me')]") private WebElement lblMe;
 		@FindBy(xpath=".//*[@id='my-peers-pog-inner']") private WebElement circleMyPeers;
@@ -184,7 +184,7 @@ private WebElement getWebElement(String fieldName) {
 			if (Web.isWebElementDisplayed(this.btnViewDetails)) {
 				
 				this.btnViewDetails.click();
-				if (this.lblAdditionalContribution.getText().contains("Additional Contributions:")) {
+				if (this.lblAdditionalContribution.getText().contains("additional contributions:")) {
 					Reporter.logEvent(Status.PASS, "Verify 'Additional Conctribution' Text",
 							"User was able to click the view details button and check the 'Additional Conctribution' text", true);
 				} else {

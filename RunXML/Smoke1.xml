@@ -9,17 +9,9 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<!-- <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
-					 <parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
-                    </parameter>
-                    </include>
-
-					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
-					 <parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
-                    </parameter>
-                    </include>
+					
 				
-					<include name="SF01_TC018_Verify_ROR_link" >
+					<!-- <include name="SF01_TC018_Verify_ROR_link" >
 					<parameter name="ManualTCName" value="RateOfReturn_Validations">
                     </parameter>
                     </include>
@@ -32,24 +24,24 @@
 					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link">
 					<parameter name="ManualTCName" value="Request_Loan_Flow">
                     </parameter>
-                    </include>
+                    </include> 
 				
 					<include name="Balance_validations">
 					<parameter name="ManualTCName" value="Balance_validations">
                     </parameter>
                     </include>
-			
+			       
 					<include name="Transaction_History_validations">
 					<parameter name="ManualTCName" value="Transaction_History_validations">
                     </parameter>
                     </include>
-				
+				   
 					<include name="Manage_My_Investment_Flow_New">
 					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
                     </parameter>
                     </include>
 				
-					<include name="PlanForms_Validations">
+					 <include name="PlanForms_Validations">
 					<parameter name="ManualTCName" value="PlanForms_Validations">
                     </parameter>
                     </include>
@@ -67,24 +59,28 @@
 					<include name="FundToFundTransfer">
 					<parameter name="ManualTCName" value="FundToFundTransfer">
                     </parameter>
-                    </include>
-			
-					<include name="Statement_and_Documents_validations">
-					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+                    </include>-->
+			       <include name="Transaction_History_validations">
+					<parameter name="ManualTCName" value="Transaction_History_validations">
                     </parameter>
                     </include>
+					<!-- <include name="Statement_and_Documents_validations">
+					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+                    </parameter>
+                    </include> -->
 		
 					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
 					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
                     </parameter>
-                    </include> -->
+                    </include> 
+                   
 	
-                    <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
+                 <!--   <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
                     </parameter>
                     </include>
                 
-                    <!-- <include name="RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets">
+                     <include name="RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
                     </parameter>
                      </include>
@@ -143,6 +139,7 @@
 					<parameter name="ManualTCName" value="LIAT_Verify_Tour_Link">
                     </parameter>
                      </include>
+                    
 				
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
@@ -153,6 +150,7 @@
 					<parameter name="ManualTCName" value="Legacy_Home_Page_From_Magic_URL">
                     </parameter>
 				</include> -->
+				 
 				</methods>
 			</class>
 		</classes>

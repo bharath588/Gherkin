@@ -62,14 +62,14 @@ private LoadableComponent<?> parent;
 @FindBy(xpath="//input[@id='monthlyOption']") private WebElement radButtonMonthly;
 @FindBy(xpath="//input[@id='yearlyOption']") private WebElement radButtonYearly;
 @FindBy(xpath=".//*[@id='progressModal']/.//button[text()[normalize-space()='Cancel']]") private WebElement lnkCancelGoalSetup;
-@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Help Me Do It']]") private WebElement lnkHelpMeDoIt;
-@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Do It Myself']]") private WebElement lnkDoItMyself;
-@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Do It For Me']]") private WebElement lnkDoItForMe;
+@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Help me do it']]") private WebElement lnkHelpMeDoIt;
+@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Do it myself']]") private WebElement lnkDoItMyself;
+@FindBy(xpath="//ul[@id='investmentTabs']/li/a[text()[normalize-space()='Do it for me']]") private WebElement lnkDoItForMe;
 @FindBy(xpath="//ul[@id='middleTabs']/li/a[text()[normalize-space()='Plan savings']]") private WebElement lnkPlanSavings;
 @FindBy(xpath="//div[@id='helpMeDoItUnenrolled']//ul/li/a[text()='Target Date Funds']") private WebElement lblTargetDateFunds;
 @FindBy(xpath="//label[@id='investments-chooser-label']") private WebElement lblInvestment;
 @FindBy(xpath="//div[@id='paycheck-breakdown']") private WebElement paycheckRainbowLine;
-@FindBy(xpath="//button[@ng-click='viewDetailsClick()']/span[text()[normalize-space()='View Details']]") private WebElement btnViewDetails;
+@FindBy(xpath="//button[@ng-click='viewDetailsClick()']/span[text()[normalize-space()='View details']]") private WebElement btnViewDetails;
 @FindBy(xpath="//ul/li[@label='My Current Savings']/span[@class='paycheck-item-val ng-binding']") private WebElement lblCurentSavings;
 @FindBy(xpath="//ul/li[@label='My Future Savings']/span[@class='paycheck-item-val ng-binding']") private WebElement lblFutureSavings;
 //@FindBy(xpath="//ul/li[@label='Employer Past Contribution']/span[@class='paycheck-item-val ng-binding']") private WebElement lblEmployerPastContribution;
@@ -597,9 +597,9 @@ for( i=1;i<=listofelements;i++)
 
 if(mapViewDetails.containsKey(label)){
 		if(!mapViewDetails.get(label).equalsIgnoreCase("$0.00")){
-	if(label.contains("Saving"))
+	if(label.contains("saving"))
 	{
-			WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")));
+			WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My savings")));
 			if(Web.isWebElementDisplayed(lblincomeType, true))
 			{
 				
@@ -610,7 +610,7 @@ if(mapViewDetails.containsKey(label)){
 	}
 	else if(label.contains("Employer"))
 	{
-		WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")));
+		WebElement lblincomeType= Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer contributions")));
 		if(Web.isWebElementDisplayed(lblincomeType, true))
 		{
 			
@@ -635,10 +635,10 @@ if(mapViewDetails.containsKey(label)){
 		else if(mapViewDetails.get(label).equalsIgnoreCase("$0.00"))
 		{
 			
-			if(label.contains("Saving"))
+			if(label.contains("saving"))
 			{
-				if(mapViewDetails.get("My Current Savings").equalsIgnoreCase("$0.00") && mapViewDetails.get("My Future Savings").equalsIgnoreCase("$0.00")){
-					if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My Savings")))))
+				if(mapViewDetails.get("My current savings").equalsIgnoreCase("$0.00") && mapViewDetails.get("My future savings").equalsIgnoreCase("$0.00")){
+					if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","My savings")))))
 					{
 						Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "My Savings is not Displayed on Color Bar", false);
 					} else {
@@ -648,7 +648,7 @@ if(mapViewDetails.containsKey(label)){
 			}
 			else if(label.contains("Employer"))
 			{
-				if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer Contributions")))))
+				if(Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(lblIncomeType.replace("IncomeType","Employer contributions")))))
 				{
 					
 					Reporter.logEvent(Status.PASS, "Verify Income Type is Displayed on Color Bar", "Employer Contributions is not Displayed on Color Bar", false);
@@ -717,7 +717,7 @@ if(mapViewDetails.containsKey("My Future Savings")){
 	futureSavings=Double.parseDouble(mapViewDetails.get("My Future Savings").substring(1).replaceAll(",", ""));
 }
 mySavings=(int)Math.round((currentSavings+futureSavings));
-			WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","My Savings")));
+			WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","My savings")));
 			int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
 			if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
 							
@@ -728,15 +728,15 @@ mySavings=(int)Math.round((currentSavings+futureSavings));
 	}
 	else if(label.contains("Employer"))
 	{	
-		if(mapViewDetails.containsKey("Employer Past Contribution")){
+		if(mapViewDetails.containsKey("Employer past contribution")){
 			
-			currentContribution=Double.parseDouble(mapViewDetails.get("Employer Past Contribution").substring(1).replaceAll(",", ""));
+			currentContribution=Double.parseDouble(mapViewDetails.get("Employer past contribution").substring(1).replaceAll(",", ""));
 			}
-			if(mapViewDetails.containsKey("Employer Future Contribution")){
-				futureContribution=Double.parseDouble(mapViewDetails.get("Employer Future Contribution").substring(1).replaceAll(",", ""));
+			if(mapViewDetails.containsKey("Employer future contribution")){
+				futureContribution=Double.parseDouble(mapViewDetails.get("Employer future contribution").substring(1).replaceAll(",", ""));
 			}
 			mySavings=(int)Math.round((currentContribution+futureContribution));
-						WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","Employer Contributions")));
+						WebElement valincomeType= Web.getDriver().findElement(By.xpath(valIncomeType.replace("IncomeType","Employer contributions")));
 						int savings =Integer.parseInt(valincomeType.getText().substring(1).replaceAll(",", ""));
 						if(mySavings==savings || mySavings==savings+1 ||  mySavings==savings-1){
 												

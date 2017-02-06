@@ -268,6 +268,11 @@ public class logintestcases {
 			}
 		}
 	}
+	@Test(dataProvider = "setData")
+	public void SF01_TC02_Verify_login_Successfully_into_unregistered_Device_Email(
+			int itr, Map<String, String> testdata) {
+	SF01_TC02_Verify_login_Successfully_into_unregistered_Device(itr, testdata);
+	}
 
 	@Test(dataProvider = "setData")
 	public void Login_CallCenter_timings(

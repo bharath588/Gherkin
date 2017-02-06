@@ -42,8 +42,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private String lnkBrokerage="//a[text()[normalize-space()='Brokerage']]";
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
-	@FindBy(xpath = ".//*[@id='myAccountList']/ul/li/a[./span[text()[normalize-space()='RPS PSAP Setup Dummy Test Plan']]]")
-	private List<WebElement> lstlnkPlanName;
+	@FindBy(xpath = "//span[@class='plan']//a")
+	private WebElement lstlnkPlanName;
 	private String lnkStatementDocument="//a[text()[normalize-space()='Statements and documents']]";
 	
 
@@ -94,12 +94,13 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 			}
-				}
+				
 			else{
-				/*if(Web.isWebElementsDisplayed(lstlnkPlanName, true))
-				lstlnkPlanName.get(1).click();*/
+				if(Web.isWebElementDisplayed(lstlnkPlanName, true))
+				Web.clickOnElement(lstlnkPlanName);
 				
 				
+			}
 			}
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());

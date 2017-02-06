@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.Set;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -593,7 +595,12 @@ public class prodvalidationtestcases {
 								+ " is Not visible", true);
 			}
 			Web.getDriver().switchTo().defaultContent();
+			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+				requestLone.EnterLoanAmtAndTerm("$100", "12");
+			}
+			else
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
+			
 			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
@@ -1516,6 +1523,17 @@ public class prodvalidationtestcases {
 			investment.choseInvestmentOption("Change Current Balance Investment");
 			Web.clickOnElement(investment, "Continue button1");
 			Thread.sleep(5000);
+						
+			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.getDriver().switchTo().frame("legacyFeatureIframe");
+				Web.clickOnElement(investment,"F2F MTG1");
+				Thread.sleep(2000);
+				Web.clickOnElement(investment,"Submit button Rebalancer");
+				
+				Web.getDriver().switchTo().defaultContent();
+			}
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			investment.navigateToTab("View By Asset Class Tab");
@@ -2864,18 +2882,18 @@ public class prodvalidationtestcases {
 						true);
 			Web.waitForElement(retirement,"VIEW DETAILS");
 			Web.clickOnElement(retirement,"VIEW DETAILS");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My Current Savings");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My Future Savings");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer Past Contribution");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer Future Contribution");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My current savings");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My future savings");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer past contribution");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer future contribution");
 			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Social Security");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Other Assets");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Income Gap");
-			retirement.verifyValueInColorBarForNonZeroValue("My Savings");
-			retirement.verifyValueInColorBarForNonZeroValue("Employer Contributions");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Other assets");
+			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Income gap");
+			retirement.verifyValueInColorBarForNonZeroValue("My savings");
+			retirement.verifyValueInColorBarForNonZeroValue("Employer contributions");
 			retirement.verifyValueInColorBarForNonZeroValue("Social Security");
-			retirement.verifyValueInColorBarForNonZeroValue("Other Assets");
-			retirement.verifyValueInColorBarForNonZeroValue("Income Gap");
+			retirement.verifyValueInColorBarForNonZeroValue("Other assets");
+			retirement.verifyValueInColorBarForNonZeroValue("Income gap");
 					} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

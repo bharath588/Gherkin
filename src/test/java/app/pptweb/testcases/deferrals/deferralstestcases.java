@@ -225,7 +225,21 @@ public class deferralstestcases {
 			}
 		}
 	}
-
+	@Test(dataProvider = "setData")
+	public void Deferral_002_Bonus_Select_another_contribution_rate(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Bonus(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Bonus_SelectAnotherContribution_after(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Bonus(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Bonus_SelectAnotherContribution_split(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Bonus(itr, testdata);
+	}
+	
 	/**
 	 * The following script Standard Deferral and confirms it
 	 * 
@@ -335,7 +349,61 @@ public class deferralstestcases {
 			}
 		}
 	}
-
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_012_Regular_BEFORE_Select_Another_contribution_rate(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_016_Regular_SPLIT_Select_Another_contributiont_rate(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_010_Regular_BEFORE_Maximize_to_the_company_match(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_011_Regular_BEFORE_Maximize_to_the_IRS_limit(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_013_Regular_ROTH_Maximize_to_the_company_match(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_014_Regular_ROTH_Maximize_to_the_IRS_limit(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_015_Regular_ROTH_Select_Another_contribution_rate(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_017_Regular_SPLIT_Maximize_to_the_company_match(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit(int itr,
+			Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral__Regular(itr, testdata);
+	}
+	
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_Catch_up(int itr,
 			Map<String, String> testdata) throws Exception {
@@ -430,6 +498,42 @@ public class deferralstestcases {
 		}
 	}
 
+	@Test(dataProvider = "setData")
+	public void Deferral_005_Catch_up_Maximize_to_the_IRS_limit(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_004_Catch_up_Select_another_contribution_rate(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Catchup_SelectAnotherContribution_Split(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Catchup_SelectAnotherContribution_Roth(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Catchup_MaximizeToIRSLimit_Roth(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Catchup_MaximizeToIRSLimit_Split(int itr,
+			Map<String, String> testdata) throws Exception {
+		SIT_PPTWEB_Deferral_Catch_up(itr, testdata);
+	}
+	
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral_006_Previous_Contributions_Participant_hired_in_prior_year(
 			int itr, Map<String, String> testdata) {
@@ -686,7 +790,22 @@ public class deferralstestcases {
 		}
 
 	}
+	
+	@Test(dataProvider = "setData")
+	public void Other_SelectAnotherContribution_split(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral_Other(itr, testdata);
+	}
 
+	@Test(dataProvider = "setData")
+	public void Other_SelectAnotherContribution_Catchup_Roth(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral_Other(itr, testdata);
+	}
+
+	@Test(dataProvider = "setData")
+	public void Deferral_009_Other_Select_another_contribution_rate(int itr, Map<String, String> testdata) {
+		SIT_PPTWEB_Deferral_Other(itr, testdata);
+	}
+	
 	/**
 	 * Thee following script checks if the participant is available for Bonus
 	 * type deferral
@@ -1761,6 +1880,24 @@ public class deferralstestcases {
 		}
 	}
 	
+	@Test(dataProvider = "setData")
+	public void Deferral_012M_Standard_contribution_with_chaining_to_Aftertax(int itr,
+			Map<String, String> testdata) throws Exception {
+		Deferrals_Standard_Contribution_with_Chaining(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual(int itr,
+			Map<String, String> testdata) throws Exception {
+		Deferrals_Standard_Contribution_with_Chaining(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Deferral_014M_Standard_contribution_with_chaining_to_NonQua(int itr,
+			Map<String, String> testdata) throws Exception {
+		Deferrals_Standard_Contribution_with_Chaining(itr, testdata);
+	}
+	
 	/**
 	 * The following script adds or edits all the deferral type and then confirm
 	 * it
@@ -1822,12 +1959,12 @@ public class deferralstestcases {
 				lib.Web.clickOnElement(deferrals, "Continue button");
 				
 				//Adding Bonus defferal and split
-				if (deferrals.clickAddEditButton("Bonus Add"))
+				/*if (deferrals.clickAddEditButton("Bonus Add"))
 					Reporter.logEvent(Status.PASS,"Verify Bonus contribution page","Bonus Contributions page is  displayed", false);
 				else
 					Reporter.logEvent(Status.FAIL,"Verify Bonus contribution page","Bonus Contributions page is not displayed", true);
 				deferrals.click_Select_Your_Contribution_Rate();
-				deferrals.split_bonus_contribution();
+				deferrals.split_bonus_contribution();*/
 				
 				//Adding Other deferral and split
 				if (deferrals.clickAddEditButton("Other Add"))
@@ -1866,13 +2003,13 @@ public class deferralstestcases {
 				lib.Web.clickOnElement(deferrals, "Continue button");
 				
 				//Adding Bonus defferal and split
-				if (deferrals.clickAddEditButton("Bonus Edit"))
+				/*if (deferrals.clickAddEditButton("Bonus Edit"))
 					Reporter.logEvent(Status.PASS,"Verify Bonus contribution page","Bonus Contributions page is  displayed", false);
 				else
 					Reporter.logEvent(Status.FAIL,"Verify Bonus contribution page","Bonus Contributions page is not displayed", true);
 				deferrals.click_Select_Your_Contribution_Rate();
 				deferrals.split_bonus_contribution();
-				
+				*/
 				//Adding Other deferral and split
 				if (deferrals.clickAddEditButton("Other Edit"))
 					Reporter.logEvent(Status.PASS,"Verify Other contribution page","Other Contributions page is  displayed", false);
@@ -1888,8 +2025,8 @@ public class deferralstestcases {
 				deferrals.add_Auto_Increase("After Add Auto Increase");
 				deferrals.add_Auto_Increase("Catch Up Before Add Auto Increase");
 				deferrals.add_Auto_Increase("Catch Up Roth Add Auto Increase");
-				deferrals.add_Auto_Increase("Roth Bonus Add Auto Increase");
-				deferrals.add_Auto_Increase("Before Bonus Add Auto Increase");
+				//deferrals.add_Auto_Increase("Roth Bonus Add Auto Increase");
+				//deferrals.add_Auto_Increase("Before Bonus Add Auto Increase");
 				
 				//Confirm all the deferrals
 				deferrals.myContributions_Confirmation_Page();
@@ -1923,6 +2060,17 @@ public class deferralstestcases {
 				e1.printStackTrace();
 			}
 		}
+	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void Create_Multiple_deferral_split_contribution(int itr, Map<String, String> testdata) {
+		Multiple_deferral_split_contribution(itr, testdata);
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Edit_Multiple_deferral_split_contribution(int itr, Map<String, String> testdata) {
+		Multiple_deferral_split_contribution(itr, testdata);
 	}
 	
 	/**

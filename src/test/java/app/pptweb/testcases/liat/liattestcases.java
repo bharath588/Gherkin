@@ -444,6 +444,15 @@ public class liattestcases {
 			catch (Exception e1) { e1.printStackTrace(); } 
 			}
 	}
+	@Test(dataProvider = "setData")
+	public void RIP_TC011_To_verify_Retirement_Income_tab_Plan_Savings(int itr, Map<String, String> testdata){
+		 RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void RIP_TC012_To_verify_Retirement_Income_tab_Plan_Savings(int itr, Map<String, String> testdata){
+		 RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(itr, testdata);
+	}
+		
 		
 	@AfterSuite
 	public void cleanupSessions() {

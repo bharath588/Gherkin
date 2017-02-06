@@ -182,7 +182,7 @@ public class TransactionHistory  extends LoadableComponent<TransactionHistory> {
 //				Reporter.logEvent(Status.FAIL, "verify Contribution details displayed", "Contribution details not displayed",true);
 			for(int i=0;i<=lstConfirmationNumber.size();i++){
 				System.out.println(lstTransactionType.get(i).getText());
-				if(lstTransactionType.get(i).getText().equalsIgnoreCase("Additional Deposit")||lstTransactionType.get(i).getText().equalsIgnoreCase("Payroll Contribution")){
+				if(lstTransactionType.get(i).getText().equalsIgnoreCase("Additional Deposit")||lstTransactionType.get(i).getText().equalsIgnoreCase("Payroll Contribution")||lstTransactionType.get(i).getText().equalsIgnoreCase("Contribution")){
 					confirmationNo=lstConfirmationNumber.get(i).getText().trim();
 					System.out.println(confirmationNo);
 					lstConfirmationNumber.get(i).click();

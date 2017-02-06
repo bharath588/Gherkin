@@ -328,6 +328,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("ROLLOVER EXPRESS MAIL")) {
 			return this.inpRollOverExpressMail;
 		}
+		if (fieldName.trim().equalsIgnoreCase("FIRST CLASS MAIL")) {
+			return this.inpFirstClassMail;
+		}
+		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
