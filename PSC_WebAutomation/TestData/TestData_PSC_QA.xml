@@ -11,6 +11,15 @@
 				<parameter name="planNumber" value="331045-01" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="planNumber" value="331045-01" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="login">
 		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User">

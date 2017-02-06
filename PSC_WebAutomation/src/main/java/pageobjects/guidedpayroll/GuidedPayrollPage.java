@@ -1,4 +1,4 @@
-package pageobjects.guidedpayroll;
+/*package pageobjects.guidedpayroll;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -994,3 +994,4 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	}
 	
 }
+*/

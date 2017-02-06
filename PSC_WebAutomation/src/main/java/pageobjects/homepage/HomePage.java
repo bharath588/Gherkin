@@ -43,6 +43,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement planHeaderInfo;
 	@FindBy(xpath=".//div[@class='ui-growl-message']/span")
 	private WebElement blankPlanNumberErrText;
+	@FindBy(xpath=".//ul[contains(@class,'ui-autocomplete')]/li")
+	private List<WebElement> autoCompleteSuggestionText;
 
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
@@ -250,6 +252,45 @@ public class HomePage extends LoadableComponent<HomePage>{
 			e.printStackTrace();
 		}
 		return errorVerified;
+	}
+	
+	public void enterPartialPlanNumber()
+	{
+		try{
+			if(Stock.GetParameterValue("planNumber")!=null)
+			{
+				Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber").substring(0, 5));
+				Reporter.logEvent(Status.INFO, "Check if five characters are entered in plan search input box", 
+						"Five characters from plan number are entered in plan search input box", true);
+				Thread.sleep(2000);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean verifyAutocompletePlanSuggestion()
+	{
+		boolean autoCompleteSuggested = false;
+		if(autoCompleteSuggestionText.size()>0)
+		{
+			for(WebElement ele : autoCompleteSuggestionText)
+			{
+				if(ele.getText().contains(Stock.GetParameterValue("planNumber")))
+					autoCompleteSuggested = true;
+				Reporter.logEvent(Status.INFO,"Check if autocomplete plan suggestion is displayed", 
+						"Autocomplete plan suggestion is displayed", false);
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.INFO, "Check if autocomplete plan suggestion is displayed", 
+					"Autocomplete plan suggestion not displayed", true);
+			autoCompleteSuggested = false;
+		}
+		return autoCompleteSuggested;
 	}
 
 }

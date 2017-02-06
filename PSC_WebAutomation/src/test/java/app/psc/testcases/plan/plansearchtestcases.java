@@ -92,19 +92,19 @@ public class plansearchtestcases {
 			}
 		}
 	}
-	
-	
+
+
 	/**This test case aims to verify that user is redirected to plan summary page when plan is entered in the Search
 	 * plans text on home page.
 	 * @param itr
-	 * @param testDat
+	 * @param testData
 	 */
 	@Test(dataProvider="setData")
-	public void TC02_Validate_error_message_when_plan_field_is_left_blank(int itr, Map<String,String> testDat)
+	public void TC02_Validate_error_message_when_plan_field_is_left_blank(int itr, Map<String,String> testData)
 	{
 		try
 		{
-			
+
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,
 					"Verify the user is prompted with error message when the plan field is left blank.");
 			Reporter.logEvent(Status.INFO, "Testcase Description", 
@@ -148,54 +148,110 @@ public class plansearchtestcases {
 				e1.printStackTrace();
 			}
 		}
-		}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
+		@Test(dataProvider="setData")
+		public void TC03_Verify_planDetails_Populated(int itr, Map<String,String> testData)
+		{
+			try
+			{
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,
+						"Verify that plan number and name are populated when user enters few text of the related plan numbers");
+				Reporter.logEvent(Status.INFO, "Testcase Description", 
+						"This testcase verifies that plan number and name are populated when user enters few text of the related plan numbers",
+						false);
+				homePage = new HomePage(new LoginPage(), false, new String[] {
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password") }).get();
+				homePage.enterPartialPlanNumber();
+				if(homePage.verifyAutocompletePlanSuggestion())
+				{
+					Reporter.logEvent(Status.PASS, 
+							"Verify that plan number and name are populated when user enters few text of the related plan numbers",
+							"Plan number and name are populated when user enters few text of the related plan numbers", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, 
+							"Verify that plan number and name are populated when user enters few text of the related plan numbers", 
+							"Plan number and name are not populated when user enters few text of the related plan numbers", true);
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				Globals.exception = e;
+				String exceptionMessage = e.getMessage();
+				Reporter.logEvent(Status.FAIL, 
+						"A run time exception occured and and plan details are not populated when user type in few characters of a plan.",
+						exceptionMessage, true);
+			}
+			catch(Error ae)
+			{
+				ae.printStackTrace();
+				Globals.error = ae;
+				String errorMsg = ae.getMessage();
+				Reporter.logEvent(Status.FAIL, 
+						"Assertion error occured and plan details are not populated when user type in few characters of a plan",
+						errorMsg, true);
+			}
+			finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		}
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
