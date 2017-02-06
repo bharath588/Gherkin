@@ -10,27 +10,11 @@
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 					
-				
-				
-					<include name="Manage_My_Investment_Flow_New">
-					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+					<include name="Balance_validations">
+					<parameter name="ManualTCName" value="Balance_validations">
                     </parameter>
                     </include>
 				
-					
-					 <include name="Dollar_Cost_Average_Flow">
-					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
-                    </parameter>
-                    </include>
-				
-					<include name="Investment_lineup_validations">
-					<parameter name="ManualTCName" value="Investment_lineup_validations">
-                    </parameter>
-                    </include> 
-		          <include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
-					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
-                    </parameter>
-				   </include>
 					<!-- <include name="SF01_TC018_Verify_ROR_link" >
 					<parameter name="ManualTCName" value="RateOfReturn_Validations">
                     </parameter>

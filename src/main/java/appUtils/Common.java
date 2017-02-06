@@ -34,6 +34,7 @@ public class Common {
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	public static WebElement lblUserName;
 	@FindBy(name="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
+	private static String lnkDismiss= "//button[text()[normalize-space()='Dismiss']]";
 	private static String userName = "";
 	static String userFromDatasheet = null;
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
@@ -352,6 +353,9 @@ public class Common {
            try{
                   int iCount = 0;
                   while (FindElement(progressBar).isDisplayed()){
+                	  if (FindElement(lnkDismiss).isDisplayed()) {
+                		  FindElement(lnkDismiss).click();
+              		}
                          if(iCount ==iTimeInSecond){
                                break;
                          }   

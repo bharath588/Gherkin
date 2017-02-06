@@ -37,7 +37,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lblRetirementIncome;
 	@FindBy(xpath = ".//*[@aria-label='Exit Tutorial']")
 	private WebElement btnCloseTutorial;
-	@FindBy(xpath = "//button[text()[normalize-space()='Dismiss')]")
+	@FindBy(xpath = "//button[text()[normalize-space()='Dismiss']]")
 	private WebElement lnkDismiss;
 	@FindBy(xpath = ".//*[@id='progressModal']/.//button[text()[normalize-space()='Cancel']]")
 	private WebElement lnkCancelGoalSetup;
