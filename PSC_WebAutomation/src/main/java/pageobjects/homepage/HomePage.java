@@ -41,6 +41,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement searchPlanButton;
 	@FindBy(xpath=".//*[@id='headerInfo_xhtml']")
 	private WebElement planHeaderInfo;
+	@FindBy(xpath=".//div[@class='ui-growl-message']/span")
+	private WebElement blankPlanNumberErrText;
 
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
@@ -225,14 +227,29 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber"));
 		Web.clickOnElement(searchPlanButton);
 		Web.waitForPageToLoad(Web.getDriver());
-		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
-			return planTextDisplayed = true;
+		if(Stock.GetParameterValue("planNumber")!=null)
+			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
+				return planTextDisplayed = true;
 	}
 	catch(Exception e)
 	{
 		e.printStackTrace();
 	}
 	return planTextDisplayed;
+	}
+	
+	public boolean verifyErrorText()
+	{
+		boolean errorVerified = false;
+		try{
+			if(Stock.GetParameterValue("errortext").equalsIgnoreCase(blankPlanNumberErrText.getText()))
+				return errorVerified=true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return errorVerified;
 	}
 
 }

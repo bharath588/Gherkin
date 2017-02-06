@@ -15,10 +15,14 @@
 				</methods>
 			</class> -->
 				<class name="app.psc.testcases.plan.plansearchtestcases">
-				<methods>
+				 <methods>
 					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page"></parameter>
+					</include>				
+					<include name="TC02_Validate_error_message_when_plan_field_is_left_blank">
+						<parameter name="ManualTCName"
+							value="Plan_Validat_error_message_when_plan_filed_blank"></parameter>
 					</include>
 				</methods>
 			</class>

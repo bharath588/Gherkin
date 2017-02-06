@@ -6,6 +6,7 @@ import java.util.Map;
 
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -91,4 +92,110 @@ public class plansearchtestcases {
 			}
 		}
 	}
+	
+	
+	/**This test case aims to verify that user is redirected to plan summary page when plan is entered in the Search
+	 * plans text on home page.
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC02_Validate_error_message_when_plan_field_is_left_blank(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,
+					"Verify the user is prompted with error message when the plan field is left blank.");
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This testcase verifies that user is prompted with error message when the plan field is left blank.",
+					false);
+			homePage = new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			if(!homePage.searchPlan() && homePage.verifyErrorText())
+			{
+				Reporter.logEvent(Status.PASS, "Verify user is promted with error message if plan number is empty", 
+						"User is promted with error message if plan number is empty", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify user is promted with error message if plan number is empty", 
+						"User is not promted with error message if plan number is empty", true);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
