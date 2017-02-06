@@ -150,6 +150,20 @@ public class Mobile {
 
 	}	
 	
+		
+	
+	public static String getElementValue(String locator) {
+		String sValue = null;
+		IOSElement ele = findElement(locator);
+
+		if (ele != null) {
+			return ele.getAttribute("Value");
+			// Reporter.logEvent(Status.INFO,"Click Element  : "+locator,
+			// "",true);
+		}
+		return sValue;
+
+	}
 	public static void clickElement(String locator) {
 		IOSElement ele = findElement(locator);
 
@@ -171,33 +185,71 @@ public class Mobile {
 		if (ele != null) {
 			String sActText = ele.getText();
 		  if(sActText.contains(sExpText))
-			  Reporter.logEvent(Status.PASS, "Found Text :"+sExpText,"", false);
+			  Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText +" \n But Actual was :"+sActText,"", true);
+			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
 		}
 	}
 	
+	public  static void verifyElementPresent(String sStep,String sObj,String sMsg){			
+		
+		
+		if(Mobile.isElementPresent(sObj)){
+			Reporter.logEvent(Status.PASS,sStep,"Dipslay :"+sMsg,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sStep,"Not Display  Element :"+sMsg,true);
+		}
+		
+	}
+	
+	 
+    /*
+	    * @Author :- Siddartha 
+	     * @Date  :- 2 - Feb -2017
+	    * @ Method:- This will wait till element is not display
+	     */
+	    
+	      public static void verifyErrorMessage(String sObj,String sExpText,Boolean bPartial){
+	    	 String sActText = getElementValue(sObj);
+	    	 if(bPartial)
+	    	 {
+	    		 if(sActText.contains(sExpText))
+	    			 Reporter.logEvent(Status.PASS, "Expected Error Message :"+sExpText,"", false);
+				  else
+					  Reporter.logEvent(Status.FAIL, "Expected Error Message :"+sExpText  ,"But Actual was :"+sActText, true);
+	    			 
+	    	 }
+	    	 else {
+	    	 if(sActText.equals(sExpText))
+				  Reporter.logEvent(Status.PASS, "Expected Error Message :"+sExpText,"", false);
+			  else
+				  Reporter.logEvent(Status.FAIL, "Expected Error Message :"+sExpText  ,"But Actual was :"+sActText, true);
+			}
+	      }
+	           
+	        
 	
 	
-	public static void  verifyElementEnable(String locator){		
+	
+	public static void  verifyElementEnable(String locator,String sMsg){		
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 		  if(ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, "Element was enable","", false);
+			  Reporter.logEvent(Status.PASS, sMsg,"", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Element is not enable","", true);
+			  Reporter.logEvent(Status.FAIL, sMsg,"", true);
 		}
 	
 		
   		
   	}
-	public static void  verifyElementISDisable(String locator){	
+	public static void  verifyElementISDisable(String locator,String sMsg){	
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 		  if(!ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, "Element is disable","", false);
+			  Reporter.logEvent(Status.PASS, "Disable",sMsg, false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Element is not disable","", true);
+			  Reporter.logEvent(Status.FAIL, "Not Disable",sMsg, true);
 		}
 	
 		

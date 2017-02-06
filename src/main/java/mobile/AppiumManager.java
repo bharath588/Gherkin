@@ -103,7 +103,9 @@ public class AppiumManager {
 
 	    public void destroyAppiumNode() {
 	        try {
+	        	if (appiumDriverLocalService.isRunning())
 	        appiumDriverLocalService.stop();
+	        	
 	        if (appiumDriverLocalService.isRunning()) {
 	            System.out.println("AppiumServer didn't shut... Trying to quit again....");
 	            appiumDriverLocalService.stop();
