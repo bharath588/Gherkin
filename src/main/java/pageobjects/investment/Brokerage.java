@@ -166,7 +166,7 @@ private LoadableComponent<?> parent;
 		if(Web.isWebElementDisplayed(data))
 			Reporter.logEvent(Status.PASS, "Verify "+dataName+" is displayed", dataName+" is displayed",false);
 		else
-			Reporter.logEvent(Status.PASS, "Verify "+dataName+" is displayed", dataName+" is not displayed",true);
+			Reporter.logEvent(Status.INFO, "Verify "+dataName+" is displayed", dataName+" is not displayed",true);
 	
 		Web.getDriver().switchTo().defaultContent();
 	}

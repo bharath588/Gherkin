@@ -203,6 +203,8 @@ public class Balance extends LoadableComponent<Balance> {
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
 		Web.getDriver().switchTo().defaultContent();
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(tabBalance);
 		if(tabName.equalsIgnoreCase("Balance")){
 			Web.clickOnElement(tabBalance);

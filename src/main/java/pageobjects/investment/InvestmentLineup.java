@@ -163,7 +163,7 @@ public class InvestmentLineup extends LoadableComponent<InvestmentLineup>{
 					if(switchToWindow("Prospectus Express")){
 						System.out.println(lblFundDocTitle.getText());
 						Web.waitForElement(lblFundDocTitle);
-						if(lblFundDocTitle.getText().contains(investmentName))
+						if(lblFundDocTitle.getText().contains(investmentName.substring(0, investmentName.length()-1)))
 							Reporter.logEvent(Status.PASS, "Verify if we are able to view the prospectus", "Prospectus displayed for : "+lblFundDocTitle.getText()+"\n Expected : "+investmentName,true);
 						else
 							Reporter.logEvent(Status.FAIL, "Verify if we are able to view the prospectus", "Prospectus displayed for : "+lblFundDocTitle.getText()+"\n Expected : "+investmentName,true);

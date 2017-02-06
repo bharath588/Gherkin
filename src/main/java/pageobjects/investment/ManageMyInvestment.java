@@ -958,14 +958,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				Reporter.logEvent(Status.PASS,
 						"Verify Investment options are available",
 						"Investment options are available ", false);
-				investmentFundName1 = txtInvestmentOption.get(1).getText()
+				investmentFundName1 = txtInvestmentOption.get(0).getText()
 						.trim();
-				investmentFundName2 = txtInvestmentOption.get(2).getText()
+				investmentFundName2 = txtInvestmentOption.get(1).getText()
 						.trim();
 				System.out.println(investmentFundName1);
 				System.out.println(investmentFundName2);
+				Web.clickOnElement(inpInvestmentOption.get(0));
 				Web.clickOnElement(inpInvestmentOption.get(1));
-				Web.clickOnElement(inpInvestmentOption.get(2));
 				Reporter.logEvent(Status.INFO, "Selected Investment Options",
 						"Selected Investment Options : \n" 
 								+ investmentFundName1 + ",\n"

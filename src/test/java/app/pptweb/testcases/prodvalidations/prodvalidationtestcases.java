@@ -629,6 +629,8 @@ public class prodvalidationtestcases {
 			requestLone.isTextFieldDisplayed("Payment Amount:");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
 			Web.getDriver().switchTo().defaultContent();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = requestLone
 					.isTextFieldDisplayed("MAILING AND CONTACT INFORMATION:");
@@ -655,6 +657,8 @@ public class prodvalidationtestcases {
 			Web.setTextToTextBox("INPUT HOME PREFIX", requestLone, "456");
 			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
 			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(requestLone, "CHECKBOX I ACCEPT");
 			lblDisplayed = Web.VerifyText(
 							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
@@ -741,6 +745,8 @@ public class prodvalidationtestcases {
 						"I ACCEPT CheckBox is Not Displayed", false);
 			}
 			Web.clickOnElement(requestLone, "CHECKBOX I ACCEPT");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(3000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone, "I ACCEPT",
 					true);
@@ -1115,16 +1121,17 @@ public class prodvalidationtestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			String parentWindow = Web.getDriver().getWindowHandle();
-			if(Common.switchToLegacyFutureFrame()){
+			/*if(Common.switchToLegacyFutureFrame()){
 			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
 				Common.handlePageToLoad("Statements and documents");
 			}
 			}
 			else
-				Common.handlePageToLoad("Statements and documents");
+				Common.handlePageToLoad("Statements and documents");*/
+					
+			statements.navigateToTab("Stmts On Demand Tab");
 			statements.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
-			statements.navigateToTab("Stmts On Demand Tab");
 			statements.verifyTableDisplayed("Account at a Glance Table");
 			statements.verifytableHeaderNotEmpty("Account at a Glance Table Header");
 			statements.verifyTableDataDisplayed("Account at a Glance Table");

@@ -283,7 +283,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			return this.btnContinueWithdrawal;
 		}
 		if (fieldName.trim().equalsIgnoreCase("I AGREE AND SUBMIT")) {
-			return this.btnContinueWithdrawal;
+			return this.btnIAgreeAndSubmit;
 		}
 		if (fieldName.trim().equalsIgnoreCase("TEXT CONFIRMATION")) {
 			return this.txtConfirmation;

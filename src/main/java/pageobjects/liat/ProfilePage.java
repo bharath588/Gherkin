@@ -62,7 +62,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	@FindBy(xpath = "//a[text()='Home']")
 	private WebElement lblHome;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-
+	public static String userFromDatasheet=null;
 	/**
 	 * Default Constructor
 	 */
@@ -85,7 +85,7 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(this.lblProfile, true),"Profile Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
-		String userFromDatasheet = null;
+		//String userFromDatasheet = null;
 		ResultSet strUserInfo = null;
 		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
 		{
@@ -254,18 +254,18 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
 					"User 'Profile' Page is not displayed", true);
 		}
 		String userName=this.hrdUserName.getText().replaceAll("\\s+", " ").trim();
-		isTextMatching = Web.VerifyText(Stock.GetParameterValue("lblUserName"),
+		isTextMatching = Web.VerifyText(userFromDatasheet,
 				userName, true);
 
 		if (isTextMatching) {
 			Reporter.logEvent(Status.PASS,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is displayed\nExpected:"+Stock.GetParameterValue("lblUserName").trim()+"\nActual:"+userName, false);
+					"USer Name is displayed\nExpected:"+userFromDatasheet.trim()+"\nActual:"+userName, false);
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify 'User Name In Profile Page'  is displayed",
-					"USer Name is not Same\nExpected:"+Stock.GetParameterValue("lblUserName").trim()+"\nActual:"+userName, false);
+					"USer Name is not Same\nExpected:"+userFromDatasheet.trim()+"\nActual:"+userName, false);
 		}
 
 		verifyWebElementDisplayed("PERSONAL CONTACT INFORMATION");

@@ -11,6 +11,26 @@
 				<methods>
 					
 				
+				
+					<include name="Manage_My_Investment_Flow_New">
+					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+				
+					
+					 <include name="Dollar_Cost_Average_Flow">
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+                    </parameter>
+                    </include>
+				
+					<include name="Investment_lineup_validations">
+					<parameter name="ManualTCName" value="Investment_lineup_validations">
+                    </parameter>
+                    </include> 
+		          <include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
+					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
+                    </parameter>
+				   </include>
 					<!-- <include name="SF01_TC018_Verify_ROR_link" >
 					<parameter name="ManualTCName" value="RateOfReturn_Validations">
                     </parameter>
@@ -59,20 +79,20 @@
 					<include name="FundToFundTransfer">
 					<parameter name="ManualTCName" value="FundToFundTransfer">
                     </parameter>
-                    </include>-->
+                    </include>
 			       <include name="Transaction_History_validations">
 					<parameter name="ManualTCName" value="Transaction_History_validations">
                     </parameter>
-                    </include>
+                    </include>-->
 					<!-- <include name="Statement_and_Documents_validations">
 					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
                     </parameter>
-                    </include> -->
+                    </include> 
 		
 					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
 					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
                     </parameter>
-                    </include> 
+                    </include> -->
                    
 	
                  <!--   <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
