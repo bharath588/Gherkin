@@ -1,10 +1,12 @@
 package app.pptweb.testcases.deferrals;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +19,9 @@ import org.testng.annotations.Test;
 import appUtils.Common;
 import appUtils.TestDataFromDB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Web;
 import pageobjects.general.*;
 import pageobjects.login.*;
@@ -30,8 +34,11 @@ import lib.Stock;
 public class deferralstestcases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
+	static String printTestData="";
+	
 
 	@BeforeClass
 	public void InitTest() throws Exception {
@@ -49,7 +56,26 @@ public class deferralstestcases {
 				.getName(), testCase.getName());
 	}
 	
-	
+	 public void prepareDynamicTestData(String quesryNmae,String... queryParam) {
+			try {
+				testDataFromDB = TestDataFromDB.getParticipantDetails(
+						quesryNmae, queryParam);
+				TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+	    
+	    private String printTestData() throws Exception {
+			printTestData="";
+			for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
+				if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+					printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+			}
+		 return printTestData;
+		}
+
 	
 
 	/**
@@ -1580,6 +1606,8 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1664,6 +1692,8 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1761,6 +1791,8 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1801,6 +1833,53 @@ public class deferralstestcases {
 		}
 	}
 	
+	@Test(dataProvider = "setData")
+	public void Deferrals_Participant_Prior_Contributions9_Plan_not_set_for_PPC(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			PriorPlanContributions priorContributions = new PriorPlanContributions(
+					leftmenu);
+
+			priorContributions.get();
+			if (!lib.Web.isWebElementDisplayed(priorContributions,
+					"TEXT PRIOR PLAN CONTRIBUTION"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Prior Plan Contribution Link Is Displayed",
+						"Prior Plan Contribution Link Is Not Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Prior Plan Contribution Link Is Displayed",
+						"Prior Plan Contribution Link Is Displayed", true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	
 	@Test(dataProvider = "setData")
 	public void Deferrals_Standard_Contribution_with_Chaining(int itr,

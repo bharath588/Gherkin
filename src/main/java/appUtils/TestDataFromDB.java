@@ -59,7 +59,7 @@ public class TestDataFromDB {
 
 						Date date = formatter.parse(dateInString);
 						SimpleDateFormat formatter1 = new SimpleDateFormat(
-								"MM-dd-yyyy");
+								"MMddyyyy");
 						mapUserDetails.put(rsMetaData.getColumnName(j),
 								formatter1.format(date));
 
@@ -67,7 +67,13 @@ public class TestDataFromDB {
 						e.printStackTrace();
 					}
 
-				} else {
+				} else if(rsMetaData.getColumnName(j).contains("FIRST_LINE_MAILING")){
+					String address = participants.getString(rsMetaData
+							.getColumnName(j));
+					mapUserDetails.put(rsMetaData.getColumnName(j),
+							address.split(" ")[0]);
+				}
+				else {
 					mapUserDetails
 							.put(rsMetaData.getColumnName(j), participants
 									.getString(rsMetaData.getColumnName(j)));

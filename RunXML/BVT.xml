@@ -4,18 +4,18 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
- 
-           
-   <test name="Pre_Login_Page_footer_links_check">
+    <test name="Registration">
         <classes>
-            <class name="app.pptweb.testcases.sanity.sanityTestCases">
+            <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="Pre_Login_Page_footer_links_check"> <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check">
-                    </parameter>
+                    				
+					<include name="Registration_MFA_OFF_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin"></parameter>
                     </include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-	  
+				
+					</methods>
+			</class>
+		</classes>
+	</test> 
+                    	  
 </suite>
