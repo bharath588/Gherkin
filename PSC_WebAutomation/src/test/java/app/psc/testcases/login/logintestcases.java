@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -355,8 +357,46 @@ public class logintestcases {
 		}
 	}
 	
-	/*@Test(dataProvider = "setData")
-	public void */
+	@Test(dataProvider = "setData")
+	public void TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt(int itr,Map<String,String> testData)
+	{
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user account is getting locked if user enters wrong password for three times", false);
+			login = new LoginPage();
+			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToSetInvalidLoginCount"),
+					Stock.GetParameterValue("username"));
+			login.get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of account locking for wrong credential.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured. Login page header could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
 
 	@AfterSuite
 	public void DriverQuite() {
