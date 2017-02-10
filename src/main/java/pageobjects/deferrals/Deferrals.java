@@ -58,8 +58,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private WebElement lblAddAfterTaxContribution;
 			@FindBy(xpath=".//strong[text()[normalize-space()='Select another contribution rate']]") 
 			private WebElement radioSelectAnotherContributionRate;	
-			@FindBy(xpath="//input[@id='contributionTypeMaximizerCompanyMatch']")//.//strong[contains(text(),'Maximize to the company')]
+			@FindBy(xpath=".//strong[contains(text(),'Maximize to the company')]")
 			private WebElement radioMaximizeToCompanyMatch;
+			//input[@id='contributionTypeMaximizerCompanyMatch']")
 			@FindBy(xpath=".//strong[contains(text(),'IRS limit')]")
 			private WebElement radioMaximizeToIRSLimit;		
 			@FindBy(xpath="//*[contains(@class, 'editable-text-trigger')]")
@@ -98,11 +99,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//button[text()[normalize-space()='Continue']]") private WebElement btnContinueBeforeTaxSplitContribution;
 			@FindBy(xpath=".//button[text()[normalize-space()='Back']]") private WebElement btnBackBeforeTaxSplitContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage']") private WebElement txtCompanyMatchMyContribution;
-			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']") private WebElement txtCompanyMatchContributionAmount;
-			@FindBy(xpath="//div[@class='contribution-percentage']") private WebElement txtIRSMyContribution;
+			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']//p[1]") private WebElement txtCompanyMatchContributionAmount;
+			@FindBy(xpath="//div[@id='anotherRate']//div[@class='contribution-amount']//p[1]") private WebElement txtAnotherContributionAmount;
+			@FindBy(xpath=".//div[@id='irsMax']//div[@class='contribution-percentage']") private WebElement txtIRSMyContribution;
 			@FindBy(xpath="//div[@class='contribution-amount']/a[@class='max-links']") private WebElement txtIRSContributionAmount;
 			@FindBy(xpath="//div[@class='contribution-amount']/p[1]") private WebElement txtIRSCatchUpContributionAmount;
-							
+			@FindBy(xpath=".//div[@id='irsMax']//a[contains(@uib-popover-template,'maxPopoverTemplate')]") private WebElement txtIRSAnnualCompensationAmount;
+			@FindBy(xpath="//div[@id='irsMax']//label[text()='Yes']") private WebElement lblIRSMaximizeYes;
+			@FindBy(xpath="//div[@id='irsMax']//label[text()='No']") private WebElement lblIRSMaximizeNo;
+
 			//Add Auto Increase		
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
@@ -377,6 +382,21 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("TEXT COMPANY MATCH")) {
 				return this.txtCompanyMatch;
 			}
+			if(fieldName.trim().equalsIgnoreCase("RADIO MAXIMIZE TO COMPANY MATCH")) {
+				return this.radioMaximizeToCompanyMatch;
+			}
+			if(fieldName.trim().equalsIgnoreCase("RADIO MAXIMIZE TO IRS LIMIT")) {
+				return this.radioMaximizeToIRSLimit;
+			}
+			if(fieldName.trim().equalsIgnoreCase("RADIO SELECT OTHER CONTRIBUTION")) {
+				return this.radioSelectAnotherContributionRate;
+			}
+			if(fieldName.trim().equalsIgnoreCase("MAXIMIZE YES")) {
+				return this.lblMaximizeYes;
+			}
+			if(fieldName.trim().equalsIgnoreCase("MAXIMIZE NO")) {
+				return this.lblMaximizeNo;
+			}
 			return null;
 			}		
 		
@@ -488,6 +508,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
 				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				Thread.sleep(3000);
+				Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
 				Web.clickOnElement(btnSaveAddAutoIncreaseModal);
 				Thread.sleep(5000);
 				}
@@ -546,6 +567,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions amount", "My Contributions amount is not displayed", true);
 			*/
+			Web.clickOnElement(lblMaximizeYes);
 		}
 			
 		
@@ -1356,7 +1378,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 * @return - boolean
 		 * @throws InterruptedException 
 		 */
-		public void verifyCompanyMatchChangesDynamically() throws InterruptedException
+		public boolean verifyCompanyMatchChangesDynamically() throws InterruptedException
 		{	
 			String companyMacthBefore="";
 			String companyMacthAfter="";
@@ -1389,7 +1411,64 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.PASS, "Verify the company match changes dynamically as the slider for the contribution rate is changed", "Company Match is Changed As Expected\nBefore:"+companyMacthBefore+"\nAfter"+companyMacthAfter, true);
 			else
 				Reporter.logEvent(Status.INFO, "Verify the company match changes dynamically as the slider for the contribution rate is changed", "Company Match is Not Changed As Expected\nBefore:"+companyMacthBefore+"\nAfter"+companyMacthAfter, true);
+			return isMatching;
+		}
+		
+
+		/**<pre> Method to verify Accuracy of pay period amount .
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public boolean verifyPayPeriodAmountIsMatching() throws InterruptedException
+		{	
+			String companyMacthcontribution="";
+			String companyMacthPayPeriodAmount="";
+			String standardPayPeriodAmount="";
+			boolean isMatching=false;
+			Web.clickOnElement(radioMaximizeToCompanyMatch);
+			Web.waitForElement(txtCompanyMatchMyContribution);
+			companyMacthcontribution=txtCompanyMatchMyContribution.getText().split("%")[0];
+			companyMacthPayPeriodAmount=txtCompanyMatchContributionAmount.getText().toString().trim();
+			Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Web.waitForElement(lnkContributionRate);
+			if(Web.isWebElementDisplayed(lnkPercent))
+				this.lnkPercent.click();			
+			this.lnkContributionRate.click();
 			
+			Web.waitForElement(txtcontributionRateSlider);
+			
+			
+			Web.setTextToTextBox(txtcontributionRateSlider, companyMacthcontribution);
+			Web.clickOnElement(btnDone); 
+			standardPayPeriodAmount=txtAnotherContributionAmount.getText().toString().trim();
+			//keyBoard.sendKeys(Keys.TAB).perform();
+			isMatching=Web.VerifyText(companyMacthPayPeriodAmount, standardPayPeriodAmount);
+			if(isMatching)
+			
+				Reporter.logEvent(Status.PASS, "Verify the Pay Period Amount is Matching", "Pay Period Amount is Matching \nExpected:"+companyMacthPayPeriodAmount+"\nActual:"+standardPayPeriodAmount, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify the Pay Period Amount is Matching","Pay Period Amount is Not Matching \nExpected:"+companyMacthPayPeriodAmount+"\nActual:"+standardPayPeriodAmount, true);
+			return isMatching;
+		}
+		/**<pre> Method to verify Accuracy of pay period amount .
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public boolean verifyAnnualCompensationDisplayed()
+		{
+			boolean isDisplayed=false;
+				Web.waitForElement(radioMaximizeToIRSLimit);
+				lib.Web.clickOnElement(radioMaximizeToIRSLimit);
+				isDisplayed=txtIRSAnnualCompensationAmount.getText().contains("$");
+			if(isDisplayed)
+				Reporter.logEvent(Status.PASS, "Verify Annual Compensation is Displayed", "Annual Compensation is  displayed \nAnnual Compensation:"+txtIRSAnnualCompensationAmount.getText().trim(), false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Annual Compensation is Displayed", "Annual Compensation is not displayed \nAnnual Compensation:"+txtIRSAnnualCompensationAmount.getText().trim(), true);
+			return isDisplayed;
 		}
 	}		
 	

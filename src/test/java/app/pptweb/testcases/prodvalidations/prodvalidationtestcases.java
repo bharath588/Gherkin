@@ -975,8 +975,9 @@ public class prodvalidationtestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			Balance balance = new Balance(leftmenu);
 			balance.get();
+			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			//Thread.sleep(5000);
+			Thread.sleep(5000);
 			
 				if(!Web.isWebElementDisplayed(balance, "Balance",true)){
 					Common.handlePageToLoad("Balance");

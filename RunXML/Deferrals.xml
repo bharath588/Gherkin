@@ -239,6 +239,17 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
+                    <include name="Deferral_022_Regular_SPLIT_Company_match">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_022_Regular_SPLIT_Company_match">
+                    </parameter>
+                    <include name="Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
+                    </parameter>
+                    </include>
+                    <include name="Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
+                    </parameter>
+                    </include>
                     -->
                 </methods>
             </class>

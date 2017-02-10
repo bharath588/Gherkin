@@ -4,16 +4,15 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="Registration">
+    <test name="PROD">
         <classes>
-            <class name="app.pptweb.testcases.login.registrationtestcases">
+          	<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
-                    				
-					<include name="Registration_MFA_OFF_5Point_registration">
-					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin"></parameter>
+                <include name="HCC_TC009_To_verify_Health_care_costs">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
+                    </parameter>
                     </include>
-				
-					</methods>
+                    </methods>
 			</class>
 		</classes>
 	</test> 

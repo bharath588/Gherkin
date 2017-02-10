@@ -1007,6 +1007,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 	Common.waitForProgressBar();
 	Web.waitForPageToLoad(Web.getDriver());
+	Web.waitForElements(txtCurrentFunds);
 	String currentFund1=txtCurrentFunds.get(0).getText().trim();
 	String currentFund2=txtCurrentFunds.get(1).getText().trim();
 	boolean iscurrentFund1Matching=false;
