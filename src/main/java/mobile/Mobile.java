@@ -46,6 +46,7 @@ public class Mobile {
 		return  (MobileDriver) Web.getDriver() ;
 	}
 	public static void tapElement(String locator) {
+		tapWithPosition(100,300);
 	//	TouchAction act = new TouchAction(getDriver());
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
@@ -59,8 +60,13 @@ public class Mobile {
 	}
 
 	public static void tapWithPosition(int x, int y) {
-		TouchAction tAction = new TouchAction(getDriver());
-		tAction.tap(x, y).release().perform();
+		try{
+			getDriver().tap(1, 200, 400, 2);
+//		TouchAction tAction = new TouchAction(getDriver());
+//		tAction.longPress(x, y).waitAction().release().perform();
+		}catch(Exception e){
+			System.out.println("Exception while taping");
+		}
 
 	}
 
@@ -180,14 +186,24 @@ public class Mobile {
 	 * This method will verify expected text with actual text.
 	 */
 	
-	public static void  verifyText(String locator,String sExpText){		
+	public static void  verifyText(String locator,String sExpText,Boolean exactMatch){		
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 			String sActText = ele.getText();
-		  if(sActText.contains(sExpText))
-			  Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
-		  else
-			  Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
+			if(exactMatch){
+				if(sActText.equals(sExpText))
+					Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
+				else
+					Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
+		            }
+			else{
+				if(sActText.contains(sExpText))
+					Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
+				else
+					Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
+		    
+				
+			}
 		}
 	}
 	
@@ -195,9 +211,22 @@ public class Mobile {
 		
 		
 		if(Mobile.isElementPresent(sObj)){
-			Reporter.logEvent(Status.PASS,sStep,"Dipslay :"+sMsg,false);
+			Reporter.logEvent(Status.PASS,sStep +"  Display ", sMsg,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL,sStep,"Not Display  Element :"+sMsg,true);
+		     Reporter.logEvent(Status.FAIL,sStep+"  Not Display  ",sMsg,true);
+		}
+		
+	}
+	
+
+
+	public  static void verifyElementNotPresent(String sStep,String sObj,String sMsg){			
+		
+		
+		if(!Mobile.isElementPresent(sObj)){
+			Reporter.logEvent(Status.PASS,sStep+" Not Display  ",sMsg,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sStep +"  Display ", sMsg,true);
 		}
 		
 	}
@@ -227,6 +256,31 @@ public class Mobile {
 			}
 	      }
 	           
+	      /*
+		    * @Author :- Siddartha 
+		     * @Date  :- 2 - Feb -2017
+		    * @ Method:- This will wait till element is not display
+		     */
+		    
+		      public static void verifyWarningMessage(String sObj,String sExpText,Boolean exactMatch){
+		    	 String sActText = getElementValue(sObj);
+		    	 
+		    	 if(!exactMatch)
+		    	 {
+		    		 if(sActText.contains(sExpText))
+		    			 Reporter.logEvent(Status.PASS, "Expected Warning Message :"+sExpText,"", false);
+					  else
+						  Reporter.logEvent(Status.FAIL, "Expected Warning Message :"+sExpText  ,"But Actual was :"+sActText, true);
+		    			 
+		    	 }
+		    	 else {
+		    	 if(sActText.equals(sExpText))
+					  Reporter.logEvent(Status.PASS, "Expected Warning Message :"+sExpText,"", false);
+				  else
+					  Reporter.logEvent(Status.FAIL, "Expected Warning Message :"+sExpText  ,"But Actual was :"+sActText, true);
+				}
+		      }
+		          
 	        
 	
 	
@@ -497,9 +551,21 @@ public class Mobile {
 		int startx = (int) (size.width * 0.9);
 		int endx = (int) (size.width * 0.20);
 		int starty = size.height / 2;
-		getDriver().swipe(startx, starty, endx, starty, 5000);
+		getDriver().swipe(startx, starty, endx, starty, 2000);
 	}
 
+	public static void tapAtCenter(){
+		try{
+//		Dimension size = getDriver().manage().window().getSize();
+//		int startx = (int) (size.width * 0.5);
+//		int endx = (int) (size.width * 0.5);		
+		getDriver().tap(1, 150, 300, 2000);
+		getDriver().swipe(150, 300, 180, 300, 2000);
+		}
+		catch(Exception e){
+			
+		}
+	}
 	public static void swipeLeft() {
 		Dimension size = getDriver().manage().window().getSize();
 		int startx = (int) (size.width * 0.8);
@@ -634,6 +700,43 @@ public class Mobile {
 		}
 
 	}
+	
+	public static void switchButton(String sObj, Boolean bValue) {
+
+		String isSelected = getElementValue(sObj);
+		if (Boolean.valueOf(isSelected) != bValue) {
+
+			try {
+				IOSElement eleCheckBoxEle = findElement(sObj);
+				if (eleCheckBoxEle != null)
+					eleCheckBoxEle.click();
+
+			} catch (Exception e) {
+				System.out.println("Not able to Switch Button");
+			}
+		}
+
+	}
+	
+	public static void verifyElementIsSelected(String sObj,String sMsg){
+		String isSelected = getElementValue(sObj);
+		if (Boolean.valueOf(isSelected) == true) 	
+			Reporter.logEvent(Status.PASS, "Selected ",sMsg, false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Not Selected",sMsg, true);
+		
+	}
+	
+	public static void verifyElementIsNotSelected(String sObj,String sMsg){
+		String isSelected = getElementValue(sObj);
+		if (Boolean.valueOf(isSelected) == false) 	
+			Reporter.logEvent(Status.PASS, " Not Selected ",sMsg, false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Selected",sMsg, true);
+		
+	}
+	
+	
 	 public static void figlet(String text) {
 	        String asciiArt1 = null;
 	        try {
