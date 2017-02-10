@@ -397,6 +397,81 @@ public class logintestcases {
 			}
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC004_Terminate User</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validating inactive user
+	 * Login</b> Test Type: <b>Negative flow</b>
+	 * 
+	 * <b>Description:</b> To verify user is prompted with error message if try to login
+	 * with terminated user credentials
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>txtUserVeriEmail -</b> User Verification Email
+	 * <b>txtUserVeriAns -</b> User Verification Security Answer
+	 * <b>termDate -</b> Termination date of the employee
+	 * 
+	 * @author rvpndy (08-FEB-2017)
+	 */
+	
+	@Test(dataProvider = "setData")
+	public void TC006_01_Verify_Error_Message_For_Terminated_User(int itr, Map<String, String> testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user is prompted with an error message if user tries to login with terminated user",
+					false);
+			login = new LoginPage();
+			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToResetInvalidLoginCount"),
+					Stock.GetParameterValue("username"));
+			login.updateTermDateForUser(Stock.getTestQuery("queryToTerminateUser"), Stock.GetParameterValue("termDate"), Stock.GetParameterValue("username"));
+			login.get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			if(itr==1)
+			{
+				login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));
+			}
+			else
+			{
+				UserVerificationPage userverification = new UserVerificationPage();
+				userverification.performVerification(
+						new String[] { Stock.GetParameterValue("UserVeriEmail"), Stock.GetParameterValue("UserSecondaryAns") });
+				new HomePage().get();
+				Reporter.logEvent(Status.PASS, "Check if home page is loaded", "Home page is loaded", false);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of login flow of terminated user.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
 
 	@AfterSuite
 	public void DriverQuite() {

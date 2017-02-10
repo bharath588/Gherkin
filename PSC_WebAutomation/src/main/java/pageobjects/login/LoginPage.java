@@ -333,6 +333,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		Web.getDriver().switchTo().defaultContent();
 	}
 	
+	/**
+	 * @param updateInvalidLogonAttemptQuery
+	 * @param userName
+	 */
 	public void updateInvalidLogonAttempt(String[] updateInvalidLogonAttemptQuery,String userName)
 	{
 		try{
@@ -347,6 +351,33 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				Reporter.logEvent(Status.FAIL, "Execute query to update Invalid_logon_count in ISIS_Password table", 
 						"Query did not execut successfully", false);
 			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param queryToTerminateUser
+	 * @param termDate
+	 * @param userName
+	 */
+	public void updateTermDateForUser(String[] queryToTerminateUser, String termDate, String userName)
+	{
+		try{
+			int rows_update=DB.executeUpdate(queryToTerminateUser[0], queryToTerminateUser[1], termDate,"K_" + userName);
+			if(rows_update==1)
+			{
+				Reporter.logEvent(Status.PASS, "Execute query to update termdate in Users table", 
+						"Query is executed successfully", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Execute query to update termdate in Users table", 
+						"Query did not execut successfully", false);
+			 
+		}
 		}
 		catch(Exception e)
 		{

@@ -46,6 +46,29 @@
 					value="Please enter a valid Username / Password combination." />
 			</Iteration>
 		</TestCase>
+		<TestCase name = "User_Account_Locking_For_max_Invalid_Attempts">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="54AFP" />
+				<parameter name="password" value="testing" />
+				<parameter name="errorMessages" value="You have exceeded the maximum number of login attempts." />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "SIT_PSC_Login_01_TC004_Terminate User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="54AFP"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate"	value="06-FEB-17"/>
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="54AFP"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate"	value="06-FEB-22"/>
+				<parameter name="UserVeriEmail" value="discard@gwl.com"/>
+				<parameter name="UserSecondaryAns" value="test"/>
+			</Iteration>
+		</TestCase>
 		<TestCase name="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="link_Footer1" value="sponsor-security" />
@@ -1064,5 +1087,15 @@ GA_ID in (select DISTINCT GA_ID from user_data_access where
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
+			<parameter QueryName="queryToSetInvalidLoginCount" DB="ParticipantDataDB"
+			Query="update isis_password set invalid_login_count=2 where user_logon_id=?">
+			</parameter>
+			<parameter QueryName="queryToResetInvalidLoginCount" DB="ParticipantDataDB"
+			Query="update isis_password set invalid_login_count=0 where user_logon_id=?">
+			</parameter>
+			<parameter QueryName = "queryToTerminateUser" DB="ParticipantDataDB"
+			Query = "Update users set termdate = ? where logon_id=?"></parameter>
+			<parameter QueryName = "queryToResetTermDate" DB="ParticipantDataDB"
+			Query = "Update users set termdate = '06-FEB-22' where logon_id=?"></parameter>
 	</Module>
 </TestData>

@@ -13,21 +13,33 @@
 							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session"></parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class> 
 				<class name="app.psc.testcases.plan.plansearchtestcases">
 				 <methods>
-					<!-- <include name="TC01_search_plan_for_valid_plan">
+					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page"></parameter>
 					</include>				
 					<include name="TC02_Validate_error_message_when_plan_field_is_left_blank">
 						<parameter name="ManualTCName"
 							value="Plan_Validat_error_message_when_plan_filed_blank"></parameter>
-					</include> -->
+					</include>
 					<include name="TC03_Verify_planDetails_Populated">
 						<parameter name="ManualTCName"
 							value="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered"></parameter>
 					</include>
+				</methods>
+			</class>-->
+			<class name="app.psc.testcases.login.logintestcases">
+				<methods>
+					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC004_Terminate User"></parameter>
+					</include>
+					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
+						<parameter name="ManualTCName"
+							value="User_Account_Locking_For_max_Invalid_Attempts"></parameter>
+					</include>				
 				</methods>
 			</class>
 		</classes>
