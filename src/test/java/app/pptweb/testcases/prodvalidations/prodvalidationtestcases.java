@@ -1955,6 +1955,7 @@ public class prodvalidationtestcases {
 			Web.clickOnElement(requestWithdrawal, "FIRST CLASS MAIL");
 			//requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
 			Common.waitForProgressBar();
+			Thread.sleep(5000);
 			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
