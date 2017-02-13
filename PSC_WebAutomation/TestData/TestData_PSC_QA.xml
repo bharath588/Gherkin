@@ -11,7 +11,7 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-		<parameter name="planNumber" value="331045-01" />
+				<parameter name="planNumber" value="331045-01" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Plan_Validat_error_message_when_plan_filed_blank">
@@ -38,6 +38,19 @@
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="planNumber" value="4@344" />
 				<parameter name="errortext" value="Plan Not Found."/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planName" value="Hoe. Ecug ss Fghgssgf 401" />
+				<parameter name="errortext" value="Please enter a plan in the search box."/>
 			</Iteration>
 		</TestCase>
 	</Module>

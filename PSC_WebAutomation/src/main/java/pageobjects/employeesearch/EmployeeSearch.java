@@ -241,8 +241,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
 		Web.setTextToTextBox(txtSearchbox, SSN);
-		Thread.sleep(2000);
-		Web.clickOnElement(btnGoEmployeeSearch);
+		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
+			Web.clickOnElement(btnGoEmployeeSearch);
 		//btnGoEmployeeSearch.click();
 		Thread.sleep(2500);
 		Web.getDriver().switchTo().defaultContent();
@@ -457,7 +457,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		btnGoEmployeeSearch.click();		
+		Web.clickOnElement(btnGoEmployeeSearch);		
 		Thread.sleep(2500);		
 		lib.Web.getDriver().switchTo().defaultContent();
 	}
@@ -517,7 +517,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division","--------------------","Name - all plans","SSN - all plans"};
+				"Participant ID", "Division"};
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -844,6 +844,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void verifySSNmasking() throws InterruptedException {
 		searchEmployeeBySSN("");
 		switchToFrame();
+		System.out.println("Results are : "+searchResultsSSNTable);
 		if (Web.isWebElementDisplayed(searchResultsSSNTable.get(0), true)) {
 			if (searchResultsSSNTable.get(0).getText().contains("XX")) {
 				Reporter.logEvent(Status.PASS, "Check if SSN are masked",

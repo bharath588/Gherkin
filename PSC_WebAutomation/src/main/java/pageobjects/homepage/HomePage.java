@@ -438,7 +438,23 @@ public class HomePage extends LoadableComponent<HomePage>{
 	
 	}
 	
-	
+	public boolean searchPlanWithName()
+	{ boolean planTextDisplayed = false;
+	try{
+		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planName"));
+		
+			Web.clickOnElement(searchPlanButton);
+			Web.isWebElementDisplayed(moreButton, true);
+			if(Stock.GetParameterValue("planName")!=null)
+			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
+				return planTextDisplayed = true;
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return planTextDisplayed;
+	}	
 	
 	
 	
