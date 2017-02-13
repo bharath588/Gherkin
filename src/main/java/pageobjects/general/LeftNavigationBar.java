@@ -218,7 +218,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		else if(linkName.equalsIgnoreCase("Statements and documents")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			Web.clickOnElement(leftNavLink);
+			mouse.moveToElement(leftNavLink).click(leftNavLink).build().perform();
+			
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {

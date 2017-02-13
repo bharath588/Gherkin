@@ -17,6 +17,7 @@ import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
@@ -222,6 +223,8 @@ public class prodvalidationtestcases {
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
+				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 			    Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
