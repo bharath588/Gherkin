@@ -302,6 +302,8 @@ public class prodvalidationtestcases {
 			List<String> telePhoneNo = login.getPreLoginTelePhoneNo(Stock
 					.GetParameterValue("Sponsor"));
 			Web.clickOnElement(login, "dismiss");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			homePage.get();
@@ -1125,6 +1127,11 @@ public class prodvalidationtestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			String parentWindow = Web.getDriver().getWindowHandle();
+			for (String winHandle : Web.getDriver().getWindowHandles()) {
+	       Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
+	       Web.waitForPageToLoad(Web.getDriver());
+       }
+			String parentWindow1 = Web.getDriver().getWindowHandle();
 			/*if(Common.switchToLegacyFutureFrame()){
 			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
 				Common.handlePageToLoad("Statements and documents");
@@ -1154,8 +1161,13 @@ public class prodvalidationtestcases {
 			statements. verifyTableDataDisplayed("Transaction Details Table");
 			//closing child window
 	   		 Web.getDriver().close();
-	          //cntrl to parent window
-	      	  Web.getDriver().switchTo().window(parentWindow);
+	          //cntrl to parent window1
+	      	  Web.getDriver().switchTo().window(parentWindow1);
+	      	  //close parent window 1
+	      	 Web.getDriver().close();
+	      	 //cntrl to parent window
+	      	 Web.getDriver().switchTo().window(parentWindow);
+	      	Web.getDriver().switchTo().defaultContent();
 			//statements.switchToWindow();
 
 		} catch (Exception e) {
