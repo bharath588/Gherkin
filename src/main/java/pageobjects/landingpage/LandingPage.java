@@ -35,7 +35,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lnkMyAccounts;
 	@FindBy(xpath = ".//*[text()='Retirement income']")
 	private WebElement lblRetirementIncome;
-	@FindBy(xpath = ".//*[@aria-label='Exit Tutorial']")
+	@FindBy(xpath = ".//button[@aria-label='Exit Tutorial']")
 	private WebElement btnCloseTutorial;
 	@FindBy(xpath = "//button[text()[normalize-space()='Dismiss']]")
 	private WebElement lnkDismiss;
@@ -133,6 +133,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 						false);
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(4000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
