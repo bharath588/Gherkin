@@ -94,8 +94,8 @@ public class plansearchtestcases {
 	}
 	
 	
-	/**This test case aims to verify that user is redirected to plan summary page when plan is entered in the Search
-	 * plans text on home page.
+	/**This test case aims to verify that user is prompted with an error message when user hits
+	 *  search for plan with plan field blank.
 	 * @param itr
 	 * @param testDat
 	 */
@@ -113,7 +113,7 @@ public class plansearchtestcases {
 			homePage = new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
-			if(!homePage.searchPlan() && homePage.verifyErrorText())
+			if(homePage.searchPlan() && homePage.verifyErrorText())
 			{
 				Reporter.logEvent(Status.PASS, "Verify user is promted with error message if plan number is empty", 
 						"User is promted with error message if plan number is empty", false);
@@ -150,7 +150,62 @@ public class plansearchtestcases {
 		}
 		}	
 	
+
 	
+	/**This test case aims to verify that user is prompted with an error message when invalid plan is searched.
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,
+					"Verify the user is prompted with error message when invalid plan number is searched.");
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This testcase verifies that user is prompted with error message when invalid plan number is searched.",
+					false);
+			homePage = new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			if(!homePage.searchPlan() && homePage.verifyErrorText())
+			{
+				Reporter.logEvent(Status.PASS, "Verify user is promted with error message if plan number is invalid.", 
+						"User is promted with error message if plan number is invalid.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify user is promted with error message if plan number is invalid.", 
+						"User is not promted with error message if plan number is invalid.", true);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		}	
 	
 	
 	

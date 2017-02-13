@@ -1,15 +1,24 @@
 package pageobjects.homepage;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -43,7 +52,25 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement planHeaderInfo;
 	@FindBy(xpath=".//div[@class='ui-growl-message']/span")
 	private WebElement blankPlanNumberErrText;
-
+	@FindBy(xpath=".//div[@class='button-row']//button[.='More']")
+	private WebElement moreButton;
+	private WebElement menuElement(String menuName)
+	{
+		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
+	}
+	private List<WebElement> menuItems()
+	{
+		return Web.getDriver().findElements(By.xpath("//ul[@id='newMenu']/li"));
+	}
+	private List<WebElement> subMenuItems()
+	{
+		return Web.getDriver().findElements(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+Stock.GetParameterValue("menuname")+"')]/following-sibling::ul/li/a"));
+	}
+	private List<WebElement> subSubMenuItems(String subMenu)
+	{
+		
+		return Web.getDriver().findElements(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+Stock.GetParameterValue("menuname")+"')]/following-sibling::ul/li/a[contains(text(),'"+subMenu+"')]/following-sibling::ul//a"));
+	}
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
 	private boolean ifUserOrAccntVerificationMandate = false; 
@@ -225,9 +252,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	{ boolean planTextDisplayed = false;
 	try{
 		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber"));
-		Web.clickOnElement(searchPlanButton);
-		Web.waitForPageToLoad(Web.getDriver());
-		if(Stock.GetParameterValue("planNumber")!=null)
+		
+			Web.clickOnElement(searchPlanButton);
+			Web.isWebElementDisplayed(moreButton, true);
+			if(Stock.GetParameterValue("planNumber")!=null)
 			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
 				return planTextDisplayed = true;
 	}
@@ -242,6 +270,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	{
 		boolean errorVerified = false;
 		try{
+			System.out.println("Actual Error Text is: "+blankPlanNumberErrText.getText());
 			if(Stock.GetParameterValue("errortext").equalsIgnoreCase(blankPlanNumberErrText.getText()))
 				return errorVerified=true;
 		}
@@ -251,5 +280,169 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return errorVerified;
 	}
+	
+	
+	public void verifyHomePageMenuTabs()
+	{
+		
+		try{
+			String expectedTabs = Stock.GetParameterValue("menutabs");
+			String[] splitTabs = expectedTabs.split(",");
+			List<String> expectedMenuTabs = Arrays.asList(splitTabs);
+			List<String> actualMenuTabs = new ArrayList<String>();
+			for(WebElement ele : menuItems())
+			{
+				actualMenuTabs.add(ele.findElement(By.tagName("a")).getText());
+			}
+			System.out.println("Tabs fetched from GUI are:"+actualMenuTabs);
+			System.out.println("Tabs fetched from xml are:"+expectedMenuTabs);
+			if(actualMenuTabs.containsAll(expectedMenuTabs))
+			{
+				Reporter.logEvent(Status.PASS,"Verify if all menu tabs are displayed on home page.","All menu tabs are displayed.",false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Verify if all menu tabs are displayed on home page.","All menu tabs are not displayed",true);
+			}
+			
+				
+				
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
+	
+	
+	public void verifySubMenuAndOptions(String menu)
+	{
+		WebElement menuItem = menuElement(menu);
+		List<String> expectSubMenuItems = Arrays.asList(Stock.GetParameterValue("submenu").split(","));
+		List<String> actualSubMenuItems = new ArrayList<String>();
+		List<String> actualSubSubMenuItems = new ArrayList<String>();	
+		Map<String,List<String>> expMenuMap = new LinkedHashMap<String,List<String>>();
+		Map<String,List<String>> actMenuMap = new LinkedHashMap<String,List<String>>();
+		
+		for(int i=0;i<expectSubMenuItems.size();i++)
+		{
+			if(expectSubMenuItems.get(i).equalsIgnoreCase("Investments & Performance")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Search employee")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Add employee")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Forms")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Overview")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Enter payroll")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Pending")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("View∕change banking information")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Year end compliance")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Compliance user guide")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Video demonstration")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Standard reports")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("My reports")||
+			   expectSubMenuItems.get(i).equalsIgnoreCase("Educational resources")
+			  )
+			{
+				expMenuMap.put(expectSubMenuItems.get(i),new LinkedList<String>());
+			}
+			else
+			{
+				expMenuMap.put(expectSubMenuItems.get(i), Arrays.asList(Stock.GetParameterValue(expectSubMenuItems.get(i)).split(",")));
+			}
+		}
+		System.out.println("Expected map is:"+expMenuMap);
+		Web.waitForPageToLoad(Web.getDriver());
+		Actions act = new Actions(Web.getDriver());
+		try{
+				if(menuItem.getText().equals(menu))
+				{
+					Web.clickOnElement(menuItem);
+					Thread.sleep(3000);
+					act.moveToElement(menuItem).click(menuItem).build().perform();
+					
+					for(WebElement ele : subMenuItems())
+					{
+						actualSubMenuItems.add(ele.getText().replace("...", "").trim());
+						if(ele.getText().equals("Investments & Performance") || ele.getText().equals("Search employee") ||
+						ele.getText().equals("Add employee") || ele.getText().equals("Forms")||
+						ele.getText().equals("Overview")||ele.getText().equals("Enter payroll")||
+						ele.getText().equals("Pending")|| ele.getText().equals("View∕change banking information")||
+						ele.getText().equals("Year end compliance")|| ele.getText().equals("Compliance user guide")||ele.getText().equals("Video demonstration")|| 
+						ele.getText().equals("Standard reports")|| ele.getText().equals("My reports")||ele.getText().equals("Educational resource"))
+								
+						{
+						
+						}
+						else
+						{
+							act.click(ele).build().perform();
+						}
+							Thread.sleep(2000);
+							actualSubSubMenuItems = new ArrayList<String>();
+							for(WebElement ele2 : subSubMenuItems(ele.getText().replace("...", "").trim()))
+							{
+								actualSubSubMenuItems.add(ele2.getText());
+							}
+							actMenuMap.put(ele.getText().replace("...", "").trim(), actualSubSubMenuItems);
+					}
+					
+					System.out.println("Actual subMenu items are:"+actualSubMenuItems);
+					System.out.println("Expected submenu items fetched from xml are :"+expectSubMenuItems);
+					System.out.println("Actual Map is:"+actMenuMap);
+					System.out.println("Expected Map is:"+expMenuMap);
+					
+					for(int j=0;j<expectSubMenuItems.size();j++){
+						
+						if(actMenuMap.get(actualSubMenuItems.get(j)).isEmpty() && expMenuMap.get(expectSubMenuItems.get(j)).isEmpty()){
+							Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
+							
+						}
+						
+						else if(actMenuMap.get(actualSubMenuItems.get(j)).containsAll(expMenuMap.get(expectSubMenuItems.get(j))))
+						{
+							Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
+						}
+						else
+						{
+							Reporter.logEvent(Status.FAIL,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are not displayed.",true);
+						}
+					}
+				}
+				
+				if(actualSubMenuItems.containsAll(expectSubMenuItems))
+				{
+					Reporter.logEvent(Status.PASS,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are displayed.",false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are not displayed.",true);
+				}
+				
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		/*finally
+		{
+			expectSubMenuItems.clear();
+			actualSubMenuItems.clear();
+			actualSubSubMenuItems.clear();
+			actMenuMap.clear();
+			expMenuMap.clear();
+			
+			
+		}*/
+	
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -355,12 +355,118 @@ public class logintestcases {
 		}
 	}
 	
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Sitenavigation_01_TC001_Menutabs</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate all menu.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify if all the expected Menu options are displayed on Home page
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password
+	 */
+	@Test(dataProvider = "setData")
+	public void TC001_01_SIT_PSC_Sitenavigation_Menutabs(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if all the expected Menu and sub menu options all displayed on Home page.", false);
+			login = new LoginPage().get();
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			 new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
+			accountverification.jumpPagedisplayed();	
+			home.verifyHomePageMenuTabs();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+		
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Sitenavigation_SubMenutabs</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate all Sub menu options on home page.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify if all the expected sub menu options are displayed on Home page
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>menuname -</b>valid menuname
+	 */
+	@Test(dataProvider = "setData")
+	public void TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if all the expected sub menu options all displayed on Home page.", false);
+			login = new LoginPage().get();
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			 new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
+			accountverification.jumpPagedisplayed();
+			Web.waitForPageToLoad(Web.getDriver());
+			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*@Test(dataProvider = "setData")
 	public void */
 
 	@AfterSuite
 	public void DriverQuite() {
-//		Web.getDriver().close();
-//		Web.getDriver().quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 }

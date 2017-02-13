@@ -6,7 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+//import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -211,7 +212,7 @@ public class guidedpayrolltc_regression {
 			 Web.clickOnElement(guidedpayroll, "ADD SSN BTN");
 			 Web.waitForElement(guidedpayroll,"SEARCH CANCEL BTN");
 			 Web.clickOnElement(guidedpayroll,"SEARCH CANCEL BTN");
-			 Web.webdriver.switchTo().defaultContent();
+			 Web.getDriver().switchTo().defaultContent();
 			 guidedpayroll.editEmployee("valid");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -244,7 +245,7 @@ public class guidedpayrolltc_regression {
 				 Web.waitForElement(guidedpayroll,"EDIT CANCEL BTN");
 				 Web.clickOnElement(guidedpayroll,"EDIT CANCEL BTN");	
 				 guidedpayroll.checkIfEditICONHighlighted();
-				 Web.webdriver.switchTo().defaultContent();
+				 Web.getDriver().switchTo().defaultContent();
 		     }
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -281,7 +282,7 @@ public class guidedpayrolltc_regression {
 				 Web.clickOnElement(guidedpayroll, "BTN CONTRIBUTION SAVE");			
 				 guidedpayroll.validateRemittance();				
 			 }
-			 Web.webdriver.switchTo().defaultContent();			
+			 Web.getDriver().switchTo().defaultContent();			
 		}catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

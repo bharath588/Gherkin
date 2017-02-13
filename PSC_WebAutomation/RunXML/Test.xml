@@ -14,7 +14,7 @@
 					</include>
 				</methods>
 			</class> -->
-				<class name="app.psc.testcases.plan.plansearchtestcases">
+				<!-- <class name="app.psc.testcases.plan.plansearchtestcases">
 				 <methods>
 					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
@@ -24,7 +24,21 @@
 						<parameter name="ManualTCName"
 							value="Plan_Validat_error_message_when_plan_filed_blank"></parameter>
 					</include>
+					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"></parameter>
+					</include>
 				</methods>
+			</class> -->
+			<class name="app.psc.testcases.login.logintestcases">
+			 <methods>
+				<!-- <include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs"></parameter>
+				</include> -->
+				<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
+					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"></parameter>
+				</include>
+			 </methods>
 			</class>
 		</classes>
 	</test>

@@ -47,6 +47,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="txtUserVeriEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="link_Footer1" value="Security" />
 				<parameter name="link_Footer2" value="Privacy" />
 				<parameter name="link_Footer3" value="Terms and conditions" />
@@ -88,6 +91,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -97,6 +103,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="expectedErrorMessage"
 					value="Email is Required&#10;&#10;Security Answer is Required" />
 			</Iteration>
@@ -105,6 +114,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="expectedErrorMessage" value="Email is Required" />
 			</Iteration>
 			<Iteration Execution="Yes" id="3">
@@ -112,6 +124,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="abc@gwl.com" />
 				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="expectedErrorMessage" value="Security Answer is Required" />
 			</Iteration>
 			<Iteration Execution="Yes" id="4">
@@ -119,6 +134,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="Invalid" />
 				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="expectedErrorMessage" value="Email format is invalid" />
 			</Iteration>
 			<Iteration Execution="Yes" id="5">
@@ -126,6 +144,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
 				<parameter name="UserSecondaryAns" value="invalid" />
+				<parameter name="dreamCar" value="invalid" />
+				<parameter name="favDrink" value="invalid" />
+				<parameter name="spouseMidName" value="invalid" />
 				<parameter name="expectedErrorMessage"
 					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive." />
 			</Iteration>
@@ -137,6 +158,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ifSingleSiteUser" value="False" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
@@ -144,6 +168,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="ifSingleSiteUser" value="False" />
 			</Iteration>
 		</TestCase>
@@ -154,6 +181,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ifSingleSiteUser" value="True" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
@@ -161,6 +191,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="ifSingleSiteUser" value="True" />
 			</Iteration>
 		</TestCase>
@@ -173,6 +206,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="1" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -183,6 +219,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="423423" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -193,6 +232,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="Name" value="s" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -203,6 +245,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="Name" value="jack" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -213,6 +258,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="EmployeeID" value="0" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -223,6 +271,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="EmployeeID" value="21131" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -233,6 +284,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_valid_ppt">
@@ -241,6 +295,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ParticipantId" value="1" />
 			</Iteration>
 		</TestCase>
@@ -250,6 +307,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ParticipantId" value="dsq" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
@@ -260,6 +320,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="12" />
 			</Iteration>
 		</TestCase>
@@ -269,6 +332,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="Name" value="a" />
 			</Iteration>
 		</TestCase>
@@ -278,6 +344,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="EmployeeID" value="1" />
 			</Iteration>
 		</TestCase>
@@ -287,6 +356,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="Participant ID" value="2" />
 			</Iteration>
 		</TestCase>
@@ -296,6 +368,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ppt_planonediv">
@@ -304,6 +379,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ppt_planmultidiv">
@@ -312,6 +390,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_screen_elements">
@@ -320,6 +401,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_sorting">
@@ -328,6 +412,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_pagination">
@@ -336,6 +423,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="002143838" />
 			</Iteration>
 		</TestCase>
@@ -345,6 +435,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_hyperlinks">
@@ -353,6 +446,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_redirect">
@@ -361,6 +457,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_limit">
@@ -369,6 +468,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_filter">
@@ -377,6 +479,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="FilterText" value="a" />
 			</Iteration>
 		</TestCase>
@@ -386,6 +491,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_emp_err_code">
@@ -394,6 +502,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
 			</Iteration>
 		</TestCase>
@@ -403,6 +514,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_valid_res_termed_emp">
@@ -411,6 +525,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ssn_masking">
@@ -419,6 +536,9 @@
 				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
 	</Module>

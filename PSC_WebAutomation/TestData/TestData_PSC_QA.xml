@@ -3,12 +3,41 @@
 	<Module name="Program"></Module>
 	<Module name="plan">
 		<TestCase name="Plan_Search_Redirection_Plan_Summary_Page">
-			<Iteration Execution="Yes " id="1">
+			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="planNumber" value="331045-01" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+		<parameter name="planNumber" value="331045-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Plan_Validat_error_message_when_plan_filed_blank">
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value=" " />
+				<parameter name="errortext" value="Please enter a plan in the search box."/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value="4@344" />
+				<parameter name="errortext" value="Plan Not Found."/>
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -90,6 +119,120 @@
 				<parameter name="Comments" value="User ID for External users" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="SIT_PSC_Sitenavigation_Menutabs">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="menutabs" value="Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="5ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="menutabs" value="PartnerLink,Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Sitenavigation_SubMenutabs">
+			 <Iteration Execution="No" id="1">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Plan" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Overview,Investments &amp; Performance,Administration,Fiduciary records,Forms &amp; documents,Contacts" />
+				<parameter name="Overview" value="Summary,Plan provisions,Vesting schedules,Participant web and VRU options" />
+				<parameter name="Investments &amp; Performance" value="" />
+				<parameter name="Administration" value="To do list,Vesting hours update &amp; verify,Vesting years update &amp; verify,Pay plan expenses,Username security management,Employee data file upload,View?change banking information,Asset allocation model setup,Plan messaging,Plan expense account" />
+				<parameter name="Fiduciary records" value="Required notices,Plan documents,Participant data extract order,Participant fee disclosure report order,Participant QDIA notice listing order" />
+				<parameter name="Forms &amp; documents" value="Administration documents,Scanned cash documents" />
+				<parameter name="Contacts" value="Plan contacts,Divisional contacts,Empower contacts" />
+			</Iteration>
+			<Iteration Execution="No" id="2">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Employees" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Search employee,Add employee,Forms" />
+				<parameter name="Search employee" value="" />
+				<parameter name="Add employee" value="" />
+				<parameter name="Forms" value="" />
+			</Iteration>
+			<Iteration Execution="No" id="3">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Process center" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Overview,Enter payroll,Transmit your own file,Pending,View∕change banking information" />
+				<parameter name="Overview" value="" />
+				<parameter name="Enter payroll" value="" />
+				<parameter name="Transmit your own file" value="Upload payroll file,Process payroll file" />
+				<parameter name="Pending" value="" />
+				<parameter name="View?change banking information" value="" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Compliance" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Year end compliance,Census file,Compliance user guide,Video demonstration" />
+				<parameter name="Year end compliance" value="" />
+				<parameter name="Census file" value="Order Census File,Download Census File" />
+				<parameter name="Compliance user guide" value="" />
+				<parameter name="Video demonstration" value="" />
+			</Iteration>
+			<Iteration Execution="No" id="5">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Reports" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Standard reports,My reports" />
+				<parameter name="Standard reports" value="" />
+				<parameter name="My reports" value="" />
+			</Iteration>
+			<Iteration Execution="No" id="6">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="Resource center" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="Products &amp; services,Educational resources" />
+				<parameter name="Products &amp; services" value="Recordkeeping products &amp; services" />
+				<parameter name="Educational resources" value="" />
+			</Iteration>
+			<Iteration Execution="No" id="7">
+				<parameter name="username" value="1ISIS"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="menuname" value="File sharing" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="userverification">
 		<TestCase
@@ -99,7 +242,7 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-			</Iteration>
+			</Iteration> 
 		</TestCase>
 		<TestCase
 			name="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid">

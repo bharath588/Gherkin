@@ -5,7 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
-import lib.Reporter.Status;
+//import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -153,7 +154,7 @@ public class guidedpayrolltestcases {
 
 	@AfterClass
 	public void cleanupSessions() {
-		Web.webdriver.close();
-		Web.webdriver.quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 }

@@ -1,15 +1,19 @@
 package pageobjects.userverification;
 
 import java.sql.ResultSet;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import pageobjects.login.LoginPage;
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Web;
 import lib.Stock;
 
@@ -137,13 +141,14 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		return null;
 	}
 	
-	/** This method Performs user verification based on the user input */
-	public void performVerification(String[] userVerfiData) {
+	/** This method Performs user verification based on the user input 
+	 * @throws InterruptedException */
+	public void performVerification(String[] userVerfiData) throws InterruptedException {
 		new UserVerificationPage();	
-		
+		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
 		}		
@@ -231,5 +236,25 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			e.printStackTrace();
 		}
 		return securityQuestionText;
+	}
+	
+	public String getSecurityAnswer()
+	{
+		String securityAnswer = "";
+		try{
+			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
+				securityAnswer =    Stock.GetParameterValue("dreamCar");
+			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
+				securityAnswer = Stock.GetParameterValue("favDrink");
+			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))
+				securityAnswer = Stock.GetParameterValue("spouseMidName");
+			else
+				securityAnswer = Stock.GetParameterValue("UserSecondaryAns");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return securityAnswer;
 	}
 }
