@@ -12,6 +12,7 @@ import java.util.Map;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
+import com.gargoylesoftware.htmlunit.javascript.host.media.webkitAudioContext;
 
 import lib.Stock;
 import lib.Web;
@@ -23,6 +24,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
@@ -345,7 +347,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			   expectSubMenuItems.get(i).equalsIgnoreCase("Educational resources")
 			  )
 			{
-				expMenuMap.put(expectSubMenuItems.get(i),new LinkedList<String>());
+				expMenuMap.put(expectSubMenuItems.get(i), new LinkedList<String>());
 			}
 			else
 			{
@@ -359,7 +361,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 				if(menuItem.getText().equals(menu))
 				{
 					Web.clickOnElement(menuItem);
-					Thread.sleep(3000);
+					Web.waitForPageToLoad(Web.getDriver());
+					Thread.sleep(10000);
 					act.moveToElement(menuItem).click(menuItem).build().perform();
 					
 					for(WebElement ele : subMenuItems())
@@ -371,7 +374,6 @@ public class HomePage extends LoadableComponent<HomePage>{
 						ele.getText().equals("Pending")|| ele.getText().equals("View∕change banking information")||
 						ele.getText().equals("Year end compliance")|| ele.getText().equals("Compliance user guide")||ele.getText().equals("Video demonstration")|| 
 						ele.getText().equals("Standard reports")|| ele.getText().equals("My reports")||ele.getText().equals("Educational resource"))
-								
 						{
 						
 						}
@@ -455,6 +457,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 	}
 	return planTextDisplayed;
 	}	
+	
+	
+	
 	
 	
 	

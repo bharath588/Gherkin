@@ -14,9 +14,9 @@
 					</include>
 				</methods>
 			</class> -->
-				<class name="app.psc.testcases.plan.plansearchtestcases">
+				<!-- <class name="app.psc.testcases.plan.plansearchtestcases">
 				 <methods>
-					<!-- <include name="TC01_search_plan_for_valid_plan">
+					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page"></parameter>
 					</include>				
@@ -27,23 +27,26 @@
 					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"></parameter>
-					</include> -->
+					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"></parameter>
-					</include>
+					</include> 
 				</methods>
-			</class> 
-			<!-- <class name="app.psc.testcases.login.logintestcases">
+			</class> -->
+			<class name="app.psc.testcases.login.logintestcases">
 			 <methods>
-				<<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+				<!-- <include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
 					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs"></parameter>
 				</include>
 				<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
 					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"></parameter>
+				</include> -->
+				<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
+					<parameter name="ManualTCName" value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite"></parameter>
 				</include>
 			 </methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>

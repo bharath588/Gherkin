@@ -2,8 +2,11 @@
 package pageobjects.accountverification;
 
 import java.sql.ResultSet;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
@@ -92,6 +95,9 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement linkLogout;
 	@FindBy(xpath = ".//*[@id='headNav']/li[2]/a")
 	private WebElement linkLogoutAccveri;
+	@FindBy(id="jumpPage")
+	private WebElement verifyJumpPage;
+	
 	
 	LoadableComponent<?> parent;
 	Select dropDownSelect;
@@ -461,8 +467,68 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 
 	public void jumpPagedisplayed() {
 		if (Web.isWebElementDisplayed(urlJumpPage))
+		{
 			urlJumpPage.click();
+		}
+		
 	}
+	
+	
+	/**
+	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
+	 */
+
+	public boolean isJumpPageDisplayed() {
+		boolean isJumpDisplayed;
+		if (Web.isWebElementDisplayed(verifyJumpPage))
+		{
+			isJumpDisplayed = true;
+		}
+		else
+		{
+			isJumpDisplayed = false;
+		}
+		System.out.println("Boolean value for jump page is:"+isJumpDisplayed);
+		return isJumpDisplayed;
+	}
+	
+	
+	public void jumpPageVerification()
+	{
+		AccountVerificationPage act = new AccountVerificationPage();
+		if(act.isJumpPageDisplayed())
+		{
+			Reporter.logEvent(Status.FAIL,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is displayed.",true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.PASS,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is not displayed.",false);
+		}
+	}
+	
+	/**
+	 * This method fetches the accu_code from Q-INST db to make sure that plan is for Nextgen/Heritafe or putnum
+	 * @param queryDeleteOldPassword
+	 * @param username
+	 * @throws Exception
+	 */
+	
+	public int get_Accu_Code_Count(String[] queryForAccuCode,String userId) throws Exception
+	{
+	
+		resultset = DB.executeQuery(queryForAccuCode[0], queryForAccuCode[1],userId);
+		return DB.getRecordSetCount(resultset);
+	/*	if (resultset != null) 
+		{
+			while (resultset.next()) {
+			accuCode.add(resultset.getString("Accu_Code"));
+		}*/
+		
+	}
+	
+	
+	
+	
 
 	/**
 	 * This method adds a plan to an existing user

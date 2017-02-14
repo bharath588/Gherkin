@@ -153,7 +153,7 @@
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Sitenavigation_SubMenutabs">
-			 <Iteration Execution="No" id="1">
+			 <Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Plan" />
@@ -169,7 +169,7 @@
 				<parameter name="Forms &amp; documents" value="Administration documents,Scanned cash documents" />
 				<parameter name="Contacts" value="Plan contacts,Divisional contacts,Empower contacts" />
 			</Iteration>
-			<Iteration Execution="No" id="2">
+			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Employees" />
@@ -182,7 +182,7 @@
 				<parameter name="Add employee" value="" />
 				<parameter name="Forms" value="" />
 			</Iteration>
-			<Iteration Execution="No" id="3">
+			<Iteration Execution="Yes" id="3">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Process center" />
@@ -211,7 +211,7 @@
 				<parameter name="Compliance user guide" value="" />
 				<parameter name="Video demonstration" value="" />
 			</Iteration>
-			<Iteration Execution="No" id="5">
+			<Iteration Execution="Yes" id="5">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Reports" />
@@ -223,7 +223,7 @@
 				<parameter name="Standard reports" value="" />
 				<parameter name="My reports" value="" />
 			</Iteration>
-			<Iteration Execution="No" id="6">
+			<Iteration Execution="Yes" id="6">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Resource center" />
@@ -235,7 +235,7 @@
 				<parameter name="Products &amp; services" value="Recordkeeping products &amp; services" />
 				<parameter name="Educational resources" value="" />
 			</Iteration>
-			<Iteration Execution="No" id="7">
+			<Iteration Execution="Yes" id="7">
 				<parameter name="username" value="1ISIS"/>
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="File sharing" />
@@ -244,6 +244,21 @@
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="submenu" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username"  value="6X52E" />
+				<parameter name="password"  value="testing1" />
+				<parameter name="userid"  value="6X52E" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="submenu" value="" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1211,5 +1226,9 @@ GA_ID in (select DISTINCT GA_ID from user_data_access where
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
+		<parameter QueryName="getAccuCode" DB="PSC_DB"
+			Query="select count(DISTINCT(accu_code)) from access_customization_view where access_type_code='PSC_WEB'and ga_id in (select ga_id from std_restrc where uscs_id=?)" />
+	
+	
 	</Module>
 </TestData>
