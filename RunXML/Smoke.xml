@@ -8,7 +8,7 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-				 <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
+					 <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
 					<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
                     </parameter>
                     </include> 
@@ -53,38 +53,41 @@
                     </parameter>
                     </include>
 				
-					
+					<include name="Manage_My_Investment_Flow_New" >
+					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+				
 					<include name="PlanForms_Validations" >
 					<parameter name="ManualTCName" value="PlanForms_Validations">
                     </parameter>
                     </include>
-												
+				
+					<include name="Dollar_Cost_Average_Flow" >
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+                    </parameter>
+                    </include>
+				
 					<include name="Investment_lineup_validations" >
 					<parameter name="ManualTCName" value="Investment_lineup_validations">
                     </parameter>
                     </include>
-							
+				
+					<include name="FundToFundTransfer" >
+					<parameter name="ManualTCName" value="FundToFundTransfer">
+                    </parameter>
+                    </include>
+				
 					<include name="Edit_MyContribution" >
 					<parameter name="ManualTCName" value="Edit_MyContribution">
                     </parameter>
                     </include>
 				
-					<include name="Manage_My_Investment_Flow_New" >
-					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
-                    </parameter>
-                    </include>
-                    <include name="Statement_and_Documents_validations" >
+					<include name="Statement_and_Documents_validations" >
 					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
                     </parameter>
                     </include>
-					<include name="Dollar_Cost_Average_Flow" >
-					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
-                    </parameter>
-                    </include>
-                    <include name="FundToFundTransfer" >
-					<parameter name="ManualTCName" value="FundToFundTransfer">
-                    </parameter>
-                    </include>
+				
 					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" >
 					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
                     </parameter>
