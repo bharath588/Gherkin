@@ -133,19 +133,18 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 						false);
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(4000);
+				//Thread.sleep(4000);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
+		if (Web.isWebElementDisplayed(lnkDismiss,true)) {
+			this.lnkDismiss.click();
+		}
 		if (Web.isWebElementDisplayed(this.btnCloseTutorial,true)) {
 			this.btnCloseTutorial.click();
-		}
-
-		if (Web.isWebElementDisplayed(lnkDismiss)) {
-			this.lnkDismiss.click();
 		}
 
 		if (Web.isWebElementDisplayed(this.lnkCancelGoalSetup,true)) {

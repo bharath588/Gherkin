@@ -8,8 +8,8 @@
         <classes>
           	<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
-                <include name="Statement_and_Documents_validations" >
-					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+               <include name="Verify_Health_care_costs_helpful_links" >
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
                     </parameter>
                     </include>
                     </methods>
