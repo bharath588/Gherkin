@@ -69,13 +69,12 @@
                     </parameter>
                     </include>
 				
-					<include name="Statement_and_Documents_validations" >
-					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
-                    </parameter>
-                    </include>
-                    
 					<include name="Manage_My_Investment_Flow_New" >
 					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+                    <include name="Statement_and_Documents_validations" >
+					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
                     </parameter>
                     </include>
 					<include name="Dollar_Cost_Average_Flow" >
