@@ -81,9 +81,9 @@
 		</TestCase>
 		<TestCase name="PlanForms_Validations">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444324ABC" />
+				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
-				<parameter name="lblUserName" value="TEST WEB" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Edit_Beneficiary">
