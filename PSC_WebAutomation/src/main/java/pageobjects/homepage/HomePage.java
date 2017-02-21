@@ -1,10 +1,14 @@
 package pageobjects.homepage;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.util.List;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
+import lib.DB;
 import lib.Stock;
 import lib.Web;
 
@@ -45,6 +49,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement blankPlanNumberErrText;
 	@FindBy(xpath=".//ul[contains(@class,'ui-autocomplete')]/li")
 	private List<WebElement> autoCompleteSuggestionText;
+	@FindBy(xpath="//div[@id='lastLogin']")
+	private WebElement lastLogin;
+	
+	
 
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
@@ -292,5 +300,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return autoCompleteSuggested;
 	}
+	
+	public ResultSet getLastLogins(String[] getLastLogins,String application, String menuFeatureCode, String user)
+	{
+		return DB.executeQuery(getLastLogins[0], getLastLogins[1], application,menuFeatureCode,"K_"+user);
+	}
+	
+	
 
 }

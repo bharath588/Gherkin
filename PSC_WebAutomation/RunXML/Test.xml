@@ -39,6 +39,10 @@
 					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
 							value="User_Account_Locking_For_max_Invalid_Attempts"></parameter>
+					</include>
+					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
+						<parameter name="ManualTCName"
+							value="Display correct date and time of my last login"></parameter>
 					</include>				
 				</methods>
 			</class>

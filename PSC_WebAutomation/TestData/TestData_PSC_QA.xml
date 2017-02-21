@@ -122,6 +122,14 @@
 				<parameter name="Comments" value="User ID for External users" />
 			</Iteration>
 		</TestCase>
+	<TestCase name="Display correct date and time of my last login">
+		<Iteration Execution="Yes" id="1">
+			<parameter name="username" value="1ISIS" />
+			<parameter name="password" value="testing1" />
+			<parameter name = "application" value="PSC"/>
+			<parameter name = "menu_feature_code" value="BROWSER_INFO"/>
+		</Iteration>
+	</TestCase>
 	</Module>
 	<Module name="userverification">
 		<TestCase
@@ -1097,5 +1105,15 @@ user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 			Query = "Update users set termdate = ? where logon_id=?"></parameter>
 			<parameter QueryName = "queryToResetTermDate" DB="ParticipantDataDB"
 			Query = "Update users set termdate = '06-FEB-22' where logon_id=?"></parameter>
+			<parameter QueryName = "getLastLogins" DB="ParticipantDataDB"
+			Query = "select user_logon_id, TO_CHAR(DPDATE_TIME, &apos;YYYYMMDD hh24:mi&apos;) DPDATE, 
+substr(exception,  instr(exception, &apos;IP_ADDR&gt;&apos;)+8,  (instr(exception, &apos;&lt;/IP_ADDR&gt;&apos;) - (instr(exception, &apos;IP_ADDR&gt;&apos;)+8))) IP ,
+substr(exception,  instr(exception, &apos;BROWSER&gt;&apos;)+8,  (instr(exception, &apos;&lt;/BROWSER&gt;&apos;) - (instr(exception, &apos;BROWSER&gt;&apos;)+8))) browser , 
+substr(exception,  instr(exception, &apos;FULL_VERSION&gt;&apos;)+13,  (instr(exception, &apos;&lt;/FULL_VERSION&gt;&apos;) - (instr(exception, &apos;FULL_VERSION&gt;&apos;)+13))) major,
+substr(exception,  instr(exception, &apos;MINOR_VERSION&gt;&apos;)+14,  (instr(exception, &apos;&lt;/MINOR_VERSION&gt;&apos;) - (instr(exception, &apos;MINOR_VERSION&gt;&apos;)+14))) minor
+from menu_activity
+where application = ?
+and menu_feature_code = ?
+and user_logon_id=? order by DPDATE desc"/>
 	</Module>
 </TestData>
