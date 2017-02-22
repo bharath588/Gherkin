@@ -251,14 +251,36 @@
 				<parameter name="username"  value="6X52E" />
 				<parameter name="password"  value="testing1" />
 				<parameter name="userid"  value="6X52E" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				
+			</Iteration>
+		</TestCase>
+		<TestCase name="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username"  value="6IUEF" />
+				<parameter name="password"  value="testing1" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="UI_Validations_On_JumpPage">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username"  value="6IUEF" />
+				<parameter name="password"  value="testing1" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1227,7 +1249,7 @@ user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
 		<parameter QueryName="getAccuCode" DB="PSC_DB"
-			Query="select count(DISTINCT(accu_code)) from access_customization_view where access_type_code='PSC_WEB'and ga_id in (select ga_id from std_restrc where uscs_id=?)" />
+			Query="select DISTINCT(accu_code),ga_id from access_customization_view where access_type_code='PSC_WEB' and accu_code in ('PlanEmpower','PscGwrs','PscPutnamWR') and ga_id in(select ga_id from std_restrc where uscs_id=?)" />
 	
 	
 	</Module>

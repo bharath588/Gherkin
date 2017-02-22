@@ -152,7 +152,8 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
 		}		
-		if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
+		//if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
+		if (!Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {
 				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
 						"The user verification screen is not loaded", false);
 			}else{

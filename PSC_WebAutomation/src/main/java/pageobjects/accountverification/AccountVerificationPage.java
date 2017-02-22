@@ -95,8 +95,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement linkLogout;
 	@FindBy(xpath = ".//*[@id='headNav']/li[2]/a")
 	private WebElement linkLogoutAccveri;
-	@FindBy(id="jumpPage")
-	private WebElement verifyJumpPage;
+	
 	
 	
 	LoadableComponent<?> parent;
@@ -474,37 +473,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	}
 	
 	
-	/**
-	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
-	 */
-
-	public boolean isJumpPageDisplayed() {
-		boolean isJumpDisplayed;
-		if (Web.isWebElementDisplayed(verifyJumpPage))
-		{
-			isJumpDisplayed = true;
-		}
-		else
-		{
-			isJumpDisplayed = false;
-		}
-		System.out.println("Boolean value for jump page is:"+isJumpDisplayed);
-		return isJumpDisplayed;
-	}
 	
-	
-	public void jumpPageVerification()
-	{
-		AccountVerificationPage act = new AccountVerificationPage();
-		if(act.isJumpPageDisplayed())
-		{
-			Reporter.logEvent(Status.FAIL,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is displayed.",true);
-		}
-		else
-		{
-			Reporter.logEvent(Status.PASS,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is not displayed.",false);
-		}
-	}
 	
 	/**
 	 * This method fetches the accu_code from Q-INST db to make sure that plan is for Nextgen/Heritafe or putnum

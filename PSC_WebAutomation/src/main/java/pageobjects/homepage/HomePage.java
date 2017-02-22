@@ -56,6 +56,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement blankPlanNumberErrText;
 	@FindBy(xpath=".//div[@class='button-row']//button[.='More']")
 	private WebElement moreButton;
+	@FindBy(id="jumpPage")
+	private WebElement verifyJumpPage;
 	private WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -458,7 +460,52 @@ public class HomePage extends LoadableComponent<HomePage>{
 	return planTextDisplayed;
 	}	
 	
+	/**
+	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
+	 * @throws Exception 
+	 */
+
+	public boolean isJumpPageDisplayed() throws Exception {
+		boolean isJumpDisplayed;
+		Web.waitForElement(verifyJumpPage);
+		if (Web.isWebElementDisplayed(verifyJumpPage))
+		{
+			isJumpDisplayed = true;
+		}
+		else
+		{
+			isJumpDisplayed = false;
+		}
+		System.out.println("Boolean value for jump page is:"+isJumpDisplayed);
+		return isJumpDisplayed;
+	}
 	
+	
+	public void jumpPageVerificationWhenPlanAccessInSingleSite() throws Exception
+	{
+		AccountVerificationPage act = new AccountVerificationPage();
+		if(this.isJumpPageDisplayed())
+		{
+			Reporter.logEvent(Status.FAIL,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is displayed.",true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.PASS,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is not displayed.",false);
+		}
+	}
+	
+	public void jumpPageVerificationWhenPlanAccessInAllSite() throws Exception
+	{
+		AccountVerificationPage act = new AccountVerificationPage();
+		if(this.isJumpPageDisplayed())
+		{
+			Reporter.logEvent(Status.PASS,"Verify if Jump page is displayed if user has access to plans in all sites.","Jump page is displayed.",false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Verify if Jump page is displayed if user has access to plans in all sites.","Jump page is not displayed.",true);
+		}
+	}	
 	
 	
 	
