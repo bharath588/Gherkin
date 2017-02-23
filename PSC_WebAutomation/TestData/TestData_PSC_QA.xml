@@ -1074,27 +1074,27 @@
 		</TestCase>
 	</Module>
 	<Module name="query">
-		<parameter QueryName="setDefaultPlanNullQuery" DB="ParticipantDataDB"
+		<parameter QueryName="setDefaultPlanNullQuery" DB="ISISDB_QA"
 			Query="update users set default_ga_id=null where logon_id = ?" />
-		<parameter QueryName="getNumberOfPlansQuery" DB="ParticipantDataDB"
+		<parameter QueryName="getNumberOfPlansQuery" DB="ISISDB_QA"
 			Query="select distinct uda.ga_id
 from user_data_access uda
 join(select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') reftable 
 ON uda.ga_id = reftable.ga_id 
 where uda.user_logon_id = ?" />
-		<parameter QueryName="deleteSecurityAnsQuery" DB="ParticipantDataDB"
+		<parameter QueryName="deleteSecurityAnsQuery" DB="ISISDB_QA"
 			Query="delete from user_security_questions where user_logon_id =?" />
-		<parameter QueryName="updateUserEffdateQuery" DB="ParticipantDataDB"
+		<parameter QueryName="updateUserEffdateQuery" DB="ISISDB_QA"
 			Query="update ISIS_PASSWORD set effdate =effdate-360 where user_logon_id = ?" />
-		<parameter QueryName="getEmailaddressQuery" DB="ParticipantDataDB"
+		<parameter QueryName="getEmailaddressQuery" DB="ISISDB_QA"
 			Query="select email_address from users where logon_id = ?" />
-		<parameter QueryName="deleteFriendlyUsernameQuery" DB="CommonDB"
+		<parameter QueryName="deleteFriendlyUsernameQuery" DB="CommonDB_QA"
 			Query="delete from FRIENDLY_USERNAME
 where user_logon_id =?
 and FRIENDLY_USERNAME in
 ( select  FRIENDLY_USERNAME from users where logon_id = ?)" />
-		<parameter QueryName="updateAttributesQuery" DB="ParticipantDataDB"
+		<parameter QueryName="updateAttributesQuery" DB="ISISDB_QA"
 			Query="update users
 set LAST_LOGIN_DATE_TIME = null ,
 cas_web_agreement_accept_ind=null,
@@ -1104,16 +1104,16 @@ FRIENDLY_USERNAME = null ,
 FRIENDLY_USERNAME_OPT_OUT_IND = null
 where logon_id =?
 " />
-		<parameter QueryName="getRecentPlanQuery" DB="ParticipantDataDB"
+		<parameter QueryName="getRecentPlanQuery" DB="ISISDB_QA"
 			Query="select ga_id from user_data_access where dpdate_time = (select max(dpdate_time) from user_data_access where user_logon_id= ? )  and ga_id is not null" />
-		<parameter QueryName="addPlanNumberQuery" DB="ParticipantDataDB"
+		<parameter QueryName="addPlanNumberQuery" DB="ISISDB_QA"
 			Query="insert into std_restrc
   values (std_restrcq.nextval,
      ?, 'GA', 'Y', 'Y',
      null, null, null,?, 
      null, null, null, null, null, null, null,
      null, null, null, null, null, 0, null)" />
-		<parameter QueryName="getPlanswithDivisions" DB="ParticipantDataDB"
+		<parameter QueryName="getPlanswithDivisions" DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join (select distinct ga.id, 'no division' from group_account ga 
 where termdate is null minus select distinct ga.id, 
 'no division' from group_account ga, gc_subset gs where ga.gc_id = GS.GC_ID and 
@@ -1122,7 +1122,7 @@ ga.gc_id = GS.GC_ID and ga.termdate is null order by id) reftable ON userdatatab
 userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
 		<parameter QueryName="getPlanswithMorethanSingleDivision"
-			DB="ParticipantDataDB"
+			DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
       (SELECT GA.ID,
        count(GS.BASIS) as count 
@@ -1133,7 +1133,7 @@ where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id
       AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
 userdatatable.user_logon_id = ? and reftable.count &gt; '1') ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-		<parameter QueryName="getPlanswithSingleDivision" DB="ParticipantDataDB"
+		<parameter QueryName="getPlanswithSingleDivision" DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
       (SELECT GA.ID,
        count(GS.BASIS) as count 
@@ -1144,9 +1144,9 @@ where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id
       AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
 userdatatable.user_logon_id = ? and reftable.count = '1') ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-		<parameter QueryName="selectDefaultPlanQuery" DB="ParticipantDataDB"
+		<parameter QueryName="selectDefaultPlanQuery" DB="ISISDB_QA"
 			Query="select default_ga_id from users where logon_id = ?" />
-		<parameter QueryName="selectSSNwithExt" DB="ParticipantDataDB"
+		<parameter QueryName="selectSSNwithExt" DB="ISISDB_QA"
 			Query="SELECT  A.ID,
         A.SSN  ,
         A.SSN_EXT  ,
@@ -1157,24 +1157,24 @@ where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id
     FROM INDIVIDUAL A, PART_AGRMT B
    WHERE  A.ID  =  B.  IND_ID AND  B.  GA_ID =  ?  AND  A.  SSN_EXT IS  NOT  NULL
 ORDER BY A.LAST_NAME" />
-		<parameter QueryName="getPlansForErrCode" DB="ParticipantDataDB"
+		<parameter QueryName="getPlansForErrCode" DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
       (select ga_id from part_agrmt where status_subcode = 'ERR') reftable ON userdatatable.ga_id = reftable.ga_id where
 userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-		<parameter QueryName="getEmployeeIDErr" DB="ParticipantDataDB"
+		<parameter QueryName="getEmployeeIDErr" DB="ISISDB_QA"
 			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id  = ? and status_subcode='ERR'and a.ind_id=b.id" />
-		<parameter QueryName="getPlanForTermedEmployees" DB="ParticipantDataDB"
+		<parameter QueryName="getPlanForTermedEmployees" DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
       (select p.ga_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
 order by emp_termdate desc) reftable ON userdatatable.ga_id = reftable.ga_id where
 userdatatable.user_logon_id =?) ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-		<parameter QueryName="getEmpIdforTermedEmployee" DB="ParticipantDataDB"
+		<parameter QueryName="getEmpIdforTermedEmployee" DB="ISISDB_QA"
 			Query="select e.ind_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
 and p.ga_id= ?
 order by emp_termdate desc" />
-		<parameter QueryName="selectPlanForSSNMasking" DB="ParticipantDataDB"
+		<parameter QueryName="selectPlanForSSNMasking" DB="ISISDB_QA"
 			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
       (select ga.id,
 pv.SSN_MASKING_ALLOWED_IND as ssnMaskingAllowedInd, 
@@ -1186,9 +1186,9 @@ and pv.SSN_MASKING_ALLOWED_IND = 'Y'
 and p.id = ga.prod_id) reftable ON userdatatable.ga_id = reftable.id where
 userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-		<parameter QueryName="updateDefaultPlanQuery" DB="ParticipantDataDB"
+		<parameter QueryName="updateDefaultPlanQuery" DB="ISISDB_QA"
 			Query="update users set DEFAULT_GA_ID=? where logon_id=?" />
-		<parameter QueryName="getMoneySourceCols" DB="ParticipantDataDB"
+		<parameter QueryName="getMoneySourceCols" DB="ISISDB_QA"
 			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
 gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai 
 where std.code = gm.sdmt_code 
@@ -1202,7 +1202,7 @@ AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)
 AND ai.part_allocn_ind = 'Y'
 AND gm.SDMT_CODE IN (?)
 AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR" />
-		<parameter QueryName="getMoneySources" DB="ParticipantDataDB"
+		<parameter QueryName="getMoneySources" DB="ISISDB_QA"
 			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
 gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai where std.code = gm.sdmt_code 
 AND gm.ga_id = ? 
@@ -1214,43 +1214,45 @@ AND ai.effdate &lt;= sysdate
 AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)  
 AND ai.part_allocn_ind = 'Y'
 AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR " />
-		<parameter QueryName="getTermedEmployees" DB="ParticipantDataDB"
+		<parameter QueryName="getTermedEmployees" DB="ISISDB_QA"
 			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id = ? and status_code='T'and a.ind_id=b.id
 " />
-		<parameter QueryName="queryChangeUserCategory" DB="ParticipantDataDB"
+		<parameter QueryName="queryChangeUserCategory" DB="ISISDB_QA"
 			Query="update users set user_category = 'PLAN EMPLOYEE' where logon_id=?" />
-		<parameter QueryName="getDefaultPlanUser" DB="ParticipantDataDB"
+		<parameter QueryName="getDefaultPlanUser" DB="ISISDB_QA"
 			Query="select default_ga_id from users where logon_id=?" />
-		<parameter QueryName="checkIfSSNExist" DB="ParticipantDataDB"
+		<parameter QueryName="checkIfSSNExist" DB="ISISDB_QA"
 			Query="select ssn from individual where ssn = ?" />
-		<parameter QueryName="getGSCBasisAndValue" DB="ParticipantDataDB"
+		<parameter QueryName="getGSCBasisAndValue" DB="ISISDB_QA"
 			Query="select distinct gcs_basis,gcs_value from user_data_access where ga_id=?" />
-		<parameter QueryName="deleteOldPasswordRows" DB="ParticipantDataDB"
+		<parameter QueryName="deleteOldPasswordRows" DB="ISISDB_QA"
 			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
 not IN(select max(EFFDATE) 
 from isis_password 
 where user_logon_id=?) " />
-		<parameter QueryName="deleteRecentPasswordRows" DB="ParticipantDataDB"
+		<parameter QueryName="deleteRecentPasswordRows" DB="ISISDB_QA"
 			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
 not IN(select min(EFFDATE) 
 from isis_password 
 where user_logon_id=?) " />
-		<parameter QueryName="queryToNumberOfrows" DB="ParticipantDataDB"
+		<parameter QueryName="queryToNumberOfrows" DB="ISISDB_QA"
 			Query="select * from isis_password where user_logon_id = ?" />
-		<parameter QueryName="queryTosetOldPassword" DB="ParticipantDataDB"
+		<parameter QueryName="queryTosetOldPassword" DB="ISISDB_QA"
 			Query="update ISIS_PASSWORD set effdate =sysdate where user_logon_id = ?" />
-		<parameter QueryName="getNumberofSiteAccess" DB="ParticipantDataDB"
+		<parameter QueryName="getNumberofSiteAccess" DB="ISISDB_QA"
 			Query="select distinct av.accu_code,ud.prod_id, ud.prov_company from user_data_access ud join access_customization_view av on ud.ga_id = av.ga_id where 
 user_logon_id = ? and av.access_type_code='PSC_WEB'" />
-		<parameter QueryName="queryTofindPlansForUser" DB="ParticipantDataDB"
+		<parameter QueryName="queryTofindPlansForUser" DB="ISISDB_QA"
 			Query="select distinct GA_ID from access_customization_view where  
 GA_ID in (select DISTINCT GA_ID from user_data_access where 
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
-		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
+		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ISISDB_QA"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
-		<parameter QueryName="getAccuCode" DB="PSC_DB"
+		<parameter QueryName="getAccuCode" DB="INSTDB_QA"
 			Query="select DISTINCT(accu_code),ga_id from access_customization_view where access_type_code='PSC_WEB' and accu_code in ('PlanEmpower','PscGwrs','PscPutnamWR') and ga_id in(select ga_id from std_restrc where uscs_id=?)" />
-	
+		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
+			Query="select i.ind_id, i.database_instance, u.ssn, u.username, u.web_default_ga_id from individual_registry i inner join username_registry u on i.usrreg_id= u.id
+where u.username=?" />
 	
 	</Module>
 </TestData>

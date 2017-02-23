@@ -41,7 +41,7 @@
 				</include>
 				<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
 					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"></parameter>
-				</include> 
+				</include>
 				<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
 					<parameter name="ManualTCName" value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite"></parameter>
 				</include>

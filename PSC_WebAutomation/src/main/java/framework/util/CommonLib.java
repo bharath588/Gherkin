@@ -1,12 +1,22 @@
 package framework.util;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import lib.DB;
+import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 
 public class CommonLib {
 
@@ -104,5 +114,177 @@ public class CommonLib {
 		}
 		return isMatching;
 	}
+	
+	public static ResultSet getParticipantInfoFromDataBase(String userName)
+            throws SQLException {
+
+     // query to get the no of plans
+     String[] sqlQuery = null;
+     try {
+            sqlQuery = Stock.getTestQuery("getParticipantInfo");
+     } catch (Exception e) {
+            e.printStackTrace();
+     }
+     sqlQuery[0] = getParticipantDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
+     ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+                  userName.substring(0, 9));
+
+     if (DB.getRecordSetCount(participantInfo) > 0) {
+            try {
+                  participantInfo.last();
+            } catch (SQLException e) {
+                  e.printStackTrace();
+                  Reporter.logEvent(
+                                com.aventstack.extentreports.Status.WARNING,
+                                "Query Participant Info from DB:" + sqlQuery[0],
+                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
+                                false);
+            }
+     }
+     return participantInfo;
+}
+
+public static String getParticipantDBName(String userName) throws SQLException {
+
+     // query to get the no of plans
+     String[] sqlQuery = null;
+
+     ResultSet participantDB = null;
+
+     try {
+            sqlQuery = Stock.getTestQuery("getPartcipantDBInfo");
+     } catch (Exception e) {
+            e.printStackTrace();
+     }
+
+     participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],userName);
+     if (DB.getRecordSetCount(participantDB) > 0) {
+            try {
+                  participantDB.last();
+            } catch (SQLException e) {
+                  e.printStackTrace();
+                  Reporter.logEvent(
+                                Status.WARNING,
+                                "Query Participant DB:" + sqlQuery[0],
+                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
+                                false);
+            }
+
+     }
+     System.out.println("DATA BASE Name"
+                  + participantDB.getString("database_instance"));
+     return participantDB.getString("database_instance");
+}
+
+public static String getParticipantID(String ssn) throws SQLException {
+
+     // query to get the no of plans
+     String[] sqlQuery = null;
+     ResultSet participantID = null;
+
+     try {
+            sqlQuery = Stock.getTestQuery("getParticipantID");
+     } catch (Exception e) {
+            e.printStackTrace();
+     }
+
+     participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+     if (DB.getRecordSetCount(participantID) > 0) {
+            try {
+                  participantID.last();
+            } catch (SQLException e) {
+                  e.printStackTrace();
+                  Reporter.logEvent(
+                                Status.WARNING,
+                                "Query Participant DB:" + sqlQuery[0],
+                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
+                                false);
+            }
+     } else {
+            try {
+                  sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDBISIS");
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
+
+            participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+            if (DB.getRecordSetCount(participantID) > 0) {
+                  try {
+                         participantID.last();
+                  } catch (SQLException e) {
+                         e.printStackTrace();
+                         Reporter.logEvent(
+                                       Status.WARNING,
+                                       "Query Participant DB:" + sqlQuery[0],
+                                       "The Query did not return any results. Please check participant test data as the appropriate data base.",
+                                       false);
+                  }
+            } else {
+                  try {
+                         sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
+                  } catch (Exception e) {
+                         e.printStackTrace();
+                  }
+
+                  participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+                  if (DB.getRecordSetCount(participantID) > 0) {
+                         try {
+                                participantID.last();
+                         } catch (SQLException e) {
+                                e.printStackTrace();
+                                Reporter.logEvent(
+                                              Status.WARNING,
+                                              "Query Participant DB:" + sqlQuery[0],
+                                              "The Query did not return any results. Please check participant test data as the appropriate data base.",
+                                              false);
+                         }
+                  }
+            }
+     }
+     System.out.println("ID is " + participantID.getString("ID"));
+     return participantID.getString("ID");
+}
+
+
+public static String checkEnv(String envName) {
+    if (envName.contains("PROJ")) {
+           return Globals.DB_TYPE.get("PROJ");
+    }
+    if (envName.contains("QA")) {
+           return Globals.DB_TYPE.get("QA");
+    }
+    if (envName.contains("PROD")) {
+           return Globals.DB_TYPE.get("PROD");
+    }
+    return null;
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

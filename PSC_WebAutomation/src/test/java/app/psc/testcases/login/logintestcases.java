@@ -571,7 +571,7 @@ public class logintestcases {
 				Stock.GetParameterValue("password") }).get();
 			Web.waitForPageToLoad(Web.getDriver());
 			jp.jumpPageUIValidation();
-			jp.jumpPageSearchPlanValidation();
+			jp.jumpPageSearchPlanBoxValidation();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
