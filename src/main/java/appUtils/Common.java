@@ -65,7 +65,7 @@ public class Common {
 		return participantInfo;
 	}
 
-	public static ResultSet getParticipantInfoFromDataBase(String ssn)
+	public static ResultSet getParticipantInfoFromDataBase(String userName)
 			throws SQLException {
 
 		// query to get the no of plans
@@ -75,9 +75,9 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		sqlQuery[0] = getParticipantDBName(ssn) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
+		sqlQuery[0] = getParticipantDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
-				ssn.substring(0, 9));
+				userName.substring(0, 9));
 
 		if (DB.getRecordSetCount(participantInfo) > 0) {
 			try {

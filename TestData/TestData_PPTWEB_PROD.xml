@@ -210,7 +210,7 @@
 			name="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -218,7 +218,7 @@
 			name="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -226,7 +226,7 @@
 			name="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -234,7 +234,7 @@
 			name="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -250,7 +250,7 @@
 			name="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -258,7 +258,7 @@
 			name="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings_Prod">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="Help Me Do It" value="Y" />
 				<parameter name="Do It For Me" value="Y" />
 				<parameter name="Do It Myself" value="Y" />
@@ -268,7 +268,7 @@
 		<TestCase name="Liat_Verify_PayCheckView_Displayed">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -282,7 +282,7 @@
 		<TestCase name="Liat_Verify_HowDoICompareTab_Labels_Circles">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -290,7 +290,7 @@
 			name="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
@@ -312,14 +312,14 @@
 		<TestCase name="LIAT_Verify_Health_care_costs_helpful_links">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="LIAT_Verify_Tour_Link">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@1234" />
+				<parameter name="password" value="Test@12345" />
 				<parameter name="lblUserName" value="WEB TESTING" />
 			</Iteration>
 		</TestCase>

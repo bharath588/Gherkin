@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			public float before_tax; 
 			public float roth;
 			public static String contrbution_rate;
+			public static String payRoll_Date;
 			//My Contributions Page
 			@FindBy(xpath=".//h1[text()[normalize-space()='My Contributions']]") private WebElement lblMyContributions;
 			@FindBy(xpath=".//table/thead/tr/th[1][text()[normalize-space()='Contribution']]")
@@ -188,6 +190,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='modal-header rules']") private WebElement headerPlanRule;
 			@FindBy(xpath="//button[text()[normalize-space()='Ok']]") private WebElement btnOk;
 			@FindBy(xpath="//div[contains(@ng-if,'hasCompanyMatch')]//div[@class='contribution-percentage']//strong") private WebElement txtCompanyMatch;
+			@FindBy(xpath=".//*[@class='deferrals-breakdown']//tbody//tr[1]//td//span") private WebElement txtTotalForDollar;
+			@FindBy(xpath=".//*[@id='account-details-container']//div[@class='page-title']//span") private WebElement txtConfirmationMessage;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			Actions mouse=new Actions(Web.getDriver());
 		/**
@@ -1469,6 +1473,143 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Annual Compensation is Displayed", "Annual Compensation is not displayed \nAnnual Compensation:"+txtIRSAnnualCompensationAmount.getText().trim(), true);
 			return isDisplayed;
+		}
+		
+		
+		
+		/**<pre> Method to select contribution rate in Dollar.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public void select_Another_Contribution_Rate_Dollar() throws InterruptedException
+		{	
+			Actions keyBoard = new Actions(Web.getDriver());
+			lib.Web.waitForElement(radioSelectAnotherContributionRate);
+			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
+			
+			lib.Web.waitForElement(lnkContributionRate);
+			
+			if(Web.isWebElementDisplayed(lnkDollar))
+				this.lnkDollar.click();			
+			this.lnkContributionRate.click();
+			
+			lib.Web.waitForElement(txtcontributionRateSlider);
+			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
+				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+			}
+			else
+				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
+			
+			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
+			//keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(btnDone);
+			if(btnDone.isDisplayed())
+			{
+				//keyBoard.sendKeys(Keys.ENTER).perform();
+				Web.clickOnElement(btnDone);
+			}
+			Thread.sleep(5000);
+			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate, true);
+			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
+			if(sliderValue)
+				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
+			else
+				Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is not selected to "+contrbution_rate, true);
+			return sliderValue;*/
+		}
+		/**<pre> Method to verify Dollar Symbol in the Confirmation Page.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public boolean verifyDollarInConfirmationPage()
+		{
+			boolean isDisplayed=false;
+				Web.waitForElement(txtTotalForDollar);
+				
+				isDisplayed=txtTotalForDollar.getText().contains("$");
+			if(isDisplayed)
+				Reporter.logEvent(Status.PASS, "Verify Confirmation Page Displays Totals of the Contribution rates in Dollars", "Totals of the Contribution rate is Displayed in Dollars\nContribution Rate:"+txtTotalForDollar.getText().trim(), true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Confirmation Page Displays Totals of the Contribution rates in Dollars", "Totals of the Contribution rate is Not Displayed in Dollars\nContribution Rate:"+txtTotalForDollar.getText().trim(), true);
+			return isDisplayed;
+		}
+		/*
+		 * This method to add auto increase when the Payroll calendar is Drop down
+		 */
+		public void add_Auto_Increase_Date_DropDown(String deferralType) throws InterruptedException, ParseException
+		{
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			DateFormat dateFormat1= new SimpleDateFormat("M/dd/yyyy");
+			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
+			
+			Web.waitForElement(tblhdrlblContribution);
+			
+			if(Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
+			{
+				if(Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
+				{
+				Reporter.logEvent(Status.PASS, "Verify if Add Auto Increase link is displayed", "Add Auto Increase link is displayed", true);
+
+				autoIncreaseDeferralType.click();
+				try {
+					Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
+				Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+				Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				Thread.sleep(3000);
+				Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
+				payRoll_Date=drpDownAutoIncreasePeriod.getAttribute("value");
+				Date date=dateFormat.parse(payRoll_Date);
+				payRoll_Date=dateFormat1.format(date);
+				Web.clickOnElement(btnSaveAddAutoIncreaseModal);
+				Thread.sleep(5000);
+				}
+				else
+				Reporter.logEvent(Status.FAIL, "Verify if Add Auto Increase link is displayed for : "+"'"+deferralType+"'", "Add Auto Increase link is not displayed", true);
+			}
+			
+			
+		}
+		/**<pre> Method to verify Confirmation Message in the Confirmation Page.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public boolean verifyConfirmationMessage()
+		{
+			boolean isMatching=false;
+				Web.waitForElement(txtConfirmationMessage);
+				String confirmationMessage="";
+				String actualConfirmationMessage=txtConfirmationMessage.getText().toString().trim();
+				if(Stock.GetParameterValue("sdsv_subcode").equalsIgnoreCase("ADJRUN_PAYROLLDATE")){
+					
+					confirmationMessage="Your changes have been received and will be processed in the "+payRoll_Date+" pay cycle, subject to your plan terms and your payroll cycle.";
+					isMatching=Web.VerifyText(confirmationMessage.trim(),actualConfirmationMessage);
+				}
+				else if(Stock.GetParameterValue("sdsv_subcode").equalsIgnoreCase("ADJRUNDATE")){
+					
+					confirmationMessage="Your changes will be reported to your plan sponsor on "+payRoll_Date+" and the changes will be effective as soon as administratively feasible, subject to your plan terms and your payroll cycle.";
+					isMatching=Web.VerifyText(confirmationMessage.trim(),actualConfirmationMessage);
+				}
+				else if(Stock.GetParameterValue("sdsv_subcode").equalsIgnoreCase("GENERIC")){
+					
+					confirmationMessage="Your changes will be reported to your plan sponsor, and will be processed as soon as administratively feasible, subject to your plan terms and your payroll cycle.";
+					isMatching=Web.VerifyText(confirmationMessage.trim(),actualConfirmationMessage);
+				}
+			if(isMatching)
+				Reporter.logEvent(Status.PASS, "Verify Confirmation Page Displays With Sucess Message", "Confirmation Message is Matching\nExpected:"+confirmationMessage+"\nActual:"+actualConfirmationMessage, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Confirmation Page Displays With Sucess Message", "Confirmation Message is Not Matching\nExpected:"+confirmationMessage+"\nActual:"+actualConfirmationMessage, true);
+			return isMatching;
 		}
 	}		
 	

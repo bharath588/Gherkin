@@ -235,19 +235,53 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
                     </parameter>
                     </include> 
+                    
                     <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
+                    
                     <include name="Deferral_022_Regular_SPLIT_Company_match">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_022_Regular_SPLIT_Company_match">
                     </parameter>
+                    
                     <include name="Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     </parameter>
                     </include>
+                    
                     <include name="Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_027_Multiple_No_changes_in_the_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_028_Multiple_Create_Dollar_deferrals">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_029_Multiple_Change_Dollar_deferrals">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_029_Multiple_Change_Dollar_deferrals">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     </parameter>
                     </include>
                     -->

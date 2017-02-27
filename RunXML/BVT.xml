@@ -6,13 +6,14 @@
     </listeners>
     <test name="PROD">
         <classes>
-          	<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+          	<class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
-               <include name="Verify_Health_care_costs_helpful_links" >
-					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+            		 
+                     <include name="Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     </parameter>
                     </include>
-                    </methods>
+                   </methods>
 			</class>
 		</classes>
 	</test> 
