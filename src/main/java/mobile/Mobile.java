@@ -7,6 +7,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSElement;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -18,10 +19,12 @@ import lib.Web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -38,7 +41,7 @@ public class Mobile {
 	public static boolean mobilePlatform = false;
 	//public static AppiumDriver<MobileElement> appiumDriver;
 
-	public static AppiumDriver getDriver() {
+	public static AppiumDriver<?> getDriver() {
 		return  (AppiumDriver) Web.getDriver() ;
 	}
 
@@ -70,8 +73,13 @@ public class Mobile {
 
 	}
 
-	public static void wait(int inmillSec) throws InterruptedException {
-		Thread.sleep(inmillSec);
+	public static void wait(int inmillSec) {
+		try {
+			Thread.sleep(inmillSec);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void setEdit(String locator, CharSequence... sTextValue) {
@@ -163,9 +171,8 @@ public class Mobile {
 		IOSElement ele = findElement(locator);
 
 		if (ele != null) {
-			return ele.getAttribute("Value");
-			// Reporter.logEvent(Status.INFO,"Click Element  : "+locator,
-			// "",true);
+			return ele.getAttribute("value");
+		
 		}
 		return sValue;
 
@@ -174,13 +181,55 @@ public class Mobile {
 		IOSElement ele = findElement(locator);
 
 		if (ele != null) {
-			ele.click();
-			// Reporter.logEvent(Status.INFO,"Click Element  : "+locator,
-			// "",true);
+			ele.click();			
 		}
 
 	}
 
+	public static Boolean is_Element_Visible(String sLocator){
+	
+		IOSElement ele = findElement(sLocator);
+		if(ele != null){
+			if(ele.isDisplayed()){
+				return true;
+			}
+		}else
+			return false;
+		
+		return false;
+	}
+	
+	/*@Author :Siddartha 
+	 * @Date = 18/Jan /2017
+	 * This method will verify expected text with actual text.
+	 */
+	
+	public static void  verifyText(String locator,String sExpText,String sMsg,Boolean exactMatch){		
+		IOSElement ele = findElement(locator);
+		if (ele != null) {
+			String sActText = ele.getText();
+			if(exactMatch){
+				if(sActText.equals(sExpText))
+					Reporter.logEvent(Status.PASS, "Verify Text : "+sExpText,sMsg, false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Text to be :"+sExpText ,"But Actual was :"+sActText, true);
+		            }
+			else{
+				
+				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().contains(sExpText.replaceAll(" ","").trim()))
+					Reporter.logEvent(Status.PASS, "Verify Text  :"+sExpText,sMsg, false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Textto be :"+sExpText ,"But Actual was :"+sActText, true);
+		    
+				
+			}
+		}else{
+			Reporter.logEvent(Status.FAIL, "Verify Text to be :"+sExpText ,"But Actual element was not found", true);
+		}
+	}
+	
+	
+	
 	/*@Author :Siddartha 
 	 * @Date = 18/Jan /2017
 	 * This method will verify expected text with actual text.
@@ -192,20 +241,25 @@ public class Mobile {
 			String sActText = ele.getText();
 			if(exactMatch){
 				if(sActText.equals(sExpText))
-					Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
+					Reporter.logEvent(Status.PASS, "Expected Text was displayed :",sExpText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :"+sActText, true);
 		            }
 			else{
-				if(sActText.contains(sExpText))
-					Reporter.logEvent(Status.PASS, "Expected  :",sExpText, false);
+				
+				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().contains(sExpText.replaceAll(" ","").trim()))
+					Reporter.logEvent(Status.PASS, "Expected Text was displayed  :",sExpText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Expected :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :"+sActText, true);
 		    
 				
 			}
+		}else{
+			Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual element was not found", true);
 		}
 	}
+	
+	
 	
 	public  static void verifyElementPresent(String sStep,String sObj,String sMsg){			
 		
@@ -218,12 +272,35 @@ public class Mobile {
 		
 	}
 	
+	
+public  static void verify_Element_Value(String sObj,String sExpText,String sMsg){			
+		  String sActValue = getElementValue(sObj);
+		if(sActValue != null){
+		if(sActValue.equals(sExpText)){
+			Reporter.logEvent(Status.PASS," Expected  and Actual Value are Same", sMsg,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL," Expected Value :"+sExpText ,"But Actucal was"+sActValue,true);
+		}
+		}else{
+		     Reporter.logEvent(Status.FAIL," Expected Value :"+sExpText ,"But Actucal was null",true);
+
+		}
+		
+	}
 
 
 	public  static void verifyElementNotPresent(String sStep,String sObj,String sMsg){			
+		if(!isElementPresent(sObj)){
+			Reporter.logEvent(Status.PASS,sStep+" Not Display  ",sMsg,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sStep +"  Display ", sMsg,true);
+		}
 		
+	}
+	public  static void verifyElement_Is_Not_Displayed(String sStep,By sObj,String sMsg){			
+		IOSElement ele =  findElementBy(sObj);
+		if(ele ==null || !ele.isDisplayed()){
 		
-		if(!Mobile.isElementPresent(sObj)){
 			Reporter.logEvent(Status.PASS,sStep+" Not Display  ",sMsg,false);
 		}else{
 		     Reporter.logEvent(Status.FAIL,sStep +"  Display ", sMsg,true);
@@ -361,7 +438,12 @@ public class Mobile {
 		
 	}
 	public static IOSElement findElementBy(By link){
+		try{
 		return (IOSElement) getDriver().findElement(link);
+		}catch(NoSuchElementException e){
+		Reporter.logEvent(Status.INFO, "Not able to Find Element","", true);
+			return null;
+		}
 	}
 	
 	public static boolean assertElementPresent(By link) {
@@ -447,17 +529,18 @@ public class Mobile {
 			}
 
 			if (element != null) {
-				while (!element.isDisplayed()) {
-				
+				int j =0;
+				while (!element.isDisplayed() && j<10) {				 
                 //element.swipe(SwipeElementDirection.UP, 1000);
 					scrollTo(element);					
-
+                   j++;
 				}
 				getDriver().manage().timeouts()
 						.implicitlyWait(10, TimeUnit.SECONDS);
 				return element;
 			}
 		}
+		
 
 		return element;
 
@@ -465,12 +548,9 @@ public class Mobile {
 
 	public static void hideKeyboard() {
 		getDriver().getKeyboard().pressKey("\n");
-		try {
+	
 			wait(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 
 	/**
@@ -482,18 +562,7 @@ public class Mobile {
 	 * @return
 	 */
 	public static IOSElement getIOSElement(By by) {
-		int waitTime = 5;
-		// try {
-		// FluentWait<?> wait = (FluentWait<?>) new WebDriverWait(driver, 30)
-		// .pollingEvery(10,TimeUnit.SECONDS)
-		// .ignoring(NoSuchElementException.class)
-		// .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(ele)));
-		//
-		// return ((IOSElement) driver.findElementByXPath(ele));
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// return null;
+		int waitTime = 5;	
 
 		try {
 			WebDriverWait wait = new WebDriverWait(getDriver(), waitTime);
@@ -522,16 +591,44 @@ public class Mobile {
 		}
 	}
 
-	public static void scrollTo(IOSElement scrollToElement) {
+	public static void scrollTo(IOSElement scrollToElement) {  
+		try{
+			
+						
+			
+//			Dimension size = getDriver().manage().window().getSize();
+//			int starty = (int) (size.height * 0.7);
+//			int endy = (int) (size.height * 0.3);
+//			int startx = size.width / 2;
+//			getDriver().swipe(startx, starty, startx, endy, 2000);
 
-		Dimension dimensions = getDriver().manage().window().getSize();
-		Double screenHeightStart = dimensions.getHeight() * 0.6;
-		int scrollStart = screenHeightStart.intValue();
-		Double screenHeightEnd = dimensions.getHeight() * 0.2;
-		int scrollEnd = screenHeightEnd.intValue();
-//		TouchAction tAction = new TouchAction((MobileDriver) getDriver());
-	//	tAction.press(0, scrollStart).waitAction().moveTo(0,scrollEnd).release().perform();
-		getDriver().swipe(15, scrollStart, 15, scrollEnd, 1000);
+			
+//		Dimension dimensions = getDriver().manage().window().getSize();
+//		Double screenHeightStart = dimensions.getHeight() * 0.6;
+//		int scrollStart = screenHeightStart.intValue();
+//		Double screenHeightEnd = dimensions.getHeight() * 0.2;
+//		int scrollEnd = screenHeightEnd.intValue();
+////		TouchAction tAction = new TouchAction((MobileDriver) getDriver());
+//	//	tAction.press(0, scrollStart).waitAction().moveTo(0,scrollEnd).release().perform();
+	//	  HashMap<String, String> scrollByObj = new HashMap<String, String>();
+//	  scrollByObj.put("element", "//XCUIElementTypeSwitch");
+//	  scrollByObj.put("toVisible", "true");
+//	  
+//		
+//		getDriver().execute("mobile: scroll",scrollByObj);
+			JavascriptExecutor js = (JavascriptExecutor) getDriver();
+			HashMap<String, String> scrollObject = new HashMap<String, String>();		
+			scrollObject.put("element",  scrollToElement.getId());
+			scrollObject.put("toVisible", "true");
+			js.executeScript("mobile: scroll", scrollObject);
+			
+			
+			
+			
+		}catch(Exception e){
+			System.out.println("Not able to swipe");
+		}
+    
 	}
 
 	public void swipeLeftUntilTextExists(String expected) {
@@ -546,6 +643,39 @@ public class Mobile {
 		} while (!isElementPresent(""));
 	}
 
+	
+	public static void scrollTillElementIsDisplay(By link){
+		
+		Dimension size = getDriver().manage().window().getSize();
+		int starty = (int) (size.height * 0.7);
+		int endy = (int) (size.height * 0.3);
+		int startx = size.width / 2;
+		
+		IOSElement ele = findElementBy(link);
+		if(ele != null){
+			if(!ele.isDisplayed())
+			getDriver().swipe(startx, starty, startx, endy, 2000);
+		}
+		
+		
+	}
+public static void scroll_UP(){
+		
+	JavascriptExecutor js = (JavascriptExecutor) getDriver();
+	HashMap<String, String> scrollObject = new HashMap<String, String>();
+	scrollObject.put("direction", "up");
+	js.executeScript("mobile: scroll", scrollObject);
+}
+
+public static void scroll_Down(){
+	
+	JavascriptExecutor js = (JavascriptExecutor) getDriver();
+	HashMap<String, String> scrollObject = new HashMap<String, String>();
+	scrollObject.put("direction", "down");
+	js.executeScript("mobile: scroll", scrollObject);
+}
+	
+	
 	public static void swipeRight() {
 		Dimension size = getDriver().manage().window().getSize();
 		int startx = (int) (size.width * 0.9);
@@ -701,6 +831,15 @@ public class Mobile {
 
 	}
 	
+	public static void selectRadioButton(String sLabel) {
+		String sRadioButtonNotSelected = "//*[@name='"+sLabel+"']/preceding-sibling::XCUIElementTypeButton";		
+		IOSElement eleRadioOption = findElement(sRadioButtonNotSelected);
+		if(eleRadioOption != null){
+			eleRadioOption.click();
+		}
+		
+	}
+	
 	public static void switchButton(String sObj, Boolean bValue) {
 
 		String isSelected = getElementValue(sObj);
@@ -710,6 +849,7 @@ public class Mobile {
 				IOSElement eleCheckBoxEle = findElement(sObj);
 				if (eleCheckBoxEle != null)
 					eleCheckBoxEle.click();
+				     wait(2000);
 
 			} catch (Exception e) {
 				System.out.println("Not able to Switch Button");
@@ -718,7 +858,7 @@ public class Mobile {
 
 	}
 	
-	public static void verifyElementIsSelected(String sObj,String sMsg){
+	public static void verify_Element_Is_Selected(String sObj,String sMsg){
 		String isSelected = getElementValue(sObj);
 		if (Boolean.valueOf(isSelected) == true) 	
 			Reporter.logEvent(Status.PASS, "Selected ",sMsg, false);
@@ -727,12 +867,12 @@ public class Mobile {
 		
 	}
 	
-	public static void verifyElementIsNotSelected(String sObj,String sMsg){
+	public static void verify_Element_Is_Not_Selected(String sObj,String sMsg){
 		String isSelected = getElementValue(sObj);
 		if (Boolean.valueOf(isSelected) == false) 	
-			Reporter.logEvent(Status.PASS, " Not Selected ",sMsg, false);
+			Reporter.logEvent(Status.PASS, sMsg,"Element should not be selected", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Selected",sMsg, true);
+			  Reporter.logEvent(Status.FAIL, sMsg,"Elemnent is Selected", true);
 		
 	}
 	
