@@ -284,6 +284,16 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     </parameter>
                     </include>
+                    
+                     <include name="Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_035_Pending_Deferral_View">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
+                    </parameter>
+                    </include>
                     -->
                 </methods>
             </class>

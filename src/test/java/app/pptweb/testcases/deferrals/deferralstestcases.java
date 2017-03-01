@@ -2,7 +2,10 @@ package app.pptweb.testcases.deferrals;
 
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -3466,6 +3469,207 @@ public class deferralstestcases {
 			}
 		}
 	}
+	/**
+	 * The following script Standard Deferral and confirms it
+	 * 
+	 * Covered Manual Test Cases: 1.Deferral_003A_Nonvisible Bonus deferral not displayed on confirm page
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 2
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step  4
+			deferrals.verifyPayPeriodAmountIsMatching();
+			//Step 5
+			deferrals.verifyAnnualCompensationDisplayed();
+			
+			//Step6 Verify Company Match is Displayed as per Rules
+			
+			// TODO 
+			
+			//Step 7
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+			
+			//Step 3 & 8
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			//Step 9
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 10
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11 
+			deferrals.add_Auto_Increase(lib.Stock
+					.GetParameterValue("Add_auto_increase_BeforeTax"));
+			
+			//Step 12
+			deferrals.myContributions_Confirmation_Page();
+			
+			if (!deferrals.verifyContributionTypeIsDisplayedInConfirmationPage("Bonus"))
+				Reporter.logEvent(Status.PASS, "Verify 'Bonus' is Displayed in Confirmation page",
+						"'Bonus' is Not Displayed in Confirmation page", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Bonus' is Displayed in Confirmation page",
+						"'Bonus' is Displayed in Confirmation page", true);
+			
+			//Step 13
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	
+	/**
+	 * The following script Verify Pending Deferral
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_035_Pending Deferral View
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_035_Pending_Deferral_View(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Precondition
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			
+			deferrals.myContributions_Confirmation_Page();
+			
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			
+			//update DB effective date to get pending deferral
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, 1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			Web.getDriver().navigate().refresh();
+			deferrals.ClickPendingDeferralLink("Before Tax");
+			deferrals.verifyPendingDeferralModal("Before Tax");
+			Web.clickOnElement(deferrals, "Button Close Pending Deferral");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 }
 

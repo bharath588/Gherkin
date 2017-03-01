@@ -35,7 +35,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lnkMyAccounts;
 	@FindBy(xpath = ".//*[text()='Retirement income']")
 	private WebElement lblRetirementIncome;
-	@FindBy(xpath = ".//button[@aria-label='Exit Tutorial']")
+	@FindBy(xpath = ".//button[@aria-label='Exit tutorial']")
 	private WebElement btnCloseTutorial;
 	@FindBy(xpath = "//button[text()[normalize-space()='Dismiss']]")
 	private WebElement lnkDismiss;
@@ -143,11 +143,11 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (Web.isWebElementDisplayed(lnkDismiss,true)) {
 			this.lnkDismiss.click();
 		}
-		if (Web.isWebElementDisplayed(this.btnCloseTutorial,true)) {
+		if (Web.isWebElementDisplayed(btnCloseTutorial,true)) {
 			this.btnCloseTutorial.click();
 		}
 
-		if (Web.isWebElementDisplayed(this.lnkCancelGoalSetup,true)) {
+		if (Web.isWebElementDisplayed(lnkCancelGoalSetup,true)) {
 			this.lnkCancelGoalSetup.click();
 		}
 

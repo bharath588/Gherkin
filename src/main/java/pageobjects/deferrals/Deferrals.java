@@ -26,6 +26,7 @@ import pageobjects.general.LeftNavigationBar;
 import lib.*;
 
 import com.aventstack.extentreports.*;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class Deferrals extends LoadableComponent<Deferrals> {
 	
@@ -192,7 +193,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[contains(@ng-if,'hasCompanyMatch')]//div[@class='contribution-percentage']//strong") private WebElement txtCompanyMatch;
 			@FindBy(xpath=".//*[@class='deferrals-breakdown']//tbody//tr[1]//td//span") private WebElement txtTotalForDollar;
 			@FindBy(xpath=".//*[@id='account-details-container']//div[@class='page-title']//span") private WebElement txtConfirmationMessage;
+			@FindBy(xpath=".//*[@class='deferrals-breakdown']//tbody//tr[1]//td//span") private List<WebElement> txtDeferralType;
+			@FindBy(xpath="//div[contains(@class,'modal-header')]//div[text()='Pending Change']") private WebElement headerPendingDeferral;
+			@FindBy(xpath=".//button[text()[normalize-space()='Delete']]") private WebElement btnDeletePendingDeferral;
+			@FindBy(xpath=".//button[text()[normalize-space()='Close']]") private WebElement btnClosePendingDeferral;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
+			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
+			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
+			
 			Actions mouse=new Actions(Web.getDriver());
 		/**
 		 * Default Constructor
@@ -401,6 +409,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("MAXIMIZE NO")) {
 				return this.lblMaximizeNo;
 			}
+			if(fieldName.trim().equalsIgnoreCase("Button Close Pending Deferral")) {
+				return this.btnClosePendingDeferral;
+			}
+			
 			return null;
 			}		
 		
@@ -1337,18 +1349,23 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			DB.executeUpdate(sqlQuery[0], "commit");
 			
 		}
-		
+		/**
+		 * <pre>
+		 * This method to get the Contribution Percentage from the deferral main Page
+		 * </pre>
+		 *  @return String - percentage
+		 */
 		public String getContributionPercentage(String contibutionName) {
-			String Percentage=null;
+			String percentage=null;
 			boolean isTextDisplayed=false;
 			 WebElement textAgeCatchupRoth= Web.getDriver().findElement(By.xpath(txtAgeCatchupRoth.replace("webElement", contibutionName)));
 		
 			isTextDisplayed = Web.isWebElementDisplayed(textAgeCatchupRoth, true);
 			if (isTextDisplayed) {
-				Percentage=textAgeCatchupRoth.getText();
+				percentage=textAgeCatchupRoth.getText();
 			}
 				
-			return Percentage;
+			return percentage;
 		}
 		
 		/**
@@ -1544,7 +1561,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void add_Auto_Increase_Date_DropDown(String deferralType) throws InterruptedException, ParseException
 		{
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			DateFormat dateFormat1= new SimpleDateFormat("M/dd/yyyy");
+			DateFormat dateFormat1= new SimpleDateFormat("M/d/yyyy");
 			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
 			
 			Web.waitForElement(tblhdrlblContribution);
@@ -1610,6 +1627,100 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Confirmation Page Displays With Sucess Message", "Confirmation Message is Not Matching\nExpected:"+confirmationMessage+"\nActual:"+actualConfirmationMessage, true);
 			return isMatching;
+		}
+		
+		/**<pre> Method to verify Contribution Type in the Confirmation Page.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public boolean verifyContributionTypeIsDisplayedInConfirmationPage(String deferralType)
+		{
+			boolean isDisplayed=false;
+				Web.waitForElements(txtDeferralType);
+				for(int i=0;i<txtDeferralType.size();i++)
+				{
+					if(txtDeferralType.get(i).getText().contains(deferralType)){
+						isDisplayed=true;
+						break;
+					}
+				}
+				
+			return isDisplayed;
+		}
+		
+		/**<pre> Method to Click on Pending Deferral.
+		 *.</pre>
+		 * 
+		 * 		 * @throws InterruptedException 
+		 */
+		public void ClickPendingDeferralLink(String deferralType)
+		{
+			WebElement lnkPendingDeferral=Web.getDriver().findElement(By.xpath(pendingDeferral.replaceAll("DeferralType", deferralType))) ;
+				Web.waitForElement(lnkPendingDeferral);
+				Web.clickOnElement(lnkPendingDeferral);
+				Web.waitForElement(headerPendingDeferral);
+								
+		}
+		
+		/**<pre> Method to Verify Pending Deferral Change Modal .
+		 *.</pre>
+		 * 
+		 * 		 * @throws InterruptedException 
+		 */
+		public void verifyPendingDeferralModal(String deferralType)
+		{
+			Web.waitForElement(headerPendingDeferral);
+			if (Web.isWebElementDisplayed(headerPendingDeferral))
+				Reporter.logEvent(Status.PASS, "Verify Pending Change Modal Is Displayed",
+						"Pending Change Modal Is Displayed", true);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Pending Change Modal Is Displayed",
+						"Pending Change Modal Is Not Displayed", true);
+			
+			WebElement txtPendingDeferral=Web.getDriver().findElement(By.xpath(txtpendingDeferral.replaceAll("DeferralType", deferralType)));
+			
+			if (Web.VerifyText(deferralType, txtPendingDeferral.getText().toString().trim(), true))
+				Reporter.logEvent(Status.PASS, "Verify 'Deferral Type' Is Displayed in Pending Change Modal",
+						"'Deferral Type' Is Displayed in Pending Change Modal\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Deferral Type' Is Displayed in Pending Change Modal",
+						"'Deferral Type' Is Not Displayed in Pending Change Modal\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+			
+			if (Web.isWebElementDisplayed(btnDeletePendingDeferral))
+				Reporter.logEvent(Status.PASS, "Verify 'Delete' Button  Is Displayed in Pending Change Modal",
+						"'Delete' Button  Is Displayed in Pending Change Modal", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Delete' Button  Is Displayed in Pending Change Modal",
+						"'Delete' Button  Is Not Displayed in Pending Change Modal", true);
+			
+			if (Web.isWebElementDisplayed(btnClosePendingDeferral))
+				Reporter.logEvent(Status.PASS, "Verify 'Close' Button  Is Displayed in Pending Change Modal",
+						"'Close' Button  Is Displayed in Pending Change Modal", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Close' Button  Is Displayed in Pending Change Modal",
+						"'Close' Button  Is Not Displayed in Pending Change Modal", true);
+			
+								
+		}
+		
+		/**<pre> Method to Verify Pending Deferral link is displayed.
+		 *.</pre>
+		 * 
+		 * String deferralType
+		 * 
+		 *@throws InterruptedException 
+		 */
+		public boolean verifyPendingDeferralLinkisDisplayed(String deferralType)
+		{
+			boolean isDisplayed=false;
+					WebElement lnkPendingDeferral=Web.getDriver().findElement(By.xpath(pendingDeferral.replaceAll("DeferralType", deferralType))) ;
+				if(Web.isWebElementDisplayed(lnkPendingDeferral, true))
+				{
+					isDisplayed=true;		
+		}
+				return isDisplayed;
 		}
 	}		
 	

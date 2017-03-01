@@ -9,8 +9,8 @@
           	<class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
             		 
-                     <include name="Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
+                   <include name="Deferral_035_Pending_Deferral_View">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
                     </parameter>
                     </include>
                    </methods>
