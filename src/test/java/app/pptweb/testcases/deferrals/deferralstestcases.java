@@ -3641,8 +3641,10 @@ public class deferralstestcases {
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 			Web.getDriver().navigate().refresh();
-			deferrals.ClickPendingDeferralLink("Before Tax");
-			deferrals.verifyPendingDeferralModal("Before Tax");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			deferrals.ClickPendingDeferralLink(Stock.GetParameterValue("DeferralType"));
+			deferrals.verifyPendingDeferralModal(Stock.GetParameterValue("DeferralType"));
 			Web.clickOnElement(deferrals, "Button Close Pending Deferral");
 			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
@@ -3652,6 +3654,153 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+				Calendar calendar = Calendar.getInstance();         
+				String date=dateFormat.format(calendar.getTime());
+				System.out.println("DATE"+date);
+				String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+				Web.getDriver().navigate().refresh();
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * The following script Verify Pending Deferral
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_036_Pending_Deferral_Delete
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_036_Pending_Deferral_Delete(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Precondition
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			
+			lib.Web.clickOnElement(deferrals, "Continue button");
+			
+			deferrals.myContributions_Confirmation_Page();
+			
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			
+			//update DB effective date to get pending deferral
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, 1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			Web.getDriver().navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 2
+			deferrals.ClickPendingDeferralLink(Stock.GetParameterValue("DeferralType"));
+			deferrals.verifyPendingDeferralModal(Stock.GetParameterValue("DeferralType"));
+			
+			//Step 3;
+			Web.clickOnElement(deferrals, "Button Delete Pending Deferral");
+			Web.waitForElement(deferrals, "Modal Delete Deferral");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Modal Delete Deferral", true))
+				Reporter.logEvent(Status.PASS, "Verify Delete Deferral Modal is Displayed",
+						"Delete Deferral Modal is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Delete Deferral Modal is Displayed",
+						"Delete Deferral Modal is not displayed", true);
+			//Step 4
+			Web.clickOnElement(deferrals, "Delete Pending Deferral");
+			Web.waitForElement(deferrals, "Confirm button");
+			if(!deferrals.verifyPendingDeferralLinkisDisplayed(Stock.GetParameterValue("DeferralType")))
+				Reporter.logEvent(Status.PASS, "Verify Pending Deferral Link Not is Displayed",
+						"Pending Deferral Link Not is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Pending Deferral Link Not is Displayed",
+						"Pending Deferral Link is Displayed", true);
+			
+			if(Web.isWebElementDisplayed(deferrals, "Confirm button", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Not Displayed", true);
+			//Step 5
+			deferrals.myContributions_Confirmation_Page();
+			deferrals.verifyDeletedDeferralinConfirmationPage(Stock.GetParameterValue("DeferralType"));
+			//Step 6
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			
+			//step 7
+			String statusCode=deferrals.getPendingDeferralStatusCodeFromDB(Stock.GetParameterValue("getStatusCode"));
+			
+			if(Web.VerifyText("C", statusCode, true))				
+				Reporter.logEvent(Status.PASS, "Verify Pending Deferral Status in data Base",
+						"Pending Deferral Status is 'Canceled'", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify Pending Deferral Status in data Base",
+						"Pending Deferral Status is Not 'Canceled'", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

@@ -197,6 +197,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[contains(@class,'modal-header')]//div[text()='Pending Change']") private WebElement headerPendingDeferral;
 			@FindBy(xpath=".//button[text()[normalize-space()='Delete']]") private WebElement btnDeletePendingDeferral;
 			@FindBy(xpath=".//button[text()[normalize-space()='Close']]") private WebElement btnClosePendingDeferral;
+			@FindBy(xpath="//div[@class='modal-content']//div[contains(text(),'Are you sure you want to delete this?')]") private WebElement hdrDeleteDeferralModal;
+			@FindBy(xpath=".//button[text()[normalize-space()='Delete'] and contains(@ng-click,'onConfirmDeleteButtonClick')]") private WebElement btnDeletePendingDeferral1;
+			@FindBy(xpath="//table[@class='table-details']/tbody//th[contains(text(),'Deleted Pending Transaction:')]") private WebElement txtPendingTrnsaction;
+			@FindBy(xpath="//table[@class='table-details']/tbody//tr[./th[contains(text(),'Deleted Pending Transaction:')]]//td//span[2]") private WebElement txtPendingDeferral;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
@@ -412,7 +416,16 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("Button Close Pending Deferral")) {
 				return this.btnClosePendingDeferral;
 			}
+			if(fieldName.trim().equalsIgnoreCase("Button Delete Pending Deferral")) {
+				return this.btnDeletePendingDeferral;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Modal Delete Deferral")) {
+				return this.hdrDeleteDeferralModal;
+			}
 			
+			if(fieldName.trim().equalsIgnoreCase("Delete Pending Deferral")) {
+				return this.btnDeletePendingDeferral1;
+			}
 			return null;
 			}		
 		
@@ -1722,6 +1735,74 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		}
 				return isDisplayed;
 		}
+		
+		/**<pre> Method to Verify Deleted Deferral In confirmation Page .
+		 *.</pre>
+		 * 
+		 * 		 * @throws InterruptedException 
+		 */
+		public void verifyDeletedDeferralinConfirmationPage(String deferralType)
+		{
+			Web.waitForElement(txtPendingTrnsaction);
+			if (Web.isWebElementDisplayed(txtPendingTrnsaction))
+				Reporter.logEvent(Status.PASS, "Verify Pending Tnsaction Is Displayed",
+						"Pending Transaction Is Displayed", true);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Pending Tnsaction Is Displayed",
+						"Pending Transaction Is Not Displayed", true);
+			
+			
+			
+			if (Web.VerifyText(deferralType, txtPendingDeferral.getText().toString().trim(), true))
+				Reporter.logEvent(Status.PASS, "Verify Deleted Pending 'Deferral Type' Is Displayed in Confirmation Page",
+						"Deleted Pending 'Deferral Type' Is Displayed in Confirmation Page\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Deferral Type' Is Displayed in Confirmation Page",
+						"Deleted Pending 'Deferral Type' Is Not Displayed in Confirmation Page\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+			
+			
+			
+								
+		}
+		/**<pre> Method to Verify Pending Deferral is cancelled or not in DB.
+		 *.</pre>
+		 * 
+		 * String deferralType
+		 * @throws SQLException 
+		 * 
+		 */
+		public String getPendingDeferralStatusCodeFromDB(String queryName) throws SQLException
+		{
+			String[] sqlQuery = null;
+			ResultSet statusCode = null;
+			
+			try{
+			sqlQuery = Stock.getTestQuery(queryName);
+			}
+		 catch (Exception e) {
+			e.printStackTrace();
+		}
+
+			statusCode = DB.executeQuery(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("username").substring(0, 9));
+
+		if (DB.getRecordSetCount(statusCode) > 0) {
+			try {
+				statusCode.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Participant DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+		}
+	
+
+return statusCode.getString("status_code");
+				
+		}
+		
 	}		
 	
 
