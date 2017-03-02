@@ -2,21 +2,33 @@ package pageobjects.employeesearch;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
+import framework.util.CommonLib;
 import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -130,7 +142,63 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement btnGoPlanNumber;
 	@FindBy(xpath = ".//tbody[contains(@id,'searchResultsTable_data')]/tr/td[5] | .//tbody[contains(@id,'searchResultsTable_data')]/tr/td[4]")
 	private List<WebElement> searchResultsSSNMItable;
-
+	@FindBy(xpath="//td/a[contains(@id,'searchResultsTable')]")
+	private List<WebElement> fNLNMILink;
+	@FindBy(id="EmployeebasicInfoMailingName")
+	private WebElement empNameHeader;
+	@FindBy(id="participantDetail")
+	private WebElement partDetailTab;
+	@FindBy(xpath="//span[contains(text(),'Employment information')]")
+	private WebElement empMntInfoHeader;
+	@FindBy(xpath="//div[@id='employmentInfo']//label")
+	List<WebElement> listOfEmpmntInfoLabels;
+	@FindBy(id="empInfoEditLink")
+	private WebElement empInfoEditLink;
+	@FindBy(id="EmployeebasicInfoMailingName")
+	private WebElement empName;
+	@FindBy(id="EmployeebasicInfoSSN")
+	private WebElement empSSN;
+	@FindBy(id="hireDate")
+	private WebElement hireDate;
+	@FindBy(id="termDate")
+	private WebElement termDate;
+	@FindBy(id="terminationReasonCode")
+	private WebElement termReason;
+	@FindBy(id="employeeId")
+	private WebElement empId;
+	@FindBy(id="officerInd")
+	private WebElement officer;
+	@FindBy(id="highlyCompensatedInd")
+	private WebElement highlyCompensatedInd;
+	@FindBy(id="ownershipPercent")
+	private WebElement ownership;
+	@FindBy(id="sarbanesOxleyReporting")
+	private WebElement tradeMonitor;
+	@FindBy(xpath="//div[@id='employeeInfoEditDialogId']/iframe")
+	private WebElement empInfoEditFrame;
+	@FindBy(xpath="//input[contains(@name,'UPDATE_SAVE')]")
+	private WebElement empUpdateSaveBtn;
+	@FindBy(xpath="//label[contains(text(),'Employee ID:')]/../following-sibling::td//td")
+	private WebElement expEmployeeID;
+	@FindBy(xpath="//label[contains(text(),'Hire date:')]/../following-sibling::td//td")
+	private WebElement expHireDate;
+	@FindBy(xpath="//label[contains(text(),'Officer:')]/../following-sibling::td//td")
+	private WebElement expOfficer;
+	@FindBy(id="empInfoHistLink")
+	private WebElement empInfoHistroyLink;
+	//@FindBy(xpath="//a[@href='#' and @role='button']")
+	@FindBy(xpath=".//*[@id='employmentInfo_content']//span[.='close']")
+	private WebElement modalWindowCloseLink;
+	@FindBy(xpath="//div[@class='oheading']//label[contains(text(),'Overview')]")
+	private WebElement overwLabel;
+	@FindBy(xpath="//div[@id='contactInfo_content']/table")
+	private WebElement contctInFoTable;
+	@FindBy(linkText="Account detail")
+	private WebElement accntDetailsTab;
+	@FindBy(xpath="//div[@id='contactInfo']//label")
+	private List<WebElement> contactInFoLabels;
+	
+	Map<String,String> m = new LinkedHashMap<String,String>();
 	LoadableComponent<?> parent;
 	Actions actions;
 	Select select;
@@ -289,9 +357,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Employee ID");
+		Thread.sleep(3000);
 		Web.setTextToTextBox(txtSearchbox, EmployeeID);
 		Thread.sleep(2000);
-		btnGoEmployeeSearch.click();	
+		Web.clickOnElement(btnGoEmployeeSearch);	
 		Thread.sleep(2500);
 		Web.getDriver().switchTo().defaultContent();
 	}
@@ -937,4 +1006,248 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		return maskedPlan;
 	}
+	
+	/*
+	 * This method fetches
+	 */
+	public String getEmployeeIdFromDB() throws SQLException
+	{
+		String empId=null;
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeID")[0], 
+				Stock.getTestQuery("getEmployeeID")[1],"K_"+Stock.GetParameterValue("username"));
+		
+		while(queryResultSet.next())
+		{
+			empId = queryResultSet.getString("ER_ASSIGNED_ID");
+			break;
+		}
+		
+		Reporter.logEvent(Status.INFO, "Employee Id fetched from DB.", "'"+empId+"'", false);
+		return empId;
+		
+	}
+	
+	/*
+	 * This method verifies the employee id, Hire date, Officer 
+	 */
+	public void verifyEmploymentInfoANDLabels() throws Exception
+	{
+		
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElements(fNLNMILink);
+		Web.clickOnElement(fNLNMILink.get(0));
+		Thread.sleep(2000);
+		Web.waitForElement(empNameHeader);
+		Web.waitForPageToLoad(Web.getDriver());
+		if(empNameHeader.getText().contains(fNLNMILink.get(0).getText()))
+		{
+			do{
+				Web.waitForElement(partDetailTab);
+			}while(!partDetailTab.isDisplayed());
+			Web.clickOnElement(partDetailTab);
+			if(Web.isWebElementDisplayed(empMntInfoHeader, true))
+			{
+				for(WebElement ele : listOfEmpmntInfoLabels)
+				{
+					m.put(ele.getText().trim(), ele.findElement(By.xpath("./../following-sibling::td//td")).getText().trim());
+				}
+				System.out.println(m);
+			}
+			Reporter.logEvent(Status.INFO, "Employee Id:", "'"+m.get("Employee ID:")+"'", false);
+			Reporter.logEvent(Status.INFO, "Hire Date:", "'"+m.get("Hire date:")+"'", false);
+			Reporter.logEvent(Status.INFO, "Officer:", "'"+m.get("Officer:")+"'", false);
+			if(m.keySet().contains("Employee ID:")&&m.keySet().contains("Hire date:")&&m.keySet().contains("Term date:")
+					&&m.keySet().contains("Officer:")&&m.keySet().contains("Highly compensated:")&&m.keySet().contains("Ownership %:")
+					&&m.keySet().contains("Term date change:")&&m.keySet().contains("Term reason:")&&m.keySet().contains("Trade monitoring:")
+					&&m.keySet().contains("Disability date:"))
+			{
+				Reporter.logEvent(Status.PASS, "Verify all the labels are displayed under Employment information.", "All the labels are displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify all the labels are displayed under Employment information.", "All the labels are not displayed.", true);
+			}
+			
+		}
+		Web.getDriver().switchTo().defaultContent();
+	}
+	
+	
+	/*
+	 * This method validates the fields available on Employment Information modal window which is displayed when
+	 * Edit link is clicked.
+	 */
+	public void updateEmploymentInfoModalWindow() throws Exception
+	{
+		String updatedHireDate = Stock.GetParameterValue("hireDate");
+		String updatedEmpID = Stock.GetParameterValue("empId");
+		String updatedOfficer = Stock.GetParameterValue("Officer");
+		
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		String ssn = empSSN.getText();
+		String empName = empNameHeader.getText();
+		Web.clickOnElement(empInfoEditLink);
+		Thread.sleep(3000);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(empInfoEditFrame);
+		Web.getDriver().switchTo().frame(empInfoEditFrame);
+		Web.waitForElement(Web.getDriver().findElement(By.xpath("//font[contains(text(),'"+ssn+"')]")));
+		//Web.waitForElement(Web.getDriver().findElement(By.xpath("//font[contains(text(),'"+empName+"')]")));
+		if(Web.getDriver().findElement(By.xpath("//font[contains(text(),'"+ssn+"')]")).getText().contains(ssn))
+				//&& Web.getDriver().findElement(By.xpath("//font[contains(text(),'"+empName+"')]")).getText().contains(empName))
+		{
+			Reporter.logEvent(Status.PASS, "Match employee name and ssn on employment information modal window with Employee overview page.","Employee name and ssn match.",false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Match employee name and ssn on employment information modal window with Employee overview page.","Employee name and ssn doesn't match.",true);
+		}
+		//To update fields.........................................
+		String dateString = m.get("Hire date:");
+		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+		Date dt = dateFormat.parse(dateString);
+		Calendar calendar = Calendar.getInstance();         
+		calendar.setTime(dt);
+		calendar.add(Calendar.DATE, 1);
+		dateFormat.format(calendar.getTime());
+		System.out.println("Date string is:"+dateFormat.format(calendar.getTime()));
+		Web.setTextToTextBox(hireDate,dateFormat.format(calendar.getTime()));
+		Thread.sleep(1500);
+		termDate.clear();
+		Web.setTextToTextBox(empId, updatedEmpID);
+		Thread.sleep(1500);
+		Select sel = new Select(officer);
+		sel.selectByVisibleText(updatedOfficer);
+		Thread.sleep(1500);
+		
+		Web.clickOnElement(empUpdateSaveBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
+		Thread.sleep(7000);
+		if(expEmployeeID.getText().equals(updatedEmpID)&&expHireDate.getText().equals(dateFormat.format(calendar.getTime()))
+				&&expOfficer.getText().equals(updatedOfficer))
+		{
+			Reporter.logEvent(Status.PASS, "Verify Hire date,emp id and officer fields are updated.", "mentioned fields are updated.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify Hire date,emp id and officer fields are updated.", "mentioned fields are not updated.", true);
+		}
+		
+		//Web.getDriver().switchTo().defaultContent();
+		//Web.getDriver().switchTo().frame(employeeSearchFrame);
+		try{
+			Web.waitForElement(empInfoEditLink);
+		Web.clickOnElement(empInfoEditLink);
+		}
+		catch(Exception e)
+		{
+			Web.clickOnElement(empInfoEditLink);
+		}
+		Web.waitForElement(empInfoEditFrame);
+		Web.getDriver().switchTo().frame(empInfoEditFrame);
+		
+		//reset the fields...................................................
+		Web.setTextToTextBox(hireDate,m.get("Hire date:"));
+		Thread.sleep(1500);
+		Web.setTextToTextBox(empId, m.get("Employee ID:"));
+		Thread.sleep(1500);
+		Select sel2 = new Select(officer);
+		sel2.selectByVisibleText(m.get("Officer:"));
+		Thread.sleep(1500);
+		Web.clickOnElement(empUpdateSaveBtn);
+		
+		Web.waitForPageToLoad(Web.getDriver());
+		Thread.sleep(2000);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
+		Web.clickOnElement(empInfoHistroyLink);
+		CommonLib.waitForProgressBar();
+		//Web.waitForElement(modalWindowCloseLink);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(Web.isWebElementDisplayed(modalWindowCloseLink, true))
+		{
+			Web.clickOnElement(modalWindowCloseLink);
+			Web.waitForPageToLoad(Web.getDriver());
+			CommonLib.waitForProgressBar();
+			if(overwLabel.isDisplayed())
+			{
+				Reporter.logEvent(Status.PASS, "Click on close button on history window.","Page is navigated back to overview page.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Click on close button on history window.","Page is navigated back to overview page.", true);
+			}
+			
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Close link is displayed on employee history modal window.","Close link is not displayed.", true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+	}
+	
+	
+	/*
+	 * This method validated if contact info section is displayed on overview page
+	 */
+	public void contactInFoSectionValidation() throws Exception
+	{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElements(fNLNMILink);
+		Web.clickOnElement(fNLNMILink.get(0));
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.waitForProgressBar();
+		Web.waitForElement(empNameHeader);
+		Web.waitForPageToLoad(Web.getDriver());
+		if(empNameHeader.getText().contains(fNLNMILink.get(0).getText()))
+		{
+			do{
+				Web.waitForElement(partDetailTab);
+			}while(!partDetailTab.isDisplayed());
+			Web.clickOnElement(partDetailTab);
+		}
+		if(contctInFoTable.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Verify contact details section is displayed.", "Contact details section is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify contact details section is displayed.", "Contact details section is not displayed.", true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+		
+	}
+	
+	/*
+	 * This method validates contact info labels
+	 */
+	public void contactInFoLabelValidation() throws Exception
+	{
+		String expLabels = Stock.GetParameterValue("expContactInfoLabels");
+		List<String> expLabels1 = Arrays.asList(expLabels.split(","));
+		Set<String> expLabels2 = new LinkedHashSet<String>(expLabels1);
+		Set<String> actLabels = new LinkedHashSet<String>();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		for(WebElement ele : contactInFoLabels)
+		{
+			actLabels.add(ele.getText().replace(":", "").trim());
+		}
+		if(expLabels2.equals(actLabels))
+		{
+			Reporter.logEvent(Status.PASS, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels are displayed:'"+actLabels+"'.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels are not displayed:'"+actLabels+"'.", true);
+		}
+	}
+	
+	
+	
+	
 }

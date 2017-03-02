@@ -34,24 +34,37 @@
 					</include> 
 				</methods>
 			</class> -->
-			<class name="app.psc.testcases.login.logintestcases">
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 			 <methods>
-				<!-- <include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+				<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
 					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs"></parameter>
 				</include>
 				<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
 					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"></parameter>
+				</include>-->
+				<!--<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
+					<parameter name="ManualTCName" value="Verify_PLUser_Login_With_No_Plna_Access"></parameter>
 				</include>
 				<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
 					<parameter name="ManualTCName" value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite"></parameter>
 				</include>
 				<include name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
 				    <parameter name="ManualTCName" value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites"></parameter>
-				</include>-->
+				</include>
 				<include name="TC003_UI_Validations_On_JumpPage">
 				    <parameter name="ManualTCName" value="UI_Validations_On_JumpPage"></parameter>
-				</include>
+				</include>  
 			 </methods>
+			</class>-->
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods>
+					<!--  <include name="TC017_Employment_Info_Verification">
+						<parameter name="ManualTCName" value="Employment_Info_Verification"></parameter>
+					</include>-->
+					<include name="TC018_Employee_Contact_Info_Verification">
+						<parameter name="ManualTCName" value="Employee_Contact_Info_Verification"></parameter>
+					</include>
+				</methods>
 			</class>
 		</classes>
 	</test>

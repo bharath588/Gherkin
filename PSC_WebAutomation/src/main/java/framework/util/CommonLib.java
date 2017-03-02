@@ -2,6 +2,7 @@ package framework.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
@@ -264,9 +265,52 @@ public static String checkEnv(String envName) {
 
 	
 	
+/*
+ * This method returns true if xpath exist else false.
+ */
+
+public static boolean isElementExistByXpath(String xpath)
+{
+	boolean xpathExist = false;
+	List<WebElement> webElements = Web.getDriver().findElements(By.xpath(xpath));
+	if(webElements.size()==0)
+	{
+		xpathExist = false;
+	}
+	else
+	{
+		xpathExist = true;
+	}
+	return xpathExist;
+}	
 	
 	
-	
+
+private static String progressBar =".//*[@id='pscSpinnerId']";    
+public static void waitForProgressBar(){
+         int iTimeInSecond=100;
+           try{
+        	   
+        	   WebElement ele = Web.getDriver().findElement(By.xpath(progressBar));
+                  int iCount = 0;
+                  while (ele.isDisplayed()){
+                     
+                         if(iCount ==iTimeInSecond){
+                               break;
+                         }   
+                         
+                         System.out.println("Progress Bar displaying..");
+                         Thread.sleep(1000);                       
+                         iCount++;
+                  }
+                  
+                  
+           }catch(Exception e){
+                  e.getMessage();
+           }
+           
+        }
+
 	
 	
 	

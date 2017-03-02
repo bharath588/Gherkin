@@ -837,6 +837,106 @@ public class employeesearchtestcases {
 			}
 		}
 	}
+	
+	
+	
+	/**
+	 * <pre>This testcase validates general employment informations</pre>
+	 * @param itr
+	 * @param testdata
+	 */
+		@Test(dataProvider = "setData")
+		public void TC017_Employment_Info_Verification(int itr,
+				Map<String, String> testdata) {		
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				Reporter.logEvent(Status.INFO, "Testcase Description",
+						"This testcase validates general employment informations", false);
+				employeesearch = new EmployeeSearch().get();	
+				//employeesearch.searchEmployeeByEmployeeId(employeesearch.getEmployeeIdFromDB());//need to fetch employee from database
+				employeesearch.searchEmployeeByEmployeeId("039011");
+				employeesearch.verifyEmploymentInfoANDLabels();
+				employeesearch.updateEmploymentInfoModalWindow();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				Globals.exception = e;
+				String exceptionMessage = e.getMessage();
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+						exceptionMessage, true);
+			} catch (Error ae) {
+				ae.printStackTrace();
+				Globals.error = ae;
+				String errorMsg = ae.getMessage();
+				Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+						errorMsg, true);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+	
+		
+		/**
+		 * <pre>This testcase validates general contact informations</pre>
+		 * @param itr
+		 * @param testdata
+		 */
+			@Test(dataProvider = "setData")
+			public void TC018_Employee_Contact_Info_Verification(int itr,
+					Map<String, String> testdata) {		
+				try {
+					Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+					Reporter.logEvent(Status.INFO, "Testcase Description",
+							"This testcase validates general employment informations", false);
+					employeesearch = new EmployeeSearch().get();	
+					//employeesearch.searchEmployeeByEmployeeId(employeesearch.getEmployeeIdFromDB());//need to fetch employee from database
+					employeesearch.searchEmployeeByEmployeeId("039011");
+					employeesearch.contactInFoSectionValidation();
+					employeesearch.contactInFoLabelValidation();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					Globals.exception = e;
+					String exceptionMessage = e.getMessage();
+					Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+							exceptionMessage, true);
+				} catch (Error ae) {
+					ae.printStackTrace();
+					Globals.error = ae;
+					String errorMsg = ae.getMessage();
+					Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+							errorMsg, true);
+				} finally {
+					try {
+						Reporter.finalizeTCReport();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@AfterSuite
 	public void cleanUpSession() {

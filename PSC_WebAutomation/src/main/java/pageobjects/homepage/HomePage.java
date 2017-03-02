@@ -29,6 +29,7 @@ import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
+import framework.util.CommonLib;
 
 public class HomePage extends LoadableComponent<HomePage>{
 	//Object Declarations 
@@ -58,6 +59,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement moreButton;
 	@FindBy(id="jumpPage")
 	private WebElement verifyJumpPage;
+	@FindBy(id="planListTable_data")
+	private WebElement planListData;
 	private WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -82,6 +85,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private Method invokeMethodforUserVerification;
 	private String[] userData;
 	private String[] userVeriData;
+	 
 
 	// userVeriData is optional for HomePage constructor
 	public HomePage(LoadableComponent<?> parent,boolean performVerification,String... userData){
@@ -349,7 +353,13 @@ public class HomePage extends LoadableComponent<HomePage>{
 			   expectSubMenuItems.get(i).equalsIgnoreCase("Educational resources")
 			  )
 			{
-				expMenuMap.put(expectSubMenuItems.get(i), new LinkedList<String>());
+				if(menu.equals("Plan") && expectSubMenuItems.get(i).equalsIgnoreCase("Overview"))
+					expMenuMap.put(expectSubMenuItems.get(i), Arrays.asList(Stock.GetParameterValue(expectSubMenuItems.get(i)).split(",")));
+				else
+				{
+					expMenuMap.put(expectSubMenuItems.get(i), new LinkedList<String>());
+					
+				}
 			}
 			else
 			{
@@ -505,7 +515,66 @@ public class HomePage extends LoadableComponent<HomePage>{
 		{
 			Reporter.logEvent(Status.FAIL,"Verify if Jump page is displayed if user has access to plans in all sites.","Jump page is not displayed.",true);
 		}
-	}	
+	}
+	
+	/*
+	 * This method verifies that Plan list is not available when user is not having any plan access.
+	 */
+	
+	public void isPlanListDisplayed()
+	{
+		if(Web.isWebElementDisplayed(planListData, true))
+		{
+			Reporter.logEvent(Status.FAIL,"Verify Plan list data is not displayed on home page since user is not having any plan access.","Plan List is displayed.",true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.PASS,"Verify Plan list data is not displayed on home page since user is not having any plan access.","Plan List is not displayed.",false);
+		}
+	}
+	
+	
+	/*
+	 * This method Takes you to the specified menu or submenu page.
+	 */
+	
+	public void navigateToProvidedPage(String...specifiedTab)
+	{
+		String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
+		String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
+		String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
+		String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
+		if(CommonLib.isElementExistByXpath(xpath1)){
+			Web.clickOnElement(menuElement(specifiedTab[0]));
+			Web.waitForPageToLoad(Web.getDriver());
+			if(CommonLib.isElementExistByXpath(xpath2)&&Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath2)), true))
+			{
+				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+				Web.waitForPageToLoad(Web.getDriver());
+			}
+			else
+			{
+				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				Web.waitForPageToLoad(Web.getDriver());
+			}
+			
+		}
+		else
+		{
+			Web.clickOnElement(menuElement(specifiedTab[0]));	
+		}
+	}
+	
+	
+	
+	
+	
+
+	
+
+	
+	
 	
 	
 	

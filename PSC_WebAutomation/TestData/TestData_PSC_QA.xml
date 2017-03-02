@@ -283,6 +283,18 @@
 				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Verify_PLUser_Login_With_No_Plna_Access">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username"  value="5ISIS" />
+				<parameter name="password"  value="testing1" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="userverification">
 		<TestCase
@@ -1072,6 +1084,35 @@
 				<parameter name="userVerificationAns" value="test" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Employment_Info_Verification">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="hireDate" value="01/16/2015"/>
+				<parameter name="empId" value="3654343"/>
+				<parameter name="Officer" value="No"/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Contact_Info_Verification">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="expContactInfoLabels" value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="employeeinfo">
+		
 	</Module>
 	<Module name="query">
 		<parameter QueryName="setDefaultPlanNullQuery" DB="ISISDB_QA"
@@ -1253,6 +1294,8 @@ user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
 			Query="select i.ind_id, i.database_instance, u.ssn, u.username, u.web_default_ga_id from individual_registry i inner join username_registry u on i.usrreg_id= u.id
 where u.username=?" />
-	
+		<parameter QueryName="getEmployeeID" DB="ISISDB_QA"
+			Query="select * from employment where ind_id in (select ind_id from part_agrmt where ga_id in 
+(select default_ga_id from users where logon_id=?)) and er_assigned_id is not null order by hire_date desc" />
 	</Module>
 </TestData>

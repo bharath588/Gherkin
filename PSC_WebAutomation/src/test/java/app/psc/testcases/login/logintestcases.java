@@ -429,7 +429,7 @@ public class logintestcases {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
-			home.isJumpPageDisplayed();
+			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
 			Web.waitForPageToLoad(Web.getDriver());
 			
 		} catch (Exception e) {
@@ -591,7 +591,49 @@ public class logintestcases {
 		}
 	}
 	
-	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>Verify_PLUser_Login_With_No_Plna_Access</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Verify PL user login with no plan access.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> Verify PL user login with no plan access
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password.
+	 */
+	@Test(dataProvider = "setData")
+	public void TC004_Verify_PLUser_Login_With_No_Plna_Access(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify PL User Login with no Plan access", false);
+			HomePage home = new HomePage(new LoginPage(),false,new String[]{
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")
+			}).get();
+			Web.getDriver().switchTo().frame("framea");
+			home.isPlanListDisplayed();
+			Web.getDriver().switchTo().defaultContent();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}	
 	
 	
 	
@@ -608,5 +650,6 @@ public class logintestcases {
 	public void DriverQuite() {
 		Web.getDriver().close();
 		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
 	}
 }
