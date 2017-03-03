@@ -197,6 +197,46 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement accntDetailsTab;
 	@FindBy(xpath="//div[@id='contactInfo']//label")
 	private List<WebElement> contactInFoLabels;
+	@FindBy(id="contactEditLink")
+	private WebElement contctEditLink;
+	@FindBy(xpath="//*[@id='contactInfoEditDialogId']/iframe")
+	private WebElement contctInfoEditFrame;
+	@FindBy(xpath="//form[@name='ChangeGenInfo']//input/../../preceding-sibling::td//font")
+	private List<WebElement> actCtcInputLabelsWindow;
+	@FindBy(xpath="//form[@name='ChangeGenInfo']//select/../../preceding-sibling::td//font")
+	private List<WebElement> actCtcSelectLabelsWindow;
+	@FindBy(xpath="//form[@name='ChangeGenInfo']//font/input")
+	private List<WebElement> listOfContactInFoValues;
+	@FindBy(id="lastName")
+	private WebElement lName;
+	@FindBy(id="firstName")
+	private WebElement fName;
+	@FindBy(id="middleName")
+	private WebElement mName;
+	@FindBy(xpath=".//*[@id='maritalStatus']/option[@selected='']")
+	private WebElement mStatus;
+	@FindBy(id="firstLineMailing")
+	private WebElement address;
+	@FindBy(id="city")
+	private WebElement city;
+	@FindBy(xpath=".//*[@id='state']/option[@selected='']")
+	private WebElement state;
+	@FindBy(id="zip")
+	private WebElement zip;
+	@FindBy(xpath=".//*[@id='country']/option[@selected='']")
+	private WebElement country;
+	@FindBy(id="homePhoneAreaCode")
+	private WebElement homeAreaCode;
+	@FindBy(id="homePhoneNumber")
+	private WebElement homePhoneNumber;
+	@FindBy(id="workPhoneAreaCode")
+	private WebElement workAreaCode;
+	@FindBy(id="workPhoneNumber")
+	private WebElement workPhoneNumber;
+	
+	
+	
+	
 	
 	Map<String,String> m = new LinkedHashMap<String,String>();
 	LoadableComponent<?> parent;
@@ -308,6 +348,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
+		Thread.sleep(4000);
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
 			Web.clickOnElement(btnGoEmployeeSearch);
@@ -1008,7 +1049,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	}
 	
 	/*
-	 * This method fetches
+	 * This method fetches empid from DB from the first record
 	 */
 	public String getEmployeeIdFromDB() throws SQLException
 	{
@@ -1026,6 +1067,56 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return empId;
 		
 	}
+	
+	/*
+	 * This method fetches ssn from DB from the first record
+	 */
+	public String getSSNFromDB() throws SQLException
+	{
+		String ssn=null;
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeID")[0], 
+				Stock.getTestQuery("getEmployeeID")[1],"K_"+Stock.GetParameterValue("username"));
+		
+		while(queryResultSet.next())
+		{
+			ssn = queryResultSet.getString("SSN");
+			break;
+		}
+		
+		Reporter.logEvent(Status.INFO, "SSN fetched from DB.", "'"+ssn+"'", false);
+		return ssn;
+		
+	}
+	
+	public Map<String,String> getEmpInfoFromDB(String ssn) throws SQLException
+	{
+		Map<String,String> empInfo=new LinkedHashMap<String,String>();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeInfo")[0], 
+				Stock.getTestQuery("getEmployeeInfo")[1],ssn);
+		
+		while(queryResultSet.next())
+		{
+			empInfo.put("Last Name",queryResultSet.getString("LAST_NAME"));
+			empInfo.put("First Name",queryResultSet.getString("FIRST_NAME"));
+			//empInfo.put("Marital Status",queryResultSet.getString("MARITAL_STATUS"));
+			empInfo.put("Middle Name",queryResultSet.getString("MIDDLE_NAME"));
+			empInfo.put("Address",queryResultSet.getString("FIRST_LINE_MAILING"));
+			empInfo.put("City",queryResultSet.getString("CITY"));
+			empInfo.put("Zip",queryResultSet.getString("ZIP_CODE"));
+			//empInfo.put("State",queryResultSet.getString("STATE_CODE"));
+			//empInfo.put("Country",queryResultSet.getString("COUNTRY"));
+			empInfo.put("Home Phone Area Code",queryResultSet.getString("HOME_PHONE_AREA_CODE"));
+			empInfo.put("Home Phone Number",queryResultSet.getString("HOME_PHONE_NBR"));
+			empInfo.put("Work Phone Area Code",queryResultSet.getString("WORK_PHONE_AREA_CODE"));
+			empInfo.put("Work Phone Number",queryResultSet.getString("WORK_PHONE_NBR"));
+			break;
+		}
+		
+		//Reporter.logEvent(Status.INFO, "Employee Id fetched from DB.", "'"+ssn+"'", false);
+		return empInfo;
+	}
+	
+	
 	
 	/*
 	 * This method verifies the employee id, Hire date, Officer 
@@ -1198,16 +1289,22 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void contactInFoSectionValidation() throws Exception
 	{
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
 		Web.waitForElements(fNLNMILink);
 		Web.clickOnElement(fNLNMILink.get(0));
 		Web.waitForPageToLoad(Web.getDriver());
 		CommonLib.waitForProgressBar();
+		CommonLib.waitForProgressBar();
+		CommonLib.waitForProgressBar();
 		Web.waitForElement(empNameHeader);
 		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		if(empNameHeader.getText().contains(fNLNMILink.get(0).getText()))
 		{
 			do{
 				Web.waitForElement(partDetailTab);
+				Thread.sleep(2000);
 			}while(!partDetailTab.isDisplayed());
 			Web.clickOnElement(partDetailTab);
 		}
@@ -1245,9 +1342,118 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Reporter.logEvent(Status.FAIL, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels are not displayed:'"+actLabels+"'.", true);
 		}
+		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	
 	
+	
+	/*
+	 * This method validates contact info labels on edit mode(Modal Window)
+	 */
+	public void contactInFoValidationModalWindow() throws Exception
+	{
+		List<String> expLabels1 = Arrays.asList(Stock.GetParameterValue("expContactInputLabelsWindow").split(","));
+		List<String> expLabels2 = Arrays.asList(Stock.GetParameterValue("expContactSelectLabelsWindow").split(","));
+		List<String> actLabels1 = new LinkedList<String>();
+		List<String> actLabels2 = new LinkedList<String>();
+		boolean bool1 = false;
+		boolean bool2 = false;
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(contctEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.clickOnElement(contctEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.waitForProgressBar();
+		Web.waitForElement(contctInfoEditFrame);
+		Web.getDriver().switchTo().frame(contctInfoEditFrame);
+		for(WebElement ele1 : actCtcInputLabelsWindow)	
+		{
+			actLabels1.add(ele1.getText().replace("*","").replace(":","").trim());
+		}
+		actLabels1.removeAll(Arrays.asList(null,""));
+		System.out.println(actLabels1);
+		for(WebElement ele2 : actCtcSelectLabelsWindow)	
+		{
+			actLabels2.add(ele2.getText().replace("*","").replace(":","").trim());
+		}
+		actLabels2.removeAll(Arrays.asList(null,""));
+		System.out.println(actLabels2);
+		
+		for(int i=0;i<expLabels1.size();i++)
+		{
+			if(expLabels1.contains(actLabels1.get(i))){
+				bool1 = true;
+			}
+			
+			else{
+				bool1 = false;
+				break;
+			}
+			
+		}
+		
+		for(int i=0;i<expLabels2.size();i++)
+		{
+			if(expLabels2.contains(actLabels2.get(i))){
+				bool2 = true;
+			}
+			
+			else{
+				bool2 = false;
+				break;
+			}
+			
+		}
+		
+		if(bool1 && bool2)
+		{
+			Reporter.logEvent(Status.PASS,"Expected Labels:"+expLabels1+" and "+expLabels2, "Actual Labels:"+actLabels1+" and "+actLabels2, false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Expected Labels:"+expLabels1+" and "+expLabels2, "Actual Labels:"+actLabels1+" and "+actLabels2, true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+	}
+	
+	
+	/*
+	 * This method validates DB fields with UI fields for employee information
+	 */
+	public void validateContactInfoWithDB() throws Exception
+	{
+		Map<String,String> infoFromUI = new LinkedHashMap<String,String>();
+		Map<String,String> infoFromDB = this.getEmpInfoFromDB(this.getSSNFromDB());
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(contctInfoEditFrame);
+		Web.getDriver().switchTo().frame(contctInfoEditFrame);
+		infoFromUI.put("Last Name",lName.getAttribute("value"));
+		infoFromUI.put("First Name",fName.getAttribute("value"));
+		//infoFromUI.put("Marital Status",mStatus.getText());
+		infoFromUI.put("Middle Name",mName.getAttribute("value"));
+		infoFromUI.put("Address",address.getAttribute("value"));
+		infoFromUI.put("City",city.getAttribute("value"));
+		infoFromUI.put("Zip",zip.getAttribute("value"));
+		//infoFromUI.put("State",state.getText());
+		//infoFromUI.put("Country",country.getText());
+		infoFromUI.put("Home Phone Area Code",homeAreaCode.getAttribute("value"));
+		infoFromUI.put("Home Phone Number",homePhoneNumber.getAttribute("value"));
+		infoFromUI.put("Work Phone Area Code",workAreaCode.getAttribute("value"));
+		infoFromUI.put("Work Phone Number",workPhoneNumber.getAttribute("value"));
+		System.out.println("Info from UI"+infoFromUI);
+		System.out.println("Info from DB"+infoFromDB);
+		if(infoFromUI.equals(infoFromDB))
+		{
+			Reporter.logEvent(Status.PASS, "Validate employee basic info with DB.", "Employee info is displayed correctly.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Validate employee basic info with DB.", "Employee info is not displayed correctly.", true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+		
+		
+	}
 	
 }

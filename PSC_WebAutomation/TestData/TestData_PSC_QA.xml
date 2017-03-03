@@ -1108,6 +1108,8 @@
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="expContactInfoLabels" value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address" />
+				<parameter name="expContactInputLabelsWindow" value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
+				<parameter name="expContactSelectLabelsWindow" value="Marital Status,Gender,Language Preference,State,Country" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1294,8 +1296,17 @@ user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
 			Query="select i.ind_id, i.database_instance, u.ssn, u.username, u.web_default_ga_id from individual_registry i inner join username_registry u on i.usrreg_id= u.id
 where u.username=?" />
-		<parameter QueryName="getEmployeeID" DB="ISISDB_QA"
+		<!-- <parameter QueryName="getEmployeeID" DB="ISISDB_QA"
 			Query="select * from employment where ind_id in (select ind_id from part_agrmt where ga_id in 
-(select default_ga_id from users where logon_id=?)) and er_assigned_id is not null order by hire_date desc" />
+(select default_ga_id from users where logon_id=?)) and er_assigned_id is not null order by hire_date desc" /> -->
+<parameter QueryName="getEmployeeID" DB="ISISDB_QA"
+			Query="select * from individual where id in (select ind_id from part_agrmt where ga_id in 
+(select default_ga_id from users where logon_id=?)) and ssn is not null" />
+<parameter QueryName="getEmployeeInfo" DB="ISISDB_QA"
+			Query="select i.ssn, i.first_name, i.last_name,i.marital_status,i.middle_name,a.first_line_mailing, 
+a.scnd_line_mailing, a.city, a.zip_code, a.state_code, a.country, 
+i.home_phone_area_code, i.home_phone_nbr, i.work_phone_area_code, 
+i.work_phone_nbr from individual i, address a where a.ind_id = i.id and 
+ i.ssn = ?" />
 	</Module>
 </TestData>

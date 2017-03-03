@@ -893,10 +893,11 @@ public class employeesearchtestcases {
 					Reporter.logEvent(Status.INFO, "Testcase Description",
 							"This testcase validates general employment informations", false);
 					employeesearch = new EmployeeSearch().get();	
-					//employeesearch.searchEmployeeByEmployeeId(employeesearch.getEmployeeIdFromDB());//need to fetch employee from database
-					employeesearch.searchEmployeeByEmployeeId("039011");
+					employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 					employeesearch.contactInFoSectionValidation();
 					employeesearch.contactInFoLabelValidation();
+					employeesearch.contactInFoValidationModalWindow();
+					employeesearch.validateContactInfoWithDB();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
