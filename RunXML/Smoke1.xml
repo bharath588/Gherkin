@@ -10,8 +10,8 @@
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 					
-					<include name="Balance_validations">
-					<parameter name="ManualTCName" value="Balance_validations">
+					<include name="Dollar_Cost_Average_Flow">
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
                     </parameter>
                     </include>
 				

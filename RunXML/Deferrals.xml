@@ -205,6 +205,12 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
                     </parameter>
                     </include>
+                    
+                    <include name="Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
+                    </parameter>
+                    </include>
+                    
                     -->
                
    <!--  PART 5 -->
@@ -292,6 +298,29 @@
                     
                      <include name="Deferral_035_Pending_Deferral_View">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
+                    </parameter>
+                    </include>
+                      <include name="Deferral_036_Pending_Deferral_Delete">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_036_Pending_Deferral_Delete">
+                    </parameter>
+                    </include>
+                    <include name="Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
                     </parameter>
                     </include>
                     -->

@@ -15,6 +15,7 @@ import org.apache.poi.ss.formula.functions.Choose;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -434,26 +435,64 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	public void dollarCostAverageFlow(String frequency, String setupDate,
 			String percent, String amount) throws InterruptedException,NullPointerException,IndexOutOfBoundsException {
 		Actions keyBoard = new Actions(Web.getDriver());
+		
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(iframeLegacyFeature);
+		iframeLegacyFeature.isDisplayed();
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
-		Web.getDriver().switchTo().frame(iframeLegacyFeature);
-		else{
-			Web.waitForElement(iframeLegacyFeature);			
-		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
+			else{
+				Web.waitForElement(iframeLegacyFeature);			
+			Web.getDriver().switchTo().frame(iframeLegacyFeature);
+			}
+			WebElement freq = this.getWebElement(frequency);
+			WebElement date = this.getWebElement(setupDate);
+			Web.clickOnElement(freq);
+			Reporter.logEvent(Status.INFO,
+					"verify if frequency period is selected",
+					"Selected Frequency Period : " + frequency, true);
+			Web.clickOnElement(date);
+			Reporter.logEvent(Status.INFO,
+					"Specify the Dollar Cost Average Setup Date", "Setup Date : "
+							+ setupDate, false);
+			// Web.getDriver().switchTo().frame(iframeLegacyFeature);
+			btnContinueToNextStep.click();
+		try{
+			Web.waitForElement(radioDoNoTerminate);
+			radioDoNoTerminate.isDisplayed();
+					
+		}catch(NoSuchElementException e){
+			cancelTransfer("Dollar Cost");
+			clickChangeMyInvestmentButton();
+			choseInvestmentOption("Dollar Cost");
+			Web.clickOnElement(btnContinue1);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(iframeLegacyFeature);
+			iframeLegacyFeature.isDisplayed();
+			if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
+				Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				else{
+					Web.waitForElement(iframeLegacyFeature);			
+				Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				}
+				/*WebElement freq = this.getWebElement(frequency);
+				WebElement date = this.getWebElement(setupDate);*/
+				Web.clickOnElement(freq);
+				Reporter.logEvent(Status.INFO,
+						"verify if frequency period is selected",
+						"Selected Frequency Period : " + frequency, true);
+				Web.clickOnElement(date);
+				Reporter.logEvent(Status.INFO,
+						"Specify the Dollar Cost Average Setup Date", "Setup Date : "
+								+ setupDate, false);
+				// Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				btnContinueToNextStep.click();
 		}
-		WebElement freq = this.getWebElement(frequency);
-		WebElement date = this.getWebElement(setupDate);
-		Web.clickOnElement(freq);
-		Reporter.logEvent(Status.INFO,
-				"verify if frequency period is selected",
-				"Selected Frequency Period : " + frequency, true);
-		Web.clickOnElement(date);
-		Reporter.logEvent(Status.INFO,
-				"Specify the Dollar Cost Average Setup Date", "Setup Date : "
-						+ setupDate, false);
-		// Web.getDriver().switchTo().frame(iframeLegacyFeature);
-		btnContinueToNextStep.click();
-		Web.waitForElement(radioDoNoTerminate);
+		
+		
+		
 		radioDoNoTerminate.click();
 		Reporter.logEvent(
 				Status.INFO,
@@ -840,10 +879,25 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	}
 
-	public void navigateToTab(String tabName) {
-		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.getDriver());
-		Web.waitForElement(iframeLegacyFeature);
+	public void navigateToTab(String tabName) throws InterruptedException {
+		
+		try{
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(iframeLegacyFeature);
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
+			WebElement tab = this.getWebElement(tabName);
+			tab.isDisplayed();
+					
+		}catch(NoSuchElementException e){
+			cancelTransfer("F2F");
+			clickChangeMyInvestmentButton();
+			choseInvestmentOption("Change Current Balance Investment");
+			Web.clickOnElement(btnContinue1);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+		}
+		
 		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
 			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 			else{
@@ -872,25 +926,53 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.getDriver().switchTo().defaultContent();
 	}
 
-	public void cancelTransfer(String transferType) {
-		btnBack.click();
-		choseInvestmentOption(transferType);
-		btnContinue1.click();
+	public void cancelTransfer(String transferType) throws InterruptedException {
+		//btnBack.click();
+		//choseInvestmentOption(transferType);
+		//btnContinue1.click();
 		if (transferType.equalsIgnoreCase("Rebalance Currnet Balance")) {
+			//Web.waitForElement(iframeLegacyFeature);
+			//Web.getDriver().switchTo().frame(iframeLegacyFeature);
+			//radioOnce.click();
+			btnContinue1.click();
 			Web.waitForElement(iframeLegacyFeature);
 			Web.getDriver().switchTo().frame(iframeLegacyFeature);
-			radioOnce.click();
+			Web.waitForElement(btnContinue2);
 			btnContinue2.click();
-			btnViewPendingTransfer.click();
-			Web.getDriver().switchTo().defaultContent();
+			Web.waitForElement(btnCancelTransferF2F);
+			btnCancelTransferF2F.click();
+			//btnViewPendingTransfer.click();
+			
 		}
 		if (transferType.equalsIgnoreCase("F2F")) {
+		
 			Web.waitForElement(btnCancelTransfer);
 			btnCancelTransfer.click();
+			Thread.sleep(4000);
+			Web.getDriver().switchTo().frame("the_iframe");
+			Web.waitForElement(btnCont);
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+			Web.waitForElement(btnCont);
+			btnCont.click();
+			Web.waitForElement(btnCancelTransferF2F);
+			btnCancelTransferF2F.click();
 
 		}
+		
+		if (transferType.equalsIgnoreCase("Dollar Cost")) {
+			Web.waitForElement(btnViewPendingTransfer);
+			btnViewPendingTransfer.click();
+			Web.waitForElement(btnCont);
+			btnCont.click();
+			Web.waitForElement(btnCancelTransferF2F);
+			btnCancelTransferF2F.click();
 
-		Web.waitForElement(iframeLegacyFeature);
+		}
+		
+		Web.getDriver().switchTo().defaultContent();
+		Web.waitForElement(btnBack);
+		btnBack.click();
+		/*Web.waitForElement(iframeLegacyFeature);
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		// Web.getDriver().switchTo().frame(theIframe);
 		btnCont.click();
@@ -913,17 +995,32 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 		btnCancelTransferF2F.click();
 		Reporter.logEvent(Status.INFO, "Verify Transfer Cancelled",
-				"Transfer Cancelled", true);
+				"Transfer Cancelled", true);*/
 		Web.getDriver().switchTo().defaultContent();
 	}
 	public void rebalanceInvestment_New(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
+		try{
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(btnChooseIndividualFunds);
+			btnChooseIndividualFunds.isDisplayed();
+					
+		}catch(NoSuchElementException e){
+			cancelTransfer("Rebalance Currnet Balance");
+			clickChangeMyInvestmentButton();
+			choseInvestmentOption("Rebalance Currnet Balance");
+			Web.clickOnElement(btnContinue1);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+		}
+		
 		if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
 			Web.clickOnElement(radioMTG1);
 			Thread.sleep(2000);
 			Web.clickOnElement(btnContinue1);
 		}
-		Common.waitForProgressBar();
-		Web.waitForPageToLoad(Web.getDriver());
+		/*Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());*/
 		Web.waitForElement(btnChooseIndividualFunds);
 		Web.clickOnElement(btnChooseIndividualFunds);
 		Common.waitForProgressBar();

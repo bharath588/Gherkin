@@ -9,10 +9,10 @@
           	<class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
             		 
-                   <include name="Deferral_035_Pending_Deferral_View">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
+             		<include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
                     </parameter>
-                    </include>
+                    </include> 
                    </methods>
 			</class>
 		</classes>

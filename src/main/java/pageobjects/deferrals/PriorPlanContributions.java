@@ -90,7 +90,7 @@ public class PriorPlanContributions extends LoadableComponent<PriorPlanContribut
 			
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			//Assert.assertTrue(Web.isWebElementDisplayed(txtPriorContribution,true));
+			Assert.assertTrue(Web.isWebElementDisplayed(txtPriorContribution,true));
 			
 		} else {
 			this.lnkLogout.click();

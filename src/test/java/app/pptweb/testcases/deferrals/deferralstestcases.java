@@ -31,6 +31,7 @@ import appUtils.Common;
 import appUtils.TestDataFromDB;
 
 import com.aventstack.extentreports.Status;
+import com.sun.prism.paint.Stop;
 
 import core.framework.Globals;
 
@@ -93,12 +94,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -114,9 +115,9 @@ public class deferralstestcases {
 
 			
 			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -134,11 +135,11 @@ public class deferralstestcases {
 						"After-tax Contributions page is not displayed", true);
 			deferrals.click_Select_Your_Contribution_Rate();
 			
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			deferrals.add_Auto_Increase("After Add Auto Increase");
 			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -176,12 +177,12 @@ public class deferralstestcases {
 	public void SIT_PPTWEB_Deferral__Bonus(int itr, Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -194,11 +195,11 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			try {
-				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+				Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -227,8 +228,8 @@ public class deferralstestcases {
 			deferrals.add_Auto_Increase(Stock
 					.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -290,13 +291,13 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Participant ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Participant ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else{
@@ -310,12 +311,12 @@ public class deferralstestcases {
 			deferrals.get();
 
 			try {
-				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+				Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -332,27 +333,27 @@ public class deferralstestcases {
 						"Verify Standard contribution page",
 						"Standard Contributions page is not displayed", true);
 
-			if (lib.Stock.GetParameterValue("Contributing_type")
+			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to company match"))
 				deferrals.click_MaximizeToCompanyMatch();
-			if (lib.Stock.GetParameterValue("Contributing_type")
+			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.click_Maximize_IRS_Limit();
-			if (lib.Stock.GetParameterValue("Contributing_type")
+			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
-			if (!lib.Stock.GetParameterValue("Contributing_type")
+			if (!Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.add_Auto_Increase(lib.Stock
 						.GetParameterValue("Add_auto_increase_type"));
 
 			deferrals.myContributions_Confirmation_Page();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -440,12 +441,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -456,11 +457,11 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			try {
-				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+				Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -477,29 +478,29 @@ public class deferralstestcases {
 						"Verify Catch up contribution page",
 						"Catch up Contributions page is not displayed", true);
 
-			if (lib.Stock.GetParameterValue("Contributing_type")
+			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.click_Maximize_IRS_Limit();
-			if (lib.Stock.GetParameterValue("Contributing_type")
+			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
 
-			if (lib.Stock.GetParameterValue("Contribution_type")
+			if (Stock.GetParameterValue("Contribution_type")
 					.equalsIgnoreCase("Split"))
 				deferrals.split_catchup_contribution();
 			else
 				deferrals.select_ContributionType(lib.Stock
 						.GetParameterValue("Contribution_type"));
 
-			if (!lib.Stock.GetParameterValue("Contributing_type")
+			if (!Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Maximize to irs limit"))
 				deferrals.add_Auto_Increase(lib.Stock
 						.GetParameterValue("Add_auto_increase_type"));
 
 			deferrals.myContributions_Confirmation_Page();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -571,7 +572,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -636,13 +637,13 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -656,11 +657,11 @@ public class deferralstestcases {
 			// logic to verify the prior plan contribution functionality with 3
 			// combination of manual test cases listed above in comments
 			// if
-			// (lib.Stock.GetParameterValue("Period_of_Participation").equalsIgnoreCase("Not_In_First_Year"))
+			// (Stock.GetParameterValue("Period_of_Participation").equalsIgnoreCase("Not_In_First_Year"))
 			// {
 			//
 			// if
-			// (lib.Web.isWebElementDisplayed(leftmenu,"Prior plan contributions"
+			// (Web.isWebElementDisplayed(leftmenu,"Prior plan contributions"
 			// )) {
 			// Reporter.logEvent(Status.FAIL,
 			// "Prior plan contributions link visibility",
@@ -676,10 +677,10 @@ public class deferralstestcases {
 			// Navigate to the prior plan contribution
 			priorContributions.get();
 
-			if (lib.Stock.GetParameterValue("Period_of_Participation")
+			if (Stock.GetParameterValue("Period_of_Participation")
 					.equalsIgnoreCase("Not_In_First_Year")) {
 
-				if (lib.Web.isWebElementDisplayed(leftmenu,
+				if (Web.isWebElementDisplayed(leftmenu,
 						"Prior plan contributions")) {
 					Reporter.logEvent(
 							Status.FAIL,
@@ -698,8 +699,8 @@ public class deferralstestcases {
 				priorContributions.verifyPriorPlanContributionsPage();
 				// enter the year to date and catchup contribution value
 				priorContributions.enterContributionValue(
-						lib.Stock.GetParameterValue("yearToDateContribution"),
-						lib.Stock.GetParameterValue("catchupContribution"));
+						Stock.GetParameterValue("yearToDateContribution"),
+						Stock.GetParameterValue("catchupContribution"));
 				priorContributions.verifyContributionMessage(lib.Stock
 						.GetParameterValue("yearToDateContribution"));
 				
@@ -752,12 +753,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -767,7 +768,7 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -785,7 +786,7 @@ public class deferralstestcases {
 			deferrals.click_Select_Your_Contribution_Rate();
 			
 
-			if (lib.Stock.GetParameterValue("Contribution_type")
+			if (Stock.GetParameterValue("Contribution_type")
 					.equalsIgnoreCase("Split"))
 				deferrals.split_Other_contribution();
 			else
@@ -795,8 +796,8 @@ public class deferralstestcases {
 			deferrals.add_Auto_Increase(Stock
 					.GetParameterValue("Add_auto_increase_type"));
 			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -853,12 +854,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -873,7 +874,7 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(myAccountPage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -928,12 +929,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -943,7 +944,7 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -964,7 +965,7 @@ public class deferralstestcases {
 			 * This step is not applicable as new functionalitychange
 			 */
 
-			/*if (lib.Web.isWebElementDisplayed(deferrals, "Maximize Checkbox"))
+			/*if (Web.isWebElementDisplayed(deferrals, "Maximize Checkbox"))
 				Reporter.logEvent(Status.PASS,
 						"Check if Maximize me always check box is present",
 						"Maximize me always check box is present", false);
@@ -976,8 +977,8 @@ public class deferralstestcases {
 			deferrals.regular_maximize_me_always("Yes");
 
 			deferrals.myContributions_Confirmation_Page();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1014,12 +1015,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1051,7 +1052,7 @@ public class deferralstestcases {
 					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
 					.trim(), true);
 			if (isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Split Contribution on Select Contribution page",
@@ -1063,7 +1064,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Split Contribution on Select Contribution page",
@@ -1076,8 +1077,8 @@ public class deferralstestcases {
 			Thread.sleep(4000);
 			Web.clickOnElement(deferrals, "Confirm button");
 			Thread.sleep(4000);
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1087,7 +1088,7 @@ public class deferralstestcases {
 			isTextMatching = Web.VerifyText(perRoth ,deferrals
 					.getContributionPercentage(Stock.GetParameterValue("Roth")),true);
 			if (!isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Standard Roth After Split Contribution on My Contribution page",
@@ -1100,7 +1101,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Standard Roth After Split Contribution on My Contribution page",
@@ -1115,7 +1116,7 @@ public class deferralstestcases {
 			isTextMatching = Web.VerifyText(perBeforeTax ,deferrals
 					.getContributionPercentage(Stock.GetParameterValue("viewonlyBFTX")),true);
 			if (isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Standard Before Tax After Split Contribution on My Contribution page",
@@ -1128,7 +1129,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Standard Before Tax After Split Contribution on My Contribution page",
@@ -1167,7 +1168,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1186,7 +1187,7 @@ public class deferralstestcases {
 						"The after tax option is not displayed", true);
 			}
 
-			if (lib.Web.isWebElementDisplayed(deferrals, "Edit Btn Aftertax")) {
+			if (Web.isWebElementDisplayed(deferrals, "Edit Btn Aftertax")) {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Check if edit button is displayed for after tax with no split contributions",
@@ -1227,12 +1228,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1264,7 +1265,7 @@ public class deferralstestcases {
 					.getWebElementText("VIEW ONLY SPLIT CONTRIBUTION TEXT")
 					.trim(), true);
 			if (isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Split Contribution on Select Contribution page",
@@ -1277,7 +1278,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Split Contribution on Select Contribution page",
@@ -1292,8 +1293,8 @@ public class deferralstestcases {
 			Thread.sleep(4000);
 			Web.clickOnElement(deferrals, "Confirm button");
 			Thread.sleep(4000);
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1303,7 +1304,7 @@ public class deferralstestcases {
 			isTextMatching = Web.VerifyText(perAgeCatchupBefore ,deferrals
 					.getContributionPercentage(Stock.GetParameterValue("catchupbeforetax")),true);
 			if (!isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Age Catch- up before After Split Contribution on My Contribution page",
@@ -1316,7 +1317,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Age Catch- up before After Split Contribution on My Contribution page",
@@ -1331,7 +1332,7 @@ public class deferralstestcases {
 			isTextMatching = Web.VerifyText(perAgeRothCatchUp ,deferrals
 					.getContributionPercentage(Stock.GetParameterValue("viewonlyroth")),true);
 			if (isTextMatching) {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.PASS,
 								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
@@ -1344,7 +1345,7 @@ public class deferralstestcases {
 								true);
 
 			} else {
-				lib.Reporter
+				Reporter
 						.logEvent(
 								Status.FAIL,
 								"Verify Age Catch- up Roth After Split Contribution on My Contribution page",
@@ -1383,12 +1384,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1404,13 +1405,13 @@ public class deferralstestcases {
 //				deferrals.click_Maximize_IRS_Limit();
 //				deferrals.select_ContributionType("Before");
 //				deferrals.myContributions_Confirmation_Page();
-//				lib.Web.clickOnElement(deferrals, "MyContribution Button");
+//				Web.clickOnElement(deferrals, "MyContribution Button");
 //			}
 			deferrals
 					.Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1444,12 +1445,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1462,9 +1463,9 @@ public class deferralstestcases {
 			deferrals
 					.Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1498,12 +1499,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1515,8 +1516,8 @@ public class deferralstestcases {
 			deferrals.get();
 			deferrals.Catch_up_Salary_changes_on_IRS_panel();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1550,12 +1551,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -1566,8 +1567,8 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			deferrals.Catch_up_Maximize_me_always();
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -1598,8 +1599,8 @@ public class deferralstestcases {
 
 	@AfterSuite
 	public void cleanupSessions() {
-		lib.Web.getDriver().close();
-		lib.Web.getDriver().quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
 	}
 
 	/**
@@ -1624,7 +1625,7 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1656,13 +1657,13 @@ public class deferralstestcases {
 			// enter the year to date and catchup contribution value
 			priorContributions.enterContributionValue(
 					"YEAR TO DATE CONTRIBUTION",
-					lib.Stock.GetParameterValue("yearToDateContribution"));
+					Stock.GetParameterValue("yearToDateContribution"));
 			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 			priorContributions.verifyContributionMessage(lib.Stock
 					.GetParameterValue("yearToDateContribution"));
 			
 
-			if (lib.Web.isWebElementDisplayed(priorContributions, "Edit"))
+			if (Web.isWebElementDisplayed(priorContributions, "Edit"))
 				Reporter.logEvent(Status.PASS, "Verify Edit button",
 						"Edit button is displayed", false);
 			else
@@ -1710,7 +1711,7 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1742,9 +1743,9 @@ public class deferralstestcases {
 			// enter the year to date and catchup contribution value
 			priorContributions.enterContributionValue(
 					"YEAR TO DATE CONTRIBUTION",
-					lib.Stock.GetParameterValue("yearToDateContribution"));
+					Stock.GetParameterValue("yearToDateContribution"));
 			priorContributions.enterContributionValue("CATCHUP CONTRIBUTION",
-					lib.Stock.GetParameterValue("catchupContribution"));
+					Stock.GetParameterValue("catchupContribution"));
 			Web.clickOnElement(priorContributions, "SAVE AND CLOSE");
 		boolean updated=	priorContributions.verifyContributionMessage(lib.Stock
 					.GetParameterValue("totalContribution"));
@@ -1763,7 +1764,7 @@ public class deferralstestcases {
 						true);
 			}
 
-			if (lib.Web.isWebElementDisplayed(priorContributions, "Edit"))
+			if (Web.isWebElementDisplayed(priorContributions, "Edit"))
 				Reporter.logEvent(Status.PASS, "Verify Edit button",
 						"Edit button is displayed", false);
 			else
@@ -1809,7 +1810,7 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1820,7 +1821,7 @@ public class deferralstestcases {
 					leftmenu);
 
 			priorContributions.get();
-			if (!lib.Web.isWebElementDisplayed(priorContributions,
+			if (!Web.isWebElementDisplayed(priorContributions,
 					"TEXT PRIOR PLAN CONTRIBUTION"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Prior Plan Contribution Link Is Displayed",
@@ -1857,7 +1858,7 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1868,7 +1869,7 @@ public class deferralstestcases {
 					leftmenu);
 
 			priorContributions.get();
-			if (!lib.Web.isWebElementDisplayed(priorContributions,
+			if (!Web.isWebElementDisplayed(priorContributions,
 					"TEXT PRIOR PLAN CONTRIBUTION"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Prior Plan Contribution Link Is Displayed",
@@ -1904,7 +1905,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1915,9 +1916,9 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 
 			deferrals.get();
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2008,12 +2009,12 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -2023,7 +2024,7 @@ public class deferralstestcases {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			if (lib.Web.isWebElementDisplayed(deferrals,"Table Header Contribution",true))
+			if (Web.isWebElementDisplayed(deferrals,"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page","My Contributions page is  displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page","My Contributions page is not displayed", true);
@@ -2053,7 +2054,7 @@ public class deferralstestcases {
 				else
 					Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 				deferrals.click_Select_Your_Contribution_Rate();
-				lib.Web.clickOnElement(deferrals, "Continue button");
+				Web.clickOnElement(deferrals, "Continue button");
 				
 				//Adding Bonus defferal and split
 				/*if (deferrals.clickAddEditButton("Bonus Add"))
@@ -2097,7 +2098,7 @@ public class deferralstestcases {
 				else
 					Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 				deferrals.click_Select_Your_Contribution_Rate();
-				lib.Web.clickOnElement(deferrals, "Continue button");
+				Web.clickOnElement(deferrals, "Continue button");
 				
 				//Adding Bonus defferal and split
 				/*if (deferrals.clickAddEditButton("Bonus Edit"))
@@ -2128,8 +2129,8 @@ public class deferralstestcases {
 				//Confirm all the deferrals
 				deferrals.myContributions_Confirmation_Page();
 
-				lib.Web.clickOnElement(deferrals, "MyContribution Button");
-				if (lib.Web.isWebElementDisplayed(deferrals,
+				Web.clickOnElement(deferrals, "MyContribution Button");
+				if (Web.isWebElementDisplayed(deferrals,
 						"Table Header Contribution", true))
 					Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 							"My Contributions page is  displayed", true);
@@ -2182,13 +2183,13 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -2202,9 +2203,9 @@ public class deferralstestcases {
 			deferrals.get();
 			
 
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2226,7 +2227,7 @@ public class deferralstestcases {
 			Web.clickOnElement(deferrals, "PLAN RULE");
 			Web.waitForElement(deferrals, "Header PlanRule");
 
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Header PlanRule"))
 				Reporter.logEvent(Status.PASS, "Verify Pan Rule PopUp is Displayed",
 						"Pan Rule PopUp is Displayed", true);
@@ -2234,7 +2235,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify Pan Rule PopUp is Displayed",
 						"Pan Rule PopUp is Not Displayed", true);
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Text PlanRule"))
 				Reporter.logEvent(Status.PASS, "Verify Pan Rule Text is Displayed and Proper",
 						"Pan Rule Text is Displayed and Proper", true);
@@ -2272,12 +2273,12 @@ public class deferralstestcases {
 	public void Deferral_011M_Verify_combined_rules_with_zero_election(int itr, Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			//LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			// if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
 			// <= 2)
 			// leftmenu = new LeftNavigationBar(homePage);
 			// else {
@@ -2290,11 +2291,11 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			try {
-				lib.Web.waitForElement(deferrals, "Table Header Contribution");
+				Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", false);
@@ -2315,7 +2316,7 @@ public class deferralstestcases {
 			
 			Web.clickOnElement(deferrals, "Continue button");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions Page is Displayed and combined rules a1re not checked on deferral types ",
 						"My Contributions page is  displayed and combined rules are not checked on deferral types ", true);
@@ -2353,7 +2354,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2365,9 +2366,9 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2393,7 +2394,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 8
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			//Step 9 10 11 12 13
 			deferrals.add_Auto_Increase(lib.Stock
 					.GetParameterValue("Add_auto_increase_BeforeTax"));
@@ -2402,8 +2403,8 @@ public class deferralstestcases {
 			//Step 14
 			deferrals.myContributions_Confirmation_Page();
 			//Step 15
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2441,7 +2442,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2452,9 +2453,9 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2471,7 +2472,7 @@ public class deferralstestcases {
 						"Verify Standard contribution page",
 						"Standard Contributions page is not displayed", true);
 			//Step 3
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"TEXT COMPANY MATCH", true))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
 						"COMPANY MATCH is displayed", true);
@@ -2488,7 +2489,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 8
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			//Step 9 10 11 12 13
 			deferrals.add_Auto_Increase(lib.Stock
 					.GetParameterValue("Add_auto_increase_BeforeTax"));
@@ -2497,8 +2498,8 @@ public class deferralstestcases {
 			//Step 14
 			deferrals.myContributions_Confirmation_Page();
 			//Step 15
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2535,7 +2536,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2550,9 +2551,9 @@ public class deferralstestcases {
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("ga_PlanId"));
 			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2589,7 +2590,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 10
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 11 to 16
 			deferrals.add_Auto_Increase(lib.Stock
@@ -2598,8 +2599,8 @@ public class deferralstestcases {
 			//Step 17
 			deferrals.myContributions_Confirmation_Page();
 			//Step 18
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2637,7 +2638,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2648,7 +2649,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
 			//Precondition
 			
@@ -2660,10 +2661,10 @@ public class deferralstestcases {
 			
 			deferrals.myContributions_Confirmation_Page();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
 			//Step 1
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2692,9 +2693,9 @@ public class deferralstestcases {
 			deferrals.myContributions_Confirmation_Page();
 		
 			//Step 7
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2735,7 +2736,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2746,7 +2747,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 				//Step 1			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
 			//PreCondition
 			//AddingStandard deferral and split
@@ -2771,7 +2772,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 			deferrals.click_Select_Your_Contribution_Rate();
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Adding Bonus defferal and split
 			/*if (deferrals.clickAddEditButton("Bonus Add"))
@@ -2791,7 +2792,7 @@ public class deferralstestcases {
 			//Confirm all the deferrals
 			deferrals.myContributions_Confirmation_Page();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
 			
 			//Step 2
@@ -2810,7 +2811,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 			deferrals.click_Select_Your_Contribution_Rate();
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 8
 			//Editing Catch up deferral and split
@@ -2850,8 +2851,8 @@ public class deferralstestcases {
 			//Confirm all the deferrals
 			/*deferrals.myContributions_Confirmation_Page();
 
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -2870,7 +2871,7 @@ public class deferralstestcases {
 			
 			deferrals.click_Select_Your_Contribution_Rate();
 			
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			deferrals.clickAddEditButton("Catch Up Edit");
 			
@@ -2930,7 +2931,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2941,7 +2942,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			//Step 1			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
 			//Step 2
 			//AddingStandard deferral and split
@@ -2963,7 +2964,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 			deferrals.select_Another_Contribution_Rate_Dollar();
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 8
 			//Adding Catch up deferral and split
@@ -3009,9 +3010,9 @@ public class deferralstestcases {
 			
 			//Step 12
 			
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -3051,7 +3052,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -3062,7 +3063,7 @@ public class deferralstestcases {
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
 			//Step 1			
-			lib.Web.waitForElement(deferrals, "Table Header Contribution");
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			
 			//Step 2
 			//AddingStandard deferral and split
@@ -3084,7 +3085,7 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL,"Verify After-tax contribution page","After-tax Contributions page is not displayed", true);
 			deferrals.select_Another_Contribution_Rate_Dollar();
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 8
 			//Adding Catch up deferral and split
@@ -3130,9 +3131,9 @@ public class deferralstestcases {
 			
 			//Step 13
 			
-			lib.Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
 			
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution", true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -3172,7 +3173,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to dropdown
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
@@ -3190,7 +3191,7 @@ public class deferralstestcases {
 			
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
-			if (lib.Web.isWebElementDisplayed(deferrals,
+			if (Web.isWebElementDisplayed(deferrals,
 					"Table Header Contribution"))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
@@ -3227,7 +3228,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 10
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 11 to 16
 			deferrals.add_Auto_Increase_Date_DropDown(lib.Stock
@@ -3276,7 +3277,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to Calendar
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
@@ -3331,7 +3332,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 10
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 11 to 16
 			deferrals.add_Auto_Increase(lib.Stock
@@ -3379,7 +3380,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to dropdown
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
@@ -3433,7 +3434,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 10
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 11 to 16
 			deferrals.add_Auto_Increase_Date_DropDown("Before Add Auto Increase");
@@ -3480,7 +3481,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			
 			
@@ -3533,7 +3534,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			//Step 10
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			//Step 11 
 			deferrals.add_Auto_Increase(lib.Stock
@@ -3589,7 +3590,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -3626,7 +3627,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			deferrals.myContributions_Confirmation_Page();
 			
@@ -3695,7 +3696,7 @@ public class deferralstestcases {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -3732,7 +3733,7 @@ public class deferralstestcases {
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			
-			lib.Web.clickOnElement(deferrals, "Continue button");
+			Web.clickOnElement(deferrals, "Continue button");
 			
 			deferrals.myContributions_Confirmation_Page();
 			
@@ -3801,6 +3802,544 @@ public class deferralstestcases {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Pending Deferral Status in data Base",
 						"Pending Deferral Status is Not 'Canceled'", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * The following script Standard Deferral and confirms it
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_037_Regular_BEFORE-Select Another contribution rate with save change popup modal
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+						
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 2
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step  4
+			deferrals.verifyPayPeriodAmountIsMatching();
+			//Step 5
+			deferrals.verifyAnnualCompensationDisplayed();
+			
+			//Step6 Verify Company Match is Displayed as per Rules
+			
+			// TODO 
+			
+			//Step 7
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+			
+			//Step 3 & 8
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			//Step 9
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 10
+			Web.clickOnElement(deferrals, "Continue button");
+			if(Web.isWebElementDisplayed(deferrals, "Confirm button", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Not Displayed", true);
+			//Step 11 
+			
+			leftmenu.clickNavigationLink("Beneficiaries");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Modal Save Changes", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Save Changes' Modal Is Displayed",
+						"'Save Changes' Modal Is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Save Changes' Modal Is Displayed",
+						"'Save Changes' Modal Is Not Displayed", true);
+			
+			//Step 12
+				deferrals.verifySaveYourChangesModal();
+			
+			//Step 13
+			Web.clickOnElement(deferrals, "Button Stay");
+			if(Web.isWebElementDisplayed(deferrals, "Confirm button", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify'Confirm & Continue' Button is Displayed",
+						"'Confirm & Continue' Button is Not Displayed", true);
+			//Step 14
+			leftmenu.clickNavigationLink("Beneficiaries");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Modal Save Changes", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Save Changes' Modal Is Displayed",
+						"'Save Changes' Modal Is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Save Changes' Modal Is Displayed",
+						"'Save Changes' Modal Is Not Displayed", true);
+			
+			
+			//step 15
+			Web.clickOnElement(deferrals, "Button Dont Save");
+			Web.waitForElement(deferrals, "Label Beneficiary");
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"Label Beneficiary", true))
+				Reporter.logEvent(Status.PASS, "Verify 'Beneficiary' Page Is Displayed",
+						"'Beneficiary' Page Is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'Beneficiary' Page Is Displayed",
+						"'Beneficiary' Page Is Not Displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Thee following scripts test for the prior contribution details of the
+	 * participants that are in the following category 1. Participant in the
+	 * first year of joining the plan or first year of the employment 
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_Deferral_005M_Prior Plan Contributions_ No Left hand Nav link
+	 */
+
+	@Test(dataProvider = "setData")
+	public void Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			//Step 1
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			leftmenu.get();
+			Thread.sleep(5000);
+			//Step 2
+			if(!leftmenu.isLeftNavigationLinkDisplayed("PRIOR PLAN CONTRIBUTIONS"))
+				Reporter.logEvent(Status.PASS, "Verify 'PRIOR PLAN CONTRIBUTIONS' Link Is Displayed in Left Nav Bar",
+				"'PRIOR PLAN CONTRIBUTIONS' Link Is Not Displayed in Left Nav Bar", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify 'PRIOR PLAN CONTRIBUTIONS' Link Is Displayed in Left Nav Bar",
+				"'PRIOR PLAN CONTRIBUTIONS' Link Is Displayed in Left Nav Bar", true);
+		
+			PriorPlanContributions priorContributions = new PriorPlanContributions(
+				leftmenu);
+
+			priorContributions.get();
+			
+			// Verify Participant with first year of the employment 
+			//able to see prior plan contribution page with out having 
+			//prior plan contribution link in Left Nav Bar .
+			priorContributions.verifyPriorPlanContributionsPage();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * The following script Standard Deferral for combined Rules  
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met
+	 */
+	@SuppressWarnings("null")
+	@Test(dataProvider = "setData")
+	public void Deferral_017M_Combined_rules_error_message_when_minimum_not_met(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 4
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 5
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			if (deferrals.clickAddEditButton("After Tax Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is not displayed", true);
+			//Step 10
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11
+			
+			deferrals.verifyCombinedRuleErrorMessage(Stock.GetParameterValue("RuleType"),Stock.GetParameterValue("MinimumLimit%"),Stock.GetParameterValue("deferralType1"),Stock.GetParameterValue("deferralType2"));
+			//Step 12
+			
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			if (deferrals.clickAddEditButton("After Tax Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is not displayed", true);
+			//Step 10
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11
+			
+			
+			deferrals.verifyCombinedRuleErrorMessage(Stock.GetParameterValue("RuleType"),Stock.GetParameterValue("MinimumLimit$"),Stock.GetParameterValue("deferralType1"),Stock.GetParameterValue("deferralType2"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * The following script Standard Deferral for combined Rules  
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_018M_Combined_rules_error_message_when_maximum_is_breached
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_018M_Combined_rules_error_message_when_maximum_is_breached(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 4
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 5
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			if (deferrals.clickAddEditButton("After Tax Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is not displayed", true);
+			//Step 10
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11
+			
+			deferrals.verifyCombinedRuleErrorMessage(Stock.GetParameterValue("RuleType"),Stock.GetParameterValue("MaximumLimit%"),Stock.GetParameterValue("deferralType1"),Stock.GetParameterValue("deferralType2"));
+			//Step 12
+			
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			if (deferrals.clickAddEditButton("After Tax Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is not displayed", true);
+			//Step 10
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11
+			
+			deferrals.verifyCombinedRuleErrorMessage(Stock.GetParameterValue("RuleType"),Stock.GetParameterValue("MaximumLimit$"),Stock.GetParameterValue("deferralType1"),Stock.GetParameterValue("deferralType2"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * The following script Standard Deferral for combined Rules  
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_bott_dollar_and_percent_are_added
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 4
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 5
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			if (deferrals.clickAddEditButton("After Tax Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify After-tax contribution page",
+						"After-tax Contributions page is not displayed", true);
+			//Step 10
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11
+			Web.waitForElement(deferrals, "Text Combined Rule Error Message");
+			String actualErrorMessage=deferrals.getWebElementText("Text Combined Rule Error Message");
+			String expectedErrorMsg=Stock.GetParameterValue("ExpectedErrorMsg");
+			if (Web.VerifyText(expectedErrorMsg, actualErrorMessage))
+				Reporter.logEvent(Status.PASS, "Verify Error Message for Combined Rule",
+						"Error Message for Combined Rule is Displayed and Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMessage, true);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Error Message for Combined Rule",
+						"Error Message for Maximum Combined Rule is Displayed and Not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMessage, true);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;

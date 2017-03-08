@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -201,6 +202,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//button[text()[normalize-space()='Delete'] and contains(@ng-click,'onConfirmDeleteButtonClick')]") private WebElement btnDeletePendingDeferral1;
 			@FindBy(xpath="//table[@class='table-details']/tbody//th[contains(text(),'Deleted Pending Transaction:')]") private WebElement txtPendingTrnsaction;
 			@FindBy(xpath="//table[@class='table-details']/tbody//tr[./th[contains(text(),'Deleted Pending Transaction:')]]//td//span[2]") private WebElement txtPendingDeferral;
+			@FindBy(xpath="//div[@class='modal-title' and contains(text(),'Do you want to save your changes?')]") private WebElement hdrSaveChangesModal;
+			@FindBy(xpath=".//button[contains(@ng-click,'DoNotSaveClick')]") private WebElement btnDontSave;
+			@FindBy(xpath=".//button[text()[normalize-space()='Stay']]") private WebElement btnStay;
+			@FindBy(xpath="//h1[text()='Designate beneficiary']") private WebElement lblDesignateBeneficiary;
+			@FindBy(xpath="//p[contains(@ng-repeat,'errorMsg')][1]") private WebElement txtCombinedRuleErrorMsg;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
@@ -426,6 +432,22 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			if(fieldName.trim().equalsIgnoreCase("Delete Pending Deferral")) {
 				return this.btnDeletePendingDeferral1;
 			}
+			if(fieldName.trim().equalsIgnoreCase("Modal Save Changes")) {
+				return this.hdrSaveChangesModal;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Button Stay")) {
+				return this.btnStay;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Button Dont Save")) {
+				return this.btnDontSave;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Label Beneficiary")) {
+				return this.lblDesignateBeneficiary;
+			}
+			
+			if(fieldName.trim().equalsIgnoreCase("Text Combined Rule Error Message")) {
+				return this.txtCombinedRuleErrorMsg;
+			}
 			return null;
 			}		
 		
@@ -493,7 +515,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Web.clickOnElement(btnDone);
 			}
 			Thread.sleep(5000);
-			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate, true);
+			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate+"%", true);
 			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
@@ -1527,11 +1549,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			this.lnkContributionRate.click();
 			
 			lib.Web.waitForElement(txtcontributionRateSlider);
-			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
-				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate_Dollar"))){
+				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate_Dollar"))+1);
 			}
 			else
-				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
+				contrbution_rate = Stock.GetParameterValue("Contribution Rate_Dollar");
 			
 			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
 			//keyBoard.sendKeys(Keys.TAB).perform();
@@ -1542,7 +1564,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Web.clickOnElement(btnDone);
 			}
 			Thread.sleep(5000);
-			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate, true);
+			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate+"$", true);
 			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
@@ -1694,23 +1716,23 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			WebElement txtPendingDeferral=Web.getDriver().findElement(By.xpath(txtpendingDeferral.replaceAll("DeferralType", deferralType)));
 			
-			if (Web.VerifyText(deferralType, txtPendingDeferral.getText().toString().trim(), true))
+			if (Web.VerifyPartialText(deferralType, txtPendingDeferral.getText().toString().trim(), true))
 				Reporter.logEvent(Status.PASS, "Verify 'Deferral Type' Is Displayed in Pending Change Modal",
-						"'Deferral Type' Is Displayed in Pending Change Modal\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+						"'Deferral Type' Is Displayed in Pending Change Modal\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify 'Deferral Type' Is Displayed in Pending Change Modal",
 						"'Deferral Type' Is Not Displayed in Pending Change Modal\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
 			
 			if (Web.isWebElementDisplayed(btnDeletePendingDeferral))
 				Reporter.logEvent(Status.PASS, "Verify 'Delete' Button  Is Displayed in Pending Change Modal",
-						"'Delete' Button  Is Displayed in Pending Change Modal", true);
+						"'Delete' Button  Is Displayed in Pending Change Modal", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify 'Delete' Button  Is Displayed in Pending Change Modal",
 						"'Delete' Button  Is Not Displayed in Pending Change Modal", true);
 			
 			if (Web.isWebElementDisplayed(btnClosePendingDeferral))
 				Reporter.logEvent(Status.PASS, "Verify 'Close' Button  Is Displayed in Pending Change Modal",
-						"'Close' Button  Is Displayed in Pending Change Modal", true);
+						"'Close' Button  Is Displayed in Pending Change Modal", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify 'Close' Button  Is Displayed in Pending Change Modal",
 						"'Close' Button  Is Not Displayed in Pending Change Modal", true);
@@ -1728,11 +1750,17 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public boolean verifyPendingDeferralLinkisDisplayed(String deferralType)
 		{
 			boolean isDisplayed=false;
-					WebElement lnkPendingDeferral=Web.getDriver().findElement(By.xpath(pendingDeferral.replaceAll("DeferralType", deferralType))) ;
-				if(Web.isWebElementDisplayed(lnkPendingDeferral, true))
+					try{
+						WebElement lnkPendingDeferral=Web.getDriver().findElement(By.xpath(pendingDeferral.replaceAll("DeferralType", deferralType))) ;
+					
+				if(Web.isWebElementDisplayed(lnkPendingDeferral))
 				{
 					isDisplayed=true;		
-		}
+				}
+					}catch(NoSuchElementException ne)
+					{
+						 isDisplayed=false;
+					}
 				return isDisplayed;
 		}
 		
@@ -1755,7 +1783,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			if (Web.VerifyText(deferralType, txtPendingDeferral.getText().toString().trim(), true))
 				Reporter.logEvent(Status.PASS, "Verify Deleted Pending 'Deferral Type' Is Displayed in Confirmation Page",
-						"Deleted Pending 'Deferral Type' Is Displayed in Confirmation Page\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
+						"Deleted Pending 'Deferral Type' Is Displayed in Confirmation Page\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify 'Deferral Type' Is Displayed in Confirmation Page",
 						"Deleted Pending 'Deferral Type' Is Not Displayed in Confirmation Page\nExpected:"+deferralType+"\nActual:"+ txtPendingDeferral.getText().toString().trim(), true);
@@ -1767,7 +1795,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		/**<pre> Method to Verify Pending Deferral is cancelled or not in DB.
 		 *.</pre>
 		 * 
-		 * String deferralType
+		 * String queryName
 		 * @throws SQLException 
 		 * 
 		 */
@@ -1803,6 +1831,63 @@ return statusCode.getString("status_code");
 				
 		}
 		
+		/**<pre> Method to Verify Do you want to save your changes modal is Displayed .
+		 *.</pre>
+		 * 
+		 * 	
+		 */
+		public void verifySaveYourChangesModal()
+		{
+			Web.waitForElement(hdrSaveChangesModal);
+			if (Web.isWebElementDisplayed(btnDontSave))
+				Reporter.logEvent(Status.PASS, "Verify 'Don't Save' Button Is Displayed",
+						"'Don't Save' Button Is Displayed", false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify'Don't Save' Button Is Displayed",
+						"'Don't Save' Button Is Not Displayed", true);
+			
+			if (Web.isWebElementDisplayed(btnStay))
+				Reporter.logEvent(Status.PASS, "Verify 'Stay' Button Is Displayed",
+						"'Stay' Button Is Displayed", false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify 'Stay' Button Is Displayed",
+						"'Stay' Button Is Not Displayed", true);
+													
+		}
+		
+		/**<pre> Method to Verify Combined Rule Error Message.
+		 * 
+		 *.</pre>
+		 * @param String[] deferralTypes(Ex:Before Tax, After Tax, Roth etc.)
+		 * @param String RuleType(Min/Max)
+		 * 	
+		 */
+		public void verifyCombinedRuleErrorMessage(String ruleType,String CombinedlimitValue,String...deferralTypes )
+		{
+			Web.waitForElement(txtCombinedRuleErrorMsg);
+			String expectedErrorMsg="";
+			String actualErrorMsg=txtCombinedRuleErrorMsg.getText().toString().trim();
+			if (ruleType.equalsIgnoreCase("Minimum")){
+			int i=deferralTypes.length;	
+			expectedErrorMsg="The sum of contributions for "+deferralTypes[0]+" and "+deferralTypes[1]+" must be no less than "+CombinedlimitValue;
+			if(Web.VerifyText(expectedErrorMsg, actualErrorMsg))
+				Reporter.logEvent(Status.PASS, "Verify Error Message for Minimum Combined Rule is Displayed",
+						"Error Message for Minimum Combined Rule is Displayed and Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Error Message for Minimum Combined Rule is Displayed",
+						"Error Message for Minimum Combined Rule is Displayed and Not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, true);
+			}
+			if (ruleType.equalsIgnoreCase("Maximum")){
+				expectedErrorMsg="The sum of contributions for "+deferralTypes[0]+" and "+deferralTypes[1]+" must be no more than "+CombinedlimitValue;
+			if(Web.VerifyText(expectedErrorMsg, actualErrorMsg,false))
+			Reporter.logEvent(Status.PASS, "Verify Error Message for Maximum Combined Rule is Displayed",
+					"Error Message for Maximum Combined Rule is Displayed and Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, false);
+					else
+			Reporter.logEvent(Status.FAIL, "Verify Error Message for Maximum Combined Rule is Displayed",
+					"Error Message for Maximum Combined Rule is Displayed and Not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, true);
+
+		}
+		}
 	}		
 	
 

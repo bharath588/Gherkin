@@ -7,10 +7,12 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.Status;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -254,6 +256,62 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 							+ linkName + "' not found", false);
 		}
 		}
+
+		return success;
+	}
+	
+	
+	/**
+	 * Method to click on the specified link in Left navigation bar
+	 * 
+	 * @param linkName
+	 *            - Link name as it is displayed on the page
+	 * @return boolean - <b>true</b> if link is  found .
+	 *         <b>false</b> otherwise.
+	 * @throws InterruptedException 
+	 */
+	public boolean isLeftNavigationLinkDisplayed(String linkName)  {
+		boolean success = false;
+		Actions mouse = new Actions(Web.getDriver());
+		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
+			strLinkText = "Account Information";
+		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
+			strLinkText = "Paycheck Contributions";
+		} else if (linkName.trim().equalsIgnoreCase("INVESTMENTS")) {
+			strLinkText = "Investments";
+		} else if (linkName.trim().equalsIgnoreCase("LOANS & WITHDRAWALS")) {
+			strLinkText = "Loans & Withdrawals";
+		} else if (linkName.trim().equalsIgnoreCase("PLAN INFORMATION")) {
+			strLinkText = "Plan Information";
+		} else if (linkName.trim().equalsIgnoreCase("PRIOR PLAN CONTRIBUTIONS")) {
+			strLinkText = "Prior plan contributions";
+		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
+			strLinkText = "Rate of return";
+		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
+			strLinkText=lnkRequestLoan;
+		} else if (linkName.trim().equalsIgnoreCase("BROKERAGE")) {
+			strLinkText=lnkBrokerage;
+		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
+			strLinkText = "Request a withdrawal";
+		} else if (linkName.trim().equalsIgnoreCase("STATEMENTS AND DOCUMENTS")) {
+			strLinkText = lnkStatementDocument;
+
+		} else {
+			strLinkText = linkName.trim();
+		}
+		lnkLeftNavItem = By.linkText(strLinkText);
+		try{
+		WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
+		
+        if(Web.isWebElementDisplayed(leftNavLink,true))
+			
+			success = true;
+		
+		}
+		catch(NoSuchElementException e){
+			success = false;
+		}
+		
 
 		return success;
 	}
