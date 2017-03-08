@@ -133,7 +133,10 @@ private LoadableComponent<?> parent;
 		}
 		if (fieldName.trim().equalsIgnoreCase("LOGOUT")) {
 			return this.lnkLogout;
-		}	
+		}
+		if (fieldName.trim().equalsIgnoreCase("LOGIN")) {
+			return this.btnLogin;
+		}
 		return null;
 	}
 	

@@ -1452,7 +1452,11 @@ public class prodvalidationtestcases {
 			Web.getDriver().close();
 			Web.getDriver().switchTo().window(parentWindow);
 			Web.getDriver().switchTo().defaultContent();
-			//Web.clickOnElement(brokerage, "LOGOUT");
+			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+				Web.clickOnElement(brokerage, "LOGOUT");
+				Web.waitForElement(brokerage, "LOGIN");
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

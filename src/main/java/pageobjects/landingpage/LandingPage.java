@@ -7,6 +7,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
@@ -145,6 +146,12 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		}
 		if (Web.isWebElementDisplayed(btnCloseTutorial)) {
 			this.btnCloseTutorial.click();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		if (Web.isWebElementDisplayed(lnkCancelGoalSetup)) {
