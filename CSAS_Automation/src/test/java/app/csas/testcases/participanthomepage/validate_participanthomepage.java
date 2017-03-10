@@ -7,7 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -40,7 +42,27 @@ public class validate_participanthomepage {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), testCase.getName());
+		.getName(), testCase.getName());
+	}
+	
+	
+	/**
+	 * <pre>Method to verify Employment status</pre>
+	 * @throws Exception 
+	 */
+	public void verifyEmploymentStatus(int itr,
+			Map<String, String> testdata) throws Exception{
+					// Step1:Launch and logged into CSAS application..
+					participantHomeObj = new ParticipantHome().get();
+					ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
+					
+					// Step2:Search with PPT ID..
+					participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
+
+					// Step3:Search for the HireDate & Termination Date based on plan
+					participantHomeObj.verify_Employment_Status(
+							Stock.GetParameterValue("ppt_id"),
+							Stock.GetParameterValue("emp_Status"));
 	}
 
 	/**
@@ -57,27 +79,45 @@ public class validate_participanthomepage {
 	 * @param <br>CSAS Credential,Participant ID,Employment Status</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void Validate_Employment_Status_As_Active_Or_Terminated(int itr,
+	public void Validate_Employment_Status_As_Active(int itr,
 			Map<String, String> testdata) {
-
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			
 			Reporter.logEvent(
 					Status.PASS,
 					"Check if Employment status for plan number : ",
 					"Employment status for plan number : ", true);
-			// Step1:Launch and logged into CSAS application..
-			participantHomeObj = new ParticipantHome().get();
-			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(Stock.GetParameterValue("ppt_id")) ;
-			
-			// Step2:Search with PPT ID..
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",Stock.GetParameterValue("ppt_id"),ga_id);
-
-			// Step3:Search for the HireDate & Termination Date based on plan
-			participantHomeObj.verify_Employment_Status(
-					Stock.GetParameterValue("ppt_id"),
-					Stock.GetParameterValue("emp_Status"));
+			verifyEmploymentStatus(itr,testdata) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Validate_Employment_Status_As_Terminated(int itr,
+			Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(
+					Status.PASS,
+					"Check if Employment status for plan number : ",
+					"Employment status for plan number : ", true);
+			verifyEmploymentStatus(itr,testdata) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -147,6 +187,28 @@ public class validate_participanthomepage {
 			}
 		}
 	}
+	
+	/**
+	 * <pre>Method to verify Order PIN</pre>
+	 * @throws Throwable 
+	 */
+	public void verifyOrderPIN(int itr,
+			Map<String, String> testdata) throws Throwable{
+					// Step1:Launch and logged into CSAS application..
+					participantHomeObj = new ParticipantHome().get();
+					// Step2:Querying for ID and GA_ID and performing search with ID  
+					if(Web.getDriver().getWindowHandles().size()==1){
+					//	sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
+					//			      GetParameterValue("web_reg_status"),"ID","GA_ID");
+						sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),true,"ID","GA_ID");
+						participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+								                                              sqlQueryRes.get("ID"),
+								                                              sqlQueryRes.get("GA_ID"));
+					}
+					// Step3: Verify Mail existing PIN and Order Temp PIN message
+					participantHomeObj.verifyPIN_ExistingOrTemp();
+	}
+	
 /**
  * -------------------------------------------------------------------
  * <pre>
@@ -160,26 +222,12 @@ public class validate_participanthomepage {
  * </pre>
  * @param <br>CSAS Credential,Participant ID</br>
  */	@Test(dataProvider = "setData")
-	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN(int itr,
+	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN_ForRegistered(int itr,
 			Map<String, String> testdata) throws Throwable {
 		
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-
-			// Step1:Launch and logged into CSAS application..
-			participantHomeObj = new ParticipantHome().get();
-			// Step2:Querying for ID and GA_ID and performing search with ID  
-			if(Web.getDriver().getWindowHandles().size()==1){
-			//	sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
-			//			      GetParameterValue("web_reg_status"),"ID","GA_ID");
-				sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),true,"ID","GA_ID");
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-						                                              sqlQueryRes.get("ID"),
-						                                              sqlQueryRes.get("GA_ID"));
-			}
-			// Step3: Verify Mail existing PIN and Order Temp PIN message
-			participantHomeObj.verifyPIN_ExistingOrTemp();
-			
+			verifyOrderPIN(itr, testdata);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -191,6 +239,33 @@ public class validate_participanthomepage {
             String errorMsg = ae.getMessage();
             Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
                             errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+ 
+ @Test(dataProvider = "setData")
+	public void Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN_ForNotRegistered(int itr,
+			Map<String, String> testdata) throws Throwable {
+		
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			verifyOrderPIN(itr, testdata);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+         ae.printStackTrace();
+         Globals.error = ae;
+         String errorMsg = ae.getMessage();
+         Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                         errorMsg, true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -250,6 +325,31 @@ public class validate_participanthomepage {
 		}
 	}
 }	
+	
+	
+	/**
+	 * <pre>Method to validate managed account status</pre>
+	 * @throws Exception 
+	 */
+	public void velidate_managedAccStatus(int itr,
+			Map<String, String> testdata) throws Exception{
+		ArrayList<String> pptID_ManagaedAccSts_List_DB;
+		// Step1:Launch and logged into CSAS application..
+					participantHomeObj = new ParticipantHome().get();
+					//Step2:Search with PPTID
+					pptID_ManagaedAccSts_List_DB = participantHomeObj.getPPTIDAndManagedAccSts(Stock.GetParameterValue("managed_acc_status"));
+					ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(pptID_ManagaedAccSts_List_DB.get(0)) ;
+					
+					participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",pptID_ManagaedAccSts_List_DB.get(0),ga_id);
+					// Step3: Verify Managed Account status
+					if (Stock.GetParameterValue("managed_acc_status").equalsIgnoreCase("Plan Not Offered")) {
+						participantHomeObj.verify_Managed_Account_Status(Stock
+								.GetParameterValue("managed_acc_status"),pptID_ManagaedAccSts_List_DB.get(0));
+					}else{
+					participantHomeObj.verify_Managed_Account_Status(Stock
+							.GetParameterValue("managed_acc_status"),pptID_ManagaedAccSts_List_DB.get(1));
+					}
+	}
 
 	/**
 	 * -------------------------------------------------------------------
@@ -265,27 +365,69 @@ public class validate_participanthomepage {
 	 * @param <br>CSAS Credential,Participant ID,Managed Acc Status</br>
 	 */
 	@Test(dataProvider = "setData")
-	public void Validate_Managed_Account_Status_On_PPT_Home_Page(int itr,
+	public void Validate_Managed_Account_Status_On_PPT_Home_Page_AsEnrolled(int itr,
 			Map<String, String> testdata) {
-		ArrayList<String> pptID_ManagaedAccSts_List_DB;
+		//ArrayList<String> pptID_ManagaedAccSts_List_DB;
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-
-			// Step1:Launch and logged into CSAS application..
-			participantHomeObj = new ParticipantHome().get();
-			//Step2:Search with PPTID
-			pptID_ManagaedAccSts_List_DB = participantHomeObj.getPPTIDAndManagedAccSts(Stock.GetParameterValue("managed_acc_status"));
-			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(pptID_ManagaedAccSts_List_DB.get(0)) ;
+			velidate_managedAccStatus(itr,testdata) ;
 			
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",pptID_ManagaedAccSts_List_DB.get(0),ga_id);
-			// Step3: Verify Managed Account status
-			if (Stock.GetParameterValue("managed_acc_status").equalsIgnoreCase("Plan Not Offered")) {
-				participantHomeObj.verify_Managed_Account_Status(Stock
-						.GetParameterValue("managed_acc_status"),pptID_ManagaedAccSts_List_DB.get(0));
-			}else{
-			participantHomeObj.verify_Managed_Account_Status(Stock
-					.GetParameterValue("managed_acc_status"),pptID_ManagaedAccSts_List_DB.get(1));
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Validate_Managed_Account_Status_On_PPT_Home_Page_AsNotOfferedByPlan(int itr,
+			Map<String, String> testdata) {
+		//ArrayList<String> pptID_ManagaedAccSts_List_DB;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			velidate_managedAccStatus(itr,testdata) ;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (Error ae) {
+            ae.printStackTrace();
+            Globals.error = ae;
+            String errorMsg = ae.getMessage();
+            Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+                            errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Validate_Managed_Account_Status_On_PPT_Home_Page_AsUnEnrolled(int itr,
+			Map<String, String> testdata) {
+		//ArrayList<String> pptID_ManagaedAccSts_List_DB;
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			velidate_managedAccStatus(itr,testdata) ;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -460,6 +602,7 @@ public class validate_participanthomepage {
 	public void cleanUpSession() {
 		Web.getDriver().close();
 		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
 	}
 
 }

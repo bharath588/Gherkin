@@ -332,6 +332,12 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(xpath = "//*[@id='oCMenu_324'][contains(text(),'Contribution Allocation Change')]")
 	private WebElement ContrAllChngSubLink;
 
+	@FindBy(xpath = "//td[contains(text(),'384171-09')]//..//form//input[@type = 'radio'][@checked ='checked']")
+	private WebElement SelectedPlan;
+	
+	
+	
+
 	@FindBy(css = "table[id='table_messageHandlerMessage']")
 	private LoadableComponent<?> parent;
 
@@ -1870,5 +1876,16 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			}
 		}
 		return participant_Info;
+	}
+	
+	/**
+	 * <pre>Method to select specific plan in ppt home page</pre>
+	 */
+	public void selectSpecificPlaINPPTHome(String planNum){
+		String planNameRadioBtn = "//td[contains(text(),'384171-09')]//..//form//input[@type = 'radio']" ;
+		Web.clickOnElement(Web.getDriver().findElement(By.xpath(planNameRadioBtn))) ;
+		if (Web.isWebElementDisplayed(SelectedPlan)) {
+			Reporter.logEvent(Status.INFO,"Select specific plan","Specific plan selected",true);
+		} 
 	}
 }

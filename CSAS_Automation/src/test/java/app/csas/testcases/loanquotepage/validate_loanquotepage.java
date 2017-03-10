@@ -6,10 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -40,7 +43,7 @@ public class validate_loanquotepage {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), testCase.getName());
+		.getName(), testCase.getName());
 	}
 
 	/**
@@ -186,5 +189,18 @@ public class validate_loanquotepage {
 			}
 		}
 	}
+	
+	/**
+	 * <pre>Method to cleanup all active session </pre>
+	 * 
+	 * @author rnjbdn
+	 */
+	@AfterSuite
+	public void cleanUpSession() {
+		Web.getDriver().close();
+		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
+	}
+
 
 }

@@ -23,7 +23,8 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
 	private WebElement MenuPPTInfo;
 
-	@FindBy(xpath = "//*[@id='oCMenu_25129'][contains(text() , 'Loan Info')]")
+	//@FindBy(xpath = "//*[@id='oCMenu_25129'][contains(text() , 'Loan Info')]")
+	@FindBy(xpath = "//*[@id='oCMenu_329'][contains(text() , 'Loan Info')]")
 	private WebElement MenuLoanInfo;
 
 	@FindBy(css = "td.pageMenuTitle")
@@ -263,89 +264,92 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 				throw new AssertionError("Non of the loan is in active state");
 			}
 			for (int i = 0; i < Loan_Status_List.size(); i++) {
-				isLoanStatusEleDisplayed = Web.isWebElementDisplayed(loanStsWE
-						.get(i));
+				if (Loan_Status_List.get(i).getText().equalsIgnoreCase("Active")) {
+					isLoanStatusEleDisplayed = Web.isWebElementDisplayed(loanStsWE
+							.get(i));
 
-				if (isLoanStatusEleDisplayed) {
-					loanSts_Val_On_Web = loanStsWE.get(i).getText();
-					switch (loanSts_var) {
-					case "LOAN_AMT":
-						// if (loanSts_Val_On_Web.contains(loanStsVal_From_DB))
-						// {
-						Number number = null;
-						number = NumberFormat.getCurrencyInstance(Locale.US)
-								.parse(loanSts_Val_On_Web);
-						if (number != null) {
-							isLoanStsEqual = true;
-						}
-						break;
-					case "REPAY_FREQ":
-						switch (loanStsVal_From_DB) {
-						case "W":
-							break;
-						case "M":
-							break;
-						case "BW":
-							if (loanSts_Val_On_Web.contains("Bi Weekly")) {
+					if (isLoanStatusEleDisplayed) {
+						loanSts_Val_On_Web = loanStsWE.get(i).getText();
+						switch (loanSts_var) {
+						case "LOAN_AMT":
+							// if (loanSts_Val_On_Web.contains(loanStsVal_From_DB))
+							// {
+							Number number = null;
+							number = NumberFormat.getCurrencyInstance(Locale.US)
+									.parse(loanSts_Val_On_Web);
+							if (number != null) {
 								isLoanStsEqual = true;
 							}
 							break;
-						case "SM":
+						case "REPAY_FREQ":
+							switch (loanStsVal_From_DB) {
+							case "W":
+								break;
+							case "M":
+								break;
+							case "BW":
+								if (loanSts_Val_On_Web.contains("Bi Weekly")) {
+									isLoanStsEqual = true;
+								}
+								break;
+							case "SM":
+								break;
+							}
 							break;
-						}
-						break;
-					case "REPAY_MTHD_CODE":
-						if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web,
-								loanStsVal_From_DB)) {
-							isLoanStsEqual = true;
-						}
-						break;
-					case "DEFAULT_IND":
-						switch (loanStsVal_From_DB) {
-						case "Y":
-							if (StringUtils.containsIgnoreCase(
-									loanSts_Val_On_Web, "YES")) {
+						case "REPAY_MTHD_CODE":
+							if (StringUtils.containsIgnoreCase(loanSts_Val_On_Web,
+									loanStsVal_From_DB)) {
 								isLoanStsEqual = true;
 							}
 							break;
-						case "N":
-							if (StringUtils.containsIgnoreCase(
-									loanSts_Val_On_Web, "NO")) {
-								isLoanStsEqual = true;
+						case "DEFAULT_IND":
+							switch (loanStsVal_From_DB) {
+							case "Y":
+								if (StringUtils.containsIgnoreCase(
+										loanSts_Val_On_Web, "YES")) {
+									isLoanStsEqual = true;
+								}
+								break;
+							case "N":
+								if (StringUtils.containsIgnoreCase(
+										loanSts_Val_On_Web, "NO")) {
+									isLoanStsEqual = true;
+								}
+								break;
 							}
 							break;
 						}
-						break;
-					}
-					if (isLoanStsEqual) {
-						Reporter.logEvent(
-								Status.PASS,
-								"Check if " + loanSts_var
-										+ " displayed properly for Loan status",
-								loanSts_var
-										+ " displayed successfully for the Loan status \n\n"
-										+ loanSts_var + " :"
-										+ loanSts_Val_On_Web, false);
+						if (isLoanStsEqual) {
+							Reporter.logEvent(
+									Status.PASS,
+									"Check if " + loanSts_var
+											+ " displayed properly for Loan status",
+									loanSts_var
+											+ " displayed successfully for the Loan status \n\n"
+											+ loanSts_var + " :"
+											+ loanSts_Val_On_Web, false);
+						} else {
+							Reporter.logEvent(
+									Status.FAIL,
+									"Check if " + loanSts_var
+											+ " displayed properly for Loan status",
+									loanSts_var
+											+ " displayed successfully for the Loan status \n\n"
+											+ loanSts_var + " :"
+											+ loanSts_Val_On_Web, false);
+						}
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Check if " + loanSts_var
 										+ " displayed properly for Loan status",
 								loanSts_var
-										+ " displayed successfully for the Loan status \n\n"
-										+ loanSts_var + " :"
-										+ loanSts_Val_On_Web, false);
+										+ " didn't displayed successfully for the Loan status \n\n",
+								true);
 					}
-				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Check if " + loanSts_var
-									+ " displayed properly for Loan status",
-							loanSts_var
-									+ " didn't displayed successfully for the Loan status \n\n",
-							true);
+					break ;
 				}
-			}
+			}	
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Check if Loan Status table displayed or not",
@@ -427,4 +431,6 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 			}
 		}
 	}
+	
+
 }

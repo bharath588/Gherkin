@@ -39,7 +39,8 @@ public class validate_moneytypebalance {
 
 	private void prepTestData(Method testCase) throws Exception {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
-				.getName(), testCase.getName());
+		.getName(), testCase.getName());
+
 	}
 	
 	/**
