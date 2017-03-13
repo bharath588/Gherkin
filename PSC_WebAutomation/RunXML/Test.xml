@@ -58,11 +58,20 @@
 			</class>-->
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<!--  <include name="TC017_Employment_Info_Verification">
+					 <!-- <include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="Employment_Info_Verification"></parameter>
-					</include>-->
+					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="Employee_Contact_Info_Verification"></parameter>
+					</include>
+					<include name="TC019_Verify_Beneficiary_Info">
+						<parameter name="ManualTCName" value="Verify_Beneficiary_Info" />
+					</include>
+					<include name="TC020_Recently_Viewed_Employee">
+						<parameter name="ManualTCName" value="Recently_Viewed_Employee" />
+					</include>-->
+					<include name="TC021_Salary_View_And_Update">
+						<parameter name="ManualTCName" value="Salary_View_And_Update" />
 					</include>
 				</methods>
 			</class>

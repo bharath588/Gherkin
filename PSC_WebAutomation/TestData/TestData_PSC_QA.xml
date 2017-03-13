@@ -1112,6 +1112,41 @@
 				<parameter name="expContactSelectLabelsWindow" value="Marital Status,Gender,Language Preference,State,Country" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Verify_Beneficiary_Info">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Recently_Viewed_Employee">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Salary_View_And_Update">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="ExpSalarySectionHeader" value="Effective date,Salary,Frequency" />
+				<parameter name="SalarySectionTitle" value="Compensation" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="employeeinfo">
 		
@@ -1308,5 +1343,27 @@ a.scnd_line_mailing, a.city, a.zip_code, a.state_code, a.country,
 i.home_phone_area_code, i.home_phone_nbr, i.work_phone_area_code, 
 i.work_phone_nbr from individual i, address a where a.ind_id = i.id and 
  i.ssn = ?" />
+ <parameter QueryName="getBeneficiaryEmployee" DB="ISISDB_QA"
+			Query="select * from 
+individual where id in (select pa_ind_id from 
+related_individual where pa_ga_id in (select default_ga_id from users where logon_id=?))" />
+	
+	<parameter QueryName="getMaritalStatus" DB="ISISDB_QA"
+	Query="select upper(rv_meaning) from isis_ref_values where rv_column = 'MARITAL_STATUS' and rv_table ='INTERLINK_DATA_EXCHANGE'and rv_low_value=?"/>
+	<parameter QueryName="getState" DB="ISISDB_QA"
+	Query="select * from isis_ref_values where rv_low_value=? and rv_domain='STATE'"/>
+	<parameter QueryName="getCountry" DB="ISISDB_QA"
+	Query="select * from isis_ref_values where rv_low_value=? and rv_domain='COUNTRY'"/>
+	<parameter QueryName="getBeneficiary" DB="ISISDB_QA"
+	Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,mailing_name_1,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1"/>
+	<parameter QueryName="getIncomeDataEmployee" DB="ISISDB_QA"
+	Query="select ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data where
+	sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from part_agrmt where ga_id in (select distinct GA_ID from access_customization_view where  
+GA_ID in (select DISTINCT GA_ID from user_data_access where 
+user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'))) order by ind_id "/>
+<parameter QueryName="getIndividual" DB="ISISDB_QA"
+	Query="select ssn from individual where id =?"/>
+	<parameter QueryName="getSalary" DB="ISISDB_QA"
+	Query="select sal_amt from income_data where ind_id =?"/>
 	</Module>
 </TestData>

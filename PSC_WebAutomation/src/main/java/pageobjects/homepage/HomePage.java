@@ -470,6 +470,25 @@ public class HomePage extends LoadableComponent<HomePage>{
 	return planTextDisplayed;
 	}	
 	
+	public boolean searchPlanWithIdOrName(String iDOrName) throws Exception
+	{
+		boolean planTextDisplayed = false;
+		Web.setTextToTextBox(searchPlansInput,iDOrName);
+		Web.clickOnElement(searchPlanButton);
+		Web.isWebElementDisplayed(moreButton, true);
+		if(iDOrName!=null)
+		if(planHeaderInfo.getText().contains(iDOrName))
+			planTextDisplayed = true;
+		else
+			planTextDisplayed =false;
+		return planTextDisplayed;
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
 	 * @throws Exception 
