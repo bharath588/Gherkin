@@ -207,9 +207,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath=".//button[text()[normalize-space()='Stay']]") private WebElement btnStay;
 			@FindBy(xpath="//h1[text()='Designate beneficiary']") private WebElement lblDesignateBeneficiary;
 			@FindBy(xpath="//p[contains(@ng-repeat,'errorMsg')][1]") private WebElement txtCombinedRuleErrorMsg;
+			@FindBy(xpath="//div[@class='contribution-amount']//li") private WebElement txtCompanyMatchRuleDesc;
+			@FindBy(xpath="//div[contains(@ng-if,'isPlanInSpecialCatchupPeriod')]//p") private WebElement txtCompanyMatchErrorMsg;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
+			String deferralTiredRule="//div[contains(@class,'deferral-codes')]//h2[@class='DeferralType']//a";
 			
 			Actions mouse=new Actions(Web.getDriver());
 		/**
@@ -1887,6 +1890,116 @@ return statusCode.getString("status_code");
 					"Error Message for Maximum Combined Rule is Displayed and Not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, true);
 
 		}
+		}
+		
+		/**<pre> Method to Verify Tired Error Message.
+		 * 
+		 *.</pre>
+		 * @param String[] deferralTypes(Ex:STANDARD, AFTERTX, CATCHUP etc.)
+		 * @param String tieredLimitValue
+		 * @param String requiredDeferral
+		 * @param String contributingDeferral
+		 * 	
+		 */
+		public void verifyTieredRuleErrorMessage(String tieredLimitValue,String deferralType,String requiredDeferral , String contributingDeferral )
+		{
+			WebElement lnkdeferralTiredRule=Web.getDriver().findElement(By.xpath(deferralTiredRule.replaceAll("DeferralType", deferralType)));
+			Web.waitForElement(lnkdeferralTiredRule);
+			String expectedErrorMsg="";
+			String actualErrorMsg=lnkdeferralTiredRule.getAttribute("uib-tooltip-html").toString().split("'<ul class=\"margin-left-100 margin-top\"><li class=\"margin-bottom\">")[1].split("</li></ul>")[0];
+			
+			//String actualErrorMsg=lnkdeferralTiredRule.getText().toString().trim();
+			
+			expectedErrorMsg="You must contribute "+tieredLimitValue+" in "+requiredDeferral+" prior to contributing to "+contributingDeferral;
+			if(Web.VerifyText(expectedErrorMsg, actualErrorMsg))
+				Reporter.logEvent(Status.PASS, "Verify Error Message for Minimum Tiered Rule is Displayed",
+						"Error Message for Minimum Tiered Rule is Displayed and Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Error Message for Minimum Tiered Rule is Displayed",
+						"Error Message for Minimum Tiered Rule is Displayed and Not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+actualErrorMsg, true);
+			
+
+	
+		}
+		
+		/**<pre> Method to Verify Company Match Rule Description .
+		 *.</pre>
+		 * @throws Exception 
+		 * 
+		 * 	
+		 */
+		public String getCompanyMatchRuleDescription(String minimumYrsOfService) throws Exception
+		{
+			ResultSet companyMatchRule = null;
+			Web.waitForElement(txtCompanyMatchRuleDesc);
+			String[] sqlQuery=Stock.getTestQuery(Stock.GetParameterValue("QueryGetRuleDescription"));
+			companyMatchRule=DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("PlanID"),minimumYrsOfService);
+
+		if (DB.getRecordSetCount(companyMatchRule) > 0) {
+			try {
+				companyMatchRule.first();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Participant DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+		}
+	
+
+return companyMatchRule.getString("rule_desc");
+			
+													
+		}
+		
+		/**<pre> Method to Verify Verify Company Match is Displayed in Select Another Contribution .
+		 *.</pre>
+		 * 
+		 * 	
+		 */
+		public boolean verifyCompanyMatchDisplayed()
+		{	
+			boolean isDispalyed=false;
+		try{
+		    if(txtCompanyMatch.isDisplayed())
+			isDispalyed=true;
+		}
+		catch(NoSuchElementException e){
+			isDispalyed=false;
+		}
+		return isDispalyed;
+		}
+		
+		
+		/**<pre> Method to Verify 457 IRS Plan Catch Up Period Error Message.
+		 * 
+		 *.</pre>
+		 * @param String errorMessage
+		 * 	
+		 */
+		public void verifyCatchUpPeriodErrorMessage(String errorMessage)
+		{
+			Web.waitForElement(txtCompanyMatchErrorMsg);
+			
+			String actualErrorMsg=txtCompanyMatchErrorMsg.getText().toString().trim();
+			try{
+			if(txtCompanyMatchErrorMsg.isDisplayed()){
+			if(Web.VerifyText(errorMessage, actualErrorMsg))
+				Reporter.logEvent(Status.PASS, "Verify Error Message for457 IRS Plan Catch Up Period is Displayed",
+						"Error Message for457 IRS Plan Catch Up Period is Displayed and Matching\nExpected:"+errorMessage+"\nActual:"+actualErrorMsg, false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Error Message for457 IRS Plan Catch Up Period is Displayed",
+						"Error Message for457 IRS Plan Catch Up Period is Not Matching \nExpected:"+errorMessage+"\nActual:"+actualErrorMsg, true);
+			
+		}
+			}
+			catch(NoSuchElementException e){
+				Reporter.logEvent(Status.FAIL, "Verify Error Message for457 IRS Plan Catch Up Period is Displayed",
+						"Error Message for457 IRS Plan Catch Up Period is Not Displayed \nExpected:"+errorMessage+"\nActual:"+actualErrorMsg, true);
+			}
+		
 		}
 	}		
 	

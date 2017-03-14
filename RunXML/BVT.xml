@@ -9,10 +9,11 @@
           	<class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
             		 
-             		<include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+             		 <include name="Deferral_021M_Company_Match_RULEA">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021M_Company_Match_RULEA">
                     </parameter>
                     </include> 
+                    
                    </methods>
 			</class>
 		</classes>

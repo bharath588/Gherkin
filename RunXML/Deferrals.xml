@@ -307,9 +307,9 @@
                     <include name="Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
                     </parameter>
-                    </include>
-                    
-                    <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    </include>-->
+                  <!-- Combined Rules-->  
+                   <!--  <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     </parameter>
                     </include>
@@ -323,6 +323,18 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
                     </parameter>
                     </include>
+                    
+                     <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    </parameter>
+                    </include>
+                   
+                   
+                    <include name="Deferral_021M_Company_Match_RULEA">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021M_Company_Match_RULEA">
+                    </parameter>
+                    </include> 
+                    
                     -->
                 </methods>
             </class>

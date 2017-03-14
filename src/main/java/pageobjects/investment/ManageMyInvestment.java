@@ -896,14 +896,15 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Web.clickOnElement(btnContinue1);
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
+				Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				else{
+					Web.waitForElement(iframeLegacyFeature);
+				Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				}
 		}
 		
-		if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
-			Web.getDriver().switchTo().frame(iframeLegacyFeature);
-			else{
-				Web.waitForElement(iframeLegacyFeature);
-			Web.getDriver().switchTo().frame(iframeLegacyFeature);
-			}
+		
 		WebElement tab = this.getWebElement(tabName);
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());

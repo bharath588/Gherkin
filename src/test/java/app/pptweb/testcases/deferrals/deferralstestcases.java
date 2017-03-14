@@ -1,6 +1,7 @@
 package app.pptweb.testcases.deferrals;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -15,6 +16,7 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -4359,5 +4361,820 @@ public class deferralstestcases {
 			}
 		}
 	}
+	
+	/**
+	 * The following script Standard Deferral for Tired Rules When Minimum Not Met
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_020M_Tiered_rules_error_message_when_minimum_not_met(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 4
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 5
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step 6
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step  7 & 8
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 9
+			
+			deferrals.verifyTieredRuleErrorMessage( Stock.GetParameterValue("tieredLimitValue%"), 
+					Stock.GetParameterValue("contributingDeferralType"),  
+					Stock.GetParameterValue("requiredDeferral"), 
+					Stock.GetParameterValue("contributingDeferral"));
+			//Step 10
+			
+			if (deferrals.clickAddEditButton("Standard Edit"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			
+			deferrals.verifyTieredRuleErrorMessage( Stock.GetParameterValue("tieredLimitValue$"), 
+					Stock.GetParameterValue("contributingDeferralType"),  
+					Stock.GetParameterValue("requiredDeferral"), 
+					Stock.GetParameterValue("contributingDeferral"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * PreCondition-Need Participant Enrolled Under a Plan which is tied with RULEA
+	 * The following scriptStandard Deferral and Verify Company Match For RULEA
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_021M_Company Match RULEA
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_021M_Company_Match_RULEA(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, -1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+		
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 5
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 6
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step 7
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"TEXT COMPANY MATCH", true))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is not displayed", true);
+			
+			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
+			
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+
+			//Step 8
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+		//Step 9
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			if(!deferrals.verifyCompanyMatchDisplayed())
+				
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Not Displayed",
+						"COMPANY MATCH is Not displayed", true);
+			}
+			catch(NoSuchElementException e){
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Not Displayed",
+						"COMPANY MATCH is displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * PreCondition-Need Participant Enrolled Under a Plan which is tied with RULE4
+	 * The following scriptStandard Deferral and Verify Company Match For RULE4
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_022M_Company Match RULE4
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_022M_Company_Match_RULE4(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, -1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+		
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 5
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 6
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step 7
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"TEXT COMPANY MATCH", true))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is not displayed", true);
+			
+			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
+			
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+
+			//Step 8
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+		//Step 9
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			if(!deferrals.verifyCompanyMatchDisplayed())
+			
+			Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is Not displayed", true);
+		}
+		catch(NoSuchElementException e){
+			Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * PreCondition-Need Participant Enrolled Under a Plan which is tied with RULE13
+	 * The following scriptStandard Deferral and Verify Company Match For RULE13
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_023M_Company_Match_RULE13
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_023M_Company_Match_RULE13(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, -1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+		
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 5
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 6
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step 7
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"TEXT COMPANY MATCH", true))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is not displayed", true);
+			
+			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
+			
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+
+			//Step 8
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+		//Step 9
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			if(!deferrals.verifyCompanyMatchDisplayed())
+			
+			Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is Not displayed", true);
+		}
+		catch(NoSuchElementException e){
+			Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * PreCondition-Need Participant Enrolled Under a Plan which is tied with RULE15
+	 * The following scriptStandard Deferral and Verify Company Match For RULE15
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral__024M_Company_Match_RULE15
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_024M_Company_Match_RULE15(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, -1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+		
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 5
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 6
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step 7
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"TEXT COMPANY MATCH", true))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is not displayed", true);
+			
+			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
+			
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+
+			//Step 8
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+		//Step 9
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			if(!deferrals.verifyCompanyMatchDisplayed())
+			
+			Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is Not displayed", true);
+		}
+		catch(NoSuchElementException e){
+			Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * PreCondition-Need Participant Enrolled Under a Plan which is tied with Non Supported Rules
+	 * The following scriptStandard Deferral and Verify Company Match For Non Supported Rules
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_025M_Company_Match_for_non_supported_rules
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_025M_Company_Match_for_non_supported_rules(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, -1);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+		
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 5
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 6
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			deferrals.click_Select_Your_Contribution_Rate();
+			//Step 7
+			
+			if (Web.isWebElementDisplayed(deferrals,
+					"TEXT COMPANY MATCH", true))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Displayed",
+						"COMPANY MATCH is not displayed", true);
+			
+			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
+			
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+
+			//Step 8
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+		//Step 9
+			
+			deferrals.select_Another_Contribution_Rate_Dollar();
+			
+			if(!deferrals.verifyCompanyMatchDisplayed())
+			
+			Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is Not displayed", true);
+		}
+		catch(NoSuchElementException e){
+			Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH is Not Displayed",
+					"COMPANY MATCH is displayed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * The following script Standard Deferral and confirms it for 457 Plan
+	 * Need Participant enrolled under 457 Plan
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_034_457_Plan_BEFORE_Select_Another_contribution_rate
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_034_457_Plan_BEFORE_Select_Another_contribution_rate(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+						
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 2
+			if (deferrals.clickAddEditButton("Standard Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Standard contribution page",
+						"Standard Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Standard contribution page",
+						"Standard Contributions page is not displayed", true);
+			//Step  4
+			deferrals.verifyPayPeriodAmountIsMatching();
+			//Step 5
+			deferrals.verifyAnnualCompensationDisplayed();
+			
+			//Step6 Verify Company Match is Displayed as per Rules
+			
+			// TODO 
+			
+			//Step 7
+			deferrals.verifyCompanyMatchChangesDynamically();
+			
+			
+			//Step 3 & 8
+			deferrals.click_Select_Your_Contribution_Rate();
+			
+			//Step 9
+			
+			deferrals.select_ContributionType(lib.Stock
+					.GetParameterValue("Contribution_type"));
+			//Step 10
+			Web.clickOnElement(deferrals, "Continue button");
+			
+			//Step 11 & 12
+						
+			deferrals.myContributions_Confirmation_Page();
+			Web.clickOnElement(deferrals, "MyContribution Button");
+		
+			//Step 13
+			ResultSet effectivDate;
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.MONTH, 1);
+			calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+			String expectedDate=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+expectedDate);
+			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryGetEffectiveDate"));
+		
+			effectivDate=DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("username").substring(0, 9));
+			
+			if (DB.getRecordSetCount(effectivDate) > 0) {
+				try {
+					effectivDate.first();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					Reporter.logEvent(
+							Status.WARNING,
+							"Query Participant DB:" + sqlQuery[0],
+							"The Query did not return any results. Please check participant test data as the appropriate data base.",
+							false);
+				}
+			}
+		
+			String actualDate=effectivDate.getString("effdate");
+			
+			if (expectedDate.equalsIgnoreCase(actualDate))
+				Reporter.logEvent(Status.PASS, "Verify Effective Date in Elective Deferral Table in DB",
+						"Effective Date is Set to First day Of Next Month\nExpected:"+expectedDate+"\nActual:"+actualDate, false);
+			else
+				Reporter.logEvent(Status.FAIL,"Verify Effective Date in Elective Deferral Table in DB",
+						"Effective Date is Not Set to First day Of Next Month\nExpected:"+expectedDate+"\nActual:"+actualDate, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	/**
+	 * The following script Standard Deferral and Verify 457 IRS Catchup Period Error Message
+	 * Need Participant enrolled under 457 Plan and under Catch up Period
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_033_457_Plan_IRS_catchup_period_message
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_033_457_Plan_IRS_catchup_period_message(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+						
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 2
+			deferrals.verifyCatchUpPeriodErrorMessage(Stock.GetParameterValue("expectedErrorMsg"));
+			if(!Web.isWebElementDisplayed(deferrals, "Standard Add"))
+			
+				Reporter.logEvent(Status.PASS,
+						"Verify Changes to Contributions are not allowed",
+						"Changes to the Contribution are disabled", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Changes to Contributions are not allowed",
+						"Changes to the Contribution are allowed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 }
 

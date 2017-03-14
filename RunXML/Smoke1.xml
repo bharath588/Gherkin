@@ -10,17 +10,8 @@
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 					
-					<include name="Brokerage_validations" >
-					<parameter name="ManualTCName" value="Brokerage_validations">
-                    </parameter>
-                    </include>
-				
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link">
-					<parameter name="ManualTCName" value="Request_Loan_Flow">
-                    </parameter>
-                    </include> 
-                    <include name="Balance_validations">
-					<parameter name="ManualTCName" value="Balance_validations">
+				<include name="FundToFundTransfer">
+					<parameter name="ManualTCName" value="FundToFundTransfer">
                     </parameter>
                     </include>
 				
