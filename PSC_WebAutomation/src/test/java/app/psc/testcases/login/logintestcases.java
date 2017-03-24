@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 
 import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
-//import pageobjects.jumppage.JumpPage;
+import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.Globals;
@@ -75,7 +75,7 @@ public class logintestcases {
 					"Validate the internal employee vs External client Login scenario", false);
 			// Step-1 : Login with internal/external employee credentials
 			login = new LoginPage().get();
-		
+
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			Thread.sleep(10000);
 			// Step-2 : Check if the user is on the login page
@@ -140,7 +140,7 @@ public class logintestcases {
 
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginTrueURL"));
 			isUsernameFieldDisplayed = Web.isWebElementDisplayed(login, "FORCELOGIN USERNAME");
-			
+
 			if(isUsernameFieldDisplayed){
 				Reporter.logEvent(Status.PASS, "Check if user name field displayed",
 						"Username field displayed successfully", false);
@@ -155,7 +155,7 @@ public class logintestcases {
 
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginFalseURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
-			
+
 			if(isGWRSLogoDisplayed){
 				Reporter.logEvent(Status.PASS, "Check if GWRS Logo displayed",
 						"GWRS Logo is displayed as expected", false);
@@ -233,9 +233,9 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the pre-login error messages", false);
 			login = new LoginPage().get();
-			
-		login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
-		Thread.sleep(4000);
+
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			Thread.sleep(4000);
 			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -329,11 +329,11 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the post login Header and footer links", false);
 			login = new LoginPage().get();
-			
+
 			List<String> preLoginFooterList = login.getPreLoginFooterLinkList();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
@@ -394,10 +394,10 @@ public class logintestcases {
 			catch(Exception e1)
 			{
 				e1.printStackTrace();
-				}
+			}
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Sitenavigation_01_TC001_Menutabs</u></b>
@@ -418,7 +418,7 @@ public class logintestcases {
 			login = new LoginPage().get();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
@@ -442,7 +442,7 @@ public class logintestcases {
 			}
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Login_01_TC004_Terminate User</u></b>
@@ -460,7 +460,7 @@ public class logintestcases {
 	 * 
 	 * @author rvpndy (08-FEB-2017)
 	 */
-	
+
 	@Test(dataProvider = "setData")
 	public void TC006_01_Verify_Error_Message_For_Terminated_User(int itr, Map<String, String> testData)
 	{
@@ -518,8 +518,8 @@ public class logintestcases {
 		}
 	}
 
-		
-	
+
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Sitenavigation_SubMenutabs</u></b>
@@ -540,13 +540,13 @@ public class logintestcases {
 			login = new LoginPage().get();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
 			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
 			Web.waitForPageToLoad(Web.getDriver());
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -582,10 +582,10 @@ public class logintestcases {
 	 * <b>APPLICATION</b> Application name in menu activity table.
 	 * @author rvpndy (21-FEB-2017)
 	 */
-	
+
 	@Test(dataProvider = "setData")
 	public void TC007_01_display_correct_date_and_time_of_my_last_login(int itr,Map<String, String> testData){
-		
+
 		try
 		{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -637,7 +637,7 @@ public class logintestcases {
 			}
 		}
 	}
-	
+
 
 	/**
 	 * <pre>
@@ -666,8 +666,8 @@ public class logintestcases {
 			home.isJumpPageDisplayed();
 			home.jumpPageVerificationWhenPlanAccessInSingleSite();
 			Web.waitForPageToLoad(Web.getDriver());
-			
-			
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -787,7 +787,7 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase description", 
 					"Verify clicking on To do(from all options) redirects users to same page", false);
 			HomePage homePage = new HomePage();
-					new HomePage(new LoginPage(),false,new String[]{
+			new HomePage(new LoginPage(),false,new String[]{
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			if(homePage.verifyToDoSiteNavigation(Stock.GetParameterValue("BUTTONNAME")))
@@ -824,7 +824,7 @@ public class logintestcases {
 			}
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>UI_Validations_On_JumpPage</u></b>
@@ -844,12 +844,12 @@ public class logintestcases {
 					"To verify UI of JumpPage(Links,SearchBox,Messages)", false);
 			/*JumpPage jp = new JumpPage(new UserVerificationPage(), true, new String[]
 			{Stock.GetParameterValue("UserVeriEmail"),Stock.GetParameterValue("UserSecondaryAns")}).get();*/
-			//JumpPage jp = new JumpPage(new LoginPage(), false, new String[] {
-				//Stock.GetParameterValue("username"),
-				//Stock.GetParameterValue("password") }).get();
-			//Web.waitForPageToLoad(Web.getDriver());
-			//jp.jumpPageUIValidation();
-			//jp.jumpPageSearchPlanBoxValidation();
+			JumpPage jp = new JumpPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			Web.waitForPageToLoad(Web.getDriver());
+			jp.jumpPageUIValidation();
+			jp.jumpPageSearchPlanBoxValidation();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -868,7 +868,7 @@ public class logintestcases {
 			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
 	public void TC010_01_Verify_Restyled_Button_Home_Page_For_Sentence_Case(int itr, Map<String,String> testData)
 	{
@@ -878,7 +878,7 @@ public class logintestcases {
 					"Verify restyled buttons on home page for sentence case", false);
 			HomePage homePage = new HomePage();
 			new HomePage(new LoginPage(),false,new String[]{
-			Stock.GetParameterValue("username"),Stock.GetParameterValue("password")
+				Stock.GetParameterValue("username"),Stock.GetParameterValue("password")
 			}).get();
 			if(homePage.verifyButtonTextForSentenceCase())
 			{
@@ -938,7 +938,7 @@ public class logintestcases {
 			Web.getDriver().switchTo().frame("framea");
 			home.isPlanListDisplayed();
 			Web.getDriver().switchTo().defaultContent();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -957,15 +957,15 @@ public class logintestcases {
 			}
 		}
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	/*@Test(dataProvider = "setData")
 	public void */
 	@AfterSuite
