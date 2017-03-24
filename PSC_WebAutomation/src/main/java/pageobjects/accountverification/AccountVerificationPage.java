@@ -657,5 +657,24 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));
 		}		
-	}	
+	}
+	
+	public void addTransactionCode(String[] addTxnCodeQuery, String txnCode,String userName)
+	{
+		try {
+			DB.executeUpdate(addTxnCodeQuery[0], addTxnCodeQuery[1], txnCode,"K_"+userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void deleteTransactionCode(String[] deleteTxnCodeQuery, String txnCode,String userName)
+	{
+		try {
+			DB.executeUpdate(deleteTxnCodeQuery[0], deleteTxnCodeQuery[1], txnCode,"K_"+userName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
