@@ -11,8 +11,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageobjects.employeesearch.EmployeeSearch;
+import pageobjects.homepage.HomePage;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 import core.framework.Globals;
@@ -24,7 +27,8 @@ public class employeesearchtestcases {
 	EmployeeSearch employeesearch;
 	String actualErrorMessage = "";
 	ResultSet resultset;
-
+	HomePage homePage;
+	
 	@BeforeClass
 	public void ReportInit() {
 		Reporter.initializeModule(this.getClass().getName());
@@ -575,8 +579,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"This testcase validates the search results for Name Doesn't contain duplicate values", false);
 			employeesearch = new EmployeeSearch().get();
-			employeesearch
-					.searchEmployeeByName(Stock.GetParameterValue("Name"));
+			employeesearch.searchEmployeeByName(Stock.GetParameterValue("Name"));
 			Thread.sleep(3000);
 			if (employeesearch.checkIfduplicateExists()) {
 				Reporter.logEvent(Status.PASS,
@@ -837,6 +840,443 @@ public class employeesearchtestcases {
 			}
 		}
 	}
+	
+	
+	
+	/**
+	 * <pre>This testcase validates general employment informations</pre>
+	 * @param itr
+	 * @param testdata
+	 */
+		@Test(dataProvider = "setData")
+		public void TC017_Employment_Info_Verification(int itr,
+				Map<String, String> testdata) {		
+			try {
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+				Reporter.logEvent(Status.INFO, "Testcase Description",
+						"This testcase validates general employment informations", false);
+				employeesearch = new EmployeeSearch().get();	
+				employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());//need to fetch employee from database
+				employeesearch.verifyEmploymentInfoANDLabels();
+				employeesearch.updateEmploymentInfoModalWindow();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				Globals.exception = e;
+				String exceptionMessage = e.getMessage();
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+						exceptionMessage, true);
+			} catch (Error ae) {
+				ae.printStackTrace();
+				Globals.error = ae;
+				String errorMsg = ae.getMessage();
+				Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+						errorMsg, true);
+			} finally {
+				try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+	
+		
+		/**
+		 * <pre>This testcase validates general contact informations</pre>
+		 * @param itr
+		 * @param testdata
+		 */
+			@Test(dataProvider = "setData")
+			public void TC018_Employee_Contact_Info_Verification(int itr,
+					Map<String, String> testdata) {		
+				try {
+					Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+					Reporter.logEvent(Status.INFO, "Testcase Description",
+							"This testcase validates general employment informations", false);
+					employeesearch = new EmployeeSearch().get();	
+					employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
+					employeesearch.contactInFoSectionValidation();
+					employeesearch.contactInFoLabelValidation();
+					employeesearch.contactInFoValidationModalWindow();
+					employeesearch.validateContactInfoWithDB();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					Globals.exception = e;
+					String exceptionMessage = e.getMessage();
+					Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+							exceptionMessage, true);
+				} catch (Error ae) {
+					ae.printStackTrace();
+					Globals.error = ae;
+					String errorMsg = ae.getMessage();
+					Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+							errorMsg, true);
+				} finally {
+					try {
+						Reporter.finalizeTCReport();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+			
+			/**
+			 * <pre>This testcase validates beneficiary details with DB</pre>
+			 * @param itr
+			 * @param testdata
+			 */
+				@Test(dataProvider = "setData")
+				public void TC019_Verify_Beneficiary_Info(int itr,
+						Map<String, String> testdata) {		
+					try {
+						Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+						Reporter.logEvent(Status.INFO, "Testcase Description",
+								"This testcase validates general employment informations", false);
+						employeesearch = new EmployeeSearch().get();
+						employeesearch.str1 = employeesearch.getBeneficiaryEmployeeSSN();
+						employeesearch.searchEmployeeBySSN(employeesearch.str1[0]);
+						employeesearch.navigateToEmployeeOverViewPage();
+						employeesearch.navigateBeneficiaryPage();
+						employeesearch.validateBeneficiaryWithDB();
+					} catch (Exception e) {
+						e.printStackTrace();
+						Globals.exception = e;
+						String exceptionMessage = e.getMessage();
+						Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+								exceptionMessage, true);
+					} catch (Error ae) {
+						ae.printStackTrace();
+						Globals.error = ae;
+						String errorMsg = ae.getMessage();
+						Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+								errorMsg, true);
+					} finally {
+						try {
+							Reporter.finalizeTCReport();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				
+				
+				/**
+				 * <pre>This testcase validates beneficiary details with DB</pre>
+				 * @param itr
+				 * @param testdata
+				 */
+					@Test(dataProvider = "setData")
+					public void TC020_Recently_Viewed_Employee(int itr,
+							Map<String, String> testdata) {		
+						try {
+							Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+							Reporter.logEvent(Status.INFO, "Testcase Description",
+									"This testcase validates general employment informations", false);
+							employeesearch = new EmployeeSearch().get();
+							employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
+							employeesearch.navigateToEmployeeOverViewPage();
+							employeesearch.Verify_Recently_Viewed_Employee();
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+							Globals.exception = e;
+							String exceptionMessage = e.getMessage();
+							Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+									exceptionMessage, true);
+						} catch (Error ae) {
+							ae.printStackTrace();
+							Globals.error = ae;
+							String errorMsg = ae.getMessage();
+							Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+									errorMsg, true);
+						} finally {
+							try {
+								Reporter.finalizeTCReport();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}
+					}
+					
+					
+					/**
+					 * <pre>This testcase to update salary details and validate with DB</pre>
+					 * @param itr
+					 * @param testdata
+					 */
+						@Test(dataProvider = "setData")
+						public void TC021_Salary_View_And_Update(int itr,
+								Map<String, String> testdata) {		
+							try {
+								Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+								Reporter.logEvent(Status.INFO, "Testcase Description",
+										"This testcase validates general employment informations", false);
+								employeesearch = new EmployeeSearch().get();
+								homePage = new HomePage();
+								homePage.searchPlanWithIdOrName(employeesearch.getSSNAndGaIdForSalaryEmp()[0]);
+								employeesearch.navigateToEmployeeTab();
+								employeesearch.searchEmployeeBySSN(employeesearch.individual[2]);
+								employeesearch.navigateToEmployeeOverViewPage();
+								employeesearch.navigateToEmpDetailPage();
+								employeesearch.verifySalarySection();
+								employeesearch.updateSalaryinfo();
+							} catch (Exception e) {
+								e.printStackTrace();
+								Globals.exception = e;
+								String exceptionMessage = e.getMessage();
+								Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+										exceptionMessage, true);
+							} catch (Error ae) {
+								ae.printStackTrace();
+								Globals.error = ae;
+								String errorMsg = ae.getMessage();
+								Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+										errorMsg, true);
+							} finally {
+								try {
+									Reporter.finalizeTCReport();
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+							}
+						}
+	
+						
+
+						
+						/**
+						 * <pre>This testcase to verify Paycheck contribution section of an employee</pre>
+						 * @param itr
+						 * @param testdata
+						 */
+							@Test(dataProvider = "setData")
+							public void TC022_Paycheck_contribution_View(int itr,
+									Map<String, String> testdata) {		
+								try {
+									Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+									Reporter.logEvent(Status.INFO, "Testcase Description",
+											"This testcase validates general employment informations", false);
+									employeesearch = new EmployeeSearch().get();
+									employeesearch.searchEmployeeBySSNAllPlans(employeesearch.ssnOfPayCheckContribution());
+									employeesearch.navigateToEmployeeOverViewPage();
+									employeesearch.navigateToEmpDetailPage();
+									employeesearch.verify_Paycheck_ContributionSection();
+								} catch (Exception e) {
+									e.printStackTrace();
+									Globals.exception = e;
+									String exceptionMessage = e.getMessage();
+									Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+											exceptionMessage, true);
+								} catch (Error ae) {
+									ae.printStackTrace();
+									Globals.error = ae;
+									String errorMsg = ae.getMessage();
+									Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+											errorMsg, true);
+								} finally {
+									try {
+										Reporter.finalizeTCReport();
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}
+								}
+							}
+	
+							
+
+							/**
+							 * <pre>This testcase to verify Paycheck contribution section of an employee</pre>
+							 * @param itr
+							 * @param testdata
+							 */
+								@Test(dataProvider = "setData")
+								public void TC023_EnrolmmentAndEligibility(int itr,
+										Map<String, String> testdata) {		
+									try {
+										Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+										Reporter.logEvent(Status.INFO, "Testcase Description",
+												"This testcase validates general employment informations", false);
+										employeesearch = new EmployeeSearch().get();
+										employeesearch.SSNOfEmployeeWithTermDate();
+										employeesearch.searchEmployeeBySSNAllPlans(employeesearch.terminatedEmp[0]);
+										employeesearch.navigateToEmployeeOverViewPage();
+										employeesearch.navigateToEmpDetailPage();
+										employeesearch.beforeRehiring();
+										employeesearch.rehireEmployee();
+										employeesearch.AfterRehiring();
+									} catch (Exception e) {
+										e.printStackTrace();
+										Globals.exception = e;
+										String exceptionMessage = e.getMessage();
+										Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+												exceptionMessage, true);
+									} catch (Error ae) {
+										ae.printStackTrace();
+										Globals.error = ae;
+										String errorMsg = ae.getMessage();
+										Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+												errorMsg, true);
+									} finally {
+										try {
+											Reporter.finalizeTCReport();
+										} catch (Exception e1) {
+											e1.printStackTrace();
+										}
+									}
+								}
+	
+	
+								/**
+								 * <pre>This testcase to verify Paycheck contribution section of an employee</pre>
+								 * @param itr
+								 * @param testdata
+								 */
+									@Test(dataProvider = "setData")
+									public void TC024_Verify_Employee_Overview_Screen_Elements(int itr,
+											Map<String, String> testdata) {		
+										try {
+											Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+											Reporter.logEvent(Status.INFO, "Testcase Description",
+													"This testcase validates general employment informations", false);
+											employeesearch = new EmployeeSearch().get();
+											homePage = new HomePage();
+											homePage.searchPlanWithIdOrName(employeesearch.findPlanForUser(Stock.getTestQuery("queryTofindPlansForUser"),
+													Stock.GetParameterValue("username")));
+											employeesearch.navigateToEmployeeTab();
+											employeesearch.searchEmployeeByEmployeeId("");
+											employeesearch.navigateToEmployeeOverViewPage();
+											employeesearch.verifyOverviewScreenElements();
+											
+										} catch (Exception e) {
+											e.printStackTrace();
+											Globals.exception = e;
+											String exceptionMessage = e.getMessage();
+											Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+													exceptionMessage, true);
+										} catch (Error ae) {
+											ae.printStackTrace();
+											Globals.error = ae;
+											String errorMsg = ae.getMessage();
+											Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+													errorMsg, true);
+										} finally {
+											try {
+												Reporter.finalizeTCReport();
+											} catch (Exception e1) {
+												e1.printStackTrace();
+											}
+										}
+									}
+	
+	
+									/**
+									 * <pre>This testcase to verify Employee overview plan list view section</pre>
+									 * @param itr
+									 * @param testdata
+									 */
+										@Test(dataProvider = "setData")
+										public void TC025_Verify_Employee_Overview_PlanList_Balance_Section(int itr,
+												Map<String, String> testdata) {		
+											try {
+												Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+												Reporter.logEvent(Status.INFO, "Testcase Description",
+														"This testcase validates general employment informations", false);
+												employeesearch = new EmployeeSearch().get();
+												employeesearch.searchEmployeeBySSNAllPlans(employeesearch.getMultiPlanEmployee());
+												employeesearch.navigateToEmployeeOverViewPage();
+												employeesearch.verifyColumnsOfPlanListsection();
+												employeesearch.verifySelectedPlanHeaderAndHighlightedPlan();
+												employeesearch.verifyTotalBalance();
+												employeesearch.verifyViewPageForAPlanHavingBalance();
+												employeesearch.verifyInvestmentSection();
+												employeesearch.verifyCalendarIcon();
+												employeesearch.returnToEmployeeOverview();
+											} catch (Exception e) {
+												e.printStackTrace();
+												Globals.exception = e;
+												String exceptionMessage = e.getMessage();
+												Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+														exceptionMessage, true);
+											} catch (Error ae) {
+												ae.printStackTrace();
+												Globals.error = ae;
+												String errorMsg = ae.getMessage();
+												Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+														errorMsg, true);
+											} finally {
+												try {
+													Reporter.finalizeTCReport();
+												} catch (Exception e1) {
+													e1.printStackTrace();
+												}
+											}
+										}
+	
+										
+
+
+/**
+ * <pre>This test case verifies employee basic information on overview page and update few fields and verifies the changes.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC026_Verify_Employee_Basic_Info(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"This testcase validates general employment informations", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.getQNTTypeIndividuals();
+		Thread.sleep(3000);
+		employeesearch.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals.get(0));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		employeesearch.verifyBasicInformationOnOverviewPage();
+		employeesearch.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals.get(1));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.verifyBasicInformationOnOverviewPage();
+		employeesearch.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals.get(2));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.verifyBasicInformationOnOverviewPage();
+		employeesearch.verifyBasicInfoModalWindow();
+		employeesearch.editBasicInfoAndSave();
+		
+													
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@AfterSuite
 	public void cleanUpSession() {

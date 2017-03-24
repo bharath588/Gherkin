@@ -15,6 +15,8 @@
 				</methods>
 			</class> 
 				<class name="app.psc.testcases.plan.plansearchtestcases">
+			</class> -->
+				<!-- <class name="app.psc.testcases.plan.plansearchtestcases">
 				 <methods>
 					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
@@ -44,6 +46,55 @@
 						<parameter name="ManualTCName"
 							value="Display correct date and time of my last login"></parameter>
 					</include>				
+					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"></parameter>
+					</include>
+					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"></parameter>
+					</include> 
+				</methods>
+			</class> 
+			<!-- <class name="app.psc.testcases.login.logintestcases">
+			 <methods>
+				<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs"></parameter>
+				</include>
+				<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
+					<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"></parameter>
+				</include>-->
+				<!--<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
+					<parameter name="ManualTCName" value="Verify_PLUser_Login_With_No_Plna_Access"></parameter>
+				</include>
+				<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
+					<parameter name="ManualTCName" value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite"></parameter>
+				</include>
+				<include name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
+				    <parameter name="ManualTCName" value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites"></parameter>
+				</include>
+				<include name="TC003_UI_Validations_On_JumpPage">
+				    <parameter name="ManualTCName" value="UI_Validations_On_JumpPage"></parameter>
+				</include>  
+			 </methods>
+			</class>-->
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods>
+					 <!-- <include name="TC017_Employment_Info_Verification">
+						<parameter name="ManualTCName" value="Employment_Info_Verification"></parameter>
+					</include>
+					<include name="TC018_Employee_Contact_Info_Verification">
+						<parameter name="ManualTCName" value="Employee_Contact_Info_Verification"></parameter>
+					</include>
+					<include name="TC019_Verify_Beneficiary_Info">
+						<parameter name="ManualTCName" value="Verify_Beneficiary_Info" />
+					</include>
+					<include name="TC020_Recently_Viewed_Employee">
+						<parameter name="ManualTCName" value="Recently_Viewed_Employee" />
+					</include>-->
+					<include name="TC021_Salary_View_And_Update">
+						<parameter name="ManualTCName" value="Salary_View_And_Update" />
+					</include>
 				</methods>
 			</class>
 		</classes>

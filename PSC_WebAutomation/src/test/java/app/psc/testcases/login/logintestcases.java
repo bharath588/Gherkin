@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
+//import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.Globals;
@@ -356,7 +357,6 @@ public class logintestcases {
 			}
 		}
 	}
-	
 	@Test(dataProvider = "setData")
 	public void TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt(int itr,Map<String,String> testData)
 	{
@@ -393,6 +393,51 @@ public class logintestcases {
 			}
 			catch(Exception e1)
 			{
+				e1.printStackTrace();
+				}
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Sitenavigation_01_TC001_Menutabs</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate all menu.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify if all the expected Menu options are displayed on Home page
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password
+	 */
+	@Test(dataProvider = "setData")
+	public void TC001_01_SIT_PSC_Sitenavigation_Menutabs(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if all the expected Menu and sub menu options all displayed on Home page.", false);
+			login = new LoginPage().get();
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			 new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
+			accountverification.jumpPagedisplayed();	
+			home.verifyHomePageMenuTabs();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -472,7 +517,54 @@ public class logintestcases {
 			}
 		}
 	}
+
+		
 	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Sitenavigation_SubMenutabs</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate all Sub menu options on home page.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify if all the expected sub menu options are displayed on Home page
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>menuname -</b>valid menuname
+	 */
+	@Test(dataProvider = "setData")
+	public void TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if all the expected sub menu options all displayed on Home page.", false);
+			login = new LoginPage().get();
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			 new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
+			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
+			Web.waitForPageToLoad(Web.getDriver());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * <pre>
 	 * Testcase: <b><u>Display correct date and time of my last login</u></b>
@@ -546,6 +638,54 @@ public class logintestcases {
 		}
 	}
 	
+
+	/**
+	 * <pre>
+	 * Testcase: <b><u>Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate jump page not to display if user has access to plans only in single site.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify Jump page not to display
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>menuname -</b>valid menuname
+	 */
+	@Test(dataProvider = "setData")
+	public void TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if jump page is not after login when user has acess to plan only in single site.", false);
+			login = new LoginPage().get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			userverification = new UserVerificationPage();
+			userverification.performVerification(new String[]{Stock.GetParameterValue("UserVeriEmail"),Stock.GetParameterValue("UserVeriEmail")});
+			Web.waitForPageToLoad(Web.getDriver());
+			home.isJumpPageDisplayed();
+			home.jumpPageVerificationWhenPlanAccessInSingleSite();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	@Test(dataProvider = "setData")
 	public void TC008_01_Verify_Equality_Of_SessionID_From_Browser_And_DB(int itr, Map<String,String> testData)
 	{
@@ -594,7 +734,50 @@ public class logintestcases {
 			}
 		}
 	}
-	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate jumpage is displayed if user has access to plans available in all sites(NextGen,Heritage,Putnam).</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To verify if jump page is displayed if user has plans available in all sites.
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password.
+	 */
+	@Test(dataProvider = "setData")
+	public void TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"verify if jump page is displayed when user has access to plans in all sites.", false);
+			login = new LoginPage().get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			home = new HomePage();
+			accountverification = new AccountVerificationPage();
+			userverification = new UserVerificationPage();
+			userverification.performVerification(new String[]{Stock.GetParameterValue("UserVeriEmail"),Stock.GetParameterValue("UserVeriEmail")});
+			Web.waitForPageToLoad(Web.getDriver());
+			home.isJumpPageDisplayed();
+			home.jumpPageVerificationWhenPlanAccessInAllSite();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	@Test(dataProvider = "setData")
 	public void TC009_01_Verify_To_Do_List_Site_Navigator(int itr, Map<String,String> testData)
 	{
@@ -637,6 +820,50 @@ public class logintestcases {
 			}
 			catch(Exception e1)
 			{
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>UI_Validations_On_JumpPage</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validate UI of JumpPage(Links,Search Box,Messages).</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> To validate UI of JumpPage
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password.
+	 */
+	@Test(dataProvider = "setData")
+	public void TC003_UI_Validations_On_JumpPage(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"To verify UI of JumpPage(Links,SearchBox,Messages)", false);
+			/*JumpPage jp = new JumpPage(new UserVerificationPage(), true, new String[]
+			{Stock.GetParameterValue("UserVeriEmail"),Stock.GetParameterValue("UserSecondaryAns")}).get();*/
+			//JumpPage jp = new JumpPage(new LoginPage(), false, new String[] {
+				//Stock.GetParameterValue("username"),
+				//Stock.GetParameterValue("password") }).get();
+			//Web.waitForPageToLoad(Web.getDriver());
+			//jp.jumpPageUIValidation();
+			//jp.jumpPageSearchPlanBoxValidation();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
@@ -687,10 +914,64 @@ public class logintestcases {
 			}
 		}
 	}
+	/**
+	 * <pre>
+	 * Testcase: <b><u>Verify_PLUser_Login_With_No_Plna_Access</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Verify PL user login with no plan access.</b> Test Type: <b>Positive flow</b>
+	 * 
+	 * <b>Description:</b> Verify PL user login with no plan access
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password.
+	 */
+	@Test(dataProvider = "setData")
+	public void TC004_Verify_PLUser_Login_With_No_Plna_Access(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify PL User Login with no Plan access", false);
+			HomePage home = new HomePage(new LoginPage(),false,new String[]{
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")
+			}).get();
+			Web.getDriver().switchTo().frame("framea");
+			home.isPlanListDisplayed();
+			Web.getDriver().switchTo().defaultContent();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*@Test(dataProvider = "setData")
+	public void */
 	@AfterSuite
 	public void DriverQuite() {
-//		Web.getDriver().close();
-//		Web.getDriver().quit();
+		Web.getDriver().close();
+		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
 	}
 }

@@ -8,7 +8,8 @@ import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
-import lib.Reporter.Status;
+//import lib.Reporter.Status;
+import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
@@ -204,18 +205,18 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	boolean checkFileExists;
 
 	public GuidedPayrollPage() {
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	public GuidedPayrollPage(String email, String secondaryAnswer) {
 		this.userVerificationEmail = email;
 		this.userVerificationAns = secondaryAnswer;
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	public GuidedPayrollPage(LoadableComponent<?> parent) {
 		this.parent = parent;
-		PageFactory.initElements(Web.webdriver, this);
+		PageFactory.initElements(Web.getDriver(), this);
 	}
 
 	@Override
@@ -229,7 +230,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		HomePage homepage = (HomePage) this.parent;
 		LoginPage login = new LoginPage();
 		new HomePage(new UserVerificationPage(login), true, new String[] {
-				Stock.globalTestdata.get("userVerificationEmail"), Stock.globalTestdata.get("userVerificationAns") })
+				Stock.GetParameterValue("userVerificationEmail"), Stock.GetParameterValue("userVerificationAns") })
 						.get();
 		Reporter.logEvent(Status.PASS, "Check if the user has landed on homepage", "The user has landed on homepage",
 				true);
@@ -283,26 +284,26 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 
 	public String validateContributionTotal(String amount) {
 		String actualMessage = "";
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		urlClicktoCont.click();
 		txtExpectedContrTotal.sendKeys(amount);
 		if (Web.isWebElementDisplayed(errorTextwithoutDiv)) {
 			actualMessage = errorTextwithoutDiv.getText();
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			return actualMessage;
 		} else {
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			return "";
 		}
 	}
 
 	public boolean compareContributionTotal(String amount) {
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		if (expContrbtnTotal.getText().contains(amount)) {
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			return true;
 		} else {
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 			return false;
 		}
 	}
@@ -318,7 +319,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	}
 
 	public void createContributionProcessingforSingleMoneySource(String date, String amount) {
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		urlClicktoCont.click();
 		txtPayrollDate.sendKeys(date);
 		txtExpectedContrTotal.sendKeys(amount);
@@ -328,8 +329,8 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Web.webdriver.switchTo().defaultContent();
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(iframeGpp);
 		chkboxFrst.click();
 		btnMoneysrcContinue.click();
 		try {
@@ -337,13 +338,13 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void enterPayRollInfo(String date, String amount) throws Exception {
 		Thread.sleep(1000);
 		Web.waitForElement(iframeGpp);
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		Web.waitForElement(urlClicktoCont);
 		Web.clickOnElement(urlClicktoCont);
 		Web.waitForElement(txtPayrollDate);
@@ -355,14 +356,14 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		checkIfButtonEnabled("BTN CONTINUE", true);
 		btnContinue.click();
 		Thread.sleep(3000);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public String fillUpdateEmployeeContribution(String amount1, String amount2, String date, String contributionamount)
 			throws InterruptedException {
 		String referenceNumber = "";
 		createContributionProcessingforSingleMoneySource(date, contributionamount);
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		drpdwnSelect = new Select(drpdwnShowEntries);
 		drpdwnSelect.selectByVisibleText("All");
 		txtinputContfirst.sendKeys(amount1);
@@ -379,27 +380,27 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		btnCompleteTransaction.click();
 		Thread.sleep(2000);
 		referenceNumber = txtRefNum.getText();
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return referenceNumber;
 	}
 
 	public boolean verifyDateandtotalonConfPage(String date, String expectedTotal) {
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		boolean isDisplayedInfoCorrect = false;
 		if (payrollDataConfPage.getText().trim().equalsIgnoreCase(date)
 				&& expectedTotalConfPage.getText().trim().equalsIgnoreCase(expectedTotal)) {
 			isDisplayedInfoCorrect = true;
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		return isDisplayedInfoCorrect;
 	}
 
 	public void navigateToProcessCenter() throws Exception {
 		Web.waitForElement(tabProcessCenter);
-		Actions act = new Actions(Web.webdriver);
+		Actions act = new Actions(Web.getDriver());
 		act.moveToElement(tabProcessCenter).build().perform();
 		Thread.sleep(1000);
-		CommonLib.HighlightElement(tabProcessCenter, Web.webdriver);
+		CommonLib.HighlightElement(tabProcessCenter, Web.getDriver());
 		tabProcessCenter.click();
 		// Web.clickOnElement(tabProcessCenter);
 		Thread.sleep(1000);
@@ -414,7 +415,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		List<String> moneySourceList = null;
 		List<String> moneySrcDataList = new ArrayList<String>();
 		if(SelectOrVerify.equalsIgnoreCase("SELECT")){
-			Web.webdriver.switchTo().frame(iframeGpp);
+			Web.getDriver().switchTo().frame(iframeGpp);
 			VerifyPayrollDateAndContribution("money_sources");
 			// Checking if Continue button is disabled
 			checkIfButtonEnabled("CONTINUE MONEYSRC", false);
@@ -425,11 +426,11 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		
 		// Check if correct DB entries of money source are listed
 		moneySourceList = new ArrayList<String>();		
-		if (Stock.globalTestdata.get("planNumber") != null) {
+		if (Stock.GetParameterValue("planNumber") != null) {
 			try {
 				
 				rs = DB.executeQuery(Stock.getTestQuery("getMoneySources")[0],
-						Stock.getTestQuery("getMoneySources")[1], Stock.globalTestdata.get("planNumber"));
+						Stock.getTestQuery("getMoneySources")[1], Stock.GetParameterValue("planNumber"));
 				if(rs!=null)
 				{
 				while (rs.next()) {
@@ -448,16 +449,16 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 								"Money Source : " + monsrctext.getText() + " validated successfully", false);
 					} else {
 						Reporter.logEvent(Status.FAIL, "Money Source DB validation",
-								"Money Source : " + Stock.globalTestdata.get("moneySource") + " validation failed", true);
+								"Money Source : " + Stock.GetParameterValue("moneySource") + " validation failed", true);
 					}
 				}
 			}			
 		}
 		
-		if (!Stock.globalTestdata.get("moneySource").contains(",")) {
-			moneySrcDataList = Arrays.asList((Stock.globalTestdata.get("moneySource") + ",").split(","));
+		if (!Stock.GetParameterValue("moneySource").contains(",")) {
+			moneySrcDataList = Arrays.asList((Stock.GetParameterValue("moneySource") + ",").split(","));
 		} else {
-			moneySrcDataList = Arrays.asList((Stock.globalTestdata.get("moneySource")).split(","));
+			moneySrcDataList = Arrays.asList((Stock.GetParameterValue("moneySource")).split(","));
 		}
 		for (String monsrcdata : moneySrcDataList) {
 			for (int iMoneySourceLoop = 1; iMoneySourceLoop <= moneySrcSize - 1; iMoneySourceLoop++) {
@@ -482,7 +483,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			Web.webdriver.switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		}		
 	}
 
@@ -499,7 +500,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			payRollAmt = updtContribution.getText();
 		} else if(stepDesc.equals("confirm_contribution")){
 			Web.waitForElement(keyFrame);
-			Web.webdriver.switchTo().frame(keyFrame);
+			Web.getDriver().switchTo().frame(keyFrame);
 			Web.waitForElement(frmCashRemit);
 			Web.waitForElement(cashRemitanceDt);
 			payRollDt = cashRemitanceDt.getText();
@@ -507,8 +508,8 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			
 		}
 		
-		if (payRollDt.contains(Stock.globalTestdata.get("payrollDate"))
-				&& payRollAmt.contains(Stock.globalTestdata.get("payrollAmt"))) {
+		if (payRollDt.contains(Stock.GetParameterValue("payrollDate"))
+				&& payRollAmt.contains(Stock.GetParameterValue("payrollAmt"))) {
 			Reporter.logEvent(Status.PASS,
 					"Validate Money Sources Payroll Date & Expected contribution details matches with previous step data",
 					"Payroll Date & Expected contribution details matches with previous step data", false);
@@ -522,24 +523,24 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	public void EnterSSN() throws Exception {
 		String setSSN, setSSNConf;
 
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		Web.waitForElement(addEmployeeBtn);
 		VerifyPayrollDateAndContribution("update");
 		Web.clickOnElement(addEmployeeBtn);
 		Web.waitForElement(btnAddEmployeeContinue);
 		checkIfButtonEnabled("BTN ADD EMP CONTINUE", false);
-		if (Stock.globalTestdata.get("SSN").equals("read_table_data")// To read
+		if (Stock.GetParameterValue("SSN").equals("read_table_data")// To read
 																		// 4th
 																		// row
 																		// of
 																		// the
 																		// grid
-				& Stock.globalTestdata.get("ConfSSN").equals("read_table_data")) {
+				& Stock.GetParameterValue("ConfSSN").equals("read_table_data")) {
 			setSSN = gppContributionFreezedTable.findElement(By.xpath("tbody/tr[4]/td[4]")).getText().trim();
 			setSSNConf = setSSN;
 		} else {
-			setSSN = Stock.globalTestdata.get("SSN");
-			setSSNConf = Stock.globalTestdata.get("ConfSSN");
+			setSSN = Stock.GetParameterValue("SSN");
+			setSSNConf = Stock.GetParameterValue("ConfSSN");
 		}
 
 		Web.setTextToTextBox(txtSSN, setSSN);
@@ -550,14 +551,14 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		if ((Web.isWebElementDisplayed(ssnFormatErr, false)) // Format
 																// checker
 				&& (Web.isWebElementDisplayed(ssnConfFormatErr, false))) {
-			if (ssnFormatErr.getText().trim().equals(Stock.globalTestdata.get("errMessage_1"))) {
+			if (ssnFormatErr.getText().trim().equals(Stock.GetParameterValue("errMessage_1"))) {
 				Reporter.logEvent(Status.PASS, "Validate SSN format error", "SSN format error validated successfully",
 						false);
 			} else {
 				Reporter.logEvent(Status.FAIL, "Validate SSN format error", "SSN format error validation failed",
 						false);
 			}
-			if (ssnConfFormatErr.getText().trim().equals(Stock.globalTestdata.get("errMessage_2"))) {
+			if (ssnConfFormatErr.getText().trim().equals(Stock.GetParameterValue("errMessage_2"))) {
 				Reporter.logEvent(Status.PASS, "Validate SSN mismatch error",
 						"SSN mismatch error validated successfully", false);
 			} else {
@@ -575,7 +576,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 																		// SSN
 																		// error
 																		// message
-			if (Web.VerifyText(Stock.globalTestdata.get("errMessage_1"), duplicateSSNErrMsg.getText(), false)) {
+			if (Web.VerifyText(Stock.GetParameterValue("errMessage_1"), duplicateSSNErrMsg.getText(), false)) {
 				Reporter.logEvent(Status.PASS, "Validate if duplicate SSN error message displayed",
 						"Duplicate SSN error message displayed successfully", false);
 			} else {
@@ -597,18 +598,18 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			Web.clickOnElement(addEmployeeBtn);
 		}
 
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void AddEmployee(String checkErr) throws Exception {
 		String existingSSN = "";
 		new GuidedPayrollPage();
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 
 		Web.waitForElement(addEmployeeForm);
 		checkIfButtonEnabled("SAVE EMP CONTINUE BTN", false);
 		Web.clickOnElement(addEmpSSNConf);
-		if (addEmpSSNConf.getText().trim().equals(Stock.globalTestdata.get("SSN"))) {
+		if (addEmpSSNConf.getText().trim().equals(Stock.GetParameterValue("SSN"))) {
 			Reporter.logEvent(Status.PASS, "Validate if new employee SSN number is displayed in Add employee form",
 					"SSN number is displayed successfully", false);
 		} else {
@@ -630,11 +631,11 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			Web.waitForElement(cancelSSNBtn);
 			Web.clickOnElement(cancelSSNBtn);
 			rs = DB.executeQuery(Stock.getTestQuery("checkIfSSNExist")[0],
-					Stock.getTestQuery("checkIfSSNExist")[1], Stock.globalTestdata.get("SSN"));
+					Stock.getTestQuery("checkIfSSNExist")[1], Stock.GetParameterValue("SSN"));
 			while (rs.next()) {
 				existingSSN = rs.getString("SSN");
 			}
-			if (readGPPEmployeeAndContributionTable(Stock.globalTestdata.get("SSN"), 4).equals(existingSSN)) {
+			if (readGPPEmployeeAndContributionTable(Stock.GetParameterValue("SSN"), 4).equals(existingSSN)) {
 				Reporter.logEvent(Status.PASS, "Validate if a new employee added using GPP",
 						"New employee added successfully", false);
 			} else {
@@ -642,7 +643,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 						"Failed to add a new employee", true);
 			}
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void checkIfButtonEnabled(String btnNm,boolean enableDisable) {
@@ -714,7 +715,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		} else if (AddOrEdit.equalsIgnoreCase("edit")) {
 			colNms = "gpdto_salAmt,gpdto_hireDate";
 		}
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 
 		for (String colNm : colNms.split(",")) {
 			tagName = parentNode.findElement(By.id(colNm)).getTagName();
@@ -732,19 +733,19 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 						.getText().trim();
 			}
 
-			if (actualText.equals(Stock.globalTestdata.get(colNm))) {
-				Reporter.logEvent(Status.PASS, "Validating invalid input error" + Stock.globalTestdata.get(colNm)
+			if (actualText.equals(Stock.GetParameterValue(colNm))) {
+				Reporter.logEvent(Status.PASS, "Validating invalid input error" + Stock.GetParameterValue(colNm)
 						+ " for " + AddOrEdit + " Employee", "Error : " + actualText + " displayed as expected", false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Validating invalid input error" + Stock.globalTestdata.get(colNm) + " for " + AddOrEdit
+						"Validating invalid input error" + Stock.GetParameterValue(colNm) + " for " + AddOrEdit
 								+ " Employee",
-						"Expected Error : " + Stock.globalTestdata.get(colNm) + " , Actual Error : " + actualText,
+						"Expected Error : " + Stock.GetParameterValue(colNm) + " , Actual Error : " + actualText,
 						true);
 			}
 		}
 		Web.clickOnElement(addEmployeeBtn);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void deleteEmployeeAndConfirm() {
@@ -752,7 +753,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		String empFNameAfterDel, empLNameAfterDel, SSNAfterDel;
 		WebElement trash;
 		new GuidedPayrollPage();
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 
 		trash = gppContributionFreezedTable.findElement(By.xpath("tbody/tr[1]/td[1]/img"));
 		if (Web.isWebElementDisplayed(trash, true)) {
@@ -766,7 +767,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 				if (delEmpDetails.split(" ")[0].equals(SSNBeforeDel)
 						&& delEmpDetails.split(" ")[1].equals(empLNameBeforeDel + ",")
 						&& delEmpDetails.split(" ")[4].equals(empFNameBeforeDel)
-						&& empDelConfMsg.getText().trim().equals(Stock.globalTestdata.get("errMessage_1"))) {
+						&& empDelConfMsg.getText().trim().equals(Stock.GetParameterValue("errMessage_1"))) {
 
 					Reporter.logEvent(Status.PASS, "Verify delete employee details and error message",
 							"Employee details successfully validated while deleting employee record :" + delEmpDetails,
@@ -802,12 +803,12 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		} else {
 			Reporter.logEvent(Status.FAIL, "Delete GPP Employee record", "Couldn't delete GPP employee record ", false);
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void editEmployee(String dataInput) throws Exception {
 		new GuidedPayrollPage();
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		Web.clickOnElement(editEmpIcon);
 		Web.waitForElement(addEmployeeForm);
 		if (dataInput.equalsIgnoreCase("valid")) {
@@ -833,12 +834,12 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 
 		// Validating SSN,LName,FName,Edit icon class
 		if (dataInput.equalsIgnoreCase("valid")) {
-			if (readGPPEmployeeAndContributionTable(Stock.globalTestdata.get("SearchParameterSSN"), 4)
-					.equals(Stock.globalTestdata.get("SearchParameterSSN"))
-					&& readGPPEmployeeAndContributionTable(Stock.globalTestdata.get("gpdto_lastName"), 5)
-							.equals(Stock.globalTestdata.get("gpdto_lastName"))
-					&& readGPPEmployeeAndContributionTable(Stock.globalTestdata.get("gpdto_firstName"), 6)
-							.equals(Stock.globalTestdata.get("gpdto_firstName"))
+			if (readGPPEmployeeAndContributionTable(Stock.GetParameterValue("SearchParameterSSN"), 4)
+					.equals(Stock.GetParameterValue("SearchParameterSSN"))
+					&& readGPPEmployeeAndContributionTable(Stock.GetParameterValue("gpdto_lastName"), 5)
+							.equals(Stock.GetParameterValue("gpdto_lastName"))
+					&& readGPPEmployeeAndContributionTable(Stock.GetParameterValue("gpdto_firstName"), 6)
+							.equals(Stock.GetParameterValue("gpdto_firstName"))
 					&& Web.VerifyText("centered employeeInfoUpdated", gppContributionFreezedTable
 							.findElement(By.xpath("tbody/tr[1]/td[2]")).getAttribute("class"), true)) {
 
@@ -848,39 +849,39 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			}
 		}
 
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void performSearchEmployee(boolean closeSearchForm) throws Exception {
 		new GuidedPayrollPage();
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		Web.waitForElement(searchEmployeeBtn);
 		Web.clickOnElement(searchEmployeeBtn);
 		Web.waitForElement(empSearchByList);
 		drpdwnSelect = new Select(empSearchByList);
-		drpdwnSelect.selectByVisibleText(Stock.globalTestdata.get("SearchBy"));
-		Web.setTextToTextBox(empSearchParam, Stock.globalTestdata.get("SearchParameterSSN"));
+		drpdwnSelect.selectByVisibleText(Stock.GetParameterValue("SearchBy"));
+		Web.setTextToTextBox(empSearchParam, Stock.GetParameterValue("SearchParameterSSN"));
 		Web.clickOnElement(empSearchBtn);
-		Reporter.logEvent(Status.INFO, "Searching Employee " + Stock.globalTestdata.get("SearchParameterSSN"),
+		Reporter.logEvent(Status.INFO, "Searching Employee " + Stock.GetParameterValue("SearchParameterSSN"),
 				"Employee search performed successfully", false);
 		Thread.sleep(2000);
 		if (closeSearchForm) {
 			Web.waitForElement(empSrchCancelBtn);
 			Web.clickOnElement(empSrchCancelBtn);
 		}
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	public void performContributionProcessing(int RowNum) throws Exception {
 		new GuidedPayrollPage();
 		int colCnt = 1;
-		Web.webdriver.switchTo().frame(iframeGpp);
+		Web.getDriver().switchTo().frame(iframeGpp);
 		List<String> moneySourceList = new ArrayList<String>();
 		List<WebElement> tableCols = null;
 
 		rs = DB.executeQuery(Stock.getTestQuery("getMoneySourceCols")[0],
-				Stock.getTestQuery("getMoneySourceCols")[1], Stock.globalTestdata.get("planNumber"),
-				Stock.globalTestdata.get("moneySource"));// Replace with GA_ID
+				Stock.getTestQuery("getMoneySourceCols")[1], Stock.GetParameterValue("planNumber"),
+				Stock.GetParameterValue("moneySource"));// Replace with GA_ID
 															// *********************
 		while (rs.next()) {
 			moneySourceList.add(rs.getString("DESCR"));
@@ -893,8 +894,8 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 					Web.setTextToTextBox(
 							gppContributionUnfreezedTable
 									.findElement(By.xpath("tbody/tr[" + RowNum + "]/td[" + colCnt + "]/input")),
-							Stock.globalTestdata.get(colNm));
-					ContributionTabFormatChecker(RowNum, colCnt, Stock.globalTestdata.get(colNm));
+							Stock.GetParameterValue(colNm));
+					ContributionTabFormatChecker(RowNum, colCnt, Stock.GetParameterValue(colNm));
 					break;
 				}
 				colCnt = colCnt + 1;
@@ -902,7 +903,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 			colCnt = 1;
 		}
 
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 	}
 
 	private void ContributionTabFormatChecker(int CurrentRowNo, int CurrentColNo, String data) {
@@ -951,7 +952,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 		Reporter.logEvent(Status.INFO,"Remitance trasaction completion status", "Remitance transaction reached final step", true);
 		Web.waitForElement(remitanceFinalSubmit);
 		Web.clickOnElement(remitanceFinalSubmit);
-		Web.webdriver.switchTo().defaultContent();
+		Web.getDriver().switchTo().defaultContent();
 		Reporter.logEvent(Status.INFO,"Remitance trasaction completion status", "Remitance transaction completed successfully", false);
 	}
 
@@ -977,7 +978,7 @@ public class GuidedPayrollPage extends LoadableComponent<GuidedPayrollPage> {
 	}
 
 	public void switchToFrame(String string) {
-		lib.Web.webdriver.switchTo().frame(getWebElement("FRAME"));
+		lib.Web.getDriver().switchTo().frame(getWebElement("FRAME"));
 	}
 
 	public void checkIfEditICONHighlighted() {

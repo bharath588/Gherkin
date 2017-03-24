@@ -1,15 +1,20 @@
 package pageobjects.userverification;
 
 import java.sql.ResultSet;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 import pageobjects.login.LoginPage;
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
+import framework.util.CommonLib;
 import lib.Web;
 import lib.Stock;
 
@@ -140,17 +145,19 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		return null;
 	}
 	
-	/** This method Performs user verification based on the user input */
-	public void performVerification(String[] userVerfiData) {
+	/** This method Performs user verification based on the user input 
+	 * @throws InterruptedException */
+	public void performVerification(String[] userVerfiData) throws InterruptedException {
 		new UserVerificationPage();	
-		
+		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
 		}		
-		if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
+		//if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
+		if (!Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {
 				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
 						"The user verification screen is not loaded", false);
 			}else{
@@ -209,6 +216,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	 */
 	public String getEmailAddressOfuser(String[] getEmailQuery, String userid) throws Exception {
 		String emailAddr = "";
+		//getEmailQuery[0]=CommonLib.getParticipantDBName(Stock.GetParameterValue("username"))+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		resultset = DB.executeQuery(getEmailQuery[0], getEmailQuery[1], "K_" + userid);
 		if (resultset != null) {
 			while (resultset.next()) {
@@ -235,5 +243,23 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		}
 		return securityQuestionText;
 	}
-	
+	public String getSecurityAnswer()
+	{
+		String securityAnswer = "";
+		try{
+			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
+				securityAnswer =    Stock.GetParameterValue("dreamCar");
+			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
+				securityAnswer = Stock.GetParameterValue("favDrink");
+			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))
+				securityAnswer = Stock.GetParameterValue("spouseMidName");
+			else
+				securityAnswer = Stock.GetParameterValue("UserSecondaryAns");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return securityAnswer;
+	}
 }
