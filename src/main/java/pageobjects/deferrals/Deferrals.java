@@ -209,11 +209,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//p[contains(@ng-repeat,'errorMsg')][1]") private WebElement txtCombinedRuleErrorMsg;
 			@FindBy(xpath="//div[@class='contribution-amount']//li") private WebElement txtCompanyMatchRuleDesc;
 			@FindBy(xpath="//div[contains(@ng-if,'isPlanInSpecialCatchupPeriod')]//p") private WebElement txtCompanyMatchErrorMsg;
+			@FindBy(xpath="//div[@class='error-block']/p") private WebElement lableErrorMsg;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
 			String deferralTiredRule="//div[contains(@class,'deferral-codes')]//h2[@class='DeferralType']//a";
-			
+			String lableViewOnlyABONUS="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//span[contains(text(),'View Only')]";
+			String inpViewOnly="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//input";
 			Actions mouse=new Actions(Web.getDriver());
 		/**
 		 * Default Constructor
@@ -450,6 +452,16 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			if(fieldName.trim().equalsIgnoreCase("Text Combined Rule Error Message")) {
 				return this.txtCombinedRuleErrorMsg;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Split Error Message")) {
+				return this.lableErrorMsg;
+			}
+			
+			if(fieldName.trim().equalsIgnoreCase("Input Roth Bonus")) {
+				return this.txtSplitRothBonus;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Input Before Tax Bonus")) {
+				return this.txtSplitBeforeBonus;
 			}
 			return null;
 			}		
@@ -1928,16 +1940,19 @@ return statusCode.getString("status_code");
 		 * 
 		 * 	
 		 */
-		public String getCompanyMatchRuleDescription(String minimumYrsOfService) throws Exception
+		public String getCompanyMatchRuleDescription(String minServiceYrs) throws Exception
 		{
+		
 			ResultSet companyMatchRule = null;
 			Web.waitForElement(txtCompanyMatchRuleDesc);
 			String[] sqlQuery=Stock.getTestQuery(Stock.GetParameterValue("QueryGetRuleDescription"));
-			companyMatchRule=DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("PlanID"),minimumYrsOfService);
+			companyMatchRule=DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("PlanID"),minServiceYrs);
 
 		if (DB.getRecordSetCount(companyMatchRule) > 0) {
+			
 			try {
 				companyMatchRule.first();
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
@@ -1946,6 +1961,8 @@ return statusCode.getString("status_code");
 						"The Query did not return any results. Please check participant test data as the appropriate data base.",
 						false);
 			}
+			
+		
 		}
 	
 
@@ -1953,6 +1970,95 @@ return companyMatchRule.getString("rule_desc");
 			
 													
 		}
+		
+		
+		/**<pre> Method to Verify Company Match Rule Description .
+		 *.</pre>
+		 * @throws Exception 
+		 * 
+		 * 	
+		 */
+		public void verifyCompanyMatchChangesForRuleA(int minYrsOfService,String contributionRate,float companyMatchPercentage) throws Exception
+		{
+			String hireDate="";
+			
+			String expectedCompanyMatch="";
+			String expectedCompanyMatchRule="";
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			
+			Web.waitForElement(txtCompanyMatchRuleDesc);
+			if(minYrsOfService<2){
+				calendar.add(Calendar.YEAR, -1);
+				hireDate=dateFormat.format(calendar.getTime());
+				expectedCompanyMatch=calculateCompanyMatchforRuleA(contributionRate, companyMatchPercentage, hireDate);
+				}
+			if(minYrsOfService<5){
+				calendar.add(Calendar.YEAR, -4);
+				hireDate=dateFormat.format(calendar.getTime());
+				expectedCompanyMatch=calculateCompanyMatchforRuleA(contributionRate, companyMatchPercentage, hireDate);
+				expectedCompanyMatchRule=getCompanyMatchRuleDescription("2");
+				}
+			if(minYrsOfService>=5){
+				calendar.add(Calendar.YEAR, -6);
+				hireDate=dateFormat.format(calendar.getTime());
+				expectedCompanyMatch=calculateCompanyMatchforRuleA(contributionRate, companyMatchPercentage, hireDate);
+				expectedCompanyMatchRule=getCompanyMatchRuleDescription("5");
+
+				}
+			String actualCompanyMatch=txtCompanyMatch.getText().toString().trim();
+			if(Web.VerifyText(expectedCompanyMatch+"%", actualCompanyMatch, false))
+				Reporter.logEvent(Status.PASS, "Verify CompanyMatch is Displayed As Per Tired Rule",
+						"Verify CompanyMatch is Displayed As Per Tired Rule\nExpected:"+expectedCompanyMatch+"%"+"\nActual:"+actualCompanyMatch, false);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify CompanyMatch is Displayed As Per Tired Rule",
+						"Verify CompanyMatch is Not Displayed As Per Tired Rule\nExpected:"+expectedCompanyMatch+"%"+"\nActual:"+actualCompanyMatch, true);
+			
+			String actualCompanyMatchRule=txtCompanyMatchRuleDesc.getText().toString().trim();
+			if(Web.VerifyText(expectedCompanyMatchRule, actualCompanyMatchRule))
+				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed ",
+						"COMPANY MATCH is displayed for RULEA for"+minYrsOfService+"Years and Matching\nExpected:"+expectedCompanyMatchRule+"\nActual:"+actualCompanyMatchRule, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
+						"COMPANY MATCH is displayed for RULEA for"+minYrsOfService+"Years and Not Matching\nExpected:"+expectedCompanyMatchRule+"\nActual:"+actualCompanyMatchRule, true);
+
+			}
+
+		
+/**<pre> Method to Verify Verify Company Match is Displayed in Select Another Contribution .
+ *.</pre>
+ * @throws Exception 
+ * 
+ * 	
+ */
+public String calculateCompanyMatchforRuleA(String contributionRate, float companyMatchPercentage,String hireDate) throws Exception
+{	
+	String expectedCompanyMatch="";
+try{
+	
+	String[] sqlQuery=Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1],hireDate,Stock.GetParameterValue("username").substring(0, 9));
+	//DB.executeUpdate(sqlQuery[0], sqlQuery[1],hireDate,Stock.GetParameterValue("username").substring(0, 9));
+	Web.getDriver().navigate().refresh();
+	Web.waitForElement(txtCompanyMatchRuleDesc);
+	this.lnkPercent.click();			
+	this.lnkContributionRate.click();
+	Web.waitForElement(txtcontributionRateSlider);
+	Web.setTextToTextBox(txtcontributionRateSlider, contributionRate);
+	Web.clickOnElement(btnDone);
+	if(btnDone.isDisplayed())
+	{
+		//keyBoard.sendKeys(Keys.ENTER).perform();
+		Web.clickOnElement(btnDone);
+	}
+	
+	 expectedCompanyMatch=Double.toString(Integer.parseInt(contributionRate)*companyMatchPercentage);
+}
+catch(NoSuchElementException e){
+	
+}
+return expectedCompanyMatch;
+}
 		
 		/**<pre> Method to Verify Verify Company Match is Displayed in Select Another Contribution .
 		 *.</pre>
@@ -1999,6 +2105,41 @@ return companyMatchRule.getString("rule_desc");
 				Reporter.logEvent(Status.FAIL, "Verify Error Message for457 IRS Plan Catch Up Period is Displayed",
 						"Error Message for457 IRS Plan Catch Up Period is Not Displayed \nExpected:"+errorMessage+"\nActual:"+actualErrorMsg, true);
 			}
+		
+		}
+		
+		
+		/**<pre> Method to Verify View Only Label For deferral type
+		 * 	
+		 */
+		public void verifyViewOnlyLabelDisplayed(String deferralType)
+		{
+			WebElement lableViewOnly=Web.getDriver().findElement(By.xpath(lableViewOnlyABONUS.replaceAll("DeferralType", deferralType)));
+
+			if(Web.isWebElementDisplayed(lableViewOnly))
+			
+				Reporter.logEvent(Status.PASS, "Verify View Only Label is Displayed for"+deferralType,
+						"View Only Label is Displayed for"+deferralType, true);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify View Only Label is Displayed for"+deferralType,
+						"View Only Label is Not Displayed for"+deferralType, true);
+		
+		}
+		
+		/**<pre> Method to Verify input field is greyed out For deferral type
+		 * 	
+		 */
+		public void verifyInputFieldGreyedOutForViewOnlyDeferral(String deferralType)
+		{
+			WebElement eleInpViewOnly=Web.getDriver().findElement(By.xpath(inpViewOnly.replaceAll("DeferralType", deferralType)));
+
+			if(eleInpViewOnly.getAttribute("ng-readonly").equalsIgnoreCase("true"))
+			
+				Reporter.logEvent(Status.PASS, "Verify Input Field for"+deferralType+"is Greyed Out",
+						"Input Field for"+deferralType+"is Greyed Out", true);
+						else
+				Reporter.logEvent(Status.FAIL, "Verify Input Field for"+deferralType+"is Greyed Out",
+						"Input Field for"+deferralType+"is Not Greyed Out", true);
 		
 		}
 	}		

@@ -19,6 +19,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 public class Common {
@@ -230,7 +231,7 @@ public class Common {
 	public static String getSponser() {
 
 		String sponser = null;
-		if (lib.Stock.globalTestdata.containsKey("ACCUCODE")) {
+		if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("ACCUCODE")) {
 			if (lib.Stock.GetParameterValue("AccuCode") != null) {
 				sponser = lib.Stock.GetParameterValue("AccuCode");
 			} else {

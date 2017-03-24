@@ -60,6 +60,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	@FindBy(xpath = ".//*[text()='My Accounts']")
 	private WebElement lblMyAccounts;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 
 	/**
 	 * Empty args constructor
@@ -132,6 +133,10 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 				mfaScreen.submitVerificationCode(
 						Stock.getConfigParam("defaultActivationCode"), true,
 						false);
+				if(Web.isWebElementDisplayed(btnContinue1))
+				{
+					Web.clickOnElement(btnContinue1);
+				}
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
 				Thread.sleep(1000);
@@ -230,7 +235,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (fieldName.trim().equalsIgnoreCase("TEXT MY ACCOUNTS")) {
 			return this.lblMyAccounts;
 		}
-
+		if (fieldName.trim().equalsIgnoreCase("CONTINUE")) {
+			return this.btnContinue1;
+		}
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",

@@ -228,7 +228,13 @@
                     <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
                     </parameter>
-                    </include>-->
+                    </include>
+                    <include name="Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources">
+                    </parameter>
+                    </include>
+                    
+                    -->
                 <!--  PART 6-->    
                     
             
@@ -334,7 +340,10 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021M_Company_Match_RULEA">
                     </parameter>
                     </include> 
-                    
+                      <include name="Deferral_026M_Terminated_Participant">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026M_Terminated_Participant">
+                    </parameter>
+                    </include> 
                     -->
                 </methods>
             </class>

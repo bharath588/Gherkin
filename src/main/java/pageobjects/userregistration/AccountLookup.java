@@ -1,8 +1,11 @@
 
 package pageobjects.userregistration;
 
+import java.util.List;
+
 import lib.Reporter;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
@@ -42,16 +45,17 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='noPin']/a") private WebElement btnContinueOnGroupAccPasswordTab;
-	@FindBy(xpath=".//ng-message[@class='form-validation-rule']//span[contains(text(),'Social Security Number')]") private WebElement lblSSNErrMsg;
-	@FindBy(xpath="//ng-message[@class='form-validation-rule']//span[(contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;
-	@FindBy(xpath="//ng-message[@class='form-validation-rule']//span[contains(text(),'Last Name')]") private WebElement lblLastNameErrMsg;
-	@FindBy(xpath="//ng-message[@class='form-validation-rule']//span[contains(text(),'Date') or contains(text(),'date')]") private WebElement lblDOBErrMsg;
-	@FindBy(xpath=".//ng-message[@class='form-validation-rule']//span[contains(text(),'Street Address')]]") private WebElement lblStrAddrErrMsg;
-	@FindBy(xpath=".//ng-message[@class='form-validation-rule']//span[contains(text(),'PIN')]") private WebElement lblPINErrMsg;
+	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private WebElement lblSSNErrMsg;
+	@FindBy(xpath="//label[contains(text(),'ZIP')]//following-sibling::ng-include//ng-message[(contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;
+	@FindBy(xpath="//label[contains(text(),'Last Name')]//following-sibling::ng-include//ng-message[(contains(text(),'Last Name'))]") private WebElement lblLastNameErrMsg;
+	@FindBy(xpath="//label[contains(text(),'Date')]//following-sibling::ng-include//ng-message[(contains(text(),'Date'))]") private WebElement lblDOBErrMsg;
+	@FindBy(xpath="//label[contains(text(),'street address')]//following-sibling::ng-include//ng-message[(contains(text(),'street address'))]") private WebElement lblStrAddrErrMsg;
+	@FindBy(xpath="//label[contains(text(),'PIN')]//following-sibling::ng-include//ng-message[contains(text(),'PIN')]") private WebElement lblPINErrMsg;
 	@FindBy(xpath=".//*[@class='form-group has-error ng-scope'][1] | .//*[@class='form-group has-error'][1]") private WebElement lblMainErrMsg;
 	@FindBy(xpath = ".//div[@class='container']/span[@ng-if='accuLogoLoaded']/img")
 	private WebElement lblSponser;
 	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
+	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private List<WebElement> lblSSNErrMsgs;
 	/** Empty args constructor
 	 * 
 	 */
@@ -432,6 +436,34 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			} else {
 				errMsg = "";
 			}
+		}
+		
+		return errMsg;
+	}
+	
+	/**<pre> Method to return error messages displayed for the corresponding field.
+	 * Error messages for fields:
+	 * 	SOCIAL SECURITY NUMBER
+	 * 	
+	 * 
+	 * Returns empty string if no error message is displayed.</pre>
+	 * 
+	 * 
+	 * @return <b>Error Msg</b> if displayed. <b>Emptry string</b> otherwise.
+	 */
+	public String getSSNFieldErrorMsgs() {
+		
+		String errMsg="";
+		
+		
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElements(lblSSNErrMsgs);
+			if (Web.isWebElementsDisplayed(lblSSNErrMsgs)) {
+				for(int i=0;i<lblSSNErrMsgs.size();i++)
+				errMsg = errMsg+","+lblSSNErrMsgs.get(i).getText();
+			} else {
+				errMsg = "";
+			
 		}
 		
 		return errMsg;

@@ -426,7 +426,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				if(attribute.equalsIgnoreCase("Marital status"))
 					return Web.VerifyText("Marital Status: "+Stock.GetParameterValue("Marital Status"), lstTblConfirmationDetails.get(1).getText(), true);
 			
-		if(Stock.globalTestdata.containsKey("BENEFICIARYTYPE"))	{
+		if(Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("BENEFICIARYTYPE"))	{
 			if (Stock.GetParameterValue("BeneficiaryType") != null && Stock.GetParameterValue("BeneficiaryType").equalsIgnoreCase("Contingent")){
 				for(int i=0;i<lstTablecontingentBeneficiary.size();i++){
 					if(lstTablecontingentBeneficiary.get(i).getText().contains(beneficiaryName)){

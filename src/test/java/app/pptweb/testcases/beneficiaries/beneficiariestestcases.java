@@ -881,7 +881,7 @@ public class beneficiariestestcases {
 					Reporter.logEvent(Status.PASS, "Verify if Cancel button is clicked", "Cancel button is clicked", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify if Cancel button is clicked", "Cancel button is not clicked", true);
-				
+				Common.waitForProgressBar();
 				if(lib.Web.isWebElementDisplayed(beneficiary, "Account Overview"))
 					Reporter.logEvent(Status.PASS, "Verify if Account overview page is displayed", "Account overview page is displayed", false);
 				else
@@ -1088,10 +1088,19 @@ public class beneficiariestestcases {
 			MyBeneficiaries beneficiary = new MyBeneficiaries();
 			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], participant_SSN);
-			beneficiary.refresh();
+			if(Stock.GetParameterValue("Delete_Beneficiary").equalsIgnoreCase("Yes"))
+				try {
+					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
+					beneficiary.refresh();
+					beneficiary.refresh();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
         }
 		try {
-            Reporter.finalizeTCReport();
+			 Reporter.finalizeTCReport();
 		} catch (Exception e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -1129,11 +1138,15 @@ public class beneficiariestestcases {
 			beneficiary.get();
 			
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+				Web.waitForElement(beneficiary, "ContinueAndConfirm");
 				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.waitForElement(beneficiary, "View Beneficiary Button");
 				Web.clickOnElement(beneficiary, "View Beneficiary Button");
 				
 				beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), "Child", Stock.GetParameterValue("Use Current Address"), "Contingent",Stock.GetParameterValue("Allocation"));
+				Web.waitForElement(beneficiary, "ContinueAndConfirm");
 				Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+				Web.waitForElement(beneficiary, "View Beneficiary Button");
 				Web.clickOnElement(beneficiary, "View Beneficiary Button");
 			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
@@ -1491,6 +1504,8 @@ public class beneficiariestestcases {
 					}
 					if(Stock.GetParameterValue("bene_spousal_rule_code").contains("75%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("66%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("50%") ){
 						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+						if(Web.isWebElementDisplayed(beneficiary, "ContinueAndConfirm"))
+							Web.clickOnElement(beneficiary, "ContinueAndConfirm");	
 						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", true);
 						if(beneficiary.verifyConfirmationPageDisplayed()){
 							Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);

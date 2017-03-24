@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
@@ -57,10 +58,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(className="document-review") private WebElement txtagreementForm;
 	@FindBy(xpath="//header[@class='contained-form-header']//h1") private WebElement hdrContactInfo;
 	@FindBy(xpath=".//*[@id='emailId']") private WebElement inpPersonalEmail;
-	@FindBy(xpath=".//*[@id='ContactCountryNameD']") private WebElement drpCountry;
+	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
 	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
-	
+	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
+	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
+	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	/** Empty args constructor
 	 * 
 	 */
@@ -213,6 +216,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 		if (fieldName.trim().equalsIgnoreCase("Label Communication Preference")) {
 			return this.txtChangeCommuniPrefer;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CONTINUE CONTACT INFO PAGE")) {
+			return this.btnContinue1;
+		}
+		if (fieldName.trim().equalsIgnoreCase("BUTTON CONTINUE TO NEXTGEN")) {
+			return this.btnViewNextGen;
 		}
 		
 		return null;
@@ -417,6 +426,27 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 
 		return getText;
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get the text of an webElement
+	 * Returns string webElement is displayed
+	 * </pre>
+	 * 
+	 * @return integer - noofPlans
+	 */
+	public int getNoofPlans() {
+		int noofPlans = 0;
+
+		if (Web.isWebElementsDisplayed(inpPlanNamecheckBox)) {
+
+			noofPlans = inpPlanNamecheckBox.size();
+
+		}
+
+		return noofPlans;
 
 	}
 }

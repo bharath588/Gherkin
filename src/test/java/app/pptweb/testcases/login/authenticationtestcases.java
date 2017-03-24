@@ -9,6 +9,7 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
@@ -28,6 +29,7 @@ public class authenticationtestcases {
 	private static HashMap<String, String> testDataFromDB = null;
 	LoginPage login;
 	String tcName;
+	static String printTestData="";
 
 	@BeforeClass
 	public void InitTest() throws Exception {
@@ -54,12 +56,21 @@ public class authenticationtestcases {
 		}
 
 	}
+	private String printTestData() throws Exception {
+		printTestData="";
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
+			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+		}
+	 return printTestData;
+	}
+
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_SendActivationCodeThroughLoginFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			boolean isDisplayed = false;
 			LoginPage loginPage = new LoginPage();
@@ -174,7 +185,7 @@ public class authenticationtestcases {
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
@@ -288,7 +299,7 @@ public class authenticationtestcases {
 		boolean isMatching;
 		boolean eleDisplayed;
 		try{
-			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage objLogin = new LoginPage();
 			ForgotPassword objForgotPsw = new ForgotPassword(objLogin).get();
 			TwoStepVerification objAuth = new TwoStepVerification(objLogin);

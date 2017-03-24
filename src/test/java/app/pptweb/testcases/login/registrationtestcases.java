@@ -10,6 +10,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.Keys;
@@ -37,6 +38,7 @@ public class registrationtestcases {
 	public static String SSN = null;
 	LoginPage login;
 	String tcName;
+	static String printTestData="";
 
 	@BeforeClass
 	public void InitTest() throws Exception {
@@ -76,13 +78,23 @@ public class registrationtestcases {
 		}
 
 	}
+	 private String printTestData() throws Exception {
+			printTestData="";
+			for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
+				if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
+					printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+			}
+		 return printTestData;
+		}
+
 
 	@Test(dataProvider = "setData")
 	public void SF01_TC01_User_has_PIN(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String headerText;
 			String activeTab;
 			String actualValue;
@@ -157,7 +169,7 @@ public class registrationtestcases {
 			accLookup.clickOnFields("PIN");
 			accLookup.clickOnFields("CONTINUE");
 			Thread.sleep(4000);
-			actualErrMsg = accLookup.getFieldErrorMsg("Social Security Number");
+			actualErrMsg = accLookup.getSSNFieldErrorMsgs();
 			if (actualErrMsg.length() == 0) {
 				Reporter.logEvent(
 						Status.FAIL,
@@ -165,8 +177,8 @@ public class registrationtestcases {
 						"No error message displayed for Social Security number.",
 						false);
 			} else {
-				if (Web.VerifyText(actualErrMsg,
-						"Social Security Number must be numeric.", true)) {
+				if (Web.VerifyPartialText("Social Security Number must be numeric.",actualErrMsg,
+						 true)) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify error message 'Social Security Number must be numeric.' is displayed",
@@ -214,7 +226,7 @@ public class registrationtestcases {
 			accLookup.navigateToTab("I have a PIN");
 			actualValue = accLookup.setTextToFields("Social Security Number",
 					"12345678956");
-			if (actualValue.trim().equals("123456789")) {
+			if (actualValue.trim().equals("123-45-6789")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify SSN field accepts only 9 digits",
 						"Value set: 12345678956\nValue accepted: "
@@ -435,8 +447,9 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			boolean blnIsElePresent;
 			String txtActErrMsg;
 			String headerText;
@@ -548,8 +561,7 @@ public class registrationtestcases {
 					"ab12CD34e");
 			Web.clickOnElement(objAccountLookup, "ZIP CODE");
 			Thread.sleep(6000);
-			txtActErrMsg = objAccountLookup
-					.getFieldErrorMsg("Social Security Number");
+			txtActErrMsg = objAccountLookup.getSSNFieldErrorMsgs();
 			if (txtActErrMsg.length() == 0) {
 				Reporter.logEvent(
 						Status.FAIL,
@@ -557,8 +569,8 @@ public class registrationtestcases {
 						"No error message displayed for Social Security number.",
 						false);
 			} else {
-				if (Web.VerifyText(txtActErrMsg,
-						"Social Security Number must be numeric.", true)) {
+				if (Web.VerifyPartialText("Social Security Number must be numeric.",txtActErrMsg,
+						 true)) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify error message 'Social Security Number must be numeric.' is displayed",
@@ -608,7 +620,7 @@ public class registrationtestcases {
 			// Step 9 - Enter SSN more than 9 digits
 			txtActErrMsg = objAccountLookup.setTextToFields(
 					"Social Security Number", "12345678956");
-			if (txtActErrMsg.trim().equals("123456789")) {
+			if (txtActErrMsg.trim().equals("123-45-6789")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify SSN field accepts only 9 digits",
 						"Value set: 12345678956\nValue accepted: "
@@ -678,7 +690,7 @@ public class registrationtestcases {
 			Web.clickOnElement(objAccountLookup, "Social Security Number");
 			Thread.sleep(6000);
 			txtActErrMsg = objAccountLookup.getFieldErrorMsg("Date of Birth");
-			expectedErrMsg = "Please enter a valid date.";
+			expectedErrMsg = "Date of birth must follow MM/DD/YYYY format.";
 			if (txtActErrMsg.length() == 0) {
 				Reporter.logEvent(
 						Status.FAIL,
@@ -822,7 +834,8 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			boolean blnIsElePresent;
 			String txtActErrMsg;
 			String headerText;
@@ -1166,8 +1179,9 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			precondition();
 			String ActErrMessage;
 			LoginPage loginPage = new LoginPage();
@@ -1318,7 +1332,8 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String ActErrMessage;
 			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -1428,7 +1443,8 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
 			String actErrMsg;
 			boolean blnTempVar;
@@ -1586,8 +1602,9 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String activeTab;
 			String actErrMsg;
 			boolean blnTempVar;
@@ -1907,10 +1924,12 @@ public class registrationtestcases {
 	public void SF03_TC01_AccountSetup(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			if (Common.getSponser().equalsIgnoreCase("Apple")) {
 				Web.getDriver()
 						.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -1966,10 +1985,11 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
 			boolean isMatching=false;
@@ -2048,9 +2068,23 @@ public class registrationtestcases {
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Account setup Header block text",
-						"Header text block is not displayed on the page", true);
+				
+				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				isMatching = Web
+						.VerifyText(
+								"Create username and password",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'Create username and password' header is displayed",
+							"User successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Create username and password' header is displayed",
+							"'Create username and password' header is Not displayed", true);
+				}
 			} else {
 				isMatching = Web
 						.VerifyText(
@@ -2125,7 +2159,8 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) +"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			String hdrBlockText;
 			Web.getDriver()
 					.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -2177,11 +2212,28 @@ public class registrationtestcases {
 
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
+			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
+			boolean isMatching =false;
 			if (hdrBlockText == null) {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Account setup Header block text",
-						"Header text block is not displayed on the page", true);
-			} else {
+				
+				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				isMatching = Web
+						.VerifyText(
+								"Create username and password",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'Create username and password' header is displayed",
+							"User successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Create username and password' header is displayed",
+							"'Create username and password' header is Not displayed", true);
+				} 
+			}
+				else {
 				Web.VerifyPartialText(
 						/* "We found you!\nTo continue, provide your contact information and create a username and password." */"Create username and password",
 						hdrBlockText, true);
@@ -2216,10 +2268,12 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
 			Actions keyBoard = new Actions(Web.getDriver());
@@ -2461,10 +2515,11 @@ public class registrationtestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			SSN = Stock.GetParameterValue("SSN");
 			String hdrBlockText;
 			Actions keyBoard = new Actions(Web.getDriver());
@@ -2547,10 +2602,25 @@ public class registrationtestcases {
 			Thread.sleep(5000);
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
+			
 			if (hdrBlockText == null) {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Account setup Header block text",
-						"Header text block is not displayed on the page", true);
+				
+				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				isMatching = Web
+						.VerifyText(
+								"Create username and password",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'Create username and password' header is displayed",
+							"User successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Create username and password' header is displayed",
+							"'Create username and password' header is Not displayed", true);
+				} 
 			} else {
 				isMatching = Web
 						.VerifyText(

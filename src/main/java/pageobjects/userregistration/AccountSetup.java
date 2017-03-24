@@ -96,7 +96,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertTrue(Web.isWebElementDisplayed(hrdSetUpYourAccount, true),"Account SetUp Page is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(lblCreateUsernameAndPassword, true),"Account SetUp Page is Not Loaded");
 		/*
 		 * String sponser = this.lblSponser.getAttribute("Alt");
 		 * if(sponser.isEmpty()) { sponser=Common.GC_DEFAULT_SPONSER; } if
@@ -941,18 +941,18 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			throws InterruptedException {
 
 		try {
-			Web.waitForElement(this.lblContactInformation);
+			Web.waitForElement(this.lblCreateUsernameAndPassword);
 		} catch (Exception e) {
 		}
 
 		Thread.sleep(5000);
 
 		boolean isHeaderPresent = Web
-				.isWebElementDisplayed(this.lblContactInformation);
+				.isWebElementDisplayed(this.lblCreateUsernameAndPassword);
 		String headerText = "";
 
 		if (isHeaderPresent) {
-			headerText = this.lblContactInformation.getText().trim();
+			headerText = this.lblCreateUsernameAndPassword.getText().trim();
 		} else {
 			return null;
 		}

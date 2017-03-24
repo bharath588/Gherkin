@@ -443,6 +443,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	public boolean isValidContactUsInfo(String contactNo) {
 		boolean isElementPresent = Web.isWebElementDisplayed(this.lnkContactus);
 		boolean isTextMatching = false;
+		if(contactNo==null||contactNo.isEmpty()){
 		if (isElementPresent) {
 			Web.clickOnElement(this.lnkContactus);
 
@@ -479,8 +480,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 									+ Actual, false);
 				}
 			}
+		}
 		} else {
-			if (!contactNo.isEmpty()) {
+			
 
 				isTextMatching = Web.VerifyText(contactNo,
 						this.lnkContactNoPreLogin.getText().trim(), true);
@@ -499,7 +501,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 									+ "Actual/ "
 									+ this.lnkContactNoPreLogin.getText()
 											.trim(), false);
-				}
+				
 			}
 		}
 

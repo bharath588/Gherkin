@@ -80,10 +80,10 @@ public class TestDataFromDB {
 				}
 			}
 			
-			if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 || mapUserDetails.get("SSN").equalsIgnoreCase("000231671"))
+			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 || mapUserDetails.get("SSN").equalsIgnoreCase("000231671"))
 				participants.next();
 			else
-				break;
+				break;*/
 			}
 
 		}

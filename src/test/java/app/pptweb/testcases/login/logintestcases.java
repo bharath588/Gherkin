@@ -3,8 +3,12 @@ package app.pptweb.testcases.login;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +20,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
@@ -36,6 +41,8 @@ public class logintestcases {
 	LoginPage login;
 	String tcName;
 	static String printTestData="";
+	static String url = null;
+	static String accuCode = null;
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
@@ -88,7 +95,7 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 
 			login = new LoginPage();
@@ -149,7 +156,7 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String verificationCode = "";
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
@@ -281,23 +288,53 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			login.get();
-
 			
-			// TODO Add code to verify text displayed on Two step verification
-			// page
+			if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("ACCUCODE"))
 
+			{
+				if (Stock.GetParameterValue("AccuCode") != null)
+					accuCode = Stock.GetParameterValue("AccuCode");
+				else
+					accuCode = Common.GC_DEFAULT_SPONSER;
+				url = Stock.getConfigParam(
+						"AppURL" + "_" + Stock.getConfigParam("TEST_ENV")).replace(
+						"Empower", accuCode);
+
+				 Web.getDriver().get(url);
+				 Web.getDriver().navigate().refresh();
+				 Web.waitForPageToLoad(Web.getDriver());
+				 if(Web.getDriver().getCurrentUrl().contains(accuCode))
+					 Reporter.logEvent(Status.PASS,
+							 "Verify Login page for '" + Common.getSponser()
+								+ "' is loaded.",
+								"Login page for '" + Common.getSponser()
+								+ "' is loaded.",
+								true);
+
+				 else	
+					 Reporter.logEvent(Status.FAIL,
+							 "Verify Login page for '" + Common.getSponser()
+								+ "' is loaded.",
+								"Login page for '" + Common.getSponser()
+								+ "' is loaded.",
+								true);
+
+
+			}
+			
+			 
 			String customerSupportInfo = "";
 			boolean isTextMatching = false;
 			
 			customerSupportInfo = login.isValidCustomerSupportInfo();
 
 			if (customerSupportInfo.trim().isEmpty()) {
-				lib.Reporter.logEvent(Status.FAIL,
-						"Check Customer Support Information on the Login Page",
+				Reporter.logEvent(Status.FAIL,
+						"Check Customer Support Information on the Login Page is Displayed",
 						"No Customer Support Information on the Login Page",
 						true);
 
@@ -305,7 +342,7 @@ public class logintestcases {
 				lib.Reporter
 						.logEvent(
 								Status.INFO,
-								"Check Customer Support Information on the Login Page",
+								"Check Customer Support Information on the Login Page is Displayed",
 								"Customer Support Information on the Login Page is displayed ",
 								true);
 			}
@@ -318,8 +355,8 @@ public class logintestcases {
 				lib.Reporter
 						.logEvent(
 								Status.PASS,
-								"Check Customer Support Information on the Login Page",
-								"Customer Support Information is Same on the Login Page",
+								"Check Customer Support Information on the Login Page is Same",
+								"Customer Support Information is Same on the Login Page\nExpected:"+Stock.GetParameterValue("Expected_CallCenterTimings_Pre_Login")+"\nActual:"+customerSupportInfo,
 								false);
 
 			} else {
@@ -328,7 +365,7 @@ public class logintestcases {
 								Status.FAIL,
 								"Check Customer Support Information on the Login Page",
 								"Customer Support Information is not same on the Login Page\nExpected:"
-										+ Stock.GetParameterValue("ExpectedCustomerSupportInfo_Pre_Login")
+										+ Stock.GetParameterValue("Expected_CallCenterTimings_Pre_Login")
 										+ "\nActual:" + customerSupportInfo,
 								false);
 			}
@@ -358,7 +395,7 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			String verificationCode = "";
@@ -474,9 +511,16 @@ public class logintestcases {
 
 			
 			LandingPage landingPage = new LandingPage(twoStepVerification);
+			
 			//Step 6
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
+			if(Web.isWebElementDisplayed(landingPage, "CONTINUE", true)){
+				Web.clickOnElement(landingPage, "CONTINUE");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+			}
+			
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify landing page is displayed",
@@ -516,7 +560,7 @@ public class logintestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter
@@ -621,7 +665,8 @@ public class logintestcases {
 
 				if (!windowHandle.equals(parentWindow)) {
 					if (Web.getDriver().switchTo().window(windowHandle)
-							.getTitle().contains("BrokerCheck")) {
+							.getTitle().contains("BrokerCheck")|| Web.getDriver().switchTo().window(windowHandle)
+							.getTitle().contains("FINRA")) {
 						windowFound = true;
 						break;
 					}
@@ -634,19 +679,22 @@ public class logintestcases {
 								"Verifying Broker Check Notification is Opened in New Window",
 								"Broker Check Notification is Opened in New Window",
 								true);
+				Web.getDriver().close();
+				Web.getDriver().switchTo().window(parentWindow);
+				Web.getDriver().navigate().refresh();
 
 			} else {
 				lib.Reporter
 						.logEvent(
-								Status.INFO,
+								Status.FAIL,
 								"Verifying Broker Check Notification is Opened in New Window",
 								"Broker Check Notification is Not Opened Properly in New Window",
 								true);
+				
 			}
 
-			Web.getDriver().close();
-			Web.getDriver().switchTo().window(parentWindow);
-			Web.getDriver().navigate().refresh();
+			
+			
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			login.clickDismissLink();
@@ -818,11 +866,22 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, -181);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			
 			String verificationCode = "";
 			Boolean isMatching=false;
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,Stock.GetParameterValue("SSN"));
+			
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -870,7 +929,7 @@ public class logintestcases {
 			if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -878,7 +937,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed As Expected\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -888,7 +947,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Displayed",
 						false);
@@ -896,7 +955,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Not Displayed",true);
 			}
@@ -905,7 +964,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Displayed",
 						false);
@@ -913,7 +972,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Not Displayed",true);
 			}
@@ -922,7 +981,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Displayed",
 						false);
@@ -930,7 +989,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Not Displayed",true);
 			}
@@ -939,7 +998,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Displayed",
 						false);
@@ -947,7 +1006,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Not Displayed",true);
 			}
@@ -955,11 +1014,16 @@ public class logintestcases {
            Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
            Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+          Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Thread.sleep(6000);
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
+           
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
 			// landingPage.dismissPopUps(true, true);
-
+			Web.waitForElement(landingPage, "Log out");
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
@@ -972,7 +1036,7 @@ public class logintestcases {
 						"Landing page is not displayed", true);
 			}
 			//Step 6 verify the part_comm_preferences table, where delivery method is displayed with 'ELECTRONIC'
-			String[] sqlQuery = null;
+			
 			ResultSet participantID = null;
 			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipant");
 			participantID =DB.executeQuery(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
@@ -1027,11 +1091,23 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, -190);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
 			String verificationCode = "";
 			Boolean isMatching=false;
-			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			String ssn=Stock.GetParameterValue("SSN");
+			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
+			sqlQuery = Stock.getTestQuery("updateTerminationDate");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
+			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -1079,7 +1155,7 @@ public class logintestcases {
 			if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -1087,7 +1163,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed As Expected\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -1097,7 +1173,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Displayed",
 						false);
@@ -1105,7 +1181,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Not Displayed",true);
 			}
@@ -1114,7 +1190,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Displayed",
 						false);
@@ -1122,7 +1198,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Not Displayed",true);
 			}
@@ -1131,7 +1207,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Displayed",
 						false);
@@ -1139,7 +1215,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Not Displayed",true);
 			}
@@ -1148,7 +1224,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Displayed",
 						false);
@@ -1156,7 +1232,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Not Displayed",true);
 			}
@@ -1164,7 +1240,11 @@ public class logintestcases {
            Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
            Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Thread.sleep(6000);
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
            
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
@@ -1172,7 +1252,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Change Communaction Preferences Page Is Displayed",
 						"Change Communaction Preferences Page Is Displayed",
 						false);
@@ -1180,7 +1260,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Change Communaction Preferences Page Is Displayed",
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
@@ -1190,7 +1270,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
 						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
 						false);
@@ -1198,7 +1278,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
 						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
 			}
@@ -1207,7 +1287,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"Check Box with plan Name' Is Displayed",
 						false);
@@ -1215,7 +1295,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
@@ -1224,7 +1304,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Email DropDown' Is Displayed",
 						"Email DropDown' Is Displayed",
 						false);
@@ -1232,7 +1312,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
 			}
@@ -1241,7 +1321,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"AGREEMENT FROM' Is Displayed",
 						false);
@@ -1249,16 +1329,16 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
            
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'CONTINUE Button' Is Displayed",
 						"CONTINUE Button' Is Displayed",
 						false);
@@ -1266,18 +1346,35 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'CONTINUE Button' Is Displayed",
 						"'CONTINUE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
-           //TO DO
+           if(twoStepVerification.getNoofPlans()>1){
+				lib.Reporter
+				.logEvent(
+						Status.PASS,
+						"Verify 'CheckBoxes With Diffrent Plan Names' Are Displayed",
+						"'CheckBoxes With Diffrent Plan Names' Are Displayed\n No.Of Plans:"+twoStepVerification.getNoofPlans(),
+						true);
+			}
+			else{
+				lib.Reporter
+				.logEvent(
+						Status.FAIL,
+						"Verify 'CheckBoxes With Diffrent Plan Names' Are Displayed",
+						"'CheckBoxes With Diffrent Plan Names' Are Not DisplayedNo.Of Plans:"+twoStepVerification.getNoofPlans(),
+						true);
+			}
            
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.waitForElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
+           Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            
            //Step 9
 			// Dismiss pop ups if displayed
@@ -1286,6 +1383,8 @@ public class logintestcases {
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
+			Common.waitForProgressBar();
+			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify landing page is displayed",
@@ -1296,33 +1395,43 @@ public class logintestcases {
 						"Landing page is not displayed", true);
 			}
 			//Step 10 verify the part_comm_preferences table, where delivery method is displayed with 'ELECTRONIC'
-			String[] sqlQuery = null;
+			
 			ResultSet participantID = null;
-			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipant");
+			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipantWithMutiplePlans");
 			participantID =DB.executeQuery(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
-			if (DB.getRecordSetCount(participantID) > 0) {
-				try {
-					participantID.first();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					Reporter.logEvent(
-							Status.WARNING,
-							"Query Participant DB:" + sqlQuery[0],
-							"The Query did not return any results. Please check participant test data as the appropriate data base.",
-							false);
+			
+			List<String>deliveryMethodsList = new LinkedList<>();
+						for(int i=1;;i++)
+			{
+				try{
+				
+					deliveryMethodsList.add(Stock.GetParameterValue("deliveryMethod"+i));
+				}catch(Error e){
+					break;
+				}
+				
+			}
+			String actualDelivryMethod = null;
+			int counter = 0;
+			while(participantID.next())
+			{
+				actualDelivryMethod = participantID.getString("DELIVERY_METHOD");
+				if(actualDelivryMethod.equalsIgnoreCase(deliveryMethodsList.get(counter))){
+					Reporter.logEvent(Status.PASS,
+							"Verify The Delivery Method in Data Base",
+							"Delivery Method is displayed As Expected In Data Base \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify The Delivery Method in Data Base",
+							"Landing page is not displayed \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+				}
+				counter++;
+				if(counter==deliveryMethodsList.size()){
+					break;
 				}
 			}
-			isMatching=Web.VerifyText(Stock.GetParameterValue("deliveryMethod"),
-					participantID.getString("delivery_method"));
-			if (isMatching) {
-				Reporter.logEvent(Status.PASS,
-						"Verify The Delivery Method in Data Base",
-						"Delivery Method is displayed As Expected In Data Base \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify The Delivery Method in Data Base",
-						"Landing page is not displayed \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
-			}
+			
+			
 			// Logout if opted
 			landingPage.logout(true);
 
@@ -1353,11 +1462,27 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String verificationCode = "";
 			Boolean isMatching=false;
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, -190);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			
+			String ssn=Stock.GetParameterValue("SSN");
+			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
+			sqlQuery = Stock.getTestQuery("updateTerminationDate");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
+			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -1405,7 +1530,7 @@ public class logintestcases {
 			if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -1413,7 +1538,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Check Confirm Your Contact Info Page is Dispalyed",
 						"Confirm Your Contact Info Page Header is Dispalyed As Expected\nExpected:"+Stock.GetParameterValue("textContactInfoHdr")+"\nActual:"+twoStepVerification.getWebElementText("CONTACT INFORMATION HEADER").trim(),
 						true);
@@ -1423,7 +1548,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Displayed",
 						false);
@@ -1431,7 +1556,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Personal Email Address Input Field Is Displayed",
 						"Personal Email Address Input Field Is Not Displayed",true);
 			}
@@ -1440,7 +1565,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Displayed",
 						false);
@@ -1448,7 +1573,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country List Drop Down Is Displayed",
 						"Country List Drop Down Is Not Displayed",true);
 			}
@@ -1457,7 +1582,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Displayed",
 						false);
@@ -1465,7 +1590,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Phone Number Input Field Is Displayed",
 						"Phone Number Input Field Is Not Displayed",true);
 			}
@@ -1474,7 +1599,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Displayed",
 						false);
@@ -1482,7 +1607,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Country Code Is Displayed",
 						"Country Code Is Not Displayed",true);
 			}
@@ -1490,7 +1615,11 @@ public class logintestcases {
            Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
            Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Thread.sleep(6000);
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
            
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
@@ -1498,7 +1627,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify Change Communaction Preferences Page Is Displayed",
 						"Change Communaction Preferences Page Is Displayed",
 						false);
@@ -1506,7 +1635,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify Change Communaction Preferences Page Is Displayed",
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
@@ -1516,7 +1645,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
 						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
 						false);
@@ -1524,7 +1653,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
 						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
 			}
@@ -1533,7 +1662,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"Check Box with plan Name' Is Displayed",
 						false);
@@ -1541,7 +1670,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Check Box with plan Name' Is Displayed",
 						"'Check Box with plan Name' Is Not Displayed",true);
 			}
@@ -1550,7 +1679,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'Email DropDown' Is Displayed",
 						"Email DropDown' Is Displayed",
 						false);
@@ -1558,7 +1687,7 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'Email DropDown' Is Displayed",
 						"'Email DropDown' Is Not Displayed",true);
 			}
@@ -1567,7 +1696,7 @@ public class logintestcases {
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"AGREEMENT FROM' Is Displayed",
 						false);
@@ -1575,16 +1704,16 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
            
            if(isMatching){
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.PASS,
 						"Verify 'CONTINUE Button' Is Displayed",
 						"CONTINUE Button' Is Displayed",
 						false);
@@ -1592,18 +1721,35 @@ public class logintestcases {
 			else{
 				lib.Reporter
 				.logEvent(
-						Status.INFO,
+						Status.FAIL,
 						"Verify 'CONTINUE Button' Is Displayed",
 						"'CONTINUE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
-           //TO DO
+           if(twoStepVerification.getNoofPlans()>1){
+				lib.Reporter
+				.logEvent(
+						Status.PASS,
+						"Verify 'CheckBoxes With Diffrent Plan Names' Are Displayed",
+						"'CheckBoxes With Diffrent Plan Names' Are Displayed\n No.Of Plans:"+twoStepVerification.getNoofPlans(),
+						true);
+			}
+			else{
+				lib.Reporter
+				.logEvent(
+						Status.FAIL,
+						"Verify 'CheckBoxes With Diffrent Plan Names' Are Displayed",
+						"'CheckBoxes With Diffrent Plan Names' Are Not DisplayedNo.Of Plans:"+twoStepVerification.getNoofPlans(),
+						true);
+			}
            
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.waitForElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
+           Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            
            //Step 9
 			// Dismiss pop ups if displayed
@@ -1612,6 +1758,8 @@ public class logintestcases {
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
+			Common.waitForProgressBar();
+			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify landing page is displayed",
@@ -1622,33 +1770,43 @@ public class logintestcases {
 						"Landing page is not displayed", true);
 			}
 			//Step 10 verify the part_comm_preferences table, where delivery method is displayed with 'ELECTRONIC'
-			String[] sqlQuery = null;
+			
 			ResultSet participantID = null;
-			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipant");
+			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipantWithMutiplePlans");
 			participantID =DB.executeQuery(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
-			if (DB.getRecordSetCount(participantID) > 0) {
-				try {
-					participantID.first();
-				} catch (SQLException e) {
-					e.printStackTrace();
-					Reporter.logEvent(
-							Status.WARNING,
-							"Query Participant DB:" + sqlQuery[0],
-							"The Query did not return any results. Please check participant test data as the appropriate data base.",
-							false);
+			
+			List<String>deliveryMethodsList = new LinkedList<>();
+						for(int i=1;;i++)
+			{
+				try{
+				
+					deliveryMethodsList.add(Stock.GetParameterValue("deliveryMethod"+i));
+				}catch(Error e){
+					break;
+				}
+				
+			}
+			String actualDelivryMethod = null;
+			int counter = 0;
+			while(participantID.next())
+			{
+				actualDelivryMethod = participantID.getString("DELIVERY_METHOD");
+				if(actualDelivryMethod.equalsIgnoreCase(deliveryMethodsList.get(counter))){
+					Reporter.logEvent(Status.PASS,
+							"Verify The Delivery Method in Data Base",
+							"Delivery Method is displayed As Expected In Data Base \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify The Delivery Method in Data Base",
+							"Landing page is not displayed \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+				}
+				counter++;
+				if(counter==deliveryMethodsList.size()){
+					break;
 				}
 			}
-			isMatching=Web.VerifyText(Stock.GetParameterValue("deliveryMethod"),
-					participantID.getString("delivery_method"));
-			if (isMatching) {
-				Reporter.logEvent(Status.PASS,
-						"Verify The Delivery Method in Data Base",
-						"Delivery Method is displayed As Expected In Data Base \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify The Delivery Method in Data Base",
-						"Landing page is not displayed \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
-			}
+			
+			
 			// Logout if opted
 			landingPage.logout(true);
 
@@ -1672,13 +1830,13 @@ public class logintestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void SIT_Login_002_eDelivery_as_Mail_Greater_than_180days(
+	public void Login_002_eDelivery_as_Mail_Greater_than_180days(
 			int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String verificationCode = "";
 			Boolean isMatching=false;
@@ -1815,7 +1973,11 @@ public class logintestcases {
            Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
            Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Thread.sleep(6000);
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
            
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
@@ -1993,13 +2155,13 @@ public class logintestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days(
+	public void Login_001_eDelivery_as_Electronic_Greater_than_180days(
 			int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_NAME + "_"
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
 			String verificationCode = "";
 			Boolean isMatching=false;
@@ -2136,7 +2298,11 @@ public class logintestcases {
            Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
            Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-           Web.clickOnElement(twoStepVerification, "CONTINUE");
+           Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Thread.sleep(6000);
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
            
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
@@ -2281,7 +2447,7 @@ public class logintestcases {
 				}
 			}
 			isMatching=Web.VerifyText(Stock.GetParameterValue("deliveryMethod"),
-					participantID.getString("delivery_method"));
+					participantID.getString("delivery_method"),true);
 			if (isMatching) {
 				Reporter.logEvent(Status.PASS,
 						"Verify The Delivery Method in Data Base",

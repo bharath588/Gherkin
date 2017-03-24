@@ -4475,7 +4475,7 @@ public class deferralstestcases {
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.MONTH, -1);
+			calendar.add(Calendar.YEAR, -1);
 			String date=dateFormat.format(calendar.getTime());
 			System.out.println("DATE"+date);
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
@@ -4523,14 +4523,27 @@ public class deferralstestcases {
 			
 			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
 			
-			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRuleDescription"), actualCompanyMatchRule))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 
 			//Step 8
+			//0-2 Yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService<2")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentagefor<2")));
+			//2-5 yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService<5")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentagefor<5")));
+			//Above 5 yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService>5")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentagefor>5")));
+			
 			deferrals.verifyCompanyMatchChangesDynamically();
 			
 		//Step 9
@@ -4578,14 +4591,6 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.MONTH, -1);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
-		
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 			
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -4628,14 +4633,16 @@ public class deferralstestcases {
 			
 			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
 			
-			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRuleDescription"), actualCompanyMatchRule))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 
 			//Step 8
+			
+			// TODO
 			deferrals.verifyCompanyMatchChangesDynamically();
 			
 		//Step 9
@@ -4684,15 +4691,7 @@ public class deferralstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.MONTH, -1);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
-		
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
-			
+						
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -4734,12 +4733,12 @@ public class deferralstestcases {
 			
 			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
 			
-			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRuleDescription"), actualCompanyMatchRule))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 
 			//Step 8
 			deferrals.verifyCompanyMatchChangesDynamically();
@@ -4791,9 +4790,9 @@ public class deferralstestcases {
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.MONTH, -1);
+			calendar.add(Calendar.YEAR, -1);
 			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
+			System.out.println("DATE:"+date);
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("QueryUpdateEmployeeHireDate"));
 		
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
@@ -4839,12 +4838,12 @@ public class deferralstestcases {
 			
 			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
 			
-			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRuleDescription"), actualCompanyMatchRule))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 
 			//Step 8
 			deferrals.verifyCompanyMatchChangesDynamically();
@@ -4944,14 +4943,27 @@ public class deferralstestcases {
 			
 			String actualCompanyMatchRule=deferrals.getCompanyMatchRuleDescription(Stock.GetParameterValue("minYearsOfService"));
 			
-			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRukeDescription"), actualCompanyMatchRule))
+			if(Web.VerifyText(Stock.GetParameterValue("ExpectedRuleDescription"), actualCompanyMatchRule))
 				Reporter.logEvent(Status.PASS, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify COMPANY MATCH RULE is Displayed",
-						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRukeDescription")+"\nActual:"+actualCompanyMatchRule, true);
+						"COMPANY MATCH is displayed for RULEA and Not Matching\nExpected:"+Stock.GetParameterValue("ExpectedRuleDescription")+"\nActual:"+actualCompanyMatchRule, true);
 
 			//Step 8
+			//0-2 Yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService<2")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentage<2")));
+			//2-5 yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService<5")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentage<5")));
+			//Above 5 yrs
+			deferrals.verifyCompanyMatchChangesForRuleA(Integer.parseInt(Stock.GetParameterValue("minYrsOfService>5")),
+					Stock.GetParameterValue("Contribution Rate"),
+					Float.parseFloat(Stock.GetParameterValue("companyMatchPercentage>5")));
+			
 			deferrals.verifyCompanyMatchChangesDynamically();
 			
 		//Step 9
@@ -5173,6 +5185,246 @@ public class deferralstestcases {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+		}
+	}
+	
+	/**
+	 * The following script Standard Deferral and Verify Terminated Participant not able to do any contributions
+	 * 
+	 * Covered Manual Test Cases: 1.SIT_PPTWEB_Deferral_026M_Terminated_Participant
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_026M_Terminated_Participant(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+						
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			
+			leftmenu = new LeftNavigationBar(homePage);
+
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			//Step 1 to 4
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution"))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			//Step 5
+			
+			if(!Web.isWebElementDisplayed(deferrals, "Standard Add"))
+			
+				Reporter.logEvent(Status.PASS,
+						"Verify Changes to Contributions are not allowed",
+						"Changes to the Contribution are disabled", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Changes to Contributions are not allowed",
+						"Changes to the Contribution are allowed", true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/*
+	 * This test case verify View only deferral 
+	 * deferral type should have 3 type(Befor,Roth,AfterTax)
+	 * After Tax Should be View Only
+	 */
+	@Test(dataProvider = "setData")
+	public void Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			// if(homePage.getNoOfPlansFromDB(Stock.GetParameterValue("Particicpant_ssn"))
+			// <= 2)
+			// leftmenu = new LeftNavigationBar(homePage);
+			// else {
+			// MyAccountsPage accountPage = new MyAccountsPage(homePage);
+			// leftmenu = new LeftNavigationBar(accountPage);
+			// }
+			leftmenu = new LeftNavigationBar(homePage);
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			boolean isTextMatching = false;
+			Thread.sleep(5000);
+			String bonusRoth = deferrals
+					.getContributionPercentage(Stock.GetParameterValue("BonusRoth"));//RTH Bonus
+			String bonusBeforeTax = deferrals
+					.getContributionPercentage(Stock.GetParameterValue("BonusBeforeTax"));//BeforeTax Bonus
+			String bonusAfterTax = deferrals
+					.getContributionPercentage(Stock.GetParameterValue("BonusAterTax"));//AfterTax Bonus
+			if (deferrals.clickAddEditButton("Bonus Add"))
+				Reporter.logEvent(Status.PASS,
+						"Verify Bonus contribution page",
+						"Bonus Contributions page is  displayed", false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Bonus contribution page",
+						"Bonus Contributions page is not displayed", true);
+			String contributionRate = Stock
+					.GetParameterValue("Contribution Rate");
+
+			deferrals.click_Select_Your_Contribution_Rate();
+			Web.clickOnElement(deferrals, "Continue button");
+			contributionRate = deferrals.contrbution_rate;
+           Thread.sleep(5000);
+			int cr = Integer.parseInt(contributionRate.split("%")[0]);
+			int bft = Integer.parseInt(bonusBeforeTax.split("%")[0]);
+			int roth = Integer.parseInt(bonusRoth.split("%")[0]);
+			int baft = Integer.parseInt(bonusAfterTax.split("%")[0]);
+			int newcr=cr - baft;
+			String newcontibution = Integer.toString(newcr);
+			String newbft=Integer.toString((int)Math.round(newcr*0.40));
+			String newroth=Integer.toString((int)Math.round(newcr*0.60));
+			
+			
+			//Step 7
+			deferrals.verifyViewOnlyLabelDisplayed(Stock.GetParameterValue("viewOnlyDeferral"));
+			deferrals.verifyInputFieldGreyedOutForViewOnlyDeferral(Stock.GetParameterValue("viewOnlyDeferral"));
+			//Step 8
+			Web.clickOnElement(deferrals, "Continue button");
+			if(Web.isWebElementDisplayed(deferrals, "Split Error Message", true))
+				Reporter.logEvent(Status.PASS, "Verify Error Message Displayed For Split Percent",
+						"Error Message Displayed For Split Percent", true);
+						else
+				Reporter.logEvent(Status.FAIL,  "Verify Error Message Displayed For Split Percent",
+						"Error Message Not Displayed For Split Percent", true);
+			
+			//Step 9
+			Web.setTextToTextBox("Input Before Tax Bonus", deferrals, newbft);
+			Web.setTextToTextBox("Input Roth Bonus", deferrals, newroth);
+			
+			newbft=newbft+"%";
+			newroth=newroth+"%";
+			Web.clickOnElement(deferrals, "Continue button");
+			//Step 10
+			Web.waitForElement(deferrals, "Confirm button");
+			if(Web.isWebElementDisplayed(deferrals, "Confirm button")){
+				Web.clickOnElement(deferrals, "Continue button");
+				Web.waitForElement(deferrals, "Confirm button");
+			}
+			
+			Web.clickOnElement(deferrals, "Confirm button");
+			
+			Web.waitForElement(deferrals, "MyContribution Button");
+			Web.clickOnElement(deferrals, "MyContribution Button");
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			if (Web.isWebElementDisplayed(deferrals,
+					"Table Header Contribution", true))
+				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
+						"My Contributions page is  displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
+						"My Contributions page is not displayed", true);
+			Web.waitForElement(deferrals, "Table Header Contribution");
+			isTextMatching = Web.VerifyText(newbft ,deferrals
+					.getContributionPercentage(Stock.GetParameterValue("BonusBeforeTax")),true);
+			if (isTextMatching) {
+				Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Before Tax Bonus After Split Contribution on My Contribution page",
+								"Before Tax Bonus is updated on My Contribution page \nExpected:"
+										+ newbft
+										+
+										"\nActual:"+deferrals
+										.getContributionPercentage(Stock.GetParameterValue("BonusBeforeTax"))
+										.trim(),
+								true);
+
+			} else {
+				Reporter
+						.logEvent(
+								Status.FAIL,"Verify Before Tax Bonus After Split Contribution on My Contribution page",
+								"Before Tax Bonus is not updated on My Contribution page \nExpected:"
+										+ newbft
+										+
+										"\nActual:"+deferrals
+										.getContributionPercentage(Stock.GetParameterValue("BonusBeforeTax"))
+										.trim(),
+								true);
+			}
+			isTextMatching = Web.VerifyText(newroth ,deferrals
+					.getContributionPercentage(Stock.GetParameterValue("BonusRoth")),true);
+			if (isTextMatching) {
+				Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Roth Bonus After Split Contribution on My Contribution page",
+								"Roth Bonus is updated on My Contribution page \nExpected:"
+										+ newroth
+										+
+										"\nActual:"+deferrals
+										.getContributionPercentage(Stock.GetParameterValue("BonusRoth"))
+										.trim(),
+								true);
+
+			} else {
+				Reporter
+						.logEvent(
+								Status.FAIL,"Verify Roth Bonus After Split Contribution on My Contribution page",
+								"Roth Bonus is not updated on My Contribution page \nExpected:"
+										+ newroth
+										+
+										"\nActual:"+deferrals
+										.getContributionPercentage(Stock.GetParameterValue("BonusRoth"))
+										.trim(),
+								true);
+
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					"Exception Occured", true);
+		} catch (AssertionError ae) {
+			ae.printStackTrace();
+			Globals.assertionerror = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+			// throw ae;
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
 		}
 	}
 	
