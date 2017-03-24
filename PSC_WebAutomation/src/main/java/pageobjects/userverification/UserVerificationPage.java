@@ -132,6 +132,9 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		if (fieldName.trim().equalsIgnoreCase("ERRORMSG")) {
 			return this.errorMsgBox;
 		}
+		if(fieldName.trim().equalsIgnoreCase("SECURITYQUESTION")){
+			return this.securityQuestion;
+		}
 		//
 		// Reporter.logEvent(
 		// Status.WARNING,
@@ -240,7 +243,6 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		}
 		return securityQuestionText;
 	}
-	
 	public String getSecurityAnswer()
 	{
 		String securityAnswer = "";

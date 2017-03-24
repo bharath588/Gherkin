@@ -900,6 +900,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.isWebElementDisplayed(moreButton, true);
 		if(Stock.GetParameterValue("planName")!=null)
 		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
+		
+			Web.clickOnElement(searchPlanButton);
+			Web.isWebElementDisplayed(moreButton, true);
+			if(Stock.GetParameterValue("planName")!=null)
+			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
 				return planTextDisplayed = true;
 	}
 	catch(Exception e)

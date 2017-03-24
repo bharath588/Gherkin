@@ -1,5 +1,6 @@
 package pageobjects.login;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import lib.Reporter;
 
 import com.aventstack.extentreports.*;
 
+import lib.DB;
 import lib.Stock;
 import lib.Web;
 import core.framework.ThrowException;
@@ -161,6 +163,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		Web.setTextToTextBox(this.txtUserName, loginData[0]);
 		Web.setTextToTextBox(this.txtPassword, loginData[1]);
 		Web.clickOnElement(this.btnLogin);
+		Reporter.logEvent(Status.PASS, "Submit login credentials", "Login credentials submitted successfully", false);
 		Web.getDriver().switchTo().defaultContent();
 		// driver.switchTo().defaultContent();
 		try {
@@ -225,12 +228,13 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		boolean textMatch = false;
 		try {
 			new LoginPage();
-			Web.getDriver().switchTo().frame(frmLogin);			
+			Web.getDriver().switchTo().frame(frmLogin);	
+			Web.isWebElementDisplayed(wePreLoginError, true);
 			textMatch = Web.VerifyPartialText(errorMsg, wePreLoginError.getText(), true);
 		
 			if(textMatch){
 				Reporter.logEvent(Status.PASS, "Check if the appropiate error displayed",
-						"Expected Error message displayed", false);
+						"Expected Error message displayed: "+wePreLoginError.getText(), false);
 			}else{
 				Reporter.logEvent(Status.FAIL, "Check if the appropiate error displayed",
 						"Failed to display expected error message", true);
@@ -327,5 +331,57 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}while(Web.isWebElementDisplayed(loginSpinner));
 		}
 		Web.getDriver().switchTo().defaultContent();
+	}
+	
+	/**
+	 * @param updateInvalidLogonAttemptQuery
+	 * @param userName
+	 */
+	public void updateInvalidLogonAttempt(String[] updateInvalidLogonAttemptQuery,String userName)
+	{
+		try{
+			int rows_update=DB.executeUpdate(updateInvalidLogonAttemptQuery[0], updateInvalidLogonAttemptQuery[1], "K_" + userName);
+			if(rows_update==1)
+			{
+				Reporter.logEvent(Status.PASS, "Execute query to update Invalid_logon_count in ISIS_Password table", 
+						"Query is executed successfully", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Execute query to update Invalid_logon_count in ISIS_Password table", 
+						"Query did not execut successfully", false);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param queryToTerminateUser
+	 * @param termDate
+	 * @param userName
+	 */
+	public void updateTermDateForUser(String[] queryToTerminateUser, String termDate, String userName)
+	{
+		try{
+			int rows_update=DB.executeUpdate(queryToTerminateUser[0], queryToTerminateUser[1], termDate,"K_" + userName);
+			if(rows_update==1)
+			{
+				Reporter.logEvent(Status.PASS, "Execute query to update termdate in Users table", 
+						"Query is executed successfully", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Execute query to update termdate in Users table", 
+						"Query did not execut successfully", false);
+			 
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package app.psc.testcases.guidedpayroll;
+/*package app.psc.testcases.guidedpayroll;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
@@ -158,3 +158,4 @@ public class guidedpayrolltestcases {
 		Web.getDriver().quit();
 	}
 }
+*/

@@ -5,7 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -267,6 +269,38 @@ public class userverificationtestcases {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void Verify_TUDS_table_for_Magic_login(int itr,Map<String,String> testData)
+	{
+		try{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"Verify TUDS table for Magic login", false);									
+		
+		HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+			Stock.GetParameterValue("username"),
+			Stock.GetParameterValue("password") }).get();
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		catch(Error ae)
+		{
+			
+		}
+		finally{
+			try{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
 				e1.printStackTrace();
 			}
 		}

@@ -768,6 +768,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Participant ID");
+		Thread.sleep(3000);
 		Web.setTextToTextBox(txtSearchbox, pptID);
 		try {
 			Thread.sleep(2000);
@@ -1086,8 +1087,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		switchToFrame();
 		Web.setTextToTextBox(txtFilter, searchText);
 		Web.waitForElement(searchResultsTablerow);
-		Thread.sleep(3000);
-		if (Web.isWebElementDisplayed(searchResultsTablerow)) {
+
+		if (Web.isWebElementDisplayed(searchResultsTablerow,true)) {
 			if (StringUtils.containsIgnoreCase(searchResultsLastName.getText(),
 					searchText)
 					|| StringUtils.containsIgnoreCase(

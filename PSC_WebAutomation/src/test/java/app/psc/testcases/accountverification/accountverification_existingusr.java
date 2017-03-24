@@ -4,15 +4,20 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
@@ -392,6 +397,230 @@ public class accountverification_existingusr {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords(int itr,Map<String,String> testData)
+	{
+		String actualErrorMessage = "";
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user is unable to use last 10 passwords", false);			
+			userverification = new UserVerificationPage();
+			accountverification = new AccountVerificationPage();
+			
+			accountverification.resetPasswordQuery(
+					Stock.getTestQuery("updateUserEffdateQuery"),
+					Stock.GetParameterValue("username"));
+			accountverification.get();
+			
+			userverification.performVerification(new String[] {
+					(userverification.getEmailAddressOfuser(
+							Stock.getTestQuery("getEmailaddressQuery"),
+							Stock.GetParameterValue("username"))).trim(),
+					Stock.GetParameterValue("UserSecondaryAns") });
+			
+			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
+				Web.clickOnElement(accountverification, "ERRORMSG");
+				Web.clickOnElement(accountverification, "DISMISS");
+			}
+			Thread.sleep(2000);
+			accountverification.resetPassword(
+					Stock.GetParameterValue("CurrentPassword"),
+					Stock.GetParameterValue("newPassword"),
+					Stock.GetParameterValue("confirmPassword"));
+			
+			accountverification.setOldPassword(
+					Stock.getTestQuery("deleteRecentPasswordRows"),
+					Stock.getTestQuery("queryTosetOldPassword"),
+					Stock.GetParameterValue("username"));
+			
+			actualErrorMessage = accountverification.getErrorMessageText();
+			System.out.println(actualErrorMessage);
+			accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage,
+					Stock.GetParameterValue("expectedErrorMessage"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void TC006_01_Verify_Display_Of_Notification_On_HomePage(int itr,Map<String,String> testData)
+	{
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify 'Notification' button is available and working as expected", false);
+			accountverification = new AccountVerificationPage();
+			if(Stock.GetParameterValue("infoType").equalsIgnoreCase("NonAvailability"))
+			{
+				HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password") }).get();
+				if(!Web.isWebElementDisplayed(homePage, "todoLink", false) &&(!Web.isWebElementDisplayed(homePage, "notificationLink", false))){
+					Reporter.logEvent(Status.PASS, "Verify Notification button is not available and working as expected if txn code is not given to user", 
+							"Notification and To Do hyperlinks are not available on home page", false);
+					homePage.logoutPSC();
+					
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Notification button is not available and working as expected if txn code is not given to user", 
+							"Notification and To Do hyperlinks are available on home page", true);
+					homePage.logoutPSC();
+				}
+			}
+			else if(Stock.GetParameterValue("infoType").equalsIgnoreCase("Availability"))
+			{
+				accountverification.addTransactionCode(Stock.getTestQuery("addTransactionCode"), Stock.GetParameterValue("TxnCode"), 
+						Stock.GetParameterValue("username"));
+				HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password") }).get();
+				if(Web.isWebElementDisplayed(homePage, "todoLink", false) &&(Web.isWebElementDisplayed(homePage, "notificationLink", false))){
+					Reporter.logEvent(Status.PASS, "Verify Notification button is available and working as expected if txn code is given to user", 
+							"Notification and To Do hyperlinks are available on home page", false);
+					homePage.logoutPSC();
+					
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Notification button is available and working as expected if txn code is given to user", 
+							"Notification and To Do hyperlinks are not available on home page", true);
+					homePage.logoutPSC();
+				}
+				
+				accountverification.deleteTransactionCode(Stock.getTestQuery("deleteTransactionCode"), Stock.GetParameterValue("TxnCode"), 
+						Stock.GetParameterValue("username"));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void TC006_01_Verify_Display_Of_Compliance_On_HomePage(int itr,Map<String,String> testData)
+	{
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify 'Compliance' button is available and working as expected", false);
+			accountverification = new AccountVerificationPage();
+			if(Stock.GetParameterValue("infoType").equalsIgnoreCase("NonAvailability"))
+			{
+				HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password") }).get();
+				if(!Web.isWebElementDisplayed(homePage, "complianceLink", false)){
+					Reporter.logEvent(Status.PASS, "Verify Compliance hyperlink is not available and working as expected if txn code is not given to user", 
+							"Compliance hyperlink is not available on home page", false);
+					homePage.logoutPSC();
+					
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Compliance button is not available and working as expected if txn code is not given to user", 
+							"Compliance hyperlink is not available on home page", true);
+					homePage.logoutPSC();
+				}
+			}
+			else if(Stock.GetParameterValue("infoType").equalsIgnoreCase("Availability"))
+			{
+				accountverification.addTransactionCode(Stock.getTestQuery("addTransactionCode"), Stock.GetParameterValue("TxnCode"), 
+						Stock.GetParameterValue("username"));
+				HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+					Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password") }).get();
+				if(Web.isWebElementDisplayed(homePage, "complianceLink", false)){
+					Reporter.logEvent(Status.PASS, "Verify Compliance button is available and working as expected if txn code is given to user", 
+							"Compliance hyperlink is available on home page", false);
+					homePage.logoutPSC();
+					
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Compliance button is available and working as expected if txn code is given to user", 
+							"Compliance hyperlink is not available on home page", true);
+					homePage.logoutPSC();
+				}
+				
+				accountverification.deleteTransactionCode(Stock.getTestQuery("deleteTransactionCode"), Stock.GetParameterValue("TxnCode"), 
+						Stock.GetParameterValue("username"));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
 				e1.printStackTrace();
 			}
 		}

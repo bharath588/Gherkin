@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>SIT_PSC_Login_01_TC006_Gwrs- Forcelogin</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Jan 06 12:37:38 IST 2017</td>
+<td>Started on:</td><td>Wed Mar 22 11:31:53 IST 2017</td>
 </tr>
-<tr><td>Total time:</td><td>0 seconds (15 ms)</td>
+<tr><td>Total time:</td><td>38 seconds (38708 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -68,47 +68,69 @@ function toggleAllBoxes() {
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
 <table width='100%' border='1' class='invocation-failed'>
-<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td colspan='4' align='center'><b>FAILED CONFIGURATIONS</b></td></tr>
 <tr><td><b>Test method</b></td>
 <td width="30%"><b>Exception</b></td>
 <td width="10%"><b>Time (seconds)</b></td>
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='app.psc.testcases.login.logintestcases.TC006_01_Verify_Force_Login()'><b>TC006_01_Verify_Force_Login</b><br>Test class: app.psc.testcases.login.logintestcases<br>Parameters: 1, {FORCELOGINTRUEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=true, FORCELOGINFALSEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=false, FORCELOGINDUMMYURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=1234ascd}</td>
-<td><div><pre>java.lang.NullPointerException
-	at app.psc.testcases.login.logintestcases.TC006_01_Verify_Force_Login(logintestcases.java:196)
-	at app.psc.ThreadInvocation$1.run(ThreadInvocation.java:29)
-	at java.lang.Thread.run(Unknown Source)
-... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1305260609", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1305260609'><pre>java.lang.NullPointerException
-	at app.psc.testcases.login.logintestcases.TC006_01_Verify_Force_Login(logintestcases.java:196)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:702)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:894)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1219)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:768)
+<td title='app.psc.testcases.login.logintestcases.InitTest()'><b>InitTest</b><br>Test class: app.psc.testcases.login.logintestcases</td>
+<td><div><pre>java.lang.OutOfMemoryError: Java heap space
+	at java.lang.StringCoding.encode(StringCoding.java:350)
+	at java.lang.String.getBytes(String.java:941)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:103)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:64)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:141)
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.execute(NewProfileExtensionConnection.java:160)
+	at org.openqa.selenium.firefox.FirefoxDriver$LazyCommandExecutor.execute(FirefoxDriver.java:467)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:601)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:241)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:128)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:259)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:247)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:242)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:238)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:131)
+	at lib.Web.getWebDriver(Web.java:466)
+	at core.framework.TestListener.beforeInvocation(TestListener.java:283)
+... Removed 15 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace178603358", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace178603358'><pre>java.lang.OutOfMemoryError: Java heap space
+	at java.lang.StringCoding.encode(StringCoding.java:350)
+	at java.lang.String.getBytes(String.java:941)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:103)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:64)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:141)
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.execute(NewProfileExtensionConnection.java:160)
+	at org.openqa.selenium.firefox.FirefoxDriver$LazyCommandExecutor.execute(FirefoxDriver.java:467)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:601)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:241)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:128)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:259)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:247)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:242)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:238)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:131)
+	at lib.Web.getWebDriver(Web.java:466)
+	at core.framework.TestListener.beforeInvocation(TestListener.java:283)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeBeforeInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:84)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:540)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:175)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:107)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
 	at org.testng.TestRunner.run(TestRunner.java:617)
 	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
 	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
 	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
 	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:87)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1188)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1113)
-	at org.testng.TestNG.run(TestNG.java:1025)
-	at app.psc.ThreadInvocation$1.run(ThreadInvocation.java:29)
-	at java.lang.Thread.run(Unknown Source)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 </pre></div></td>
 <td>0</td>
-<td>app.psc.testcases.login.logintestcases@39b0b1f</td></tr>
+<td>app.psc.testcases.login.logintestcases@4c9f8c13</td></tr>
 </table><p>
 </body>
 </html>

@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Gitlab_Changes_Undone_verification">
 		<classes>
-			 <!-- <class name="app.psc.testcases.login.logintestcases">
+			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -14,8 +14,8 @@
 				Forcelogin"></parameter>
 					</include>
 				</methods>
-			</class>  
-			  <class name="app.psc.testcases.userverification.userverificationtestcases">
+			</class>
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -28,24 +28,25 @@
 							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Valid"></parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class>
 
-			<!--<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					<include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
-					 <include name="TC002_Search_Employee_For_Invalid_SSN">
+					<include name="TC002_Search_Employee_For_Invalid_SSN">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Sanity_Suite_invalidssn">
 						</parameter>
 					</include>
-					 <include name="TC003_Search_Employee_For_Valid_Name_Input">
+					<include name="TC003_Search_Employee_For_Valid_Name_Input">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validname">
 						</parameter>
-					</include> -->
-					<!-- <include name="TC004_Search_Employee_For_Invalid_Name_Input">
+					</include>
+					<include name="TC004_Search_Employee_For_Invalid_Name_Input">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Sanity_Suite_invalidname">
 						</parameter>
@@ -93,8 +94,8 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicateppt">
 						</parameter>
-					</include>-->
-					<!--  <include
+					</include>
+					<include
 						name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatediv">
@@ -114,12 +115,12 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include> 
+					</include>
 				</methods>
-			</class>-->
+			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
-					 <!--  <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
+					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_screen_elements">
 						</parameter>
@@ -157,7 +158,7 @@
 						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_ext">
 						</parameter>
 					</include>
-					 <include
+					<include
 						name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_emp_err_code">
@@ -173,14 +174,15 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_valid_res_termed_emp">
 						</parameter>
-					</include>-->
+					</include>
 					<include name="TC029_Verify_ssn_masking_for_external_users">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_masking">
 						</parameter>
-					</include> 
+					</include>
 				</methods>
-			</class>   
-			 <!-- <class
+			</class>
+			<!-- <class </include> </methods> </class> -->
+			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
 					<include
@@ -202,7 +204,7 @@
 						</parameter>
 					</include>
 				</methods>
-			</class> 
+			</class>
 			<class
 				name="app.psc.testcases.accountverification.accountverification_existingusr">
 				<methods>
@@ -211,7 +213,7 @@
 							value="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
 						</parameter>
 					</include>
-				 	<include
+					<include
 						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC002_Expired Password_negative">
@@ -227,10 +229,10 @@
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
 						</parameter>
-					</include> 
+					</include>
 				</methods>
 			</class>
-			 <class
+			<class
 				name="app.psc.testcases.accountverification.accountverificationtest_plan">
 				<methods>
 					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
@@ -245,7 +247,7 @@
 					</include>
 				</methods>
 			</class>
-		 <class name="app.psc.testcases.login.logintestcases">
+			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					<include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
@@ -272,7 +274,7 @@
 							value="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin"></parameter>
 					</include>
 				</methods>
-			</class>   -->
+			</class>
 		</classes>
 	</test>
 

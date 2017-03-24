@@ -14,6 +14,7 @@
 				<parameter name="planNumber" value="331045-01" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered"/>
 		<TestCase name="Plan_Validat_error_message_when_plan_filed_blank">
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="1ISIS" />
@@ -46,6 +47,7 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="planNumber" value="331045-01" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
@@ -77,6 +79,29 @@
 				<parameter name="password" value="badpassword" />
 				<parameter name="errorMessages"
 					value="Please enter a valid Username / Password combination." />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "User_Account_Locking_For_max_Invalid_Attempts">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="54AFP" />
+				<parameter name="password" value="testing" />
+				<parameter name="errorMessages" value="You have exceeded the maximum number of login attempts." />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "SIT_PSC_Login_01_TC004_Terminate User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="54AFP"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate"	value="06-FEB-17"/>
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="54AFP"/>
+				<parameter name="password" value="testing1" />
+				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate"	value="06-FEB-22"/>
+				<parameter name="UserVeriEmail" value="discard@gwl.com"/>
+				<parameter name="UserSecondaryAns" value="test"/>
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
@@ -132,6 +157,14 @@
 				<parameter name="Comments" value="User ID for External users" />
 			</Iteration>
 		</TestCase>
+	<TestCase name="Display correct date and time of my last login">
+		<Iteration Execution="Yes" id="1">
+			<parameter name="username" value="1ISIS" />
+			<parameter name="password" value="testing1" />
+			<parameter name = "application" value="PSC"/>
+			<parameter name = "menu_feature_code" value="BROWSER_INFO"/>
+		</Iteration>
+	</TestCase>
 		<TestCase name="SIT_PSC_Sitenavigation_Menutabs">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS"/>
@@ -343,8 +376,7 @@
 				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
 				<parameter name="UserSecondaryAns" value="invalid" />
 				<parameter name="expectedErrorMessage"
-					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.
-" />
+					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive." />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -1326,6 +1358,27 @@ GA_ID in (select DISTINCT GA_ID from user_data_access where
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ISISDB_QA"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
+			<parameter QueryName="queryToSetInvalidLoginCount" DB="ParticipantDataDB"
+			Query="update isis_password set invalid_login_count=2 where user_logon_id=?">
+			</parameter>
+			<parameter QueryName="queryToResetInvalidLoginCount" DB="ParticipantDataDB"
+			Query="update isis_password set invalid_login_count=0 where user_logon_id=?">
+			</parameter>
+			<parameter QueryName = "queryToTerminateUser" DB="ParticipantDataDB"
+			Query = "Update users set termdate = ? where logon_id=?"></parameter>
+			<parameter QueryName = "queryToResetTermDate" DB="ParticipantDataDB"
+			Query = "Update users set termdate = '06-FEB-22' where logon_id=?"></parameter>
+			<parameter QueryName = "getLastLogins" DB="ParticipantDataDB"
+			Query = "select user_logon_id, TO_CHAR(DPDATE_TIME, &apos;YYYYMMDD hh24:mi&apos;) DPDATE, 
+substr(exception,  instr(exception, &apos;IP_ADDR&gt;&apos;)+8,  (instr(exception, &apos;&lt;/IP_ADDR&gt;&apos;) - (instr(exception, &apos;IP_ADDR&gt;&apos;)+8))) IP ,
+substr(exception,  instr(exception, &apos;BROWSER&gt;&apos;)+8,  (instr(exception, &apos;&lt;/BROWSER&gt;&apos;) - (instr(exception, &apos;BROWSER&gt;&apos;)+8))) browser , 
+substr(exception,  instr(exception, &apos;FULL_VERSION&gt;&apos;)+13,  (instr(exception, &apos;&lt;/FULL_VERSION&gt;&apos;) - (instr(exception, &apos;FULL_VERSION&gt;&apos;)+13))) major,
+substr(exception,  instr(exception, &apos;MINOR_VERSION&gt;&apos;)+14,  (instr(exception, &apos;&lt;/MINOR_VERSION&gt;&apos;) - (instr(exception, &apos;MINOR_VERSION&gt;&apos;)+14))) minor
+from menu_activity
+where application = ?
+and menu_feature_code = ?
+and user_logon_id=? order by DPDATE desc"/>
+=======
 		<parameter QueryName="getAccuCode" DB="INSTDB_QA"
 			Query="select DISTINCT(accu_code),ga_id from access_customization_view where access_type_code='PSC_WEB' and accu_code in ('PlanEmpower','PscGwrs','PscPutnamWR') and ga_id in(select ga_id from std_restrc where uscs_id=?)" />
 		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
@@ -1365,5 +1418,6 @@ user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'))) order by i
 	Query="select ssn from individual where id =?"/>
 	<parameter QueryName="getSalary" DB="ISISDB_QA"
 	Query="select sal_amt from income_data where ind_id =?"/>
+>>>>>>> 742279f708fa8c86da87f93f3dc630b0096c0f0f
 	</Module>
 </TestData>

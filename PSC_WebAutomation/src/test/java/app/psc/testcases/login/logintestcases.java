@@ -75,7 +75,7 @@ public class logintestcases {
 					"Validate the internal employee vs External client Login scenario", false);
 			// Step-1 : Login with internal/external employee credentials
 			login = new LoginPage().get();
-		
+
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			Thread.sleep(10000);
 			// Step-2 : Check if the user is on the login page
@@ -140,7 +140,7 @@ public class logintestcases {
 
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginTrueURL"));
 			isUsernameFieldDisplayed = Web.isWebElementDisplayed(login, "FORCELOGIN USERNAME");
-			
+
 			if(isUsernameFieldDisplayed){
 				Reporter.logEvent(Status.PASS, "Check if user name field displayed",
 						"Username field displayed successfully", false);
@@ -155,7 +155,7 @@ public class logintestcases {
 
 			Web.getDriver().get(Stock.GetParameterValue("ForceLoginFalseURL"));
 			isGWRSLogoDisplayed = Web.isWebElementDisplayed(login, "GWRS IMAGE");
-			
+
 			if(isGWRSLogoDisplayed){
 				Reporter.logEvent(Status.PASS, "Check if GWRS Logo displayed",
 						"GWRS Logo is displayed as expected", false);
@@ -233,9 +233,9 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the pre-login error messages", false);
 			login = new LoginPage().get();
-			
-		login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
-		Thread.sleep(4000);
+
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			Thread.sleep(4000);
 			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -329,11 +329,11 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the post login Header and footer links", false);
 			login = new LoginPage().get();
-			
+
 			List<String> preLoginFooterList = login.getPreLoginFooterLinkList();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
@@ -357,8 +357,47 @@ public class logintestcases {
 			}
 		}
 	}
-	
-	
+	@Test(dataProvider = "setData")
+	public void TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt(int itr,Map<String,String> testData)
+	{
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user account is getting locked if user enters wrong password for three times", false);
+			login = new LoginPage();
+			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToSetInvalidLoginCount"),
+					Stock.GetParameterValue("username"));
+			login.get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of account locking for wrong credential.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured. Login page header could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Sitenavigation_01_TC001_Menutabs</u></b>
@@ -379,7 +418,7 @@ public class logintestcases {
 			login = new LoginPage().get();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
@@ -403,8 +442,84 @@ public class logintestcases {
 			}
 		}
 	}
-		
-	
+
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC004_Terminate User</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validating inactive user
+	 * Login</b> Test Type: <b>Negative flow</b>
+	 * 
+	 * <b>Description:</b> To verify user is prompted with error message if try to login
+	 * with terminated user credentials
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>txtUserVeriEmail -</b> User Verification Email
+	 * <b>txtUserVeriAns -</b> User Verification Security Answer
+	 * <b>termDate -</b> Termination date of the employee
+	 * 
+	 * @author rvpndy (08-FEB-2017)
+	 */
+
+	@Test(dataProvider = "setData")
+	public void TC006_01_Verify_Error_Message_For_Terminated_User(int itr, Map<String, String> testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user is prompted with an error message if user tries to login with terminated user",
+					false);
+			login = new LoginPage();
+			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToResetInvalidLoginCount"),
+					Stock.GetParameterValue("username"));
+			login.updateTermDateForUser(Stock.getTestQuery("queryToTerminateUser"), Stock.GetParameterValue("termDate"), Stock.GetParameterValue("username"));
+			login.get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			if(itr==1)
+			{
+				login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));
+			}
+			else
+			{
+				UserVerificationPage userverification = new UserVerificationPage();
+				userverification.performVerification(
+						new String[] { Stock.GetParameterValue("UserVeriEmail"), Stock.GetParameterValue("UserSecondaryAns") });
+				new HomePage().get();
+				Reporter.logEvent(Status.PASS, "Check if home page is loaded", "Home page is loaded", false);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of login flow of terminated user.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+
+
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Sitenavigation_SubMenutabs</u></b>
@@ -425,13 +540,13 @@ public class logintestcases {
 			login = new LoginPage().get();
 			home = new HomePage();
 			accountverification = new AccountVerificationPage();
-			 new HomePage(new LoginPage(), false, new String[] {
+			new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Thread.sleep(3000);
 			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
 			Web.waitForPageToLoad(Web.getDriver());
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -450,8 +565,79 @@ public class logintestcases {
 			}
 		}
 	}
-	
-	
+	/**
+	 * <pre>
+	 * Testcase: <b><u>Display correct date and time of my last login</u></b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Verifying equality of last login date values
+	 * from app and DB</b> Test Type: <b>Psotive flow</b>
+	 * 
+	 * <b>Description:</b> To verify equality of last login date time value is equal to 
+	 * date time value stored in database
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid Username <b>password
+	 * -</b> Valid Password <b>txtUserVeriEmail -</b> User Verification Email
+	 * <b>txtUserVeriAns -</b> User Verification Security Answer
+	 * <b>MENU_FEATURE_CODE -</b> Browser Info
+	 * <b>APPLICATION</b> Application name in menu activity table.
+	 * @author rvpndy (21-FEB-2017)
+	 */
+
+	@Test(dataProvider = "setData")
+	public void TC007_01_display_correct_date_and_time_of_my_last_login(int itr,Map<String, String> testData){
+
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify last login displayed on home page is correct",
+					false);
+			HomePage homePage= 	 new HomePage();
+			String date = homePage.getLastLoginDate();
+			login = new LoginPage().get();
+			new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			if(homePage.verifyLastLoginDateEquality(date))
+			{
+				Reporter.logEvent(Status.PASS, "Compare last login date and time from application and database ",
+						"Time displayed on application home page is equal to time stored in database", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Compare last login date and time values from application and database ",
+						"Time displayed on application home page is not equal to time stored in database", true);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of last login time equality between app and db.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+
 
 	/**
 	 * <pre>
@@ -480,8 +666,8 @@ public class logintestcases {
 			home.isJumpPageDisplayed();
 			home.jumpPageVerificationWhenPlanAccessInSingleSite();
 			Web.waitForPageToLoad(Web.getDriver());
-			
-			
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -500,7 +686,54 @@ public class logintestcases {
 			}
 		}
 	}
-	
+	@Test(dataProvider = "setData")
+	public void TC008_01_Verify_Equality_Of_SessionID_From_Browser_And_DB(int itr, Map<String,String> testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify session ID from browser cookie is equal to session ID from database",
+					false);
+			HomePage homePage= 	 new HomePage();
+			new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			//Thread.sleep(2000);
+			if(homePage.validateCookieValue())
+				Reporter.logEvent(Status.PASS,"Verify session ID from browser cookie is equal to session ID from database",
+						"Sessions IDs are verified positively for equality", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Verify session ID from browser cookie is equal to session ID from database",
+						"Sessions IDs are not equal", true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of equality of session IDs from app and db.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * <pre>
 	 * Testcase: <b><u>Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites</u></b>
@@ -545,8 +778,53 @@ public class logintestcases {
 			}
 		}
 	}
-	
-	
+	@Test(dataProvider = "setData")
+	public void TC009_01_Verify_To_Do_List_Site_Navigator(int itr, Map<String,String> testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME, "DDTC-1319");
+			Reporter.logEvent(Status.INFO, "Testcase description", 
+					"Verify clicking on To do(from all options) redirects users to same page", false);
+			HomePage homePage = new HomePage();
+			new HomePage(new LoginPage(),false,new String[]{
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			if(homePage.verifyToDoSiteNavigation(Stock.GetParameterValue("BUTTONNAME")))
+			{
+				Reporter.logEvent(Status.PASS, "Check user is properly navigated", "User is properly navigated", false);
+			}
+			else
+				Reporter.logEvent(Status.FAIL, "Check user is properly navigated", "User is not properly navigated", true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of site naviagation",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>UI_Validations_On_JumpPage</u></b>
@@ -590,7 +868,52 @@ public class logintestcases {
 			}
 		}
 	}
-	
+
+	@Test(dataProvider = "setData")
+	public void TC010_01_Verify_Restyled_Button_Home_Page_For_Sentence_Case(int itr, Map<String,String> testData)
+	{
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME, "DDTC-1353");
+			Reporter.logEvent(Status.INFO, "Testcase description", 
+					"Verify restyled buttons on home page for sentence case", false);
+			HomePage homePage = new HomePage();
+			new HomePage(new LoginPage(),false,new String[]{
+				Stock.GetParameterValue("username"),Stock.GetParameterValue("password")
+			}).get();
+			if(homePage.verifyButtonTextForSentenceCase())
+			{
+				Reporter.logEvent(Status.PASS, "Check button text is in sentence case", "Button text is in sentence case", false);
+			}
+			else
+				Reporter.logEvent(Status.FAIL, "Check button text is in sentence case", "Button text is not in sentence case", true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, 
+					"A run time exception occured during verification of restyled button on home page.",
+					e.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page or login page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * <pre>
 	 * Testcase: <b><u>Verify_PLUser_Login_With_No_Plna_Access</u></b>
@@ -615,7 +938,7 @@ public class logintestcases {
 			Web.getDriver().switchTo().frame("framea");
 			home.isPlanListDisplayed();
 			Web.getDriver().switchTo().defaultContent();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -634,18 +957,17 @@ public class logintestcases {
 			}
 		}
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	/*@Test(dataProvider = "setData")
 	public void */
-
 	@AfterSuite
 	public void DriverQuite() {
 		Web.getDriver().close();

@@ -13,6 +13,8 @@
 							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session"></parameter>
 					</include>
 				</methods>
+			</class> 
+				<class name="app.psc.testcases.plan.plansearchtestcases">
 			</class> -->
 				<!-- <class name="app.psc.testcases.plan.plansearchtestcases">
 				 <methods>
@@ -24,6 +26,26 @@
 						<parameter name="ManualTCName"
 							value="Plan_Validat_error_message_when_plan_filed_blank"></parameter>
 					</include>
+					<include name="TC03_Verify_planDetails_Populated">
+						<parameter name="ManualTCName"
+							value="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered"></parameter>
+					</include>
+				</methods>
+			</class>-->
+			<class name="app.psc.testcases.login.logintestcases">
+				<methods>
+					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC004_Terminate User"></parameter>
+					</include>
+					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
+						<parameter name="ManualTCName"
+							value="User_Account_Locking_For_max_Invalid_Attempts"></parameter>
+					</include>
+					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
+						<parameter name="ManualTCName"
+							value="Display correct date and time of my last login"></parameter>
+					</include>				
 					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"></parameter>
@@ -33,7 +55,7 @@
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"></parameter>
 					</include> 
 				</methods>
-			</class> -->
+			</class> 
 			<!-- <class name="app.psc.testcases.login.logintestcases">
 			 <methods>
 				<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
