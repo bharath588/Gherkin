@@ -1,5 +1,6 @@
 package pageobjects.employeesearch;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -18,18 +19,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import lib.DB;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
+import com.sun.glass.ui.Window;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 import framework.util.CommonLib;
 import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.util.component.FileNoticeLifeCycleListener;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -266,8 +273,135 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement incomeEditFrame;
 	@FindBy(xpath="//font[@class='important_note']//li")
 	private List<WebElement> errorBoxes;
-	
-	
+	@FindBy(xpath=".//*[@id='paycheckContributionInfo']//span[@class='sectionHeader']")
+	private WebElement paycheckContriHeader;
+	@FindBy(xpath="//font[@class='column_title' and contains(text(),'SSN')]")
+	private WebElement modalWindowSSN;
+	@FindBy(xpath="//font[@class='section_title_text' and contains(text(),'Update employment')]")
+	private WebElement upDateEmploymentHeader;
+	@FindBy(xpath="//label[contains(text(),'Hire date')]/../following-sibling::td//td")
+	private WebElement hireDateReadOnly;
+	@FindBy(xpath="//label[contains(text(),'Overview')]")
+	private WebElement overviewLabel;
+	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'Name')]")
+	private WebElement nameLabel;
+	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'SSN')]")
+	private WebElement ssnLabel;
+	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'DOB')]")
+	private WebElement dobLabel;
+	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'Employee ID')]")
+	private WebElement empIDLabel;
+	@FindBy(id="EmployeebasicInfoIndividualID")
+	private WebElement empIdValue;
+	@FindBy(id="EmployeebasicInfoBirthDate")
+	private WebElement dobValue;
+	@FindBy(xpath="//*[@id='paeUrlButton']")
+	private WebElement employeeWebButton;
+	@FindBy(xpath="//*[@id='selectedPlanHeaderPanel']//a[.='Print']")
+	private WebElement print;
+	@FindBy(xpath="//div[@class='printHeader']/h3")
+	private WebElement printPriviewWindowHeader;
+	@FindBy(xpath="//div[@id='overviewtable']//span[contains(text(),'Plan number')]")
+	private WebElement planNumberColumn;
+	@FindBy(xpath="//div[@id='overviewtable']//span[contains(text(),'Plan name')]")
+	private WebElement planNameColumn;
+	@FindBy(xpath="//div[@id='overviewtable']//span[contains(text(),'Balance')]")
+	private WebElement balanceColumn;
+	@FindBy(xpath="//div[@id='overviewtable']//span[contains(text(),'Details')]")
+	private WebElement detailsColumn;
+	@FindBy(xpath=".//*[@id='overviewtable']//td[1]")
+	private List<WebElement>  planNumbersUI;
+	@FindBy(xpath=".//*[@id='overviewtable']//td[2]")
+	private List<WebElement>  planNamesUI;
+	@FindBy(xpath=".//*[@id='selectedPlanHeaderPanel']//h3")
+	private WebElement selectedPlanHeader;
+	@FindBy(xpath=".//*[@id='overviewtable_data']//tr[contains(@class,'selected')]//a")
+	private WebElement highlightedPlannumber;
+	@FindBy(xpath=".//*[@id='overviewtable_data']//tr//a")
+	private List<WebElement> planListOnOveriewPage;
+	@FindBy(xpath="//div[contains(@class,'ui-datatable-footer')]//span")
+	private List<WebElement> totalBalance;
+	@FindBy(xpath=".//*[@id='overviewtable']//td[3]//span")
+	private List<WebElement> balanceList;
+	@FindBy(xpath="//*[@class='page-title']/h1")
+	private WebElement accountDetailHeader;
+	@FindBy(xpath="//div[@id='iframePanelcA']/iframe")
+	private WebElement viewAccountDetailFrame;
+	@FindBy(xpath="//a/h4[contains(text(),'Money Source')]")
+	private WebElement moneySource;
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]")
+	private WebElement investment;
+	@FindBy(xpath=".//*[@id='asOfDateCal']//preceding-sibling::span")
+	private WebElement balanceOnViewAccountPage; 
+	@FindBy(xpath="//a/h4[contains(text(),'Money Source')]//ancestor::*[2]/following-sibling::div//th")
+	private List<WebElement> moneySrcHeaders;
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]//ancestor::*[2]/following-sibling::div//th")
+	private List<WebElement> investmentHeaders;
+	@FindBy(xpath="//a/h4[contains(text(),'Money Source')]//ancestor::*[2]/following-sibling::div//tr")
+	private List<WebElement> moneySrcRow;
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]//ancestor::*[2]/following-sibling::div//tr")
+	private List<WebElement> investmentRows;
+	@FindBy(xpath="//i[contains(text(),'Return to employee overview')]")
+	private WebElement returnToEmployeeOverview;
+	@FindBy(xpath=".//*[@id='asOfDateCal']//following-sibling::span[text()='*']/preceding-sibling::*[1]")
+	private WebElement calendarIcon;
+	@FindBy(id="asOfDateCal_table")
+	private WebElement asOfDate;
+	@FindBy(xpath="//h4[contains(text(),'Money Sources')]/ancestor::*[2]/following-sibling::div//strong")
+	private List<WebElement> totalForMoneySources;
+	@FindBy(xpath="//h4[contains(text(),'Investments')]/ancestor::*[2]/following-sibling::div//strong")
+	private List<WebElement> totalForInvetsment;
+	@FindBy(xpath="//span[contains(text(),'Basic information')]")
+	private WebElement basicinfoHeader;
+	@FindBy(xpath="//*[@id='basicInfo']//label")
+	private List<WebElement> basicInfoLabels;
+	@FindBy(xpath="//*[@id='basicInfo']//label/../following-sibling::*//td")
+	private List<WebElement> basicInfoValues;
+	public Map<String,String> basicInfoMapBeforeChanges;
+	@FindBy(id="basicInfoEditLink")
+	private WebElement basicInfoEdit;
+	@FindBy(xpath="//*[@id='basicInfoEditDialogId']//iframe")
+	private WebElement basicInfoEditFrame;
+	@FindBy(xpath="//*[@id='basicInfoEditDialogId']/preceding-sibling::div//span[.='close']")
+	private WebElement closeIconBasicInfoEditWindow;
+	@FindBy(xpath="//font[@class='column_title'][contains(text(),'SSN')]")
+	private WebElement ssnHeaderOnModalWindow;
+	@FindBy(xpath="//font[@class='column_title'][contains(text(),'Name')]")
+	private WebElement nameHeaderOnModalWindow;
+	@FindBy(xpath="//font[contains(text(),'Employee Contact Information')]/../following-sibling::*[3]//tr//td[1]//font[text()!='']")
+	private List<WebElement> modalWindowContactInfoLabels;
+	@FindBy(xpath="//font[contains(text(),'Employee Basic Information')]/../following-sibling::*[3]//tr//td[1]//font[text()!='']")
+	private List<WebElement> modalWindowBasicInfoLabels;
+	@FindBy(id="birthDate")
+	private WebElement birthDate;
+	@FindBy(id="maritalStatus")
+	private WebElement maritalSts;
+	@FindBy(id="sex")
+	private WebElement gender;
+	@FindBy(id="language")
+	private WebElement language;
+	@FindBy(xpath=".//*[@id='sex']/option[@selected='']")
+	private WebElement checkGender;
+	@FindBy(xpath=".//*[@id='language']/option[@selected='']")
+	private WebElement checkLanguage;
+	@FindBy(xpath=".//*[@id='maritalStatus']/option[@selected='']")
+	private WebElement checkMaritalStatus;
+	@FindBy(xpath="//b[contains(text(),'Incoming Rollover Assistance')]")
+	private WebElement incomingRollAssitance;
+	@FindBy(id="IPB_CONTACT_4")
+	private WebElement outsideAssets;
+	@FindBy(xpath="//label[contains(text(),'Birth date')]/../following-sibling::td//td")
+	private WebElement updatedBirthDate;
+	@FindBy(xpath="//label[contains(text(),'Marital status')]/../following-sibling::td//td")
+	private WebElement updatedMaritalStatus;
+	@FindBy(xpath="//label[contains(text(),'Gender')]/../following-sibling::td//td")
+	private WebElement updatedGender;
+	@FindBy(xpath="//label[contains(text(),'Language')]/../following-sibling::td//td")
+	private WebElement updatedLanguage;
+	String qdroPart = null;
+	String normalPart = null;
+	String transferPart=null;
+		
 	String maritalStatus = null;
 	String state1 = null;
 	String country1 = null;
@@ -275,6 +409,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	String beneTypeCode = null;
 	public  String[] str1 = new String[2];
 	public String[] individual = new String[3];
+	public String[] terminatedEmp = new String[2];
+	public List<String> qntTypeIndividuals;
+	public Map<String,String> partDetails;
 	
 	Map<String,String> m = new LinkedHashMap<String,String>();
 	LoadableComponent<?> parent;
@@ -285,10 +422,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	Set<String> setSSN;
 	List<String> expectedListofElements;
 	List<String> actualListofElements;
-	
+	Map<String,String> employmentDetailsBeforeRehiring = new LinkedHashMap<String,String>();
+	Map<String,String> employmentDetailsAfterRehiring = new LinkedHashMap<String,String>();
+	//List<String> planNameList;
+	List<String> planNumberList;
 
 	public EmployeeSearch() {
 		PageFactory.initElements(Web.getDriver(), this);
+		
 	}
 
 	@Override
@@ -309,15 +450,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Check if the user has landed on homepage",
 					"The user has landed on homepage", true);
-			//actions = new Actions(Web.getDriver());
-			//actions.moveToElement(tabEmployees).click();
-			//actions.click();
+			CommonLib.waitForProgressBar();
+			Web.waitForElement(tabEmployees);
 			Web.clickOnElement(tabEmployees);
 			Web.waitForElement(drpdwnSearchEmployee);
-			actions = new Actions(Web.getDriver());
+			/*actions = new Actions(Web.getDriver());
 			actions.moveToElement(linkProfile);
-			actions.build().perform();
-
+			actions.build().perform();*/
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -329,6 +468,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement getWebElement(String fieldName) {
 		if (fieldName.trim().equalsIgnoreCase("BTN GO")) {
 			return this.btnGoPlanNumberforSearchBox;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Link_EXT"))
+		{
+			return this.linkEXT;
 		}
 
 		if (fieldName.trim().equalsIgnoreCase("FILTER")) {
@@ -358,6 +501,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 		if (fieldName.trim().equalsIgnoreCase("LastName Sort")) {
 			return this.listLastName;
+		}
+		if(fieldName.trim().equalsIgnoreCase("EmpLastNameLink"))
+		{
+			return this.fNLNMILink;
 		}
 		if (fieldName.trim().equalsIgnoreCase("FirstName Sort")) {
 			return this.listFirstName;
@@ -396,6 +543,24 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().defaultContent();
 		dismissErrorBox();
 	}
+	
+	/**
+	 * This method used to search the employee by SSN-All Plans
+	 * @param SSN
+	 * @throws InterruptedException
+	 */
+	public void searchEmployeeBySSNAllPlans(String SSN) throws InterruptedException {
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
+		select = new Select(drpdwnSearchEmployee);
+		select.selectByVisibleText("SSN - all plans");
+		Web.waitForElement(txtSearchbox);
+		Web.setTextToTextBox(txtSearchbox, SSN);
+		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
+		Web.clickOnElement(btnGoEmployeeSearch);
+		Web.getDriver().switchTo().defaultContent();
+		//dismissErrorBox();
+	}
 
 	/**
 	 * This method validates if search results are displayed for a particular search criteria
@@ -422,7 +587,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Name");
-		Web.setTextToTextBox(txtSearchbox, Name);		
+		Web.isWebElementDisplayed(txtSearchbox, true);
+		Web.clickOnElement(txtSearchbox);
+		//Web.setTextToTextBox(txtSearchbox, Name);		
 		Thread.sleep(2000);
 		btnGoEmployeeSearch.click();
 		Thread.sleep(2500);		
@@ -559,7 +726,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
 		Web.clickOnElement(tabEmployees);
-		Thread.sleep(2000);
+		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(linkProfile);
 		actions.build().perform();
@@ -573,9 +740,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	
 	public void searchByDivision() throws InterruptedException {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Division");
-		if (Web.isWebElementDisplayed(tableDivresults)) {
+		if (Web.isWebElementDisplayed(tableDivresults,true)) {
 			Reporter.logEvent(Status.PASS,
 					"Check if divisions are displayed for the plan",
 					"The divisions related to plan are displayed", false);
@@ -665,8 +833,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public boolean compareDropdownOptions() {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
+		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
+				"Participant ID", "Division"};*/
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division"};
+				"Participant ID", "--------------------","Name - all plans","SSN - all plans"};
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -712,8 +882,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void verifyColumnHeaders() throws Exception {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		/*String[] headersArray = new String[] { "Last name", "First name",
+				"M.I.", "SSN", "Ext", "Emp ID", "Part ID", "Division" };*/
 		String[] headersArray = new String[] { "Last name", "First name",
-				"M.I.", "SSN", "Ext", "Emp ID", "Part ID", "Division" };
+				"M.I.", "SSN", "Ext", "Emp ID", "Part ID"};
 		expectedListofElements = Arrays.asList(headersArray);
 		Web.waitForElements(headerSearchResTable);
 		actualListofElements = getWebElementstoListofStrings(headerSearchResTable);
@@ -902,7 +1074,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public ResultSet selectPlanForUser(String[] planNumwithDivQuery,
 			String username) throws Exception {
 		queryResultSet = DB.executeQuery(planNumwithDivQuery[0],
-				planNumwithDivQuery[1], "K_" + username);
+				planNumwithDivQuery[1], "K_"+username);
 		return queryResultSet;
 	}
 
@@ -910,10 +1082,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * It verifies the filter functionality by taking a text as the filter criteria
 	 * @param searchText
 	 */
-	public void verifyFilterFunctionality(String searchText) {
+	public void verifyFilterFunctionality(String searchText) throws Exception {
 		switchToFrame();
 		Web.setTextToTextBox(txtFilter, searchText);
 		Web.waitForElement(searchResultsTablerow);
+		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(searchResultsTablerow)) {
 			if (StringUtils.containsIgnoreCase(searchResultsLastName.getText(),
 					searchText)
@@ -923,7 +1096,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							searchResultsMI.getText(), searchText)
 					|| StringUtils.containsIgnoreCase(linkSSN.getText(),
 							searchText)
-					|| StringUtils.containsIgnoreCase(linkEXT.getText(),
+					|| StringUtils.containsIgnoreCase(this.getWebElement("Link_EXT").getText(),
 							searchText)
 					|| StringUtils.containsIgnoreCase(linkEMP_ID.getText(),
 							searchText)
@@ -1000,7 +1173,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"The SSN are masked for the specific plan", true);
 			} else {
 				Reporter.logEvent(Status.FAIL, "Check if SSN are masked",
-						"The SSN are masked for the specific plan", true);
+						"The SSN are not masked for the specific plan", true);
 			}
 		}
 		switchToDefaultContent();
@@ -1149,12 +1322,6 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return individual;
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	public Map<String,String> getEmpInfoFromDB(String ssn) throws SQLException
@@ -1600,22 +1767,20 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return str;
 	}
 	
-	
+	public String employeeSearched = null;
 	/*
 	 * This method takes user to the employee overview page
 	 */
 	public void navigateToEmployeeOverViewPage() throws Exception
 	{
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.isWebElementsDisplayed(fNLNMILink, true);
+		if(this.getWebElementasList("EmpLastNameLink").size()>0)
+		employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
+		Web.isWebElementsDisplayed(fNLNMILink, true);
+		Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
 		CommonLib.waitForProgressBar();
-		Web.waitForElements(fNLNMILink);
-		Web.clickOnElement(fNLNMILink.get(0));
 		Web.waitForPageToLoad(Web.getDriver());
-		CommonLib.waitForProgressBar();
-		CommonLib.waitForProgressBar();
-		CommonLib.waitForProgressBar();
-		Web.waitForPageToLoad(Web.getDriver());
-		Thread.sleep(3000);
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(empNameHeader);
@@ -1793,8 +1958,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(partDetailTab);
-		CommonLib.waitForProgressBar();
-		Thread.sleep(2000);
+		//CommonLib.waitForProgressBar();
+		//Thread.sleep(2000);
 		Web.clickOnElement(partDetailTab);
 		Web.waitForPageToLoad(Web.getDriver());
 		
@@ -1896,10 +2061,897 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Reporter.logEvent(Status.FAIL, "Update salary and save.", "Salary has not been updated.", true);
 		}
+	}
+	
+	@FindBy(xpath=".//*[@id='paycheckContributionMpwrDataTbl']//thead//th")
+	private List<WebElement> paycheckHeaderColumn; 
+	/*
+	 * This method verifies paycheck contribution section
+	 */
+	public void verify_Paycheck_ContributionSection() throws Exception
+	{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(paycheckContriHeader);
+		if(paycheckContriHeader.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Check if Paycheck contribution section is displayed.", "Paycheck contribution "
+					+ "section is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Check if Paycheck contribution section is displayed.", "Paycheck contribution "
+					+ "section is displayed.", true);
+		}
 		
-		
+		for(WebElement header : paycheckHeaderColumn)
+		{
+			Reporter.logEvent(Status.INFO, "Check column:'"+header.getText()+"'", "Column header:'"+header.getText()+"' is displayed.", true);
+		}
 		
 	}
+	
+	
+	/*
+	 * This method fetches the 
+	 */
+	public String ssnOfPayCheckContribution() throws SQLException
+	{
+		String ssn=null;
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getSSNForPaycheckContribution")[0],
+				Stock.getTestQuery("getSSNForPaycheckContribution")[1]);
+		while(queryResultSet.next())
+		{
+			ssn = queryResultSet.getString("SSN");
+			break;
+		}
+		return ssn;
+	}
+	
+	/*
+	 * This method fetches the 
+	 */
+	public String[] SSNOfEmployeeWithTermDate() throws SQLException,Exception
+	{
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeWithTermDate")[0],
+				Stock.getTestQuery("getEmployeeWithTermDate")[1],"K_"+Stock.GetParameterValue("username"));
+		Thread.sleep(3000);
+		while(queryResultSet.next())
+		{
+			terminatedEmp[0] = queryResultSet.getString("SSN");
+			System.out.println("SSN is:"+terminatedEmp[0]);
+			terminatedEmp[1] = queryResultSet.getString("ID");
+			System.out.println("Ind_Id is:"+terminatedEmp[1]);
+			break;
+		}
+		return terminatedEmp;
+	}
+
+	public Map<String,String> beforeRehiring() throws SQLException
+	{
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmpHiringDetails")[0], Stock.getTestQuery("getEmpHiringDetails")[1], terminatedEmp[1]);
+		while(queryResultSet.next())
+		{
+			queryResultSet.first();
+			employmentDetailsBeforeRehiring.put("EMP_TERMDATE",queryResultSet.getString("EMP_TERMDATE"));
+			employmentDetailsBeforeRehiring.put("HIRE_DATE",queryResultSet.getString("HIRE_DATE"));
+			employmentDetailsBeforeRehiring.put("ELIGIBILITY_IND",queryResultSet.getString("ELIGIBILITY_IND"));
+			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATE",queryResultSet.getString("PARTICIPATION_DATE"));
+			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("PARTICIPATION_DATE_SOURCE"));
+			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("ELIGIBILITY_DATE"));
+			break;
+		}
+		System.out.println(employmentDetailsBeforeRehiring);
+		return employmentDetailsBeforeRehiring;
+		
+	}
+	
+	public void AfterRehiring() throws Exception,SQLException
+	{
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmpHiringDetails")[0], Stock.getTestQuery("getEmpHiringDetails")[1], terminatedEmp[1]);
+		while(queryResultSet.next())
+		{
+			queryResultSet.first();
+			employmentDetailsAfterRehiring.put("EMP_TERMDATE",queryResultSet.getString("EMP_TERMDATE"));
+			employmentDetailsAfterRehiring.put("HIRE_DATE",queryResultSet.getString("HIRE_DATE"));
+			employmentDetailsAfterRehiring.put("ELIGIBILITY_IND",queryResultSet.getString("ELIGIBILITY_IND"));
+			employmentDetailsAfterRehiring.put("PARTICIPATION_DATE",queryResultSet.getString("PARTICIPATION_DATE"));
+			employmentDetailsAfterRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("PARTICIPATION_DATE_SOURCE"));
+			employmentDetailsAfterRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("ELIGIBILITY_DATE"));
+			break;
+		}
+		System.out.println(employmentDetailsAfterRehiring);
+		if(employmentDetailsAfterRehiring.get("EMP_TERMDATE").equals(null)
+			&&!employmentDetailsBeforeRehiring.get("HIRE_DATE").equals(employmentDetailsAfterRehiring.get("HIRE_DATE"))
+		    &&!employmentDetailsBeforeRehiring.get("ELIGIBILITY_IND").equals(employmentDetailsAfterRehiring.get("ELIGIBILITY_IND"))
+		    &&employmentDetailsBeforeRehiring.get("PARTICIPATION_DATE").equals(employmentDetailsAfterRehiring.get("HIRE_DATE"))
+		    &&!employmentDetailsBeforeRehiring.get("PARTICIPATION_DATA_SOURCE").equals(employmentDetailsAfterRehiring.get("PARTICIPATION_DATE_SOURCE"))
+		    &&employmentDetailsBeforeRehiring.get("ELIGIBILITY_DATE").equals(employmentDetailsAfterRehiring.get("ELIGIBILITY_DATE")))
+		{
+			Reporter.logEvent(Status.PASS, "Compare the changes after rehiring employee as below:<br>Term Date=null"
+					+ "<br>Hire Date=new Hire date<br>Eligibility code remains same<br>Participation date changes to Rehire date"
+					+ "<br>Participation datesource changes<br>Eligibility date does not changed.","All the said changes are observed", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Compare the changes after rehiring employee as below:<br>Term Date=null"
+					+ "<br>Hire Date=new Hire date<br>Eligibility code remains same<br>Participation date changes to Rehire date"
+					+ "<br>Participation datesource changes<br>Eligibility date does not changed.","All the said changes are not observed", true);
+		}
+		
+	}
+	
+	
+	/*
+	 * This method updates the hire date and removes the term date in process of rehiring of an employee
+	 */
+	public void rehireEmployee() throws Exception
+	{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(empInfoEditLink);
+		Web.clickOnElement(empInfoEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.waitForProgressBar();
+		Web.waitForElement(empInfoEditFrame);
+		Web.getDriver().switchTo().frame(empInfoEditFrame);
+		CommonLib.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(upDateEmploymentHeader);
+		if(upDateEmploymentHeader.isDisplayed())
+		{
+			String termDate_1 = termDate.getAttribute("value");
+			DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+			Date dt = dateFormat.parse(termDate_1);
+			Calendar calendar = Calendar.getInstance();         
+			calendar.setTime(dt);
+			calendar.add(Calendar.DATE, 1);
+			String newHireDate = dateFormat.format(calendar.getTime());
+			System.out.println("Date string is:"+dateFormat.format(calendar.getTime()));
+			hireDate.clear();
+			Web.setTextToTextBox(hireDate,newHireDate);
+			termDate.clear();
+			Web.clickOnElement(save);
+			Web.waitForPageToLoad(Web.getDriver());
+			CommonLib.waitForProgressBar();
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.waitForElement(hireDateReadOnly);
+			if(hireDateReadOnly.getText().equals(newHireDate))
+			{
+				Reporter.logEvent(Status.PASS,"Delete the term date and enter new hire date.", "New hire date has been entered.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Delete the term date and enter new hire date.", "New hire date has not been entered.", true);
+			}
+			Web.getDriver().switchTo().defaultContent();
+			
+		}
+		
+	}
+
+public String getSSNForMultiplePlans() throws SQLException
+{
+	String ssn=null;
+	
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeWithMultiplePlan")[0],
+			Stock.getTestQuery("getEmployeeWithMultiplePlan")[1],"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		ssn = queryResultSet.getString("SSN");
+		break;
+	}
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeWithMultiplePlan")[0],
+			Stock.getTestQuery("getEmployeeWithMultiplePlan")[1],"K_"+Stock.GetParameterValue("username"));
+	
+	
+	
+	
+	
+	return ssn;
+}
+	
+
+
+public void verifyOverviewScreenElements() throws Exception,SQLException
+{
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.waitForElement(overviewLabel);
+	if(overviewLabel.isDisplayed())
+	{
+		Reporter.logEvent(Status.PASS,"Verify Overview label is displayed.", "Overview label is displayed.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL,"Verify Overview label is displayed.", "Overview label is displayed.", true);
+	}
+	
+	if(nameLabel.isDisplayed()&&ssnLabel.isDisplayed()&&dobLabel.isDisplayed()||empIDLabel.isDisplayed())
+	{
+		Reporter.logEvent(Status.PASS,"Verify labels name,SSN,DOB end empid(if applicable) is displayed under overview section.", "Mentioned labels are displayed.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.PASS,"Verify labels name,SSN,DOB end empid(if applicable) is displayed under overview section.", "Mentioned labels are not displayed.", true);
+	}
+	
+	String firstName=null,lastName=null,middleName=null,birthDate=null;
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getIndividualDetails")[0],Stock.getTestQuery("getIndividualDetails")[1], empSSN.getText().replace("-","").trim());
+	while(queryResultSet.next())
+	{
+		firstName = queryResultSet.getString("FIRST_NAME");
+		lastName = queryResultSet.getString("LAST_NAME");
+		middleName = queryResultSet.getString("MIDDLE_NAME");
+		birthDate = queryResultSet.getString("BIRTH_DATE");
+		break;
+	}
+	String fullName = firstName+" "+middleName+" " +lastName;
+	System.out.println(fullName);
+	if(fullName.equals(empName.getText()))
+	{
+		Reporter.logEvent(Status.PASS,"Verify name format as: FirstName middleName lastName.", "Name is in mentioned format.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL,"Verify name format as: FirstName middleName lastName.", "Name is not in mentioned format.", true);
+	}
+	
+	String expression = "^\\d{3}[- ]?\\d{2}[- ]?\\d{4}$";
+	Pattern pattern = Pattern.compile(expression);
+	Matcher matcher = pattern.matcher(empSSN.getText());
+	if(matcher.matches())
+	{
+		Reporter.logEvent(Status.PASS, "Verify SSN is in format xxx-xx-xxxx.", "SSN is found to be in format:xxx-xx-xxxx", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify SSN is in format xxx-xx-xxxx.", "SSN is not found to be in format:xxx-xx-xxxx", true);
+	}
+	
+	if(birthDate.equals(dobValue.getText().trim()))
+	{
+		Reporter.logEvent(Status.PASS, "Verify DOB format as MM/DD/YYYY.", "DOB format is:MM/DD/YYYY", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify DOB format as MM/DD/YYYY.", "DOB format is not in format:MM/DD/YYYY", true);
+	}
+	if(!empIDLabel.isDisplayed())
+	{
+		if(!empIdValue.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Emp Id value is not displayed provided emp id label is not displayed.", "Emp Id value is not displayed if label is not displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Emp Id value is not displayed provided emp id label is not displayed.", "Emp Id value is displayed if label is not displayed.", true);
+		}
+	}
+		if(partDetailTab.isDisplayed()&&accntDetailsTab.isDisplayed()&&employeeWebButton.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Verify account detail,employee detail and employee web button is displayed.", "Account detail,employee detail and Employee web button is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify account detail,employee detail and employee web button is displayed.", "Account detail,employee detail and Employee web button is not displayed.", true);
+		}
+	String parentWindow = Web.getDriver().getWindowHandle();
+	System.out.println("Parent Window:"+parentWindow);
+	Web.waitForElement(print);
+	Web.clickOnElement(print);
+	Set<String> printWindow = Web.getDriver().getWindowHandles();
+	System.out.println(printWindow);
+	for(String childWindow:printWindow )
+	{
+		if(!parentWindow.equals(childWindow))
+		{
+			System.out.println("This is inside IF.");
+			Web.getDriver().switchTo().window(childWindow);
+			Web.waitForElement(printPriviewWindowHeader);
+			if(printPriviewWindowHeader.getText().contains("THIS IS A PRINT PREVIEW"))
+			{
+				Reporter.logEvent(Status.PASS, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is not displayed.", true);
+			}
+		}
+		
+	}
+	Web.getDriver().close();
+	Web.getDriver().switchTo().window(parentWindow);
+	Web.getDriver().switchTo().defaultContent();
+	
+}
+
+public String getMultiPlanEmployee() throws SQLException
+{
+	String ssn=null;
+	//planNameList = new ArrayList<String>();
+	planNumberList = new ArrayList<String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmployeeWithMultiplePlan")[0],Stock.getTestQuery("getEmployeeWithMultiplePlan")[1],"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		ssn = queryResultSet.getString("SSN");
+		break;
+	}
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getPlanNamesForSSN")[0],Stock.getTestQuery("getPlanNamesForSSN")[1],ssn);
+	while(queryResultSet.next())
+	{
+		//planNameList.add(queryResultSet.getString("NAME"));
+		planNumberList.add(queryResultSet.getString("GA_ID"));
+	}
+	System.out.println(planNumberList);
+	return ssn;
+}
+
+
+
+public List<String> getQNTTypeIndividuals() throws Exception,SQLException
+{
+	qntTypeIndividuals = new ArrayList<String>();
+	partDetails = new HashMap<String,String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getQDROIndividual")[0],Stock.getTestQuery("getQDROIndividual")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		String ssnQ = queryResultSet.getString("SSN");
+		this.searchEmployeeBySSNAllPlans(ssnQ);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElements(fNLNMILink);
+		if(fNLNMILink.size()>0)
+		{
+			qntTypeIndividuals.add(ssnQ);
+			qdroPart = queryResultSet.getString("OWNERSHIP_IND");
+			Web.getDriver().switchTo().defaultContent();
+			break;
+		}
+	}
+	
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getTransferIndividual")[0],Stock.getTestQuery("getTransferIndividual")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		String ssnT = queryResultSet.getString("SSN");
+		this.searchEmployeeBySSNAllPlans(ssnT);
+		System.out.println("after Transfer emp search.");
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElements(fNLNMILink);
+		if(fNLNMILink.size()>0)
+		{
+			qntTypeIndividuals.add(ssnT);
+			transferPart = queryResultSet.getString("OWNERSHIP_IND");
+			Web.getDriver().switchTo().defaultContent();
+			break;
+		}
+	}
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getNormalIndividual")[0],Stock.getTestQuery("getNormalIndividual")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		String ssnN = queryResultSet.getString("SSN");
+		this.searchEmployeeBySSNAllPlans(ssnN);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElements(fNLNMILink);
+		if(fNLNMILink.size()>0)
+		{
+			qntTypeIndividuals.add(ssnN);
+			normalPart = queryResultSet.getString("OWNERSHIP_IND");
+			partDetails.put("BIRTH_DATE",queryResultSet.getString("BIRTH_DATE"));
+			partDetails.put("MARITAL_STATUS",queryResultSet.getString("MARITAL_STATUS"));
+			partDetails.put("SEX",queryResultSet.getString("SEX"));
+			partDetails.put("LANGUAGE_CODE",queryResultSet.getString("LANGUAGE_CODE"));
+			Web.getDriver().switchTo().defaultContent();
+			break;
+		}
+	}
+	return qntTypeIndividuals;
+}
+
+
+	
+/*
+ * this methos verifies the Basic Information section on employee overview page
+ */
+public void verifyBasicInformationOnOverviewPage() throws Exception
+{
+	basicInfoMapBeforeChanges = new HashMap<String,String>();
+	Web.getDriver().switchTo().defaultContent();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.waitForElement(basicinfoHeader);
+	for(int i=0;i<basicInfoLabels.size();i++)
+	{
+		String key = basicInfoLabels.get(i).getText().replaceAll(":","").trim();
+		String value = basicInfoValues.get(i).getText().trim();
+		basicInfoMapBeforeChanges.put(key, value);
+	}
+	Set<String> actLabels = basicInfoMapBeforeChanges.keySet();
+	if(actLabels.contains("Account status")&&actLabels.contains("SSN")&&actLabels.contains("Participant ID")
+			&&actLabels.contains("Birth date")&&actLabels.contains("Death date")&&actLabels.contains("Gender")
+			&&actLabels.contains("Marital status")&&actLabels.contains("Language")&&actLabels.contains("PIN effective date")
+			&&actLabels.contains("Account type"))
+	{
+		Reporter.logEvent(Status.PASS, "Verify basic info categories as below on employee detail page:<br>"
+				+ "Account status,SSN,Participant ID,Birth date,Death date,Gender,Marital status,Language,PIN effective date,Account type", "All mentioned categories are displayed for employee details.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify basic info categories as below on employee detail page:<br>"
+				+ "Account status,SSN,Participant ID,Birth date,Death date,Gender,Marital status,Language,PIN effective date,Account type", "All mentioned categories are not displayed for employee details.", true);
+	}
+	
+	String accounttype = 	basicInfoMapBeforeChanges.get("Account type");
+	if(accounttype.equals(QNTMeaning(qdroPart))||accounttype.equals(QNTMeaning(normalPart))||accounttype.equals(QNTMeaning(transferPart)))
+	{
+		Reporter.logEvent(Status.PASS, "Verify Account type is dislayed accordingly."
+				+ "<br>for QDRO participant,Account type is 'QUALIFIED DOMESTIC RELATIONS AGREEMENT'"
+				+ "<br>for Normal participant,'NORMAL PARTICIPANT AGREEMENT'"
+				+ "<br>for Takeover/Transfer employee,'TAKEOVER/TRANSFER'.", "Account type is:"+accounttype, false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify Account type is dislayed accordingly."
+				+ "<br>for QDRO participant,Account type is 'QUALIFIED DOMESTIC RELATIONS AGREEMENT'"
+				+ "<br>for Normal participant,'NORMAL PARTICIPANT AGREEMENT'"
+				+ "<br>for Takeover/Transfer employee,'TAKEOVER/TRANSFER'.", "Account type is not displayed accordingly.", true);
+	}
+	//basicInfoMapBeforeChanges.clear();
+	Web.getDriver().switchTo().defaultContent();
+}
+
+public String QNTMeaning(String accountTypeCode) throws Exception
+{
+	Map<String,String> qnt = new HashMap<String,String>();
+	qnt.put("Q","Qualified Domestic Relations Agreement");
+	qnt.put("N","Normal Participant Agreement");
+	qnt.put("T","Takeover/transfer");
+	return qnt.get(accountTypeCode);
+}
+
+
+
+
+public void verifyColumnsOfPlanListsection()
+{
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.waitForElement(overviewLabel);
+	boolean isDisplayed = false;
+	if(planNumberColumn.isDisplayed()&&planNameColumn.isDisplayed()&&balanceColumn.isDisplayed())
+	{
+		Reporter.logEvent(Status.PASS, "Verify Plan number,Plan name,Balance and Details columns are displayed under overview section.",
+				"Plan number,Plan name,Balance and Details columns are displayed.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify Plan number,Plan name,Balance and Details columns are displayed under overview section.",
+				"Either of the columns are not displayed.", true);
+	}
+	for(WebElement planNumber:planNumbersUI)
+	{
+			if(planNumberList.contains(planNumber.getText().trim()))
+				{
+					isDisplayed = true;
+				}
+			else
+			{
+				isDisplayed = false;
+				break;
+			}
+	}
+		if(isDisplayed)
+	Reporter.logEvent(Status.PASS, "Chekc all the plans are displayed for the employeee on overview page.", "All the plan are displayed.", false);
+	else
+	Reporter.logEvent(Status.FAIL, "Chekc all the plans are displayed for the employeee on overview page.", "All the plan are not displayed.", true);
+}
+	
+
+public void verifySelectedPlanHeaderAndHighlightedPlan()
+{
+	if(selectedPlanHeader.getText().contains(highlightedPlannumber.getText()))
+	{
+		Reporter.logEvent(Status.PASS, "Verify selected plan and highlighted plan in lan list are same.", "Selected plan and highlighted selected plan are same.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify selected plan and highlighted plan in lan list are same.", "Selected plan and highlighted selected plan are not same.", true);
+	}
+	for(WebElement plan : planListOnOveriewPage)
+	{
+		if(!plan.getText().trim().equals(highlightedPlannumber.getText().trim()))
+		{
+			Web.clickOnElement(plan);
+			CommonLib.waitForProgressBar();
+			Web.waitForElement(highlightedPlannumber);
+			if(selectedPlanHeader.getText().contains(highlightedPlannumber.getText()))
+			{
+				Reporter.logEvent(Status.PASS, "Select a different plan and verify plan header at top is updated with highlighted plan.", "Plan header is updated with highlighted plan.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Select a different plan and verify plan header at top is updated with highlighted plan.", "Plan header is not updated with highlighted plan.", true);
+			}
+			break;
+		}
+	}
+}
+
+
+
+public void verifyTotalBalance()
+{
+	if(totalBalance.get(0).getText().equalsIgnoreCase("Total balance"))
+	{
+		Reporter.logEvent(Status.PASS, "Verify Total Balance section is displayed.", "Total balance section is displayed.", false);
+		Reporter.logEvent(Status.INFO, "Verify total balance for selected employee '"+empName.getText()+"'.", "Total balacne is :'"+totalBalance.get(1).getText()+"'.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify Total Balance section is displayed.", "Total balance section is not displayed.", true);
+	}
+}
+
+
+public void verifyViewPageForAPlanHavingBalance() throws Exception
+{
+	String xpath = "./ancestor::*[2]/following-sibling::div";
+	List<String> moneySourceHeaders = new ArrayList<String>();
+	for(WebElement balance : balanceList)
+	{
+		if(!balance.getText().equals("N/A"))
+		{
+			String bal = balance.getText();
+			Thread.sleep(2000);
+			Web.clickOnElement(balance.findElement(By.xpath("./../following-sibling::td/button")));
+			CommonLib.waitForProgressBar();
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(viewAccountDetailFrame);
+			Web.waitForElement(accountDetailHeader);
+			WebElement expandCollapseMoneySource = moneySource.findElement(By.tagName("i"));
+			WebElement expandCollapseInvestment = investment.findElement(By.tagName("i"));
+			if(bal.contains(balanceOnViewAccountPage.getText()))
+			{
+				Reporter.logEvent(Status.PASS,"Verify balance displayed on overview page under<br>"
+						+ "Balance column and balance displayed when clicking on View button, both should match.",""
+								+ "Both balance matches.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Verify balance displayed on overview page under<br>"
+						+ "Balance column and balance displayed when clicking on View button, both should match.",""
+								+ "Both balance do not match.", true);
+			}
+			if(moneySource.isDisplayed()&&investment.isDisplayed())
+			{
+				String isInvestmentcollapsed = investment.findElement(By.xpath("./..")).getAttribute("aria-expanded");
+				WebElement moneySourceData = moneySource.findElement(By.xpath(xpath));
+				WebElement investmentData = investment.findElement(By.xpath(xpath));
+				if(isInvestmentcollapsed.equals("true"))
+				{
+					Web.clickOnElement(expandCollapseInvestment);
+					Web.waitForElement(moneySourceData);
+				}
+				if(moneySourceData.isDisplayed()&&investmentData.isDisplayed())
+				{
+					Reporter.logEvent(Status.PASS, "Verify Money Sources and Investments sections.", "All money sources and Investments are displayed with data.", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Money Sources and Investments sections.", "All money sources and Investments are not displayed.", true);
+				}
+				
+				for(WebElement header : moneySrcHeaders)
+				{
+					moneySourceHeaders.add(header.getText().trim());
+				}
+				if(moneySourceHeaders.contains("Description")&&moneySourceHeaders.contains("Balance")&&moneySourceHeaders.contains("Vested Percent:")
+					&&moneySourceHeaders.contains("Vested Balance:")&&moneySource.getText().trim().equals("Money Sources")&&expandCollapseMoneySource.isDisplayed())
+				{
+					Reporter.logEvent(Status.PASS,"1.Verify header with label Money sources."
+							+ "<br>2.Expand and collapse icon is displayed."
+							+ "<br>3.Labels Description,Balance,Vested Percent and Vested Balance are displayed.", ""
+									+ "1.header with label money source is displayed."
+									+ "<br>2.Expand and collapse icon is displayed."
+									+ "<br>3.Labels Description,Balance,Vested Percent,Vested Balance are displayed.", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.PASS,"1.Verify header with label Money sources."
+							+ "<br>2.Expand and collapse icon is displayed."
+							+ "<br>3.Labels Description,Balance,Vested Percent and Vested Balance are displayed.", "Either label Money source is not displayed"
+									+ "<br>or expand/collapse icon is not displayed"
+									+ "<br>or labels Description,Balance,Vested Balance,Vested Percent are not displayed.", true);
+				}
+				if(totalForMoneySources.get(2).getText().equals("Total"))
+				{
+					Reporter.logEvent(Status.PASS, "Verify Total is displayed for Money source section.", "Total is displayed for Money source section.", false);
+					Reporter.logEvent(Status.INFO, "Check for Balance.", "Balance is:"+totalForMoneySources.get(3).getText(), false);
+					Reporter.logEvent(Status.INFO, "Check for Vested Balance.", "Vested Balance is:"+totalForMoneySources.get(4).getText(), false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Total is displayed for Money source section.", "Total is not displayed for Money source section.", true);
+				}
+			}
+			break;
+		}
+	}
+}
+
+	public void verifyInvestmentSection()
+	{
+		String xpath = "./ancestor::*[2]/following-sibling::div";
+		WebElement investmentData = investment.findElement(By.xpath(xpath));
+		WebElement expandCollapseIcon = investment.findElement(By.tagName("i"));
+		List<String> investmentHeadersAct = new ArrayList<String>();
+		if(investment.isDisplayed())
+		{
+			String iscollapsed = investment.findElement(By.xpath("./..")).getAttribute("aria-expanded");
+			if(iscollapsed.equals("false"))
+			{
+				Web.clickOnElement(expandCollapseIcon);
+				Web.waitForElement(investmentData);
+			}
+			
+			for(WebElement header : investmentHeaders)
+			{
+				investmentHeadersAct.add(header.getText().trim());
+			}
+			System.out.println("Investment headers:"+investmentHeadersAct);
+			if(investmentHeadersAct.contains("Investment option")&&investmentHeadersAct.contains("Unit/Shares effective date")&&investmentHeadersAct.contains("Unit/Share price")
+				&&investmentHeadersAct.contains("Unit/Shares owned")&&investmentHeadersAct.contains("Balance")&&investment.getText().contains("Investments")&&expandCollapseIcon.isDisplayed())
+			{
+				Reporter.logEvent(Status.PASS,"1.Verify header with label 'Investments'."
+						+ "<br>2.Expand and collapse icon is displayed."
+						+ "<br>3.Labels Investment option,Unit/Shares effective date,Unit/Share price,Unit/Shares owned,Balance are displayed.", ""
+								+ "1.header with label Investments is displayed."
+								+ "<br>2.Expand and collapse icon is displayed."
+								+ "<br>3.Mentioned labels are displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"1.Verify header with label 'Investments'."
+						+ "<br>2.Expand and collapse icon is displayed."
+						+ "<br>3.Labels Investment option,Unit/Shares effective date,Unit/Share price,Unit/Shares owned,Balance are displayed.", "either"
+								+ "label Investment is not displayed"
+								+ "<br>or expand/collapse icon is not displayed."
+								+ "<br>or mentioned labels are not displayed.", true);
+			}
+			if(totalForInvetsment.get(0).getText().equals("Total"))
+			{
+				Reporter.logEvent(Status.PASS,"Verify total is displayed for Investments.", "Total is displayed.", false);
+				Reporter.logEvent(Status.INFO,"Balance for Investments section.", "Balance for investments section is:"+totalForInvetsment.get(1).getText(), false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Verify total is displayed for Investments.", "Total is not displayed.", true);
+			}
+			
+		
+	}
+		
+	}
+	
+	
+	public void verifyCalendarIcon()
+	{
+		boolean isCalenderDisplayed = false;
+		if(calendarIcon.isDisplayed())
+		isCalenderDisplayed= true;
+		if(isCalenderDisplayed)
+		{
+			Reporter.logEvent(Status.PASS,"Verify Calendar icon is displayed.", "Calendar icon is dislayed.", false);
+			Web.clickOnElement(calendarIcon);
+			Web.waitForElement(asOfDate);
+			if(asOfDate.isDisplayed())
+			{
+				Reporter.logEvent(Status.PASS,"Click on calendar icon and verify calendar to pick date is displayed.", "Calendar to pick date is displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Click on calendar icon and verify calendar to pick date is displayed.", "Calendar to pick date is not displayed.", true);
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Verify Calendar icon is displayed.", "Calendar icon is not dislayed.", true);
+		}
+		
+	}
+	
+	public void returnToEmployeeOverview()
+	{
+		Web.clickOnElement(returnToEmployeeOverview);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(overviewLabel.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Click on 'Return to employee overview link'.", "Employee overview page is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Click on 'Return to employee overview link'.", "Employee overview page is not displayed.", true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+	}
+	
+	
+
+	
+	/*
+	 * This method verifies the Edit and save functionality for Employee Basic Info section on overview page.
+	 * THis also verifies the fields to be editable on basic info modal window
+	 */
+	public void verifyBasicInfoModalWindow() throws Exception
+	{
+		List<String> actModalInfoLabels = new LinkedList<String>();
+		List<String> expModalInfoLabels = Arrays.asList(Stock.GetParameterValue("ExpectedLabels").split(","));
+		boolean islabelExist = false;
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(basicInfoEdit);
+		CommonLib.waitForProgressBar();
+		//Thread.sleep(3000);
+		Web.waitForElement(basicInfoEditFrame);
+		if(closeIconBasicInfoEditWindow.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS,"Verify cross icon is displayed on top right of modal window.", "Cross icon is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Verify cross icon is displayed on top right of modal window.", "Cross icon is not displayed.", true);
+		}
+		Web.getDriver().switchTo().frame(basicInfoEditFrame);
+		String ssn = ssnHeaderOnModalWindow.getText().split(":")[1].replace("-","").trim();
+		String name = nameHeaderOnModalWindow.getText().split(":")[1].trim();
+		if(ssn.equals(qntTypeIndividuals.get(2))&&name.contains(employeeSearched))
+		{
+			Reporter.logEvent(Status.PASS, "Verify SSN and Employee Name on modal window.", "Employee name:'"+name+"' and SSN:'"+ssn+"' are displayed correctly.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify SSN and Employee Name on modal window.", "Employee name and SSN are not displayed correctly.", true);
+		}
+		for(WebElement basicInfoLabel : modalWindowBasicInfoLabels)
+		{
+			String label = basicInfoLabel.getText().replace("*","").replace(":","").trim(); 
+			actModalInfoLabels.add(label);
+		}
+		for(WebElement contactInfoLabel : modalWindowContactInfoLabels)
+		{
+			String label = contactInfoLabel.getText().replace("*","").replace(":","").trim(); 
+			actModalInfoLabels.add(label);
+		}
+		System.out.println(actModalInfoLabels);
+		System.out.println(expModalInfoLabels);
+		for(String expLabel : expModalInfoLabels)
+		{
+			if(actModalInfoLabels.contains(expLabel))
+			{
+				islabelExist = true;
+			}
+			else
+			{
+				islabelExist = false;
+				break;
+			}
+		}
+		
+		if(islabelExist&&incomingRollAssitance.isDisplayed())
+		{
+			Reporter.logEvent(Status.PASS, "Verify fields on Basic info modal window.", "All Expected Fields '"+actModalInfoLabels+"' are displayed on modal window.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify fields on Basic info modal window.", "All Expected Fields are not displayed on modal window.", true);
+		}
+	}
+	
+	
+
+
+/*
+ * This method edit the few basic info and revert them back to previous values	
+ */
+public void editBasicInfoAndSave() throws Exception
+{
+	String birthDate_ = basicInfoMapBeforeChanges.get("Birth date");	
+	String maritalStatus = basicInfoMapBeforeChanges.get("Marital status");
+	String gender_ = basicInfoMapBeforeChanges.get("Gender");
+	String language_ = basicInfoMapBeforeChanges.get("Language");
+	Web.getDriver().switchTo().defaultContent();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.getDriver().switchTo().frame(basicInfoEditFrame);
+	Web.waitForElement(birthDate);
+	DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+	Date dt = dateFormat.parse(birthDate.getAttribute("value"));
+	Calendar calendar = Calendar.getInstance();         
+	calendar.setTime(dt);
+	calendar.add(Calendar.DATE, 5);
+	String selectedBirthDate = dateFormat.format(calendar.getTime());
+	System.out.println("Date string is:"+dateFormat.format(calendar.getTime()));
+	//update birth date
+	Web.setTextToTextBox(birthDate,selectedBirthDate);
+	
+	//Update marital status
+	Select selMaritalStatus = new Select(maritalSts);
+	if(checkMaritalStatus.getText().equals("MARRIED"))
+		selMaritalStatus.selectByVisibleText("SINGLE");
+	else if(checkMaritalStatus.getText().equals("SINGLE"))
+		selMaritalStatus.selectByVisibleText("MARRIED");
+	else if(checkMaritalStatus.getText().equals("DIVORCED"))
+		selMaritalStatus.selectByVisibleText("MARRIED");
+	else
+		selMaritalStatus.selectByVisibleText("MARRIED");
+	String selectedMstatus = checkMaritalStatus.getText();
+	//update Gender
+	Select selectGender = new Select(gender);
+	if(checkGender.getText().equals("FEMALE"))
+		selectGender.selectByVisibleText("MALE");
+	else
+		selectGender.selectByVisibleText("FEMALE");
+	String selectedGender = checkGender.getText();
+	//update Language
+	Select selLanguage = new Select(language);
+	int value = Integer.parseInt(checkLanguage.getAttribute("value"));
+	selLanguage.selectByIndex(value+1);
+	String selectedLanguage = checkLanguage.getText();
+	
+	Web.clickOnElement(outsideAssets);
+	Web.clickOnElement(save);
+	CommonLib.waitForProgressBar();
+	Web.getDriver().switchTo().defaultContent();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(selectedBirthDate.equals(updatedBirthDate.getText().trim())&&selectedGender.equals(updatedGender.getText().trim())&&selectedLanguage.equals(updatedLanguage.getText().trim())
+			&&selectedMstatus.equals(updatedMaritalStatus.getText().trim()))
+	{
+		Reporter.logEvent(Status.PASS, "Update Gender,Marital Status,Birth date,Language and check radio button"
+				+ "'Dont know if employee has outside assets' and save.Verify the updated changes.", "Changes are reflected properly.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Update Gender,Marital Status,Birth date,Language and check radio button"
+				+ "'Dont know if employee has outside assets' and save.Verify the updated changes.", "Changes are not reflected properly.", true);
+	}
+	
+	
+	Thread.sleep(3000);
+	Web.clickOnElement(basicInfoEdit);
+	Web.waitForElement(basicInfoEditFrame);
+	Web.getDriver().switchTo().frame(basicInfoEditFrame);
+	Web.waitForElement(ssnHeaderOnModalWindow);
+	
+	//update birth date
+	Web.setTextToTextBox(birthDate,birthDate_);
+		
+	//Update marital status
+	//Select selMaritalStatus = new Select(maritalSts);
+	selMaritalStatus.selectByVisibleText(maritalStatus.toUpperCase());
+	//update Gender
+	//Select selectGender_ = new Select(gender);
+	selectGender.selectByVisibleText(gender_.toUpperCase());
+	
+	//update Language
+	//Select selLanguage_ = new Select(language);
+	selLanguage.selectByVisibleText(language_.toUpperCase());
+		
+	Web.clickOnElement(outsideAssets);
+	Web.clickOnElement(save);
+	CommonLib.waitForProgressBar();
+	Web.getDriver().switchTo().defaultContent();
+	
+	
+}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

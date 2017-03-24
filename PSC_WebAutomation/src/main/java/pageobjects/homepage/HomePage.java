@@ -1,6 +1,7 @@
 package pageobjects.homepage;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import lib.Reporter;
 import com.aventstack.extentreports.*;
 import com.gargoylesoftware.htmlunit.javascript.host.media.webkitAudioContext;
 
+import lib.DB;
 import lib.Stock;
 import lib.Web;
 
@@ -85,7 +87,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private Method invokeMethodforUserVerification;
 	private String[] userData;
 	private String[] userVeriData;
-	 
+	ResultSet queryResultSet;
 
 	// userVeriData is optional for HomePage constructor
 	public HomePage(LoadableComponent<?> parent,boolean performVerification,String... userData){
@@ -102,7 +104,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 
 	@Override
-	protected void isLoaded() throws Error {	
+	protected void isLoaded() throws Error {
 		if(!Web.isWebElementDisplayed(weGreeting,true)){
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
@@ -260,11 +262,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	{ boolean planTextDisplayed = false;
 	try{
 		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber"));
-		
-			Web.clickOnElement(searchPlanButton);
-			Web.isWebElementDisplayed(moreButton, true);
-			if(Stock.GetParameterValue("planNumber")!=null)
-			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
+		Web.clickOnElement(searchPlanButton);
+		Web.isWebElementDisplayed(moreButton, true);
+		if(Stock.GetParameterValue("planNumber")!=null)
+		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
 				return planTextDisplayed = true;
 	}
 	catch(Exception e)
@@ -584,6 +585,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Web.clickOnElement(menuElement(specifiedTab[0]));	
 		}
 	}
+	
 	
 	
 	

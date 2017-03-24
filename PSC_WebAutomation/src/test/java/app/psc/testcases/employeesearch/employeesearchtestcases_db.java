@@ -363,6 +363,10 @@ public class employeesearchtestcases_db {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"This test case verifies the filter functionality on the search results page according to a provided text", false);
 			employeesearch = new EmployeeSearch().get();
+			resultset = employeesearch.selectPlanForUser(
+					Stock.getTestQuery("getPlanswithDivisions"),
+					Stock.GetParameterValue("username"));
+			employeesearch.selectPlanFromResultset(resultset);
 			employeesearch.searchEmployeeBySSN("0");
 			employeesearch.switchToFrame();
 			if (Web.isWebElementDisplayed(employeesearch, "FILTER")) {

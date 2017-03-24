@@ -58,6 +58,7 @@ public class plansearchtestcases {
 			homePage = new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
+			Thread.sleep(3000);
 			if(homePage.searchPlan())
 			{
 				Reporter.logEvent(Status.PASS, "Verify user is redirected to entered plan summary page", "User is redirected to entered plan summary page", false);

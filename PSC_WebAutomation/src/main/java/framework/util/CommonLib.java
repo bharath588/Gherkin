@@ -292,6 +292,7 @@ public static void waitForProgressBar(){
            try{
         	   
         	   WebElement ele = Web.getDriver().findElement(By.xpath(progressBar));
+        	   Web.waitForElement(ele);
                   int iCount = 0;
                   while (ele.isDisplayed()){
                      
