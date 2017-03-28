@@ -79,7 +79,7 @@ public class beneficiariestestcases {
 	
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
@@ -207,7 +207,7 @@ public class beneficiariestestcases {
 		
 
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
@@ -341,7 +341,7 @@ public class beneficiariestestcases {
 	
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -468,7 +468,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -537,7 +537,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -604,7 +604,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -722,7 +722,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -786,7 +786,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -934,7 +934,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			participant_SSN = Stock.GetParameterValue("SSN");
@@ -1020,7 +1020,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -1114,7 +1114,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
@@ -1226,7 +1226,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -1305,7 +1305,7 @@ public class beneficiariestestcases {
 		
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			participant_SSN = Stock.GetParameterValue("SSN");
@@ -1422,7 +1422,7 @@ public class beneficiariestestcases {
 			
 			
 			try{
-				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -1567,7 +1567,7 @@ public class beneficiariestestcases {
 			
 			
 			try{
-				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
@@ -1664,7 +1664,7 @@ public class beneficiariestestcases {
 			
 			
 			try{
-				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 				prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 				lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 

@@ -23,19 +23,19 @@
                     
                   <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
-                    </include>-->
+                    </include>
                     
                     <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
-                    </include>
+                    </include>-->
                     
-                 <!--     <include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
+                  <include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
                     </include>
                     
                     <include name="Login_001_eDelivery_as_Electronic_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days"></parameter>
-                    </include> -->
+                    </include> 
                     </methods>
                     </class>
                      <!-- <class name="app.pptweb.testcases.login.registrationtestcases">
