@@ -17,7 +17,7 @@ public class ThreadInvocation {
 			//Class c= Class.forName("core.framework.TestListener");
 			final TestNG testng = new TestNG();
 			List<String> suites = new ArrayList<String>();
-			String xml=System.getProperty("user.dir")+"\\RunXML\\"+"Login.xml";
+			String xml=System.getProperty("user.dir")+"\\RunXML\\"+"Liat.xml";
            // suites.add(System.getProperty("user.dir")+"\\RunXML\\BVT.xml");
             suites.add(xml);
             testng.setTestSuites(suites);

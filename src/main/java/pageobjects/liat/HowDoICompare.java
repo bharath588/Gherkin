@@ -31,7 +31,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		@FindBy(xpath=".//*[text()='How do I compare']") private WebElement lblHowDoICompare;
 		@FindBy(xpath=".//*[text()='How do I compare to other people like me?']") private WebElement lblHwDoCmpOthrPplLikMe;
 		@FindBy(xpath="//button[@ng-click='clickViewDetailsEvent()']/span[text()[normalize-space()='View details']]") private WebElement btnViewDetails;
-		@FindBy(xpath=".//*[contains(text(),'additional contributions')]") private WebElement lblAdditionalContribution;
+		@FindBy(xpath=".//*[contains(text(),'Current contributions')]") private WebElement lblAdditionalContribution;
 		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//td[@class='target-my-peers']//div[contains(text(),'My peers')]") private WebElement lblMyPeers;
@@ -77,7 +77,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 			String ssn = Stock.GetParameterValue("userName");
 			String userFromDatasheet = null;
 			ResultSet strUserInfo=null;
-			if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+			if(Stock.getConfigParam(Globals.GC_COLNAME_TEST_ENV).contains("PROD"))
 			{
 				userFromDatasheet=Stock.GetParameterValue("lblUserName");
 			}
@@ -184,12 +184,12 @@ private WebElement getWebElement(String fieldName) {
 			if (Web.isWebElementDisplayed(this.btnViewDetails)) {
 				
 				this.btnViewDetails.click();
-				if (this.lblAdditionalContribution.getText().contains("additional contributions:")) {
-					Reporter.logEvent(Status.PASS, "Verify 'Additional Conctribution' Text",
-							"User was able to click the view details button and check the 'Additional Conctribution' text", true);
+				if (this.lblAdditionalContribution.getText().contains("Current contributions")) {
+					Reporter.logEvent(Status.PASS, "Verify 'Current contributions:' Text",
+							"User was able to click the view details button and check the 'Current contributions' text", true);
 				} else {
-					Reporter.logEvent(Status.FAIL, "Verify 'Additional Conctribution' Text",
-							"User was able to check the 'Additional Conctribution' text, please check if the user has any contributions", true);
+					Reporter.logEvent(Status.FAIL, "Verify 'Current contributions:' Text",
+							"User was not able to check the 'Current contributions:' text, please check if the user has any contributions", true);
 				}
 								
 			}else{

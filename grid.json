@@ -1,11 +1,16 @@
 
 [ {
-	"Browser": "FIREFOX",
-	"Port": "http://143.199.166.218:5555/wd/hub",
+	"Browser": "CHROME",
+	"Port": "http://10.4.61.208:5555/wd/hub",
 	"Platform": "Windows.xp"
 },
 {
 	"Browser": "FIREFOX",
-	"Port": "http://143.199.167.18:5555/wd/hub",
+	"Port": "http://143.199.166.218:5556/wd/hub",
+	"Platform": "Windows.xp"
+},
+{
+	"Browser": "IE",
+	"Port": "http://10.4.61.11:5557/wd/hub",
 	"Platform": "Windows.xp"
 }]

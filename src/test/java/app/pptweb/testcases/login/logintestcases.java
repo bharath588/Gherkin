@@ -237,7 +237,8 @@ public class logintestcases {
 			twoStepVerification.submitVerificationCode(verificationCode, true,
 					Boolean.parseBoolean(lib.Stock
 							.GetParameterValue("rememberDevice")));
-
+			if(Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true))
+			  Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
 			// landingPage.dismissPopUps(true, true);

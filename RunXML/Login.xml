@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1">
+<suite name="testsuite" parallel="classes" thread-count="3" verbose="1">
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
@@ -35,7 +35,7 @@
                     <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
                     </include>
                     
-                     <!-- <include name="Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days">
+                     <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
                     </include>
                     
@@ -43,19 +43,19 @@
                     <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
                     </include>
                     
-                    <include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
+                  <include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
                     </include>
                     
                     <include name="Login_001_eDelivery_as_Electronic_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days"></parameter>
-                    </include> -->
+                    </include> 
                 </methods>
             </class>
         </classes>
     </test>
     
-      <test name="Registration">
+       <test name="Registration">
         <classes>
             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
@@ -125,7 +125,7 @@
 				</methods>
 			</class>
 		</classes>
-	</test> 
+	</test>  
 	
     <test name="Athentication">
         <classes>

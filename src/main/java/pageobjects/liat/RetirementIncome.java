@@ -132,7 +132,7 @@ protected void isLoaded() throws Error {
 	String ssn = Stock.GetParameterValue("userName");
 	String userFromDatasheet = null;
 	ResultSet strUserInfo=null;
-	if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+	if(Stock.getConfigParam(Globals.GC_COLNAME_TEST_ENV).contains("PROD"))
 	{
 		userFromDatasheet=Stock.GetParameterValue("lblUserName");
 	}

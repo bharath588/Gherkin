@@ -8,7 +8,7 @@
         <classes>
             <class name="app.pptweb.testcases.liat.liattestcases">
                 <methods>
-                    <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
+                   <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
                     </parameter>
                     </include>
@@ -31,19 +31,18 @@
                     <include name="RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
                     </parameter>
-                    </include>
-                
-                    <include name="HCC_TC009_To_verify_Health_care_costs">
+                    </include> 
+                  <include name="HCC_TC009_To_verify_Health_care_costs">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs">
                     </parameter>
-                    </include>
+                    </include> 
                 
                     <include name="HDIC_TC010_To_verify_How_do_I_compare_tab">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
                     </parameter>
                     </include>
                
-                    <include name="RIP_TC011_To_verify_Retirement_Income_tab_Plan_Savings">
+                  <include name="RIP_TC011_To_verify_Retirement_Income_tab_Plan_Savings">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings">
                     </parameter>
                     </include>

@@ -8,6 +8,7 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
@@ -23,6 +24,7 @@ import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import core.framework.Globals;
+import core.framework.TestListener;
 
 public class liattestcases {
  
@@ -30,6 +32,7 @@ public class liattestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
+	
 	
 	@BeforeClass
     public void ReportInit(){               
@@ -54,7 +57,7 @@ public class liattestcases {
 	public void RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -173,7 +176,7 @@ public class liattestcases {
 	public void RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -227,7 +230,7 @@ public class liattestcases {
 	public void RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -280,7 +283,7 @@ public class liattestcases {
 	public void RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login=new LoginPage();
 			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
 			LandingPage landing= new LandingPage(twoStepVerification);			
@@ -333,7 +336,7 @@ public class liattestcases {
 
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -379,7 +382,7 @@ public class liattestcases {
 	public void HCC_TC009_To_verify_Health_care_costs(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			float projectedIncome;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -418,7 +421,7 @@ public class liattestcases {
 	public void HDIC_TC010_To_verify_How_do_I_compare_tab(int itr, Map<String, String> testdata){
 		
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);

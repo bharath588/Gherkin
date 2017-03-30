@@ -36,7 +36,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@id='passwordReset']/a") private WebElement lnkNeedHelpWithPassword;
 	@FindBy(linkText="Return to login") private WebElement lnkReturnToLogin;
 	@FindBy(xpath=".//*[text()[normalize-space()='Recover your account']]") private WebElement lblRecoverYourAccount;
-	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
+	@FindBy(xpath=".//*[@id='acPasswordInput' and @name='password']") private WebElement txtPassword;
 	@FindBy(xpath=".//*[@id='confirmPasswordInput']") private WebElement txtReEnterPassword;
 	@FindBy(xpath=".//*[@id='accountRecoveryContinue']") private WebElement btnContinueAccRecovery;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;

@@ -299,7 +299,8 @@ public class Common {
 	String ssn = Stock.GetParameterValue("userName");
 	
 	
-	if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+	//if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+	if(Stock.getConfigParam(Globals.GC_COLNAME_TEST_ENV).contains("PROD"))
 	{
 		userFromDatasheet=Stock.GetParameterValue("lblUserName");
 	}

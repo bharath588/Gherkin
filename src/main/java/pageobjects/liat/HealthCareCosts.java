@@ -29,7 +29,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	//Declarations
 	private LoadableComponent<?> parent;
 	
-	@FindBy(xpath=".//*[text()='Health-care costs']") private WebElement lblHelathCareCosts;
+	@FindBy(xpath=".//*[text()='Healthcare costs']") private WebElement lblHelathCareCosts;
 	@FindBy(xpath=".//button[contains(@class,'btn-personalize')]") private WebElement btnPersonalize;
 	@FindBy(xpath=".//*[text()[normalize-space()='Update']]") private WebElement btnUpdate;
 	@FindBy(xpath="//div[@id='attainedAgeSlider']//button[@class='sliderThumb']") private WebElement sliderAttainedAge;
@@ -81,7 +81,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		ResultSet strUserInfo=null;
-		if(Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD"))
+		if(Stock.getConfigParam(Globals.GC_COLNAME_TEST_ENV).contains("PROD"))
 		{
 			userFromDatasheet=Stock.GetParameterValue("lblUserName");
 		}
