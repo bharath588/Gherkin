@@ -4,12 +4,13 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression Suite" parallel="classes" thread-count="1">
+	<!-- <test name="Regression Suite" parallel="classes" thread-count="1"> -->
+	<test name="Regression Suite">
 		<classes>
 			<class
 				name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods>
-					<!-- <include name="Validate_Employment_Status_As_Active">
+					<include name="Validate_Employment_Status_As_Active">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"></parameter>
 					</include>
@@ -40,9 +41,9 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Ppt_Managed_Acct_Status_Not_Offered_By_Plan"></parameter>
 					</include>
-					<include name="Validate_PDI_Status_On_PPT_Home">
+					<!-- <include name="Validate_PDI_Status_On_PPT_Home">
 						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_PDI_Status"></parameter>
-					</include> 
+					</include>  -->
 					<include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN_ForNotRegistered">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_PIN_Button_NonRegistered"></parameter>
@@ -54,7 +55,7 @@
 					<include name="Validate_PPT_Home_Account_Balance">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Balance_Details"></parameter>
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
@@ -62,8 +63,8 @@
 					<!--  <include name="Validate_LoanStatus_TotalOutstandingBal">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance"></parameter>
-					</include>  -->
-					<!-- <include name="Validate_LoanStatus_PaymentFrequency">
+					</include> --> 
+					<include name="Validate_LoanStatus_PaymentFrequency">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Loan_Info_Payment_Frequency"></parameter>
 					</include>
@@ -74,7 +75,7 @@
 					<include name="Validate_LoanStatus_DefaultIndicator">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Loan_Info_Default_Indicator"></parameter>
-					</include>-->
+					</include>
 					<include name="Validate_PaymentHistory_UnPaid">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Loan_Info_Loan_History_Unpaid"></parameter>
@@ -85,7 +86,7 @@
 					</include> 
 				</methods>
 			</class>
-			<!-- <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
+			<class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
 				<methods>
 					<include
 						name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote">
@@ -96,8 +97,8 @@
 						<parameter name="ManualTCName" value="Validate_Selected_Loan_Type_Details"></parameter>
 					</include>
 				</methods>
-			</class> -->
-			<!-- <class
+			</class>
+			<class
 				name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
 				<methods>
 					<include name="Validate_Active_Allocation_Percentage">
@@ -121,7 +122,7 @@
 							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals"></parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class>
 			<class
 				name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
@@ -146,28 +147,28 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Change_Cont_Allc_Chg_Default_Invest_Option"></parameter>
 					</include>
-					<!-- <include name="Validate_Current_Deposite_Allocation_Details">
+					<include name="Validate_Current_Deposite_Allocation_Details">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Change_Cont_Allc_Chg_Current_Deposit_Allc"></parameter>
 					</include>
 					<include name="Validate_ProcessAcc_Rebalancer_ChckBx_Details">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Change_Cont_Allc_Chg_Rebalancer_Process_Checkbox"></parameter>
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
 				<methods>
-					<!-- <include name="Validate_Fund_to_Fund_Transfer">
+					<include name="Validate_Fund_to_Fund_Transfer">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"></parameter>
-					</include> -->
+					</include>
 					<include name="Validate_Fund_to_Fund_Basic_Transfer">
 						<parameter name="ManualTCName" value="Basic_Transfer"></parameter>
 					</include>
-					<!-- <include name="Validate_Fund_to_Fund_Cancel_Transfer">
+					<include name="Validate_Fund_to_Fund_Cancel_Transfer">
 						<parameter name="ManualTCName" value="Cancel_Transfer"></parameter>
-					</include> -->
+					</include>
 					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
@@ -185,7 +186,7 @@
 					</include>
 				</methods>
 			</class>
-		<!-- 	<class name="app.csas.testcases.rebalancer.validate_rebalancer">
+			<class name="app.csas.testcases.rebalancer.validate_rebalancer">
 				<methods>
 					<include name="Perform_and_validate_Rebalancer_transferRestriction">
 						<parameter name="ManualTCName"
@@ -196,7 +197,7 @@
 							value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>
