@@ -6,58 +6,54 @@
     </listeners>
     <test name="LOGIN">
         <classes>
-            <class name="app.pptweb.testcases.login.logintestcases">
+             <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
-                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+                   
+                   <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter></include>
-                
+                  	
+                  	<include name="Login_005_with_out_eDelivery_as_Electronic_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
+                    </include>
+                    
                     <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
-                
+                	
+                	 <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
+                    </include>
+                    
                     <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device_Email">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption"></parameter>
                     </include>
                     
-                    
+                    <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
+                    </include>
                     <include name="Login_CallCenter_timings">
                     <parameter name="ManualTCName" value="Login_CallCenter_timings"></parameter>
+                    </include>
+                       
+                  	<include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
                     </include>
                     
                     <include name="userName_Login_Sanity">
                     <parameter name="ManualTCName" value="userName_Login_Sanity"></parameter>
                     </include>
                     
-                     <include name="Pre_Login_Page_footer_links_check">
-                    <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check"></parameter>
-                    </include>
-                    
-                     <include name="Login_005_with_out_eDelivery_as_Electronic_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
-                    </include>
-                    
-                     <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
-                    </include>
-                    
-                    <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
-                    </include>
-                    
-                  <include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
-                    </include>
-                    
                     <include name="Login_001_eDelivery_as_Electronic_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days"></parameter>
                     </include> 
+                     <include name="Pre_Login_Page_footer_links_check">
+                    <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check"></parameter>
+                    </include>
+                 
+                    
                 </methods>
-            </class>
-        </classes>
-    </test>
-    
-       <test name="Registration">
-        <classes>
-            <class name="app.pptweb.testcases.login.registrationtestcases">
+            </class> 
+       
+             <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
@@ -89,7 +85,7 @@
                
                     <include name="AccountLookup_PositiveFlow_WithPIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
-                    </include>
+                    </include> 
               
                     <include name="AccountSetup_WithPin_Validate_ContactInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
@@ -107,7 +103,7 @@
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC004_UI_Validation_WithOutPin_Username_Password"></parameter>
                     </include>
                 
-					<include name="Registration_MFA_ON_5Point_registrationn">
+					<include name="Registration_MFA_ON_5Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin"></parameter>
                     </include>
 				
@@ -123,13 +119,9 @@
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
                     </include>
 				</methods>
-			</class>
-		</classes>
-	</test>  
-	
-    <test name="Athentication">
-        <classes>
-            <class name="app.pptweb.testcases.login.authenticationtestcases">
+			</class> 
+		
+           <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
                     <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>
@@ -155,7 +147,7 @@
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
                     </include>
                 </methods>
-            </class>
+            </class> 
         </classes>
     </test> 
 </suite>

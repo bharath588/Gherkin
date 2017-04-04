@@ -245,6 +245,7 @@ public class logintestcases {
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
+			landingPage.get();
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify landing page is displayed",
@@ -383,6 +384,12 @@ public class logintestcases {
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
+				url = Stock.getConfigParam(
+						"AppURL" + "_" + Stock.getConfigParam("TEST_ENV"));
+
+				 Web.getDriver().get(url);
+				 Web.getDriver().navigate().refresh();
+				 Web.waitForPageToLoad(Web.getDriver());
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -521,7 +528,7 @@ public class logintestcases {
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
 			}
-			
+			landingPage.get();
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify landing page is displayed",
@@ -1024,6 +1031,7 @@ public class logintestcases {
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
 			// landingPage.dismissPopUps(true, true);
+			landingPage.get();
 			Web.waitForElement(landingPage, "Log out");
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
@@ -1761,6 +1769,7 @@ public class logintestcases {
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
+			landingPage.get();
 			Common.waitForProgressBar();
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
@@ -2116,6 +2125,7 @@ public class logintestcases {
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
 			Common.waitForProgressBar();
+			landingPage.get();
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
@@ -2474,6 +2484,7 @@ public class logintestcases {
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
 			Common.waitForProgressBar();
+			landingPage.get();
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,

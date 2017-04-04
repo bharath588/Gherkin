@@ -17,6 +17,7 @@ import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.firefox.internal.NewProfileExtensionConnection;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -95,7 +96,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -178,7 +179,7 @@ public class deferralstestcases {
 	@Test(dataProvider = "setData")
 	public void SIT_PPTWEB_Deferral__Bonus(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -292,7 +293,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -442,7 +443,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) throws Exception {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -573,7 +574,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -638,7 +639,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -754,7 +755,7 @@ public class deferralstestcases {
 	public void SIT_PPTWEB_Deferral_Other(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -855,7 +856,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -930,7 +931,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1016,7 +1017,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1169,7 +1170,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1229,7 +1230,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1385,7 +1386,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1446,7 +1447,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1500,7 +1501,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1552,7 +1553,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -1625,7 +1626,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
@@ -1711,7 +1712,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
@@ -1810,7 +1811,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
@@ -1819,10 +1820,9 @@ public class deferralstestcases {
 			LandingPage homePage = new LandingPage(mfaPage);
 
 			leftmenu = new LeftNavigationBar(homePage);
-			PriorPlanContributions priorContributions = new PriorPlanContributions(
-					leftmenu);
-
-			priorContributions.get();
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			PriorPlanContributions priorContributions=new PriorPlanContributions();
 			if (!Web.isWebElementDisplayed(priorContributions,
 					"TEXT PRIOR PLAN CONTRIBUTION"))
 				Reporter.logEvent(Status.PASS,
@@ -1858,7 +1858,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
@@ -1867,10 +1867,9 @@ public class deferralstestcases {
 			LandingPage homePage = new LandingPage(mfaPage);
 
 			leftmenu = new LeftNavigationBar(homePage);
-			PriorPlanContributions priorContributions = new PriorPlanContributions(
-					leftmenu);
-
-			priorContributions.get();
+			Deferrals deferrals = new Deferrals(leftmenu);
+			deferrals.get();
+			PriorPlanContributions priorContributions=new PriorPlanContributions();
 			if (!Web.isWebElementDisplayed(priorContributions,
 					"TEXT PRIOR PLAN CONTRIBUTION"))
 				Reporter.logEvent(Status.PASS,
@@ -1906,7 +1905,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) throws Exception {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -2010,7 +2009,7 @@ public class deferralstestcases {
 	public void Multiple_deferral_split_contribution(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2184,7 +2183,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -2274,7 +2273,7 @@ public class deferralstestcases {
 	@Test(dataProvider = "setData")
 	public void Deferral_011M_Verify_combined_rules_with_zero_election(int itr, Map<String, String> testdata) {
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			//LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2355,7 +2354,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -2443,7 +2442,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2537,7 +2536,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2639,7 +2638,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2737,7 +2736,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -2932,7 +2931,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -3053,7 +3052,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
@@ -3174,7 +3173,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to dropdown
@@ -3278,7 +3277,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to Calendar
@@ -3381,7 +3380,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			//Update date picker to dropdown
@@ -3482,7 +3481,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			
@@ -3591,7 +3590,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -3697,7 +3696,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -3834,7 +3833,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 						
@@ -3972,7 +3971,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareDynamicTestData(Stock.GetParameterValue("queryName"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
@@ -4034,7 +4033,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -4155,7 +4154,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -4276,7 +4275,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -4371,7 +4370,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -4471,7 +4470,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar calendar = Calendar.getInstance();         
@@ -4589,7 +4588,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			
 			LeftNavigationBar leftmenu;
@@ -4689,7 +4688,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 						
 			LeftNavigationBar leftmenu;
@@ -4786,7 +4785,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar calendar = Calendar.getInstance();         
@@ -4891,7 +4890,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 			Calendar calendar = Calendar.getInstance();         
@@ -5009,7 +5008,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 						
 			LeftNavigationBar leftmenu;
@@ -5134,7 +5133,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 						
 			LeftNavigationBar leftmenu;
@@ -5198,7 +5197,7 @@ public class deferralstestcases {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 						
 			LeftNavigationBar leftmenu;
@@ -5262,7 +5261,7 @@ public class deferralstestcases {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME+"_"+Stock.getConfigParam("BROWSER"));
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();

@@ -17,7 +17,7 @@ public class ThreadInvocation {
 			//Class c= Class.forName("core.framework.TestListener");
 			final TestNG testng = new TestNG();
 			List<String> suites = new ArrayList<String>();
-			String xml=System.getProperty("user.dir")+"\\RunXML\\"+"Liat.xml";
+			String xml=System.getProperty("user.dir")+"\\RunXML\\"+"Beneficiary.xml";
            // suites.add(System.getProperty("user.dir")+"\\RunXML\\BVT.xml");
             suites.add(xml);
             testng.setTestSuites(suites);
@@ -31,7 +31,7 @@ public class ThreadInvocation {
 			};
 
 				//Runnable runnable = new DriverScript();
-			    Thread[] threads = new Thread[2];
+			    Thread[] threads = new Thread[4];
 		
 			for (int i = 0; i < threads.length; i++) {
 			    threads[i] = new Thread(threadRunnable);

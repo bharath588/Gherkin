@@ -13,7 +13,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity"></parameter>
                     </include>
    
-                    <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                  <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity"></parameter>
                     </include>
                     
@@ -37,9 +37,9 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC003_Married with Spouse One beneficiary Date of Birth Error messages"></parameter>
                     </include>
                 
-                   <!--  <include name="Beneficiary_TC005_Married_no_Spouse_Error_message">
+                    <include name="Beneficiary_TC005_Married_no_Spouse_Error_message">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC005_Married no Spouse Error message"></parameter>
-                    </include> -->
+                    </include>
                 
    
                     <include name="TC010_UnMarried_One_Individual_beneficiary_Date_of_Birth_error_message">
@@ -116,7 +116,7 @@
                 
                     <include name="validate_Beneficiary_ErrorMessages">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC040_Beneficiary error messages"></parameter>
-                    </include>
+                    </include> 
                 </methods>
             </class>
         </classes>

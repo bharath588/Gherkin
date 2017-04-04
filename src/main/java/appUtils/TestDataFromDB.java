@@ -17,13 +17,13 @@ public class TestDataFromDB {
 	private static HashMap<String, String> tempMap = null;
 
 	@SuppressWarnings("null")
-	public static HashMap<String, String> getParticipantDetails(
+	public static synchronized HashMap<String, String> getParticipantDetails(
 			String queryName, String... queryParameterValues)
 			throws SQLException {
 
 		String[] sqlQuery = null;
-		HashMap<String, String> mapUserDetails = new HashMap<String, String>();
-		LinkedHashMap<Integer, Map<String, String>> testdataFromDB = new LinkedHashMap<Integer, Map<String, String>>();
+		LinkedHashMap<String, String> mapUserDetails = new LinkedHashMap<String, String>();
+		LinkedHashMap<Long, LinkedHashMap<String, String>> testdataFromDB = new LinkedHashMap<Long, LinkedHashMap<String, String>>();
 		ResultSetMetaData rsMetaData = null;
 		int noOfColumns = 0;
 		int noOfRows = 0;
@@ -44,12 +44,14 @@ public class TestDataFromDB {
 				
 							
 				if (rsMetaData.getColumnName(j).contains("SUBSTR")) {
+					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+									.getColumnName(j))))
 					mapUserDetails
 							.put("PASSWORD", participants.getString(rsMetaData
 									.getColumnName(j)));
 				} else if (rsMetaData.getColumnName(j).equalsIgnoreCase(
 						"BIRTH_DATE")) {
-
+					
 					SimpleDateFormat formatter = new SimpleDateFormat(
 							"yyyy-MM-dd HH:mm:ss");
 					String dateInString = participants.getString(rsMetaData
@@ -60,6 +62,8 @@ public class TestDataFromDB {
 						Date date = formatter.parse(dateInString);
 						SimpleDateFormat formatter1 = new SimpleDateFormat(
 								"MMddyyyy");
+						if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+								.getColumnName(j))))
 						mapUserDetails.put(rsMetaData.getColumnName(j),
 								formatter1.format(date));
 
@@ -70,16 +74,22 @@ public class TestDataFromDB {
 				} else if(rsMetaData.getColumnName(j).contains("FIRST_LINE_MAILING")){
 					String address = participants.getString(rsMetaData
 							.getColumnName(j));
+					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+							.getColumnName(j))))
 					mapUserDetails.put(rsMetaData.getColumnName(j),
 							address.split(" ")[0]);
 				}
 				else {
+					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+							.getColumnName(j))))
 					mapUserDetails
 							.put(rsMetaData.getColumnName(j), participants
 									.getString(rsMetaData.getColumnName(j)));
 				}
 			}
 			
+			
+			testdataFromDB.put(Thread.currentThread().getId(),mapUserDetails);
 			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 || mapUserDetails.get("SSN").equalsIgnoreCase("000231671"))
 				participants.next();
 			else
@@ -89,9 +99,25 @@ public class TestDataFromDB {
 		}
 		System.out.println("TEST DATA FROM DB:"+mapUserDetails);
 
-		return mapUserDetails;
+		return testdataFromDB.get(Thread.currentThread().getId());
 	}
 
+	public static synchronized boolean checkValueExistsniMap(Map<Long,LinkedHashMap<String,String>> dataMap,String value)
+	{
+		boolean isExist = false;
+		if(dataMap.isEmpty() || dataMap.size() == 0)
+		{
+			return false;
+		}
+		
+		for(Map.Entry<Long, LinkedHashMap<String,String>> refMap : dataMap.entrySet())
+		{
+			if(refMap.getValue().containsValue(value))
+				isExist = true;
+		}
+	return isExist;	
+	}
+	
 	public static void addUserDetailsToGlobalMap(Map<String, String> paramMap) {
 
 		tempMap = (HashMap<String, String>) Stock.globalTestdata.get(Thread.currentThread().getId());
