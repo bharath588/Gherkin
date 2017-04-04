@@ -1,254 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">
+<suite name="testsuite"> <!-- parallel="classes" thread-count="3"> -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Gitlab_Changes_Undone_verification">
+	<test name="Regression_Yellow_Period_Execution_1">
 		<classes>
-			<class name="app.psc.testcases.login.logintestcases">
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC006_Gwrs- 
-				Forcelogin"></parameter>
+							value="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>
-				</methods>
-			</class>
-			<class name="app.psc.testcases.userverification.userverificationtestcases">
-				<methods>
-					<include
-						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid"></parameter>
-					</include>
-					<include
-						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Valid"></parameter>
-					</include>
-				</methods>
-			</class>
-
-
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
-				<methods>
-					<include name="TC001_Search_Employee_For_Valid_SSN">
-						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
-						</parameter>
-					</include>
-					<include name="TC002_Search_Employee_For_Invalid_SSN">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Sanity_Suite_invalidssn">
-						</parameter>
-					</include>
-					<include name="TC003_Search_Employee_For_Valid_Name_Input">
-						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validname">
-						</parameter>
-					</include>
-					<include name="TC004_Search_Employee_For_Invalid_Name_Input">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Sanity_Suite_invalidname">
-						</parameter>
-					</include>
-					<include name="TC005_Search_Employee_For_Valid_EmployeeID_Input">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Sanity_Suite_validempid">
-						</parameter>
-					</include>
-					<include
-						name="TC07_Verify_employee_details_displayed_for_plans_with_divisions">
-						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_plandiv">
-						</parameter>
-					</include>
-					<include
-						name="TC08_Verify_employee_details_displayed_for_valid_participant_id">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_valid_ppt">
-						</parameter>
-					</include>
-					<include
-						name="TC09_Verify_employee_details_displayed_for_invalid_participant_id">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_invalid_ppt">
-						</parameter>
-					</include>
-					<include
-						name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_noduplicatessn">
-						</parameter>
-					</include>
-					<include
-						name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_noduplicatename">
-						</parameter>
-					</include>
-					<include
-						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_noduplicateempid">
-						</parameter>
-					</include>
-					<include
-						name="TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_noduplicateppt">
-						</parameter>
-					</include>
-					<include
-						name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_noduplicatediv">
-						</parameter>
-					</include>
-					<include name="TC015_Check_For_Plans_With_one_division">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_ppt_planonediv">
-						</parameter>
-					</include>
-					<include name="TC016_Check_For_Plans_With_multiple_divisions">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_ppt_planmultidiv">
-						</parameter>
-					</include>
-					<include name="TC006_Search_Employee_For_Invalid_EmployeeID_Input">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Sanity_Suite_invalidempid">
-						</parameter>
-					</include>
-				</methods>
-			</class>
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
-				<methods>
-					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_screen_elements">
-						</parameter>
-					</include>
-					<include name="TC018_Verify_the_sorting_in_search_results">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_sorting">
-						</parameter>
-					</include>
-					<include name="TC019_Verify_the_Pagination_on_search_results_page">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_pagination">
-						</parameter>
-					</include>
-					<include name="TC020_Verify_the_Order_of_search_results">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_order">
-						</parameter>
-					</include>
-					<include name="TC021_Verify_Search_results_are_displayed_as_Hyperlinks">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_hyperlinks">
-						</parameter>
-					</include>
-					<include
-						name="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_redirect">
-						</parameter>
-					</include>
-					<include name="TC023_Verify_the_limit_of_search_results_on_searchpage">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_limit">
-						</parameter>
-					</include>
-					<include name="TC024_Verify_Filter_Functionality_Search_Results_Page">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_filter">
-						</parameter>
-					</include>
-					<include name="TC025_Verify_search_results_for_ssn_with_extension">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_ext">
-						</parameter>
-					</include>
-					<include
-						name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_emp_err_code">
-						</parameter>
-					</include>
-					<include name="TC027_Verify_termed_employeedetails_are_displayed">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_termed_employee">
-						</parameter>
-					</include>
-					<include
-						name="TC028_Verify_search_results_are_displayed_for_termed_employees">
-						<parameter name="ManualTCName"
-							value="Employee_Search_Regression_valid_res_termed_emp">
-						</parameter>
-					</include>
-					<include name="TC029_Verify_ssn_masking_for_external_users">
-						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_masking">
-						</parameter>
-					</include>
-				</methods>
-			</class>
-			<!-- <class </include> </methods> </class> -->
-			<class
-				name="app.psc.testcases.accountverification.accountverificationtestcases">
-				<methods>
-					<include
-						name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
-						</parameter>
-					</include>
-					<include
-						name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
-						</parameter>
-					</include>
-					<include
-						name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
-						</parameter>
-					</include>
-				</methods>
-			</class>
-			<class
-				name="app.psc.testcases.accountverification.accountverification_existingusr">
-				<methods>
-					<include name="TC019_Verify_Default_Plan_Prompting">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
-						</parameter>
-					</include>
-					<include
-						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC002_Expired Password_negative">
-						</parameter>
-					</include>
-					<include
-						name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC002_Expired Password_positive">
-						</parameter>
-					</include>
-					<include name="TC018_Security_Question_Validation_Existing_User">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
-						</parameter>
-					</include>
-				</methods>
-			</class>
-			<class
-				name="app.psc.testcases.accountverification.accountverificationtest_plan">
-				<methods>
-					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid">
-						</parameter>
-					</include>
-					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
-						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
-						</parameter>
-					</include>
-				</methods>
-			</class>
-			<class name="app.psc.testcases.login.logintestcases">
-				<methods>
 					<include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC017_Internal and External User">
@@ -269,12 +32,344 @@
 							value="SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
 					</include>
-					<include name="TC006_01_Verify_Force_Login">
+					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+						<parameter name="ManualTCName" value="SIT_PSC_Login_01_TC004_Terminate User" />
+					</include>
+					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt" >
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin"></parameter>
+							value="User_Account_Locking_For_max_Invalid_Attempts" />
+					</include> 
+					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
+						<parameter name="ManualTCName"
+							value="Display correct date and time of my last login" />
+					</include>
+					 <include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered" >
+						<parameter name="ManualTCName"
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
+					</include>
+					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
+					</include>
+					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs" />
+					</include>
+					<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
+						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs" />
+					</include>
+					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access" >
+						<parameter name="ManualTCName"
+							value="Verify_PLUser_Login_With_No_Plna_Access" />
+					</include>
+					<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
+						<parameter name="ManualTCName"
+							value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite" />
+					</include>
+					<include name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites" >
+						<parameter name="ManualTCName"
+							value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites" />
+					</include>
+					<include name="TC003_UI_Validations_On_JumpPage" >
+						<parameter name="ManualTCName" value="UI_Validations_On_JumpPage" />
 					</include>
 				</methods>
 			</class>
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
+				<methods>
+					 <include name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid" />
+					</include> 
+					<include name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Valid" />
+					</include>
+					<include name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session" />
+					</include>
+					<include name="Verify_TUDS_table_for_Magic_login">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login" />
+					</include> 
+				</methods>
+			</class>
+			<class name="app.psc.testcases.plan.plansearchtestcases">
+				<methods>
+					<include name="TC01_search_plan_for_valid_plan">
+						<parameter name="ManualTCName"
+							value="Plan_Search_Redirection_Plan_Summary_Page" />
+					</include>
+					<include name="TC02_Validate_error_message_when_plan_field_is_left_blank">
+						<parameter name="ManualTCName"
+							value="Plan_Validat_error_message_when_plan_filed_blank" />
+					</include>
+					<include name="TC03_Verify_planDetails_Populated">
+						<parameter name="ManualTCName"
+							value="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered" />
+					</include>
+					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered" >
+						<parameter name="ManualTCName"
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
+					</include>
+					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
+					</include>
+				</methods>
+			</class> -->
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods>
+					<!--  <include name="TC001_Search_Employee_For_Valid_SSN">
+						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
+						</parameter>
+					</include>
+					<include name="TC002_Search_Employee_For_Invalid_SSN">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Sanity_Suite_invalidssn">
+						</parameter>
+					</include>
+					<include name="TC003_Search_Employee_For_Valid_Name_Input">
+						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validname">
+						</parameter> 
+					</include>
+					<include name="TC004_Search_Employee_For_Invalid_Name_Input">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Sanity_Suite_invalidname">
+						</parameter>
+					</include>
+					<include name="TC005_Search_Employee_For_Valid_EmployeeID_Input">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Sanity_Suite_validempid">
+						</parameter>
+					</include>
+					<include name="TC07_Verify_employee_details_displayed_for_plans_with_divisions" >
+						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_plandiv">
+						</parameter>
+					</include>
+					<include name="TC08_Verify_employee_details_displayed_for_valid_participant_id" >
+						<parameter name="ManualTCName" value="Employee_Search_Regression_valid_ppt">
+						</parameter>
+					</include>
+					<include name="TC09_Verify_employee_details_displayed_for_invalid_participant_id" >
+						<parameter name="ManualTCName" value="Employee_Search_Regression_invalid_ppt">
+						</parameter>
+					</include>
+					<include name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_noduplicatessn">
+						</parameter>
+					</include>
+					<include name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_noduplicatename">
+						</parameter>
+					</include> 
+					<include name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_noduplicateempid">
+						</parameter>
+					</include>
+					<include name="TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_noduplicateppt">
+						</parameter>
+					</include>
+					<include name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_noduplicatediv">
+						</parameter>
+					</include>
+					<include name="TC015_Check_For_Plans_With_one_division">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_ppt_planonediv">
+						</parameter>
+					</include>
+					<include name="TC016_Check_For_Plans_With_multiple_divisions">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_ppt_planmultidiv">
+						</parameter>
+					</include>
+					<include name="TC006_Search_Employee_For_Invalid_EmployeeID_Input">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Sanity_Suite_invalidempid">
+						</parameter>
+					</include>
+					<include name="TC017_Employment_Info_Verification">
+						<parameter name="ManualTCName" value="Employment_Info_Verification" />
+					</include>
+					<include name="TC018_Employee_Contact_Info_Verification">
+						<parameter name="ManualTCName" value="Employee_Contact_Info_Verification" />
+					</include>
+					<include name="TC019_Verify_Beneficiary_Info">
+						<parameter name="ManualTCName" value="Verify_Beneficiary_Info" />
+					</include>
+					<include name="TC020_Recently_Viewed_Employee">
+						<parameter name="ManualTCName" value="Recently_Viewed_Employee" />
+					</include>
+					<include name="TC021_Salary_View_And_Update">
+						<parameter name="ManualTCName" value="Salary_View_And_Update" />
+					</include> 
+					 <include name="TC022_Paycheck_contribution_View">
+						<parameter name="ManualTCName" value="Paycheck_contribution_View" />
+					</include> 
+					<include name="TC023_EnrolmmentAndEligibility">
+						<parameter name="ManualTCName" value="EnrolmmentAndEligibility" />
+					</include>
+					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
+						<parameter name="ManualTCName"
+							value="Verify_Employee_Overview_Screen_Elements" />
+					</include>
+					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+						<parameter name="ManualTCName"
+							value="Verify_Employee_Overview_PlanList_Balance_Section" />
+					</include>
+					<include name="TC026_Verify_Employee_Basic_Info">
+						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
+					</include>-->
+					<include name="TC027_Verify_Subset_History_Section">
+						<parameter name="ManualTCName" value="Verify_Subset_History_Section" />
+					</include>
+				</methods>
+			</class>
+			<!--<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+				<methods>
+					 <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_screen_elements">
+						</parameter>
+					</include>
+					<include name="TC018_Verify_the_sorting_in_search_results">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_sorting">
+						</parameter>
+					</include>
+					<include name="TC019_Verify_the_Pagination_on_search_results_page">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_pagination">
+						</parameter>
+					</include>
+					<include name="TC020_Verify_the_Order_of_search_results">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_order">
+						</parameter>
+					</include>
+					 <include name="TC021_Verify_Search_results_are_displayed_as_Hyperlinks">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_hyperlinks">
+						</parameter>
+					</include>
+					<include name="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_redirect">
+						</parameter>
+					</include>
+					<include name="TC023_Verify_the_limit_of_search_results_on_searchpage">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_limit">
+						</parameter>
+					</include> 
+					<include name="TC024_Verify_Filter_Functionality_Search_Results_Page">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_filter">
+						</parameter>
+					</include>
+					<include name="TC025_Verify_search_results_for_ssn_with_extension">
+						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_ext">
+						</parameter>
+					</include> 
+					<include name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_emp_err_code">
+						</parameter>
+					</include>
+					 <include name="TC027_Verify_termed_employeedetails_are_displayed">
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_termed_employee">
+						</parameter>
+					</include>
+					<include name="TC028_Verify_search_results_are_displayed_for_termed_employees" >
+						<parameter name="ManualTCName"
+							value="Employee_Search_Regression_valid_res_termed_emp">
+						</parameter>
+					</include>
+					<include name="TC029_Verify_ssn_masking_for_external_users" >
+						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_masking">
+						</parameter>
+					</include>
+				</methods>
+			</class> 
+			 <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+				<methods>
+					 <include name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
+						</parameter>
+					</include> 
+					<include name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
+						</parameter>
+					</include> 
+					<include name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
+						</parameter>
+					</include>
+					<include name="TC008_00_Verify_new_user_flow_negative" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Negative"/>
+					</include>
+					 <include name="TC008_00_Verify_new_user_flow_positive" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive"/>
+					</include> 
+				</methods>
+			</class>
+			<class name="app.psc.testcases.accountverification.accountverification_existingusr" >
+				<methods>
+					<include name="TC019_Verify_Default_Plan_Prompting">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
+						</parameter>
+					</include>
+					 <include name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC002_Expired Password_negative">
+						</parameter>
+					</include> 
+					<include name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC002_Expired Password_positive">
+						</parameter>
+					</include>
+					<include name="TC018_Security_Question_Validation_Existing_User">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
+						</parameter>
+					</include>
+					<include name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
+						</parameter>
+					</include>
+					<include name="TC006_01_Verify_Display_Of_Notification_On_HomePage">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_HomePage_02_TC006_Notification Button">
+						</parameter>
+					</include>
+					<include name="TC006_01_Verify_Display_Of_Compliance_On_HomePage" >
+						<parameter name="ManualTCName"
+							value="SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
+						</parameter>
+					</include> 
+				</methods>
+			</class>
+			<class name="app.psc.testcases.accountverification.accountverificationtest_plan" >
+				<methods>
+					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid"/>
+					</include>
+					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid"/>
+					</include>
+				</methods>
+			</class> -->
 		</classes>
 	</test>
 

@@ -28,7 +28,7 @@ public class employeesearchtestcases {
 	String actualErrorMessage = "";
 	ResultSet resultset;
 	HomePage homePage;
-	
+	CommonLib commonLib;
 	@BeforeClass
 	public void ReportInit() {
 		Reporter.initializeModule(this.getClass().getName());
@@ -894,7 +894,8 @@ public class employeesearchtestcases {
 					Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 					Reporter.logEvent(Status.INFO, "Testcase Description",
 							"This testcase validates general employment informations", false);
-					employeesearch = new EmployeeSearch().get();	
+					employeesearch = new EmployeeSearch().get();
+					CommonLib.switchToDefaultPlan();
 					employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 					employeesearch.contactInFoSectionValidation();
 					employeesearch.contactInFoLabelValidation();
@@ -936,6 +937,7 @@ public class employeesearchtestcases {
 						Reporter.logEvent(Status.INFO, "Testcase Description",
 								"This testcase validates general employment informations", false);
 						employeesearch = new EmployeeSearch().get();
+						CommonLib.switchToDefaultPlan();
 						employeesearch.str1 = employeesearch.getBeneficiaryEmployeeSSN();
 						employeesearch.searchEmployeeBySSN(employeesearch.str1[0]);
 						employeesearch.navigateToEmployeeOverViewPage();
@@ -976,6 +978,7 @@ public class employeesearchtestcases {
 							Reporter.logEvent(Status.INFO, "Testcase Description",
 									"This testcase validates general employment informations", false);
 							employeesearch = new EmployeeSearch().get();
+							CommonLib.switchToDefaultPlan();
 							employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 							employeesearch.navigateToEmployeeOverViewPage();
 							employeesearch.Verify_Recently_Viewed_Employee();
@@ -1190,10 +1193,15 @@ public class employeesearchtestcases {
 												employeesearch.verifyColumnsOfPlanListsection();
 												employeesearch.verifySelectedPlanHeaderAndHighlightedPlan();
 												employeesearch.verifyTotalBalance();
-												employeesearch.verifyViewPageForAPlanHavingBalance();
-												employeesearch.verifyInvestmentSection();
-												employeesearch.verifyCalendarIcon();
-												employeesearch.returnToEmployeeOverview();
+												if(employeesearch.verifyViewPageForAPlanHavingBalance())
+												{
+													employeesearch.verifyInvestmentSection();
+													employeesearch.verifyCalendarIcon();
+													employeesearch.returnToEmployeeOverview();
+												}else
+												{
+													Reporter.logEvent(Status.INFO, "Check if balance is displayed for any of the plan for employee enrolled with more than one plan.", "Balance is not displayed for any of the plan", true);
+												}
 											} catch (Exception e) {
 												e.printStackTrace();
 												Globals.exception = e;
@@ -1245,8 +1253,6 @@ try {
 		employeesearch.verifyBasicInformationOnOverviewPage();
 		employeesearch.verifyBasicInfoModalWindow();
 		employeesearch.editBasicInfoAndSave();
-		
-													
 	} catch (Exception e) {
 		e.printStackTrace();
 		Globals.exception = e;
@@ -1266,7 +1272,71 @@ try {
 				}
 	}
 }
-	
+
+
+/**
+ * <pre>This test case verifies employee basic information on overview page and update few fields and verifies the changes.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC027_Verify_Subset_History_Section(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"This testcase validates Subset section of employee.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.getEmployeeForUser(
+				Stock.getTestQuery("getEmployeeWithSubSetSection"),
+				Stock.GetParameterValue("username"));
+		String ssn = "";
+		ssn = employeesearch.getEmployeeSSNFromResultSet(resultset);
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(employeesearch.isSubSetSectionDisplayed())
+		{
+			Reporter.logEvent(Status.PASS,"Check Employee subset information section is displayed.", "Employee subset information is displayed.", false);
+			employeesearch.verifySubSetColumnHeaders();
+			employeesearch.verifySubsetHistorySection();
+			employeesearch.checkSubSetHistDataIsDisplayed();
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL,"Check Employee subset information section is displayed.", "Employee subset information is not displayed.", true);
+		}
+		resultset = employeesearch.getEmployeeForUser(
+				Stock.getTestQuery("getEmployeeWithoutSubSetSection"),
+				Stock.GetParameterValue("username"));
+		ssn = employeesearch.getEmployeeSSNFromResultSet(resultset);
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(employeesearch.isSubSetSectionDisplayed())
+			Reporter.logEvent(Status.FAIL,"Check Employee subset information section is not displayed.", "Employee subset information is displayed.", true);
+		else
+			Reporter.logEvent(Status.PASS,"Check Employee subset information section is not displayed.", "Employee subset information is not displayed.", false);
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
 	
 	
 	

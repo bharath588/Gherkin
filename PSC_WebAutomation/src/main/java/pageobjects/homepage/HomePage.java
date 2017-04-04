@@ -142,7 +142,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@Override
 	protected void isLoaded() throws Error {	
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
-			CommonLib.waitForProgressBar();
+			//CommonLib.waitForProgressBar();
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
 			//	Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
@@ -170,11 +170,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 				loginObj.waitForSuccessfulLogin();
 				//Check if UserVerification Pages appears then performVerification
 				if(Web.isWebElementDisplayed(Web.returnElement(userVeriPg,"EMAIL ADDRESS"))){
-					userVeriData = new String[]{Stock.GetParameterValue("userVerificationEmail"),
-					          getSecurityAnswer((Web.returnElement(userVeriPg, "SECURITYQUESTION")).getText().trim())};
-					/*userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
+					/*userVeriData = new String[]{userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),Stock.GetParameterValue("username")),
+					          getSecurityAnswer((Web.returnElement(userVeriPg, "SECURITYQUESTION")).getText().trim())};*/
+					userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"));
-					userVeriData[1] = Stock.GetParameterValue("userVerificationAns");*/
+					userVeriData[1] = Stock.GetParameterValue("userVerificationAns");
 					invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
 					invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
 				}else{
@@ -182,6 +182,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				}
 			}
 			//urlJumpPage.click();
+			Web.waitForElement(urlJumpPage);
 			Web.clickOnElement(urlJumpPage);
 			Web.waitForElement(weGreeting);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
@@ -548,7 +549,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				expMenuMap.put(expectSubMenuItems.get(i), Arrays.asList(Stock.GetParameterValue(expectSubMenuItems.get(i)).split(",")));
 			}
 		}
-		System.out.println("Expected map is:"+expMenuMap);
+
 		Web.waitForPageToLoad(Web.getDriver());
 		Actions act = new Actions(Web.getDriver());
 		try{

@@ -158,6 +158,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	 * @throws InterruptedException
 	 */
 	public void submitLoginCredentials(String[] loginData) {
+		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frmLogin);
 		// common.webDriver.switchTo().frame(frmLogin);
 		Web.setTextToTextBox(this.txtUserName, loginData[0]);

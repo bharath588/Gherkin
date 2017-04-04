@@ -15,12 +15,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import pageobjects.homepage.HomePage;
+
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
 
-public class CommonLib {
 
+public class CommonLib {
+	static ResultSet queryResultSet;
+	static HomePage homePage;
 	public static void HighlightElement(WebElement ele, WebDriver driver) {
 		for (int i = 0; i < 3; i++) {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -314,7 +318,19 @@ public static void waitForProgressBar(){
 
 	
 	
-	
+public static void switchToDefaultPlan() throws SQLException,Exception
+{
+	String defaultPlan = null;
+	homePage = new HomePage();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
+	}
+	Web.getDriver().switchTo().defaultContent();
+	homePage.searchPlanWithIdOrName(defaultPlan);
+}
 	
 	
 	

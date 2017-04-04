@@ -152,9 +152,23 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
+			Web.setTextToTextBox(txtUserVerificationSecAns, getSecurityAnswer());
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
+			/*if(Web.isWebElementDisplayed(imgEmpowerPsc))
+			{
+				
+			}
+			else
+			{
+				Web.getDriver().navigate().refresh();
+				Web.waitForElement(txtUserVerificationEmail);
+				Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
+				Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+				Web.clickOnElement(btnUserVerificationNext);
+				Web.waitForElement(imgEmpowerPsc);
+				
+			}*/
 		}		
 		//if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
 		if (!Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {

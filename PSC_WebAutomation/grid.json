@@ -1,7 +1,17 @@
 [
 {
-	"Browser": "FF",
+	"Browser": "IE",
 	"Port": "http://143.199.166.43:5556/wd/hub",
+	"Platform": "Windows.xp"
+},
+{
+	"Browser": "Chrome",
+	"Port": "http://10.4.61.69:5557/wd/hub",
+	"Platform": "Windows.xp"
+},
+{
+	"Browser": "FF",
+	"Port": "http://143.199.167.18:5558/wd/hub",
 	"Platform": "Windows.xp"
 }
 ]
