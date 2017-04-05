@@ -1394,7 +1394,7 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="expContactInfoLabels" value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address" />
+				<parameter name="expContactInfoLabels" value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method" />
 				<parameter name="expContactInputLabelsWindow" value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
 				<parameter name="expContactSelectLabelsWindow" value="Marital Status,Gender,Language Preference,State,Country" />
 			</Iteration>
@@ -1503,7 +1503,17 @@
 				<parameter name="expectedHeadersHistory" value="Client Division Code,Division,Division Name,Effective Date,Term Date" />
 			</Iteration>
 		</TestCase>
-		
+		<TestCase name="Recently_Viewed_Switch_Participant_Reg">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="employeeinfo">
 	</Module>
@@ -1680,6 +1690,10 @@ user_logon_id = ? and av.access_type_code='PSC_WEB'" />
 			Query="select distinct GA_ID from access_customization_view where  
 GA_ID in (select DISTINCT GA_ID from user_data_access where 
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
+<parameter QueryName="queryTofindPlansForNextGen" DB="ISISDB_QA"
+			Query="select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ISISDB_QA"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
 			<parameter QueryName="queryToSetInvalidLoginCount" DB="ISISDB_QA"
@@ -1823,8 +1837,9 @@ inner join part_agrmt pa on pa.ga_id=ga.id
 inner join access_customization_view acv on acv.ga_id=pa.ga_id
 inner join user_data_access uda on uda.ga_id= acv.ga_id
 inner join individual i on i.id = pa.ind_id
-where acv.accu_code='PlanEmpower' 
-and acv.accu_code not like 'PscGwrs%'
+and acv.accu_code='PlanEmpower' and ga.id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id='K_1ISIS' and acv1.accu_code='PlanEmpower'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and acv.access_type_code='PSC_WEB' and uda.user_logon_id =?
 and gs.basis is not null and gs.value is not null"/>
 <parameter QueryName="getEmployeeWithoutSubSetSection" DB="ISISDB_QA"

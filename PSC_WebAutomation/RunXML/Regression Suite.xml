@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"> <!-- parallel="classes" thread-count="3"> -->
+<suite name="testsuite" parallel="classes" thread-count="3"> <!-- parallel="classes" thread-count="3"> -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -226,9 +226,12 @@
 					</include>
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
-					</include>-->
-					<include name="TC027_Verify_Subset_History_Section">
+					</include>
+					 <include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName" value="Verify_Subset_History_Section" />
+					</include>-->
+					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
+						<parameter name="ManualTCName" value="Recently_Viewed_Switch_Participant_Reg" />
 					</include>
 				</methods>
 			</class>

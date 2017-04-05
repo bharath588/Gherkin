@@ -855,7 +855,9 @@ public class employeesearchtestcases {
 				Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 				Reporter.logEvent(Status.INFO, "Testcase Description",
 						"This testcase validates general employment informations", false);
-				employeesearch = new EmployeeSearch().get();	
+				employeesearch = new EmployeeSearch().get();
+				CommonLib.switchToDefaultPlan();
+				employeesearch.navigateToEmployeeTab();
 				employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());//need to fetch employee from database
 				employeesearch.verifyEmploymentInfoANDLabels();
 				employeesearch.updateEmploymentInfoModalWindow();
@@ -896,6 +898,7 @@ public class employeesearchtestcases {
 							"This testcase validates general employment informations", false);
 					employeesearch = new EmployeeSearch().get();
 					CommonLib.switchToDefaultPlan();
+					employeesearch.navigateToEmployeeTab();
 					employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 					employeesearch.contactInFoSectionValidation();
 					employeesearch.contactInFoLabelValidation();
@@ -938,6 +941,7 @@ public class employeesearchtestcases {
 								"This testcase validates general employment informations", false);
 						employeesearch = new EmployeeSearch().get();
 						CommonLib.switchToDefaultPlan();
+						employeesearch.navigateToEmployeeTab();
 						employeesearch.str1 = employeesearch.getBeneficiaryEmployeeSSN();
 						employeesearch.searchEmployeeBySSN(employeesearch.str1[0]);
 						employeesearch.navigateToEmployeeOverViewPage();
@@ -979,6 +983,7 @@ public class employeesearchtestcases {
 									"This testcase validates general employment informations", false);
 							employeesearch = new EmployeeSearch().get();
 							CommonLib.switchToDefaultPlan();
+							employeesearch.navigateToEmployeeTab();
 							employeesearch.searchEmployeeBySSN(employeesearch.getSSNFromDB());
 							employeesearch.navigateToEmployeeOverViewPage();
 							employeesearch.Verify_Recently_Viewed_Employee();
@@ -1275,7 +1280,8 @@ try {
 
 
 /**
- * <pre>This test case verifies employee basic information on overview page and update few fields and verifies the changes.</pre>
+ * <pre>This test case verifies employee subset section and subset history section for employee who are assigned with plans with subset
+ * and employee with no subset section.</pre>
  * @param itr
  * @param testdata
  */
@@ -1317,6 +1323,50 @@ try {
 			Reporter.logEvent(Status.FAIL,"Check Employee subset information section is not displayed.", "Employee subset information is displayed.", true);
 		else
 			Reporter.logEvent(Status.PASS,"Check Employee subset information section is not displayed.", "Employee subset information is not displayed.", false);
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+
+
+/**
+ * <pre>This testcase validates employee switch functionality through recently viewed features.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC028_Recently_Viewed_Switch_Participant_Reg(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"This testcase validates employee switch functionality through recently viewed features.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectPlanForUser(
+				Stock.getTestQuery("queryTofindPlansForNextGen"),
+				Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.navigateToEmployeeTab();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.switchToRecentlyViewedEmp();
+		
 		
 	} catch (Exception e) {
 		e.printStackTrace();

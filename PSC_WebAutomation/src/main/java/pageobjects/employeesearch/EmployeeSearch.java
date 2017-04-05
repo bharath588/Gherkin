@@ -27,6 +27,7 @@ import lib.Reporter;
 
 import com.aventstack.extentreports.*;
 
+import db.filters.NotEqualFilter;
 import framework.util.CommonLib;
 import lib.Stock;
 import lib.Web;
@@ -406,11 +407,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(id="empSubsetHistFrameId")
 	WebElement empSubSetHistFrame;
 	@FindBy(xpath="//table[2]//tr[1]//font/font")
-	//@FindBy(css="table:nth-child(2) tr:nth-child(1) font > font")
 	List<WebElement> subSetHistoryHeaders;
 	@FindBy(xpath="//table[2]//tr")
-	//@FindBy(css="table:nth-child(2) tr")
 	List<WebElement> subSetDataRows;
+	@FindBy(xpath="//*[@id='empSubsetHistDialogId']/preceding-sibling::div//span[.='close']")
+	WebElement closeIconOnSubsetHistoryWindow;
+	@FindBy(xpath="//div[@id='contactInfo']//label[contains(text(),'Name:')]/../following-sibling::td//td")
+	private WebElement contactName;
+	@FindBy(xpath="//div[@id='basicInfo']//label[contains(text(),'SSN:')]/../following-sibling::td//td")
+	private WebElement ssnInBasicInfoSection;
 	
 	String qdroPart = null;
 	String normalPart = null;
@@ -451,7 +456,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().defaultContent();
 		Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
 	}
-
+@FindBy(xpath="//*[@id='newMenu']//li/a[.='Search employee']")
+private WebElement searchEmployeeOptionLink;
 	@Override
 	@SuppressWarnings("unused")
 	protected void load() {
@@ -466,11 +472,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"The user has landed on homepage", true);
 			CommonLib.waitForProgressBar();
 			Web.waitForElement(tabEmployees);
-			Web.clickOnElement(tabEmployees);
-			Web.waitForElement(drpdwnSearchEmployee);
-			/*actions = new Actions(Web.getDriver());
-			actions.moveToElement(linkProfile);
-			actions.build().perform();*/
+			//Web.clickOnElement(tabEmployees);
+			//Web.waitForElement(drpdwnSearchEmployee);
+			actions = new Actions(Web.getDriver());
+			actions.moveToElement(tabEmployees).click().build().perform();
+			Web.waitForPageToLoad(Web.getDriver());
+			if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
+			{
+				actions.moveToElement(tabEmployees).click().build().perform();
+				actions.click(searchEmployeeOptionLink).perform();
+			}
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -565,7 +576,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void searchEmployeeBySSNAllPlans(String SSN) throws InterruptedException {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.waitForElement(drpdwnSearchEmployee);
+		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN - all plans");
 		Web.waitForElement(txtSearchbox);
@@ -606,8 +617,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.clickOnElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, Name);		
 		Thread.sleep(2000);
-		btnGoEmployeeSearch.click();
+		Web.clickOnElement(btnGoEmployeeSearch);
 		Thread.sleep(2500);		
+		Web.waitForElements(fNLNMILink);
 		Web.getDriver().switchTo().defaultContent();
 	}
 	/**
@@ -741,7 +753,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
 		Web.clickOnElement(tabEmployees);
-		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
+		Web.isWebElementDisplayed(drpdwnSearchEmployee, false);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(linkProfile);
 		actions.build().perform();
@@ -1407,6 +1419,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	{
 		
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
 		Web.waitForElements(fNLNMILink);
 		Web.clickOnElement(fNLNMILink.get(0));
 		Thread.sleep(2000);
@@ -1622,11 +1635,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		if(expLabels2.equals(actLabels))
 		{
-			Reporter.logEvent(Status.PASS, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels are displayed:'"+actLabels+"'.", false);
+			Reporter.logEvent(Status.PASS, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels displayed as:'"+actLabels+"'.", false);
 		}
 		else
 		{
-			Reporter.logEvent(Status.FAIL, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels are not displayed:'"+actLabels+"'.", true);
+			Reporter.logEvent(Status.FAIL, "Verify labels on contact info section:'"+expLabels2+"'", "actual labels displayed as:'"+actLabels+"'.", true);
 		}
 		Web.getDriver().switchTo().defaultContent();
 	}
@@ -1799,13 +1812,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 			else
 			{
-				employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
-				Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
+				employeeSearched = fNLNMILink.get(0).getText();
+				Web.clickOnElement(fNLNMILink.get(0));
 			}
 		}
-		//employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
-		//Web.isWebElementsDisplayed(fNLNMILink, true);
-		//Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
 		CommonLib.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
@@ -1946,16 +1956,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	/*
 	 * This method verifies the Recently viewed functionality on employee overview page
 	 */
-	public void Verify_Recently_Viewed_Employee() throws Exception
+	public String Verify_Recently_Viewed_Employee() throws Exception
 	{
+		String recentEmp = null;
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		CommonLib.waitForProgressBar();
+		//CommonLib.waitForProgressBar();
 		Web.clickOnElement(recentlyViewedLink);
 		Web.waitForElement(recentlyViewedEmpTable);
 		if(recentlyViewedEmpTable.isDisplayed())
 		{
 			Reporter.logEvent(Status.PASS,"Verify after clicking on recently viewed link,option collapses.", "reccently viewed option gets collapsed after clicking on Recently viewed link.", false);
-			String recentEmp = recentlyViewedEmployee.get(0).getText();
+			recentEmp = recentlyViewedEmployee.get(0).getText();
 			String overviewEmp = empNameHeader.getText();
 			System.out.println("Recently Viewed:"+recentEmp+" && "+"Overview Emp "+overviewEmp);
 			if(recentlyViewedEmployee.get(0).getText().equalsIgnoreCase(empNameHeader.getText()))
@@ -1972,7 +1983,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Reporter.logEvent(Status.FAIL,"Verify after clicking on recently viewed link,option collapses.", "reccently viewed option does not get collapsed after clicking on Recently viewed link.", true);
 		}
-		
+		return recentEmp;
 		
 	}
 	
@@ -2037,7 +2048,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 	}
 	
-	
+	@FindBy(xpath="//font[contains(text(),'We were unable to process')]")
+	private WebElement unexpErro;
 	
 	/*
 	 * This method edit the salary information of an employee and save it.
@@ -2050,41 +2062,54 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(incomeEditFrame);
 		Web.getDriver().switchTo().frame(incomeEditFrame);
-		Web.waitForElement(salaryInput);
-		String salary = salaryInput.getAttribute("value");
-		int sal = Integer.parseInt(salary);
-		int updateSal = sal+1;
-		String updatedSal = Integer.toString(updateSal);
-		String salaryDB=null;
-		Web.setTextToTextBox(salaryInput, "-"+updatedSal);
-		Web.clickOnElement(empUpdateSaveBtn);
-		Web.waitForPageToLoad(Web.getDriver());
-		if(Web.isWebElementsDisplayed(errorBoxes, true))
-		{
-			Reporter.logEvent(Status.PASS, "Enter salary in negative.", "error message is displayed.", false);
+		if(unexpErro.isDisplayed())
+		{	
+			Reporter.logEvent(Status.FAIL, "Check if unexpected error message is displayed.if yes,it may be due to data issue"
+					+ "or may be issue.kindly check manually once.", "Unexpected error is displayed.", true);
+			HomePage homePage = new HomePage();
+			Web.getDriver().switchTo().defaultContent();
+			Web.clickOnElement(Web.returnElement(homePage, "Home_Page_Logo"));
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
 		}
 		else
 		{
-			Reporter.logEvent(Status.FAIL, "Enter salary in negative.", "error message is displayed.", true);
-		}
-		Web.setTextToTextBox(salaryInput,updatedSal);
-		Web.clickOnElement(empUpdateSaveBtn);
-		Web.waitForPageToLoad(Web.getDriver());
-		CommonLib.waitForProgressBar();
-		Web.getDriver().switchTo().defaultContent();
-		queryResultSet = DB.executeQuery(Stock.getTestQuery("getSalary")[0],Stock.getTestQuery("getSalary")[1],individual[1]);
-		while(queryResultSet.next())
-		{
-			salaryDB = queryResultSet.getString("SAL_AMT");
-		}
-		System.out.println(salaryDB);
-		if(salaryDB.equals(updatedSal))
-		{
-			Reporter.logEvent(Status.PASS, "Update salary and save.", "Salary has been updated and changes are saved.", false);
-		}
-		else
-		{
-			Reporter.logEvent(Status.FAIL, "Update salary and save.", "Salary has not been updated.", true);
+			Web.waitForElement(salaryInput);
+			String salary = salaryInput.getAttribute("value");
+			int sal = Integer.parseInt(salary);
+			int updateSal = sal+1;
+			String updatedSal = Integer.toString(updateSal);
+			String salaryDB=null;
+			Web.setTextToTextBox(salaryInput, "-"+updatedSal);
+			Web.clickOnElement(empUpdateSaveBtn);
+			Web.waitForPageToLoad(Web.getDriver());
+			if(Web.isWebElementsDisplayed(errorBoxes, true))
+			{
+				Reporter.logEvent(Status.PASS, "Enter salary in negative.", "error message is displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Enter salary in negative.", "error message is displayed.", true);
+			}
+			Web.setTextToTextBox(salaryInput,updatedSal);
+			Web.clickOnElement(empUpdateSaveBtn);
+			Web.waitForPageToLoad(Web.getDriver());
+			CommonLib.waitForProgressBar();
+			Web.getDriver().switchTo().defaultContent();
+			queryResultSet = DB.executeQuery(Stock.getTestQuery("getSalary")[0],Stock.getTestQuery("getSalary")[1],individual[1]);
+			while(queryResultSet.next())
+			{
+				salaryDB = queryResultSet.getString("SAL_AMT");
+			}
+			System.out.println(salaryDB);
+			if(salaryDB.equals(updatedSal))
+			{
+				Reporter.logEvent(Status.PASS, "Update salary and save.", "Salary has been updated and changes are saved.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Update salary and save.", "Salary has not been updated.", true);
+			}
 		}
 	}
 	
@@ -3000,7 +3025,7 @@ public boolean isSubSetSectionDisplayed() throws Exception
 	boolean isSubSetDisplayed = false;
 	Web.getDriver().switchTo().defaultContent();
 	Web.getDriver().switchTo().frame(employeeSearchFrame);
-	if(Web.isWebElementDisplayed(subSetsection, true))
+	if(Web.isWebElementDisplayed(subSetsection, false))
 		isSubSetDisplayed = true;
 	else
 		isSubSetDisplayed = false;
@@ -3105,7 +3130,7 @@ public void checkSubSetHistDataIsDisplayed()
 
     for(int i=1;i<subSetDataRows.size();i++)
     {
-    	String subsetRow = "//table[2]//tr['"+(i+1)+"']";
+    	String subsetRow = "//table[2]//tr["+(i+1)+"]";
     	WebElement row = Web.getDriver().findElement(By.xpath(subsetRow));
     	List<WebElement> subsetColumns  = row.findElements(By.xpath(".//font"));
     	for(WebElement column :subsetColumns)
@@ -3114,7 +3139,105 @@ public void checkSubSetHistDataIsDisplayed()
     	}
     	Reporter.logEvent(Status.INFO, "Subset data:","Subset data:"+actualSubsetData, false);
     }	
+    Web.getDriver().switchTo().defaultContent();
+    Web.getDriver().switchTo().frame(employeeSearchFrame);
+    Web.clickOnElement(closeIconOnSubsetHistoryWindow);
+    CommonLib.waitForProgressBar();
+    Web.getDriver().switchTo().defaultContent();
 }
+
+
+
+/*
+ * This method switches to employee through recently viewed section and validates other details pertaining to switched employee
+ */
+public void switchToRecentlyViewedEmp() throws Exception,SQLException
+{
+	String recentlyViewedBeforeSwitch = null;
+	String planBeforeSwitch = null;
+	String recentlyViewedAfterSwitch = null;
+	String ssnbeforeSwitch = null;
+	ArrayList<String> plans = new ArrayList<String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("queryTofindPlansForNextGen")[0],
+			Stock.getTestQuery("queryTofindPlansForNextGen")[1],"K_"+Stock.GetParameterValue("username"));
+	while(queryResultSet.next())
+	{
+		plans.add(queryResultSet.getString("GA_ID"));
+	}
+	
+	recentlyViewedBeforeSwitch = this.Verify_Recently_Viewed_Employee();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	planBeforeSwitch = selectedPlanHeader.getText().split(" - ")[1].trim();
+	ssnbeforeSwitch = empSSN.getText().substring(7);
+	System.out.println("Plan before switch:"+planBeforeSwitch+",and employee before switch:"+recentlyViewedBeforeSwitch
+			+",SSN before switch:"+ssnbeforeSwitch);
+	HomePage homePage = new HomePage();
+	for(String plan : plans){
+		if(!plan.equals(planBeforeSwitch)){
+			Web.getDriver().switchTo().defaultContent();
+			homePage.searchPlanWithIdOrName(plan);
+			break;
+		}
+	}
+	this.navigateToEmployeeTab();
+	this.searchEmployeeByName("");
+	this.navigateToEmployeeOverViewPage();
+	recentlyViewedAfterSwitch = this.Verify_Recently_Viewed_Employee();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	
+	if(recentlyViewedEmployee.get(0).getText().equals(recentlyViewedAfterSwitch)
+			&&recentlyViewedEmployee.get(1).getText().equals(recentlyViewedBeforeSwitch))
+	{
+		Reporter.logEvent(Status.PASS, "Verify recently viewed employee list after adding employees from"
+				+ "different plan to Recently viewed list by searching employee and navigating to employee overview page.",""
+						+ "employee from different plan is listed on top and previoulsy visited employee form other plan"
+						+ " listed second.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify recently viewed employee list after adding employees from"
+				+ "different plan to Recently viewed list by searching employee and navigating to employee overview page.",""
+						+ "Recently viewed list is not ordered based on recently viewed employees order.", true);
+	}
+	Web.clickOnElement(recentlyViewedEmployee.get(1));
+	CommonLib.waitForProgressBar();
+	Web.waitForPageToLoad(Web.getDriver());
+	Web.getDriver().switchTo().defaultContent();
+	this.navigateToEmpDetailPage();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(empNameHeader.getText().equals(recentlyViewedBeforeSwitch)
+	&&selectedPlanHeader.getText().replace(" - ", "").trim().contains(planBeforeSwitch)
+	&&empSSN.getText().substring(7).equals(ssnbeforeSwitch)
+	&&contactName.getText().toUpperCase().equals(recentlyViewedBeforeSwitch)
+	&&ssnInBasicInfoSection.getText().contains(ssnbeforeSwitch))
+	{
+		Reporter.logEvent(Status.PASS, "Switch to another plan employee from recently viewed list"
+				+ "and validate employee is switched and respective data is displayed.", "Employee is switched and respective data is displayed.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Switch to another plan employee from recently viewed list"
+				+ "and validate employee is switched and respective data is displayed.", "Employee is not switched or respective data is not displayed.", true);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

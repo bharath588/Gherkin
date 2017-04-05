@@ -56,6 +56,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@FindBy(css = "a[id = 'profileLink']") private WebElement myProfileLink;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
+	@FindBy(xpath="//div[@id='logo']/img")
+	private WebElement homePageLogo;
 	@FindBy(xpath=".//a[@id='logOutLink']") private WebElement logoutLink;
 	@FindBy(xpath=".//*[@id='planSearchAc_input']")
 	private WebElement searchPlansInput;
@@ -227,6 +229,16 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(iFramePlanB);
 			return this.complianceHyperLink;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Welcome"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+			return this.weGreeting;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Home_Page_Logo"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+			return this.homePageLogo;
 		}
 		return null;
 	}
@@ -920,7 +932,15 @@ public class HomePage extends LoadableComponent<HomePage>{
 		boolean planTextDisplayed = false;
 		Web.setTextToTextBox(searchPlansInput,iDOrName);
 		Web.clickOnElement(searchPlanButton);
-		Web.isWebElementDisplayed(moreButton, true);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.waitForElement(iFramePlanB);
+		Web.getDriver().switchTo().frame(iFramePlanB);
+		if(!moreButton.isDisplayed())
+		{
+			Web.isWebElementDisplayed(moreButton, true);
+		}
+		Web.getDriver().switchTo().defaultContent();
 		if(iDOrName!=null)
 		if(planHeaderInfo.getText().contains(iDOrName))
 			planTextDisplayed = true;
