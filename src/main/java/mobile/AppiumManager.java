@@ -103,6 +103,7 @@ public class AppiumManager {
 
 	    public void destroyAppiumNode() {
 	        try {
+	        
 	        	if (appiumDriverLocalService.isRunning())
 	        appiumDriverLocalService.stop();
 	        	
@@ -113,7 +114,8 @@ public class AppiumManager {
 	        if (Mobile.getDriver().toString().split(":")[0].trim().equals("IOSDriver")) {
 	     
 					iosDevice.destroyIOSWebKitProxy();
-				} }catch (IOException e) {
+				} 
+	        	}catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InterruptedException e) {
@@ -123,6 +125,7 @@ public class AppiumManager {
 	      
 	       new  AppiumParallelTest().freeDevice(new IOSDriverManager().deviceName);
 	    }
+	   
 	    
 	    
 	    

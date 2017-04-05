@@ -73,6 +73,11 @@ public class IOSDriverManager {
 //				 
 //				 else{
 				 
+				 if (Reader.getConfigParam("DEVICE").equalsIgnoreCase("Simulator")){
+						driver = new IOSDriver<>(new URL(sURL), iosNative());
+				 }
+				 else{
+				 
 				 
 				 if(list == null){
 					 Mobile.figlet("No Devices Connected");
@@ -98,13 +103,16 @@ public class IOSDriverManager {
 					driver = new IOSDriver<>(appiumMan.getAppiumUrl(), iosNative());
 						}
 						else{
+							IOSDeviceConfiguration.closeAllIProxy();						
 							driver = new IOSDriver<>(new URL(sURL), iosNative());
 						}
-				} catch (Exception e) {					
+				}
+				 catch (Exception e) {					
 					System.out.println("Not able to Initialize Appium deriver");
 					e.printStackTrace();
 					return driver;
 				}
+				 }
 			//	 }
 				 
 			

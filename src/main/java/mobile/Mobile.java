@@ -27,6 +27,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.aventstack.extentreports.Status;
 import com.github.lalyos.jfiglet.FigletFont;
@@ -37,7 +38,7 @@ import com.github.lalyos.jfiglet.FigletFont;
 public class Mobile {
 	
 	
-	
+	public static boolean reportStatus = false;
 	public static boolean mobilePlatform = false;
 	//public static AppiumDriver<MobileElement> appiumDriver;
 
@@ -84,13 +85,18 @@ public class Mobile {
 
 	public static void setEdit(String locator, CharSequence... sTextValue) {
 		IOSElement ele = findElement(locator);
-		if (ele != null) {
+		
+		try{
+			if (ele != null) {	
 			ele.clear();
 			ele.sendKeys(sTextValue);
 		
 		} else {
 			System.out.println("Element not Present :" + locator);
 		}
+	}catch(Exception e){
+	Reporter.logEvent(Status.INFO, "Not able to set value in Text Field", sTextValue.toString(), true);		
+	}	
 
 	}
 	
@@ -177,6 +183,18 @@ public class Mobile {
 		return sValue;
 
 	}
+	
+	public static String getElementValue(By locator) {
+		String sValue = null;
+		IOSElement ele = findElementBy(locator);
+
+		if (ele != null) {
+			return ele.getAttribute("value");
+		
+		}
+		return sValue;
+
+	}
 	public static void clickElement(String locator) {
 		IOSElement ele = findElement(locator);
 
@@ -199,6 +217,22 @@ public class Mobile {
 		return false;
 	}
 	
+	public static Boolean is_Element_Displayed(By sLocator){
+		
+		IOSElement ele = findElementBy(sLocator);
+		if(ele != null){
+			if(ele.isDisplayed()){
+				return true;
+			}
+		}else
+			return false;
+		
+		return false;
+	}
+	
+	
+	
+	
 	/*@Author :Siddartha 
 	 * @Date = 18/Jan /2017
 	 * This method will verify expected text with actual text.
@@ -210,21 +244,32 @@ public class Mobile {
 			String sActText = ele.getText();
 			if(exactMatch){
 				if(sActText.equals(sExpText))
-					Reporter.logEvent(Status.PASS, "Verify Text : "+sExpText,sMsg, false);
+					Reporter.logEvent(Status.PASS, sMsg,sExpText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Verify Text to be :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected was  :" +sMsg +"  : "+sExpText ,"But Actual was :"+sActText, true);
 		            }
 			else{
-				
-				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().contains(sExpText.replaceAll(" ","").trim()))
-					Reporter.logEvent(Status.PASS, "Verify Text  :"+sExpText,sMsg, false);
+				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().toLowerCase().contains(sExpText.replaceAll(" ","").trim().toLowerCase()))
+					Reporter.logEvent(Status.PASS, sMsg,sExpText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Verify Textto be :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected was  to contain  :  "+sExpText ,"But Actual was :"+sActText, true);
 		    
 				
 			}
 		}else{
-			Reporter.logEvent(Status.FAIL, "Verify Text to be :"+sExpText ,"But Actual element was not found", true);
+			Reporter.logEvent(Status.FAIL, " Expected was   :"+sExpText ,"But actual was not found", true);
+		}
+	}
+	
+	public static void verify_Text_Is_Not_Displayed(String locator,String sExpText,String sMsg,Boolean exactMatch){		
+		
+		IOSElement ele = findElement(locator);
+		if (ele != null) {
+			String sActText = ele.getText();
+			if(!sActText.replaceAll("\\n", "").replaceAll(" ","").trim().contains(sExpText.replaceAll(" ","").trim()))
+				Reporter.logEvent(Status.PASS, sMsg,sExpText, false);
+			else
+				Reporter.logEvent(Status.FAIL, "Expected was  :" +sMsg +" "+sExpText ,"But Actual was :"+sActText, true);
 		}
 	}
 	
@@ -241,16 +286,16 @@ public class Mobile {
 			String sActText = ele.getText();
 			if(exactMatch){
 				if(sActText.equals(sExpText))
-					Reporter.logEvent(Status.PASS, "Expected Text was displayed :",sExpText, false);
+					Reporter.logEvent(Status.PASS, "Expected Text to be  displayed :",sExpText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :  "+sActText, true);
 		            }
 			else{
 				
 				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().contains(sExpText.replaceAll(" ","").trim()))
-					Reporter.logEvent(Status.PASS, "Expected Text was displayed  :",sExpText, false);
+					Reporter.logEvent(Status.PASS, "Expected Text was displayed  :",sActText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual was :  "+sActText, true);
 		    
 				
 			}
@@ -262,12 +307,12 @@ public class Mobile {
 	
 	
 	public  static void verifyElementPresent(String sStep,String sObj,String sMsg){			
-		
-		
+			
 		if(Mobile.isElementPresent(sObj)){
 			Reporter.logEvent(Status.PASS,sStep +"  Display ", sMsg,false);
 		}else{
 		     Reporter.logEvent(Status.FAIL,sStep+"  Not Display  ",sMsg,true);
+		          
 		}
 		
 	}
@@ -276,10 +321,10 @@ public class Mobile {
 public  static void verify_Element_Value(String sObj,String sExpText,String sMsg){			
 		  String sActValue = getElementValue(sObj);
 		if(sActValue != null){
-		if(sActValue.equals(sExpText)){
+		if(sActValue.replaceAll("\\n","").trim().equals(sExpText.trim())){
 			Reporter.logEvent(Status.PASS," Expected  and Actual Value are Same", sMsg,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL," Expected Value :"+sExpText ,"But Actucal was"+sActValue,true);
+		     Reporter.logEvent(Status.FAIL," Expected Value :"+sExpText ,"But Actucal was:  "+sActValue,true);
 		}
 		}else{
 		     Reporter.logEvent(Status.FAIL," Expected Value :"+sExpText ,"But Actucal was null",true);
@@ -287,13 +332,11 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 		}
 		
 	}
-
-
 	public  static void verifyElementNotPresent(String sStep,String sObj,String sMsg){			
 		if(!isElementPresent(sObj)){
-			Reporter.logEvent(Status.PASS,sStep+" Not Display  ",sMsg,false);
+			Reporter.logEvent(Status.PASS,sStep+" Not Displayed  ",sMsg,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL,sStep +"  Display ", sMsg,true);
+		     Reporter.logEvent(Status.FAIL,sStep +"Displayed ", sMsg,true);
 		}
 		
 	}
@@ -320,16 +363,16 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 	    	 if(bPartial)
 	    	 {
 	    		 if(sActText.contains(sExpText))
-	    			 Reporter.logEvent(Status.PASS, "Expected Error Message :"+sExpText,"", false);
+	    			 Reporter.logEvent(Status.PASS, "Expected Error Message displayed",sExpText, false);
 				  else
-					  Reporter.logEvent(Status.FAIL, "Expected Error Message :"+sExpText  ,"But Actual was :"+sActText, true);
+					  Reporter.logEvent(Status.FAIL, "Expected Error Message to be  :  "+sExpText  ,"But Actual was :  "+sActText, true);
 	    			 
 	    	 }
 	    	 else {
 	    	 if(sActText.equals(sExpText))
-				  Reporter.logEvent(Status.PASS, "Expected Error Message :"+sExpText,"", false);
+				  Reporter.logEvent(Status.PASS, "Expected Error Message displayed : ","sExpText", false);
 			  else
-				  Reporter.logEvent(Status.FAIL, "Expected Error Message :"+sExpText  ,"But Actual was :"+sActText, true);
+				  Reporter.logEvent(Status.FAIL, "Expected Error Message to be  :"+sExpText  ,"But Actual was :  "+sActText, true);
 			}
 	      }
 	           
@@ -345,16 +388,16 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 		    	 if(!exactMatch)
 		    	 {
 		    		 if(sActText.contains(sExpText))
-		    			 Reporter.logEvent(Status.PASS, "Expected Warning Message :"+sExpText,"", false);
+		    			 Reporter.logEvent(Status.PASS, "Expected Warning Message : "+sExpText,"", false);
 					  else
-						  Reporter.logEvent(Status.FAIL, "Expected Warning Message :"+sExpText  ,"But Actual was :"+sActText, true);
+						  Reporter.logEvent(Status.FAIL, "Expected Warning Message : "+sExpText  ,"But Actual was : "+sActText, true);
 		    			 
 		    	 }
 		    	 else {
 		    	 if(sActText.equals(sExpText))
-					  Reporter.logEvent(Status.PASS, "Expected Warning Message :"+sExpText,"", false);
+					  Reporter.logEvent(Status.PASS, "Expected Warning Message : "+sExpText,"", false);
 				  else
-					  Reporter.logEvent(Status.FAIL, "Expected Warning Message :"+sExpText  ,"But Actual was :"+sActText, true);
+					  Reporter.logEvent(Status.FAIL, "Expected Warning Message : "+sExpText  ,"But Actual was : "+sActText, true);
 				}
 		      }
 		          
@@ -378,9 +421,9 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 		  if(!ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, "Disable",sMsg, false);
+			  Reporter.logEvent(Status.PASS, "Element is Disable",sMsg, false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Not Disable",sMsg, true);
+			  Reporter.logEvent(Status.FAIL, "Element is Not Disable",sMsg, true);
 		}
 	
 		
@@ -434,26 +477,57 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 				flag = false;
 			}
 		} 
-		return flag;
-		
+		return flag;		
 	}
+	
+	public static boolean isElementPresent(String locator,int timeInSecond) {
+		IOSElement ele = findElement(locator);
+		Boolean flag = false;
+		
+		
+			for(int i = 0;i<timeInSecond;i++){
+				if (ele == null){
+			      ele= findElement(locator);
+				}else{
+					break;
+			}
+				
+		}
+		
+		
+		if (ele != null) {
+			if (ele.isDisplayed()) {
+				flag = true;
+			} else {
+				System.out.println("Not Display :" + locator);
+				flag = false;
+			}
+		} 
+		return flag;		
+	}
+	
+	
+	
 	public static IOSElement findElementBy(By link){
 		try{
+			getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		return (IOSElement) getDriver().findElement(link);
 		}catch(NoSuchElementException e){
-		Reporter.logEvent(Status.INFO, "Not able to Find Element","", true);
-			return null;
+		return null;
 		}
 	}
 	
-	public static boolean assertElementPresent(By link) {
+	public static boolean assertElementPresentByAccessibilityId(String link) {
 		Boolean flag = false;
 
 		try{
 		getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		IOSElement ele = (IOSElement) getDriver().findElement(link);
+		IOSElement ele = (IOSElement) getDriver().findElementByAccessibilityId(link);
 
 		if (ele != null) {
+			if(!ele.isDisplayed()){
+				scrollTo(ele);
+			}
 			if (ele.isDisplayed()) {
 				flag = true;
 			} else {
@@ -467,6 +541,66 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 	}
 		return flag;
 	}
+	
+	
+	
+	public static boolean assertElementPresent(By link) {
+		Boolean flag = false;
+
+		try{
+		getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		IOSElement ele = (IOSElement) getDriver().findElement(link);
+		
+		if (ele != null) {
+			int j =0;
+			while (!ele.isDisplayed() && j<3) {	 
+          		scrollTo(ele);	
+          		if(j == 1 ){
+          			Mobile.scroll_Down();
+          		}
+          		if(j  == 2 ){
+          			Mobile.scroll_UP();
+          		}
+               j++;
+			}			
+						
+			if (ele.isDisplayed()) {
+				flag = true;
+			} else {
+				System.out.println("Not Displaying : "+link );
+				flag = false;
+			}
+		}
+		
+	}  catch(Exception e){
+		System.out.println("Not Display :" );
+	}
+		return flag;
+	}
+	
+	
+	
+	
+	
+	public static boolean assertElementsPresent(String... elements) {
+		Boolean flag = false;
+		try{
+		for (String element : elements) {			  
+			IOSElement ele = findElementBy(By.name(element));
+			if (ele != null) {
+				return true;
+			}			
+		}	
+		
+		}catch(Exception e){
+			System.out.println("Not Display :" );
+		}
+			return flag;
+		}
+	
+		
+
+		
 	
 
 	public static void waitForPageToLoad(String locator) {
@@ -486,53 +620,78 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 	}
 
 	public static IOSElement findElement(String locator) {
-		getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		IOSElement element = null;
-		for (int i = 0; i < 5; i++) {
+		String LocatorType = "AccessibilityID";
+		
+		if(locator.contains("//")){
+			LocatorType = "Xpath";
+		}
+		
+		for (int i = 0; i < 3; i++) {
 			try {
-
-				try {
-					// System.out.println("Name");
+				
+				if(LocatorType.equals("AccessibilityID")){
 					element = (IOSElement) getDriver().findElementByAccessibilityId(
 							locator);
-
-				} catch (Exception e1) {
-					try {
-						// System.out.println("Accessibility");
-						element = (IOSElement) getDriver()
-								.findElementByName(locator);
-
-					} catch (Exception e2) {
-						try {
-							// System.out.println("xpath");
-							element = (IOSElement) getDriver()
-									.findElementByXPath(locator);
-
-						} catch (Exception e3) {
-
-							try {
-								// System.out.println("ID");
-								element = (IOSElement) getDriver()
-										.findElementById(locator);
-
-							} catch (Exception e4) {
-
-								element = null;
-
-							}
-						}
-					}
 				}
+				else if(LocatorType.equals("Xpath")){
+					element = (IOSElement) getDriver()
+							.findElementByXPath(locator);
+				}
+				
+
+//				try {
+//					// System.out.println("Name");
+//					element = (IOSElement) getDriver().findElementByAccessibilityId(
+//							locator);
+//				} catch (Exception e1) {
+//					try {
+//						// System.out.println("Accessibility");
+//						element = (IOSElement) getDriver()
+//								.findElementByXPath(locator);
+//
+//					} catch (Exception e2) {
+//						element = null;
+//
+//					}
+//						try {
+//							// System.out.println("xpath");
+//							
+////							element = (IOSElement) getDriver()
+////									.findElementByName(locator);
+//
+//						} catch (Exception e3) {
+//
+//							try {
+//								// System.out.println("ID");
+////								element = (IOSElement) getDriver()
+////										.findElementById(locator);
+//
+//							} catch (Exception e4) {
+//
+//								element = null;
+//
+//							}
+	//					}
+		//			}
+	//			}
 			} catch (Exception e) {
-				System.out.println("Element Not fount at FindElement");
+				System.out.println(locator + "  Not found at FindElement function");
 
 			}
 
 			if (element != null) {
 				int j =0;
-				while (!element.isDisplayed() && j<10) {				 
-                //element.swipe(SwipeElementDirection.UP, 1000);
-					scrollTo(element);					
+				while (!element.isDisplayed() && j<3) {	 
+//              		scrollTo(element);	
+//              		if(j == 1 ){
+              			Mobile.scroll_Down();
+              	//	}
+              		if(j == 2 ){
+              			Mobile.scroll_UP();
+              			
+              		}
                    j++;
 				}
 				getDriver().manage().timeouts()
@@ -621,9 +780,7 @@ public  static void verify_Element_Value(String sObj,String sExpText,String sMsg
 			scrollObject.put("element",  scrollToElement.getId());
 			scrollObject.put("toVisible", "true");
 			js.executeScript("mobile: scroll", scrollObject);
-			
-			
-			
+				
 			
 		}catch(Exception e){
 			System.out.println("Not able to swipe");
@@ -832,7 +989,9 @@ public static void scroll_Down(){
 	}
 	
 	public static void selectRadioButton(String sLabel) {
-		String sRadioButtonNotSelected = "//*[@name='"+sLabel+"']/preceding-sibling::XCUIElementTypeButton";		
+		//String sRadioButtonNotSelected = "//*[contains(@name,'"+sLabel+"')]/preceding-sibling::XCUIElementTypeButton";		
+		String sRadioButtonNotSelected = "//*[contains(@name,'"+sLabel+"')]";		
+		
 		IOSElement eleRadioOption = findElement(sRadioButtonNotSelected);
 		if(eleRadioOption != null){
 			eleRadioOption.click();
@@ -876,6 +1035,18 @@ public static void scroll_Down(){
 		
 	}
 	
+	public static void verify_SwitchButton_Selected(String sObj,Boolean bStatus, String sMsg){
+		String isSelected = getElementValue(sObj);
+		String sVal= "0";
+		if(bStatus){
+			sVal="1";
+		}
+		if (sVal.equals(isSelected)) 	
+			Reporter.logEvent(Status.PASS, "Switch Option should be  "+bStatus,sMsg, false);
+		  else
+			  Reporter.logEvent(Status.FAIL, "Switch Option is not Displayed as expected : "+bStatus,"But Actual was :"+isSelected, true);
+		
+	}	
 	
 	 public static void figlet(String text) {
 	        String asciiArt1 = null;
