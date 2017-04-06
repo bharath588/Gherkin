@@ -276,6 +276,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("Auth code I Error Msg")) {
 			return this.txtPhoneNumber;
 		}
+		if (fieldName.trim().equalsIgnoreCase("LOG OUT")) {
+			return this.lnkLogout;
+		}
 		return null;
 		
 	}

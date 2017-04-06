@@ -3641,7 +3641,7 @@ public class deferralstestcases {
 			String date=dateFormat.format(calendar.getTime());
 			System.out.println("DATE"+date);
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+			//DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
@@ -3747,7 +3747,7 @@ public class deferralstestcases {
 			String date=dateFormat.format(calendar.getTime());
 			System.out.println("DATE"+date);
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+		//	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());

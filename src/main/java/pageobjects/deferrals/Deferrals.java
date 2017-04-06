@@ -1309,7 +1309,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		
 		public void chainingForStandardContribution(String chainingOption){
 			WebElement option=this.getWebElement(chainingOption);
-			Web.waitForElement(lblChainingText);
+			//Web.waitForElement(lblChainingText);
 			/*if(StringUtils.containsIgnoreCase(lblChainingText.getText(), "Carryover my contribution if I reach the plan or IRS limit?"))
 				Reporter.logEvent(Status.PASS, "Verify Chaining message displayed", "Expected : Carryover my contribution if I reach the plan or IRS limit? \nActual : "+lblChainingText.getText(), false);
 			else

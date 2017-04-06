@@ -975,7 +975,10 @@ public class beneficiariestestcases {
 					Reporter.logEvent(Status.FAIL, "verify Error message displayed for married no allocations beneficiary is matching", "Error Message is matching", true);
 			}
 			else	
-				Reporter.logEvent(Status.FAIL, "verify Error message displayed ", "Error Message is not displayed", true);
+				Reporter.logEvent(Status.FAIL, "verify Error message displayed ", "Error Message is not displayed",
+						true);
+			
+			Web.clickOnElement(beneficiary, "LOG OUT");
 		}
 		catch(Exception e)
         {
@@ -1026,6 +1029,8 @@ public class beneficiariestestcases {
 
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
+		    String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1042,9 +1047,8 @@ public class beneficiariestestcases {
 			
 			beneficiary.get();
 			
-			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],participant_SSN);	
-			Web.getDriver().navigate().refresh();
+			
+			//Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			
