@@ -978,7 +978,7 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.FAIL, "verify Error message displayed ", "Error Message is not displayed",
 						true);
 			
-			Web.clickOnElement(beneficiary, "LOG OUT");
+			
 		}
 		catch(Exception e)
         {
@@ -1097,6 +1097,7 @@ public class beneficiariestestcases {
 					beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 					beneficiary.refresh();
 					beneficiary.refresh();
+					Web.clickOnElement(beneficiary, "LOG OUT");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1730,6 +1731,7 @@ public class beneficiariestestcases {
 					try {
 						beneficiary.deleteBeneficiariesFromDB(participant_SSN,first_Name+"%");
 						beneficiary.refresh();
+						Web.clickOnElement(beneficiary, "LOG OUT");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -76,9 +76,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message"></parameter>
                     </include>
                
-                   <include name="Beneficiary_TC020_Participants_with_auth_code_I">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I"></parameter>
-                    </include>
+                  
                     <include name="Beneficiary_TC007_Marital_status_not_displayed_One_beneficiary_use_address_on_record">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC007_Marital status not displayed One beneficiary use address on record"></parameter>
                     </include>
@@ -118,6 +116,9 @@
                     <include name="validate_Beneficiary_ErrorMessages">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC040_Beneficiary error messages"></parameter>
                     </include> 
+                     <include name="Beneficiary_TC020_Participants_with_auth_code_I">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I"></parameter>
+                    </include>
                 </methods>
             </class>
         </classes>
