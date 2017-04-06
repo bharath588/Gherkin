@@ -416,6 +416,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement contactName;
 	@FindBy(xpath="//div[@id='basicInfo']//label[contains(text(),'SSN:')]/../following-sibling::td//td")
 	private WebElement ssnInBasicInfoSection;
+	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo_content']/table")
+	private WebElement enrollmentAndEligibilitySection;
+	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo']//a")
+	private WebElement enrolAndEligibltyEditLink;
+	@FindBy(id="enrollEligEditFrameId")
+	private WebElement enrollAndEligEditFrame;
 	
 	String qdroPart = null;
 	String normalPart = null;
@@ -583,7 +589,7 @@ private WebElement searchEmployeeOptionLink;
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
 		Web.clickOnElement(btnGoEmployeeSearch);
-		Web.waitForElements(fNLNMILink);
+		Web.waitForElement(fNLNMILink.get(0));
 		Web.getDriver().switchTo().defaultContent();
 		//dismissErrorBox();
 	}
@@ -3213,6 +3219,7 @@ public void switchToRecentlyViewedEmp() throws Exception,SQLException
 	{
 		Reporter.logEvent(Status.PASS, "Switch to another plan employee from recently viewed list"
 				+ "and validate employee is switched and respective data is displayed.", "Employee is switched and respective data is displayed.", false);
+	Web.getDriver().switchTo().defaultContent();
 	}
 	else
 	{
@@ -3222,12 +3229,56 @@ public void switchToRecentlyViewedEmp() throws Exception,SQLException
 
 }
 
+/*
+ * This is a generic method to return all resultset of employee for a user
+ */
+public ResultSet selectEmployeesForUser(String[] dBQueryName,String username) throws SQLException
+{
+	queryResultSet = DB.executeQuery(dBQueryName[0],dBQueryName[1],username);
+	return queryResultSet;
+}
+
+/*
+ * This is a generic method to return SSN of an employee from DB
+ */
+public String selectEmployeeFromResultSet(ResultSet resultSet) throws SQLException,InterruptedException
+{
+	String empSSN = null;
+	while(resultSet.next())
+	{
+		empSSN = resultSet.getString("SSN");
+		this.searchEmployeeBySSNAllPlans(empSSN);
+		if (!errortxtSearchResults.getText().contains("PLEASE CHECK YOUR SEARCH CRITERIA.")) {
+			break;
+		}
+	}
+	return empSSN;
+}
 
 
 
-
-
-
+/*
+ * This method update the Enrollment and Eligibility section and save.
+ */
+public boolean editEnrollmentAndEligibilityAndSave()
+{
+	boolean isEnrollmentSectionDisplayed = false;
+	Web.getDriver().switchTo().defaultContent();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(enrollmentAndEligibilitySection.isDisplayed())
+	{
+		isEnrollmentSectionDisplayed = true;
+		Web.clickOnElement(enrolAndEligibltyEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(enrollAndEligEditFrame);
+		
+	}
+	else
+	{
+		isEnrollmentSectionDisplayed = false;
+	}
+	return isEnrollmentSectionDisplayed;
+}
 
 
 

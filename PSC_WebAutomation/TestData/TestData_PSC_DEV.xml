@@ -1300,6 +1300,17 @@
 				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Edit_Enrollment_And_Eligibility">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="query">
 		<parameter QueryName="setDefaultPlanNullQuery" DB="ISISDB_DEV"
@@ -1483,10 +1494,11 @@ where  pa.GA_ID in (select DISTINCT GA_ID from user_data_access where user_logon
 and accu_code='PlanEmpower') and emp.emp_termdate is not null"/> -->
 <parameter QueryName="getEmployeeWithTermDate" DB="ISISDB_DEV"
 	Query="select ind.ssn,ind.id from employment emp inner join individual ind on emp.ind_id=ind.id where ind_id in (select id from individual where ssn in(select ind.SSN 
-from part_agrmt pa,
-    individual ind where
- pa.ga_id in (select distinct GA_ID from access_customization_view 
-where  GA_ID in (select DISTINCT GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
+from part_agrmt pa,individual ind where
+pa.ga_id in (select distinct GA_ID from access_customization_view 
+where  GA_ID in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and accu_code='PlanEmpower')
 and pa.ind_id=ind.id)) and emp_termdate is not null"/>
 <parameter QueryName="getEmpHiringDetails" DB="ISISDB_DEV"

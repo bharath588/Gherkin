@@ -1366,7 +1366,46 @@ try {
 		employeesearch.searchEmployeeByName("");
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.switchToRecentlyViewedEmp();
-		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+
+
+/**
+ * <pre>This testcase validates employee enrollment and eligibility edit and save,edit and cancel features.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC029_Edit_Enrollment_And_Eligibility(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objective of this test case is to edit Enrollment and eligibility section and update and save and edit"
+		+ "Enrollment and eligibility section,update and cancel to make sure save/cancel works as expected.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectEmployeesForUser(Stock.getTestQuery("getEmployeeWithTermDate"),
+				Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
 		
 	} catch (Exception e) {
 		e.printStackTrace();

@@ -229,9 +229,12 @@
 					</include>
 					 <include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName" value="Verify_Subset_History_Section" />
-					</include>-->
+					</include>
 					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName" value="Recently_Viewed_Switch_Participant_Reg" />
+					</include>-->
+					<include name="TC029_Edit_Enrollment_And_Eligibility">
+						<parameter name="ManualTCName" value="Edit_Enrollment_And_Eligibility" />
 					</include>
 				</methods>
 			</class>
