@@ -930,10 +930,16 @@ public class logintestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify PL User Login with no Plan access", false);
-			HomePage home = new HomePage(new LoginPage(),false,new String[]{
+			/*HomePage home = new HomePage(new LoginPage(),false,new String[]{
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")
-			}).get();
+			}).get();*/
+			LoginPage loginPage = new LoginPage().get();
+			loginPage.submitLoginCredentials(new String[]{
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")
+			});
+			Reporter.logEvent(Status.INFO, "Login Status", "Login is done", true);
 			Web.getDriver().switchTo().frame("framea");
 			home.isPlanListDisplayed();
 			Web.getDriver().switchTo().defaultContent();
