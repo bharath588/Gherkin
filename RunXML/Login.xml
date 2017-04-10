@@ -53,7 +53,7 @@
                 </methods>
             </class> 
        
-            <class name="app.pptweb.testcases.login.registrationtestcases">
+     <!--       <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                     <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
@@ -119,7 +119,7 @@
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
                     </include>
 				</methods>
-			</class> 
+			</class>  -->
 		
            <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>

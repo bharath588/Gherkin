@@ -1951,7 +1951,7 @@ public class deferralstestcases {
 			if (deferrals.verifyMyContributions(new DecimalFormat("##.##").format(deferrals.before_tax), "Before-tax", "Standard"))
 				Reporter.logEvent(Status.PASS,"Verify Before contribution percent for Standard deferral","Before contribution percent matching", true);
 			else
-				Reporter.logEvent(Status.FAIL,"Verify Before contribution percent for Standar deferral","Before contribution percent matching", true);
+				Reporter.logEvent(Status.FAIL,"Verify Before contribution percent for Standar deferral","Before contribution percent Not matching", true);
 			
 			deferrals.verifyChainingMessage(Stock.GetParameterValue("Chaining_Option"));
 			
