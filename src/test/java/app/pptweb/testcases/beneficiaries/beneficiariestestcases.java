@@ -1061,7 +1061,10 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
-			
+			Web.waitForElement(beneficiary, "View Beneficiary Button");
+			Web.clickOnElement(beneficiary, "View Beneficiary Button");
+			Web.waitForElement(beneficiary, "ContinueAndConfirm");
+			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
 			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg"))
 				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
 			else
