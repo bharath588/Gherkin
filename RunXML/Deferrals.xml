@@ -13,7 +13,7 @@
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
                 
-                <!--  <include name="SIT_PPTWEB_Deferral__AfterTax">
+              <!--    <include name="SIT_PPTWEB_Deferral__AfterTax">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
                     </parameter>
                     </include>
@@ -53,19 +53,18 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
                     </parameter>
                     </include>
-                      -->
-                                    
-                    
-             
-    <!--  BONUS -->
-    
-                  
-                 
-              <!-- <include name="Participant_not_elegible_for_Bonus_type_contribution">
+                       <include name="Participant_not_elegible_for_Bonus_type_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
                     </parameter>
                     </include>
-                <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+                      -->
+                                    
+      
+             
+    <!--  BONUS -->
+    
+    
+                  <!--   <include name="Deferral_002_Bonus_Select_another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
                     </parameter>
                     </include>
@@ -81,7 +80,25 @@
                     </include> 
                  -->
       
-   
+    
+                    <!-- CHAINING CONTRIBUTION -->
+               
+                 <!--  <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+                    </parameter>
+                    </include>
+               
+                     <include name="Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+                    </parameter>
+                    </include>
+               
+                     <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
+                    </parameter>
+                    </include>  -->
+                    
+                    
    <!-- PRIOR PLAN CONTRIBUTIONS-->
    
                     <!--  <include name="Deferrals_Participant_Prior_Contributions6">
@@ -114,7 +131,7 @@
    
    <!-- VIEW ONLY CONTRIBUTIONS-->
    
-                 <!--  <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+               <!--  <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     </parameter>
                     </include>
@@ -143,7 +160,7 @@
                    
                      <!--COMBINED RULES-->  
                   
-               <!--   <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+             <!--    <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     </parameter>
                     </include>
@@ -167,18 +184,18 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
                     </parameter>
                     </include> 
-                        -->
+                       -->
                         
                     <!-- TIRED RULES -->
-                       <!--  <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                       <!-- <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
                     </parameter>
-                    </include>
-                    -->
+                    </include> -->
+                  
                     
                      <!-- PENDING DEFERRALS -->
                      
-                      <!--   <include name="Deferral_035_Pending_Deferral_View">
+                     <!--    <include name="Deferral_035_Pending_Deferral_View">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
                     </parameter>
                     </include>
@@ -206,28 +223,12 @@
                     </parameter>
                     </include> -->
                     
-                  
-                      <!-- CHAINING CONTRIBUTION -->
-               
-                 <!--   <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
-                    </parameter>
-                    </include>
-               
-                     <include name="Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
-                    </parameter>
-                    </include>
-               
-                     <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
-                    </parameter>
-                    </include>  -->
+                 
                
             
                    <!-- COMPANY MATCH AND CALENDAR UPDATE AND MULTIPLE DEFERRAL-->
                     
-                   <!--  <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                    <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
@@ -275,7 +276,7 @@
                        <include name="Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     </parameter>
-                    </include> -->
+                    </include>
                        
                     
                     <!-- DOLLAR DEFERRAL -->
@@ -298,7 +299,7 @@
   
                 
                
-                     <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
+                    <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
                     </parameter>
                     </include>
@@ -370,7 +371,7 @@
                      <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
                     </parameter>
-                    </include>
+                    </include> 
                     
                   
                     

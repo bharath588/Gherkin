@@ -35,7 +35,7 @@ public class ExecuteQuery {
 		initQuery();
 				//Access Data Sheet
 		Log.Report(Log.Level.INFO,"***************** Initiating execution of delete record query *****************");	
-		dbName = "CommonDB";
+		dbName = "CommonDB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		if(!dbName.isEmpty()){		
 			try{
 			   /*if(dbName.split("_")[0].length()>1)

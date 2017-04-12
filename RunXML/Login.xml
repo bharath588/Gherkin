@@ -6,7 +6,7 @@
     </listeners>
     <test name="LOGIN">
         <classes>
-             <class name="app.pptweb.testcases.login.logintestcases">
+             <!-- <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                    
                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
@@ -52,10 +52,10 @@
                     
                 </methods>
             </class> 
-       
+        -->
        <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-                    <include name="SF01_TC01_User_has_PIN">
+                   <!--  <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
                     </include>
                
@@ -86,7 +86,7 @@
                     <include name="AccountLookup_PositiveFlow_WithPIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
                     </include> 
-              
+               -->
                     <include name="AccountSetup_WithPin_Validate_ContactInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
                     </include>
