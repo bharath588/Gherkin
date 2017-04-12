@@ -2202,7 +2202,7 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
+			Web.getDriver().navigate().refresh();
 
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			
@@ -2291,6 +2291,7 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
+			Web.getDriver().navigate().refresh();
 			try {
 				Web.waitForElement(deferrals, "Table Header Contribution");
 			} catch (Exception e) {
@@ -2551,11 +2552,11 @@ public class deferralstestcases {
 			//Update date picker to calendar
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
 			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("ga_PlanId"));
-			
+			Web.getDriver().navigate().refresh();	
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
 			if (Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
+					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
 			else
@@ -3189,11 +3190,11 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
+			Web.getDriver().navigate().refresh();	
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
 			if (Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
+					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
 			else
@@ -3293,11 +3294,11 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
+			Web.getDriver().navigate().refresh();	
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
 			if (Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
+					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
 			else
@@ -3395,11 +3396,11 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-						
+			Web.getDriver().navigate().refresh();			
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1
 			if (Web.isWebElementDisplayed(deferrals,
-					"Table Header Contribution"))
+					"Table Header Contribution",true))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page",
 						"My Contributions page is  displayed", true);
 			else
@@ -3674,10 +3675,10 @@ public class deferralstestcases {
 				String date=dateFormat.format(calendar.getTime());
 				System.out.println("DATE"+date);
 				String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
-				DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+				/*DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 				Web.getDriver().navigate().refresh();
 				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForPageToLoad(Web.getDriver());*/
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3747,10 +3748,11 @@ public class deferralstestcases {
 			String date=dateFormat.format(calendar.getTime());
 			System.out.println("DATE"+date);
 			String[] sqlQuery= Stock.getTestQuery(Stock.GetParameterValue("queryName"));
-		//	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
+		/*	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForPageToLoad(Web.getDriver());*/
+			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 2
 			deferrals.ClickPendingDeferralLink(Stock.GetParameterValue("DeferralType"));
 			deferrals.verifyPendingDeferralModal(Stock.GetParameterValue("DeferralType"));
@@ -4166,7 +4168,7 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
+			Web.getDriver().navigate().refresh();
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1 to 4
 			if (Web.isWebElementDisplayed(deferrals,
@@ -4287,7 +4289,7 @@ public class deferralstestcases {
 
 			Deferrals deferrals = new Deferrals(leftmenu);
 			deferrals.get();
-			
+			Web.getDriver().navigate().refresh();
 			Web.waitForElement(deferrals, "Table Header Contribution");
 			//Step 1 to 4
 			if (Web.isWebElementDisplayed(deferrals,

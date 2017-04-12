@@ -13,7 +13,55 @@
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
                 
-              <!--    <include name="SIT_PPTWEB_Deferral__AfterTax">
+                 <!-- PRIOR PLAN CONTRIBUTIONS-->
+   
+                     <!-- <include name="Deferrals_Participant_Prior_Contributions6">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
+                    </parameter>
+                    </include>
+                
+                     <include name="Deferrals_Participant_Prior_Contributions7">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
+                    </parameter>
+                    </include>
+                
+                     <include name="Deferrals_Participant_Prior_Contributions8">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
+                    </parameter>
+                    </include> 
+                    
+                     <include name="Deferrals_Participant_Prior_Contributions9_Plan_not_set_for_PPC">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
+                    </parameter>
+                    </include>    
+                     -->
+                        <!-- CHAINING CONTRIBUTION -->
+               
+                  <!-- <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+                    </parameter>
+                    </include>
+               
+                     <include name="Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+                    </parameter>
+                    </include>
+               
+                     <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
+                    </parameter>
+                    </include> 
+                     -->
+                    
+               
+                <!-- SELECT OTHER CONTRIBUTION -->
+                
+                <!--  <include name="SIT_PPTWEB_Deferral__AfterTax">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
                     </parameter>
                     </include>
@@ -63,8 +111,8 @@
              
     <!--  BONUS -->
     
-    
-                  <!--   <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+    <!-- 
+                     <include name="Deferral_002_Bonus_Select_another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
                     </parameter>
                     </include>
@@ -77,61 +125,49 @@
                      <include name="Bonus_SelectAnotherContribution_split">
                     <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
                     </parameter>
-                    </include> 
-                 -->
+                    </include>  -->
+                 
       
     
-                    <!-- CHAINING CONTRIBUTION -->
-               
-                 <!--  <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
+                   <!--COMBINED RULES-->  
+                  
+               <!-- <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     </parameter>
                     </include>
-               
-                     <include name="Deferral_013M_Standard_contribution_with_chaining_to_Aftertax_to_NonQual">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013M_Standard contribution with chaining to After-tax to Non-Qual">
+                    
+                     <include name="Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
                     </parameter>
                     </include>
-               
-                     <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
+                    
+                     <include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    </parameter>
+                    </include>
+                    
+                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
+                    </parameter>
+                    </include>
+                
+                     <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
                     </parameter>
                     </include>  -->
-                    
-                    
-   <!-- PRIOR PLAN CONTRIBUTIONS-->
-   
-                    <!--  <include name="Deferrals_Participant_Prior_Contributions6">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
+                       
+                        
+                    <!-- TIRED RULES -->
+                      <!-- <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
                     </parameter>
-                    </include>
-                
-                     <include name="Deferrals_Participant_Prior_Contributions7">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Prior Plan Contributions_Catchup_participant within first year of employment">
-                    </parameter>
-                    </include>
-                
-                     <include name="Deferrals_Participant_Prior_Contributions8">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Prior Plan Contributions_Participant not in first year of employment">
-                    </parameter>
-                    </include> 
-                    
-                     <include name="Deferrals_Participant_Prior_Contributions9_Plan_not_set_for_PPC">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009M_Prior Plan Contributions_Plan not set for PPC">
-                    </parameter>
-                    </include>
-                    
-                     <include name="Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
-                    </parameter>
-                    </include>    -->
-                    
-                    
-               
+                    </include>  -->
+                  
+  
    
    <!-- VIEW ONLY CONTRIBUTIONS-->
    
-               <!--  <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+               <!--   <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     </parameter>
                     </include>
@@ -158,56 +194,12 @@
                     <!-- Above test case is Not Visible Bonus type Contributions -->
                    
                    
-                     <!--COMBINED RULES-->  
-                  
-             <!--    <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
-                    </parameter>
-                    </include>
-                    
-                     <include name="Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
-                    </parameter>
-                    </include>
-                    
-                     <include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
-                    </parameter>
-                    </include>
-                    
-                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
-                    </parameter>
-                    </include>
-                
-                     <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
-                    </parameter>
-                    </include> 
-                       -->
-                        
-                    <!-- TIRED RULES -->
-                       <!-- <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
-                    </parameter>
-                    </include> -->
                   
                     
                      <!-- PENDING DEFERRALS -->
                      
-                     <!--    <include name="Deferral_035_Pending_Deferral_View">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
-                    </parameter>
-                    </include>
-                       <include name="Deferral_036_Pending_Deferral_Delete">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_036_Pending_Deferral_Delete">
-                    </parameter>
-                    </include>
-                     <include name="Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
-                    </parameter>
-                    </include> 
-                    
+                      <!--   
+                       
                     <include name="Deferral_026M_Terminated_Participant">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026M_Terminated_Participant">
                     </parameter>
@@ -221,14 +213,30 @@
                       <include name="Deferral_034_457_Plan_BEFORE_Select_Another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_034_457_Plan_BEFORE_Select_Another_contribution_rate">
                     </parameter>
-                    </include> -->
+                    </include>
+                    
+                      <include name="Deferral_035_Pending_Deferral_View">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_035_Pending_Deferral_View">
+                    </parameter>
+                    </include>
+                    
+                      <include name="Deferral_036_Pending_Deferral_Delete">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_036_Pending_Deferral_Delete">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
+                    </parameter>
+                    </include> 
+                     -->
                     
                  
                
             
                    <!-- COMPANY MATCH AND CALENDAR UPDATE AND MULTIPLE DEFERRAL-->
                     
-                    <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                <!--    <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
@@ -264,11 +272,7 @@
                     </parameter>
                     </include>
                     
-                      <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
-                    </parameter>
-                    </include>
-                    
+                     
                       <include name="Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     </parameter>
@@ -276,28 +280,15 @@
                        <include name="Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_025_Regular_BEFORE_Select_Another_contribution_rate_subcode_ADJRUNDATE_GENERIC">
                     </parameter>
-                    </include>
-                       
-                    
-                    <!-- DOLLAR DEFERRAL -->
-                
-                
-                    <!--   <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_028_Multiple_Create_Dollar_deferrals">
+                    </include> 
+                     <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     </parameter>
-                    </include>
-                    
-                     <include name="Deferral_029_Multiple_Change_Dollar_deferrals">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_029_Multiple_Change_Dollar_deferrals">
-                    </parameter>
-                    </include> -->
-                    
-                    
+                    </include>-->
+                
                       
    <!-- MAXIMIZE ME ALWAYS--> 
    
-  
-                
                
                     <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
@@ -371,7 +362,7 @@
                      <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
                     </parameter>
-                    </include> 
+                    </include>  
                     
                   
                     
@@ -383,6 +374,22 @@
                     </parameter>
                     </include> -->
                      
+                    
+                         
+                    
+                    <!-- DOLLAR DEFERRAL -->
+                
+                
+                    <!--   <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_028_Multiple_Create_Dollar_deferrals">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_029_Multiple_Change_Dollar_deferrals">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_029_Multiple_Change_Dollar_deferrals">
+                    </parameter>
+                    </include> -->
+                    
                     
                 </methods>
             </class>

@@ -1707,6 +1707,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void ClickPendingDeferralLink(String deferralType)
 		{
+			
 			WebElement lnkPendingDeferral=Web.getDriver().findElement(By.xpath(pendingDeferral.replaceAll("DeferralType", deferralType))) ;
 				Web.waitForElement(lnkPendingDeferral);
 				Web.clickOnElement(lnkPendingDeferral);

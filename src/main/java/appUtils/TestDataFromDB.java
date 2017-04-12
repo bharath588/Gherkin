@@ -32,7 +32,7 @@ public class TestDataFromDB {
 				queryParameterValues);
 		if (DB.getRecordSetCount(participants) > 0) {
 			noOfRows = DB.getRecordSetCount(participants);
-			participants.absolute(1);
+			participants.absolute(noOfRows-2);
 			rsMetaData = participants.getMetaData();
 			noOfColumns = rsMetaData.getColumnCount();
 			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
