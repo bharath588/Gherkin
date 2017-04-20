@@ -290,7 +290,7 @@
    <!-- MAXIMIZE ME ALWAYS--> 
    
                
-                    <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
+                    <!-- <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
                     </parameter>
                     </include>
@@ -364,15 +364,15 @@
                     </parameter>
                     </include>  
                     
-                  
+                   -->
                     
                 
                     
                     <!-- Company Match Rules -->
-                    <!--  <include name="Deferral_021M_Company_Match_RULEA">
+                     <include name="Deferral_021M_Company_Match_RULEA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021M_Company_Match_RULEA">
                     </parameter>
-                    </include> -->
+                    </include> 
                      
                     
                          
@@ -380,7 +380,7 @@
                     <!-- DOLLAR DEFERRAL -->
                 
                 
-                    <!--   <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
+                       <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_028_Multiple_Create_Dollar_deferrals">
                     </parameter>
                     </include>
@@ -388,7 +388,7 @@
                      <include name="Deferral_029_Multiple_Change_Dollar_deferrals">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_029_Multiple_Change_Dollar_deferrals">
                     </parameter>
-                    </include> -->
+                    </include> 
                     
                     
                 </methods>
