@@ -8,7 +8,7 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					 <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
+					  <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
 					<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
                     </parameter>
                     </include> 

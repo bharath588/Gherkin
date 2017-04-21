@@ -31,7 +31,7 @@ public class HowDoICompare extends LoadableComponent<HowDoICompare> {
 		@FindBy(xpath=".//*[text()='How do I compare']") private WebElement lblHowDoICompare;
 		@FindBy(xpath=".//*[text()='How do I compare to other people like me?']") private WebElement lblHwDoCmpOthrPplLikMe;
 		@FindBy(xpath="//button[@ng-click='clickViewDetailsEvent()']/span[text()[normalize-space()='View details']]") private WebElement btnViewDetails;
-		@FindBy(xpath=".//*[contains(text(),'Current contributions')]") private WebElement lblAdditionalContribution;
+		@FindBy(xpath="//div[@class='how-do-compare-container']//p") private WebElement lblAdditionalContribution;
 		@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 		@FindBy(linkText="Log out") private WebElement lnkLogout;
 		@FindBy(xpath="//td[@class='target-my-peers']//div[contains(text(),'My peers')]") private WebElement lblMyPeers;
@@ -184,7 +184,8 @@ private WebElement getWebElement(String fieldName) {
 			if (Web.isWebElementDisplayed(this.btnViewDetails)) {
 				
 				this.btnViewDetails.click();
-				if (this.lblAdditionalContribution.getText().contains("Current contributions")) {
+				
+				if (lblAdditionalContribution.getText().contains("Current")) {
 					Reporter.logEvent(Status.PASS, "Verify 'Current contributions:' Text",
 							"User was able to click the view details button and check the 'Current contributions' text", true);
 				} else {
