@@ -1,7 +1,11 @@
 package test.framework;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.testng.TestNG;
 
@@ -14,7 +18,7 @@ public class ThreadInvocation {
 
 	public static void main(String[] args) {
 		try{
-			//Class c= Class.forName("core.framework.TestListener");
+			/*//Class c= Class.forName("core.framework.TestListener");
 			final TestNG testng = new TestNG();
 			List<String> suites = new ArrayList<String>();
 			String xml=System.getProperty("user.dir")+"\\RunXML\\"+"Liat.xml";
@@ -38,6 +42,14 @@ public class ThreadInvocation {
 			    threads[i].start();
 			    Thread.sleep(5000);
 			 }
+			*/
+			Calendar cal = Calendar.getInstance();
+			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
+					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
+					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
+					Integer.toString(cal.get(Calendar.YEAR))+" ,"+" "+
+					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			System.out.println(date);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

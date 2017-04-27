@@ -449,6 +449,13 @@ public class Investmentstestcases {
 						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
 						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
 				}
+			
+			//Step 18
+		    
+			String confirmationNo=investment.getConfirmationNoChangeFutureFlow();
+			
+			
+			
 			//Step 17
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
@@ -469,9 +476,7 @@ public class Investmentstestcases {
 			}
 		  
 		    
-		    //Step 18
-		    
-			// TODO
+		   
 			
 		} catch (Exception e) {
 			e.printStackTrace();

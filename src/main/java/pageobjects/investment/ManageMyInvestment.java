@@ -274,6 +274,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//tr//td[contains(@class,'allocation-fund-name')]//a") private WebElement txtAllocationFundName;
 	
+	@FindBy(xpath = "//div[@class='row allocation-content']//p//strong") private WebElement lblConfirmationNoFutureFund;
+	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
@@ -1461,7 +1463,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 * Returns map
 	 * </pre>
 	 * 
-	 * @return String - getText
+	 * @return mapInvestmentOptions
 	 */
 	public Map<String, String> getCurrentFunds() {
 	
@@ -1477,4 +1479,48 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		return mapInvestmentOptions;
 
 	}
+	
+	/**
+	 * <pre>
+	 * Method to get the Confirmation Number from Confirmation Page for Change Future Allocation Flow
+	 * Returns String
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getConfirmationNoChangeFutureFlow() {
+	
+          String confirmationNo="";
+		if (Web.isWebElementDisplayed(lblConfirmationNoFutureFund)) {
+
+			confirmationNo=lblConfirmationNoFutureFund.getText().toString().trim();
+		}
+
+		return confirmationNo;
+
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Method to verify the Confirmation Number is updated in Data Base
+	 * Returns boolean
+	 * </pre>
+	 * 
+	 * @return Boolean - isDisplayed
+	 */
+	public String verifyConfirmationNoupdatedInDB(String queryName,String confirmationNo,String tableName) {
+	
+         
+		if (Web.isWebElementDisplayed(lblConfirmationNoFutureFund)) {
+
+			confirmationNo=lblConfirmationNoFutureFund.getText().toString().trim();
+		}
+
+		return confirmationNo;
+
+	}
+	
+	
+	
 }
