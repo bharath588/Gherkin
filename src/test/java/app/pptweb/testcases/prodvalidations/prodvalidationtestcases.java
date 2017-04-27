@@ -3448,7 +3448,7 @@ public class prodvalidationtestcases {
 			investment.get();
 			//Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
-			investment.choseInvestmentOption("Rebalance Currnet Balance");
+			investment.choseInvestmentOption("Rebalance Current Balance");
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
