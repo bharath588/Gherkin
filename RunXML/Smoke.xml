@@ -148,11 +148,7 @@
                     </parameter>
                     </include>
 				
-					<include name="Verify_Health_care_costs_helpful_links" >
-					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
-                    </parameter>
-                    </include>
-				
+					
 					<include name="Verify_Tour_Link" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Tour_Link">
                     </parameter>
@@ -172,6 +168,12 @@
 					<parameter name="ManualTCName" value="SendActivationCode_ForgotPasswordFlow">
                     </parameter>
                     </include> 
+                    
+                    <include name="Verify_Health_care_costs_helpful_links" >
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+                    </parameter>
+                    </include>
+				
 				</methods>
 			</class>
 		</classes>
