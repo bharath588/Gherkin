@@ -2,7 +2,11 @@ package pageobjects.investment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import lib.Reporter;
 import lib.Stock;
@@ -36,6 +40,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String fromInvestmentOption;
 	static String toInvestmentOption;
 	String confirmationNo;
+	static Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
+	static Map<String, String> mapCurrentInvestmentOptions = new HashMap<String, String>();
 
 	// @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']")
 	// private WebElement lblUserName;
@@ -167,7 +173,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblConfirmationNumberF2F;
 	@FindBy(xpath = "//span[@class='baseFontFace sectionTitleFontSize sectionTitleFontColor sectionTitleFontWeight']")
 	private WebElement lblConfirmationNumberForCancel;
-	@FindBy(xpath = "//button[text()='Back']")
+	@FindBy(xpath = "//button[text()[normalize-space()='Back']]")
 	private WebElement btnBack;
 	@FindBy(xpath = "//input[@class='canceltransferBtn']")
 	private WebElement btnCancelTransfer;
@@ -210,15 +216,67 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = ".//div[@class='allocation-table-wrapper']//table[@id='allocation-all-funds-table']") private WebElement tableAllocationFund;
 	
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label[@class='add-view-label']]//input") private List<WebElement> inpInvestmentOption;
-	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
+	@FindBy(xpath = "//*[@id='allocation-all-funds-table']//tr[./td[./label]]//td//a[contains(@class,'allocation-fund-name')]") private List<WebElement> txtInvestmentOption;
 	@FindBy(xpath = ".//*[@id='add-funds-button']") private WebElement btnAdd;
 	@FindBy(xpath = ".//*[@id='pptGrpModalSubmit']") private WebElement btnAlertContinue;
 	@FindBy(xpath = ".//*[@id='submitButton submit']") private WebElement btnSubmit;
-	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private List<WebElement> btnRemoveInvestment;
+	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private List<WebElement> btnRemoveInvestments;
 	@FindBy(xpath = "//span[@class='allocation-funds-portfolio-total']") private WebElement txttotalInvestmentPercent;
 	@FindBy(xpath = "//tr[contains(@ng-repeat,'rebalanceCurrentFunds')]//span[@class='fund-overview-url']//a") private List<WebElement> txtCurrentFunds;
+	@FindBy(xpath = "//h1[text()[normalize-space()='How would you like to invest?']]")
+	private WebElement txtHowWouldLikeToInvest;
+	
+	@FindBy(xpath = "//h2[text()[normalize-space()='Do It Myself']]")
+	private WebElement txtDoItMySelf;
+	
+	@FindBy(xpath = "//h2[text()[normalize-space()='Help Me Do It']]")
+	private WebElement txtHelpMeDoIt;
+	
+	@FindBy(xpath = "//h2[text()[normalize-space()='Do It for Me']]")
+	private WebElement txtDoItForMe;
+
+	@FindBy(xpath = "//h1[text()[normalize-space()='Build Your Own Portfolio']]")
+	private WebElement txtBuildYourOwnPortfolio;
+	
+	@FindBy(xpath = "//a[contains(text(),'Back')]")
+	private WebElement lnkBack;
+	
+	@FindBy(xpath = "//a[@id='reset-funds-changes']")
+	private WebElement lnkResetFundChanges;
+	
+	@FindBy(xpath = ".//*[@id='submit-button']") private WebElement btnSubmitChangeFutureFund;
+	
+	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label]//input") private List<WebElement> inpInvestmentOptionFutureAllocation;
+	
+	@FindBy(xpath = "//tr[contains(@ng-repeat,'fund in currentFunds')]//td//a") private List<WebElement> txtCurrentFundsforChangeFutureFlow;
+
+	@FindBy(xpath = "//h1[text()[normalize-space()='Review Your Changes']]")
+	private WebElement hdrReviewYourChanges;
+	
+	@FindBy(xpath = "//*[@id='span_name']")
+	private WebElement txtFundNameinNewWindow;
+	
+	@FindBy(xpath = "//button[./span[text()[normalize-space()='Confirm']]]")
+	private WebElement btnConfirm;
+	
+	@FindBy(xpath = "//h1[text()[normalize-space()='Confirmation']]")
+	private WebElement hdrConfirmation;
+	
+	@FindBy(xpath = "//span[contains(@ng-if,'confirmChanges')]")
+	private WebElement txtConfirmation;
+	
+	@FindBy(xpath = ".//*[@id='portfolio-link']//span[text()[normalize-space()='Current']]")
+	private WebElement lblCurrent;
+	
+	@FindBy(xpath = "//*[@id='view-all-funds']") private WebElement lnkAddViewAllFundsFuture;
+	
+	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private WebElement btnRemoveInvestment;
+	
+	@FindBy(xpath = "//tr//td[contains(@class,'allocation-fund-name')]//a") private WebElement txtAllocationFundName;
+	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
+	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	
 	/**
 	 * Empty args constructor
@@ -291,7 +349,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	}
 
 	private WebElement getWebElement(String fieldName) {
-		if (fieldName.trim().equalsIgnoreCase("Rebalance Currnet Balance")) {
+		if (fieldName.trim().equalsIgnoreCase("Rebalance Current Balance")) {
 			return this.radioRebalanceCurrBal;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Change Future Contribution")) {
@@ -343,6 +401,74 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Post Transfer Balance Graph")) {
 			return this.postTransferBalanceGraph;
 		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Continue Button")) {
+			return this.btnContinue1;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Back Button")) {
+			return this.btnBack;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header How Would You Like To Invest")) {
+			return this.txtHowWouldLikeToInvest;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Do It Myself")) {
+			return this.txtDoItMySelf;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Help Me Do It")) {
+			return this.txtHelpMeDoIt;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Do It For Me")) {
+			return this.txtDoItForMe;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Choose Individual Funds")) {
+			return this.btnChooseIndividualFunds;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Build Your Own Portfolio")) {
+			return this.txtBuildYourOwnPortfolio;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Back Link")) {
+			return this.lnkBack;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Reset All Changes Link")) {
+			return this.lnkResetFundChanges;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Submit Button Change Future Allocation")) {
+			return this.btnSubmitChangeFutureFund;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Add/View All Funds")) {
+			return this.lnkAddViewAllFunds;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Table Select Funds")) {
+			return this.tableAllocationFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Review Your Changes")) {
+			return this.hdrReviewYourChanges;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Confirm")) {
+			return this.btnConfirm;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Header Confirmation")) {
+			return this.hdrConfirmation;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Text Confirmation")) {
+			return this.txtConfirmation;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Current Flag")) {
+			return this.lblCurrent;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Link Add/View All Funds")) {
+			return this.lnkAddViewAllFundsFuture;
+		}
+		
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -373,6 +499,20 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (Web.isWebElementDisplayed(option, true)) {
 			Web.clickOnElement(option);
 			Reporter.logEvent(Status.INFO, "verify " + investmentOption
+					+ " option is displayed", investmentOption
+					+ " option is displayed", true);
+			
+		} else
+			Reporter.logEvent(Status.FAIL, "verify " + investmentOption
+					+ " option is displayed", investmentOption
+					+ " option not displayed", true);
+	}
+	
+	public void verifyInvestmentOptionIsDisplayed(String investmentOption) {
+		WebElement option = this.getWebElement(investmentOption);
+		if (Web.isWebElementDisplayed(option, true)) {
+		
+			Reporter.logEvent(Status.PASS, "verify " + investmentOption
 					+ " option is displayed", investmentOption
 					+ " option is displayed", true);
 			
@@ -1036,10 +1176,10 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 				"verify if Rebalance Your Portfolio Page is Displayed",
 				"Rebalance Your Portfolio Page is Not Displayed", true);
 		}
-		if(Web.isWebElementsDisplayed(btnRemoveInvestment))
+		if(Web.isWebElementsDisplayed(btnRemoveInvestments))
 		{
-			for(int i=0;i<btnRemoveInvestment.size();i++){
-				btnRemoveInvestment.get(i).click();
+			for(int i=0;i<btnRemoveInvestments.size();i++){
+				btnRemoveInvestments.get(i).click();
 				Web.waitForPageToLoad(Web.getDriver());
 			}
 		}
@@ -1147,5 +1287,194 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 				"Investment Options are Matching in Review your changes Page\nExpected:"+investmentFundName1+" and "+investmentFundName2+"\nActual:"+currentFund1+" and "+currentFund2, true);
 		}
 	*/
+	}
+	
+	public boolean verifyWebElementDisplayed(String fieldName) {
+
+		boolean isDisplayed = Web.isWebElementDisplayed(
+				this.getWebElement(fieldName), true);
+
+		if (isDisplayed) {
+
+			Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\'  is displayed",
+					fieldName + " is displayed", false);
+			isDisplayed = true;
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify \'"+fieldName+"\' is displayed", fieldName
+							+ " is not Displayed", false);
+		}
+
+		return isDisplayed;
+
+	}
+	/**
+	 * Method to remove Investment options from Build Your Own Portfolio Page
+	 */
+	public void removeAllIvestments() {
+    
+		if(Web.isWebElementDisplayed(btnRemoveInvestment))
+		{
+			for(int i=0;i<btnRemoveInvestments.size();i++){
+				btnRemoveInvestments.get(0).click();
+				Web.waitForPageToLoad(Web.getDriver());
+			}
+			Web.clickOnElement(btnRemoveInvestment);
+		}
+		
+
+	}
+	/**
+	 * This Method to select the investment options and enter the percentage
+	 * @author srsksr
+	 *@param noOfInvestmentoptions
+	 *@param percent
+	 *
+	 */
+	public void addInvestments(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
+		try{
+		    mapInvestmentOptions.clear();
+			
+			int noOfRows = inpInvestmentOptionFutureAllocation.size();
+			if (noOfRows >= noOfInvestmentoptions) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment options are available",
+						"Investment options are available ", false);
+				for(int i=0;i<noOfInvestmentoptions;i++){
+					mapInvestmentOptions.put("investmentFundName"+i, txtInvestmentOption.get(i).getText());
+				
+				Web.clickOnElement(inpInvestmentOptionFutureAllocation.get(i));
+				
+				Reporter.logEvent(Status.INFO, "Selected Investment Option",
+						"Selected Investment Option : \n" 
+								+ mapInvestmentOptions.get("investmentFundName"+i) , true);
+				}
+			
+				
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment options are available",
+						noOfInvestmentoptions+"Investment options are not available ", true);
+
+			Web.clickOnElement(btnAdd);
+		
+			Web.waitForElement(lnkAddViewAllFundsFuture);
+			
+			for(int i=0;i<noOfInvestmentoptions;i++){
+		WebElement inptAllocationPercent = Web.getDriver().findElement(By
+				.xpath(inputAllocationPercrntageFuture.replace("Investment Option",
+						mapInvestmentOptions.get("investmentFundName"+i))));
+		Web.setTextToTextBox(inptAllocationPercent, percent[i]);
+			}
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		if(txttotalInvestmentPercent.getText().contains("100")){
+			Reporter.logEvent(Status.PASS,
+					"Verify Investment Percentage is Entered and Equals to 100",
+					"Investment Percentage is Matching and Equals to 100", true);
+
+		}
+		else 
+			{
+			Reporter.logEvent(Status.FAIL,
+							"Verify Investment Percentage is Entered and Matching",
+				"Investment Percentage is not Matching", true);
+			}
+		btnSubmitChangeFutureFund.click();
+		if(Web.isWebElementDisplayed(btnAlertContinue, true)){
+			Web.clickOnElement(btnAlertContinue);
+		}
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElements(txtCurrentFundsforChangeFutureFlow);
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	/**
+	 * Method to click and verify Investment option opens in new Tab/Window in Review Your Changes Page
+	 * @return boolean
+	 */
+	public boolean VerifyInvestmentOptionOpenInNewWindow() {
+		boolean windowFound=false;
+		String parentWindow;
+		if(Web.isWebElementsDisplayed(txtCurrentFundsforChangeFutureFlow))
+		{
+				String fundName=txtCurrentFundsforChangeFutureFlow.get(0).getText().toString().trim();
+				txtCurrentFundsforChangeFutureFlow.get(0).click();
+				Web.waitForPageToLoad(Web.getDriver());
+				parentWindow = Web.getDriver().getWindowHandle();
+				Set<String> handles =  Web.getDriver().getWindowHandles();
+				   for(String windowHandle  : handles)
+				       {
+				       if(!windowHandle.equals(parentWindow)){
+				    	   Web.getDriver().switchTo().window(windowHandle);
+				    	   Web.waitForPageToLoad(Web.getDriver());
+				    	   Web.waitForElement(txtFundNameinNewWindow);
+				    	   System.out.println(txtFundNameinNewWindow.getText().toString().replaceAll("®", "").replaceAll(":", "").trim());
+			    		   System.out.println(fundName);
+				    	   if(txtFundNameinNewWindow.getText().toString().replaceAll("®", "").replaceAll(":", "").trim().contains(fundName)){
+				    		   System.out.println(txtFundNameinNewWindow.getText().toString().trim());
+				    		   System.out.println(fundName);
+				    		   windowFound=true;
+				    		   break;
+				    	   } 
+				    	  
+				       }
+				     
+				    }
+				   Web.getDriver().close(); //closing child window
+		           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
+		           Web.getDriver().switchTo().defaultContent();
+		        
+			}
+		return windowFound;  
+	}
+
+	/**
+	 * <pre>
+	 * Method to get the text of an webElement
+	 * Returns string webElement is displayed
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getWebElementText(String fieldName) {
+		String getText = "";
+
+		if (verifyWebElementDisplayed(fieldName)) {
+
+			getText = this.getWebElement(fieldName).getText().trim();
+
+		}
+
+		return getText;
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get the Current Funds from Review changes and Confirmation Pages
+	 * Returns map
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public Map<String, String> getCurrentFunds() {
+	
+          mapInvestmentOptions.clear();
+		if (Web.isWebElementsDisplayed(txtCurrentFundsforChangeFutureFlow)) {
+
+			for(int i=0;i<txtCurrentFundsforChangeFutureFlow.size();i++){
+				mapInvestmentOptions.put("investmentOption"+i, txtCurrentFundsforChangeFutureFlow.get(i).getText().toString().trim());
+			}
+
+		}
+
+		return mapInvestmentOptions;
+
 	}
 }
