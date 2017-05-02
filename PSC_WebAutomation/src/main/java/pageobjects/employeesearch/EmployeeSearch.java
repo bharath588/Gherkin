@@ -5,18 +5,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -27,16 +30,14 @@ import lib.Reporter;
 
 import com.aventstack.extentreports.*;
 
-import db.filters.NotEqualFilter;
 import framework.util.CommonLib;
 import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.eclipse.jetty.util.component.FileNoticeLifeCycleListener;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -243,6 +244,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement workPhoneNumber;
 	@FindBy(xpath="//input[@value='Save']")
 	private WebElement save;
+	@FindBy(xpath="//input[@value='Cancel']")
+	private WebElement cancel;
 	@FindBy(xpath="//li[contains(@class,'default')]/a[.='Account detail']")
 	private WebElement accntLink;
 	@FindBy(linkText="Beneficiaries")
@@ -290,9 +293,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'DOB')]")
 	private WebElement dobLabel;
 	@FindBy(xpath=".//*[@id='participantIndicative']//label[contains(text(),'Employee ID')]")
-	private WebElement empIDLabel;
+	private List<WebElement> empIDLabel;
 	@FindBy(id="EmployeebasicInfoIndividualID")
-	private WebElement empIdValue;
+	private List<WebElement> empIdValue;
 	@FindBy(id="EmployeebasicInfoBirthDate")
 	private WebElement dobValue;
 	@FindBy(xpath="//*[@id='paeUrlButton']")
@@ -417,15 +420,195 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath="//div[@id='basicInfo']//label[contains(text(),'SSN:')]/../following-sibling::td//td")
 	private WebElement ssnInBasicInfoSection;
 	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo_content']/table")
-	private WebElement enrollmentAndEligibilitySection;
+	private List<WebElement> enrollmentAndEligibilitySection;
 	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo']//a")
 	private WebElement enrolAndEligibltyEditLink;
 	@FindBy(id="enrollEligEditFrameId")
 	private WebElement enrollAndEligEditFrame;
+	@FindBy(xpath="//*[@name='ChangeEligInfo']//td[1]/font[contains(text(),'')]")
+	private List<WebElement> eligibilityLabels;
+	@FindBy(xpath="//*[@name='ChangeEligInfo']//td[2]/font[text()!='']")
+	private List<WebElement> eligibilityFields;
+	@FindBy(id="eligibilityInd")
+	private WebElement eligiCode;
+	@FindBy(id="ineligibilityReasonCode")
+	private WebElement inEligiReasonCode;
+	@FindBy(xpath=".//*[@id='eligibilityInd']/option[@selected='']")
+	private WebElement selectedEligiCode;
+	@FindBy(xpath=".//*[@id='ineligibilityReasonCode']/option[@selected='']")
+	private WebElement selectedInEligiCode;
+	@FindBy(xpath="//label[contains(text(),'Eligibility code:')]/../following-sibling::td//td")
+	private WebElement eligibilityCodeOverview;
+	@FindBy(xpath="//label[contains(text(),'Ineligibility code:')]/../following-sibling::td//td")
+	private WebElement inEligibilityCodeOverview;
+	@FindBy(xpath="//label[contains(text(),'Participation date:')]/../following-sibling::td//td")
+	private WebElement partDateOverview;
+	@FindBy(id="participationDate")
+	private WebElement partDate;
+	@FindBy(xpath="//div[contains(text(),'Percent')]/preceding-sibling::div")
+	private WebElement benName;
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]/ancestor::*[5]/following-sibling::div[3]//span")
+	private WebElement disclaimerText;
+	@FindBy(xpath="//a/h4[contains(text(),'Money Source')]/../../following-sibling::div//table[2]//td/a")
+	private List<WebElement> moneyTypeLinks;
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]/../../following-sibling::div//table//td/a")
+	private List<WebElement> investTypeLinks;
+	@FindBy(css="div[id='moneySourceModal'] div[class='modal-content']")
+	private WebElement moneyTypeModalContent;
+	@FindBy(xpath="//div[@id='fundSummaryModal']//div[@class='modal-content']")
+	private WebElement investTypeModalContent;
+	@FindBy(css="div[id='moneySourceModal'] div[class='modal-content'] h4")
+	public WebElement modalContentHeader;
+	@FindBy(xpath=".//*[@id='moneySourceModal']//div[@class='modal-body']//div//table")
+	public List<WebElement> investmentOptionDataTables;
+	@FindBy(xpath=".//*[@id='moneySourceModal']//button")
+	private WebElement closeMoneyType;
+	@FindBy(xpath="//*[@id='fundSummaryModal']//button")
+	private WebElement closeInvestType;
+	@FindBy(xpath="//div[@id='fundSummaryModal']//div[@class='modal-content']//h4")
+	private WebElement modalContentHeaderInvestment;
+	@FindBy(xpath="//h4[contains(text(),'Money Source')]/ancestor::div[2]//table[2]//th")
+	private List<WebElement> monySrcHeader;
+	@FindBy(xpath="//h4[contains(text(),'Money Source')]/ancestor::div[2]//table[2]//tr")
+	private List<WebElement> monySrcDataRows;
+	@FindBy(xpath=".//*[@id='asOfDateCal']")
+	private WebElement asOfDateInput;
+	@FindBy(xpath="//html//span")
+	private WebElement errorWebElement;
+	@FindBy(xpath="//*[@id='newMenu']//li/a[.='Search employee']")
+	private WebElement searchEmployeeOptionLink;
+	@FindBy(xpath="//ul[@id='newMenu']//a[contains(text(),'Process center')]")
+	private WebElement proCenterMenu;
+	@FindBy(xpath="//ul[@id='newMenu']//a[contains(text(),'Compliance')]")
+	private WebElement compMenu;
+	@FindBy(xpath="//li/a[contains(text(),'Administration')]//following-sibling::ul//a[contains(text(),'Transfer restrictions')]")
+	private WebElement transferRestrictions;
+	@FindBy(id="accountDetail")
+	private WebElement accountDetail;
+	@FindBy(id="allocationMoreButton")
+	private WebElement allocMoreButton;
+	@FindBy(xpath=".//*[@id='allocationDashboard']//th/span")
+	private List<WebElement> allocationHeaders;
+	@FindBy(xpath=".//*[@id='allocationDisplay_content']//tbody//tr/td[5]")
+	private List<WebElement> investPercentList;
+	@FindBy(xpath=".//*[@id='allocationDisplay_content']//tbody//tr")
+	private List<WebElement> maxAllocationsRow;
+	@FindBy(xpath=".//*[@id='allocationDashboard_content']//div[@class='noData']")
+	private WebElement noallocations;
+	@FindBy(xpath="(.//*[@id='allocationHistorySSOFrame'])[1]")
+	private WebElement allocModalWindowFrame;
+	@FindBy(name="CHG_ALLOC_BTN")
+	private WebElement changeAllocBtn;
+	@FindBy(name="ChangeAllocations")
+	private WebElement changeAllocPage;
+	@FindBy(xpath="//input[contains(@id,'percentage_')]")
+	private List<WebElement> listOfInPercentageField;
+	@FindBy(id="totalPercent")
+	private WebElement totalPercent;
+	@FindBy(xpath="//input[contains(@id,'percentage_')]//ancestor::tr")
+	private List<WebElement> allocationsRows;
+	@FindBy(xpath=".//*[@id='allocationHistoryDialog']//preceding-sibling::div[1]//span[.='close']")
+	private WebElement allocationModalClose;
+	@FindBy(id="participantStatementsDetailMpwr")
+	private WebElement partStatementTab;
+	@FindBy(id="ptctStatementsTypes_data")
+	private WebElement statementContent;
+	@FindBy(xpath=".//*[@id='ptctStatementsTypes']//th/span")
+	private List<WebElement> stmntHeader; 
+	@FindBy(id="stmtOptionDropDown")
+	private WebElement stmtDropDown;
+	@FindBy(xpath="//tbody[@id='ptctStatementsTypes_data']//td[2]//span")
+	private List<WebElement> stmtCategory;
+	@FindBy(xpath="//tbody[@id='ptctStatementsTypes_data']//td[1]//span")
+	private List<WebElement> stmtDateStringList;
+	@FindBy(xpath="//tbody[@id='ptctStatementsTypes_data']//td[3]//span")
+	private List<WebElement> stmtDescription;
+	@FindBy(xpath="//*[@name='ChangeEmployment']//td[1]//font[text()!='']")
+	private List<WebElement>  editEmplmentInfoModalWindowLabels;
+	@FindBy(xpath="//*[@id='employeeInfoEditDialogId']/preceding-sibling::div//*[contains(text(),'close')]")
+	private WebElement closeEditEmpntInfoWindow;
+	@FindBy(xpath="//*[@id='feeDashboard']//thead/following-sibling::tbody")
+	private WebElement feesTable;
+	@FindBy(xpath="//*[@id='feeDashboard']//thead/following-sibling::tbody//tr")
+	private List<WebElement> feesRecords;
+	@FindBy(xpath=".//*[@id='feeDashboard']//th//span")
+	private List<WebElement> feesHeader;
+	@FindBy(id="feeMoreButton")
+	private WebElement feeMoreButton;
+	@FindBy(xpath="//*[@id='feeHistoryDialog']//preceding-sibling::div//span[contains(text(),'close')]")
+	private WebElement closeFeeModalWindow;
+	@FindBy(id="feesHistorySSOFrame")
+	private WebElement feesModalFrame;
+	@FindBy(xpath="//table[2]//tr[1]//font/font")
+	private List<WebElement> FeesModalWinHeader;
+	@FindBy(xpath="//select[contains(@name,'from')]")
+	private List<WebElement> from_date;
+	@FindBy(xpath="//select[contains(@name,'to')]")
+	private List<WebElement> to_date;
+	@FindBy(name="SUBMIT_BUTTON")
+	private WebElement submit;
+	@FindBy(xpath=".//table[2]//tr[1]/following-sibling::tr//td[3]//font")
+	private List<WebElement> listEffcDate;
+	@FindBy(xpath=".//*[@id='feeDashboard']//*[@class='noData']")
+	private WebElement noFeesData;
+	@FindBy(xpath=".//*[@id='vestingDashboard']//td[contains(text(),'Computation period')]")
+	private WebElement computationPrd;
+	@FindBy(xpath=".//*[@id='vestingDashboard']//a[contains(text(),'Vested balance')]")
+	private WebElement vestedBalance;
+	@FindBy(xpath=".//*[@id='vestingDashboard']//a[contains(text(),'Vesting by money source')]")
+	private WebElement vestedByMoneySource;
+	@FindBy(id="vestingDashboard")
+	private WebElement vestingBoxWithData;
+	@FindBy(id="vestingDialog")
+	private WebElement vestingDialog;
+	@FindBy(xpath=".//*[@id='vestingDialog']/preceding-sibling::div//span[.='close']")
+	private WebElement vestingModalCloseLink;
+	@FindBy(xpath=".//*[@id='vestingDialog']//a[contains(text(),'Click here')]")
+	private WebElement clickHereLink;
+	@FindBy(xpath=".//*[@id='vestingDialog']//th//span/following-sibling::span")
+	private List<WebElement> vestingModalHeaders;
+	@FindBy(id="accountBalanceSSOFrame")
+	private WebElement accntBalFrame;
+	@FindBy(className="section_title_text")
+	private WebElement accntBalTitle;
+	@FindBy(xpath=".//*[@id='accountBalanceHistoryDialog']/preceding-sibling::div//span[contains(text(),'close')]")
+	private WebElement accntBalCloseLink;
+	@FindBy(xpath=".//*[contains(@id,'vestingForm')]//thead/following-sibling::tbody//a")
+	private List<WebElement> periodBeginDateLinks;
+	@FindBy(xpath=".//*[@id='vestingDetailDialog']//div[contains(text(),'Vesting Compliance Details for Period Beginning')]")
+	private WebElement vestingDetailPage;
+	@FindBy(xpath=".//*[@id='vestingDetailDialog']/preceding-sibling::div//span[contains(@class,'ui-icon-closethick')]")
+	private WebElement vestingDetailClose;
+	@FindBy(className="money_content")
+	private WebElement moneyOutSection;
+	@FindBy(xpath=".//*[@class='loansHeader']//tr//td")
+	private List<WebElement> loansHeaderElements; 
+	@FindBy(xpath="//*[@class='money_content']//th/ancestor::thead/following-sibling::tbody//tr")
+	private List<WebElement> loanDataRows;
+	@FindBy(xpath="//*[@class='money_content']//th")
+	private List<WebElement> loansColumnsList;
+	
+	private String transHistory = ".//*[@id='transactions']";
+	private String interactions = ".//*[@id='participantengagement']";
+	private String investments = ".//*[@id='allocations']";
+	private String fees = ".//*[@id='fees']";
+	private String loans = ".//a[contains(text(),'Loans')]";
+	private String vesting = "//*[contains(@class,'vesting')]";
+	private String beneficiarySection = ".//*[contains(@class,'beneficiary')]";
+	private String compensation = ".//*[@id='salaryInfo']";
+	private String empLeaveInfoSection  = ".//*[@id='employeeDetailTabLoaInfoSection']";
+	private String basicInfoSection = ".//*[@id='basicInfo']";
+	private String contactInfoSection = ".//*[@id='contactInfo']";
+	private String employmentInfoSection = ".//*[@id='employmentInfo']";
+	private String enrollAndEligSection = ".//*[@id='enrollmentAndEligibilityInfo']";
+	private String payCheckContriSection = ".//*[@id='paycheckContributionInfo']";
+	private String feesDataForThreeMonth = ".//*[@id='feeDashboard']//thead/following-sibling::tbody";
+	
 	
 	String qdroPart = null;
 	String normalPart = null;
 	String transferPart=null;
+	private String ssn="";
 		
 	String maritalStatus = null;
 	String state1 = null;
@@ -437,7 +620,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public String[] terminatedEmp = new String[2];
 	public List<String> qntTypeIndividuals;
 	public Map<String,String> partDetails;
-	
+	private List<String> uscsID = new ArrayList<String>();
+	private List<String> uscsIDReset;
 	Map<String,String> m = new LinkedHashMap<String,String>();
 	LoadableComponent<?> parent;
 	Actions actions;
@@ -462,8 +646,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().defaultContent();
 		Assert.assertTrue(Web.isWebElementDisplayed(employeeSearchFrame));
 	}
-@FindBy(xpath="//*[@id='newMenu']//li/a[.='Search employee']")
-private WebElement searchEmployeeOptionLink;
+
 	@Override
 	@SuppressWarnings("unused")
 	protected void load() {
@@ -476,7 +659,8 @@ private WebElement searchEmployeeOptionLink;
 			Reporter.logEvent(Status.PASS,
 					"Check if the user has landed on homepage",
 					"The user has landed on homepage", true);
-			CommonLib.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//CommonLib.waitForProgressBar();
 			Web.waitForElement(tabEmployees);
 			//Web.clickOnElement(tabEmployees);
 			//Web.waitForElement(drpdwnSearchEmployee);
@@ -487,6 +671,7 @@ private WebElement searchEmployeeOptionLink;
 			{
 				actions.moveToElement(tabEmployees).click().build().perform();
 				actions.click(searchEmployeeOptionLink).perform();
+				Web.waitForPageToLoad(Web.getDriver());
 			}
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -581,6 +766,7 @@ private WebElement searchEmployeeOptionLink;
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeBySSNAllPlans(String SSN) throws InterruptedException {
+		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
 		select = new Select(drpdwnSearchEmployee);
@@ -589,7 +775,7 @@ private WebElement searchEmployeeOptionLink;
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
 		Web.clickOnElement(btnGoEmployeeSearch);
-		Web.waitForElement(fNLNMILink.get(0));
+		Web.isWebElementsDisplayed(this.getWebElementasList("EmpLastNameLink"),true);
 		Web.getDriver().switchTo().defaultContent();
 		//dismissErrorBox();
 	}
@@ -685,7 +871,7 @@ private WebElement searchEmployeeOptionLink;
 		String planWithDivisons = "";
 		while (resultset.next()) {
 			planWithDivisons = resultset.getString("GA_ID");
-			Web.selectDropDownOption(planDropdown, planWithDivisons);
+			Web.selectDropDownOption(planDropdown, planWithDivisons,true);
 			btnGoPlanNumberfordrpdwn.click();
 			if (getErrorMessageText().trim().isEmpty()) {
 				break;
@@ -759,11 +945,17 @@ private WebElement searchEmployeeOptionLink;
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
 		Web.clickOnElement(tabEmployees);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(drpdwnSearchEmployee, false);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(linkProfile);
 		actions.build().perform();
 		Thread.sleep(2000);
+		if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
+		{
+			actions.moveToElement(tabEmployees).click().build().perform();
+			actions.click(searchEmployeeOptionLink).perform();
+		}
 		
 	}
 	/**
@@ -1217,6 +1409,7 @@ private WebElement searchEmployeeOptionLink;
  * @throws InterruptedException
  */
 	public void logoutFromApplication() throws InterruptedException {
+		Web.getDriver().switchTo().defaultContent();
 		if (Web.isWebElementDisplayed(linkLogout)) {
 			linkLogout.click();
 			Thread.sleep(2000);
@@ -1812,7 +2005,7 @@ private WebElement searchEmployeeOptionLink;
 		{
 			if(!fNLNMILink.get(0).isDisplayed())
 			{
-				Web.waitForElements(this.getWebElementasList("EmpLastNameLink"));
+				//Web.waitForElements(this.getWebElementasList("EmpLastNameLink"));
 				Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
 				employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
 			}
@@ -1874,8 +2067,7 @@ private WebElement searchEmployeeOptionLink;
 		
 	}
 
-	@FindBy(xpath="//div[contains(text(),'Percent')]/preceding-sibling::div")
-	private WebElement benName;
+	
 	
 	/*
 	 * This method validates the DB record with UI for Beneficiary
@@ -1959,7 +2151,7 @@ private WebElement searchEmployeeOptionLink;
 	}
 	
 	
-	/*
+	/**
 	 * This method verifies the Recently viewed functionality on employee overview page
 	 */
 	public String Verify_Recently_Viewed_Employee() throws Exception
@@ -2001,11 +2193,40 @@ private WebElement searchEmployeeOptionLink;
 	{
 		CommonLib.waitForProgressBar();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.waitForElement(partDetailTab);
-		Thread.sleep(2000);
-		Web.clickOnElement(partDetailTab);
-		Web.waitForPageToLoad(Web.getDriver());
-		Web.getDriver().switchTo().defaultContent();
+		if(partDetailTab.findElement(By.xpath("./..")).getAttribute("class").contains("active"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+		}
+		else{
+			
+			Web.waitForElement(partDetailTab);
+			Thread.sleep(2000);
+			Web.clickOnElement(partDetailTab);
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+		}
+	}
+	
+	
+	/*
+	 * This method is used to navigate to Account detail page on overview page
+	 */
+	public void navigateToAccountDetailPage() throws Exception
+	{
+		CommonLib.waitForProgressBar();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(accountDetail.findElement(By.xpath("./..")).getAttribute("class").contains("active"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+		}
+		else{
+			
+			Web.waitForElement(accountDetail);
+			Thread.sleep(2000);
+			Web.clickOnElement(accountDetail);
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+		}
 	}
 	
 
@@ -2055,7 +2276,7 @@ private WebElement searchEmployeeOptionLink;
 	}
 	
 	@FindBy(xpath="//font[contains(text(),'We were unable to process')]")
-	private WebElement unexpErro;
+	private List<WebElement> unexpErro;
 	
 	/*
 	 * This method edit the salary information of an employee and save it.
@@ -2064,19 +2285,20 @@ private WebElement searchEmployeeOptionLink;
 	{
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.clickOnElement(salaryEditLink);
-		CommonLib.waitForProgressBar();
+		//CommonLib.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(incomeEditFrame);
 		Web.getDriver().switchTo().frame(incomeEditFrame);
-		if(unexpErro.isDisplayed())
+		if(unexpErro.size()>0)
 		{	
 			Reporter.logEvent(Status.FAIL, "Check if unexpected error message is displayed.if yes,it may be due to data issue"
 					+ "or may be issue.kindly check manually once.", "Unexpected error is displayed.", true);
 			HomePage homePage = new HomePage();
 			Web.getDriver().switchTo().defaultContent();
-			Web.clickOnElement(Web.returnElement(homePage, "Home_Page_Logo"));
+			homePage.logoutPSC();
+			/*Web.clickOnElement(Web.returnElement(homePage, "Home_Page_Logo"));
 			Web.waitForPageToLoad(Web.getDriver());
-			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.getDriver().switchTo().frame(employeeSearchFrame);*/
 		}
 		else
 		{
@@ -2325,7 +2547,7 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 		Reporter.logEvent(Status.FAIL,"Verify Overview label is displayed.", "Overview label is displayed.", true);
 	}
 	
-	if(nameLabel.isDisplayed()&&ssnLabel.isDisplayed()&&dobLabel.isDisplayed()||empIDLabel.isDisplayed())
+	if(nameLabel.isDisplayed()&&ssnLabel.isDisplayed()&&dobLabel.isDisplayed()||empIDLabel.size()>0)
 	{
 		Reporter.logEvent(Status.PASS,"Verify labels name,SSN,DOB end empid(if applicable) is displayed under overview section.", "Mentioned labels are displayed.", false);
 	}
@@ -2385,9 +2607,9 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 	{
 		Reporter.logEvent(Status.FAIL, "Verify DOB format as MM/DD/YYYY.", "DOB format is not in format:MM/DD/YYYY", true);
 	}
-	if(!empIDLabel.isDisplayed())
+	if(empIDLabel.size()>0)
 	{
-		if(!empIdValue.isDisplayed())
+		if(empIdValue.size()>0)
 		{
 			Reporter.logEvent(Status.PASS, "Emp Id value is not displayed provided emp id label is not displayed.", "Emp Id value is not displayed if label is not displayed.", false);
 		}
@@ -3234,11 +3456,11 @@ public void switchToRecentlyViewedEmp() throws Exception,SQLException
  */
 public ResultSet selectEmployeesForUser(String[] dBQueryName,String username) throws SQLException
 {
-	queryResultSet = DB.executeQuery(dBQueryName[0],dBQueryName[1],username);
+	queryResultSet = DB.executeQuery(dBQueryName[0],dBQueryName[1],"K_"+username);
 	return queryResultSet;
 }
 
-/*
+/**
  * This is a generic method to return SSN of an employee from DB
  */
 public String selectEmployeeFromResultSet(ResultSet resultSet) throws SQLException,InterruptedException
@@ -3248,44 +3470,1980 @@ public String selectEmployeeFromResultSet(ResultSet resultSet) throws SQLExcepti
 	{
 		empSSN = resultSet.getString("SSN");
 		this.searchEmployeeBySSNAllPlans(empSSN);
-		if (!errortxtSearchResults.getText().contains("PLEASE CHECK YOUR SEARCH CRITERIA.")) {
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if (fNLNMILink.size()>=1) {
+			Web.getDriver().switchTo().defaultContent();
 			break;
 		}
 	}
 	return empSSN;
 }
 
+/**
+ * <pre>This method validates message under fees section if there is no past three month data found.</pre>
+ * @author smykjn
+ * @return void
+ * @Date 28th-April-2017
+ 
+ */
+public void validateNoPastThreeMonthDataMessage()
+{
+	String actText;
+	String expText = Stock.GetParameterValue("ExpectedMessage");
+	try{
+		this.navigateToAccountDetailPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(Web.getDriver().findElement(By.xpath(fees)));
+		actText = noFeesData.getText();
+		if(Web.VerifyPartialText(expText, actText, true))
+			Reporter.logEvent(Status.PASS,"Search for a participant with no past 3 months fees data."
+					+ " and validate following message is displayed:"+expText,"Message displayed:"+actText, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Search for a participant with no past 3 months fees data."
+					+ " and validate following message is displayed:"+expText,"Message displayed:"+actText, true);
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+	}
+}
 
-
-/*
+/**
  * This method update the Enrollment and Eligibility section and save.
  */
-public boolean editEnrollmentAndEligibilityAndSave()
+public boolean editEnrollmentAndEligibilityAndSave() throws InterruptedException,Exception
 {
 	boolean isEnrollmentSectionDisplayed = false;
+	String updatedEliCode= null;
+	String updatedInEliCode = null;
 	Web.getDriver().switchTo().defaultContent();
 	Web.getDriver().switchTo().frame(employeeSearchFrame);
-	if(enrollmentAndEligibilitySection.isDisplayed())
+	if(enrollmentAndEligibilitySection.size()>0)
 	{
 		isEnrollmentSectionDisplayed = true;
+		Reporter.logEvent(Status.PASS,"Validate Enrollment and eligibility section is displayed.",""
+				+"Enrollment and eligibility section is displayed.", false);
 		Web.clickOnElement(enrolAndEligibltyEditLink);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(enrollAndEligEditFrame);
-		
+		Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
+		Select eligibilityCode = new Select(eligiCode);
+		Select inEligibilityCode = new Select(inEligiReasonCode);
+		if(selectedEligiCode.getText().equals("No"))
+		{
+			eligibilityCode.selectByVisibleText("Yes");
+			inEligibilityCode.selectByValue("0");
+			updatedEliCode = "Yes";
+			updatedInEliCode = "";
+		}
+		else
+		{
+			eligibilityCode.selectByVisibleText("No");
+			inEligibilityCode.selectByVisibleText("Other");
+			updatedEliCode = "No";
+			updatedInEliCode = "Other";
+		}
+		Web.clickOnElement(this.save);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
+		if(eligibilityCodeOverview.getText().trim().equals(updatedEliCode)
+				&& inEligibilityCodeOverview.getText().trim().equals(updatedInEliCode))
+		{
+			Reporter.logEvent(Status.PASS, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are saved correctly.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are not saved correctly.", true);
+		}
+		Web.clickOnElement(enrolAndEligibltyEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(enrollAndEligEditFrame);
+		Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
+		String participationDate = partDate.getAttribute("value");
+		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+		Date dt = dateFormat.parse(participationDate);
+		Calendar calendar = Calendar.getInstance();         
+		calendar.setTime(dt);
+		calendar.add(Calendar.DATE, 1);
+		String partDateInString  = dateFormat.format(calendar.getTime());
+		Web.setTextToTextBox(partDate,partDateInString);
+		if(selectedEligiCode.getText().equals("No"))
+		{
+			eligibilityCode.selectByVisibleText("Yes");
+			inEligibilityCode.selectByValue("0");
+			updatedEliCode = "Yes";
+			updatedInEliCode = "";
+		}
+		else
+		{
+			eligibilityCode.selectByVisibleText("No");
+			inEligibilityCode.selectByVisibleText("Other");
+			updatedEliCode = "No";
+			updatedInEliCode = "Other";
+		}
+		Web.clickOnElement(this.cancel);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
+		if(!updatedEliCode.equals(eligibilityCodeOverview.getText().trim())
+				&&!updatedInEliCode.equals(inEligibilityCodeOverview.getText().trim())
+				&&!partDateInString.equals(partDateOverview.getText().trim()))
+		{
+			Reporter.logEvent(Status.PASS, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
+					+  " and click on cancel.", "Changes are not saved.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
+					+  " and click on cancel.", "Changes are saved.", true);
+		}
 	}
 	else
 	{
 		isEnrollmentSectionDisplayed = false;
+		Reporter.logEvent(Status.FAIL,"Validate Enrollment and eligibility section is displayed.",""
+				+"Enrollment and eligibility section is not displayed.", true);
 	}
 	return isEnrollmentSectionDisplayed;
 }
 
 
+public boolean validateAccountBalanceScreen_0() throws Exception
+{
+	String expecDisclaimer = Stock.GetParameterValue("ExpectedDisclaimer");
+	boolean isLink = false;
+	boolean isBalance = false;
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	for(WebElement balance : balanceList)
+	{
+		if(!balance.getText().equals("N/A"))
+		{
+			String bal = balance.getText();
+			System.out.println("Bal on Overview:"+bal);
+			Thread.sleep(2000);
+			Web.clickOnElement(balance.findElement(By.xpath("./../following-sibling::td/button")));
+			CommonLib.waitForProgressBar();
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(viewAccountDetailFrame);
+			Web.waitForElement(accountDetailHeader);
+			WebElement expandCollapseMoneySource = moneySource.findElement(By.tagName("i"));
+			WebElement expandCollapseInvestment = investment.findElement(By.tagName("i"));
+			if(moneySource.isDisplayed()&&investment.isDisplayed())
+			{
+				Reporter.logEvent(Status.PASS,"User should be able to view balance by money source"
+						+ " and balance by Investments.", "Money source and Investment sections are displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"User should be able to view balance by money source"
+						+ " and balance by Investments.", "Money source and Investment sections are displayed.", true);
+			}
+			
+			if(bal.equals(balanceOnViewAccountPage.getText()))
+			{
+				Reporter.logEvent(Status.PASS,"Validate the balance displayed on overview page is same as displayed "
+						+ "on Account details page.", "Total Balance value from Account Balance page matches Total "
+								+ "balance as of {current date} on Overview page.", true);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Validate the balance displayed on overview page is same as displayed "
+						+ "on Account details page.", "Total Balance value from Account Balance page does not matche total "
+								+ "balance as of {current date} on Overview page.", true);
+			}
+			if(!expandCollapseMoneySource.getAttribute("class").contains("down"))
+			{
+				Web.clickOnElement(expandCollapseMoneySource);
+			}
+			if(!expandCollapseInvestment.getAttribute("class").contains("down"))
+			{
+				Web.clickOnElement(expandCollapseInvestment);
+			}
+			if(disclaimerText.getText().trim().equalsIgnoreCase(expecDisclaimer))
+			{
+				Reporter.logEvent(Status.PASS,"Validate the note text down on Acount balance page."
+						+ "It should be '* All dates and times are in Mountain Time unless otherwise noted.'", ""
+								+ "Actual text displayed is:"+disclaimerText.getText().trim(), false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Validate the note text down on Acount balance page."
+						+ "It should be '* All dates and times are in Mountain Time unless otherwise noted.'", ""
+								+ "Actual text displayed is:"+disclaimerText.getText().trim(), true);
+			}
+			if(moneyTypeLinks.size()>0){
+				for(WebElement moneyTypeLink : moneyTypeLinks)
+				{
+					if(moneyTypeLink.getTagName().equals("a")){
+						isLink = true;
+					}
+					else{
+						isLink = false;
+						break;
+					}
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.INFO, "There is no money type found.", "No money type found.", true);
+			}
+			if(investTypeLinks.size()>0){
+				for(WebElement investTypeLink : investTypeLinks)
+				{
+					if(investTypeLink.getTagName().equals("a")){
+						isLink = true;
+					}
+					else{
+						isLink = false;
+						break;
+					}
+				}
+			}
+			else
+			{
+				Reporter.logEvent(Status.INFO, "There is no investment type found.", "No investment type found.", true);
+			}
+			if(isLink)
+				Reporter.logEvent(Status.PASS,"Validate money type and investment type(if applicable) are hyperlinks.","" 
+						+"Money type and investment type are found to be as hyperlinks.", false);
+			
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Validate money type and investment type(if applicable) are hyperlinks.","" 
+						+"Money type and investment type are not found to be as hyperlinks.", true);
+			}
+			isBalance = true;
+			break;
+		}
+		else
+		{
+			isBalance = false;
+		}
+	}
+	return isBalance;
+}
+
+
+public void validateAccountBalanceScreen_1() throws Exception
+{
+	if(moneyTypeLinks.size()>0)
+	{
+		String moneyType = moneyTypeLinks.get(0).getText();
+		Web.clickOnElement(moneyTypeLinks.get(0));
+		Web.waitForElement(moneyTypeModalContent);
+		if(modalContentHeader.getText().contains(moneyType.substring(0, moneyType.length()-1))&&investmentOptionDataTables.size()>0)
+		{
+			Reporter.logEvent(Status.PASS, "Click on one of the investment type and check if investment options for selected "
+					+ "money type is displayed.", "Investment options for selected money type is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Click on one of the investment type and check if investment options for selected "
+					+ "money type is displayed.", "Investment options for selected money type is not displayed.", true);
+		}
+		Web.clickOnElement(closeMoneyType);
+		Web.waitForElement(moneySource);
+	}
+	if(investTypeLinks.size()>0)
+	{
+		String investmentType = investTypeLinks.get(0).getText();
+		Web.clickOnElement(investTypeLinks.get(0));
+		Web.waitForElement(investTypeModalContent);
+		if(modalContentHeaderInvestment.getText().contains(investmentType.substring(0, investmentType.length()))&&investmentOptionDataTables.size()>0)
+		{
+			Reporter.logEvent(Status.PASS, "Click on one of the investment type and check if money sources for selected "
+					+ "investment type is displayed.", "money sources for selected investment type is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Click on one of the investment type and check if money sources for selected "
+					+ "investment type is displayed.", "money sources for selected investment type is not displayed.", true);
+		}
+		Web.clickOnElement(closeInvestType);
+		Web.waitForElement(moneySource);
+	}
+	
+}
+
+
+public void ChangeDateAndVerifyData() throws Exception
+{
+	String[] balance = new String[2];
+	String[] vestedBalance = new String[2];
+	int headersize = monySrcHeader.size();
+	String xpathforColumn = "//h4[contains(text(),'Money Source')]/ancestor::div[2]//table[2]//tr["+monySrcDataRows.size()+"]//td";
+	List<WebElement> monySrcColumn = Web.getDriver().findElements(By.xpath(xpathforColumn));
+	int columnsize = monySrcColumn.size();
+	if(headersize==columnsize)
+	{
+		for(int k=0;k<headersize;k++)
+		{
+			if(monySrcHeader.get(k).getText().trim().equals("Balance"))
+			{
+			
+				balance[0] = monySrcColumn.get(k).getText().trim();
+			}
+			if(monySrcHeader.get(k).getText().trim().equals("Vested Balance:"))
+			{
+				
+				vestedBalance[0] =  monySrcColumn.get(k).getText().trim();
+			}
+		}
+	}
+	Calendar cal = Calendar.getInstance();
+	cal.add(Calendar.YEAR, -2);
+	SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+	String formatted = format1.format(cal.getTime());
+	Web.setTextToTextBox(asOfDateInput,formatted);
+	Web.waitForElement(moneySource);
+	if(headersize==columnsize)
+	{
+		for(int k=0;k<headersize;k++)
+		{
+			if(monySrcHeader.get(k).getText().trim().equals("Balance"))
+			{
+				balance[1] = monySrcColumn.get(k).getText().trim();
+			}
+			if(monySrcHeader.get(k).getText().trim().equals("Vested Balance:"))
+			{
+				vestedBalance[1] = monySrcColumn.get(k).getText().trim();
+			}
+		}
+	}
+	if(!balance[0].equals(balance[1])&&!vestedBalance[0].equals(vestedBalance[1]))
+	{
+		Reporter.logEvent(Status.PASS, "Change the date to one year back and observe the total balance and vested balance.",""
+				+"balance and vested balance is updated as date is changed.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Change the date to one year back and observe the total balance and vested balance.",""
+				+"balance and vested balance is not updated as date is changed.", true);
+	}
+	
+}
+
+/*
+ * This method disable access to PPT Web via PSC
+ */
+public boolean disablePAEURL() throws SQLException
+{
+	boolean isRecordExist = false;
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPortalTypecodeForEmpower")[0],
+			Stock.getTestQuery("CheckPortalTypecodeForEmpower")[1]);
+	if(DB.getRecordSetCount(queryResultSet)>0)
+	{
+		queryResultSet.close();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("DisablePAE")[0],
+				Stock.getTestQuery("DisablePAE")[1]);
+		isRecordExist = true;
+	}
+	else
+	{
+		isRecordExist = false;
+		Reporter.logEvent(Status.INFO, "Check in DB if portal_type_code is set to PAE_URL for empower type accu_code.",""
+				+"No record is found in DB for 'PAE_URL' portal_type_code", false);
+	}
+	return isRecordExist;
+}
+
+
+/*
+ * This method validates the data set up error message if PAE_URL is not set up properly
+ */
+public void verifyDataSetErrorForDisabledPAEURL() throws InterruptedException,NoSuchWindowException
+{
+	String expectedError = Stock.GetParameterValue("ExpectedErrorMessage");
+	String actualError = null;
+	int count = 0;
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	String currentWindow =  Web.getDriver().getWindowHandle();
+	System.out.println("Parent window"+currentWindow);
+    Thread.sleep(3000);
+    if(Web.isWebElementDisplayed(employeeWebButton,true)){
+       Web.clickOnElement(employeeWebButton);             
+       while(Web.getDriver().getWindowHandles().size()==1)
+       {
+              if(count==10) break;
+              Thread.sleep(500);
+              count++;
+              System.out.println("Counter : "+count);
+       }
+       count=0;
+       System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
+       for(String newWindow : Web.getDriver().getWindowHandles())
+       {
+    	   if(!newWindow.equals(currentWindow))
+    	   {
+    		   	Web.getDriver().switchTo().window(newWindow);
+    		   	actualError = errorWebElement.getText().trim();
+   				System.out.println("Actual Error Message:"+actualError);
+   				Web.getDriver().close();
+   				Web.getDriver().switchTo().window(currentWindow);
+   				break;
+    	   }
+       }
+       if(actualError.equals(expectedError))
+				Reporter.logEvent(Status.PASS, "Execute the query:"+Stock.getTestQuery("DisablePAE")[1]+" and click on"
+					+ "Employe web button.","Data set up error message is displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Execute the query:"+Stock.getTestQuery("DisablePAE")[1]+" and click on"
+					+ "Employe web button.","Data set up error message is not displayed.", true);
+    }
+
+	
+	
+}
+
+/*
+ * This method enables access to PPT Web via PSC
+ */
+public void enablePAEURL() throws SQLException
+{
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("enablePAE")[0],
+			Stock.getTestQuery("enablePAE")[1]);
+		
+}
+
+
+/**
+ * This method deletes the PSCPAE txn_code from all user class assigned to a user.
+ */
+public void deletePSCPAETxnCodeFromDB() throws SQLException
+{
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],Stock.getTestQuery("CheckPSCPAETxnCode")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	if(DB.getRecordSetCount(queryResultSet)>0)
+	{
+		while(queryResultSet.next())
+		{
+			uscsID.add(queryResultSet.getString("USCS_ID"));
+		}
+		System.out.println("User class for PSCPAE txn_code are:"+uscsID);
+	}
+	else
+	{
+		queryResultSet.close();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("insertPSCPAETxnCode")[0],Stock.getTestQuery("insertPSCPAETxnCode")[1]);
+		queryResultSet.close();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],Stock.getTestQuery("CheckPSCPAETxnCode")[1],
+				"K_"+Stock.GetParameterValue("username"));
+		while(queryResultSet.next())
+		{
+			uscsID.add(queryResultSet.getString("USCS_ID"));
+		}
+	}
+	queryResultSet.close();
+	for(int i=0;i<uscsID.size();i++){
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("deletePSCPAETxnCode")[0],Stock.getTestQuery("deletePSCPAETxnCode")[1],uscsID.get(i));
+	}
+}
+
+
+/*
+ * This method validates the Employee Web button is displayed or not on Employee overview page after deleting respective transaction code
+ */
+public boolean validateEmployeeWebButton()
+{
+	boolean isEmployeeWebBtnDisplayed = false;
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(Web.getDriver().findElements(By.id("paeUrlButton")).size() != 0)
+		isEmployeeWebBtnDisplayed = true;
+	else
+		isEmployeeWebBtnDisplayed = false;
+	return isEmployeeWebBtnDisplayed;
+}
+
+
+/**
+ * This method inserts back the PSCPAE txn_code from all user class assigned to a user.
+ */
+public void insertPSCPAETxnCode() throws SQLException,Exception
+{
+	
+	for(int i=0;i<uscsID.size();i++){
+		Thread.sleep(2000);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("insertPSCPAETxnCode_1")[0],Stock.getTestQuery("insertPSCPAETxnCode_1")[1],uscsID.get(i));
+	}
+	queryResultSet.close();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],Stock.getTestQuery("CheckPSCPAETxnCode")[1],
+			"K_"+Stock.GetParameterValue("username"));
+	if(DB.getRecordSetCount(queryResultSet)>0)
+	{
+		Reporter.logEvent(Status.PASS, "Execute query to insert back PSCPAE txn_code:'"+Stock.getTestQuery("insertPSCPAETxnCode_1")[1]+"'.",""
+				+"Record is inserted.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Execute query to insert back PSCPAE txn_code:'"+Stock.getTestQuery("insertPSCPAETxnCode_1")[1]+"'.",""
+				+"Record is not inserted.please Check once manually in DB.", false);
+	}
+	
+}
+
+
+/**
+ * @author smykjn
+ * @Date 13-April-2017
+ * @Objective this method checks that Process center and Compliance tab is not displayed for TRS-Flex plan and displayed for<br>
+ * Non TRS-Flex plans
+ */
+public boolean validateComplianceAndProCenterTabForTRSFlex() throws NoSuchElementException
+{
+	
+	boolean isTabExist = false;
+	Web.getDriver().switchTo().defaultContent();
+	if(proCenterMenu.isDisplayed()&&compMenu.isDisplayed())
+		isTabExist = true;
+	else
+		isTabExist = false;
+	return isTabExist;
+	
+}
+
+/**
+ * @author smykjn
+ * @Date 13-April-2017
+ * @Objective This method is to validate all basic validations related to TRSFlex plan :Like<br>
+ * Plan-->Administration--->Transfer restriction must not be displayed for TRSFlex plan
+ */
+public void validationsForTRSFlexPlan() 
+{
+	try{
+		Actions act = new Actions(Web.getDriver());
+		act.click(Web.returnElement(new HomePage(), "Plan Menu")).build().perform();
+		act.click(Web.returnElement(new HomePage(), "Plan Administration")).build().perform();
+		if(transferRestrictions.isDisplayed())
+			Reporter.logEvent(Status.FAIL, "Navigate to Plan/Administration menu and check Transfer restriction"
+					+ " is supressed for TRS-Flex plan.", "Transfer restriction is displayed for TRS-Flex plan.", true);
+		else
+			Reporter.logEvent(Status.PASS, "Navigate to Plan/Administration menu and check Transfer restriction"
+					+ " is supressed for TRS-Flex plan.", "Transfer restriction is supressed for TRS-Flex plan.", false);
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	
+}
+
+/**
+ * @author smykjn
+ * @Date 13-April-2017
+ * @Objective This method is to validate all basic validations related to Non-TRSFlex plan :Like<br>
+ * Plan-->Administration--->Transfer restriction must  be displayed for Non-TRSFlex plan
+ */
+public void validationsForNonTRSFlexPlan() 
+{
+	try{
+		Actions act = new Actions(Web.getDriver());
+		act.click(Web.returnElement(new HomePage(), "Plan Menu")).build().perform();
+		Web.waitForElement(Web.returnElement(new HomePage(), "Plan Administration"));
+		act.click(Web.returnElement(new HomePage(), "Plan Administration")).build().perform();
+		if(transferRestrictions.isDisplayed())
+			Reporter.logEvent(Status.PASS, "Navigate to Plan/Administration menu and check Transfer restriction"
+					+ " is displayed for non TRS-Flex plan.", "Transfer restriction is displayed for non TRS-Flex plan.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Navigate to Plan/Administration menu and check Transfer restriction"
+					+ " is displayed for non TRS-Flex plan.", "Transfer restriction is supressed for non TRS-Flex plan.", true);
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	
+}
+
+/**
+ * @author smykjn
+ * @Date 13-April-2017
+ * @Objective This method switches between employee from non TRS Plan employee to TRS-Flex plan employee and validates that<br>
+ * top menu 'Process center' and 'Compliance' must be suppressed after switch and Transfer restrictions should not be<br>
+ * displayed for TRS-Flex plan employee.
+ */
+public void switchEmployeeAndValidateTopMenu() 
+{
+	String planName = null;
+	String empName = null;
+	try{
+		if(proCenterMenu.isDisplayed()&&compMenu.isDisplayed())
+			Reporter.logEvent(Status.PASS, "Navigate to employee overview page of an employee who is in"
+					+ " non TRS-Flex plan and observe Process center and compliance tabs are displayed.", "Process center and "
+							+ " compliance tabs are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Navigate to employee overview page of an employee who is in"
+					+ " non TRS-Flex plan and observe Process center and compliance tabs are displayed.", "Process center and "
+							+ " compliance tabs are not displayed.", true);
+		
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		planName = selectedPlanHeader.getText().trim();
+		Web.clickOnElement(recentlyViewedLink);
+		Web.waitForElement(recentlyViewedEmpTable);
+		empName = empNameHeader.getText().trim();
+		Web.clickOnElement(recentlyViewedEmployee.get(1));//switch to TRS-Flex employee from recently viewed link
+		CommonLib.waitForProgressBar();
+		Thread.sleep(3000);
+		if(this.validateComplianceAndProCenterTabForTRSFlex())
+			Reporter.logEvent(Status.FAIL, "Switch to employee overview page of an employee who is in"
+					+ " TRS-Flex plan and observe Process center and compliance tabs are suppressed.", "Process center and "
+							+ " compliance tabs are displayed.", true);
+		else
+			Reporter.logEvent(Status.PASS, "Switch to employee overview page of an employee who is in"
+				+ " TRS-Flex plan and observe Process center and compliance tabs are suppressed.", "Process center and "
+						+ " compliance tabs are suppressed.", false);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(!planName.equals(selectedPlanHeader.getText().trim())&&!empName.equals(empNameHeader.getText().trim()))
+			Reporter.logEvent(Status.PASS, "After switching to non TRS-Flex plan's employee to TRS-Flex plan "
+					+ " employee,verify plan name and employee name is also updated.", "Plan name and employee name is updated.", false);
+		
+		else
+			Reporter.logEvent(Status.FAIL, "After switching to non TRS-Flex plan's employee to TRS-Flex plan "
+					+ " employee,verify plan name and employee name is also updated.", "Plan name and employee name is not updated.", true);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	
+}
 
 
 
+/**
+ * @author smykjn
+ * @date 17th-April-2017
+ * @Objective This test case searches for sections present in Account detail tab for TRSFlex plans
+ * @return void<br>
+ * 
+ */
+public void validateAccountDetailSectionsTRSFlexPlan() throws Exception
+{
+	this.navigateToAccountDetailPage();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(CommonLib.isElementExistByXpath(transHistory)&&CommonLib.isElementExistByXpath(interactions))
+		Reporter.logEvent(Status.PASS, "Navigate to employee overview page of an employee who is in TRSFlex plan"
+				+ " and check only Transaction hitory and Interactions sections are displayed under Account detail.",""
+				+"Transaction history and Interactions are displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Navigate to employee overview page of an employee who is in TRSFlex plan"
+				+ " and check only Transaction hitory and Interactions sections are displayed under Account detail.",""
+				+"Transaction history and Interactions are not displayed.", true);
+	if(!CommonLib.isElementExistByXpath(investments)&&!CommonLib.isElementExistByXpath(fees)&&
+			!CommonLib.isElementExistByXpath(loans)&&!CommonLib.isElementExistByXpath(vesting)&&
+			!CommonLib.isElementExistByXpath(beneficiarySection))
+		Reporter.logEvent(Status.PASS, "Investments,Fees,Loans,Vesting,Beneficiary sections should not"
+				+ " be displayed for TRSFlex plan as Account detail elements.", "Mentioned sections are not displayed.", false);
+	
+	else
+		Reporter.logEvent(Status.FAIL, "Investments,Fees,Loans,Vesting,Beneficiary sections should not"
+				+ " be displayed for TRSFlex plan as Account detail elements.", "Mentioned sections or any of them , are displayed.", true);
+	Web.getDriver().switchTo().defaultContent();
+}
 
 
+/**
+ * @author smykjn
+ * @date 17th-April-2017
+ * @Objective This test case searches for sections present in Employee detail tab for TRSFlex plans
+ * @return void
+ */
+public void validateEmployeeDetailSectionsTRSFlexPlan() throws Exception
+{
+	this.navigateToEmpDetailPage();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(CommonLib.isElementExistByXpath(compensation)&&CommonLib.isElementExistByXpath(payCheckContriSection)
+			&&CommonLib.isElementExistByXpath(basicInfoSection)&&CommonLib.isElementExistByXpath(contactInfoSection)
+			&&CommonLib.isElementExistByXpath(employmentInfoSection))
+		Reporter.logEvent(Status.PASS, "Navigate to employee overview page of an employee who is in TRSFlex plan"
+				+ " and check following sections are exist in Employee details tab:Compensation,Paycheck contribution"
+				+ ",Basic Information,Contact Information,Employment Information",""
+				+"All the mentioned sections are exist as Employee detail elements.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Navigate to employee overview page of an employee who is in TRSFlex plan"
+				+ " and check following sections are exist in Employee details tab:Compensation,Paycheck contribution"
+				+ ",Basic Information,Contact Information,Employment Information",""
+				+"All the mentioned sections or few of the sections do not exist as Employee detail elements.", true);
+	if(!CommonLib.isElementExistByXpath(empLeaveInfoSection)&&!CommonLib.isElementExistByXpath(enrollAndEligSection))
+		Reporter.logEvent(Status.PASS, "'Employee Leave Information' and 'Enrollment and Eligibility' sections should"
+				+ " be suppressed for TRSFlex plan as employee detail elements.", "Mentioned sections are found to be suppressed.", false);
+	
+	else
+		Reporter.logEvent(Status.FAIL, "Investments,Fees,Loans,Vesting,Beneficiary sections should"
+				+ " be suppressed for TRSFlex plan as employee detail elements.", "Mentioned sections or any of them , are not suppressed.", true);
+	
+	Web.getDriver().switchTo().defaultContent();
+}
+
+
+/**
+ * @author smykjn
+ * @date 17th-april-2017
+ * @Objective This test case searches for sections present in Account detail tab for NonTRSFlex plans
+ * @return void
+ */
+public void validateAccountDetailSectionsNonTRSFlexPlan() throws Exception
+{
+	this.navigateToAccountDetailPage();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(CommonLib.isElementExistByXpath(transHistory)&&CommonLib.isElementExistByXpath(interactions)
+			&&CommonLib.isElementExistByXpath(investments)&&CommonLib.isElementExistByXpath(fees)
+			&&CommonLib.isElementExistByXpath(loans)&&CommonLib.isElementExistByXpath(vesting)
+			&&CommonLib.isElementExistByXpath(beneficiarySection))
+		Reporter.logEvent(Status.PASS, "Navigate to employee overview page of an employee who is in NonTRSFlex plan"
+				+ " and check following sections are exist in Account detail tab:Transaction history,Interactions"
+				+ ",Loans,Vesting,Beneficiary,fees,Investment",""
+				+"All the mentioned sections are displayed as Account detail elements.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Navigate to employee overview page of an employee who is in NonTRSFlex plan"
+				+ " and check following sections are exist in Account detail tab:Transaction history,Interactions"
+				+ ",Loans,Vesting,Beneficiary,fees,Investment",""
+				+"All or few of the sections are not displayed as Account detail elements.", true);
+	Web.getDriver().switchTo().defaultContent();
+}
+
+/**
+ * @author smykjn
+ * @date 17th-April-2017
+ * @Objective This test case searches for sections present in Employee detail tab for NonTRSFlex plans
+ * @return void
+ */
+public void validateEmployeeDetailSectionsNonTRSFlexPlan() throws Exception
+{
+	this.navigateToEmpDetailPage();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(CommonLib.isElementExistByXpath(compensation)&&CommonLib.isElementExistByXpath(payCheckContriSection)
+			&&CommonLib.isElementExistByXpath(empLeaveInfoSection)&&CommonLib.isElementExistByXpath(basicInfoSection)
+			&&CommonLib.isElementExistByXpath(contactInfoSection)&&CommonLib.isElementExistByXpath(employmentInfoSection)
+			&&CommonLib.isElementExistByXpath(enrollAndEligSection))
+		Reporter.logEvent(Status.PASS, "Navigate to employee overview page of an employee who is in NonTRSFlex plan"
+				+ " and check following sections are exist in employee detail tab:Compensation,Paycheck contribution"
+				+ ",Employee leave information,Basic information,contact information,employement information,Enrollment and eligibility.",""
+				+"All the mentioned sections are displayed as employee detail elements.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Navigate to employee overview page of an employee who is in NonTRSFlex plan"
+				+ " and check following sections are exist in employee detail tab:Compensation,Paycheck contribution"
+				+ ",Employee leave information,Basic information,contact information,employement information,Enrollment and eligibility.",""
+				+"All or few of the mentioned sections are not displayed as employee detail elements.", true);
+	Web.getDriver().switchTo().defaultContent();
+}
+
+/**
+ * @author smykjn
+ * @date 17th-April-2017
+ * @Objective This test case validates sections present in Employee detail and account detail tabs when employee is 
+ * switched from Non TRSFlex plan to employee in TRSFlex plan.
+ * @return void
+ */
+public void validateEmpDetailAccDetail_SwitchEmploye() throws Exception
+{
+	Reporter.logEvent(Status.INFO, "switch to participant who is in TRSFlex plan through recently viewed and again verify "
+			+ "all the employee detail and account detail sections that TRSFlex plan access to are displayed.", "", false);
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.clickOnElement(this.recentlyViewedLink);
+	Web.waitForElement(recentlyViewedEmpTable);
+	Web.clickOnElement(recentlyViewedEmployee.get(1));
+	CommonLib.waitForProgressBar();
+	Web.getDriver().switchTo().defaultContent();
+	this.validateAccountDetailSectionsTRSFlexPlan();
+	this.validateEmployeeDetailSectionsTRSFlexPlan();
+	
+}
+
+
+/**
+ * @author smykjn
+ * @date 18th-April-2017
+ * @Objective This test case validates Investments section(Columns) present under Account detail tab
+ * @return boolean
+ */
+public boolean validateInvestmentsSectionElements()
+{
+	boolean proceed = false;
+	boolean isHeaderExist = false;
+	boolean isMoreDisplayed = false;
+	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedHeaders").split(","));
+  try{
+	  	this.navigateToAccountDetailPage();
+	  	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	  	if(CommonLib.isElementExistByXpath(investments))
+	  	{
+	  		proceed = true;
+	  		Reporter.logEvent(Status.PASS, "Validate Investment section is displayed under Account detail.","Investment section is"
+	  				+ " dislayed.", false);
+	  		Web.clickOnElement(Web.getDriver().findElement(By.xpath(investments)));
+	  		Web.waitForElement(allocMoreButton);
+	  		for(WebElement header : allocationHeaders)
+	  		{
+	  			if(expHeaders.contains(header.getText().trim())){
+	  				isHeaderExist = true;}
+	  			else{
+	  				isHeaderExist = false;
+	  				break;
+	  			}
+	  		}
+	  		isMoreDisplayed = allocMoreButton.isDisplayed();
+	  		if(isHeaderExist&&isMoreDisplayed)
+	  			Reporter.logEvent(Status.PASS, "Verify following Investment details displayed in Investment tab."
+	  					+ "1.Investment option 2.Fund short name 3.Deposit period 4.Default indicator 5.Percent and 'More' button.", ""
+	  							+ "All the mentioned details are displayed.", false);
+	  		else
+	  			Reporter.logEvent(Status.FAIL, "Verify following Investment details displayed in Investment tab."
+	  					+ "1.Investment option 2.Fund short name 3.Deposit period 4.Default indicator 5.Percent and 'More' button.", ""
+	  							+ "All the mentioned details or few of the details are not displayed.", true);
+	  		
+	  	}
+	  	else
+	  	{
+	  		proceed = false;
+	  		Reporter.logEvent(Status.FAIL, "Validate Investment section is displayed under Account detail.","Investment section is"
+	  				+ " not dislayed.", true);
+	  		
+	  	}
+	  	return proceed;
+  }
+  catch(Exception e)
+  {
+	  e.printStackTrace();
+	  return proceed;
+  }
+	
+	
+}
+
+/**
+ * @author smykjn
+ * @date 18th-April-2017
+ * @Objective This method validates <br>1.descending order by Percent of records under investment under Account detail<br>
+ * 2.Max 5 records can fit for investment section
+ * @return void
+ */
+public void validateInvestmentsPercentOrderAndMaxRecords()
+{
+	boolean sorted = false;
+	List<Double> investmentPercents = new ArrayList<Double>();
+	try{
+	  	for(WebElement percent : investPercentList)
+	  	{
+	  		investmentPercents.add(Double.parseDouble(percent.getText().replace("%", "").trim()));
+	  	}
+	 	System.out.println(investmentPercents);
+	 	sorted = CommonLib.isSortedByDescOrder(investmentPercents);
+	  	if(sorted)
+	  		Reporter.logEvent(Status.PASS, "Validate records are sorted by percent in descending order.", "Reocrds are sorted by percent in"
+	  				+ " descending order."+investmentPercents, false);
+	  	else
+	  		Reporter.logEvent(Status.FAIL, "Validate records are sorted by percent in descending order.", "Reocrds are not sorted by percent in"
+	  				+ " descending order."+investmentPercents, true);
+	  	//To validate max allocation row under investment section under account detail
+	  	if(maxAllocationsRow.size()<=5)
+	  		Reporter.logEvent(Status.PASS, "Validate max 5 allocations can be shown under investment section.", ""
+	  				+ "5 allocations or less than 5, are shown.", false);
+	  	else
+	  		Reporter.logEvent(Status.FAIL, "Validate max 5 allocations can be shown under investment section.", ""
+	  				+ "more than 5 allocations are shown.", true);
+	  	
+  }
+  catch(Exception e)
+  {
+	  e.printStackTrace();
+  }
+	
+	
+}
+
+/**
+ * @author smykjn
+ * @date 19th-April-2017
+ * @Objective This method validates message when no allocations for a participant
+ * @return void
+ */
+public void validateNoAllocation()
+{
+	String expectedMsg = Stock.GetParameterValue("ExpectedMessage");
+	try{
+		this.searchEmployeeBySSNAllPlans("345654695");//employee without allocation
+		this.navigateToEmployeeOverViewPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(Web.getDriver().findElement(By.xpath(investments)));
+  		Web.waitForElement(allocMoreButton);
+  		System.out.println(noallocations.getText());
+  		if(CommonLib.VerifyText(expectedMsg, noallocations.getText().trim(), true))
+  			Reporter.logEvent(Status.PASS, "Search an Employee who has no allocations.", "message,'"+expectedMsg+"' is displayed.", false);
+  		else
+  			Reporter.logEvent(Status.FAIL, "Search an Employee who has no allocations.", "message,'"+expectedMsg+" is not displayed.", true);
+}
+  catch(Exception e)
+  {
+	  e.printStackTrace();
+  }
+}
+
+
+/**
+ * @author smykjn
+ * @date 19th-April-2017
+ * @Objective This method validates if user has access to Add/Change allocations button.
+ * @return boolean <br> returns true if Add/Change Allocations button is displayed else returns false
+ */
+public boolean validateAddAllocationBtnIfUserHasAccess()
+{
+	Set<String> txn_code = new HashSet<String>();
+	boolean isCodeExist = false;
+	boolean isChangeBtnDisplayed = false;
+	try{
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("checkESCCPAtxnCode_1")[0],Stock.getTestQuery("checkESCCPAtxnCode_1")[1],
+				"K_"+Stock.GetParameterValue("username"));
+		while(queryResultSet.next())
+		{
+			txn_code.add(queryResultSet.getString("TXN_CODE"));
+			System.out.println("code is:"+txn_code);
+		}
+		if(txn_code.contains("ESCCPA")&&txn_code.contains("ESCPAL"))
+			isCodeExist = true;
+		else
+			isCodeExist = false;
+		if(isCodeExist){
+			Reporter.logEvent(Status.PASS, "Make sure user has assigned with 'ESCCPA' and 'ESCPAL' txn codes.","" 
+					+"user is assigned with codes:"+txn_code, false);
+			Web.getDriver().switchTo().defaultContent();
+			//navigateToEmployeeOverViewPage();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(Web.getDriver().findElement(By.xpath(investments)));
+			Web.waitForElement(allocMoreButton);
+			if(allocMoreButton.isDisplayed())
+				Reporter.logEvent(Status.PASS, "Validate more button is displayed.", "more button is displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate more button is displayed.", "more button is not displayed.", true);
+			Web.clickOnElement(allocMoreButton);
+			Web.waitForElement(allocModalWindowFrame);
+			Web.getDriver().switchTo().frame(allocModalWindowFrame);
+			Web.waitForElement(changeAllocBtn);
+			if(changeAllocBtn.isDisplayed()){
+				Reporter.logEvent(Status.PASS, "Validate Add/Change Allocations button is displayed.","" 
+						+"Add/Change Allocations button is displayed.", false);
+				isChangeBtnDisplayed = true;
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Validate Add/Change Allocations button is displayed.","" 
+						+"Add/Change Allocations button is not displayed.", true);
+				isChangeBtnDisplayed = false;
+			}
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "Make sure user has assigned with 'ESCCPA' and 'ESCPAL' txn codes.", 
+					"user is assigned with codes:"+txn_code, false);
+		}
+		
+		return isChangeBtnDisplayed;
+		
+}
+  catch(Exception e)
+  {
+	  e.printStackTrace();
+	  return isChangeBtnDisplayed;
+  }
+}
+
+
+/**
+ * @author smykjn
+ * @date 19th-April-2017
+ * @Objective This method add a new allocation and validates the elements(save,cancel button,input percentage fields)
+ * @return void
+ */
+public void addAllocation()
+{
+	String invsetOptionAfterSave = null;
+	String percentageAfterSave = null;
+	try{
+		Web.clickOnElement(changeAllocBtn);
+		Web.waitForElement(changeAllocPage);
+		if(changeAllocPage.isDisplayed())
+			Reporter.logEvent(Status.PASS, "In the allocations modal window click on 'Add/Change Allocations' button"
+					+ " and validate if 'Enter New allocations for future contributions page is displayed.'", ""
+							+"'Enter New allocations for future contributions page is displayed page' is displayed.", false);
+		else
+			Reporter.logEvent(Status.PASS, "In the allocations modal window click on 'Add/Change Allocations' button"
+					+ " and validate if 'Enter New allocations for future contributions page is displayed.'", ""
+							+"'Enter New allocations for future contributions page is displayed page' is not displayed.", true);
+		if(Web.isWebElementsDisplayed(listOfInPercentageField, true)&&
+				save.isDisplayed()&&cancel.isDisplayed()&&totalPercent.isDisplayed())	
+			Reporter.logEvent(Status.PASS,"Validate save,cancel,total % and input fields to enter allocation% is displayed.","" 
+					+"All mentioned elelemts are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate save,cancel and input fields to enter allocation% is displayed.","" 
+					+"All mentioned or few of the elelemts are not displayed.", true);
+		List<WebElement> columns = allocationsRows.get(0).findElements(By.tagName("font"));
+		System.out.println(columns.size());
+		String percentBeforeSave = "100";
+		String investOptionBeforeSave = columns.get(0).getText().trim();
+		System.out.println("Before save investment option:"+investOptionBeforeSave);
+		Web.setTextToTextBox(columns.get(3).findElement(By.tagName("input")), percentBeforeSave);
+		Web.clickOnElement(save);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+		Web.waitForElement(allocMoreButton);
+		List<WebElement> columnsAfterSave = maxAllocationsRow.get(0).findElements(By.tagName("td"));
+		invsetOptionAfterSave  = columnsAfterSave.get(0).getText().trim();
+		percentageAfterSave = columnsAfterSave.get(4).findElement(By.tagName("span")).getText().replace("%","").trim();
+		System.out.println("After save investment:"+invsetOptionAfterSave+" and after save %:"+percentageAfterSave);
+		if(invsetOptionAfterSave.contains(investOptionBeforeSave)&&percentageAfterSave.equals(percentBeforeSave+".00"))
+			Reporter.logEvent(Status.PASS, "Add an investment '"+investOptionBeforeSave+"' with 100% allocation and save it.close the modal window and validate"
+					+ " allocation is updated on account detail page.", "Allocation % is updated with investment option"+invsetOptionAfterSave, false);
+		else
+			Reporter.logEvent(Status.FAIL, "Add an investment '"+investOptionBeforeSave+"' with 100% allocation and save it.close the modal window and validate"
+					+ " allocation is updated on account detail page.", "Allocation % is not updated with investment option"+invsetOptionAfterSave, true);
+		Web.getDriver().switchTo().defaultContent();
+	}
+  catch(Exception e)
+  {
+	  e.printStackTrace();
+  }
+}
+
+/**
+ * @author smykjn
+ * @date 19th-April-2017
+ * @Objective This method deletes ESCCPA txn_code if user is assigned with same code.
+ * @return void
+ */
+public void deleteAdd_ChangeAllocationTxn_Code() throws SQLException
+{
+	uscsIDReset = new ArrayList<String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("checkESCCPAtxnCode")[0], Stock.getTestQuery("checkESCCPATxnCode")[1],"" 
+			+"K_"+Stock.GetParameterValue("username"));
+	if(DB.getRecordSetCount(queryResultSet)>0)
+	{
+		while(queryResultSet.next())
+		{
+			uscsIDReset.add(queryResultSet.getString("USCS_ID"));
+		}
+		System.out.println("User class for ESCCPA txn_code are:"+uscsIDReset);
+		for(int i=0;i<uscsIDReset.size();i++){
+			queryResultSet = DB.executeQuery(Stock.getTestQuery("DeleteESCCPAtxnCode")[0], Stock.getTestQuery("DeleteESCCPAtxnCode")[1],"" 
+					+"K_"+Stock.GetParameterValue("username"));
+		}
+	}
+	else
+	{
+		System.out.println("User is not assigned with ESCCPA txn_code so no need to delete from DB.");
+	}
+}
+
+/**
+ * @author smykjn
+ * @Date 20th-April-2017
+ * @Objective This method validates Add/Change Allocations button is not displayed if ESCCPA txn_code is not assigned to user
+ */
+public void validateAdd_ChangeAllocIfNoAccess()
+{
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	Web.clickOnElement(Web.getDriver().findElement(By.xpath(investments)));
+	Web.waitForElement(allocMoreButton);
+	if(allocMoreButton.isDisplayed())
+		Reporter.logEvent(Status.PASS, "Validate more button is displayed is user is not having access to ESCCPA txn_code.", "more button is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Validate more button is displayed is user is not having access to ESCCPA txn_code", "more button is not displayed.", true);
+	Web.clickOnElement(allocMoreButton);
+	Web.waitForElement(allocModalWindowFrame);
+	Web.getDriver().switchTo().frame(allocModalWindowFrame);
+	Web.waitForElement(changeAllocBtn);
+	if(CommonLib.isElementExistByXpath("//input[@name='CHG_ALLOC_BTN']")){
+		Reporter.logEvent(Status.FAIL, "Validate Add/Change Allocations button is displayed.","" 
+				+"Add/Change Allocations button is displayed.", true);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+	}
+	else{
+		Reporter.logEvent(Status.PASS, "Validate Add/Change Allocations button is displayed.","" 
+				+"Add/Change Allocations button is not displayed.", false);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+	}
+	Web.getDriver().switchTo().defaultContent();
+}
+
+
+/**
+ * @author smykjn
+ * This method inserts back the ESCCPA txn_code for user class it was assigned before deleting.
+ */
+public void insertESCCPATxnCode() throws SQLException,Exception
+{
+	
+	for(int i=0;i<uscsIDReset.size();i++){
+		Thread.sleep(2000);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("insertESCCPAtxnCode")[0],
+				Stock.getTestQuery("insertESCCPAtxnCode")[1],uscsIDReset.get(i));
+	}
+	uscsIDReset.clear();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],
+			Stock.getTestQuery("CheckPSCPAETxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+	
+	while(queryResultSet.next())
+	{
+		uscsIDReset.add(queryResultSet.getString("TXN_CODE"));
+	}
+		
+	if(DB.getRecordSetCount(queryResultSet)>0&&uscsIDReset.contains("ESCCPA"))
+	{
+		Reporter.logEvent(Status.PASS, "Execute query to insert back ESCCPA txn_code:'"+Stock.getTestQuery("insertESCCPAtxnCode")[1]+"'.",""
+				+"Record is inserted.", false);
+	}
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Execute query to insert back ESCCPA txn_code:'"+Stock.getTestQuery("insertESCCPAtxnCode")[1]+"'.",""
+				+"Record is not inserted.please Check once manually in DB.", false);
+	}
+	
+}
+
+/**
+ * @author smykjn
+ * @Date 20th-April-2017
+ * @Objective This method navigates to Statements tab
+ * @return boolean, true if content inside statement tab is displayed.false if there is no content available
+ */
+public boolean navigateToStatementTab() throws Exception
+{
+	boolean isContentDisplayed = false;
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(partStatementTab.findElement(By.xpath("./..")).getAttribute("class").contains("active"))
+	{
+		Web.getDriver().switchTo().defaultContent();
+	}
+	else
+	{
+		Web.waitForElement(partStatementTab);
+		Thread.sleep(2000);
+		Web.clickOnElement(partStatementTab);
+		Web.waitForPageToLoad(Web.getDriver());
+	}
+	if(statementContent.isDisplayed()){
+		Reporter.logEvent(Status.PASS, "Navigate to statement tab on overview page.", "Statement page is displayed.", false);
+		Web.getDriver().switchTo().defaultContent();
+		isContentDisplayed = true;}
+	else{
+		Reporter.logEvent(Status.FAIL, "Navigate to statement tab on overview page.", "Statement page is not displayed.", true);
+		isContentDisplayed = false;}
+	return isContentDisplayed;
+}
+
+
+/**
+ * @author smykjn
+ * @Date 20th-April-2017
+ * @Objective This method validates the statement tab column header names,PDF must open in different Tab,Sorting of 
+ * records by Date descending order
+ * @return void
+ */
+public void validateStatementTabHeaderAndDateSorting() 
+{
+	List<String> expHeader = Arrays.asList(Stock.GetParameterValue("ExpectedHeader").split(","));
+	int windowSize = 0;
+	boolean isHeaderExist = false;
+	String currentWindow = null;
+	Set<String> childWindows;
+	try{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		for(WebElement header : stmntHeader)
+		{
+			if(expHeader.contains(header.getText().trim())){
+				isHeaderExist = true;}
+			else{
+				isHeaderExist = false;break;}
+		}
+		if(isHeaderExist)
+			Reporter.logEvent(Status.PASS, "Validate Columns under Statement tab as following:"+expHeader,""+
+					"Expected Columns are found.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate Columns under Statement tab as following:"+expHeader, ""+
+					"Expected Columns are not found.", true);
+		currentWindow = Web.getDriver().getWindowHandle();
+		Web.clickOnElement(statementContent.findElements(By.tagName("a")).get(0));
+		windowSize = Web.getDriver().getWindowHandles().size(); 
+		childWindows = Web.getDriver().getWindowHandles();
+		System.out.println("Window size is:"+windowSize);
+		for(String chlWindow : childWindows)
+		{
+			if(!chlWindow.equals(currentWindow))
+			{
+				Web.getDriver().switchTo().window(chlWindow);
+				Web.getDriver().close();
+			}
+		}
+		Web.getDriver().switchTo().window(currentWindow);
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(windowSize==2)
+			Reporter.logEvent(Status.PASS,"Click on one of the PDF and validate PDF must be displayed in different Tab.",""
+					+"PDF is opened in different tab/Window.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on one of the PDF and validate PDF must be displayed in different Tab.",""
+					+"PDF is not opened in different tab/window.", true);
+		this.validateSortingOrderOfDateOfStmt();
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+}
+
+
+
+/**
+ * @author smykjn
+ * @Date 20th-April-2017
+ * @Objective This method validates filter functionality of Statement 'SHOW' drop down
+ * @return void
+ */
+public void validateStatementFilter() 
+{
+	List<WebElement> stmtFilterOptions = new ArrayList<WebElement>();
+	List<String> stmtFilterOptionsStr = new ArrayList<String>();
+	boolean isStatementDisplayed = false;
+	boolean isStatementDescDisplayed = false;
+	try{
+		if(stmtDropDown.isDisplayed())
+		{
+			Select stmtDrpdwn = new Select(stmtDropDown);
+			stmtFilterOptions = stmtDrpdwn.getOptions();
+			for(WebElement option : stmtFilterOptions)
+			{
+				stmtFilterOptionsStr.add(option.getText());
+			}
+			for(int i=0;i<stmtFilterOptions.size();i++)
+			{
+				String option = stmtFilterOptions.get(i).getText();
+				stmtDrpdwn.selectByVisibleText(option);
+				CommonLib.waitForProgressBar();
+				if(option.equals("All"))
+				{
+					for(WebElement category : stmtCategory)
+					{
+						
+						if(stmtFilterOptionsStr.contains(category.getText().trim())){
+							isStatementDisplayed = true;}
+						else{isStatementDisplayed=false;break;}
+					}
+				}
+				else
+				{
+					for(WebElement category : stmtCategory)
+					{
+						if(category.getText().trim().equals(option)){
+							isStatementDisplayed = true;}
+						else{isStatementDisplayed=false;break;}
+						if(category.getText().trim().equals("Statement"))
+						{
+							for(WebElement desc : stmtDescription)
+							{
+								if(desc.getText().contains("your Statement ending")&&desc.getText().contains("is ready"))
+									isStatementDescDisplayed = true;
+								else
+									isStatementDescDisplayed = false;
+							}
+							if(isStatementDescDisplayed)
+								Reporter.logEvent(Status.PASS, "Validate the Statement description 'Your Statement ending '(mm/dd/yyyy)' is ready' for Statement type category.",""
+										+"Expected Description for Statement type category is displayed.", false);
+							else
+								Reporter.logEvent(Status.FAIL, "Validate the Statement description 'Your Statement ending '(mm/dd/yyyy)' is ready' for Statement type category.",""
+										+"Expected Description for Statement type category is not displayed.", true);
+						}
+					}
+				}
+				if(isStatementDisplayed)
+					Reporter.logEvent(Status.PASS, "Select '"+option+"' category from dropdown and check all records"
+							+ " must be filtered with '"+option+"' category.", "All records are filtered with '"+option+"' category.", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Select '"+option+"' category from dropdown and check all records"
+							+ " must be filtered with '"+option+"' category.", "All records are not filtered with '"+option+"' category.", true);
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Validate Filter dropdown is displayed.", "Filter drop down is not displayed.", true);
+		}
+		Web.getDriver().switchTo().defaultContent();
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred.",e.getMessage(), true);
+	}
+}
+
+
+/**
+ * @author smykjn
+ * @Date 20th-April-2017
+ * @Objective This method validates the Date of statement must be in Chronological descending order
+ * @return void
+ */
+public void validateSortingOrderOfDateOfStmt() 
+{
+	List<String> dateStringList = new ArrayList<String>();
+	List<Date> dateList = new ArrayList<Date>();
+	try{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		for(WebElement dateString : stmtDateStringList)
+		{
+			dateStringList.add(dateString.getText().trim());
+		}
+		System.out.println("before string to date conversion:"+dateStringList);
+		for(String str : dateStringList)
+		{
+			dateList.add(simpleDateFormat.parse(str));
+		}
+		List<Date> dateListOriginalOrder = new ArrayList<Date>(dateList);
+		System.out.println("After string to date conversion:"+dateList);
+		System.out.println("Copy List to another list:"+dateListOriginalOrder);
+		Collections.sort(dateList);
+		System.out.println("After sorting:"+dateList);
+		Collections.reverse(dateList);
+		System.out.println("After reverse sorting:"+dateList);
+		if(dateListOriginalOrder.equals(dateList))
+			Reporter.logEvent(Status.PASS, "Validate statements are sorted in chronological descending order by date.",""
+					+"Statements are sorted by Date in chronological descending order.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate statements are sorted in chronological descending order by date.",""
+					+"Statements are not found to be sorted by Date in chronological descending order.", true);
+		Calendar present = Calendar.getInstance();
+	    present.setTime(dateList.get(0));
+	    Calendar past = Calendar.getInstance();
+	    past.setTime(dateList.get(dateList.size()-1));
+
+	    int years = 0;
+	    while (past.before(present)) {
+	        past.add(Calendar.YEAR, 1);
+	        if (past.before(present)) {
+	            years++;
+	        }
+	    } 
+	    System.out.println("Number of years:"+years);
+	    if(years>=0&&years<=5)
+	    	Reporter.logEvent(Status.PASS, "Validate only up to 5 years records are diplayed.", "up to 5 years records are displayed.", false);
+	    else
+	    	Reporter.logEvent(Status.FAIL, "Validate only up to 5 years records are diplayed.", "up to 5 years records are not displayed.", true);
+		
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred.",e.getMessage(), true);
+	}
+}
+
+/**
+ * @author smykjn
+ * @Objective This method validates is Enrollment and eligibility section is displayed.
+ * @return boolean
+ * true is displayed,false if not displayed
+ */
+public boolean isEnrollmentEligiDisplayed() throws Exception
+{
+	boolean isdisplayed = false;
+	Web.getDriver().switchTo().defaultContent();
+	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	if(CommonLib.isElementExistByXpath(enrollAndEligSection))
+		isdisplayed = true;
+	else
+		isdisplayed = false;
+	Web.getDriver().switchTo().defaultContent();
+	return isdisplayed;
+}
+
+/**
+ * @author smykjn
+ * @Objective This method validates if following fields are displayed as Employment information on overview page.<br>
+  Fileds are:Union,Insider,Super officer,FT/PT Employee,Job description,Employment type,Employer classification code
+ * @return void
+ */
+public void validateNewEmploymentFileds()
+{
+	boolean isLabelDisplayed = false;
+	List<String> actLabels = new  ArrayList<String>();
+	List<String> expLabels = Arrays.asList(Stock.GetParameterValue("ExpectedLabels").split(","));
+	List<String> expEditWinLabels = Arrays.asList(Stock.GetParameterValue("ExpModalWindowLabels").split(","));
+	try{
+		this.navigateToEmpDetailPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		for(WebElement label : listOfEmpmntInfoLabels){
+			actLabels.add(label.getText().replace(":","").trim());
+		}
+		for(String label_ : expLabels){
+			if(actLabels.contains(label_)){isLabelDisplayed=true;}
+			else{isLabelDisplayed=false;break;}
+		}
+		if(isLabelDisplayed)
+			Reporter.logEvent(Status.PASS, "Validate all the following labels are displayed:"+expLabels,""
+					+"All the expected labels are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate all the following labels are displayed:"+expLabels,""
+					+"All the expected labels are not displayed.", true);
+		System.out.println(actLabels);
+		actLabels.clear();
+		System.out.println("after clear"+actLabels);
+		//Edit section and validate fields not to be displayed
+		Web.clickOnElement(empInfoEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.waitForProgressBar();
+		Web.waitForElement(empInfoEditFrame);
+		Web.getDriver().switchTo().frame(empInfoEditFrame);
+		for(WebElement label : editEmplmentInfoModalWindowLabels)
+		{
+			actLabels.add(label.getText().replace("?","").trim());
+		}
+		System.out.println("Edit Window labels:"+actLabels);
+		isLabelDisplayed=false;
+		for(String label_1 : expEditWinLabels){
+			System.out.println(label_1);
+			if(actLabels.contains(label_1)){isLabelDisplayed=true;}
+			else{isLabelDisplayed=false;break;}
+		}
+		if(isLabelDisplayed)
+			Reporter.logEvent(Status.PASS, "Validate all the following labels are displayed on Update "
+					+ "employment information modal window:"+expEditWinLabels,""
+					+"All the expected labels are not displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate all the following labels are displayed displayed on Update "
+					+ "employment information modal window:"+expEditWinLabels,""
+					+"All/few of the expected labels are not displayed.", true);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(closeEditEmpntInfoWindow);
+		CommonLib.waitForProgressBar();
+		Web.getDriver().switchTo().defaultContent();
+			
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occurred.", e.getMessage(), true);
+	}
+	
+}
+
+
+
+/**
+ * @author smykjn
+ * @Objective this method validate the Tool tip elements(SSN,EMP ID,Participant ID) for recently viewed links on 
+ * mouser hovering event
+ * @Date 26th-April-2017
+ */
+public void recentlyViwedMouseHoverElementsValidation()
+{
+	try{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(recentlyViewedLink);
+		Web.waitForElement(recentlyViewedEmpTable);
+		WebElement tootlTip = recentlyViewedEmployee.get(0).findElement(By.xpath("./preceding-sibling::div"));
+		Actions act = new Actions(Web.getDriver());
+		act.moveToElement(recentlyViewedEmployee.get(0)).build().perform();
+		Thread.sleep(2000);
+		boolean isDisplayed = tootlTip.isDisplayed();
+		String toolTipText = tootlTip.getText();
+		Web.clickOnElement(recentlyViewedLink);
+		System.out.println(toolTipText+" and isToolTipDisplayed:"+isDisplayed);
+		if(isDisplayed && toolTipText.contains("SSN")&&toolTipText.contains("Employee ID")&&toolTipText.contains("Participant ID"))
+			Reporter.logEvent(Status.PASS, "Mouse hover on employee link present under recenlty viewed."
+					+ " SSN,Employee ID,Participant ID must be displayed in tool tip.",""
+							+ "Tool tip is displayed:"+isDisplayed+" details inside tool tip:"+toolTipText, false);
+		else
+			Reporter.logEvent(Status.FAIL, "Mouse hover on employee link present under recenlty viewed."
+				+ " SSN,Employee ID,Participant ID must be displayed in tool tip.",""
+						+ "Tool tip is displayed:"+isDisplayed+" details inside tool tip:"+toolTipText, true);
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+/**
+ * <pre>this method validate Fees section if past 3 months data is displayed.</pre>
+ * @author smykjn
+ * @Date 27th-April-2017
+ * @return boolean 
+ * <pre>Returns true is data is displayed inside fees section else returns false</pre>
+ */
+public boolean validatePastThreeMonthFees()
+{
+	List<String> expFeeHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedHeaders").split(","));
+	boolean isHeaderDisplayed = false;
+	boolean isDataDisplayed = false;
+	try{
+		this.navigateToAccountDetailPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(CommonLib.isElementExistByXpath(fees)){
+			Reporter.logEvent(Status.PASS, "Validate Fees section is displayed under account detail.", "Fees"
+					+ " section is displayed.", false);
+			Web.clickOnElement(Web.getDriver().findElement(By.xpath(fees)));
+			if(CommonLib.isElementExistByXpath(feesDataForThreeMonth))
+			{
+				for(WebElement feeHeader : feesHeader){
+					if(expFeeHeaders.contains(feeHeader.getText().trim())){isHeaderDisplayed=true;}
+					else{isHeaderDisplayed=false;break;}
+				}
+				if(isHeaderDisplayed)
+					Reporter.logEvent(Status.PASS, "Validate following information is displayed"
+							+ " in fees section if past 3 months data exists:"+expFeeHeaders, "Mentioned fees details are displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Validate following information is displayed"
+							+ " in fees section if past 3 months data exists:"+expFeeHeaders, "Mentioned fees information or"
+									+ " few of the information are not displayed.", true);
+				isDataDisplayed= true;
+			}else{
+				Reporter.logEvent(Status.FAIL, "Validate past 3 months data displayed under Fees section.", "there is"
+						+ " no fees data found within past three months.", true);
+				isDataDisplayed = false;
+			}
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Validate Fees section is displayed under account detail.", "Fees"
+					+ " section is not displayed.", true);
+		}
+		return isDataDisplayed;
+		
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+		return isDataDisplayed;
+	}
+}
+
+
+/**
+ * <pre>this method validate Max number of fees records over past three month,<br>that should be 5 fees records over past 3 month.</pre>
+ * @author smykjn
+ * @Date 27th-April-2017
+ * @return void
+ */
+public void validateMaxNumberOfFeesRecords()
+{
+	try{
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getPastThreeMonthFeesCount")[0],
+				Stock.getTestQuery("getPastThreeMonthFeesCount")[1],Stock.GetParameterValue("SSN"),""+
+				"K_"+Stock.GetParameterValue("username"));
+		int count = DB.getRecordSetCount(queryResultSet);
+		if(count<=5&&count>0){
+			if(count==feesRecords.size())
+				Reporter.logEvent(Status.PASS, "Validate only up to 5 fees over the past 3 month is displayed.",""
+						+"Section shows up to 5 fees over the past 3 months.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate only up to 5 fees over the past 3 month is displayed.",""
+						+"Section doesn't show up to 5 fees over the past 3 months.", true);
+		}else{
+			if(feesRecords.size()==5)
+				Reporter.logEvent(Status.PASS, "Validate only up to 5 fees over the past 3 month is displayed.",""
+						+"Section shows up to 5 fees over the past 3 months.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate only up to 5 fees over the past 3 month is displayed.",""
+						+"Section doesn't show up to 5 fees over the past 3 months.", true);
+		}
+		
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method validates fees modal window columns header,Date drop down and submit button on fees modal window.</pre>
+ * @author smykjn
+ * @Date 27th-April-2017
+ * @return boolean<br>
+ * <pre>returns true if data is displayed inside fees modal window else false</pre>
+ */
+public boolean validateFeesModalWindow()
+{
+	List<String> expFeesModalWinHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedModalWinHeader").split(","));
+	boolean isHeaderDisplayed= false;
+	try{
+		if(feesRecords.size()>=1)
+		{
+			if(feeMoreButton.isDisplayed()){
+				Web.clickOnElement(feeMoreButton);
+				Web.waitForElement(feesModalFrame);
+				Web.getDriver().switchTo().frame(feesModalFrame);
+				Web.waitForElement(submit);
+				for(WebElement header : FeesModalWinHeader)
+				{
+					if(expFeesModalWinHeaders.contains(header.getText().trim()))
+						{isHeaderDisplayed=true;}
+					else{isHeaderDisplayed=false;break;}
+				}
+				if(isHeaderDisplayed)
+					Reporter.logEvent(Status.PASS, "Validate more button is displayed."
+							+ " and if dislayed click on it and validate following column header"+expFeesModalWinHeaders,""
+							+"More button is displayed and expected column headers are displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Validate more button is displayed."
+							+ " and if dislayed click on it and validate following column header"+expFeesModalWinHeaders,""
+							+"More button is displayed and expected column headers are not displayed.", true);
+				if(Web.isWebElementsDisplayed(to_date, false)&&Web.isWebElementsDisplayed(from_date, false)&&
+						submit.isDisplayed())
+					Reporter.logEvent(Status.PASS, "Validtae From and to date drop down and submit button is displayed.",""
+							+"From and to date drop down and submit button is displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Validtae From and to date drop down and submit button is displayed.",""
+						+"Either From and to date drop down or submit button is not displayed.", true);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Validate more button is displayed.", "More button is not displayed.", true);
+				isHeaderDisplayed=false;
+			}
+			
+		}
+		return isHeaderDisplayed;
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+		return isHeaderDisplayed;
+	}
+}
+
+
+/**
+ * <pre>This method validates fees records are updated based on selected date range.</pre>
+ * @author smykjn
+ * @Date 27th-April-2017
+ * @return void
+ */
+public void updateDateRengeAndValidate()
+{
+	List<String> dateString =  new ArrayList<String>();
+	List<Date> dateList = new ArrayList<Date>();
+	try{
+		LocalDate localDate = LocalDate.now();
+		//set month
+		Select sel1 = new Select(from_date.get(0));
+		sel1.selectByIndex(localDate.getMonthValue()-1);
+		//set year
+		Select sel2 = new Select(from_date.get(2));
+		int year = localDate.getYear() - 1;
+		sel2.selectByVisibleText(Integer.toString(year));
+		Web.clickOnElement(submit);
+		Web.waitForPageToLoad(Web.getDriver());
+		for(WebElement date_String :listEffcDate)
+		{
+			dateString.add(date_String.getText().trim());
+		}
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		for(String str : dateString)
+		{
+			dateList.add(simpleDateFormat.parse(str));
+		}
+		Collections.sort(dateList);
+		Collections.reverse(dateList);
+		Calendar present = Calendar.getInstance();
+	    present.setTime(dateList.get(0));
+	    Calendar past = Calendar.getInstance();
+	    past.setTime(dateList.get(dateList.size()-1));
+
+	    int years = 0;
+	    while (past.before(present)) {
+	        past.add(Calendar.YEAR, 1);
+	        if (past.before(present)) {
+	            years++;
+	        }
+	    } 
+	    System.out.println("year difference:"+years);
+	    if(years<=1||years==0)
+	    	Reporter.logEvent(Status.PASS, "Change the date to one year back and see all records are within selected "
+	    			+ "date range.", "Records are filtered within selected Date range.", false);
+	    else
+	    	Reporter.logEvent(Status.FAIL, "Change the date to one year range back and see all records are within selected "
+	    			+ "date range.", "Records are not filtered within selected Date range.", false);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(closeFeeModalWindow);
+		Thread.sleep(2000);
+	}catch(Exception e){
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(closeFeeModalWindow);
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+/**
+ * <pre>This method validates vesting Title should be link and once clicked,it should open a modal window.</pre>
+ * @author smykjn
+ * @Date 28th-April-2017
+ * @return void
+ */
+public void validateVestingSection_1()
+{
+	try{
+		this.navigateToAccountDetailPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(vestingBoxWithData.isDisplayed()&&
+				vestingBoxWithData.findElement(By.xpath(".//h1/a")).getText().equals("Vesting"))
+			Reporter.logEvent(Status.PASS, "Navigate to Account detail page and check Vesting box is displayed"
+					+ " with title 'Vesting'.", "Vesting box is displayed with title 'vesting'.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Navigate to Account detail page and check Vesting box is displayed"
+					+ " with title 'Vesting'.", "Vesting box is not displayed or title 'vesting' is not displayed.", true);
+		WebElement vestingLink = vestingBoxWithData.findElement(By.xpath(".//h1/a"));
+		String tagName  = vestingLink.getTagName();
+		Web.clickOnElement(vestingLink);
+		Web.waitForElement(vestingDialog);
+		if(tagName.equals("a")&&vestingDialog.isDisplayed())
+			Reporter.logEvent(Status.PASS, "Validate Title 'Vesting' is link when data is found for vesting and "
+					+ "once the link is clicked,Vesting detail information page(Modal window) is displayed.", "title 'Vesting' "
+							+ "is a link and when clicked,Vesting information detail page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate Title 'Vesting' is link when data is found for vesting and "
+					+ "once the link is clicked,Vesting detail information page(Modal window) is displayed.", "title 'Vesting' "
+							+ "is not a link or when clicked,Vesting information detail page is not displayed.", true);
+		Web.clickOnElement(vestingModalCloseLink);
+		CommonLib.waitForProgressBar();
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+/**
+ * <pre>This method validates vesting section fields that is displayed to the user.
+ * Ex: Computation period,Vested balance,Vesting by money source</pre>
+ * @author smykjn
+ * @Date 28th-April-2017
+ * @return void
+ */
+public void validateVestingSection_2()
+{
+	String computationPeriod = computationPrd.findElement(By.xpath("./following-sibling::td/span")).getText();
+	String vestedBalance_ = vestedBalance.findElement(By.xpath("./../following-sibling::td/span")).getText();
+	try{
+		if(computationPrd.isDisplayed()&&vestedBalance.isDisplayed()&&vestedByMoneySource.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Check if following information is displayed under vesting section:"+
+					"Computation period,Vested balance,Vesting by money source.","Specified information is displayed:"
+							+ "Computation period:"+computationPeriod+","+"Vested balance:"+vestedBalance_,false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check if following information is displayed under vesting section:"+
+					"Computation period,Vested balance,Vesting by money source.","Specified information is not displayed.",true);
+		
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+
+/**
+ * <pre>This method validates vesting modal window section elements.</pre>
+ * @author smykjn
+ * @Date 28th-April-2017
+ * @return void
+ */
+public void validateVestingModalWindowSection_1()
+{
+	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedHeaders").split(","));
+	boolean isHeaderDisplayed = false;
+	try{
+		Web.clickOnElement(vestingBoxWithData.findElement(By.xpath(".//h1/a")));
+		Web.waitForElement(clickHereLink);
+		for(WebElement header : vestingModalHeaders){
+			System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
+			if(expHeaders.contains(header.getText().replaceAll("\\s+", " ").trim()))
+				{isHeaderDisplayed = true;}
+			else
+				{isHeaderDisplayed = false;break;}
+		}
+		if(isHeaderDisplayed)
+			Reporter.logEvent(Status.PASS, "Validate header columns on vesting modal info window  as following:"+expHeaders,""
+					+"All column headers are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate header columns on vesting modal info window  as following:"+expHeaders,""
+					+"All column headers or few headers are not displayed.", true);
+		if(clickHereLink.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Check click here link is displayed.", "Click here link is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check click here link is displayed.", "Click here link is not displayed.", true);
+		
+		
+		//Step8 has to be validated
+		
+		
+		
+		
+		
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method validates 
+ * 1.if Click here link is clicked then it should display Account Balance by money sources page.
+ * 2.Validates Period begin dates are link.</pre>
+ * @author smykjn
+ * @Date 28th-April-2017
+ * @return void
+ */
+public void validateVestingModalWindowSection_2()
+{
+	boolean isLink = false;
+	try{
+		Web.clickOnElement(clickHereLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(accntBalFrame);
+		Web.getDriver().switchTo().frame(accntBalFrame);
+		Web.waitForElement(accntBalTitle);
+		if(accntBalTitle.getText().contains("Account Balance by Money Sources"))
+			Reporter.logEvent(Status.PASS,"Click on 'Click here' link and check 'Account Balance by Money Sources' page is displayed.",""
+					+ "Account Balance by Money Sources page is displayed." , false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on 'Click here' link and check 'Account Balance by Money Sources' page is displayed.",""
+					+ "Account Balance by Money Sources page is not displayed." , true);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(accntBalCloseLink);
+		Web.waitForElement(clickHereLink);	
+		if(periodBeginDateLinks.size()>0){
+		for(WebElement periodBeginLink : periodBeginDateLinks)
+		{
+			if(periodBeginLink.getTagName().equals("a")){
+				isLink = true;}
+			else{isLink=false;break;}
+		}
+		if(isLink)
+			Reporter.logEvent(Status.PASS,"Validate column 'Period begin date' is having dates as Links.","Period begin dates are Links.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate column 'Period begin date' is having dates as Links.","Period begin dates are not found to be Links.", true);
+		
+		Web.clickOnElement(periodBeginDateLinks.get(0));
+		Web.waitForElement(vestingDetailPage);
+		if(vestingDetailPage.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Click on Period begin date link and validate vesting detail page is displayed.",""+
+					"Vesting detail page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Period begin date link and validate vesting detail page is displayed.",""+
+					"Vesting detail page is not displayed.", true);
+		Web.clickOnElement(vestingDetailClose);
+		Web.waitForElement(clickHereLink);
+		Web.clickOnElement(vestingModalCloseLink);
+		CommonLib.waitForProgressBar();
+		Web.getDriver().switchTo().defaultContent();
+		}else{
+			Web.clickOnElement(vestingModalCloseLink);
+			CommonLib.waitForProgressBar();
+			Web.getDriver().switchTo().defaultContent();
+			Reporter.logEvent(Status.WARNING,"Validate column 'Period begin date' is having dates as Links.","Date links are not displayed.Please get participant"
+				+ " with required data.", true);}
+		//Step11 has to be validated
+		
+		
+		
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+
+/**
+ * <pre>This method searches participant in DB who is having loans and search him on PSC search page.</pre>
+ * @author smykjn
+ * @Date 2nd-May-2017
+ * @return String
+ * <pre>Returns SSN of Participant with Loan details</pre>
+ */
+public String searchPPTWithLoan() throws SQLException
+{
+		queryResultSet = this.selectEmployeesForUser(Stock.getTestQuery("getPPTWithLoans"),""
+				+Stock.GetParameterValue("username"));
+		try{
+		ssn = this.selectEmployeeFromResultSet(queryResultSet);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return ssn;
+	
+}
+
+/**
+ * <pre>This method validates basic elements of Loan section.
+ * Like 1.Money out title and columns 'Active Loans,Max Loans allowed,Min amount,Max amount'</pre>
+ * @author smykjn
+ * @Date 2nd-May-2017
+ * @return void
+ */
+public void validateLoanSection_1()
+{
+	List<String> expElements = Arrays.asList(Stock.GetParameterValue("ExpectedElements"));
+	try{
+		this.navigateToAccountDetailPage();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		if(moneyOutSection.findElement(By.tagName("h1")).getText().trim().equalsIgnoreCase("Money out"))
+			Reporter.logEvent(Status.PASS,"Validate that title Money out is displayed.", "Money out title is"
+					+ " displayed.",false);
+		else
+			Reporter.logEvent(Status.PASS,"Validate that title Money out is displayed.", "Money out title is"
+					+ " displayed.",true);
+		boolean isdisplayed = CommonLib.isAllHeadersDisplayed(loansHeaderElements, expElements);
+		if(isdisplayed)
+			Reporter.logEvent(Status.PASS, "Validate following columns are displayed under loans section:"+
+					""+expElements, "All expected columns are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate following columns are displayed under loans section:"+
+					""+expElements, "All expected columns or few columns are not displayed.", true);
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method validates if loan data is displayed.
+ * Like Effective date,Loan Amount,Status,Repay Amount,Principal Balance,Details</pre>
+ * @author smykjn
+ * @Date 2nd-May-2017
+ * @return void
+ */
+public void validateLoanSection_2()
+{
+	try{
+		
+		
+	}catch(Exception e){
+		e.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method fetches the loan data for a participant</pre>
+ * @author smykjn
+ * @Date 2nd-May-2017
+ * @return map
+ */
+public void getLoanDatFromDB()
+{
+	Map<String,String> loanData = new LinkedHashMap<String,String>();
+	try{
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getLoanDetail")[0],""+
+				Stock.getTestQuery("getLoanDetail")[1],Stock.GetParameterValue("username"));
+		while(queryResultSet.next())
+		{
+			loanData.put("Effective Date", queryResultSet.getString("EFFDATE"));
+		}
+		
+	}catch(Exception e1){
+		e1.getStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e1.getMessage(), true);
+	}
+}
 
 
 
@@ -3294,10 +5452,6 @@ public boolean editEnrollmentAndEligibilityAndSave()
 
 
 }
-
-
-
-
 
 	
 	

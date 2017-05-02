@@ -85,7 +85,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement homeLink;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/a")
 	private WebElement planMenu;
-	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[3]/a")
+	//@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[3]/a")
+	@FindBy(xpath="//*[@id='newMenu']//a[.='Plan']//following-sibling::ul//a[.='Administration...']")
 	private WebElement planAdministration;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[3]/ul/li[1]/a")
 	private WebElement planAdministrationToDo;
@@ -197,6 +198,15 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
 	 *  </pre>
@@ -208,6 +218,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 		if (fieldName.trim().equalsIgnoreCase("MY PROFILE")) {
 			return this.myProfileLink;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Plan Menu")) {
+			return this.planMenu;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Plan Administration")) {
+			return this.planAdministration;
 		}
 		if (fieldName.trim().equalsIgnoreCase("JUMP_PAGE_NXTGEN_LINK")) {
 			return this.urlJumpPage;

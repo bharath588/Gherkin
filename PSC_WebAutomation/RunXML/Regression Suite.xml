@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="3"> <!-- parallel="classes" thread-count="3"> -->
+<suite name="testsuite"> <!-- parallel="classes" thread-count="3"> -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -120,7 +120,7 @@
 			</class> -->
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<!--  <include name="TC001_Search_Employee_For_Valid_SSN">
+					 <!-- <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -210,7 +210,7 @@
 					<include name="TC021_Salary_View_And_Update">
 						<parameter name="ManualTCName" value="Salary_View_And_Update" />
 					</include> 
-					 <include name="TC022_Paycheck_contribution_View">
+					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="Paycheck_contribution_View" />
 					</include> 
 					<include name="TC023_EnrolmmentAndEligibility">
@@ -232,9 +232,42 @@
 					</include>
 					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName" value="Recently_Viewed_Switch_Participant_Reg" />
-					</include>-->
+					</include>
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName" value="Edit_Enrollment_And_Eligibility" />
+					</include>
+					<include name="TC30_Account_balance_Tab">
+						<parameter name="ManualTCName" value="Validate_Account_balance_Tab" />
+					</include>
+					<include name="TC31_Disable_PAE_then_renable_PAE">
+						<parameter name="ManualTCName" value="Disable_PAE_then_renable_PAE" />
+					</include>
+					<include name="TC32_Supress_Menu_Items_for_TRS_Flex">
+						<parameter name="ManualTCName" value="Supress_Menu_Items_for_TRS_Flex" />
+					</include>
+					<include name="TC33_Suppress_Account_Detail_elements_TRS_NonTRS">
+						<parameter name="ManualTCName" value="Suppress_Account_Detail_elements_TRS_NonTRS" />
+					</include>
+					<include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
+						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Allocations_Reg" />
+					</include>
+					<include name="TC35_SIT_PSC_Statements_Tab">
+						<parameter name="ManualTCName" value="SIT_PSC_Statements_Tab" />
+					</include>
+					<include name="TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
+						<parameter name="ManualTCName" value="SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed" />
+					</include>
+					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
+						<parameter name="ManualTCName" value="SIT_PSC_Recentlyviewed_MouseOver" />
+					</include>
+					<include name="TC38_SIT_PSC_Accountdetail_Fees_Reg">
+						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Fees_Reg" />
+					</include> -->
+					<include name="TC39_SIT_PSC_Accountdetail_Vesting_Reg">
+						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Vesting_Reg" />
+					</include> 
+					<include name="TC40_SIT_PSC_Accountdetail_Loans_Reg">
+						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Loans_Reg" />
 					</include>
 				</methods>
 			</class>

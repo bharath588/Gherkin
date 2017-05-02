@@ -23,6 +23,7 @@ import org.testng.Assert;
 import com.aventstack.extentreports.Status;
 import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder;
 
+import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
@@ -43,7 +44,9 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	private List<WebElement> jumpPageText;
 	@FindBy(xpath="//*[@id='jumpPageList']/option")
 	private WebElement jumpPageList;
-	
+	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
+	private WebElement urlJumpPage;
+	@FindBy(css="div[id='greeting'] span[class='label']") private WebElement weGreeting;
 	private LoadableComponent<?> parent;
 	private boolean ifUserOrAccntVerificationMandate = false; 
 	private Method invokeMethod;
@@ -114,6 +117,16 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * This method verifies the UI of Jump Page.(JumpPage text,Search box,Site links,Jump Page header)
 	 */
@@ -169,9 +182,26 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 			}
 		}
 		
-	}
 	
+
+
+/**
+ * This method clicks on the Jump page URL
+ */
+public void ClickOnJumpPageURL() throws Exception
+{
+	Web.getDriver().switchTo().defaultContent();
+	Web.waitForElement(urlJumpPage);
+	Web.clickOnElement(urlJumpPage);
+	Web.waitForPageToLoad(Web.getDriver());
+	Web.waitForElement(weGreeting);
+	if(weGreeting.isDisplayed())
+		Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
+	else
+		Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is not successfull",false);
+}
 	
+}	
 	
 	
 	

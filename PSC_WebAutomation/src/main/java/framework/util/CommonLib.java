@@ -123,14 +123,13 @@ public class CommonLib {
 	public static ResultSet getParticipantInfoFromDataBase(String userName)
             throws SQLException {
 
-     // query to get the no of plans
      String[] sqlQuery = null;
      try {
             sqlQuery = Stock.getTestQuery("getParticipantInfo");
      } catch (Exception e) {
             e.printStackTrace();
      }
-     sqlQuery[0] = getParticipantDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
+     sqlQuery[0] = getUserDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
      ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
                   userName.substring(0, 9));
 
@@ -149,20 +148,18 @@ public class CommonLib {
      return participantInfo;
 }
 
-public static String getParticipantDBName(String userName) throws SQLException {
+public static String getUserDBName(String userName) throws SQLException {
 
      // query to get the no of plans
      String[] sqlQuery = null;
-
      ResultSet participantDB = null;
-
      try {
             sqlQuery = Stock.getTestQuery("getPartcipantDBInfo");
      } catch (Exception e) {
             e.printStackTrace();
      }
-
-     participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],userName);
+     
+     participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],"K_"+userName);
      if (DB.getRecordSetCount(participantDB) > 0) {
             try {
                   participantDB.last();
@@ -176,9 +173,13 @@ public static String getParticipantDBName(String userName) throws SQLException {
             }
 
      }
-     System.out.println("DATA BASE Name"
-                  + participantDB.getString("database_instance"));
-     return participantDB.getString("database_instance");
+     System.out.println("DATA BASE Name"+ participantDB.getString("DATABASE_INSTANCE"));
+     String db = participantDB.getString("DATABASE_INSTANCE");
+     if(db.equals("QASK"))
+     {
+    	 db="ISIS";
+     }
+     return db;
 }
 
 public static String getParticipantID(String ssn) throws SQLException {
@@ -269,7 +270,8 @@ public static String checkEnv(String envName) {
 
 	
 	
-/*
+/**
+ * @author smykjn<br>
  * This method returns true if xpath exist else false.
  */
 
@@ -283,7 +285,11 @@ public static boolean isElementExistByXpath(String xpath)
 	}
 	else
 	{
-		xpathExist = true;
+		WebElement element = Web.getDriver().findElement(By.xpath(xpath));
+		if(element.isDisplayed())
+			xpathExist=true;
+		else
+			xpathExist=false;
 	}
 	return xpathExist;
 }	
@@ -317,7 +323,12 @@ public static void waitForProgressBar(){
         }
 
 	
-	
+/**	
+ * @author smykjn
+ * @Objective This method switches to default plan page
+ * @throws SQLException
+ * @throws Exception
+ */
 public static void switchToDefaultPlan() throws SQLException,Exception
 {
 	String defaultPlan = null;
@@ -333,11 +344,60 @@ public static void switchToDefaultPlan() throws SQLException,Exception
 }
 	
 	
+/**
+ * @author smykjn
+ * @Objective This method returns true of list is sorted in ascending order
+ * @return boolean
+ */
+
+public static boolean isSortedByDescOrder(List<Double> list)
+{
+    boolean sorted = false; 
+    if(list.size()==1)
+	{
+		sorted = true;
+		Reporter.logEvent(Status.INFO, "Only one allocation is found so sorting validation is not required.", "", true);
+	}
+    else{
+    for (int i = 1; i < list.size(); i++) {
+    	
+        if (list.get(i-1).compareTo(list.get(i)) > 0) {
+        	sorted = true;}
+        else{
+        	sorted = false;
+        	break;
+        	}
+    	}
+    }
+
+    return sorted;
+}
 	
-	
-	
-	
-	
+
+/**
+ * @author smykjn
+ * @param actHeaders
+ * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
+ * @param expHeaders
+ * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
+ * @return boolean
+ * <pre>This method returns true if all actual headers are present in exppcted header list.
+ * if any of the header is missing from expHeaders the returns false.</pre>
+ * @throws Exception
+ * @Date 2nd-May-2017
+ */
+public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
+{
+	boolean isdisplayed = false;
+	for(WebElement header : actHeaders){
+		System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
+		if(expHeaders.contains(header.getText().replaceAll(":", "").replaceAll("\\s+", " ").trim()))
+		{isdisplayed = true;}
+		else
+		{isdisplayed = false;break;}
+	}	
+	return isdisplayed;
+}
 	
 	
 	

@@ -230,7 +230,8 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	 */
 	public String getEmailAddressOfuser(String[] getEmailQuery, String userid) throws Exception {
 		String emailAddr = "";
-		//getEmailQuery[0]=CommonLib.getParticipantDBName(Stock.GetParameterValue("username"))+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		getEmailQuery[0]=CommonLib.getUserDBName(Stock.GetParameterValue("username"))
+				+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		resultset = DB.executeQuery(getEmailQuery[0], getEmailQuery[1], "K_" + userid);
 		if (resultset != null) {
 			while (resultset.next()) {

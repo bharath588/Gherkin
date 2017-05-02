@@ -7,15 +7,19 @@ import java.util.Map;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
+import pageobjects.jumppage.JumpPage;
+import pageobjects.login.LoginPage;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
 
+import lib.DB;
 import lib.Stock;
 import lib.Web;
 import core.framework.Globals;
@@ -24,11 +28,12 @@ import framework.util.CommonLib;
 public class employeesearchtestcases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
-	EmployeeSearch employeesearch;
+	public EmployeeSearch employeesearch;
 	String actualErrorMessage = "";
 	ResultSet resultset;
 	HomePage homePage;
 	CommonLib commonLib;
+	LoginPage loginPage;
 	@BeforeClass
 	public void ReportInit() {
 		Reporter.initializeModule(this.getClass().getName());
@@ -1151,7 +1156,7 @@ public class employeesearchtestcases {
 													"This testcase validates general employment informations", false);
 											employeesearch = new EmployeeSearch().get();
 											homePage = new HomePage();
-											homePage.searchPlanWithIdOrName(employeesearch.findPlanForUser(Stock.getTestQuery("queryTofindPlansForUser"),
+											homePage.searchPlanWithIdOrName(employeesearch.findPlanForUser(Stock.getTestQuery("queryTofindPlansForNextGen"),
 													Stock.GetParameterValue("username")));
 											employeesearch.navigateToEmployeeTab();
 											employeesearch.searchEmployeeByEmployeeId("");
@@ -1406,6 +1411,198 @@ try {
 		employeesearch.selectEmployeeFromResultSet(resultset);
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.navigateToEmpDetailPage();
+		employeesearch.editEnrollmentAndEligibilityAndSave();
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+
+
+/**
+ * <pre>This testcase validate Account balance section for a Participant.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC30_Account_balance_Tab(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objective of this test case is to validate Account balance section for a Participant.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectEmployeesForUser(Stock.getTestQuery("getPartWithAccountBalance"),
+				Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.validateAccountBalanceScreen_0())
+		{
+			employeesearch.validateAccountBalanceScreen_1();
+			employeesearch.ChangeDateAndVerifyData();
+		}
+		else
+		{
+			Reporter.logEvent(Status.INFO,"Check for participanct with account balance.", "No particiapnt is found"
+					+ " with account balance.", true);
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+
+/**
+ * <pre>This testcase validates 'Data set error must be displayed if access to participant Web is disable via PSC'
+ *  and this test case also validates Employee Web button is not displayed if PSCPAE txn_code is not associated with logged in user.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC31_Disable_PAE_then_renable_PAE(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objective of this test case is to validate<br>1.Data set error must be displayed if access to participant Web is disable via PSC."
+		+ "<br>2.Employee Web button is displayed based on respective transaction code 'PSCPAE'.", false);
+		employeesearch = new EmployeeSearch().get();
+		if(employeesearch.disablePAEURL())
+		{
+			employeesearch.searchEmployeeByName("");
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.verifyDataSetErrorForDisabledPAEURL();
+			employeesearch.enablePAEURL();
+		}
+		if(employeesearch.validateEmployeeWebButton())
+		{
+			Reporter.logEvent(Status.PASS, "Validate Employee Web bottin is displayed before deleting 'PSCPAE' txn_code for all user classes, logged in user is associated with.", "Employee web button is"
+					+ " displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Validate Employee Web bottin is displayed before deleting 'PSCPAE' txn_code for all user classes, logged in user is associated with.", "Employee web button is"
+					+ " not displayed.", true);
+		}
+		employeesearch.deletePSCPAETxnCodeFromDB();
+		employeesearch.logoutFromApplication();
+		LoginPage loginPage = new LoginPage();
+		JumpPage jumpPage = new JumpPage();
+		loginPage.submitLoginCredentials(
+				new String[]{Stock.GetParameterValue("username"),Stock.GetParameterValue("password")});
+		jumpPage.ClickOnJumpPageURL();
+		employeesearch.navigateToEmployeeTab();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.validateEmployeeWebButton())
+		{
+			Reporter.logEvent(Status.FAIL, "Execute the query '"+Stock.getTestQuery("deletePSCPAETxnCode")[1]+"'.", "Employee web button is"
+					+ " displayed.", true);
+		}
+		else
+		{
+			Reporter.logEvent(Status.PASS, "Execute the query '"+Stock.getTestQuery("deletePSCPAETxnCode")[1]+"'.", "Employee web button is"
+					+ " not displayed.", false);
+		}
+		employeesearch.insertPSCPAETxnCode();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+		exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+			try {
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+	}
+}
+
+
+
+/**
+ * <pre>This test case validates the menu items for TRSFlex plan and for Non-TRSFlex plan.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC32_Supress_Menu_Items_for_TRS_Flex(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objective of this test case is to validate menu items 'Process Center and Compliance' must be Supressed for TRSFlex.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		if(employeesearch.validateComplianceAndProCenterTabForTRSFlex())
+			Reporter.logEvent(Status.FAIL,"Search for TRS-Flex plan and navigate to plan page.Observe the"
+					+ " Process center and compliance menu tabs are supressed.", "Process center and compliance menu tabs are"
+							+ " not supressed.", true);
+		else
+			Reporter.logEvent(Status.PASS,"Search for TRS-Flex plan and navigate to plan page.Observe the"
+					+ " Process center and compliance menu tabs are supressed.", "Process center and compliance menu tabs are"
+							+ " supressed.", false);
+		employeesearch.validationsForTRSFlexPlan();
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		if(employeesearch.validateComplianceAndProCenterTabForTRSFlex())
+			Reporter.logEvent(Status.PASS,"Search for Non TRS-Flex plan and navigate to plan page.Observe the"
+					+ " Process center and compliance menu tabs are displayed.", "Process center and compliance menu tabs are"
+							+ " displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Search for Non TRS-Flex plan and navigate to plan page.Observe the"
+					+ " Process center and compliance menu tabs are displayed.", "Process center and compliance menu tabs are"
+							+ " not displayed.", true);
+		employeesearch.validationsForNonTRSFlexPlan();
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();//add TRS-Flex plan employee to recently viewed list 
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();//add non TRS-Flex plan employee to recently viewed list
+		employeesearch.switchEmployeeAndValidateTopMenu();
+		
+		
 		
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -1428,10 +1625,455 @@ try {
 }
 	
 	
+/**
+ * <pre>This testcase validates Account detail and employee detail section's elements for TRSFlex and non TRSFlex plans.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC33_Suppress_Account_Detail_elements_TRS_NonTRS(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objective of this test case is to validate account detail and employee detail elements for TRSFlex and non TRSFlex plans.", false);
+		employeesearch = new EmployeeSearch().get();	
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), 
+				Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.searchEmployeeByName("");
+		//TRSFlex plan employee added to recently viewed employee
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateAccountDetailSectionsTRSFlexPlan();
+		employeesearch.validateEmployeeDetailSectionsTRSFlexPlan();
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), 
+				Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.searchEmployeeByName("");
+		//NonTRSFlex plan employee added to recently viewed employee
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateAccountDetailSectionsNonTRSFlexPlan();
+		employeesearch.validateEmployeeDetailSectionsNonTRSFlexPlan();
+		employeesearch.validateEmpDetailAccDetail_SwitchEmploye();
 	
-	
-	
-	
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * <pre>1.This test case validates the Investments sub section inside Account Detail tab(Columns).<br>
+ 	2.This test case validates order of investment information and max number of investment records on overview page.<br>
+ 	3.This test case validates the adding new allocation.<br>
+ 	4.This test case validates the 'Add/Change Allocations button' enabled/disabled based on transaction codes assigned to user.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC34_SIT_PSC_Accountdetail_Allocations_Reg(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+		"The objectives of this test case is as below:"
+		+ "1.This test case validates the Investments sub section inside Account Detail tab(Columns)."
+		+"2.This test case validates order of investment information and max number of investment records on overview page(if max number records exist)."
+		+"3.This test case validates the adding new allocation."
+		+"4.This test case validates the 'Add/Change Allocations button' enabled/disabled based on transaction codes assigned to user.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectEmployeesForUser(Stock.getTestQuery("getInvetmentAllocationEmp"),
+				Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.validateInvestmentsSectionElements())
+		{
+			employeesearch.validateInvestmentsPercentOrderAndMaxRecords();
+			if(employeesearch.validateAddAllocationBtnIfUserHasAccess())
+			{
+				employeesearch.addAllocation();
+			}
+			employeesearch.validateNoAllocation();
+		}
+		employeesearch.deleteAdd_ChangeAllocationTxn_Code();
+		employeesearch.logoutFromApplication();
+		LoginPage loginPage = new LoginPage();
+		JumpPage jumpPage = new JumpPage();
+		loginPage.submitLoginCredentials(
+				new String[]{Stock.GetParameterValue("username"),Stock.GetParameterValue("password")});
+		jumpPage.ClickOnJumpPageURL();
+		employeesearch.navigateToEmployeeTab();
+		resultset = employeesearch.selectEmployeesForUser(Stock.getTestQuery("getInvetmentAllocationEmp"),
+				Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateAdd_ChangeAllocIfNoAccess();
+		employeesearch.insertESCCPATxnCode();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}	
+
+
+/**
+ * <pre></pre>
+ * @Objective This test case validates the Statement tab and its filter functionality.
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC35_SIT_PSC_Statements_Tab(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objectives of this test case is as below:"
+				+ "1.Validate the Statement tab UI validations.2)Sorting of Statement records.3)Filter of statements based on "
+				+ "selected category.", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("empSSN"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.navigateToStatementTab())
+		{
+			employeesearch.validateStatementTabHeaderAndDateSorting();
+			employeesearch.validateStatementFilter();
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+/**
+ * <pre></pre>
+ * @Objective This test case validates the Enrollment & Eligibility section is not displayed for NQ plans.
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objectives of this test case is to validate"
+				+ " Enrollment & Eligibility section is not displayed for NQ plans.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("GetNQPlans"),Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.navigateToEmployeeTab();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(!employeesearch.isEnrollmentEligiDisplayed())
+			Reporter.logEvent(Status.PASS, "Validate Enrollment and Eligibility section"
+					+ " is not displayed for NQ plans.", "Enrollment and Eligibility section is not displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate Enrollment and Eligibility section"
+					+ " is not displayed for NQ plans.", "Enrollment and Eligibility section is not displayed.", true);
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("GetDBPlans"),Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);
+		employeesearch.navigateToEmployeeTab();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(!employeesearch.isEnrollmentEligiDisplayed())
+			Reporter.logEvent(Status.PASS, "Validate Enrollment and Eligibility section"
+					+ " is not displayed for DB plans.", "Enrollment and Eligibility section is not displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate Enrollment and Eligibility section"
+					+ " is not displayed for DB plans.", "Enrollment and Eligibility section is not displayed.", true);
+		employeesearch.logoutFromApplication();
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+/**
+ * <pre></pre>
+ * @Objective This test case validates the new fields in Employment Information section on Employee overview page.
+ * @param itr
+ * @param testdata
+ */
+/*@Test(dataProvider = "setData")
+public void TC37_SIT_PSC_Employment_Information_new_fileds(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates"
+				+ " new fileds on Employment information section and validates their values against DB.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = DB.executeQuery(Stock.getTestQuery("getEmploymentPPT")[0],Stock.getTestQuery("getEmploymentPPT")[1],""+
+				"K_"+Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateNewEmploymentFileds();
+		
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}*/
+
+/**
+ * <pre>This test case validates the tool-tip elements in recently viewed section.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC37_SIT_PSC_Recentlyviewed_MouseOver(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objectives of this test case is to validate"
+				+ " Tool-tip elements in recently viewed employee section.", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.recentlyViwedMouseHoverElementsValidation();
+		employeesearch.logoutFromApplication();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+/**
+ * <pre></pre>
+ * @Objective This test case validates the Fees detail on Employee overview page.
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC38_SIT_PSC_Accountdetail_Fees_Reg(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objectives of this test case is to validate"
+				+ "Fees section elements on employee overview page.", false);
+		employeesearch = new EmployeeSearch().get();
+		/*resultset = DB.executeQuery(Stock.getTestQuery("getPastThreeMonthFeesData")[0],
+				Stock.getTestQuery("getPastThreeMonthFeesData")[1],""
+				+"K_"+Stock.GetParameterValue("username"));
+		employeesearch.selectPlanFromResultset(resultset);*/
+		String ssn = Stock.GetParameterValue("SSN");
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.validatePastThreeMonthFees())
+		{
+			employeesearch.validateMaxNumberOfFeesRecords();
+			if(employeesearch.validateFeesModalWindow())
+			employeesearch.updateDateRengeAndValidate();
+		}
+		resultset = DB.executeQuery(Stock.getTestQuery("getNoPastThreeMonthFees")[0],
+				Stock.getTestQuery("getNoPastThreeMonthFees")[1],"K_"+Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateNoPastThreeMonthDataMessage();
+		employeesearch.logoutFromApplication();
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to verify Employee Vesting information
+ *box displayed under Account detail tab with Vesting info.
+ *Note: This Test case deals with validation of elements inside vesting section.It does not validate data specific to a participant.</pre>
+ * @Objective This test case validates the Fees detail on Employee overview page.
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC39_SIT_PSC_Accountdetail_Vesting_Reg(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to validate"
+				+ " Vesting section with vesting info under account detail tab.", false);
+		employeesearch = new EmployeeSearch().get();
+		String ssn = Stock.GetParameterValue("SSN");
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateVestingSection_1();
+		employeesearch.validateVestingSection_2();
+		employeesearch.validateVestingModalWindowSection_1();
+		employeesearch.validateVestingModalWindowSection_2();
+		employeesearch.logoutFromApplication();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to verify Employee Loan information
+ *box displayed under Account detail tab.
+ *Note: This Test case deals with validation of elements inside Loan section
+ *and navigation of loan pages when links are clicked.</pre>
+ * @Objective This test case validates the Loan detail on Employee overview page.
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC40_SIT_PSC_Accountdetail_Loans_Reg(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to validate"
+				+ " Loan section info under account detail tab.", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchPPTWithLoan();
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateLoanSection_1();
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+
+
 	
 	
 	
