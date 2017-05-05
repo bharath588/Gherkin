@@ -28,16 +28,6 @@
                     </parameter>
                     </include>
 				
-					<include name="Brokerage_validations" >
-					<parameter name="ManualTCName" value="Brokerage_validations">
-                    </parameter>
-                    </include>
-				
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" >
-					<parameter name="ManualTCName" value="Request_Loan_Flow">
-                    </parameter>
-                    </include>
-				
 					<include name="Balance_validations" >
 					<parameter name="ManualTCName" value="Balance_validations">
                     </parameter>
@@ -168,6 +158,16 @@
 					<parameter name="ManualTCName" value="SendActivationCode_ForgotPasswordFlow">
                     </parameter>
                     </include> 
+                    
+                    <include name="Brokerage_validations" >
+					<parameter name="ManualTCName" value="Brokerage_validations">
+                    </parameter>
+                    </include>
+				
+					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" >
+					<parameter name="ManualTCName" value="Request_Loan_Flow">
+                    </parameter>
+                    </include>
                     
                     <include name="Verify_Health_care_costs_helpful_links" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">

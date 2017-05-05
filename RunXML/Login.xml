@@ -53,7 +53,7 @@
                 </methods>
             </class> 
        
-         <class name="app.pptweb.testcases.login.registrationtestcases">
+        <!--  <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
                   <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
@@ -147,7 +147,7 @@
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
                     </include>
                 </methods>
-            </class>  
+            </class>   -->
         </classes>
     </test> 
 </suite>

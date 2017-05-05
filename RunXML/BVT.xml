@@ -9,11 +9,10 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                    <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_Sanity">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_2672_DIM_Choose_individual_funds_or_DIM_Sanity"></parameter>
-                    </include> 
+                     <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM"></parameter>
+                    </include>
                
-                    
 				</methods>
               
 			</class>

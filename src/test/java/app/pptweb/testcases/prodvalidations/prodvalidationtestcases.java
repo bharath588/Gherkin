@@ -636,6 +636,7 @@ public class prodvalidationtestcases {
 			Web.getDriver().switchTo().defaultContent();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(10000);
 			Web.getDriver().switchTo().frame("legacyFeatureIframe");
 			lblDisplayed = requestLone
 					.isTextFieldDisplayed("MAILING AND CONTACT INFORMATION:");
