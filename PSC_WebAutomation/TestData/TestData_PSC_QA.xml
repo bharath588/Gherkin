@@ -199,6 +199,7 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test"/>
 			</Iteration>
 	</TestCase>
 		<TestCase name="SIT_PSC_Sitenavigation_Menutabs">
@@ -403,11 +404,11 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
-				<parameter name="UserVeriEmail" value=" " />
+				<parameter name="UserVeriEmail" value="" />
 				<parameter name="UserSecondaryAns" value="" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="expectedErrorMessage"
 					value="Email is Required&#10;&#10;Security Answer is Required" />
 			</Iteration>
@@ -426,9 +427,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="abc@gwl.com" />
 				<parameter name="UserSecondaryAns" value="" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="" />
+				<parameter name="favDrink" value="" />
+				<parameter name="spouseMidName" value="" />
 				<parameter name="expectedErrorMessage" value="Security Answer is Required" />
 			</Iteration>
 			<Iteration Execution="Yes" id="4">
@@ -446,9 +447,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
 				<parameter name="UserSecondaryAns" value="invalid" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="invalid" />
+				<parameter name="favDrink" value="invalid" />
+				<parameter name="spouseMidName" value="invalid" />
 				<parameter name="expectedErrorMessage"
 					value="Email is invalid&#10;&#10;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive." />
 			</Iteration>
@@ -516,7 +517,7 @@
 				<parameter name="username" value="5IP4Z" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
-				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="userVerificationAns" value="test" />
 				<parameter name="infoType" value="NonAvailability" />
 				<parameter name="TxnCode" value="PSCCTR"/>
 				<parameter name="dreamCar" value="test" />
@@ -526,7 +527,7 @@
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="5IP4Z" />
 				<parameter name="password" value="testing1" />
-				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
 				<parameter name="infoType" value="Availability" />
 				<parameter name="TxnCode" value="PSCCTR"/>
@@ -540,7 +541,7 @@
 				<parameter name="username" value="5IP4Z" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
-				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="userVerificationAns" value="test" />
 				<parameter name="infoType" value="NonAvailability" />
 				<parameter name="TxnCode" value="PSCTOD"/>
 				<parameter name="dreamCar" value="test" />
@@ -551,7 +552,7 @@
 				<parameter name="username" value="5IP4Z" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
-				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="userVerificationAns" value="test" />
 				<parameter name="infoType" value="Availability" />
 				<parameter name="TxnCode" value="PSCTOD"/>
 				<parameter name="dreamCar" value="test" />
@@ -648,8 +649,8 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5XEEX" />
 				<parameter name="password" value="testing1" />
-				<parameter name="firstDrpdwnAns" value="test" />
-				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="firstDrpdwnAns" value="testr" />
+				<parameter name="secondDrpdwnAns" value="testk" />
 				<parameter name="thirdDrpdwnAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
