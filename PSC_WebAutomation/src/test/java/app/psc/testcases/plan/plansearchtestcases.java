@@ -15,13 +15,15 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+import framework.util.CommonLib;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
+import plan.PlanPage;
 
 public class plansearchtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	HomePage homePage;
-
+	PlanPage planPage;
 
 	@BeforeClass
 	public void ReportInit()
@@ -321,4 +323,63 @@ public class plansearchtestcases {
 			}
 		}
 		}	
+	
+	
+	/**This test case validates the plan messaging confirmation page.
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC05_SIT_PSC_Plan_messaging_confirmation_page(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates the plan messaging confirmation page.", false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+			planPage.navigateToInvestmentAndPerformace();
+			planPage.addNewPlanMessage();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		}		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

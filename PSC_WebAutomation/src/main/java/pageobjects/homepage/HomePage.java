@@ -1034,23 +1034,24 @@ public class HomePage extends LoadableComponent<HomePage>{
 	}
 	
 	
-	/*
+	/**
 	 * This method Takes you to the specified menu or submenu page.
 	 */
 	
-	public void navigateToProvidedPage(String...specifiedTab)
+	public void navigateToProvidedPage(String...specifiedTab) throws Exception
 	{
 		String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
 		String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
 		String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
 		String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
-		if(CommonLib.isElementExistByXpath(xpath1)){
+		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
 			Web.clickOnElement(menuElement(specifiedTab[0]));
 			Web.waitForPageToLoad(Web.getDriver());
-			if(CommonLib.isElementExistByXpath(xpath2)&&Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath2)), true))
+			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
 			{
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
 				Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath4)));
 				Web.waitForPageToLoad(Web.getDriver());
 			}
 			else

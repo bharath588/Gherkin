@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -581,12 +582,52 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement vestingDetailClose;
 	@FindBy(className="money_content")
 	private WebElement moneyOutSection;
-	@FindBy(xpath=".//*[@class='loansHeader']//tr//td")
-	private List<WebElement> loansHeaderElements; 
-	@FindBy(xpath="//*[@class='money_content']//th/ancestor::thead/following-sibling::tbody//tr")
-	private List<WebElement> loanDataRows;
 	@FindBy(xpath="//*[@class='money_content']//th")
 	private List<WebElement> loansColumnsList;
+	@FindBy(xpath=".//*[@class='loansHeader']//td[contains(text(),'Active loans')]")
+	private WebElement activeLoansLabel;
+	@FindBy(xpath=".//*[@class='loansHeader']//td[contains(text(),'Max loans allowed')]")
+	private WebElement maxLoanAllowedlabel;
+	@FindBy(xpath=".//*[@class='loansHeader']//td[contains(text(),'Minimum amount')]")
+	private WebElement minAmntLabel;
+	@FindBy(xpath=".//*[@class='loansHeader']//td[contains(text(),'Maximum amount')]")
+	private WebElement maxAmntLabel;
+	@FindBy(xpath="//*[@class='money_content']//th/ancestor::thead/following-sibling::tbody//tr")
+	private List<WebElement> loanRows;
+	@FindBy(xpath="//*[@class='money_content']//th/ancestor::thead/following-sibling::tbody//tr//td[1]")
+	private List<WebElement> loanEffDateList;
+	@FindBy(xpath="//*[@class='money_content']//th/ancestor::thead/following-sibling::tbody//tr//td[6]/button")
+	private List<WebElement> loanViewButtons;
+	@FindBy(xpath="//span/b[.='Loans']")
+	private WebElement loanDetailTitle;
+	@FindBy(id="framecA")
+	private WebElement loanDetailFrame;
+	@FindBy(xpath="//span[.='Loans']/../following-sibling::table[1]//th//a")
+	private List<WebElement> loanDetailsHeader;
+	@FindBy(xpath="//span[.='Loans']/../following-sibling::table[1]//tbody//tr")
+	private List<WebElement> loanDataRowsOnDetailsPage;
+	@FindBy(xpath="//span/b[contains(text(),'Employee loan account information')]")
+	private WebElement empLoanAccntNumber;
+	@FindBy(xpath="//b[contains(text(),'Employee loan account information')]/ancestor::div[1]//following-sibling::table[1]//tr[1]//td")
+	private List<WebElement> acctDetailColumn;
+	@FindBy(xpath="//b[contains(text(),'Employee loan account information')]/ancestor::div[1]//following-sibling::table[1]//tr")
+	private WebElement loanAcctInfoRows;
+	@FindBy(xpath="//span[contains(text(),'Effective date:')]/..")
+	private WebElement loanEffDate;
+	@FindBy(xpath="//span[contains(text(),'First due date:')]/..")
+	private WebElement loanFstDueDate;
+	@FindBy(xpath="//span[contains(text(),'Maturity date:')]/..")
+	private WebElement loanMatDate;
+	@FindBy(xpath="//span[contains(text(),'Interest rate:')]/..")
+	private WebElement loanIntRate;
+	@FindBy(xpath="//span[contains(text(),'Loan term:')]/..")
+	private WebElement loanTerm;
+	@FindBy(xpath=".//span[contains(text(),'Days late')]/following-sibling::span")
+	private WebElement daysLateField;
+	@FindBy(xpath="//*[contains(text(),'Employee loan activity information')]/ancestor::div[1]//following-sibling::table[1]//tr//td[10][contains(text(),'UNPAID') or contains(text(),'PARTIAL')]//preceding-sibling::td[2]")
+	private List<WebElement> listOfUpaidDueDates;
+	@FindBy(xpath="//span[contains(text(),'Payments remaining')]/..")
+	private WebElement payRemaining;
 	
 	private String transHistory = ".//*[@id='transactions']";
 	private String interactions = ".//*[@id='participantengagement']";
@@ -5245,7 +5286,7 @@ public void validateVestingSection_2()
  */
 public void validateVestingModalWindowSection_1()
 {
-	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedHeaders").split(","));
+	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedElements").split(","));
 	boolean isHeaderDisplayed = false;
 	try{
 		Web.clickOnElement(vestingBoxWithData.findElement(By.xpath(".//h1/a")));
@@ -5381,7 +5422,7 @@ public String searchPPTWithLoan() throws SQLException
  */
 public void validateLoanSection_1()
 {
-	List<String> expElements = Arrays.asList(Stock.GetParameterValue("ExpectedElements"));
+	List<String> expElements = Arrays.asList(Stock.GetParameterValue("ExpectedElements").split(","));
 	try{
 		this.navigateToAccountDetailPage();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -5391,8 +5432,7 @@ public void validateLoanSection_1()
 		else
 			Reporter.logEvent(Status.PASS,"Validate that title Money out is displayed.", "Money out title is"
 					+ " displayed.",true);
-		boolean isdisplayed = CommonLib.isAllHeadersDisplayed(loansHeaderElements, expElements);
-		if(isdisplayed)
+		if(activeLoansLabel.isDisplayed()&&maxLoanAllowedlabel.isDisplayed()&&minAmntLabel.isDisplayed()&&maxAmntLabel.isDisplayed())
 			Reporter.logEvent(Status.PASS, "Validate following columns are displayed under loans section:"+
 					""+expElements, "All expected columns are displayed.", false);
 		else
@@ -5404,18 +5444,95 @@ public void validateLoanSection_1()
 	}
 }
 
+
+
 /**
- * <pre>This method validates if loan data is displayed.
- * Like Effective date,Loan Amount,Status,Repay Amount,Principal Balance,Details</pre>
+ * <pre>This method fetches the loan data for a participant and stores it in map</pre>
  * @author smykjn
  * @Date 2nd-May-2017
+ * @return map
+ */
+public Map<String,List<String>> getLoanDataFromDB() throws SQLException
+{
+	Map<String,List<String>> loanData = new LinkedHashMap<String,List<String>>();
+	List<String> dbEffDate = new ArrayList<String>();
+	List<String> loanAmt = new ArrayList<String>();
+	List<String> sts_code = new ArrayList<String>();
+	List<String> repay_Amt = new ArrayList<String>();
+	List<String> loanNumber = new ArrayList<String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getLoanDetail")[0],""+
+			Stock.getTestQuery("getLoanDetail")[1],ssn);
+	while(queryResultSet.next())
+	{
+		dbEffDate.add(queryResultSet.getString("EFFDATE"));
+		loanAmt.add(queryResultSet.getString("LOAN_AMT"));
+		if(queryResultSet.getString("STATUS_CODE").equals("A")){
+			sts_code.add("Active");}
+		if(queryResultSet.getString("STATUS_CODE").equals("P"))
+		{
+			sts_code.add("Paid in Full");
+		}
+		repay_Amt.add(queryResultSet.getString("REPAY_AMT"));
+		loanNumber.add(queryResultSet.getString("INLNAG_SEQNBR"));
+	}
+	loanData.put("Effective Date", dbEffDate);
+	loanData.put("Loan Amount", loanAmt);
+	loanData.put("Status", sts_code);
+	loanData.put("Repay Amount", repay_Amt);
+	loanData.put("Loan Number", loanNumber);
+	System.out.println("Loan map from DB is"+loanData);
+	return loanData;
+}
+
+/**
+ * <pre>This method validates if loan data is displayed and compares data from DB.
+ * Like Effective date,Loan Amount,Status,Repay Amount,Principal Balance,Details</pre>
+ * @author smykjn
+ * @Date 3rd-May-2017
  * @return void
  */
-public void validateLoanSection_2()
+public void compareLoanDataWithDB()
 {
+	List<String> effDate = new ArrayList<String>();
+	List<String> loanAmt = new ArrayList<String>();
+	List<String> status = new ArrayList<String>();
+	List<String> repayAmt = new ArrayList<String>();
+	Map<String,List<String>> loanDataFromGUI = new HashMap<String,List<String>>();
+	Map<String,List<Date>> loanDataFromGUI_Date = new HashMap<String,List<Date>>();
+	Map<String,List<String>> loanDataFromDB;
 	try{
-		
-		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			for(int j=0;j<loanRows.size();j++)
+			{
+				List<WebElement> loanColumn = loanRows.get(j).findElements(By.tagName("td"));
+				for(int k=0;k<loansColumnsList.size();k++)
+				{
+					if(loansColumnsList.get(k).getText().equals("Effective Date"))
+						effDate.add(loanColumn.get(k).getText());
+					if(loansColumnsList.get(k).getText().equals("Loan Amount"))
+						loanAmt.add(loanColumn.get(k).getText().replace("$","").replace(",","").trim());
+					if(loansColumnsList.get(k).getText().equals("Status"))
+						status.add(loanColumn.get(k).getText());
+					if(loansColumnsList.get(k).getText().equals("Repay Amount"))
+						repayAmt.add(loanColumn.get(k).getText().replace("$","").replace(",","").trim());
+				}
+			}
+			loanDataFromGUI.put("Effective Date", effDate);
+			loanDataFromGUI.put("Loan Amount", loanAmt);
+			loanDataFromGUI.put("Status", status);
+			loanDataFromGUI.put("Repay Amount", repayAmt);
+			System.out.println("Loan data from GUI:"+loanDataFromGUI);
+			loanDataFromDB = this.getLoanDataFromDB();
+			if(loanDataFromDB.get("Effective Date").containsAll(loanDataFromGUI.get("Effective Date"))
+					&&loanDataFromDB.get("Loan Amount").containsAll(loanDataFromGUI.get("Loan Amount"))
+					&&loanDataFromDB.get("Status").containsAll(loanDataFromGUI.get("Status"))
+					&&loanDataFromDB.get("Repay Amount").containsAll(loanDataFromGUI.get("Repay Amount")))
+				Reporter.logEvent(Status.PASS, "Validate Loan data for selected participant from DB in terms of "
+							+ "Effective date,Loan amount,Status,Repay Amount.", "Data is validated and found to be proper.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate Loan data for selected participant from DB in terms of "
+						+ "Effective date,Loan amount,Status,Repay Amount.", "Data is validated and it is not matching with GUI."
+								+ "Please check manually once.", true);
 	}catch(Exception e){
 		e.getStackTrace();
 		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
@@ -5423,27 +5540,266 @@ public void validateLoanSection_2()
 }
 
 /**
- * <pre>This method fetches the loan data for a participant</pre>
+ * <pre>This method validates the descending order of Loan effective date.</pre>
  * @author smykjn
- * @Date 2nd-May-2017
- * @return map
+ * @Date 3rd-May-2017
  */
-public void getLoanDatFromDB()
+public void validateLoanEffDateOrder()
 {
-	Map<String,String> loanData = new LinkedHashMap<String,String>();
 	try{
-		queryResultSet = DB.executeQuery(Stock.getTestQuery("getLoanDetail")[0],""+
-				Stock.getTestQuery("getLoanDetail")[1],Stock.GetParameterValue("username"));
-		while(queryResultSet.next())
-		{
-			loanData.put("Effective Date", queryResultSet.getString("EFFDATE"));
-		}
-		
-	}catch(Exception e1){
-		e1.getStackTrace();
-		Reporter.logEvent(Status.FAIL, "Exception occurred:", e1.getMessage(), true);
+		boolean isSorted = CommonLib.validateDateSorting(loanEffDateList);
+		if(isSorted)
+			Reporter.logEvent(Status.PASS, "Validate effective date is sorted in descending order.", "Effective date is sorted in "
+					+ "descending order.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate effective date is sorted in descending order.", "Effective date is not sorted in "
+					+ "descending order.", true);
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
 	}
 }
+
+/**
+ * <pre>This method validates clicking on View button opens loan detail page.</pre>
+ * @author smykjn
+ * @Date 3rd-May-2017
+ */
+public void validateLoanDetailPage_1()
+{
+	try{
+		if(loanViewButtons.size()>0)
+		{
+			Web.clickOnElement(loanViewButtons.get(0));
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(loanDetailFrame);
+			Web.waitForElement(loanDetailTitle);
+			if(loanDetailTitle.getText().contains("Loans"))
+				Reporter.logEvent(Status.PASS, "Click on View button for any Loan record.", "Loan details page is displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Click on View button for any Loan record.", "Loan details page is not displayed.", true);
+			Web.getDriver().switchTo().defaultContent();
+		}
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method validates Loan data on details page.</pre>
+ * @author smykjn
+ * @Date 3rd-May-2017
+ */
+public void validateLoanDetailPage_2()
+{
+	List<String> expLoanDetailHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedLoanDetailHeaders").split(","));
+	List<String> effDate = new ArrayList<String>();
+	List<String> loanAmt = new ArrayList<String>();
+	List<String> status = new ArrayList<String>();
+	List<String> repayAmt = new ArrayList<String>();
+	List<String> loanNumber = new ArrayList<String>();
+	Map<String,List<String>> loanDetailsFromDB = new HashMap<String,List<String>>();
+	Map<String,List<String>> loanDetailsFromGUI = new HashMap<String,List<String>>();
+	try{
+		Web.getDriver().switchTo().frame(loanDetailFrame);
+		if(CommonLib.isAllHeadersDisplayedWhiteSpace(loanDetailsHeader, expLoanDetailHeaders))
+			Reporter.logEvent(Status.PASS, "Validate following headers:"+expLoanDetailHeaders,"Expected headers are displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate following headers:"+expLoanDetailHeaders,"Expected headers or few headers are not"
+					+ " displayed.",true);
+		loanDetailsFromDB = this.getLoanDataFromDB();
+		for(int j=0;j<loanDataRowsOnDetailsPage.size();j++)
+		{
+			List<WebElement> loanColumnOnDetailsPage = loanDataRowsOnDetailsPage.get(j).findElements(By.tagName("td"));
+			for(int k=0;k<loanDetailsHeader.size();k++)
+			{
+				if(loanDetailsHeader.get(k).getText().contains("Loan number"))
+					loanNumber.add(loanColumnOnDetailsPage.get(k).getText().trim());
+				if(loanDetailsHeader.get(k).getText().contains("Effective date"))
+					effDate.add(loanColumnOnDetailsPage.get(k).getText().trim());
+				if(loanDetailsHeader.get(k).getText().equals("Loan amount"))
+					loanAmt.add(loanColumnOnDetailsPage.get(k).getText().replace("$","").replace(",","").trim());
+				if(loanDetailsHeader.get(k).getText().equals("Status"))
+					status.add(loanColumnOnDetailsPage.get(k).getText().trim());
+				if(loanDetailsHeader.get(k).getText().equals("Repay amount"))
+					repayAmt.add(loanColumnOnDetailsPage.get(k).getText().replace("$","").replace(",","").trim());
+			}
+		}
+		loanDetailsFromGUI.put("Loan Number", loanNumber);
+		loanDetailsFromGUI.put("Effective Date", effDate);
+		loanDetailsFromGUI.put("Loan Amount", loanAmt);
+		loanDetailsFromGUI.put("Status", status);
+		loanDetailsFromGUI.put("Repay Amount", repayAmt);
+		System.out.println("Loan data from GUI:"+loanDetailsFromGUI);
+		if(loanDetailsFromDB.get("Loan Number").containsAll(loanDetailsFromGUI.get("Loan Number"))
+				&&loanDetailsFromDB.get("Status").containsAll(loanDetailsFromGUI.get("Status"))
+						&&loanDetailsFromDB.get("Repay Amount").containsAll(loanDetailsFromGUI.get("Repay Amount"))
+						&&loanDetailsFromDB.get("Effective Date").containsAll(loanDetailsFromGUI.get("Effective Date"))
+						&&loanDetailsFromDB.get("Loan Amount").containsAll(loanDetailsFromGUI.get("Loan Amount")))
+			Reporter.logEvent(Status.PASS, "Validate Loan data on details page for selected participant from DB in terms of "
+					+ "Effective date,Loan amount,Status,Repay Amount,Loan Number.", "Data is validated and found to be proper.", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Validate Loan data on details page for selected participant from DB in terms of "
+				+ "Effective date,Loan amount,Status,Repay Amount,Laon Number.", "Data is validated and it is not matching with GUI."
+						+ "Please check manually once.", true);
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method validates Employee loan account data under Employee Loan Account Information section.</pre>
+ * @author smykjn
+ * @Date 4th-May-2017
+ */
+public void validateEmpLoanAccountInformation()
+{
+	List<String> expColumn = Arrays.asList(Stock.GetParameterValue("ExpLoanAccountDetailColumn").split(","));
+	boolean isDisplayed = false;
+	Map<String,String> actDetailsDB  = new HashMap<String,String>();
+	Map<String,Date> actDetailsDB_Date  = new HashMap<String,Date>();
+	Map<String,String> actDetailsGUI  = new HashMap<String,String>();
+	Map<String,Date> actDetailsGUI_Date  = new HashMap<String,Date>();
+	try{
+		String loanNumber = loanDataRowsOnDetailsPage.get(0).findElement(By.tagName("a")).getText();
+		Web.clickOnElement(loanDataRowsOnDetailsPage.get(0).findElement(By.tagName("a")));
+		do{
+			Thread.sleep(3000);
+		}while(!empLoanAccntNumber.getText().split(":")[0].trim().contains(loanNumber));
+		for(int i=0;i<acctDetailColumn.size();i++){
+			List<WebElement> labels_1 = loanAcctInfoRows.findElements(By.xpath(".//td["+(i+1)+"]//span[text()!=''][1]"));
+			System.out.println("Size of columns:"+labels_1.size());
+			if(CommonLib.isAllHeadersDisplayed(labels_1, expColumn))
+				{isDisplayed=true;}
+			else
+				{isDisplayed = false;break;}
+			
+		}
+		if(isDisplayed)
+			Reporter.logEvent(Status.PASS, "Validate all expected labels under Loan account information section is displayed."+expColumn,"" 
+					+"All expected labels are displayed", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate all expected labels under Loan account information section is displayed."+expColumn,"" 
+					+"All expected labels are not displayed", true);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmpAcctDetails")[0],Stock.getTestQuery("getEmpAcctDetails")[1], ssn,loanNumber);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		while(queryResultSet.next())
+		{
+			actDetailsDB_Date.put("Effective Date",simpleDateFormat.parse(queryResultSet.getString("EFFDATE")));
+			actDetailsDB_Date.put("First Due Date",simpleDateFormat.parse(queryResultSet.getString("FIRST_DUE_DATE")));
+			actDetailsDB_Date.put("Maturity Date",simpleDateFormat.parse(queryResultSet.getString("MATURITY_DATE")));
+			actDetailsDB.put("Interest Rate",queryResultSet.getString("FIXED_INT_RATE"));
+			actDetailsDB.put("Loan Term",queryResultSet.getString("LOAN_TERM"));
+		}
+		System.out.println("Map obtained from DB:"+actDetailsDB);
+		
+		actDetailsGUI_Date.put("Effective Date",simpleDateFormat.parse(loanEffDate.getText().split(":")[1].trim()));
+		actDetailsGUI_Date.put("First Due Date",simpleDateFormat.parse(loanFstDueDate.getText().split(":")[1].trim()));
+		actDetailsGUI_Date.put("Maturity Date",simpleDateFormat.parse(loanMatDate.getText().split(":")[1].trim()));
+		actDetailsGUI.put("Interest Rate",loanIntRate.getText().split(":")[1].trim());
+		actDetailsGUI.put("Loan Term",loanTerm.getText().trim().split(":")[1].trim().split("\\s+")[0].trim());
+		System.out.println("Map obtained from GUI:"+actDetailsGUI);
+		
+		if(actDetailsDB.equals(actDetailsGUI)&&actDetailsDB_Date.equals(actDetailsGUI_Date))
+			Reporter.logEvent(Status.PASS, "Validate Employee Loan account information.", "Account information is validated and proper.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Validate Employee Loan account information.", "Account information is validated and not proper.", true);
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+@FindBy(linkText="Return to employee overview")
+private WebElement returnToEmpPageLink;
+
+/**
+ * <pre>This method validates Days Late and payments remaining 
+ * field under Employee loan Account information section.</pre>
+ * @author smykjn
+ * @Date 5th-May-2017
+ * @return void
+ */
+public void validateDaysLateAndPayRemainingField()
+{
+	List<Date> unPaidDueDates = new ArrayList<Date>();
+	String loanNumber;
+	try{
+		int counter =0;
+		do{
+			loanNumber= loanDataRowsOnDetailsPage.get(counter).findElement(By.tagName("a")).getText();
+			System.out.println("Loan number:"+loanNumber);
+			Web.clickOnElement(loanDataRowsOnDetailsPage.get(counter).findElement(By.tagName("a")));
+			do{
+				Thread.sleep(2000);
+			}while(!empLoanAccntNumber.getText().split(":")[0].trim().contains(loanNumber));
+			counter++;
+		}while(daysLateField.getText().trim().equals("N/A")&&counter<loanDataRowsOnDetailsPage.size());
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUnpaidDueDates")[0],
+				Stock.getTestQuery("getUnpaidDueDates")[1],ssn,loanNumber);
+		int payRemainingDB = DB.getRecordSetCount(queryResultSet);
+		while(queryResultSet.next())
+		{
+			unPaidDueDates.add(queryResultSet.getDate("DUE_DATE"));
+		}
+		int daysLate = Integer.parseInt(daysLateField.getText().trim());
+		int payRemainingUI = Integer.parseInt(payRemaining.getText().split(":")[1].trim());
+		System.out.println("Pay remaining:"+payRemainingUI);
+		TimeZone zone = TimeZone.getTimeZone("MST");
+		Calendar present = Calendar.getInstance(zone);
+	    present.setTime(present.getTime());
+	    Calendar past = Calendar.getInstance();
+	    past.setTime(unPaidDueDates.get(0));
+	    int days = 0;
+	    while((past.before(present))||past.equals(present)){
+	    	
+	        past.add(Calendar.DAY_OF_MONTH, 1);
+	        days++;
+	     } 
+	    System.out.println("Number of Days:"+(days-1));
+	    if((days-1)==daysLate)
+	    	Reporter.logEvent(Status.PASS, "Validate Days late field as 'Current date-first unpaid/partial due date'","" 
+	    			+"Days late field is having value as per calculation.", false);
+	    else
+	    	Reporter.logEvent(Status.FAIL, "Validate Days late field as 'Current date-first unpaid/partial due date'","" 
+	    			+"Days late field is not having value as per calculation.", true);
+	    
+	    if(payRemainingUI==payRemainingDB)
+	    	Reporter.logEvent(Status.PASS, "Validate payments remaining field as number of unpaid/partial payments record.","" 
+	    			+"payments remaining field is having value as per calculation.", false);
+	    else
+	    	Reporter.logEvent(Status.FAIL, "Validate payments remaining field as number of unpaid/partial payments record.","" 
+	    			+"payments remaining field is not having value as per calculation.", true);
+	    Web.clickOnElement(returnToEmpPageLink);
+	    Web.waitForPageToLoad(Web.getDriver());
+	    Web.getDriver().switchTo().defaultContent();
+	    Web.getDriver().switchTo().frame(employeeSearchFrame);
+	    Web.waitForElement(txtOverview);
+	    if(txtOverview.isDisplayed())
+	    	Reporter.logEvent(Status.PASS, "Click on Retrun to overview link.","" 
+	    			+"Employee overview page is displayed.", false);
+	    else
+	    	Reporter.logEvent(Status.FAIL, "Click on Retrun to overview link.","" 
+	    			+"Employee overview page is not displayed.", true);
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+
+
 
 
 

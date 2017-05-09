@@ -2,6 +2,17 @@
 	<DateTime value="10/6/2016 7:08:42 PM"></DateTime>
 	<Module name="Program"></Module>
 	<Module name="plan">
+		<TestCase name="SIT_PSC_Plan_messaging_confirmation_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
 		<TestCase name="Plan_Search_Redirection_Plan_Summary_Page">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
@@ -1670,6 +1681,8 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="ExpectedElements" value="Active loans,Max loans allowed,Minimum amount,Maximum amount" />
+				<parameter name="ExpectedLoanDetailHeaders" value="Loan number,Effective date,Loan amount,Status,Repay amount,Principal balance,Principal due,Interest due,Total due" />
+				<parameter name="ExpLoanAccountDetailColumn" value="Effective date,First due date,Maturity date,Interest rate,Loan term,Current outstanding balance,Repay frequency,Original loan amount,Payments remaining,Status,Paid off date,Days late,Default indicator,Default date"/>
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -2109,7 +2122,14 @@ where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= 
 and pa.ind_id = la.ind_id group by pa.ind_id 
 having count(pa.ind_id) > 5) order by ssn desc " />
 <parameter QueryName="getLoanDetail" DB="ISISDB_QA"
-Query="select effdate, loan_amt, status_code, repay_amt from loan_acct where ind_id in (select id from individual where ssn=?) 
-and status_code in ('P','A') order by effdate desc " />
+Query="select inlnag_seqnbr ,to_char(effdate,'MM/DD/YYYY') effdate, to_char(loan_amt,'999999999999999.00') loan_amt, status_code, to_char(repay_amt,'999999999999999.00') repay_amt from loan_acct where ind_id in (select id from individual where ssn=?) 
+and status_code in ('P','A') order by to_date(effdate,'mm/dd/yyyy') desc " />
+<parameter QueryName="getEmpAcctDetails" DB="ISISDB_QA"
+Query="select to_char(effdate,'MM/dd/yyyy') effdate, to_char(first_due_date,'MM/dd/yyyy') first_due_date, to_char(maturity_date,'MM/dd/yyyy') maturity_date,
+fixed_int_rate, loan_term, orig_loan_amt, status_code,default_ind from loan_acct where ind_id in
+(select id from individual where ssn=?) and inlnag_seqnbr=?" />
+<parameter QueryName="getUnpaidDueDates" DB="ISISDB_QA"
+Query="select due_date from loan_assess where ind_id 
+in(select id from individual where ssn=?)and status_code in ('UNPAID','PARTIAL') and inlnag_seqnbr=? order by due_date asc" />
 </Module>
 </TestData>

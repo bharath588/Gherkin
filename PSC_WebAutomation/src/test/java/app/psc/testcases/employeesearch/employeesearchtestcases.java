@@ -2049,6 +2049,13 @@ try {
 		employeesearch.searchPPTWithLoan();
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.validateLoanSection_1();
+		employeesearch.compareLoanDataWithDB();
+		employeesearch.validateLoanEffDateOrder();
+		employeesearch.validateLoanDetailPage_1();
+		employeesearch.validateLoanDetailPage_2();
+		employeesearch.validateEmpLoanAccountInformation();
+		employeesearch.validateDaysLateAndPayRemainingField();
+		employeesearch.logoutFromApplication();
 		
 } catch (Exception e) {
 	e.printStackTrace();

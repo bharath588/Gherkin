@@ -2,6 +2,10 @@ package framework.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import lib.DB;
@@ -390,6 +394,31 @@ public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<Str
 {
 	boolean isdisplayed = false;
 	for(WebElement header : actHeaders){
+		System.out.println("Actual Header is"+header.getText().trim());
+		if(expHeaders.contains(header.getText().replaceAll(":", "").trim()))
+		{isdisplayed = true;}
+		else
+		{isdisplayed = false;break;}
+	}	
+	return isdisplayed;
+}
+
+/**
+ * @author smykjn
+ * @param actHeaders
+ * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
+ * @param expHeaders
+ * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
+ * @return boolean
+ * <pre>This method returns true if all actual headers are present in exppcted header list.
+ * if any of the header is missing from expHeaders the returns false.</pre>
+ * @throws Exception
+ * @Date 2nd-May-2017
+ */
+public static boolean isAllHeadersDisplayedWhiteSpace(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
+{
+	boolean isdisplayed = false;
+	for(WebElement header : actHeaders){
 		System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
 		if(expHeaders.contains(header.getText().replaceAll(":", "").replaceAll("\\s+", " ").trim()))
 		{isdisplayed = true;}
@@ -399,7 +428,41 @@ public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<Str
 	return isdisplayed;
 }
 	
-	
+/**
+ * <pre>This method converts String list into Date List and sort it in descending order.</pre>
+ * @Date 3rd-May-2017
+ * @author smykjn
+ * @return boolean
+ * <pre>returns true if list is sorted in descending order else false.</pre>
+ * @throws Exception
+ * @Parameter List of WebElements
+ */
+public static boolean validateDateSorting(List<WebElement> dateStringElements) throws Exception
+{
+	boolean isSortedInDescen=false;
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	List<String> dateStringList = new ArrayList<String>();
+	List<Date> dateList = new ArrayList<Date>();
+	for(WebElement dateStringEle : dateStringElements)
+	{
+		dateStringList.add(dateStringEle.getText().trim());
+	}
+	for(String dateString : dateStringList)
+	{
+		dateList.add(simpleDateFormat.parse(dateString));
+	}
+	List<Date> dateListOriginalOrder = new ArrayList<Date>(dateList);
+	System.out.println("Copy List to another list:"+dateListOriginalOrder);
+	Collections.sort(dateList);
+	System.out.println("Natural sorting:"+dateList);
+	Collections.reverse(dateList);
+	System.out.println("Descending:"+dateList);
+	if(dateList.equals(dateListOriginalOrder))
+		isSortedInDescen=true;
+	else
+		isSortedInDescen=false;
+	return isSortedInDescen;
+}	
 	
 	
 	
