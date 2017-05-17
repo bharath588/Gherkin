@@ -463,6 +463,21 @@ public static boolean validateDateSorting(List<WebElement> dateStringElements) t
 		isSortedInDescen=false;
 	return isSortedInDescen;
 }	
+
+
+/**
+ * <pre>This method deletes all cookies.</pre>
+ * @Date 11th-May-2017
+ * @author smykjn
+ * @return void
+ * <pre>returns true if list is sorted in descending order else false.</pre>
+ * @throws Exception
+ * @Parameter List of WebElements
+ */
+public static void deleteAllCookies() throws Exception
+{
+	Web.getDriver().manage().deleteAllCookies();
+}	
 	
 	
 	

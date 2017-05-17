@@ -2,6 +2,7 @@ package app.psc.testcases.employeesearch;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -2078,7 +2079,313 @@ try {
 }
 
 
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate Employee YTD contributions sum displayed on YTD column,
+ * Paycheck contributions elements displayed in Paycheck contributions box under Account detail tab.</pre>
+ * @param itr
+ * @param testdata
+ */
+@Test(dataProvider = "setData")
+public void TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to validate Employee "
+				+"Paycheck contributions screen elements and valiate contribution type record on history window.", false);
+		employeesearch = new EmployeeSearch().get();
+		/*employeesearch.selectEmployeesForUser(Stock.getTestQuery("PaycheckContriSSNWithYTD"),
+				Stock.GetParameterValue("username"));*/
+		String ssn = Stock.GetParameterValue("SSN");
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToAccountDetailPage();
+		employeesearch.validatePaycheckContTitle();
+		employeesearch.validatePaycheckContTabs();
+		employeesearch.validateYTDTabDataWithDB();
+		employeesearch.validateTransactionHistory();
+		employeesearch.validateMoreButtonPage();
+		employeesearch.validateNoDataScenarioPayChkContribution();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate page navigation of Paycheck contribution history window.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 11th-May-2017
+ */
+@Test(dataProvider = "setData")
+public void TC42_Paycheck_Contribution_History(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate page navigation of Paycheck contribution history window.", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeBySSN("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		employeesearch.validateNavigationWhenClosingHisWindow();
+		employeesearch.logoutFromApplication();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate remember employee search selection using browser cookie.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 11th-May-2017
+ */
+@Test(dataProvider = "setData")
+public void TC43_SIT_PSC_User_Remember_Search_Employee_Selection(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate page navigation of Paycheck contribution history window.", false);
+		employeesearch = new EmployeeSearch().get();
+		//employeesearch.navigateToEmployeeTab();
+		employeesearch.validateDefaultEmpSearchOption();
+		employeesearch.validateRememberOfEmpSearchOption();
+		employeesearch.validateRememberOfEmpSearchOptionWhenPlanSwitch();
+		employeesearch.logoutFromApplication();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate fields with DB for enrollment and eligibility section.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 11th-May-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_44_Enroll_And_Eligibility_Fields_Type_Validations(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is"
+				+ " to validate fields with DB for enrollment and eligibility section.", false);
+		String ssn="";
+		employeesearch = new EmployeeSearch().get();
+		resultset = DB.executeQuery(Stock.getTestQuery("getPPtWithEnrollAndEligDetails")[0],
+				Stock.getTestQuery("getPPtWithEnrollAndEligDetails")[1],"K_"+Stock.GetParameterValue("username"));
+		while(resultset.next()){
+		ssn = resultset.getString("SSN");break;}
+		System.out.println("SSN is:"+ssn);
+		Map<String,String> dbMap =employeesearch.getEnrollAndEligDataFromDB(ssn);
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		Map<String,String> uiMap = employeesearch.getEnrollAndEligDataFromUI();
+		if(dbMap.equals(uiMap))
+			Reporter.logEvent(Status.PASS,"Compare UI data from DB for enroll and eligibility section.",""
+					+"DB data:"+dbMap+" and UI data:"+uiMap, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Compare UI data from DB for enroll and eligibility section.",""
+					+"DB data:"+dbMap+" and UI data:"+uiMap, true);
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate Add employee functionality for Autosite plan
+ * with participant enrolled into managed account.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 11th-May-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate Add employee functionality for Autosite plan.", false);
+		employeesearch = new EmployeeSearch().get();
+		/*resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getAutoSuitePlan"),""
+				+Stock.GetParameterValue("username"));*/
+		String planNumber = Stock.GetParameterValue("PlanNumber");
+		employeesearch.selectPlanFromResultset(planNumber);
+		employeesearch.navigateToAddEmpPage();
+		if(employeesearch.fillSSNForAddNewEmp())
+		{
+			employeesearch.fillNewEmpBasicInfoInvalid();
+			if(employeesearch.fillNewEmpBasicInfoValid())
+			{
+				employeesearch.fillEligibilityInfoNegativeFlow();
+				if(employeesearch.fillEligibilityInfoPositiveFlow())
+				{
+					if(employeesearch.enterIncomeData())
+					{
+						if(employeesearch.addNewEmploymentInfo())
+						{
+							employeesearch.addSubSetInfo();
+						}
+						employeesearch.addManageAccountDetailsWithManageAccntEnroll();
+					}
+				}
+			}
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>The objective of this test case is to validate Add employee functionality for Autosite plan
+ * without participant enrollment into managed account.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 11th-May-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_46_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page(int itr,
+Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate Add employee functionality for Autosite plan.", false);
+		employeesearch = new EmployeeSearch().get();
+		/*resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getAutoSuitePlan"),""
+				+Stock.GetParameterValue("username"));*/
+		String planNumber = Stock.GetParameterValue("PlanNumber");
+		employeesearch.selectPlanFromResultset(planNumber);
+		employeesearch.navigateToAddEmpPage();
+		if(employeesearch.fillSSNForAddNewEmp())
+		{
+			employeesearch.fillNewEmpBasicInfoInvalid();
+			if(employeesearch.fillNewEmpBasicInfoValid())
+			{
+				employeesearch.fillEligibilityInfoNegativeFlow();
+				if(employeesearch.fillEligibilityInfoPositiveFlow())
+				{
+					if(employeesearch.enterIncomeData())
+					{
+						if(employeesearch.addNewEmploymentInfo())
+						{
+							employeesearch.addSubSetInfo();
+						}
+						employeesearch.addManageAccountDetailsWithOutManageAccntEnroll();
+					}
+				}
+			}
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
 
 	

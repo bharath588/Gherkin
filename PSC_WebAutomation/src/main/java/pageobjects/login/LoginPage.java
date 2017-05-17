@@ -160,13 +160,11 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	public void submitLoginCredentials(String[] loginData) {
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frmLogin);
-		// common.webDriver.switchTo().frame(frmLogin);
 		Web.setTextToTextBox(this.txtUserName, loginData[0]);
 		Web.setTextToTextBox(this.txtPassword, loginData[1]);
 		Web.clickOnElement(this.btnLogin);
 		Reporter.logEvent(Status.PASS, "Submit login credentials", "Login credentials submitted successfully", false);
 		Web.getDriver().switchTo().defaultContent();
-		// driver.switchTo().defaultContent();
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {

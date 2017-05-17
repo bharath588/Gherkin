@@ -2,6 +2,7 @@ package pageobjects.homepage;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,9 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
 import java.util.Arrays;
-
 import java.util.LinkedList;
 
 import lib.Reporter;
@@ -181,7 +180,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 					invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
 					invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
 				}else{
-					//navigate to Home
+					
 				}
 			}
 			//urlJumpPage.click();
@@ -1050,9 +1049,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
 			{
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
 				Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath4)));
-				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForPageToLoad(Web.getDriver());}
 			}
 			else
 			{
