@@ -29,6 +29,7 @@ import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
+import pageobjects.userregistration.Registration;
 import core.framework.Globals;
 
 public class registrationtestcases {
@@ -2412,7 +2413,7 @@ public class registrationtestcases {
 						"'Re-Enter Password' is not displayed", false);
 			}
 			
-            String email=accSetup.getWebElementText("EMAIL ADDRESS");
+           /* String email=accSetup.getWebElementText("EMAIL ADDRESS");
             String phoneNo=accSetup.getWebElementText("MOBILE PHONE NUMBER");
            
             if(email.isEmpty()||!email.contains("@")||!email.contains(".com")){
@@ -2420,7 +2421,7 @@ public class registrationtestcases {
             }
             if(phoneNo.isEmpty()||phoneNo.length()<10){
             	Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup, "9999999999");
-            }
+            }*/
 			Web.setTextToTextBox("USERNAME", accSetup,
 					Stock.GetParameterValue("SSN") + "ABC");
 			Web.setTextToTextBox("PASSWORD", accSetup,
@@ -2446,6 +2447,7 @@ public class registrationtestcases {
 
 			Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
 			Thread.sleep(5000);
+			homePage.dismissPopUps(true, true);
 			Web.waitForElement(homePage, "Log out");
 			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")&& Web.isWebElementDisplayed(homePage, "Retirement income");
 					if (isDisplayed) {
@@ -2591,6 +2593,250 @@ public class registrationtestcases {
 
 			}
 
+			// Click on Continue button
+			accLookup.clickOnFields("Continue");
+
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter participant details and click on Continue button.",
+					"Submitted participant details and clicked on Continue button",
+					false);
+			Thread.sleep(5000);
+			// Verify set up your account page is displayed
+			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
+			
+			if (hdrBlockText == null) {
+				
+				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				isMatching = Web
+						.VerifyText(
+								"Create username and password",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'Create username and password' header is displayed",
+							"User successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Create username and password' header is displayed",
+							"'Create username and password' header is Not displayed", true);
+				} 
+			} else {
+				isMatching = Web
+						.VerifyText(
+								"We found you!\nVerification codes for enhanced security will be sent to the email address or phone number you provide below.",
+								hdrBlockText, true);
+				if (isMatching) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'We found you!' header is displayed",
+							"user successfully navigated to the Account Setup page",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'We found you!' header is displayed",
+							"We found you! Header is not displayed", true);
+				}
+			}
+
+			// Verify Provide contact information Header
+			hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+			isMatching = Web.VerifyText("Provide contact information",
+					hdrBlockText, true);
+			if (isMatching) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is displayed",
+						false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Contact Information' header is displayed",
+						"Provide contact information Header is not displayed",
+						false);
+			}
+
+			// Verify 'Email Address' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "EMAIL ADDRESS")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Email Address' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
+
+			// Verify 'Mobile Phone Number' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "MOBILE PHONE NUMBER")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Mobile Phone Number' text field is displayed",
+						"'Email Address' is not displayed", false);
+			}
+			// Verify 'Username' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "USERNAME")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Username' text field is displayed",
+						"'Username' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Username' text field is displayed",
+						"'Username' is not displayed", false);
+			}
+
+			// Verify 'Password' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "PASSWORD")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Password' text field is displayed",
+						"'Password' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Password' text field is displayed",
+						"'Password' is not displayed", false);
+			}
+
+			// Verify 'Re-Enter Password' field is displayed
+			if (Web.isWebElementDisplayed(accSetup, "RE-ENTER PASSWORD")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Re-Enter Password' text field is displayed",
+						"'Re-Enter Password' field is displayed", false);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Re-Enter Password' text field is displayed",
+						"'Re-Enter Password' is not displayed", false);
+			}
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup,
+					Stock.GetParameterValue("SSN") + "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(5000);
+			objAuth.selectCodeDeliveryOption(Stock
+					.GetParameterValue("codeDeliveryOption"));
+			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
+					.equalsIgnoreCase("EMAIL")) {
+				verificationCode = objAuth.getVerificationCode(false);
+			}
+			objAuth.submitVerificationCode(verificationCode, false, false);
+
+			Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
+			Thread.sleep(5000);
+			homePage.dismissPopUps(true, true);
+			Web.waitForElement(homePage, "Log out");
+			isDisplayed = Web.isWebElementDisplayed(homePage, "Log out")
+					&& Web.isWebElementDisplayed(homePage, "Retirement income");
+			if (isDisplayed) {
+				Reporter.logEvent(Status.PASS,
+						"Verify user is on landing page",
+						"user is navigated to landing page", true);
+				Web.clickOnElement(homePage, "LOGOUT");
+			} else if (Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify user is on landing page",
+						"user is navigated to MyACCOUNTS page", true);
+				Web.clickOnElement(homePage, "LOGOUT");
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify user is on landing page",
+						"user is not navigated to Landing page", true);
+			}
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+				ExecuteQuery.UnRegisterParticipant(SSN);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void NPDIRegistration(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"),
+					Stock.GetParameterValue("ga_PlanId"));
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			SSN = Stock.GetParameterValue("SSN");
+			String hdrBlockText;
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration rigistration =new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup(accLookup);
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			LandingPage homePage = new LandingPage(objAuth);
+			// Steps
+			// Step 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			boolean isMatching = false;
+			String verificationCode = null;
+			boolean isDisplayed = false;
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 - Click on "I have a PIN" or "I do not have a PIN" tab
+			accLookup.clickOnFields(Stock.GetParameterValue("TabName"));
+
+			// Step 4 - Verify user is on opted tab
+			if (accLookup.getActiveTabName().trim()
+					.equalsIgnoreCase(Stock.GetParameterValue("TabName"))) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify user is on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						"User is on \"" + Stock.GetParameterValue("TabName")
+								+ "\" tab", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify user is on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						"User is not on \""
+								+ Stock.GetParameterValue("TabName") + "\" tab",
+						true);
+			}
+
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),  Stock.GetParameterValue("planEnrollmentCode"));
 			// Click on Continue button
 			accLookup.clickOnFields("Continue");
 

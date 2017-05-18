@@ -145,6 +145,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		if (fieldName.trim().equalsIgnoreCase("Prior plan contributions")) {
 			return this.lnkPriorPlanContributions;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Left Navigation Bar")) {
+			return this.weLeftNavSection;
+		}
 
 		return null;
 	}

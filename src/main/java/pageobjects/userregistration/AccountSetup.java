@@ -2,6 +2,7 @@ package pageobjects.userregistration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
@@ -58,7 +59,9 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	// @FindBy(xpath=".//*[@id='registration-form']/div[4]/span[1]") private
 	// WebElement lblUserNameErrMsg;
 	@FindBy(xpath = ".//*[contains(@for,'password') and ./ng-message]")
-	private WebElement lblPasswordErrMsg;
+	private WebElement lblPasswordErrMsg1;
+	@FindBy(xpath = ".//*[contains(@for,'password') and ./ng-message]")
+	private List<WebElement> lblPasswordErrMsgs;
 	// .//*[@id='registration-form']/ng-include[2]/div[2]/ng-messages
 	// @FindBy(xpath=".//*[@id='registration-form']/div[5]/span[1]") private
 	// WebElement lblPasswordErrMsg;
@@ -198,7 +201,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 
 		// ERR_PASSWORD
 		if (fieldName.trim().equalsIgnoreCase("ERR_PASSWORD")) {
-			return this.lblPasswordErrMsg;
+			return this.lblPasswordErrMsg1;
 		}
 
 		// RE-ENTER PASSWORD
@@ -734,8 +737,12 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		// Enter a letter 'a' in Password and verify in-line error messages
 		this.txtPassword.clear();
 		this.txtPassword.sendKeys("a");
+		actErrorText="";
 		Thread.sleep(3000);
-		actErrorText = this.lblPasswordErrMsg.getText();
+		for(int i=0;i<lblPasswordErrMsgs.size();i++){
+			actErrorText=actErrorText+lblPasswordErrMsgs.get(i).getText().trim()+"\n";
+		}
+		//actErrorText = this.lblPasswordErrMsg.getText();
 		
 		// Verify 'At least eight characters' error message is displayed
 		if (actErrorText.contains("Must be 8 - 16 characters\nMust include 2 of these 3:\nUppercase letter\nNumber\nSpecial character")) {
@@ -758,8 +765,11 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
 		}
-
-		actErrorText = this.lblPasswordErrMsg.getText();
+		actErrorText="";
+		for(int i=0;i<lblPasswordErrMsgs.size();i++){
+			actErrorText=actErrorText+lblPasswordErrMsgs.get(i).getText().trim()+"\n";
+		}
+		//actErrorText = this.lblPasswordErrMsg.getText();
 		// Verify 'At least one number' error message is displayed
 		if (actErrorText
 				.contains("Password is required\nMust be 8 - 16 characters\nMust include 3 of these 4:\nUppercase letter\nLowercase letter\nNumber\nSpecial character\nMust not match the username")) {

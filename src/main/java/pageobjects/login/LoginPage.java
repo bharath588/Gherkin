@@ -6,6 +6,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebDriver;
@@ -122,14 +123,25 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void isLoaded() throws Error {
 		//Assert.assertTrue(Web.getDriver().getCurrentUrl().contains(Common.getSponser()),"Login Page is Not Loaded");
-		if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg))
-		Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");	    
-		else{
-			Assert.assertTrue(false);
+		try {
+			if(!Web.isWebElementDisplayed(sessionTimeOutErrMsg)){
+				
+			if(verifyAccuCodeisSame())
+			Assert.assertTrue(Web.isWebElementDisplayed(txtPassword),"Login Page is Not Loaded\n");	    
+			else{
+				Assert.assertTrue(false);
+			}
+			}
+			else{
+				Assert.assertTrue(false);			
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		String accuCode = null;
-		 Web.waitForElement(btnDismiss);
-		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss, true);
+		/* Web.waitForElement(btnDismiss);*/
+		boolean isElementPresent = Web.isWebElementDisplayed(btnDismiss);
 		if (isElementPresent)
 			btnDismiss.click();
 		 
@@ -166,7 +178,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		// lib.Web.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
 		// lib.Web.getDriver().get(Stock.getConfigParam("AppURL"));
-		if (Stock.globalTestdata.containsKey("ACCUCODE")
+		if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("ACCUCODE")
 				&& Stock.GetParameterValue("AccuCode") != null) {
 
 			url = Stock.getConfigParam(
@@ -194,7 +206,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		 }		
 		 else
 		 {	
-		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg,true))
+		 if(Web.isWebElementDisplayed(sessionTimeOutErrMsg))
 		 {
 			 Web.getDriver().navigate().to(url);
 			 Web.getDriver().navigate().refresh();
@@ -698,6 +710,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 	 		Web.waitForPageToLoad(Web.getDriver());
 
+	}
+	
+	public boolean verifyAccuCodeisSame()
+			throws InterruptedException {
+		boolean isMatching = false;
+		String accuCode = null;
+		String accucodeFromTestData = null;
+		try {
+			accuCode = Web.getDriver().getCurrentUrl().split("=")[1];
+			if (Stock.globalTestdata.get(Thread.currentThread().getId())
+					.containsKey("ACCUCODE")
+					&& Stock.GetParameterValue("AccuCode") != null) {
+				accucodeFromTestData = Stock.GetParameterValue("AccuCode");
+			} else {
+				accucodeFromTestData = Common.GC_DEFAULT_SPONSER;
+			}
+		
+		if (accuCode.equalsIgnoreCase(accucodeFromTestData)) {
+			isMatching = true;
+		} 
+		} catch (Exception e) {
+			isMatching = false;
+		}
+		return isMatching;
 	}
 
 }

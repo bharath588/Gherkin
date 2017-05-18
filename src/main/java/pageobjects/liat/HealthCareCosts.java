@@ -259,6 +259,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		Web.clickOnElement(lblHelathCareCosts);
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
+		if(!Web.isWebElementDisplayed( lnkMedicare, true))
 		Web.clickOnElement(btnPersonalize);
 		if(Web.isWebElementDisplayed( lnkMedicare, true)){
 			Thread.sleep(5);

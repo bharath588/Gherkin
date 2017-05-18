@@ -61,6 +61,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	private WebElement lblMyAccounts;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
+	@FindBy(linkText="Guidance")
+	private WebElement lnkGuidance;
 
 	/**
 	 * Empty args constructor
@@ -162,7 +164,20 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (Web.isWebElementDisplayed(lnkCancelGoalSetup)) {
 			this.lnkCancelGoalSetup.click();
 		}
-
+		if(!Web.isWebElementDisplayed(lblUserName, true)){
+			String url=Web.getDriver().getCurrentUrl();
+			url=url.concat("?accu=Empower");
+			Web.getDriver().get(url);
+			Web.getDriver().navigate().refresh();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -237,6 +252,10 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE")) {
 			return this.btnContinue1;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("GUIDANCE")) {
+			return this.lnkGuidance;
 		}
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
@@ -342,5 +361,16 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Method to Click on Guidance Link
+	 * 
+	 * 
+	 */
+	public void clickOnGuidanceLink() {
+		Web.waitForElement(lnkGuidance);
+		if ( Web.isWebElementDisplayed(lnkGuidance))
+			Web.clickOnElement(lnkGuidance);
 	}
 }

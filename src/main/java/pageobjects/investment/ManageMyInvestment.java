@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -31,6 +32,7 @@ import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.balance.Balance;
 import pageobjects.general.LeftNavigationBar;
+import pageobjects.landingpage.LandingPage;
 
 public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
@@ -249,7 +251,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label]//input") private List<WebElement> inpInvestmentOptionFutureAllocation;
 	
 	@FindBy(xpath = "//tr[contains(@ng-repeat,'fund in currentFunds')]//td//a") private List<WebElement> txtCurrentFundsforChangeFutureFlow;
-
+	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Review Your Changes']]")
 	private WebElement hdrReviewYourChanges;
 	
@@ -276,10 +278,48 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//div[@class='row allocation-content']//p//strong") private WebElement lblConfirmationNoFutureFund;
 	
+	@FindBy(xpath = "//button[@id='target-year-fund-link']") private WebElement btnChooseTargetDateFund;
+	
+	@FindBy(xpath = "//h1[text()[normalize-space()='Select a target date fund']]")
+	private WebElement txtSelectTargetDateFund;
+	
+	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund')][./td[@class='allocation-fund-name-container'][not(span)]]//td//input")
+	private List<WebElement> inpTargetDateFund;
+	
+	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund')][./td[@class='allocation-fund-name-container'][not(span)]]//td[@class='allocation-fund-name-container']")
+	private List<WebElement> txtTargetDateFund;
+	
+	@FindBy(xpath = "//a[@id='submitButton']")
+	private WebElement btnContinueToTargetDateFund;
+	
+	@FindBy(xpath = "//button[@id='target-year-fund-link']//span[text()[normalize-space()='Current']]")
+	private WebElement lblCurrentTagetDateFund;
+
+	@FindBy(xpath = "//span[./span[text()[normalize-space()='Expand sources']]]")
+	private WebElement lnkExpandSources;
+	
+	@FindBy(xpath = "//span[./span[text()[normalize-space()='Collapse sources']]]")
+	private WebElement lnkCollapseSources;
+	
+	@FindBy(xpath = "//button[@id='risk-based-fund-link']") private WebElement btnChooseRiskBasedFund;
+	
+	@FindBy(xpath = "//h1[text()[normalize-space()='Select a risk-based fund']]")
+	private WebElement txtSelectRiskBasedFund;
+	
+	@FindBy(xpath = "//button[@id='risk-based-fund-link']/span[text()[normalize-space()='Current']]")
+	private WebElement currentFlagRiskBasedFund;
+	
+	@FindBy(xpath = "//div[contains(@class,'alert-warning')]//p")
+	private WebElement allertRiskBasedFund;
+	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
-	
+	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds')][./td/a[contains(text(),'Investment Option')]]//td[2]";
+	String slider="//input[contains(@aria-label,'Investment Option')]";
+	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
+	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
+	String choice=null;
 	/**
 	 * Empty args constructor
 	 * 
@@ -296,6 +336,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	 */
 	public ManageMyInvestment(LoadableComponent<?> parent) {
 		this.parent = parent;
+		
 		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
@@ -303,7 +344,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
-		//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
+		/*//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
 		String ssn = Stock.GetParameterValue("userName");
 		String userFromDatasheet = null;
 		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
@@ -326,10 +367,23 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		
 		String userLogedIn = this.lblUserName.getText();
-		
-		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments),"View/Manage MyInvestments Page is Not Loaded");
+		*/
+		if(Common.verifyLoggedInUserIsSame()) {
+			
+			if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("NAVIGATEFROM")){
+				
+				if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("GuidancePage"))	{
+					
+					Assert.assertTrue(lib.Web.isWebElementDisplayed(txtHowWouldLikeToInvest),"Guidance Page is Not Loaded");
+					
+				}
+				if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LeftNav")){
+					Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments),"View/Manage MyInvestments Page is Not Loaded");
+				}
+				
+			}else
+				Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments),"View/Manage MyInvestments Page is Not Loaded");
+				
 		} else {
 			
 			this.lnkLogout.click();
@@ -342,12 +396,32 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@Override
 	protected void load() {
 		this.parent.get();
+		if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("NAVIGATEFROM")){
+			if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("GuidancePage"))	{
+				((LandingPage) this.parent).clickOnGuidanceLink();
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.isWebElementDisplayed(txtHowWouldLikeToInvest,true);
+			}
+			else if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LIATPage"))	{
+			//TODO
+			}
+			else if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LeftNav")){
+				((LeftNavigationBar) this.parent)
+				.clickNavigationLink("View/Manage my investments");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.isWebElementDisplayed(lblMyInvestments,true);	
+			}
+		}else{
+			
 		((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/Manage my investments");
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
-		lib.Web.isWebElementDisplayed(lblMyInvestments,true);	
-
+		Web.isWebElementDisplayed(lblMyInvestments,true);	
+	
+		}
 	}
 
 	private WebElement getWebElement(String fieldName) {
@@ -470,7 +544,38 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Link Add/View All Funds")) {
 			return this.lnkAddViewAllFundsFuture;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Choose Target Date Fund")) {
+			return this.btnChooseTargetDateFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Select Target Date Fund")) {
+			return this.txtSelectTargetDateFund;
+		}
 		
+		if (fieldName.trim().equalsIgnoreCase("Select Target Date Fund")) {
+			return this.txtSelectTargetDateFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Current Flag Target Date Fund")) {
+			return this.lblCurrentTagetDateFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Expand Sources")) {
+			return this.lnkExpandSources;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Collapse Sources")) {
+			return this.lnkCollapseSources;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Choose Risk Based Funds")) {
+			return this.btnChooseRiskBasedFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Select Risk Based Fund")) {
+			return this.txtSelectRiskBasedFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Current Flag Risk Based Fund")) {
+			return this.currentFlagRiskBasedFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Risk Based Fund Allert Message")) {
+			return this.allertRiskBasedFund;
+		}
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -524,7 +629,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					+ " option not displayed", true);
 	}
 
-	public void rebalanceInvestment(String frequency, String setupDate,
+	public  void rebalanceInvestment(String frequency, String setupDate,
 			String percent) {
 		Web.waitForElement(iframeLegacyFeature);
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
@@ -1298,14 +1403,14 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 
 		if (isDisplayed) {
 
-			Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\'  is displayed",
-					fieldName + " is displayed", false);
+			Reporter.logEvent(Status.PASS, "Verify Text Field \'"+fieldName+"\'  is displayed",
+					"Text Field \'"+fieldName+"\' is displayed", false);
 			isDisplayed = true;
 
 		} else {
 			Reporter.logEvent(Status.FAIL,
-					"Verify \'"+fieldName+"\' is displayed", fieldName
-							+ " is not Displayed", false);
+					"Verify Text Field \'"+fieldName+"\'  is displayed",
+					"Text Field \'"+fieldName+"\' is not displayed", false);
 		}
 
 		return isDisplayed;
@@ -1508,19 +1613,213 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 * </pre>
 	 * 
 	 * @return Boolean - isDisplayed
+	 * @throws SQLException 
 	 */
-	public String verifyConfirmationNoupdatedInDB(String queryName,String confirmationNo,String tableName) {
+	public boolean verifyConfirmationNoUpdatedInDB(String queryName,String userName,String confirmationNo,String tableName) throws SQLException {
 	
+		boolean isRowCreated=false;
          
-		if (Web.isWebElementDisplayed(lblConfirmationNoFutureFund)) {
+		String[] sqlQuery = Stock.getTestQuery(queryName);
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				confirmationNo);
+		
+		int noOfRows = DB.getRecordSetCount(participants);
+		
+		if (noOfRows==1) {
 
-			confirmationNo=lblConfirmationNoFutureFund.getText().toString().trim();
+			Reporter.logEvent(Status.PASS,
+					"Verify New Row is Cretaed in "+tableName+ " Table with Confirmation No:"+confirmationNo,
+					"New Row is Cretaed in "+tableName+ " Table with Confirmation No:"+confirmationNo, false);
+			isRowCreated=true;
 		}
-
-		return confirmationNo;
+		else 
+			{
+			Reporter.logEvent(Status.FAIL,
+					"Verify New Row is Cretaed in "+tableName+ "Table with Confirmation No:"+confirmationNo,
+					"New Row is not Cretaed in "+tableName+ " Table with Confirmation No:"+confirmationNo, false);
+			}
+		return isRowCreated;
 
 	}
 	
 	
+	/**
+	 * <pre>
+	 * Method to select the Target year fund/Risk based Fund for Change Future Allocation-HMDI
+	 * Returns String
+	 * </pre>
+	 * 
+	 * @return String - targetYearFund
+	 */
+	public String selectTargetYearFund() {
+	
+          String targetYearFund="";
+          if (Web.isWebElementsDisplayed(inpTargetDateFund)) {
+			if(inpTargetDateFund.size()>=1){
+				Web.clickOnElement(inpTargetDateFund.get(0));
+				targetYearFund=txtTargetDateFund.get(0).getText().toString().trim();
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Target Year Fund' is selected",
+						"Selected 'Target Year Fund' is:"+targetYearFund, true);
+				
+			}
+			else 
+				{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Target Year Fund' is selected",
+						"'Target Year Fund' is not selected", true);
+				}
+			
+		}
+   Web.clickOnElement(btnContinueToTargetDateFund);
+   Web.waitForElement(hdrReviewYourChanges);
+		return targetYearFund;
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to select the Target year fund for Change Future Allocation-HMDI
+	 * Returns String
+	 * </pre>
+	 * 
+	 * @return String - percentage
+	 */
+	public String getAllocatedPecentageForFund(String fundName) {
+	
+          String percentage="";
+          WebElement txtAllocationPercent = Web.getDriver().findElement(By
+  				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
+  						fundName)));
+          percentage=txtAllocationPercent.getText().toString().trim();
+  		
+  		return percentage;
+
+	}
+	
+	/**
+	 * This Method to select the investment options and enter the percentage
+	 * @author srsksr
+	 *@param noOfInvestmentoptions
+	 *@param percent
+	 *
+	 */
+	public Map<String,String> selectInvestmentOptions(int noOfInvestmentoptions) throws InterruptedException {
+		try{
+		    mapInvestmentOptions.clear();
+			
+			int noOfRows = inpInvestmentOptionFutureAllocation.size();
+			if (noOfRows >= noOfInvestmentoptions) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment options are available",
+						"Investment options are available ", false);
+				for(int i=0;i<noOfInvestmentoptions;i++){
+					mapInvestmentOptions.put("investmentFundName"+i, txtInvestmentOption.get(i).getText());
+				
+				Web.clickOnElement(inpInvestmentOptionFutureAllocation.get(i));
+				
+				Reporter.logEvent(Status.INFO, "Selected Investment Option",
+						"Selected Investment Option : \n" 
+								+ mapInvestmentOptions.get("investmentFundName"+i) , true);
+				}
+			
+				
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment options are available",
+						noOfInvestmentoptions+"Investment options are not available ", true);
+
+			Web.clickOnElement(btnAdd);
+		
+			Web.waitForElement(lnkAddViewAllFundsFuture);
+			
+			
+		}
+		
+		catch(Exception e){
+			
+		}
+		
+		return mapInvestmentOptions;
+	}
+	
+	public void moveSlider(String fundName,int percent){
+		
+		WebElement inpSlider = Web.getDriver().findElement(By
+				.xpath(slider.replace("Investment Option",fundName)));
+		
+		    int width=inpSlider.getSize().getWidth();
+		    System.out.println("Slider width"+width);
+		    Actions move = new Actions(Web.getDriver());
+		    move.moveToElement(inpSlider, ((width*percent)/100), 0).click();
+		  
+		    move.build().perform();
+		   
+		  
+			
+		}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Submit Button is Enabled or Not
+	 * Returns boolean
+	 * </pre>
+	 * 
+	 * @return boolean - isEnabled
+	 */
+	public boolean verifySubmitButtonisEnabled() {
+	
+		boolean isEnabled=false;
+          if(btnSubmitChangeFutureFund.isEnabled())
+        	  isEnabled=true;
+  		
+  		return isEnabled;
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Click on Change My Investments Button for Particular Money Type Grouping
+	 * 
+	 * </pre>
+	 * 
+	 * @param String - moneyTypeGrouping
+	 */
+	public void clickChangeMyInvestmentButton(String moneyTypeGrouping) {
+	
+  		
+		WebElement btnChangeMyInvestment = Web.getDriver().findElement(By
+				.xpath(btnChangeInvestments.replace("Money Type Grouping",moneyTypeGrouping)));
+		Web.clickOnElement(btnChangeMyInvestment);
+		
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Money Type Grouping is Displayed in My Investments Page
+	 * Returns boolean
+	 * </pre>
+	 * 
+	 * @return boolean - isDisplayed
+	 */
+	public boolean verifyMoneyTypeGroupIsDisplayed(String moneyTypeGrouping) {
+	
+		boolean isDisplayed=false;
+		
+		try
+		{
+			WebElement textMoneyTypeGrouping = Web.getDriver().findElement(By		
+				.xpath(txtMoneyTypeGrouping.replace("Money Type Grouping",moneyTypeGrouping)));
+			if(textMoneyTypeGrouping.isDisplayed())
+				isDisplayed=true;
+		}
+          catch(NoSuchElementException e){
+        	  isDisplayed=false;
+          }
+  		
+  		return isDisplayed;
+
+	}
 	
 }

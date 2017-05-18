@@ -30,10 +30,10 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	private LoadableComponent<?> parent;
 	
 	//Objects and locators declaration
-	@FindBy(xpath=".//*[text()[normalize-space()='Registration account lookup']]/..") private WebElement lblAccLookupHeaderTextBlock;
+	@FindBy(xpath=".//*[text()[normalize-space()='Account verification']]/..") private WebElement lblAccLookupHeaderTextBlock;
 	@FindBy(linkText="I do not have a PIN") private WebElement tabIDoNotHaveaPIN;
 	@FindBy(linkText="I have a PIN") private WebElement tabIHaveaPIN;
-	@FindBy(linkText="I have a group account password") private WebElement tabIHaveaGroupAccPassword;
+	@FindBy(linkText="I have a plan enrollment code") private WebElement tabIHaveaPlanEnrollmentCode;
 	@FindBy(id="ssnInput") private WebElement txtSSN;
 	@FindBy(id="zipCodeInput") private WebElement txtZipCode;
 	@FindBy(id="lastNameInput") private WebElement txtLastName;
@@ -44,7 +44,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	@FindBy(xpath=".//*[@id='login-help-submit']") private WebElement btnContinueDoNotHavePin;
 	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
-	@FindBy(xpath=".//*[@id='noPin']/a") private WebElement btnContinueOnGroupAccPasswordTab;
+	@FindBy(id="groupIdInput") private WebElement inpPlanNumber;
+	@FindBy(id="planEnrollmentCodeInput") private WebElement inpPlanEnrollmentCode;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private WebElement lblSSNErrMsg;
 	@FindBy(xpath="//label[contains(text(),'ZIP')]//following-sibling::ng-include//ng-message[(contains(text(),'ZIP Code') or contains(text(),'Zip Code'))]") private WebElement lblZipCodeErrMsg;
 	@FindBy(xpath="//label[contains(text(),'Last Name')]//following-sibling::ng-include//ng-message[(contains(text(),'Last Name'))]") private WebElement lblLastNameErrMsg;
@@ -130,8 +131,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		}
 		
 		//I have a group account password
-		if (fieldName.trim().equalsIgnoreCase("I HAVE A GROUP ACCOUNT PASSWORD")) {
-			return this.tabIHaveaGroupAccPassword;
+		if (fieldName.trim().equalsIgnoreCase("I HAVE A Plan Enrollment Code")) {
+			return this.tabIHaveaPlanEnrollmentCode;
 		}
 		
 		//Social Security Number
@@ -197,9 +198,9 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		
 		//Continue button
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE")) {
-			if (this.getActiveTabName().equalsIgnoreCase("I have a group account password")) {
+			if (this.getActiveTabName().equalsIgnoreCase("I have a plan enrollment code")) {
 				//Continue on "I have a group account password" Tab
-				return this.btnContinueOnGroupAccPasswordTab;
+				return this.btnContinue;
 			}
 			else if(this.getActiveTabName().equalsIgnoreCase("I do not have a PIN")){
 				return this.btnContinueDoNotHavePin ;
@@ -263,11 +264,11 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 //			common.waitForElement(txtSSN);
 //		} catch (Exception e1) {
 //		}
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 		this.txtSSN.sendKeys(socialSecurityNumber);
 		this.txtPINInput.sendKeys(verificatinPIN);
 		
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 		this.btnContinue.click();
 		try {
 			Thread.sleep(3000);
@@ -282,10 +283,12 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	 * @param : NA
 	 */
 	
-	public void registerWithGroupAccPassword() {
-		this.tabIHaveaGroupAccPassword.click();
-		this.btnContinueOnGroupAccPasswordTab.click();
-		
+	public void registerWithPlanEnrollmentCode(String planNumber, String planEnrollmentCode ) {
+		Web.clickOnElement(tabIHaveaPlanEnrollmentCode);
+		Web.waitForElement(inpPlanNumber);
+		Web.setTextToTextBox(inpPlanNumber, planNumber);
+		Web.setTextToTextBox(inpPlanEnrollmentCode, planEnrollmentCode);
+		Web.clickOnElement(btnContinue);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -331,8 +334,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			activeTab = "I do not have a PIN";
 		} else if (Web.getParent(this.tabIHaveaPIN).getAttribute("class").toUpperCase().contains("ACTIVE")) {
 			activeTab = "I have a PIN";
-		} else if (Web.getParent(this.tabIHaveaGroupAccPassword).getAttribute("class").toUpperCase().contains("ACTIVE")) {
-			activeTab = "I have a group account password";
+		} else if (Web.getParent(this.tabIHaveaPlanEnrollmentCode).getAttribute("class").toUpperCase().contains("ACTIVE")) {
+			activeTab = "I have a plan enrollment code";
 		} else {
 			activeTab = "";
 		}
@@ -356,8 +359,8 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 			this.tabIDoNotHaveaPIN.click();
 		} else if(tabName.trim().equalsIgnoreCase("I have a PIN")) {
 			this.tabIHaveaPIN.click();
-		} else if(tabName.trim().equalsIgnoreCase("I have a group account password")) {
-			this.tabIHaveaGroupAccPassword.click();
+		} else if(tabName.trim().equalsIgnoreCase("I have a plan enrollment code")) {
+			this.tabIHaveaPlanEnrollmentCode.click();
 		} else {
 			return false;
 		}
