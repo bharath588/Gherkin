@@ -54,6 +54,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	
 	//Locators declaration
+	@FindBy(xpath=".//font[contains(text(),'We were unable to process your request.')]")
+	private WebElement processingError;
 	@FindBy(css = "iframe[id = 'framec']")
 	private WebElement employeeSearchFrame;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[2]/a")
@@ -184,6 +186,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement ownership;
 	@FindBy(id="sarbanesOxleyReporting")
 	private WebElement tradeMonitor;
+	@FindBy(id="IPB_CONTACT_3")
+	private WebElement radioCheck;
 	@FindBy(xpath="//div[@id='employeeInfoEditDialogId']/iframe")
 	private WebElement empInfoEditFrame;
 	@FindBy(xpath="//input[contains(@name,'UPDATE_SAVE')]")
@@ -211,6 +215,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement contctEditLink;
 	@FindBy(xpath="//*[@id='contactInfoEditDialogId']/iframe")
 	private WebElement contctInfoEditFrame;
+	@FindBy(xpath="//*[@id='contactInfoEditDialogId']//preceding-sibling::div//*[contains(text(),'close')]")
+	private WebElement closeEmpContactModalWindow;
 	@FindBy(xpath="//form[@name='ChangeGenInfo']//input/../../preceding-sibling::td//font")
 	private List<WebElement> actCtcInputLabelsWindow;
 	@FindBy(xpath="//form[@name='ChangeGenInfo']//select/../../preceding-sibling::td//font")
@@ -747,7 +753,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(id="EmployeeDeferralModule")
 	private WebElement autoSuiteAngularDeferralPage;
 	@FindBy(xpath=".//button[contains(text(),'Continue without deferrals')]")
-	private WebElement conWithoutDeffNgBtn;@FindBy(xpath="uses_models_4")
+	private WebElement conWithoutDeffNgBtn;@FindBy(id="uses_models_4")
 	private WebElement newAllocRadioButton;
 	@FindBy(xpath=".//font[@class='important_note']//li"
 			+ "[contains(text(),'First Name contains 1 or more invalid characters.  Invalid characters')]")
@@ -756,7 +762,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement addressValidation;
 	@FindBy(xpath=".//font[@class='important_note']//li[contains(text(),'Zip Code is invalid')]")
 	private WebElement zipCodeValidation;
-	
+	@FindBy(xpath=".//div[@id='enrollEligEditDialogId']//preceding-sibling::div//*[contains(text(),'close')]")
+	private WebElement enrollEligCloseWindow;
 	
 	private String transHistory = ".//*[@id='transactions']";
 	private String interactions = ".//*[@id='participantengagement']";
@@ -779,6 +786,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	String normalPart = null;
 	String transferPart=null;
 	private String ssn="";
+	public String employeeSearched = null;
 		
 	String maritalStatus = null;
 	String state1 = null;
@@ -920,7 +928,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
-		Thread.sleep(2000);
+		Web.waitForElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
 			Web.clickOnElement(btnGoEmployeeSearch);
@@ -994,11 +1002,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Employee ID");
-		Thread.sleep(3000);
+		Web.waitForElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, EmployeeID);
 		Thread.sleep(2000);
 		Web.clickOnElement(btnGoEmployeeSearch);	
-		Thread.sleep(2500);
+		CommonLib.waitForProgressBar();
+		Thread.sleep(2000);
 		Web.getDriver().switchTo().defaultContent();
 	}
 
@@ -1186,7 +1195,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
-		Web.clickOnElement(tabEmployees);
+		Web.waitForElement(tabEmployees);
+		actions = new Actions(Web.getDriver());
+		actions.moveToElement(tabEmployees).click().build().perform();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
 		actions = new Actions(Web.getDriver());
@@ -1201,7 +1212,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		
 	}
 	/**
-	 * This method used to search the employee by Division
+	 * <pre>This method used to search the employee by Division</pre>
 	 * @throws InterruptedException
 	 */
 	
@@ -1233,6 +1244,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void searchByParticipantID(String pptID) throws InterruptedException {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Participant ID");
 		Thread.sleep(3000);
@@ -1805,16 +1817,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			maritalStatus = queryResultSet.getString("MARITAL_STATUS");
 			state1 = queryResultSet.getString("STATE_CODE");
 			country1 = queryResultSet.getString("COUNTRY");
-			empInfo.put("Last Name",queryResultSet.getString("LAST_NAME"));
-			empInfo.put("First Name",queryResultSet.getString("FIRST_NAME"));
-			empInfo.put("Middle Name",queryResultSet.getString("MIDDLE_NAME"));
-			empInfo.put("Address",queryResultSet.getString("FIRST_LINE_MAILING"));
-			empInfo.put("City",queryResultSet.getString("CITY"));
-			empInfo.put("Zip",queryResultSet.getString("ZIP_CODE"));
-			empInfo.put("Home Phone Area Code",queryResultSet.getString("HOME_PHONE_AREA_CODE"));
-			empInfo.put("Home Phone Number",queryResultSet.getString("HOME_PHONE_NBR"));
-			empInfo.put("Work Phone Area Code",queryResultSet.getString("WORK_PHONE_AREA_CODE"));
-			empInfo.put("Work Phone Number",queryResultSet.getString("WORK_PHONE_NBR"));
+			empInfo.put("Last Name",queryResultSet.getString("LAST_NAME").trim());
+			empInfo.put("First Name",queryResultSet.getString("FIRST_NAME").trim());
+			empInfo.put("Middle Name",queryResultSet.getString("MIDDLE_NAME").trim());
+			empInfo.put("Address",queryResultSet.getString("FIRST_LINE_MAILING").trim());
+			empInfo.put("City",queryResultSet.getString("CITY").trim());
+			empInfo.put("Zip",queryResultSet.getString("ZIP_CODE").trim());
+			empInfo.put("Home Phone Area Code",queryResultSet.getString("HOME_PHONE_AREA_CODE").trim());
+			empInfo.put("Home Phone Number",queryResultSet.getString("HOME_PHONE_NBR").trim());
+			empInfo.put("Work Phone Area Code",queryResultSet.getString("WORK_PHONE_AREA_CODE").trim());
+			empInfo.put("Work Phone Number",queryResultSet.getString("WORK_PHONE_NBR").trim());
 			break;
 		}
 		empInfo.put("Marital Status",getMaritalStatus());
@@ -1901,7 +1913,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	}
 	
 	
-	/*
+	/**
 	 * This method validates the fields available on Employment Information modal window which is displayed when
 	 * Edit link is clicked.
 	 */
@@ -1931,12 +1943,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.FAIL, "Match employee name and ssn on employment information modal window with Employee overview page.","Employee name and ssn doesn't match.",true);
 		}
 		//To update fields.........................................
-		String dateString = m.get("Hire date:");
+		try{
+		String dateString = m.get("Term date:");
 		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
 		Date dt = dateFormat.parse(dateString);
 		Calendar calendar = Calendar.getInstance();         
 		calendar.setTime(dt);
-		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		dateFormat.format(calendar.getTime());
 		System.out.println("Date string is:"+dateFormat.format(calendar.getTime()));
 		Web.setTextToTextBox(hireDate,dateFormat.format(calendar.getTime()));
@@ -1953,7 +1966,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		CommonLib.waitForProgressBar();
-		Thread.sleep(7000);
+		Thread.sleep(5000);
 		if(expEmployeeID.getText().equals(updatedEmpID)&&expHireDate.getText().equals(dateFormat.format(calendar.getTime()))
 				&&expOfficer.getText().equals(updatedOfficer))
 		{
@@ -1963,12 +1976,20 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Reporter.logEvent(Status.FAIL, "Verify Hire date,emp id and officer fields are updated.", "mentioned fields are not updated.", true);
 		}
-		
+		}catch(Exception e){
+			
+			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(closeEditEmpntInfoWindow);
+			CommonLib.waitForProgressBar();
+		}
 		//Web.getDriver().switchTo().defaultContent();
 		//Web.getDriver().switchTo().frame(employeeSearchFrame);
 		try{
 			Web.waitForElement(empInfoEditLink);
-		Web.clickOnElement(empInfoEditLink);
+			Web.clickOnElement(empInfoEditLink);
 		}
 		catch(Exception e)
 		{
@@ -1978,6 +1999,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(empInfoEditFrame);
 		
 		//reset the fields...................................................
+		try{
 		Web.setTextToTextBox(hireDate,m.get("Hire date:"));
 		Thread.sleep(1500);
 		Web.setTextToTextBox(empId, m.get("Employee ID:"));
@@ -2016,6 +2038,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Reporter.logEvent(Status.FAIL, "Close link is displayed on employee history modal window.","Close link is not displayed.", true);
 		}
+		}catch(Exception e){
+			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(closeEditEmpntInfoWindow);
+			CommonLib.waitForProgressBar();
+		}
+	
 		Web.getDriver().switchTo().defaultContent();
 	}
 	
@@ -2026,15 +2057,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void contactInFoSectionValidation() throws Exception
 	{
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		CommonLib.waitForProgressBar();
+		//CommonLib.waitForProgressBar();
 		Web.waitForElements(fNLNMILink);
 		Web.clickOnElement(fNLNMILink.get(0));
 		Web.waitForPageToLoad(Web.getDriver());
 		CommonLib.waitForProgressBar();
-		CommonLib.waitForProgressBar();
-		CommonLib.waitForProgressBar();
-		
-		Web.waitForPageToLoad(Web.getDriver());
 		Thread.sleep(3000);
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -2157,8 +2184,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().defaultContent();
 	}
 	
-	@FindBy(id="IPB_CONTACT_3")
-	private WebElement radioCheck;
+
 	
 	
 	/*
@@ -2186,7 +2212,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		infoFromUI.put("Country",country.getText());
 		System.out.println("Info from UI"+infoFromUI);
 		System.out.println("Info from DB"+infoFromDB);
+		try{
 		Web.clickOnElement(radioCheck);
+		}catch(Exception e){Web.clickOnElement(radioCheck);}
+		try{
 		Web.clickOnElement(save);
 		Web.waitForPageToLoad(Web.getDriver());
 		CommonLib.waitForProgressBar();
@@ -2197,6 +2226,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		else
 		{
 			Reporter.logEvent(Status.FAIL, "Validate employee basic info with DB.", "Employee info is not displayed correctly.", true);
+		}
+		}catch(Exception e){
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);
+			Web.clickOnElement(closeEmpContactModalWindow);
+			CommonLib.waitForProgressBar();
 		}
 		Web.getDriver().switchTo().defaultContent();
 	}
@@ -2236,9 +2273,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		return str;
 	}
 	
-	public String employeeSearched = null;
-	/*
-	 * This method takes user to the employee overview page
+	
+	/**
+	 * <pre>This method takes user to the employee overview page</pre>
+	 * @author smykjn
 	 */
 	public void navigateToEmployeeOverViewPage() throws Exception
 	{
@@ -2253,8 +2291,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 			else
 			{*/
-				employeeSearched = fNLNMILink.get(0).getText();
-				Web.clickOnElement(fNLNMILink.get(0));
+				employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
+				Thread.sleep(2000);
+				Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
 			//}
 		}
 		CommonLib.waitForProgressBar();
@@ -2275,8 +2314,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	
 	
 	
-	/*
-	 * This method takes user to employee's beneficiary page from Overview page
+	/**
+	 * <pre>This method takes user to employee's beneficiary page from Overview page</pre>
 	 */
 	public void navigateBeneficiaryPage() throws Exception
 	{
@@ -2311,8 +2350,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	
 	
-	/*
-	 * This method validates the DB record with UI for Beneficiary
+	/**
+	 * <pre>This method validates the DB record with UI for Beneficiary</pre>
+	 * @author smykjn
 	 */
 	public void validateBeneficiaryWithDB() throws Exception
 	{
@@ -2368,11 +2408,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 			if(beneficiaryDetails.containsKey("Mailing Name"))
 			{
-				beneficiaryDetails.put("Mailing Name"+j, benName.getText().trim());
+				beneficiaryDetails.put("Mailing Name"+j, benName.getText().replace(" ","").trim());
 			}
 			else
 			{
-				beneficiaryDetails.put("Mailing Name", benName.getText().trim());
+				beneficiaryDetails.put("Mailing Name", benName.getText().replace(" ","").trim());
 			}
 		}
 		System.out.println(beneficiaryDetails.entrySet());
@@ -2617,7 +2657,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	{
 		String ssn=null;
 		queryResultSet = DB.executeQuery(Stock.getTestQuery("getSSNForPaycheckContribution")[0],
-				Stock.getTestQuery("getSSNForPaycheckContribution")[1]);
+				Stock.getTestQuery("getSSNForPaycheckContribution")[1],"K_"+Stock.GetParameterValue("username"));
 		while(queryResultSet.next())
 		{
 			ssn = queryResultSet.getString("SSN");
@@ -2645,6 +2685,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		return terminatedEmp;
 	}
+	/**
+	 * @author smykjn
+	 * @return Map<String,String>
+	 * @throws SQLException
+	 */
 
 	public Map<String,String> beforeRehiring() throws SQLException
 	{
@@ -2658,7 +2703,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			employmentDetailsBeforeRehiring.put("ELIGIBILITY_IND",queryResultSet.getString("ELIGIBILITY_IND"));
 			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATE",queryResultSet.getString("PARTICIPATION_DATE"));
 			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("PARTICIPATION_DATE_SOURCE"));
-			employmentDetailsBeforeRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("ELIGIBILITY_DATE"));
+			employmentDetailsBeforeRehiring.put("ELIGIBILITY_DATE",queryResultSet.getString("ELIGIBILITY_DATE"));
 			break;
 		}
 		System.out.println(employmentDetailsBeforeRehiring);
@@ -2666,6 +2711,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		
 	}
 	
+	/**
+	 * @author smykjn
+	 * @throws Exception
+	 * @throws SQLException
+	 */
 	public void AfterRehiring() throws Exception,SQLException
 	{
 		
@@ -2678,7 +2728,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			employmentDetailsAfterRehiring.put("ELIGIBILITY_IND",queryResultSet.getString("ELIGIBILITY_IND"));
 			employmentDetailsAfterRehiring.put("PARTICIPATION_DATE",queryResultSet.getString("PARTICIPATION_DATE"));
 			employmentDetailsAfterRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("PARTICIPATION_DATE_SOURCE"));
-			employmentDetailsAfterRehiring.put("PARTICIPATION_DATA_SOURCE",queryResultSet.getString("ELIGIBILITY_DATE"));
+			employmentDetailsAfterRehiring.put("ELIGIBILITY_DATE",queryResultSet.getString("ELIGIBILITY_DATE"));
 			break;
 		}
 		System.out.println(employmentDetailsAfterRehiring);
@@ -2703,8 +2753,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	}
 	
 	
-	/*
-	 * This method updates the hire date and removes the term date in process of rehiring of an employee
+	/**
+	 * <pre>This method updates the hire date and removes the term date in process of rehiring of an employee</pre>
 	 */
 	public void rehireEmployee() throws Exception
 	{
@@ -2731,6 +2781,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			hireDate.clear();
 			Web.setTextToTextBox(hireDate,newHireDate);
 			termDate.clear();
+			try{
 			Web.clickOnElement(save);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -2747,8 +2798,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.FAIL,"Delete the term date and enter new hire date.", "New hire date has not been entered.", true);
 			}
 			Web.getDriver().switchTo().defaultContent();
-			
+			}catch(Exception e){
+				Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+						+"It may be due to bad data issue.Please check manually with other data.", true);
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(employeeSearchFrame);
+				Web.clickOnElement(closeEditEmpntInfoWindow);
+				CommonLib.waitForProgressBar();
+				
+			}
 		}
+		
 		
 	}
 
@@ -2794,7 +2854,7 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 	}
 	else
 	{
-		Reporter.logEvent(Status.PASS,"Verify labels name,SSN,DOB end empid(if applicable) is displayed under overview section.", "Mentioned labels are not displayed.", true);
+		Reporter.logEvent(Status.FAIL,"Verify labels name,SSN,DOB end empid(if applicable) is displayed under overview section.", "Mentioned labels are not displayed.", true);
 	}
 	
 	String firstName=null,lastName=null,middleName=null,birthDate=null;
@@ -2873,7 +2933,8 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 	Web.clickOnElement(print);
 	Set<String> printWindow = Web.getDriver().getWindowHandles();
 	System.out.println(printWindow);
-	for(String childWindow:printWindow )
+	int count=0;
+	/*for(String childWindow:printWindow )
 	{
 		if(!parentWindow.equals(childWindow))
 		{
@@ -2890,7 +2951,33 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 			}
 		}
 		
-	}
+	}*/
+	 while(Web.getDriver().getWindowHandles().size()==1)
+     {
+            if(count==10) break;
+            Thread.sleep(500);
+            count++;
+            System.out.println("Counter : "+count);
+     }
+     System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
+     for(String newWindow : Web.getDriver().getWindowHandles())
+     {
+  	   if(!newWindow.equals(parentWindow))
+  	   {
+  		   	Web.getDriver().switchTo().window(newWindow);
+  		  if(printPriviewWindowHeader.getText().contains("THIS IS A PRINT PREVIEW"))
+			{
+				Reporter.logEvent(Status.PASS, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is displayed.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is not displayed.", true);
+			}
+ 				Web.getDriver().close();
+ 				Web.getDriver().switchTo().window(parentWindow);
+ 				break;
+  	   }
+     }
 	Web.getDriver().close();
 	Web.getDriver().switchTo().window(parentWindow);
 	Web.getDriver().switchTo().defaultContent();
@@ -2926,12 +3013,13 @@ public List<String> getQNTTypeIndividuals() throws Exception,SQLException
 	partDetails = new HashMap<String,String>();
 	queryResultSet = DB.executeQuery(Stock.getTestQuery("getQDROIndividual")[0],Stock.getTestQuery("getQDROIndividual")[1],
 			"K_"+Stock.GetParameterValue("username"));
+	int count1=0;
 	while(queryResultSet.next())
 	{
 		String ssnQ = queryResultSet.getString("SSN");
 		this.searchEmployeeBySSNAllPlans(ssnQ);
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.waitForElements(fNLNMILink);
+		Web.isWebElementsDisplayed(fNLNMILink,true);
 		if(fNLNMILink.size()>0)
 		{
 			qntTypeIndividuals.add(ssnQ);
@@ -2939,17 +3027,20 @@ public List<String> getQNTTypeIndividuals() throws Exception,SQLException
 			Web.getDriver().switchTo().defaultContent();
 			break;
 		}
+		count1++;
+		if(count1==5){break;}
 	}
 	
 	queryResultSet = DB.executeQuery(Stock.getTestQuery("getTransferIndividual")[0],Stock.getTestQuery("getTransferIndividual")[1],
 			"K_"+Stock.GetParameterValue("username"));
+	int count2=0;
 	while(queryResultSet.next())
 	{
 		String ssnT = queryResultSet.getString("SSN");
 		this.searchEmployeeBySSNAllPlans(ssnT);
 		System.out.println("after Transfer emp search.");
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.waitForElements(fNLNMILink);
+		Web.isWebElementsDisplayed(fNLNMILink,true);
 		if(fNLNMILink.size()>0)
 		{
 			qntTypeIndividuals.add(ssnT);
@@ -2957,9 +3048,11 @@ public List<String> getQNTTypeIndividuals() throws Exception,SQLException
 			Web.getDriver().switchTo().defaultContent();
 			break;
 		}
+		count2++;if(count2==5){break;}
 	}
 	queryResultSet = DB.executeQuery(Stock.getTestQuery("getNormalIndividual")[0],Stock.getTestQuery("getNormalIndividual")[1],
 			"K_"+Stock.GetParameterValue("username"));
+	int count3=0;
 	while(queryResultSet.next())
 	{
 		String ssnN = queryResultSet.getString("SSN");
@@ -2977,14 +3070,16 @@ public List<String> getQNTTypeIndividuals() throws Exception,SQLException
 			Web.getDriver().switchTo().defaultContent();
 			break;
 		}
+		count3++;if(count3==5){break;}
 	}
 	return qntTypeIndividuals;
 }
 
 
 	
-/*
- * this methos verifies the Basic Information section on employee overview page
+/**
+ * <pre>this methos verifies the Basic Information section on employee overview page</pre>
+ * @author smykjn
  */
 public void verifyBasicInformationOnOverviewPage() throws Exception
 {
@@ -3318,7 +3413,7 @@ public boolean verifyViewPageForAPlanHavingBalance() throws Exception
 	
 
 	
-	/*
+	/**
 	 * This method verifies the Edit and save functionality for Employee Basic Info section on overview page.
 	 * THis also verifies the fields to be editable on basic info modal window
 	 */
@@ -3328,9 +3423,9 @@ public boolean verifyViewPageForAPlanHavingBalance() throws Exception
 		List<String> expModalInfoLabels = Arrays.asList(Stock.GetParameterValue("ExpectedLabels").split(","));
 		boolean islabelExist = false;
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		try{
 		Web.clickOnElement(basicInfoEdit);
 		CommonLib.waitForProgressBar();
-		//Thread.sleep(3000);
 		Web.waitForElement(basicInfoEditFrame);
 		if(closeIconBasicInfoEditWindow.isDisplayed())
 		{
@@ -3384,12 +3479,20 @@ public boolean verifyViewPageForAPlanHavingBalance() throws Exception
 		{
 			Reporter.logEvent(Status.FAIL, "Verify fields on Basic info modal window.", "All Expected Fields are not displayed on modal window.", true);
 		}
+		}catch(Exception e){
+			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(closeIconBasicInfoEditWindow);
+			CommonLib.waitForProgressBar();
+		}
 	}
 	
 	
 
 
-/*
+/**
  * This method edit the few basic info and revert them back to previous values	
  */
 public void editBasicInfoAndSave() throws Exception
@@ -3433,14 +3536,19 @@ public void editBasicInfoAndSave() throws Exception
 	//update Language
 	Select selLanguage = new Select(language);
 	int value = Integer.parseInt(checkLanguage.getAttribute("value"));
-	selLanguage.selectByIndex(value+1);
+	if(checkLanguage.getText().trim().equals("ENGLISH")){
+	selLanguage.selectByVisibleText("SPANIS");
+	}else{
+		selLanguage.selectByVisibleText("ENGLISH");
+	}
 	String selectedLanguage = checkLanguage.getText();
-	
 	Web.clickOnElement(outsideAssets);
+	try{
 	Web.clickOnElement(save);
-	CommonLib.waitForProgressBar();
+	
 	Web.getDriver().switchTo().defaultContent();
 	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	CommonLib.waitForProgressBar();
 	if(selectedBirthDate.equals(updatedBirthDate.getText().trim())&&selectedGender.equals(updatedGender.getText().trim())&&selectedLanguage.equals(updatedLanguage.getText().trim())
 			&&selectedMstatus.equals(updatedMaritalStatus.getText().trim()))
 	{
@@ -3470,9 +3578,19 @@ public void editBasicInfoAndSave() throws Exception
 		
 	Web.clickOnElement(outsideAssets);
 	Web.clickOnElement(save);
+	Web.getDriver().switchTo().defaultContent();
+	this.switchToFrame();
 	CommonLib.waitForProgressBar();
 	Web.getDriver().switchTo().defaultContent();
-	
+	}catch(Exception e)
+	{
+		Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+				+"It may be due to bad data issue.Please check manually with other data.", true);
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.clickOnElement(closeIconBasicInfoEditWindow);
+		CommonLib.waitForProgressBar();
+	}
 }
 
 
@@ -3751,6 +3869,7 @@ public void validateNoPastThreeMonthDataMessage()
 }
 
 /**
+ * @author smykjn
  * This method update the Enrollment and Eligibility section and save.
  */
 public boolean editEnrollmentAndEligibilityAndSave() throws InterruptedException,Exception
@@ -3765,6 +3884,7 @@ public boolean editEnrollmentAndEligibilityAndSave() throws InterruptedException
 		isEnrollmentSectionDisplayed = true;
 		Reporter.logEvent(Status.PASS,"Validate Enrollment and eligibility section is displayed.",""
 				+"Enrollment and eligibility section is displayed.", false);
+		try{
 		Web.clickOnElement(enrolAndEligibltyEditLink);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(enrollAndEligEditFrame);
@@ -3840,13 +3960,22 @@ public boolean editEnrollmentAndEligibilityAndSave() throws InterruptedException
 			Reporter.logEvent(Status.FAIL, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
 					+  " and click on cancel.", "Changes are saved.", true);
 		}
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL,"Some error occurred.either Processing error or blank screen.",""
+					+ "this may be due to bad data.kindly check manually once.", true);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(enrollEligCloseWindow);
+		}
 	}
 	else
 	{
 		isEnrollmentSectionDisplayed = false;
 		Reporter.logEvent(Status.FAIL,"Validate Enrollment and eligibility section is displayed.",""
-				+"Enrollment and eligibility section is not displayed.", true);
+				+"Enrollment and eligibility section is not displayed.It may be due to bad data.Please check with"
+				+ " different participant.", true);
 	}
+	
 	return isEnrollmentSectionDisplayed;
 }
 
@@ -4723,7 +4852,13 @@ public void addAllocation()
 		String percentBeforeSave = "100";
 		String investOptionBeforeSave = columns.get(0).getText().trim();
 		System.out.println("Before save investment option:"+investOptionBeforeSave);
-		Web.setTextToTextBox(columns.get(3).findElement(By.tagName("input")), percentBeforeSave);
+		if(newAllocRadioButton.isDisplayed()){
+			Web.clickOnElement(newAllocRadioButton);
+			Thread.sleep(2000);
+			Web.setTextToTextBox(columns.get(3).findElement(By.tagName("input")), percentBeforeSave);
+		}else{
+			Web.setTextToTextBox(columns.get(3).findElement(By.tagName("input")), percentBeforeSave);}
+		try{
 		Web.clickOnElement(save);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
@@ -4741,6 +4876,14 @@ public void addAllocation()
 			Reporter.logEvent(Status.FAIL, "Add an investment '"+investOptionBeforeSave+"' with 100% allocation and save it.close the modal window and validate"
 					+ " allocation is updated on account detail page.", "Allocation % is not updated with investment option"+invsetOptionAfterSave, true);
 		Web.getDriver().switchTo().defaultContent();
+		}catch(Exception e){
+			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			Web.clickOnElement(allocationModalClose);
+			CommonLib.waitForProgressBar();
+		}
 	}
   catch(Exception e)
   {
@@ -4826,8 +4969,8 @@ public void insertESCCPATxnCode() throws SQLException,Exception
 				Stock.getTestQuery("insertESCCPAtxnCode")[1],uscsIDReset.get(i));
 	}
 	uscsIDReset.clear();
-	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],
-			Stock.getTestQuery("CheckPSCPAETxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("checkESCCPAtxnCode")[0],
+			Stock.getTestQuery("checkESCCPAtxnCode")[1],"K_"+Stock.GetParameterValue("username"));
 	
 	while(queryResultSet.next())
 	{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"> <!-- parallel="classes" thread-count="3"> -->
+<suite name="testsuite"><!--   parallel="classes" thread-count="3"> -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -8,7 +8,7 @@
 		<classes>
 		<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<!--  <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName" value="SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
 					 <include name="TC001_Search_Employee_For_Valid_SSN">
@@ -60,13 +60,13 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicateempid">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values" >
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicateppt">
 						</parameter>
-					</include>
-					<include name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values" >
+					</include>-->
+					<!-- <include name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values" >
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatediv">
 						</parameter>
@@ -85,8 +85,8 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include>
-					<include name="TC017_Employment_Info_Verification">
+					</include> 
+					 <include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="Employment_Info_Verification" />
 					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
@@ -94,30 +94,27 @@
 					</include>
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="Verify_Beneficiary_Info" />
-					</include>
-					<include name="TC020_Recently_Viewed_Employee">
+					</include>-->
+					<!-- <include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="Recently_Viewed_Employee" />
-					</include>
+					</include> 
 					<include name="TC021_Salary_View_And_Update">
 						<parameter name="ManualTCName" value="Salary_View_And_Update" />
 					</include> 
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="Paycheck_contribution_View" />
 					</include> 
-					<include name="TC023_EnrolmmentAndEligibility">
+					 <include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="EnrolmmentAndEligibility" />
-					</include>
-					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
-						<parameter name="ManualTCName"
-							value="Verify_Employee_Overview_Screen_Elements" />
-					</include>
-					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+					</include>-->
+					
+					<!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include>
+					</include> 
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
-					</include>
+					</include> 
 					 <include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName" value="Verify_Subset_History_Section" />
 					</include>
@@ -141,17 +138,17 @@
 					</include>
 					<include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Allocations_Reg" />
-					</include>
-					<include name="TC35_SIT_PSC_Statements_Tab">
+					</include>-->
+					<!-- <include name="TC35_SIT_PSC_Statements_Tab">
 						<parameter name="ManualTCName" value="SIT_PSC_Statements_Tab" />
-					</include>
+					</include>-->
 					<include name="TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
 						<parameter name="ManualTCName" value="SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed" />
 					</include>
 					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="SIT_PSC_Recentlyviewed_MouseOver" />
-					</include>
-					<include name="TC38_SIT_PSC_Accountdetail_Fees_Reg">
+					</include> 
+					<!-- <include name="TC38_SIT_PSC_Accountdetail_Fees_Reg">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Fees_Reg" />
 					</include> 
 					<include name="TC39_SIT_PSC_Accountdetail_Vesting_Reg">
@@ -159,11 +156,11 @@
 					</include> 
 					<include name="TC40_SIT_PSC_Accountdetail_Loans_Reg">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Loans_Reg" />
-					</include>
-					<include name="TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD">
+					</include> -->
+					<!-- <include name="TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Paycheck_Contribution_YTD" />
-					</include>
-					<include name="TC42_Paycheck_Contribution_History">
+					</include> -->
+					<!-- <include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="Paycheck_Contribution_History" />
 					</include> 
 					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
@@ -174,12 +171,16 @@
 					</include>
 					<include name="TC_46_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page">
 						<parameter name="ManualTCName" value="SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page" />
+					</include> 
+					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
+						<parameter name="ManualTCName"
+							value="Verify_Employee_Overview_Screen_Elements" />
 					</include>-->
 				</methods>
 			</class>
 			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<include name="TC006_01_Verify_Force_Login">
+					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>
@@ -264,8 +265,8 @@
 							value="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login" />
 					</include> 
 				</methods>
-			</class>
-			<class name="app.psc.testcases.plan.plansearchtestcases">
+			</class> 
+		<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					 <include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
@@ -292,7 +293,7 @@
 							value="SIT_PSC_Plan_messaging_confirmation_page" />
 					</include>
 				</methods>
-			</class>--> 
+			</class>-->
 			
 			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>

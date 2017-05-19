@@ -19,6 +19,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageobjects.accountverification.AccountVerificationPage;
+import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
 import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
@@ -850,6 +851,8 @@ public class logintestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			jp.jumpPageUIValidation();
 			jp.jumpPageSearchPlanBoxValidation();
+			HomePage homepage = new HomePage();
+			homepage.logoutPSC();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -940,6 +943,7 @@ public class logintestcases {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")
 			});
+			HomePage homePage = new HomePage().get();
 			Reporter.logEvent(Status.INFO, "Login Status", "Login is done", true);
 			Web.getDriver().switchTo().frame("framea");
 			home.isPlanListDisplayed();

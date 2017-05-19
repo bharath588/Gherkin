@@ -54,7 +54,8 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	private String[] userData;
 	private String[] userVeriData;
 	ResultSet resultset;
-
+	
+	private static String jumpageList="//*[@id='jumpPageList']/option";
 	public JumpPage() {
 		this.parent = new UserVerificationPage();
 		PageFactory.initElements(Web.getDriver(), this);
@@ -67,7 +68,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 		this.userVeriData = new String[2];		
 		PageFactory.initElements(Web.getDriver(), this);
 	}
-
+	
 	@Override
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(jumpPageHeader));
@@ -162,7 +163,8 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	public void jumpPageSearchPlanBoxValidation() throws Exception
 	{
 		Set<String> planIDs = new LinkedHashSet<String>();
-			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode")[0],Stock.getTestQuery("getAccuCode")[1],"K_"+Stock.GetParameterValue("username"));
+			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode")[0],""
+					+Stock.getTestQuery("getAccuCode")[1],"K_"+Stock.GetParameterValue("username"));
 			while(resultset.next())
 			{
 				planIDs.add(resultset.getString("GA_ID"));
@@ -170,14 +172,15 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 			}
 			for(String str : planIDs){
 				Web.setTextToTextBox(jumpPageSearchBox, str);
-				Web.waitForElement(jumpPageList);
-				if(jumpPageList.getText().contains(str))
+				WebElement option = Web.getDriver().findElement(By.xpath(jumpageList));
+				Web.waitForElement(option);
+				if(option.getText().contains(str))
 				{
-					Reporter.logEvent(Status.PASS,"Verify Search plan Box options when a valid plan number "+str+" is entered.","Plan '"+jumpPageList.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",false);
+					Reporter.logEvent(Status.PASS,"Verify Search plan Box options when a valid plan number "+str+" is entered.","Plan '"+option.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",false);
 				}
 				else
 				{
-					Reporter.logEvent(Status.FAIL,"Verify Search plan Box options when a valid plan number is "+str+" is entered.","Plan '"+jumpPageList.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",true);
+					Reporter.logEvent(Status.FAIL,"Verify Search plan Box options when a valid plan number is "+str+" is entered.","Plan '"+option.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",true);
 				}
 			}
 		}

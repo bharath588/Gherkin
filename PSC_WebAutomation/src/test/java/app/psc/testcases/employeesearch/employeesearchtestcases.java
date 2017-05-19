@@ -1027,7 +1027,7 @@ public class employeesearchtestcases {
 							try {
 								Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 								Reporter.logEvent(Status.INFO, "Testcase Description",
-										"This testcase validates general employment informations", false);
+										"This testcase updates the salary information of an employee.", false);
 								employeesearch = new EmployeeSearch().get();
 								homePage = new HomePage();
 								homePage.searchPlanWithIdOrName(employeesearch.getSSNAndGaIdForSalaryEmp()[0]);
@@ -1072,7 +1072,7 @@ public class employeesearchtestcases {
 								try {
 									Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 									Reporter.logEvent(Status.INFO, "Testcase Description",
-											"This testcase validates general employment informations", false);
+											"This testcase validates Paycheck contribution section of an employee.", false);
 									employeesearch = new EmployeeSearch().get();
 									employeesearch.searchEmployeeBySSNAllPlans(employeesearch.ssnOfPayCheckContribution());
 									employeesearch.navigateToEmployeeOverViewPage();

@@ -96,7 +96,7 @@
 		</TestCase>
 		<TestCase name="UI_Validations_On_JumpPage">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username"  value="6IUEF" />
+				<parameter name="username"  value="1INST" />
 				<parameter name="password"  value="testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
@@ -930,7 +930,7 @@
 					<parameter name="favDrink" value="testk" />
 					<parameter name="spouseMidName" value="test" />
 					<parameter name="expContactInfoLabels"
-						value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address" />
+						value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method" />
 					<parameter name="expContactInputLabelsWindow"
 						value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
 					<parameter name="expContactSelectLabelsWindow"
@@ -1036,9 +1036,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 				<parameter name="ExpectedLabels" value="Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email" />
 				<parameter name="" value=""/>
 				<parameter name="" value=""/>
@@ -1156,7 +1156,10 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="ParticipantId" value="" />
+				<parameter name="Participant ID" value="2" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_noduplicatediv">
@@ -1165,6 +1168,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ppt_planonediv">
@@ -1173,6 +1179,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ppt_planmultidiv">
@@ -1181,7 +1190,11 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
+			
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_screen_elements">
 			<Iteration Execution="Yes" id="1">
@@ -1189,6 +1202,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_sorting">
@@ -1197,6 +1213,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_pagination">
@@ -1206,6 +1225,9 @@
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="SSN" value="002143838" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_order">
@@ -1214,6 +1236,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_hyperlinks">
@@ -1230,6 +1255,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_limit">
@@ -1238,6 +1266,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_filter">
@@ -1246,6 +1277,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ssn_ext">
@@ -1254,6 +1288,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_emp_err_code">
@@ -1262,6 +1299,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_termed_employee">
@@ -1270,6 +1310,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_valid_res_termed_emp">
@@ -1278,6 +1321,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_ssn_masking" >
@@ -1286,6 +1332,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Verify_Subset_History_Section">
@@ -1693,13 +1742,22 @@ AND ai.part_allocn_ind = 'Y'
 AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR " />
 		<parameter QueryName="getEmployeeID" DB="ISISDB_DEV"
 			Query="select * from individual, employment where id in (select ind_id from part_agrmt where ga_id in 
-(select default_ga_id from users where logon_id=?)) and ssn is not null and individual.id=employment.ind_id and hire_date is not null and emp_termdate is null" />
+(select default_ga_id from users where logon_id=?)) and ssn is not null and individual.id=employment.ind_id and hire_date is not null and emp_termdate is not null" />
 		<parameter QueryName="getEmployeeInfo" DB="ISISDB_DEV"
-			Query="select i.ssn, i.first_name, i.last_name,i.marital_status,i.middle_name,a.first_line_mailing, 
-a.scnd_line_mailing, a.city, a.zip_code, a.state_code, a.country, 
-i.home_phone_area_code, i.home_phone_nbr, i.work_phone_area_code, 
-i.work_phone_nbr from individual i, address a where a.ind_id = i.id and 
- i.ssn = ?" />
+			Query="select i.ssn,i.first_name,i.last_name,
+nvl(i.marital_status,' ') marital_status,
+nvl(i.middle_name,' ') middle_name,
+nvl(a.first_line_mailing,' ') first_line_mailing, 
+nvl(a.scnd_line_mailing,' ') scnd_line_mailing, 
+nvl(a.city,' ') city, 
+nvl( a.zip_code,' ') zip_code,
+nvl(a.state_code,' ') state_code,
+nvl(a.country,' ') country, 
+nvl(to_char(i.home_phone_area_code),' ') home_phone_area_code,
+nvl(to_char(i.home_phone_nbr),' ') home_phone_nbr, 
+nvl(to_char(i.work_phone_area_code),' ') work_phone_area_code,
+nvl(to_char(i.work_phone_nbr),' ') work_phone_nbr
+from individual i, address a where a.ind_id = i.id and i.ssn = ?" />
 		<parameter QueryName="getBeneficiaryEmployee" DB="ISISDB_DEV"
 			Query="select * from 
 individual where id in (select pa_ind_id from 
@@ -1711,7 +1769,7 @@ related_individual where pa_ga_id in (select default_ga_id from users where logo
 		<parameter QueryName="getCountry" DB="ISISDB_DEV"
 			Query="select * from isis_ref_values where rv_low_value=? and rv_domain='COUNTRY' " />
 		<parameter QueryName="getBeneficiary" DB="ISISDB_DEV"
-			Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,mailing_name_1,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1" />
+			Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,replace(mailing_name_1,' ','')mailing_name_1,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1" />
 		<!-- <parameter QueryName="getIncomeDataEmployee" DB="ISISDB_DEV"
 			Query="select ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data where
 	sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from part_agrmt where ga_id in (select distinct GA_ID from access_customization_view where  
@@ -1985,5 +2043,7 @@ ON I.ID=IE.IND_ID WHERE IE.ELIGIBILITY_IND IS NOT NULL " />
 Query="select distinct ga_id from enrollment_rule_entity where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) " />
+<parameter QueryName="getAccuCode" DB="INSTDB_DEV"
+			Query="select DISTINCT(accu_code),ga_id from access_customization_view where access_type_code='PSC_WEB' and accu_code in ('PlanEmpower','PscGwrs','PscPutnamWR') and ga_id in(select ga_id from std_restrc where uscs_id=?)" />
 </Module>
 </TestData>
