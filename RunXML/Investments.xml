@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1" >
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="PROD">
+        <classes>
+          	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
+                <methods>
+                   
+                 <!--    <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG"></parameter>
+                    </include> -->
+                    
+                   <include name="DDTC_2844_DIM_Choose_individual_funds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
+                    </include>
+                    
+                 <!--     <include name="DDTC_2714_HMDI_target_based_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2714_HMDI_target_based_Offer_all_mntype"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_2640_MTG_Viewmanage_invest_HDMI_Doesnot_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2640_MTG_Viewmanage_invest_HDMI_Doesnot_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_2317_MTG_Viewmanage_invest_DIM_Doesnot_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2317_MTG_Viewmanage_invest_DIM_Doesnot_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_5410_DoItMyself_Allocation_based_on_slider">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_5410_DoItMyself_Allocation_based_on_slider"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N"></parameter>
+                    </include> 
+               
+                    <include name="DDTC_2534_MTG_Guidance_HMDI_Risk_based_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2534_MTG_Guidance_HMDI_Risk_based_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_2855_MTG_Guidance_DIM_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2855_MTG_Guidance_DIM_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                      <include name="DDTC_5680_MTG_Guidance_HMDI_Target_based_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_5680_MTG_Guidance_HMDI_Target_based_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_2804_MTG_Guidance_HMDI_Risk_based_DoesNot_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2804_MTG_Guidance_HMDI_Risk_based_DoesNot_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
+                    </include>  -->
+                    
+                   
+                    
+                    
+				</methods>
+              
+			</class>
+		</classes>
+	</test> 
+                    	  
+</suite>

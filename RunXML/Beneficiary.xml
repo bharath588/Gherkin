@@ -6,6 +6,7 @@
     </listeners>
    
     <test name="Beneficiaries">
+
         <classes>
             <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
                 <methods>

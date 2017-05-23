@@ -100,11 +100,11 @@
                      <include name="Deferral_004_Catch_up_Select_another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
                     </parameter>
-                    </include> -->
+                    </include> 
                        <include name="Participant_not_elegible_for_Bonus_type_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
                     </parameter>
-                    </include>
+                    </include>-->
                     
                                     
       
@@ -120,12 +120,12 @@
                      <include name="Bonus_SelectAnotherContribution_after">
                     <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_after">
                     </parameter>
-                    </include>
+                    </include> 
                 
                      <include name="Bonus_SelectAnotherContribution_split">
                     <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
                     </parameter>
-                    </include>  -->
+                    </include> -->
                  
       
     
@@ -198,9 +198,9 @@
                     
                      <!-- PENDING DEFERRALS -->
                      
-                      <!--   
                        
-                    <include name="Deferral_026M_Terminated_Participant">
+                       
+                    <!-- <include name="Deferral_026M_Terminated_Participant">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026M_Terminated_Participant">
                     </parameter>
                     </include> 
@@ -229,14 +229,14 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
                     </parameter>
                     </include> 
-                     -->
+                      -->
                     
                  
                
             
                    <!-- COMPANY MATCH AND CALENDAR UPDATE AND MULTIPLE DEFERRAL-->
                     
-                <!--    <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                   <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
@@ -256,17 +256,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
                     </parameter>
                     </include>
-                    
-                    <include name="Create_Multiple_deferral_split_contribution">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_023_Multiple_Create contribution rate for multiple deferral type, split contribution">
-                    </parameter>
-                    </include>
-                
-                     <include name="Edit_Multiple_deferral_split_contribution">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_024_Multiple_Change contribution rate for multiple deferral type, split contributions">
-                    </parameter>
-                    </include>
-                    
+                   
                       <include name="Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
                     </parameter>
@@ -284,7 +274,7 @@
                      <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     </parameter>
-                    </include>-->
+                    </include>
                 
                       
    <!-- MAXIMIZE ME ALWAYS--> 
@@ -375,7 +365,19 @@
                     </include> --> 
                      
                     
-                         
+                  <!-- Multiple Deferral -->
+                  <!-- 
+                    <include name="Create_Multiple_deferral_split_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_023_Multiple_Create contribution rate for multiple deferral type, split contribution">
+                    </parameter>
+                    </include>
+                
+                     <include name="Edit_Multiple_deferral_split_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_024_Multiple_Change contribution rate for multiple deferral type, split contributions">
+                    </parameter>
+                    </include>
+                    
+                   -->       
                     
                     <!-- DOLLAR DEFERRAL -->
                 

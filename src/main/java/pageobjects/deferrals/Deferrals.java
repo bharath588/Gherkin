@@ -205,7 +205,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='modal-title' and contains(text(),'Do you want to save your changes?')]") private WebElement hdrSaveChangesModal;
 			@FindBy(xpath=".//button[contains(@ng-click,'DoNotSaveClick')]") private WebElement btnDontSave;
 			@FindBy(xpath=".//button[text()[normalize-space()='Stay']]") private WebElement btnStay;
-			@FindBy(xpath="//h1[text()='Designate beneficiary']") private WebElement lblDesignateBeneficiary;
+			@FindBy(xpath=".//h1[contains(text(),'Designate beneficiary') or contains( text(),'My Beneficiaries')]") private WebElement lblDesignateBeneficiary;
 			@FindBy(xpath="//p[contains(@ng-repeat,'errorMsg')][1]") private WebElement txtCombinedRuleErrorMsg;
 			@FindBy(xpath="//div[@class='contribution-amount']//li") private WebElement txtCompanyMatchRuleDesc;
 			@FindBy(xpath="//div[contains(@ng-if,'isPlanInSpecialCatchupPeriod')]//p") private WebElement txtCompanyMatchErrorMsg;
@@ -746,7 +746,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			WebElement deferral=this.getWebElement(deferralType);
 			if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions))
             	this.lnkMoreOptions.click();
-			if(lib.Web.isWebElementDisplayed(deferral));
+			if(Web.isWebElementDisplayed(deferral))
 				issuccess=true;
 			
 			return issuccess;

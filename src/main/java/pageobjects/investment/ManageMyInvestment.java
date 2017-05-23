@@ -312,6 +312,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//div[contains(@class,'alert-warning')]//p")
 	private WebElement allertRiskBasedFund;
 	
+	@FindBy(xpath = "//*[@id='frequency']")
+	private WebElement drpRebalFrequency;
+	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
@@ -1626,7 +1629,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		
 		int noOfRows = DB.getRecordSetCount(participants);
 		
-		if (noOfRows==1) {
+		if (noOfRows>=1) {
 
 			Reporter.logEvent(Status.PASS,
 					"Verify New Row is Cretaed in "+tableName+ " Table with Confirmation No:"+confirmationNo,
@@ -1820,6 +1823,21 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
   		
   		return isDisplayed;
 
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Select the Frequency For Rebalance
+	 * 
+	 * </pre>
+	 * 
+	 * @param String - frequencyType
+	 */
+	public void selectFrequencyForRebalance(String frequencyType) {
+	
+		Web.waitForElement(drpRebalFrequency);
+		Web.selectDropDownOption(drpRebalFrequency, frequencyType, true);
+		
 	}
 	
 }

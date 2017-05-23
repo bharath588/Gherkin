@@ -291,7 +291,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_2844_DIM_Choose_individual_funds_or_DIM_MTG(int itr, Map<String, String> testdata) {
+	public void DDTC_2844_DIM_Choose_individual_funds(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -398,7 +398,7 @@ public class Investmentstestcases {
 			//Step 13
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*	if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -407,7 +407,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//Step 14
 			Web.clickOnElement(investment, "Button Confirm");
@@ -424,13 +424,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -446,7 +440,7 @@ public class Investmentstestcases {
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 15
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -455,7 +449,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
@@ -1417,7 +1411,7 @@ public class Investmentstestcases {
 			
 			//Step 7
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping1"));
-			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping1"))){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Money Type Grouping is Displayed on Change Investments Page",
@@ -3236,5 +3230,585 @@ public class Investmentstestcases {
 			}
 		}
 
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			//Step 5
+			String sqlQuery[]=Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("ga_id"),Stock.GetParameterValue("moneyTypeGrouping"));
+			
+			//Step 1 to 6
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			
+			if(!investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is Filtered out and not Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is Filtered out and not Displayed on My Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is Filtered out and not Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is not Filtered out and is Displayed on My Investments Page", true);
+			}
+			
+			//Step 7
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping1"));
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping1")+" is Displayed on Change Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping1")+" is not Displayed on Change Investments Page", true);
+			}
+			
+			//Step 8
+			investment.choseInvestmentOption("Change Future Contribution");
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is Not displayed ", true);
+			}
+			
+			//Step 9
+		
+			Web.clickOnElement(investment,"Choose Target Date Fund");
+			Web.waitForElement(investment, "Header Select Target Date Fund");
+			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Select Target Date Fund Page is displayed",
+						"Select Target Date Fund Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Select Target Date Fund Page is displayed",
+						"Select Target Date Fund Page is not displayed ", true);
+			}
+			
+			//Step 10
+			investment.selectTargetYearFund();
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is not displayed ", true);
+			}
+			
+		
+		
+			//Step 11
+			
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Not Displayed", true);
+			}
+			
+			String date=getInvestmentsSubmissionTime();
+			
+			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+			
+			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
+			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+				    
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			
+		    //Step 12
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+		   
+			Web.clickOnElement(homePage, "LOG OUT");
+			Web.waitForElement(login, "SIGN IN");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			//Step 29
+			String sqlQuery[]=Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("ga_id"),Stock.GetParameterValue("moneyTypeGrouping"));
+			
+			//Step 30
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				Web.clickOnElement(investment, "Expand Sources");
+			}
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is included and Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is included and Displayed on My Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is included and Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is not Displayed on My Investments Page", true);
+			}
+			
+			//Step 31
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is Displayed on Change Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is not Displayed on Change Investments Page", true);
+			}
+			
+			//Step 32
+			investment.choseInvestmentOption("Change Future Contribution");
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is Not displayed ", true);
+			}
+			
+			//Step 33
+		
+			Web.clickOnElement(investment,"Choose Target Date Fund");
+			Web.waitForElement(investment, "Header Select Target Date Fund");
+			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Select Target Date Fund Page is displayed",
+						"Select Target Date Fund Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Select Target Date Fund Page is displayed",
+						"Select Target Date Fund Page is not displayed ", true);
+			}
+			
+			//Step 34
+			investment.selectTargetYearFund();
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is not displayed ", true);
+			}
+			
+		
+		
+			//Step 35
+			
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Not Displayed", true);
+			}
+			
+			String date=getInvestmentsSubmissionTime();
+			
+			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+			
+			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
+			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+				    
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			
+		    //Step 36
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Expand Sources Link is displayed",
+						"Expand Sources Link is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Expand Sources Link is displayed",
+						"Expand Sources Link is Not displayed ", true);
+			}
+			//Step 6
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			
+			
+			//Step 7
+			investment.choseInvestmentOption("Rebalance Current Balance");
+			
+			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is Not displayed ", true);
+			}
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 8
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Build Your Own Portfolio Page is displayed",
+						"Build Your Own Portfolio Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Build Your Own Portfolio Page is displayed",
+						"Build Your Own Portfolio Page is not displayed ", true);
+			}
+			
+			investment.verifyWebElementDisplayed("Link Add/View All Funds");
+			investment.verifyWebElementDisplayed("Reset All Changes Link");
+			investment.verifyWebElementDisplayed("Submit Button Change Future Allocation");
+			investment.verifyWebElementDisplayed("Back Link");
+			
+			
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			//Step 10,11,12
+			String[] percentage={"50","50"};
+			investment.addInvestments(2,percentage);
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is not displayed ", true);
+			}
+			//Step 13
+			
+			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
+			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Investment Option' opened in New Window from Review Changes Page",
+						"'Investment Option' opened in New Window ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Investment Option' opened in New Window from Review Changes Page",
+						"'Investment Option' is not opened in New Window ", true);
+			}
+			
+			//Step 14
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Not Displayed", true);
+			}
+			
+			Calendar cal = Calendar.getInstance();
+			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
+					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
+					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
+					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
+					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			
+			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+			
+			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
+			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Message is Displayed in Confirmation Page",
+						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+			}
+			//Step 15
+			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Investment Option' opened in New Window from Confirmation Page",
+						"'Investment Option' opened in New Window ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Investment Option' opened in New Window from Confirmation Page",
+						"'Investment Option' is not opened in New Window ", true);
+			}
+			
+			//step 16
+			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
+			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+			}
+			else 
+				{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+				}
+			
+			
+		    
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			
+			
+			
+			//Step 17
+			leftmenu.clickNavigationLink("View/Manage my investments");
+			investment.clickChangeMyInvestmentButton();
+			investment.choseInvestmentOption("Change Future Contribution");
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Current' Flag displayed on DIM button",
+						"'Current' Flag is displayed on DIM button", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Current' Flag displayed on DIM button",
+						"'Current' Flag  is not displayed on DIM button", true);
+			}
+		  
+		    //Step 18
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	public String getInvestmentsSubmissionTime(){
+		String time =null;
+		String minute=null;
+		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.MINUTE)<=9){
+			 minute="0"+Integer.toString(cal.get(Calendar.MINUTE));
+			
+		}
+		else{
+			 minute=Integer.toString(cal.get(Calendar.MINUTE));
+		}
+		 time=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
+				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
+				+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
+				Integer.toString(cal.get(Calendar.YEAR))+","+" "+
+				Integer.toString(cal.get(Calendar.HOUR))+":"+minute+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		return time;
+		
 	}
 }
