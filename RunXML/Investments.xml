@@ -9,15 +9,15 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                 <!--    <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG">
+                  <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG"></parameter>
-                    </include> -->
+                    </include> 
                     
                    <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>
                     
-                 <!--     <include name="DDTC_2714_HMDI_target_based_Offer_all_mntype">
+                  <include name="DDTC_2714_HMDI_target_based_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2714_HMDI_target_based_Offer_all_mntype"></parameter>
                     </include>
                     
@@ -63,10 +63,7 @@
                     
                     <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
-                    </include>  -->
-                    
-                   
-                    
+                    </include> 
                     
 				</methods>
               

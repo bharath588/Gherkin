@@ -4058,7 +4058,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			//Step 5
-			if (deferrals.clickAddEditButton("Standard Edit"))
+			if (deferrals.clickAddEditButton("Standard Add"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
 						"Standard Contributions page is  displayed", false);
@@ -4179,7 +4179,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			//Step 5
-			if (deferrals.clickAddEditButton("Standard Edit"))
+			if (deferrals.clickAddEditButton("Standard Add"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
 						"Standard Contributions page is  displayed", false);
@@ -4300,7 +4300,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions page",
 						"My Contributions page is not displayed", true);
 			//Step 5
-			if (deferrals.clickAddEditButton("Standard Edit"))
+			if (deferrals.clickAddEditButton("Standard Add"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
 						"Standard Contributions page is  displayed", false);

@@ -15,7 +15,7 @@
                 
                  <!-- PRIOR PLAN CONTRIBUTIONS-->
    
-                    <!--  <include name="Deferrals_Participant_Prior_Contributions6">
+                   <!--  <include name="Deferrals_Participant_Prior_Contributions6">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
                     </parameter>
                     </include>
@@ -38,11 +38,11 @@
                      <include name="Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005M_Prior_Plan_Contributions_No_Left_hand_Nav_link">
                     </parameter>
-                    </include>  -->   
-                     
+                    </include>  
+                      -->
                         <!-- CHAINING CONTRIBUTION -->
                
-                 <!--  <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
+               <!--   <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
                     </parameter>
                     </include>
@@ -55,13 +55,13 @@
                      <include name="Deferral_014M_Standard_contribution_with_chaining_to_NonQua">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014M_Standard contribution with chaining to Non-Qual">
                     </parameter>
-                    </include> 
-                      -->
+                    </include>  -->
+                      
                     
                
                 <!-- SELECT OTHER CONTRIBUTION -->
                 
-                <!--  <include name="SIT_PPTWEB_Deferral__AfterTax">
+              <!--   <include name="SIT_PPTWEB_Deferral__AfterTax">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
                     </parameter>
                     </include>
@@ -104,15 +104,15 @@
                        <include name="Participant_not_elegible_for_Bonus_type_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
                     </parameter>
-                    </include>-->
+                    </include> -->
                     
                                     
       
              
     <!--  BONUS -->
     
-    <!-- 
-                     <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+  
+                   <!--   <include name="Deferral_002_Bonus_Select_another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
                     </parameter>
                     </include>
@@ -131,7 +131,7 @@
     
                    <!--COMBINED RULES-->  
                   
-               <!-- <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+              <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     </parameter>
                     </include>
@@ -154,7 +154,7 @@
                      <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
                     </parameter>
-                    </include>  -->
+                    </include> 
                        
                         
                     <!-- TIRED RULES -->
@@ -236,7 +236,7 @@
             
                    <!-- COMPANY MATCH AND CALENDAR UPDATE AND MULTIPLE DEFERRAL-->
                     
-                   <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                   <!-- <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
@@ -275,7 +275,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     </parameter>
                     </include>
-                
+                 -->
                       
    <!-- MAXIMIZE ME ALWAYS--> 
    
