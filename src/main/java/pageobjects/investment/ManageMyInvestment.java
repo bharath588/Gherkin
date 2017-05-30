@@ -2,9 +2,11 @@ package pageobjects.investment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import core.framework.Globals;
@@ -167,10 +170,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblTransferToOption;
 	@FindBy(xpath = "//table[@id='transactions-validation']//tbody/tr/td[2]")
 	private WebElement lblTransferToPercent;
-	@FindBy(xpath = "//p/span[@class='baseFontFace baseFontSize alertFontColor alertFontWeight baseTextAlign']")
-	private WebElement lblTransactionDetails;
-	@FindBy(xpath = "//p/span[@class='baseFontFace baseFontSize alertFontColor alertFontWeight baseTextAlign']/span")
-	private WebElement lblConfirmationNumber;
+	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']")
+	private WebElement txtRebalanceTransactionDetails;
+	@FindBy(xpath = "//span[@id='effectiveDate']") private WebElement txtTransactionDetails;
+	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']/i") private WebElement lblGreenCheck;
+	@FindBy(xpath = "//*[@id='confirmationNumber']") private WebElement lblConfirmationNumber;
+	@FindBy(xpath = "//*[@id='confirmationNumber']/b")	private WebElement  txtConfirmationNumber;
 	@FindBy(xpath = "//p[@class='bold confirmationNumber']")
 	private WebElement lblConfirmationNumberF2F;
 	@FindBy(xpath = "//span[@class='baseFontFace sectionTitleFontSize sectionTitleFontColor sectionTitleFontWeight']")
@@ -240,17 +245,20 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//h1[text()[normalize-space()='Build Your Own Portfolio']]")
 	private WebElement txtBuildYourOwnPortfolio;
 	
+	@FindBy(xpath = "//h1[text()[normalize-space()='Rebalance your portfolio']]")
+	private WebElement txtRebalanceYourPortfolio;
+	
 	@FindBy(xpath = "//a[contains(text(),'Back')]")
 	private WebElement lnkBack;
 	
 	@FindBy(xpath = "//a[@id='reset-funds-changes']")
 	private WebElement lnkResetFundChanges;
 	
-	@FindBy(xpath = ".//*[@id='submit-button']") private WebElement btnSubmitChangeFutureFund;
+	@FindBy(xpath = ".//*[@id='submit-button'or @id='submitButton submit']") private WebElement btnSubmitChangeFutureFund;
 	
 	@FindBy(xpath = ".//*[@id='allocation-all-funds-table']//tr//td[./label]//input") private List<WebElement> inpInvestmentOptionFutureAllocation;
 	
-	@FindBy(xpath = "//tr[contains(@ng-repeat,'fund in currentFunds')]//td//a") private List<WebElement> txtCurrentFundsforChangeFutureFlow;
+	@FindBy(xpath = "//tr[contains(@ng-repeat,'fund in currentFunds') or contains(@ng-repeat,'rebalanceCurrentFunds')]//td//a") private List<WebElement> txtCurrentFundsforChangeFutureFlow;
 	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Review Your Changes']]")
 	private WebElement hdrReviewYourChanges;
@@ -270,7 +278,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = ".//*[@id='portfolio-link']//span[text()[normalize-space()='Current']]")
 	private WebElement lblCurrent;
 	
-	@FindBy(xpath = "//*[@id='view-all-funds']") private WebElement lnkAddViewAllFundsFuture;
+	@FindBy(xpath = "//*[@id='view-all-funds' or @id='rebalance-view-all-funds']") private WebElement lnkAddViewAllFundsFuture;
 	
 	@FindBy(xpath = ".//a/span[@class='em-x-bold']") private WebElement btnRemoveInvestment;
 	
@@ -315,13 +323,20 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//*[@id='frequency']")
 	private WebElement drpRebalFrequency;
 	
+	@FindBy(xpath = "//*[@id='direct-future-investments']")
+	private WebElement inpDirectFutureInvest;
+	
+	@FindBy(xpath = "//label[@aria-label='Direct my future investments this way']")
+	private WebElement lblDirectFutureInvest;
+	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
-	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
+	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds')][./td/a[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
 	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
+	private String textField="//*[contains(text(),'webElementText')]";
 	String choice=null;
 	/**
 	 * Empty args constructor
@@ -380,7 +395,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					Assert.assertTrue(lib.Web.isWebElementDisplayed(txtHowWouldLikeToInvest),"Guidance Page is Not Loaded");
 					
 				}
-				if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LeftNav")){
+				if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("LeftNav")){
 					Assert.assertTrue(lib.Web.isWebElementDisplayed(lblMyInvestments),"View/Manage MyInvestments Page is Not Loaded");
 				}
 				
@@ -402,14 +417,20 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("NAVIGATEFROM")){
 			if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("GuidancePage"))	{
 				((LandingPage) this.parent).clickOnGuidanceLink();
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
 				Web.isWebElementDisplayed(txtHowWouldLikeToInvest,true);
 			}
-			else if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LIATPage"))	{
+			else if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("LIATPage"))	{
 			//TODO
 			}
-			else if(Stock.GetParameterValue("InvestmentsFrom").equalsIgnoreCase("LeftNav")){
+			else if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("LeftNav")){
 				((LeftNavigationBar) this.parent)
 				.clickNavigationLink("View/Manage my investments");
 				Common.waitForProgressBar();
@@ -503,8 +524,13 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Choose Individual Funds")) {
 			return this.btnChooseIndividualFunds;
 		}
+
 		if (fieldName.trim().equalsIgnoreCase("Header Build Your Own Portfolio")) {
 			return this.txtBuildYourOwnPortfolio;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Header Rebalance your portfolio")) {
+			return this.txtRebalanceYourPortfolio;
 		}
 		
 		if (fieldName.trim().equalsIgnoreCase("Back Link")) {
@@ -519,7 +545,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			return this.btnSubmitChangeFutureFund;
 		}
 		
-		if (fieldName.trim().equalsIgnoreCase("Add/View All Funds")) {
+		if (fieldName.trim().equalsIgnoreCase("Rebalance Add/View All Funds")) {
 			return this.lnkAddViewAllFunds;
 		}
 		
@@ -579,6 +605,14 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Risk Based Fund Allert Message")) {
 			return this.allertRiskBasedFund;
 		}
+		if (fieldName.trim().equalsIgnoreCase("CheckBox Direct Future Investments")) {
+			return this.inpDirectFutureInvest;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Label Direct Future Investments")) {
+			return this.lblDirectFutureInvest;
+		}
+		
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -624,12 +658,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		
 			Reporter.logEvent(Status.PASS, "verify " + investmentOption
 					+ " option is displayed", investmentOption
-					+ " option is displayed", true);
+					+ " option is displayed", false);
 			
 		} else
 			Reporter.logEvent(Status.FAIL, "verify " + investmentOption
 					+ " option is displayed", investmentOption
-					+ " option not displayed", true);
+					+ " option not displayed", false);
 	}
 
 	public  void rebalanceInvestment(String frequency, String setupDate,
@@ -949,7 +983,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
 	public void verifyRebalanceInvestmentConfirmationDetails() {
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
-		if (StringUtils.containsIgnoreCase(lblTransactionDetails.getText(),
+		if (StringUtils.containsIgnoreCase(txtTransactionDetails.getText(),
 				"Your Confirmation Number is")) {
 			confirmationNo = lblConfirmationNumber.getText();
 			if (lblConfirmationNumber.getText() != " "
@@ -1445,6 +1479,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	public void addInvestments(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
 		try{
 		    mapInvestmentOptions.clear();
+		    Web.waitForElements(inpInvestmentOptionFutureAllocation);
 			
 			int noOfRows = inpInvestmentOptionFutureAllocation.size();
 			if (noOfRows >= noOfInvestmentoptions) {
@@ -1452,12 +1487,13 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 						"Verify Investment options are available",
 						"Investment options are available ", false);
 				for(int i=0;i<noOfInvestmentoptions;i++){
+					int j=i+1;
 					mapInvestmentOptions.put("investmentFundName"+i, txtInvestmentOption.get(i).getText());
 				
 				Web.clickOnElement(inpInvestmentOptionFutureAllocation.get(i));
 				
 				Reporter.logEvent(Status.INFO, "Selected Investment Option",
-						"Selected Investment Option : \n" 
+						"Selected Investment Option"+j+" : \n" 
 								+ mapInvestmentOptions.get("investmentFundName"+i) , true);
 				}
 			
@@ -1840,4 +1876,159 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		
 	}
 	
+	
+	/**
+	 * <pre>
+	 * Method to Verify Frequency For Rebalance is Anual By default
+	 * 
+	 * </pre>
+	 * 
+	 * @param String - frequencyType
+	 */
+	public void VerifyFrequencyForRebalanceisMatching(String frequencyType) {
+	
+		Web.waitForElement(drpRebalFrequency);
+		Select drpDown=new Select(drpRebalFrequency);
+		if(drpDown.getFirstSelectedOption().getText().equalsIgnoreCase(frequencyType)){
+			
+			Reporter.logEvent(Status.INFO, "Verify the Default Frequency Option For Rebalance",
+					"Default Frequency Option For Rebalance is Matching\nExpected:"+frequencyType +"\nActual:"
+							+drpDown.getFirstSelectedOption().getText() , true);
+			}
+		
+			
+		 else
+			Reporter.logEvent(Status.INFO, "Verify the Default Frequency Option For Rebalance",
+					"Default Frequency Option For Rebalance is Not Matching\nExpected:"+frequencyType +"\nActual:"
+							+drpDown.getFirstSelectedOption().getText() , true);
+		
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify ConfirmationPage For Rebalance flow
+	 * 
+	 * </pre>
+	 * 
+	 * @param String - frequencyType
+	 */
+	public void verifyRebalanceInvestmentConfirmationDetails(String frequencyType) {
+	
+
+		String date=getInvestmentsSubmissionTime();
+		String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible. Your account will automatically rebalance "+frequencyType+".";
+		
+		String actualConfirmationMsg=txtTransactionDetails.getText().toString().trim();
+		if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+			
+			Reporter.logEvent(Status.PASS,
+					"Verify Confirmation Message is Displayed in Confirmation Page",
+					"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+		}
+		else{
+			Reporter.logEvent(Status.INFO,
+					"Verify Confirmation Message is Displayed in Confirmation Page",
+					"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+		}
+		if(Web.isWebElementDisplayed(txtConfirmationNumber)){
+		confirmationNo = txtConfirmationNumber.getText();
+		expectedConfirmationMsg="Your confirmation number is "+confirmationNo+".";
+		actualConfirmationMsg=lblConfirmationNumber.getText().toString().trim();
+		if (expectedConfirmationMsg.equalsIgnoreCase(actualConfirmationMsg))
+			Reporter.logEvent(Status.PASS,
+					"Verify Confirmation Number Displayed",
+					"Confirmation Number is displayed \nConfirmation No:"+confirmationNo, false);
+		}else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Confirmation Number Displayed",
+					"Confirmation Number not displayed", false);
+		if (Web.isWebElementDisplayed(lblGreenCheck))
+			Reporter.logEvent(Status.PASS,
+					"Verify Right Tick is Displayed below Confirmation header",
+					"Right Tick is Displayed below Confirmation header", false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Right Tick is Displayed below Confirmation header",
+					"Right Tick is Displayed below Confirmation header", false);
+	    isTextFieldDisplayed("Please refer to this number for inquires regarding this transaction.");
+		
+	}
+	
+	public boolean isTextFieldDisplayed(String fieldName) {
+		boolean isTextDisplayed=false;
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		if (isTextDisplayed) {
+			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
+					false);
+
+		} else {
+					
+			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
+			throw new Error(fieldName+" is not displayed");
+		}
+	
+return isTextDisplayed;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get the Confirmation Number from Confirmation Page for Rebalance Flow
+	 * Returns String
+	 * </pre>
+	 * 
+	 * @return String - getText
+	 */
+	public String getRebalanceConfirmation() {
+	
+          String confirmationNo="";
+		if (Web.isWebElementDisplayed(txtConfirmationNumber)) {
+
+			confirmationNo=txtConfirmationNumber.getText().toString().trim();
+		}
+
+		return confirmationNo;
+
+	}
+	
+	/**<pre> Method to delete Pending Transaction for Rebalance.
+	 *.</pre>
+	 * @param userName - Partcipant userName
+	 * @param 
+	 * @return - boolean
+	 * @throws Exception 
+	 */
+	public void deleteRebalancePendingTransaction(String userName) throws Exception{
+		String[] sqlQuery=null;
+		
+		sqlQuery = Stock.getTestQuery("deleteRebalancePendingTransaction");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+		
+		
+	}
+	public String getInvestmentsSubmissionTime(){
+		String time =null;
+		String minute=null;
+		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.MINUTE)<=9){
+			 minute="0"+Integer.toString(cal.get(Calendar.MINUTE));
+			
+		}
+		else{
+			 minute=Integer.toString(cal.get(Calendar.MINUTE));
+		}
+		 time=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
+				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
+				+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
+				Integer.toString(cal.get(Calendar.YEAR))+","+" "+
+				Integer.toString(cal.get(Calendar.HOUR))+":"+minute+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		 System.out.println("TIME STAMP"+time);
+		return time;
+		
+	}
 }

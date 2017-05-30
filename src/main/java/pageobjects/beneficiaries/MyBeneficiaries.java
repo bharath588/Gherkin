@@ -82,7 +82,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath="//input[@id='taxIdentificationNumber']") private WebElement txtTaxIdentificationNo;
 	@FindBy(xpath=".//ng-messages[@class='ng-active'][./ng-message[contains(text(),'Date of birth')]]") private WebElement txtDOBErrorMsg;
 	@FindBy(xpath=".//*[@class='ng-binding ng-scope' and contains(text(),'Tax Identification Number')]") private WebElement txtTINErrorMsg;
-	@FindBy(xpath="//div[contains(@class,'alert alert-warning')]//p") private WebElement lblAlertMsg;
+	@FindBy(xpath="//div[contains(@class,'error-block')]//p") private WebElement lblAlertMsg;
 	@FindBy(id="btn-view-beneficiaries") private WebElement btnViewBeneficiaries;
 	@FindBy(xpath="//h1[text()='Account Overview']") private WebElement hdrAccountOverview;
 	@FindBy(xpath="//div[@class='inner-container with-padding with-shadow']/p") private WebElement GenericErrorMsg;

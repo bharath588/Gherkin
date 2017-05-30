@@ -35,6 +35,7 @@ public class Investmentstestcases {
 	LoginPage login;
 	String tcName;
 	static String printTestData="";
+	static String userName=null;
 
 	@BeforeClass
 	public void ReportInit() {
@@ -103,7 +104,7 @@ public class Investmentstestcases {
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			//investment.verifyWebElementDisplayed("Do It For Me");
 			
 			//Step 8
 			
@@ -161,7 +162,7 @@ public class Investmentstestcases {
 			//Step 13
 			
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -171,7 +172,7 @@ public class Investmentstestcases {
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
 			}
-			
+			*/
 			//Step 14
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
@@ -187,16 +188,14 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			
+			String date=getInvestmentsSubmissionTime();
 			
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
+			//actualConfirmationMsg.substring(beginIndex, endIndex)
+			
 			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
 				
 				Reporter.logEvent(Status.PASS,
@@ -204,12 +203,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 15
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -218,7 +217,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
@@ -435,7 +434,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -629,7 +628,7 @@ public class Investmentstestcases {
 			//Step 13
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -638,7 +637,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//Step 14
 			Web.clickOnElement(investment, "Button Confirm");
@@ -655,12 +654,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			String date=getInvestmentsSubmissionTime();
 			
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
@@ -672,12 +666,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 15
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -686,7 +680,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
@@ -880,7 +874,7 @@ public class Investmentstestcases {
 	  			}
 			
 			//Step 11
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -889,7 +883,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			
 			//Step 12
@@ -908,12 +902,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+			String date=getInvestmentsSubmissionTime();
 			
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
@@ -925,12 +914,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 13
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -940,7 +929,7 @@ public class Investmentstestcases {
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
 			}
-			
+			*/
 			
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -1131,7 +1120,7 @@ public class Investmentstestcases {
 	  			}
 			
 			//Step 11
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -1140,7 +1129,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			
 			//Step 12
@@ -1159,13 +1148,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -1176,12 +1159,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 13
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -1191,7 +1174,7 @@ public class Investmentstestcases {
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
 			}
-			
+			*/
 			
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -1500,13 +1483,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -1517,7 +1494,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -1682,13 +1659,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -1699,7 +1670,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -1883,13 +1854,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -1900,7 +1865,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -2122,7 +2087,7 @@ public class Investmentstestcases {
 	  			}
 			
 			//Step 10
-			
+			/*
 			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
@@ -2132,7 +2097,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//Step 11
 			Web.clickOnElement(investment, "Button Confirm");
@@ -2149,13 +2114,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -2166,12 +2125,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 12
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -2180,7 +2139,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -2391,7 +2350,7 @@ public class Investmentstestcases {
 			
 			//Step 10
 			
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' opened in New Window ", true);
@@ -2400,7 +2359,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//Step 11
 			Web.clickOnElement(investment, "Button Confirm");
@@ -2417,13 +2376,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -2434,12 +2387,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 12
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -2448,7 +2401,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
@@ -2648,7 +2601,7 @@ public class Investmentstestcases {
 	  			}
 			
 			//Step 10
-			
+			/*
 			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
@@ -2658,7 +2611,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Review Changes Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			//Step 11
 			Web.clickOnElement(investment, "Button Confirm");
@@ -2675,13 +2628,7 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-			
+			String date=getInvestmentsSubmissionTime();
 			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 			
 			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -2692,12 +2639,12 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			//Step 12
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' opened in New Window ", true);
@@ -2706,7 +2653,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Investment Option' opened in New Window from Confirmation Page",
 						"'Investment Option' is not opened in New Window ", true);
-			}
+			}*/
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
@@ -2872,7 +2819,7 @@ public class Investmentstestcases {
 			
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-				if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Investment Option' opened in New Window from Review Changes Page",
 							"'Investment Option' opened in New Window ", true);
@@ -2881,7 +2828,7 @@ public class Investmentstestcases {
 					Reporter.logEvent(Status.FAIL,
 							"Verify 'Investment Option' opened in New Window from Review Changes Page",
 							"'Investment Option' is not opened in New Window ", true);
-				}
+				}*/
 				
 				//Step 10
 				Web.clickOnElement(investment, "Button Confirm");
@@ -2898,13 +2845,7 @@ public class Investmentstestcases {
 							"Confirmation Page is Not Displayed", true);
 				}
 				
-				Calendar cal = Calendar.getInstance();
-				String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-						cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-						+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-						Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-						Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-				
+				String date=getInvestmentsSubmissionTime();
 				String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 				
 				String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -2915,12 +2856,12 @@ public class Investmentstestcases {
 							"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 				}
 				else{
-					Reporter.logEvent(Status.FAIL,
+					Reporter.logEvent(Status.INFO,
 							"Verify Confirmation Message is Displayed in Confirmation Page",
 							"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 				}
 				//Step 11
-				if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Investment Option' opened in New Window from Confirmation Page",
 							"'Investment Option' opened in New Window ", true);
@@ -2929,7 +2870,7 @@ public class Investmentstestcases {
 					Reporter.logEvent(Status.FAIL,
 							"Verify 'Investment Option' opened in New Window from Confirmation Page",
 							"'Investment Option' is not opened in New Window ", true);
-				}
+				}*/
 				
 				//step 12
 				mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
@@ -3091,7 +3032,7 @@ public class Investmentstestcases {
 			
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-				if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Investment Option' opened in New Window from Review Changes Page",
 							"'Investment Option' opened in New Window ", true);
@@ -3101,7 +3042,7 @@ public class Investmentstestcases {
 							"Verify 'Investment Option' opened in New Window from Review Changes Page",
 							"'Investment Option' is not opened in New Window ", true);
 				}
-				
+				*/
 				//Step 10
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
@@ -3117,13 +3058,7 @@ public class Investmentstestcases {
 							"Confirmation Page is Not Displayed", true);
 				}
 				
-				Calendar cal = Calendar.getInstance();
-				String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-						cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-						+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-						Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-						Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-				
+				String date=getInvestmentsSubmissionTime();
 				String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
 				
 				String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
@@ -3134,12 +3069,12 @@ public class Investmentstestcases {
 							"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 				}
 				else{
-					Reporter.logEvent(Status.FAIL,
+					Reporter.logEvent(Status.INFO,
 							"Verify Confirmation Message is Displayed in Confirmation Page",
 							"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 				}
 				//Step 11
-				if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
 							"Verify 'Investment Option' opened in New Window from Confirmation Page",
 							"'Investment Option' opened in New Window ", true);
@@ -3148,7 +3083,7 @@ public class Investmentstestcases {
 					Reporter.logEvent(Status.FAIL,
 							"Verify 'Investment Option' opened in New Window from Confirmation Page",
 							"'Investment Option' is not opened in New Window ", true);
-				}
+				}*/
 				
 				//step 12
 				mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
@@ -3352,7 +3287,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -3515,7 +3450,7 @@ public class Investmentstestcases {
 						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
 			else{
-				Reporter.logEvent(Status.FAIL,
+				Reporter.logEvent(Status.INFO,
 						"Verify Confirmation Message is Displayed in Confirmation Page",
 						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
 			}
@@ -3559,7 +3494,7 @@ public class Investmentstestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			
+			userName=Stock.GetParameterValue("userName");
 			//Step 1 to 5
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -3567,24 +3502,50 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is displayed ", true);
+				Web.clickOnElement(investment, "Expand Sources");
 			}
 			else{
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
+		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			
 			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
 			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
 			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
 			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.VerifyFrequencyForRebalanceisMatching("Annually");
+			if(Web.isWebElementDisplayed(investment, "CheckBox Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is Not displayed", false);
+			}
 			
+			if(Web.isWebElementDisplayed(investment, "Label Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is Not displayed", false);
+			}
 			
 			//Step 7
 			investment.choseInvestmentOption("Rebalance Current Balance");
@@ -3594,6 +3555,12 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Continue Button");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			
+			
+			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				Web.clickOnElement(investment, "Continue Button");
+			}*/
+			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
 				Reporter.logEvent(Status.PASS,
@@ -3606,38 +3573,31 @@ public class Investmentstestcases {
 						"How Would You Like To Invest Page is Not displayed ", true);
 			}
 			
-			investment.verifyWebElementDisplayed("Do It Myself");
-			investment.verifyWebElementDisplayed("Help Me Do It");
-			investment.verifyWebElementDisplayed("Do It For Me");
-			
 			//Step 8
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
+			Web.waitForElement(investment, "Header Rebalance your portfolio");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if (Web.isWebElementDisplayed(investment,"Header Rebalance your portfolio")) {
 				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is displayed ", true);
 			}
 			else{
 				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is not displayed ", true);
 			}
 			
-			investment.verifyWebElementDisplayed("Link Add/View All Funds");
-			investment.verifyWebElementDisplayed("Reset All Changes Link");
-			investment.verifyWebElementDisplayed("Submit Button Change Future Allocation");
-			investment.verifyWebElementDisplayed("Back Link");
-			
-			
-			
 			//Step 9
-			Web.clickOnElement(investment, "Link Add/View All Funds");
-			
+			Web.waitForElement(investment, "Rebalance Add/View All Funds");
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			
-			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Investment Allocation table is displayed",
 						"Investment Allocation table is displayed ", true);
@@ -3647,10 +3607,10 @@ public class Investmentstestcases {
 						"Verify Investment Allocation table is displayed",
 						"Investment Allocation table is not displayed ", true);
 			}
-			//Step 10,11,12
+			
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Review Your Changes Page is displayed",
 						"Review Your Changes Page is displayed ", true);
@@ -3660,24 +3620,17 @@ public class Investmentstestcases {
 						"Verify Review Your Changes Page is displayed",
 						"Review Your Changes Page is not displayed ", true);
 			}
-			//Step 13
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Investment Option' opened in New Window from Review Changes Page",
-						"'Investment Option' opened in New Window ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Investment Option' opened in New Window from Review Changes Page",
-						"'Investment Option' is not opened in New Window ", true);
-			}
 			
-			//Step 14
+			
+			//Step 10
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			Web.waitForElement(investment, "Header Confirmation");
+			
 			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirmation Page is Displayed",
@@ -3689,40 +3642,9 @@ public class Investmentstestcases {
 						"Confirmation Page is Not Displayed", true);
 			}
 			
-			Calendar cal = Calendar.getInstance();
-			String date=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
-					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
-					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
-					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-					Integer.toString(cal.get(Calendar.HOUR))+":"+Integer.toString(cal.get(Calendar.MINUTE))+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
 			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency"));
 			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			//Step 15
-			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Investment Option' opened in New Window from Confirmation Page",
-						"'Investment Option' opened in New Window ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Investment Option' opened in New Window from Confirmation Page",
-						"'Investment Option' is not opened in New Window ", true);
-			}
-			
-			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
 				Reporter.logEvent(Status.PASS,
@@ -3736,32 +3658,8 @@ public class Investmentstestcases {
 						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
 				}
 			
+			String confirmationNumber=investment.getRebalanceConfirmation();
 			
-		    
-			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
-			
-			
-			//Step 17
-			leftmenu.clickNavigationLink("View/Manage my investments");
-			investment.clickChangeMyInvestmentButton();
-			investment.choseInvestmentOption("Change Future Contribution");
-			Web.clickOnElement(investment, "Continue Button");
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag is displayed on DIM button", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag  is not displayed on DIM button", true);
-			}
-		  
-		    //Step 18
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
@@ -3783,7 +3681,8 @@ public class Investmentstestcases {
 			// throw ae;
 		} finally {
 			try {
-				Web.getDriver().switchTo().defaultContent();
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3808,6 +3707,7 @@ public class Investmentstestcases {
 				+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
 				Integer.toString(cal.get(Calendar.YEAR))+","+" "+
 				Integer.toString(cal.get(Calendar.HOUR))+":"+minute+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		 System.out.println("TIME STAMP"+time);
 		return time;
 		
 	}

@@ -122,6 +122,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		login.submitLoginCredentials(lib.Stock.GetParameterValue("username"),lib.Stock.GetParameterValue("password"));
 		if (!isPageMandatory)
             isMandatoryAfterLoad = false;
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 	}

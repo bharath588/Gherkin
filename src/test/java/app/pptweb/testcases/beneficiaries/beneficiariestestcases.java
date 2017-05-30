@@ -82,6 +82,8 @@ public class beneficiariestestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			participant_SSN = Stock.GetParameterValue("SSN");
+			first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -95,10 +97,9 @@ public class beneficiariestestcases {
 			//		}
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
-
+			
 			beneficiary.get();
-			participant_SSN = Stock.GetParameterValue("SSN");
-			first_Name=Stock.GetParameterValue("FIRST_NAME");
+			
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
 
 			//			// add a beneficiary
@@ -560,7 +561,9 @@ public class beneficiariestestcases {
 			
 			beneficiary.get();
 			lib.Web.clickOnElement(beneficiary, "Married");
-			lib.Web.selectDropDownOption(beneficiary,"Beneficiary Relation","Child");
+			beneficiary.addBeneficiary(Stock.GetParameterValue("Marital Status"), Stock.GetParameterValue("Beneficiary Relation"), Stock.GetParameterValue("Use Current Address"), Stock.GetParameterValue("Beneficiary Type"),Stock.GetParameterValue("Allocation"));
+			Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+			Web.waitForElement(beneficiary,"Alert Msg");
 			if(Web.isWebElementDisplayed(beneficiary,"Alert Msg")){
 				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -1061,11 +1064,12 @@ public class beneficiariestestcases {
 				Reporter.logEvent(Status.PASS, "Confirm and Continue button", "Clicked confirm and continue button", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Confirm and Continue button", "Could not Click confirm and continue button", true);
-			Web.waitForElement(beneficiary, "View Beneficiary Button");
+			/*Web.waitForElement(beneficiary, "View Beneficiary Button");
 			Web.clickOnElement(beneficiary, "View Beneficiary Button");
 			Web.waitForElement(beneficiary, "ContinueAndConfirm");
-			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))
-			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg"))
+			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))*/
+			Web.waitForElement(beneficiary, "Generic Error Msg");
+			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg",true))
 				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);

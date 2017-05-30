@@ -105,7 +105,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-percentage']") private WebElement txtCompanyMatchMyContribution;
 			@FindBy(xpath="//div[@id='companyMatch']//div[@class='contribution-amount']//p[1]") private WebElement txtCompanyMatchContributionAmount;
 			@FindBy(xpath="//div[@id='anotherRate']//div[@class='contribution-amount']//p[1]") private WebElement txtAnotherContributionAmount;
-			@FindBy(xpath=".//div[@id='irsMax']//div[@class='contribution-percentage']") private WebElement txtIRSMyContribution;
+			@FindBy(xpath=".//div[@id='irsMax' or @id='catchupMax']//div[@class='contribution-percentage']") private WebElement txtIRSMyContribution;
 			@FindBy(xpath="//div[@class='contribution-amount']/a[@class='max-links']") private WebElement txtIRSContributionAmount;
 			@FindBy(xpath="//div[@class='contribution-amount']/p[1]") private WebElement txtIRSCatchUpContributionAmount;
 			@FindBy(xpath=".//div[@id='irsMax']//a[contains(@uib-popover-template,'maxPopoverTemplate')]") private WebElement txtIRSAnnualCompensationAmount;
@@ -142,15 +142,15 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			@FindBy(xpath="//h2[text()[normalize-space()='Bonus']]") private WebElement lblBonus;
 			@FindBy(xpath="//input[@type='checkbox']") private WebElement chkboxMaximize;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before-tax')]/../td[3]") private WebElement txtMaximizeMeAlwaysBefore;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before-tax') or contains(text(),'Before Tax')]/../td[3]") private WebElement txtMaximizeMeAlwaysBefore;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[3]") private WebElement txtMaximizeMeAlwaysRoth;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]") private WebElement txtMaximizeMeAlwaysCatchupBefore;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[1]") private WebElement txtBeforeTaxContributionAmt;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Roth')]/../td[1]") private WebElement txtRothContributionAmt;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Age Catch-Up Before')]/../td[1]") private WebElement txtCatchupBeforeAmt;
+			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[1]") private WebElement txtCatchupBeforeAmt;
 			
 			//table[@class='uib-daypicker']//th[./button[contains(@class,'pull-right')]]
-			@FindBy(xpath="//table[@class='deferrals-breakdown ng-scope']/tbody") private WebElement tblContributionDetails;
+			@FindBy(xpath="//table[@class='deferrals-breakdown']/tbody") private WebElement tblContributionDetails;
 			@FindBy(xpath="//table[@class='responsive-tables contributions-cart']/tbody") private WebElement tblMyContributions;
 			
 			//view only
@@ -169,8 +169,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(linkText="Log out") private WebElement lnkLogout;
 			@FindBy(xpath="//span[@class='editable-text-trigger ng-binding']") private WebElement txtMyCatchupContr;
 			@FindBy(id = "contributionInput") private WebElement txtAnnualCompensation;
-			@FindBy(xpath = ".//span[text()[normalize-space()='Update']]") private WebElement btnUpdate;
-			@FindBy(xpath = "//div[contains(@class,'alert')]/p") private WebElement lblAlertMsg;
+			//@FindBy(xpath = ".//span[text()[normalize-space()='Update']]") private WebElement btnUpdate;
+			@FindBy(xpath = "//div[contains(@class,'alert')]/p[3]") private WebElement lblAlertMsg;
+			@FindBy(xpath = "//div[contains(@class,'alert')]/p[5]") private WebElement lblAlertMsg1;
 			
 			@FindBy(xpath="//div[contains(text(),'Carryover my contribution')]") private WebElement lblChainingText;
 			@FindBy(xpath=".//*[@id='buttonEditChaining' or @id='buttonAddChaining']") private WebElement btnAddChaining;
@@ -210,6 +211,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='contribution-amount']//li") private WebElement txtCompanyMatchRuleDesc;
 			@FindBy(xpath="//div[contains(@ng-if,'isPlanInSpecialCatchupPeriod')]//p") private WebElement txtCompanyMatchErrorMsg;
 			@FindBy(xpath="//div[@class='error-block']/p") private WebElement lableErrorMsg;
+			@FindBy(xpath="//a[contains(@uib-popover-template,'maxPopoverTemplate')]") private WebElement lnkAnnualCompensation;
+			@FindBy(xpath="//button[./span[contains(text(),'Update')]]") private WebElement btnUpdate;
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
@@ -592,10 +595,10 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void myContributions_Confirmation_Page()
 		{
 		
-			lib.Web.waitForElement(btnConfirmAndContinue);
-			lib.Web.clickOnElement(this.btnConfirmAndContinue); 
+			Web.waitForElement(btnConfirmAndContinue);
+			Web.clickOnElement(this.btnConfirmAndContinue); 
 			
-			if(lib.Web.isWebElementDisplayed(this.lblContributionDetails, true))
+			if(Web.isWebElementDisplayed(this.lblContributionDetails, true))
 				Reporter.logEvent(Status.PASS, "Click on Confirm and Continue button", "My Contributions Confirmations Page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Click on Confirm and Continue button", "My Contributions Confirmations Page is not displayed", true);
@@ -633,7 +636,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions amount", "My Contributions amount is not displayed", true);
 			*/
-			Web.clickOnElement(lblMaximizeYes);
+			//Web.clickOnElement(lblMaximizeYes);
 		}
 			
 		
@@ -733,6 +736,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.PASS, "Verify My Contributions amount ", "My Contributions amount is  displayed", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify My Contributions amount", "My Contributions amount is not displayed", true);*/
+			contrbution_rate = txtCompanyMatchMyContribution.getText().split("%")[0];
 		}
 		
 		
@@ -970,8 +974,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always(){
 			
 			
-			lib.Web.waitForElement(btnEditStandard);
-			lib.Web.clickOnElement(btnEditStandard);
+			clickAddEditButton("Standard Add");
 			click_Maximize_IRS_Limit();
 			regular_maximize_me_always("Yes");
 			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysCatchupBefore.getText(), true))
@@ -983,13 +986,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
 			
 			String catchup_before_percent=txtCatchupBeforeAmt.getText().trim();
+			
 			Float total_contr=Float.parseFloat(catchup_before_percent.split("%")[0])+before_tax+ roth;
 			Web.clickOnElement(btnConfirmAndContinue);
 			
 			
 			
 			if(verifyConfirmationPageDisplayed()){
-				if(verifyContributionDetails(new DecimalFormat("##.##").format(before_tax),"Before-tax",null,null))
+				if(verifyContributionDetails(new DecimalFormat("##.##").format(before_tax),"Before Tax",null,null))
 					Reporter.logEvent(Status.PASS, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+new DecimalFormat("##.##").format(before_tax), false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+new DecimalFormat("##.##").format(before_tax), true);
@@ -1027,8 +1031,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer() throws InterruptedException{
 			
 			
-			lib.Web.waitForElement(btnEditStandard);
-			lib.Web.clickOnElement(btnEditStandard);
+			clickAddEditButton("Standard Add");
 			click_Select_Your_Contribution_Rate();
 			select_ContributionType(Stock.GetParameterValue("Contribution_type"));
 			
@@ -1072,12 +1075,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 //			else
 //				Reporter.logEvent(Status.FAIL, "Verify Total Contribution rate", "Total Contribution rate is "+Float.toString(total_contr), true);
 			
-			if(verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"),"Before-tax",null,null))
+			if(verifyContributionDetails(Stock.GetParameterValue("Contribution Rate"),"Before Tax",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+Stock.GetParameterValue("Contribution Rate"), false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+Stock.GetParameterValue("Contribution Rate"), true);
 			
-			if(verifyContributionDetails(catchup_before_percent.split("%")[0],"Age Catch-Up Before Tax",null,null))
+			if(verifyContributionDetails(catchup_before_percent.split("%")[0],"Catch-Up Before",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+catchup_before_percent, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+catchup_before_percent, true);
@@ -1090,24 +1093,43 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void Catch_up_Salary_changes_on_IRS_panel(){
 			
-			lib.Web.waitForElement(btnEditStandard);
+			Web.waitForElement(btnAddOrEditStandard);
 			String catchup_contr1=txtCatchupBeforeAmt.getText().trim();
-			lib.Web.clickOnElement(btnEditStandard);
-			Web.waitForElement(txtAnnualCompensation);
-			//String irs_contr_rate=	txtIRSMyContribution.getText().split("%")[0];
+			Web.clickOnElement(btnAddOrEditStandard);
+			Web.waitForElement(radioMaximizeToIRSLimit);
+			Web.clickOnElement(radioMaximizeToIRSLimit);
+			Web.waitForElement(lnkAnnualCompensation);
+	        Web.clickOnElement(lnkAnnualCompensation);			//String irs_contr_rate=	txtIRSMyContribution.getText().split("%")[0];
 			Web.setTextToTextBox(txtAnnualCompensation, Stock.GetParameterValue("Annual_Compensation"));
 			Reporter.logEvent(Status.INFO, "Entered Annual Compansation amount", "Annual compensation amount entered is: "+Stock.GetParameterValue("Annual_Compensation"), false);
 			Web.clickOnElement(btnUpdate);
+			if(Web.isWebElementDisplayed(txtAnnualCompensation, true))
+				Web.clickOnElement(lnkAnnualCompensation);
 			if(Web.isWebElementDisplayed(lblAlertMsg)){
-				if(Web.VerifyText(Stock.GetParameterValue("Alert_Message"), lblAlertMsg.getText(), true))
-					Reporter.logEvent(Status.PASS, "Verify Alert message is matching", "Alert message is matching", true);
+				if(Web.VerifyPartialText(Stock.GetParameterValue("Alert_Message"), lblAlertMsg.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify Alert message is Displayed", "Alert message is Displayed\nExpected:"+Stock.GetParameterValue("Alert_Message")+"\nActual:"+lblAlertMsg.getText(), true);
 				else
-					Reporter.logEvent(Status.FAIL, "Verify Alert message is matching", "Alert message not matching", true);
+					Reporter.logEvent(Status.FAIL, "Verify Alert message is matching", "Alert message not matching\nExpected:"+Stock.GetParameterValue("Alert_Message")+"\nActual:"+lblAlertMsg.getText(), true);
+				/*if(Web.VerifyText(Stock.GetParameterValue("Alert_Message1"), lblAlertMsg1.getText(), true))
+					Reporter.logEvent(Status.PASS, "Verify Alert message is Displayed", "Alert message is Displayed\nExpected:"+Stock.GetParameterValue("Alert_Message1")+"\nActual:"+lblAlertMsg1.getText(), true);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Alert message is matching", "Alert message not matching\nExpected:"+Stock.GetParameterValue("Alert_Message1")+"\nActual:"+lblAlertMsg1.getText(), true);*/
+				
 			}
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Alert is displayed", "No Alert displayed after updating Annual compensation amount", true);
+				
+			
 			String irs_contr_rate=	txtIRSMyContribution.getText().split("%")[0];
 			select_ContributionType(Stock.GetParameterValue("Contribution_type"));	
+			
+			Web.waitForElement(btnAddOrEditCatchUp);
+			Web.clickOnElement(btnAddOrEditCatchUp);
+			Web.waitForElement(radioMaximizeToIRSLimit);
+			click_Maximize_IRS_Limit();
+
+			select_ContributionType(Stock.GetParameterValue("Contribution_type"));
+			
 			Web.waitForElement(lblMyContributions);
 			if(Web.isWebElementDisplayed(lblMyContributions))
 				Reporter.logEvent(Status.PASS, "Verify My Contributions page is displayed", "My Contributions page is displayed", true);
@@ -1123,18 +1145,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			Float total_contr=Float.parseFloat(catchup_contr2.split("%")[0])+Float.parseFloat(irs_contr_rate);
 			Web.clickOnElement(btnConfirmAndContinue);
-			
+			Web.waitForElement(btnMyContributions);
 			if(verifyContributionDetails(Float.toString(total_contr),"Total",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Total Contribution rate", "Total Contribution rate is "+total_contr, true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Total Contribution rate", "Total Contribution rate is "+total_contr, true);
 			
-			if(verifyContributionDetails(irs_contr_rate,"Before-tax",null,null))
+			if(verifyContributionDetails(irs_contr_rate,"Before Tax",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+irs_contr_rate, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+irs_contr_rate, true);
 			
-			if(verifyContributionDetails(catchup_contr2.split("%")[0],"Age Catch-Up Before Tax",null,null))
+			if(verifyContributionDetails(catchup_contr2.split("%")[0],"Catch-Up Before",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+catchup_contr2, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+catchup_contr2, true);
@@ -1168,13 +1190,13 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 //			else
 //				Reporter.logEvent(Status.FAIL, "Verify Total Contribution rate", "Total Contribution rate is "+total_contr, true);
 			
-			if(verifyContributionDetails(standard_beforetax_contr,"Before-tax",null,null))
+			if(verifyContributionDetails(standard_beforetax_contr,"Before Tax",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+standard_beforetax_contr, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Standard Before Contribution rate", "Standard Before Contribution rate is "+standard_beforetax_contr, true);
 			
 			
-			if(verifyContributionDetails(Float.toString(irs_limit),"Age Catch-Up Before Tax",null,null))
+			if(verifyContributionDetails(Float.toString(irs_limit),"Catch-Up Before",null,null))
 				Reporter.logEvent(Status.PASS, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+Float.toString(irs_limit), false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Age Catch-Up Before Contribution rate", "Age Catch-Up Before Contribution rate is "+Float.toString(irs_limit), true);

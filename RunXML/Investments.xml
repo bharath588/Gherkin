@@ -9,11 +9,11 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                  <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG">
+                  <!-- <include name="DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2672_DIM_Choose_individual_funds_or_DIM_NoMTG"></parameter>
                     </include> 
                     
-                   <include name="DDTC_2844_DIM_Choose_individual_funds">
+                 <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>
                     
@@ -63,6 +63,18 @@
                     
                     <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N"></parameter>
+                    </include>  -->
+                    
+                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype"></parameter>
                     </include> 
                     
 				</methods>

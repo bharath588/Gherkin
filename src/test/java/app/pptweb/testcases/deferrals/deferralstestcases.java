@@ -345,7 +345,6 @@ public class deferralstestcases {
 			if (Stock.GetParameterValue("Contributing_type")
 					.equalsIgnoreCase("Select another contribution"))
 				deferrals.click_Select_Your_Contribution_Rate();
-
 			deferrals.select_ContributionType(lib.Stock
 					.GetParameterValue("Contribution_type"));
 			if (!Stock.GetParameterValue("Contributing_type")
@@ -2473,6 +2472,7 @@ public class deferralstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Standard contribution page",
 						"Standard Contributions page is not displayed", true);
+			Web.clickOnElement(deferrals, "RADIO SELECT OTHER CONTRIBUTION");
 			//Step 3
 			if (Web.isWebElementDisplayed(deferrals,
 					"TEXT COMPANY MATCH", true))
@@ -2658,11 +2658,13 @@ public class deferralstestcases {
 			if (deferrals.clickAddEditButton("Standard Add"))
 				
 			deferrals.click_Maximize_IRS_Limit();
+			Web.clickOnElement(deferrals, "MAXIMIZE YES");
 		
 			deferrals.select_ContributionType("split");
 			
 			deferrals.myContributions_Confirmation_Page();
-
+			
+			Web.waitForElement(deferrals, "MyContribution Button");
 			Web.clickOnElement(deferrals, "MyContribution Button");
 			
 			//Step 1
@@ -2693,6 +2695,7 @@ public class deferralstestcases {
 			
 			//Step 6
 			deferrals.myContributions_Confirmation_Page();
+			Web.waitForElement(deferrals, "MyContribution Button");
 		
 			//Step 7
 			Web.clickOnElement(deferrals, "MyContribution Button");

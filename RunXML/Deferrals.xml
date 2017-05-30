@@ -13,7 +13,7 @@
             <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
                 
-                 <!-- PRIOR PLAN CONTRIBUTIONS-->
+                 <!-- PRIOR PLAN CONTRIBUTIONS 5 -->
    
                    <!--  <include name="Deferrals_Participant_Prior_Contributions6">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
@@ -40,7 +40,7 @@
                     </parameter>
                     </include>  
                       -->
-                        <!-- CHAINING CONTRIBUTION -->
+                        <!-- CHAINING CONTRIBUTION 3 -->
                
                <!--   <include name="Deferral_012M_Standard_contribution_with_chaining_to_Aftertax">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012M_Standard contribution with chaining to After-tax">
@@ -59,7 +59,7 @@
                       
                     
                
-                <!-- SELECT OTHER CONTRIBUTION -->
+                <!-- SELECT OTHER CONTRIBUTION 10 -->
                 
               <!--   <include name="SIT_PPTWEB_Deferral__AfterTax">
                      <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
@@ -109,7 +109,7 @@
                                     
       
              
-    <!--  BONUS -->
+   				 <!--  BONUS 3 -->
     
   
                    <!--   <include name="Deferral_002_Bonus_Select_another_contribution_rate">
@@ -129,9 +129,9 @@
                  
       
     
-                   <!--COMBINED RULES-->  
+                   <!--COMBINED RULES 5 -->  
                   
-              <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+              <!-- <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
                     </parameter>
                     </include>
@@ -145,29 +145,31 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
                     </parameter>
                     </include>
-                    
-                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
-                    </parameter>
-                    </include>
+                   
                 
                      <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
                     </parameter>
                     </include> 
+                    
+                     
+                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
+                    </parameter>
+                    </include> -->
                        
                         
-                    <!-- TIRED RULES -->
-                      <!-- <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    <!-- TIRED RULES 1  -->
+                       <!-- <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
                     </parameter>
-                    </include>  -->
+                    </include>   -->
                   
   
    
-   <!-- VIEW ONLY CONTRIBUTIONS-->
+   <!-- VIEW ONLY CONTRIBUTIONS 5 -->
    
-               <!--   <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+              <!--      <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
                     </parameter>
                     </include>
@@ -180,27 +182,28 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources">
                     </parameter>
                     </include> 
-                       <include name="Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
-                    </parameter>
-                    </include> 
-                    
-                      <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+                     <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
                     </parameter>
                     </include>
-                    -->
+                       <include name="Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    </parameter>
+                    </include>  
+                     -->
+                     
+                    
                     
                     <!-- Above test case is Not Visible Bonus type Contributions -->
                    
                    
                   
                     
-                     <!-- PENDING DEFERRALS -->
+                     <!-- PENDING DEFERRALS 6-->
                      
                        
-                       
-                    <!-- <include name="Deferral_026M_Terminated_Participant">
+                 <!--       
+                   <include name="Deferral_026M_Terminated_Participant">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026M_Terminated_Participant">
                     </parameter>
                     </include> 
@@ -228,30 +231,16 @@
                      <include name="Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_037_Regular_BEFORE_Select_Another_Contributionrate_With_Save_Change_Popup_Modal">
                     </parameter>
-                    </include> 
-                      -->
+                    </include>  -->
+                      
                     
                  
                
             
-                   <!-- COMPANY MATCH AND CALENDAR UPDATE AND MULTIPLE DEFERRAL-->
+                   <!--CALENDAR UPDATE AND MULTIPLE DEFERRAL 5 -->
                     
-                   <!-- <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
-                    </parameter>
-                    </include>
-                    
-                     <include name="Deferral_022_Regular_SPLIT_Company_match">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_022_Regular_SPLIT_Company_match">
-                    </parameter>
-                    </include>
-                    
-                  
-                     <include name="Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
-                    </parameter>
-                    </include>
-                    
+                 
+                    <!-- 
                      <include name="Deferral_027_Multiple_No_changes_in_the_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
                     </parameter>
@@ -274,37 +263,69 @@
                      <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     </parameter>
-                    </include>
-                 -->
+                    </include> -->
+                
                       
-   <!-- MAXIMIZE ME ALWAYS--> 
+   					<!-- MAXIMIZE ME ALWAYS 17 --> 
    
-               
-                    <!-- <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
+               <!-- 
+                 <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
                     </parameter>
-                    </include>
+                    </include> 
                
-                     <include name="Deferral_014_Regular_ROTH_Maximize_to_the_IRS_limit">
+                      <include name="Deferral_014_Regular_ROTH_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_014_Regular_ROTH-Maximize to the IRS limit">
                     </parameter>
                     </include>
                 
-                     <include name="Deferral_011_Regular_BEFORE_Maximize_to_the_IRS_limit">
+                  <include name="Deferral_011_Regular_BEFORE_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011_Regular_BEFORE-Maximize to the IRS limit">
                     </parameter>
                     </include>
                 
+                      
+                     <include name="Catchup_MaximizeToIRSLimit_Split">
+                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Split">
+                    </parameter>
+                    </include> 
+                    
+                    <include name="Catchup_MaximizeToIRSLimit_Roth">
+                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Roth">
+                    </parameter>
+                    </include>
+                    
                      <include name="Deferral_005_Catch_up_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_005_Catch up_Maximize to the IRS limit">
                     </parameter>
                     </include>
                
+                
+                    <include name="Deferral_020_Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
+                    </parameter>
+                    </include>
+                     <include name="Regular_SPLIT_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
+                    </parameter>
+                    </include>
+                
+                     <include name="Deferral_008_Catch_up_Maximize_me_always">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
+                    </parameter>
+                    </include>
                     
+                     
+                	<include name="Deferral_006_Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
+                    </parameter>
+                    </include>
+                    
+                   
                     <include name="Deferral_010_Regular_BEFORE_Maximize_to_the_company_match">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010_Regular_BEFORE-Maximize to the company match">
                     </parameter>
-                    </include>
+                    </include> 
                 
                      <include name="Deferral_013_Regular_ROTH_Maximize_to_the_company_match">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_013_Regular_ROTH-Maximize to the company match">
@@ -316,58 +337,44 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017_Regular_SPLIT-Maximize to the company match">
                     </parameter>
                     </include>
-               
-                     
-                     <include name="Catchup_MaximizeToIRSLimit_Split">
-                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Split">
+                    
+                     <include name="Deferral_022_Regular_SPLIT_Company_match">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_022_Regular_SPLIT_Company_match">
                     </parameter>
                     </include>
-                
-                 
-                     <include name="Catchup_MaximizeToIRSLimit_Roth">
-                    <parameter name="ManualTCName" value="Catchup_MaximizeToIRSLimit_Roth">
+                    
+                     <include name="Deferral_021_Regular_SPLIT_Company_match_suppressed">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021_Regular_SPLIT- Company match suppressed">
                     </parameter>
                     </include>
-    
-                     <include name="Regular_SPLIT_Maximize_me_always">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019_Regular_SPLIT-Maximize me always">
-                    </parameter>
-                    </include>
-                
-                     <include name="Deferral_008_Catch_up_Maximize_me_always">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_008_Catch up_Maximize me always">
-                    </parameter>
-                    </include>
-                
-                     <include name="Deferral_006_Catch_up_Cancel_Maximizer_on_cancellation_of_standard_maximizer">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006_Catch up_Cancel Maximizer on cancellation of standard maximizer">
-                    </parameter>
-                    </include>
-                
-                     <include name="Deferral_020_Regular_SPLIT_Change_of_Maximized_with_Catchup_to_Maximize_me_always">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020_Regular_SPLIT- Change of Maximized with Catchup to Maximize me always">
-                    </parameter>
-                    </include>
-               
+                    
+                  
                      <include name="Deferral_007_Catch_up_Salary_changes_on_IRS_panel">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_007_Catch up_Salary changes on IRS panel">
                     </parameter>
-                    </include>  
+                    </include> --> 
                     
-                   -->
+                    
+                    <include name="Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
+                    </parameter>
+                    </include>
+                  
+                    
+                  
                     
                 
                     
-                    <!-- Company Match Rules -->
+                    <!-- Company Match Rules 1 -->
                     <!--  <include name="Deferral_021M_Company_Match_RULEA">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_021M_Company_Match_RULEA">
                     </parameter>
                     </include> --> 
                      
                     
-                  <!-- Multiple Deferral -->
-                  <!-- 
-                    <include name="Create_Multiple_deferral_split_contribution">
+                  <!-- Multiple Deferral 2 -->
+                  
+                   <!--  <include name="Create_Multiple_deferral_split_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_023_Multiple_Create contribution rate for multiple deferral type, split contribution">
                     </parameter>
                     </include>
@@ -375,11 +382,11 @@
                      <include name="Edit_Multiple_deferral_split_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_024_Multiple_Change contribution rate for multiple deferral type, split contributions">
                     </parameter>
-                    </include>
+                    </include> -->
                     
-                   -->       
+                     
                     
-                    <!-- DOLLAR DEFERRAL -->
+                    <!-- DOLLAR DEFERRAL 2 -->
                 
                 
                       <!--  <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
