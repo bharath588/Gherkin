@@ -954,6 +954,7 @@ public class Investmentstestcases {
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
 			}
+			leftmenu.clickNavigationLink("View/Manage my investments");
 		  
 		    //Step 15
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -1199,7 +1200,7 @@ public class Investmentstestcases {
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
 			}
-		  
+			leftmenu.clickNavigationLink("View/Manage my investments");
 		    //Step 15
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -1912,7 +1913,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -2172,7 +2173,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -2431,7 +2432,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -2683,7 +2684,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -2757,7 +2758,6 @@ public class Investmentstestcases {
 			//Step 7
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Select Target Date Fund");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
 			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
 				Reporter.logEvent(Status.PASS,
@@ -2771,24 +2771,7 @@ public class Investmentstestcases {
 			}
 			
 			
-			String ExpectedAllertMsg="Because your plan has multiple contribution sources, "
-					+ "we are unable to display your current allocation.  "
-					+ "Changes to your investment allocation will apply to all your contribution sources. "
-					+ "To make changes based on contribution source, go to My Accounts.";
 			
-			String actualAllertMsg=investment.getWebElementText("Risk Based Fund Allert Message");
-			
-			if(ExpectedAllertMsg.contentEquals(actualAllertMsg)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Static Message is Displayed in Select Target Date Fund Page",
-						"Static Message is Displayed in Select Target Date Fund Page\nStatic Message is:"+actualAllertMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Static Message is Displayed in Select Target Date Fund Page",
-						"Static Message is not Displayed/Matching in Select Target Date Fund Page\nExpected Message:"+ExpectedAllertMsg+"\nActual Message:"+actualAllertMsg, true);
-			}
 			
 			//Step 8
 			
@@ -2917,7 +2900,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -2983,14 +2966,14 @@ public class Investmentstestcases {
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
-			investment.verifyWebElementDisplayed("Help Me Do It");
+			/*investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			investment.verifyWebElementDisplayed("Do It For Me");*/
 			
 			//Step 7
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Select Target Date Fund");
+			
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
 			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
 				Reporter.logEvent(Status.PASS,
@@ -3130,7 +3113,7 @@ public class Investmentstestcases {
 			
 			//Step 15
 			Web.clickOnElement(homePage, "HOME");
-			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true)){
+			if(Web.isWebElementDisplayed(homePage, "RETIREMENT INCOME", true) || Web.isWebElementDisplayed(homePage, "TEXT MY ACCOUNTS")){
 				Reporter.logEvent(Status.PASS,
 						"Verify user is navigated to 'LIAT' Page ",
 						"User is navigated to LIAT Page", true);
@@ -3502,7 +3485,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -3513,7 +3496,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -3551,6 +3534,10 @@ public class Investmentstestcases {
 			investment.choseInvestmentOption("Rebalance Current Balance");
 			
 			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+				investment.selectFutureInvestmentCheckBox(false);
+			}
 			
 			Web.clickOnElement(investment, "Continue Button");
 			Common.waitForProgressBar();
@@ -3643,7 +3630,7 @@ public class Investmentstestcases {
 			}
 			
 			
-			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency"));
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
@@ -3662,7 +3649,419 @@ public class Investmentstestcases {
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
-			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+			//investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Expand Sources Link is Not displayed",
+						"Expand Sources Link is Not displayed ", true);
+				
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Expand Sources Link is Not displayed",
+						"Expand Sources Link is displayed ", true);
+			}
+		
+			//Step 6
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			
+			investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"));
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.VerifyFrequencyForRebalanceisMatching("Annually");
+			if(Web.isWebElementDisplayed(investment, "CheckBox Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is Not displayed", false);
+			}
+			
+			if(Web.isWebElementDisplayed(investment, "Label Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is Not displayed", false);
+			}
+			
+			//Step 7
+			investment.choseInvestmentOption("Rebalance Current Balance");
+			
+			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+				investment.selectFutureInvestmentCheckBox(false);
+			}
+			
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			
+			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				Web.clickOnElement(investment, "Continue Button");
+			}*/
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is Not displayed ", true);
+			}
+			
+			//Step 8
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Rebalance your portfolio");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if (Web.isWebElementDisplayed(investment,"Header Rebalance your portfolio")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is not displayed ", true);
+			}
+			
+			//Step 9
+			Web.waitForElement(investment, "Rebalance Add/View All Funds");
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"100"};
+			investment.addInvestments(1,percentage);
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is not displayed ", true);
+			}
+			
+			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
+			
+			
+			//Step 10
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			Web.waitForElement(investment, "Header Confirmation");
+			
+			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Not Displayed", true);
+			}
+			
+			
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
+			
+			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
+			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+			}
+			else 
+				{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+				}
+			
+			String confirmationNumber=investment.getRebalanceConfirmation();
+			
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			//investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Expand Sources Link is Not displayed",
+						"Expand Sources Link is Not displayed ", true);
+				
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Expand Sources Link is Not displayed",
+						"Expand Sources Link is displayed ", true);
+			}
+		
+			//Step 6
+			investment.clickChangeMyInvestmentButton();
+			
+			investment.verifyMoneyTypeGroupIsDisplayed("All sources");
+			
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.VerifyFrequencyForRebalanceisMatching("Annually");
+			if(Web.isWebElementDisplayed(investment, "CheckBox Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is Not displayed", false);
+			}
+			
+			if(Web.isWebElementDisplayed(investment, "Label Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is Not displayed", false);
+			}
+			
+			//Step 7
+			investment.choseInvestmentOption("Rebalance Current Balance");
+			
+			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+				investment.selectFutureInvestmentCheckBox(false);
+			}
+			
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify How Would You Like To Invest Page is displayed",
+						"How Would You Like To Invest Page is Not displayed ", true);
+			}
+			
+			//Step 8
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Rebalance your portfolio");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			if (Web.isWebElementDisplayed(investment,"Header Rebalance your portfolio")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is not displayed ", true);
+			}
+			
+			//Step 9
+			Web.waitForElement(investment, "Rebalance Add/View All Funds");
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"9","20","25","11","35"};
+			investment.addInvestments(5,percentage);
+			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes Page is displayed",
+						"Review Your Changes Page is not displayed ", true);
+			}
+			
+			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
+			
+			
+			//Step 10
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			Web.waitForElement(investment, "Header Confirmation");
+			
+			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Confirmation Page is Displayed",
+						"Confirmation Page is Not Displayed", true);
+			}
+			
+			
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
+			
+			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
+			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+			}
+			else 
+				{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+				}
+			
+			String confirmationNumber=investment.getRebalanceConfirmation();
+			
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			//investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"), confirmationNumber, "Invopt_alloc");
 		   
 			
 		} catch (Exception e) {

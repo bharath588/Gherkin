@@ -173,7 +173,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']")
 	private WebElement txtRebalanceTransactionDetails;
 	@FindBy(xpath = "//span[@id='effectiveDate']") private WebElement txtTransactionDetails;
-	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']/i") private WebElement lblGreenCheck;
+	@FindBy(xpath = "//div[@id='rebalanceConfirmationHeadingWhenSyncAllocationFailed']") private WebElement txtConfirmationWhenRebalneceSyncFailed;
+	@FindBy(xpath = "//i[@class='em-checkbox-icon']") private WebElement lblGreenCheck;
 	@FindBy(xpath = "//*[@id='confirmationNumber']") private WebElement lblConfirmationNumber;
 	@FindBy(xpath = "//*[@id='confirmationNumber']/b")	private WebElement  txtConfirmationNumber;
 	@FindBy(xpath = "//p[@class='bold confirmationNumber']")
@@ -1806,10 +1807,12 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 * </pre>
 	 * 
 	 * @return boolean - isEnabled
+	 * @throws InterruptedException 
 	 */
-	public boolean verifySubmitButtonisEnabled() {
+	public boolean verifySubmitButtonisEnabled() throws InterruptedException {
 	
 		boolean isEnabled=false;
+		Thread.sleep(3000);
           if(btnSubmitChangeFutureFund.isEnabled())
         	  isEnabled=true;
   		
@@ -1876,6 +1879,23 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		
 	}
 	
+	/**
+	 * <pre>
+	 * Method to Select/UnSelect Direct My Future Investment Check Box For Rebalance
+	 * 
+	 * </pre>
+	 * 
+	 * @param boolean - select
+	 */
+	public void selectFutureInvestmentCheckBox(boolean select ) {
+	
+		Web.waitForElement(inpDirectFutureInvest);
+		if(!select){
+			Web.clickOnElement(inpDirectFutureInvest);
+		}
+		
+	}
+	
 	
 	/**
 	 * <pre>
@@ -1913,12 +1933,23 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 * @param String - frequencyType
 	 */
 	public void verifyRebalanceInvestmentConfirmationDetails(String frequencyType) {
-	
+		String expectedConfirmationMsg=null;
+		String actualConfirmationMsg=null;
 
 		String date=getInvestmentsSubmissionTime();
-		String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible. Your account will automatically rebalance "+frequencyType+".";
 		
-		String actualConfirmationMsg=txtTransactionDetails.getText().toString().trim();
+		if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+		
+			expectedConfirmationMsg="Your investment allocation request for current account balance, has been received as of "+date+", and will be processed as soon as administratively feasible. Your account will automatically rebalance "+frequencyType+".";
+			
+			actualConfirmationMsg=txtConfirmationWhenRebalneceSyncFailed.getText().toString().trim();
+		}
+		else{
+			expectedConfirmationMsg="Your investment allocation request for current account balance, and future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible. Your account will automatically rebalance "+frequencyType+".";
+		
+		   actualConfirmationMsg=txtTransactionDetails.getText().toString().trim();
+		}
+		
 		if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
 			
 			Reporter.logEvent(Status.PASS,
