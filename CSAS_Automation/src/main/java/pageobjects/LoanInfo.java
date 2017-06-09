@@ -24,7 +24,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	private WebElement MenuPPTInfo;
 
 	//@FindBy(xpath = "//*[@id='oCMenu_25129'][contains(text() , 'Loan Info')]")
-	@FindBy(xpath = "//*[@id='oCMenu_329'][contains(text() , 'Loan Info')]")
+	@FindBy(xpath = ".//*[contains(@id,'oCMenu')][contains(text() , 'Loan Info')]")
 	private WebElement MenuLoanInfo;
 
 	@FindBy(css = "td.pageMenuTitle")

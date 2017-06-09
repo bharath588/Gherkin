@@ -1882,7 +1882,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 * <pre>Method to select specific plan in ppt home page</pre>
 	 */
 	public void selectSpecificPlaINPPTHome(String planNum){
-		String planNameRadioBtn = "//td[contains(text(),'384171-09')]//..//form//input[@type = 'radio']" ;
+		String planNameRadioBtn = "//td[contains(text(),'"+planNum+"')]//..//form//input[@type = 'radio']" ;
 		Web.clickOnElement(Web.getDriver().findElement(By.xpath(planNameRadioBtn))) ;
 		if (Web.isWebElementDisplayed(SelectedPlan)) {
 			Reporter.logEvent(Status.INFO,"Select specific plan","Specific plan selected",true);
