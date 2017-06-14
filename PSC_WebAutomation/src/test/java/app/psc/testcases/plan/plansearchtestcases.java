@@ -1,30 +1,36 @@
 package app.psc.testcases.plan;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.aspectj.weaver.Iterators.Getter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.Status;
+import com.mongodb.connection.QueryResult;
 
 import core.framework.Globals;
 import framework.util.CommonLib;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
+import pageobjects.userverification.UserVerificationPage;
 import plan.PlanPage;
 
 public class plansearchtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	HomePage homePage;
 	PlanPage planPage;
-
+	ResultSet queryResultSet; 
+	
 	@BeforeClass
 	public void ReportInit()
 	{
@@ -341,7 +347,7 @@ public class plansearchtestcases {
 			planPage = new PlanPage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")}).get();
-			planPage.navigateToInvestmentAndPerformace();
+			planPage.navigateToPlanMessagingPage();
 			planPage.addNewPlanMessage();
 			
 		}
@@ -372,12 +378,250 @@ public class plansearchtestcases {
 		}		
 	
 	
+	/**<pre>This test case validates the Investment and Performance Tabs columns and Print functionality.
+	 * in terms of clicking and check if a print preview page opens up.</pre>
+	 * @author smykjn
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates the Investment and Performance Tabs columns and Print functionality."
+					+ " in terms of clicking and check if a print preview page opens up", false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+			HomePage homePage = new HomePage();
+			homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+			planPage.navigateToInvestmentAndPerformance();
+			planPage.validateInvestmentAndPerformanceColumns();
+			planPage.validateColumnFixedInvstmntRatePage();
+			planPage.validateUnitShareFromToField();
+			planPage.validatePrintFunctionality();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		}		
 	
 	
+	/**<pre>This test case validates the Asset allocation columns and Print functionality.
+	 * in terms of clicking and check if a print preview page opens up.</pre>
+	 * @author smykjn
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC07_SIT_PSC_Investment_Asset_Allocations_page(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This testcase validates the Asset allocation columns and Print functionality."
+					+ " in terms of clicking and check if a print preview page opens up.", false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+			HomePage homePage = new HomePage();
+			homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+			planPage.navigateToInvestmentAndPerformance();
+			planPage.validateInvestmentAndPerformanceColumns();
+			planPage.validateAssetAllocPage();
+			planPage.validatePrintFunctionality();
+			homePage.logoutPSC();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		}			
 	
 	
-	
-	
+/**<pre>This test case validates the edit functionality after creating new user.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ */
+@Test(dataProvider="setData")
+public void TC08_Disable_certain_user_edit_fields_for_SAW(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates the edit functionality after creating new user.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+		HomePage homePage = new HomePage();
+		if(homePage.navigateToProvidedPage("Plan","Administration","Username security management"))
+			Reporter.logEvent(Status.PASS,"Navigate to Plan-->Administration--->Username security management page.",""
+					+ "User is navigated to Username security management page.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Navigate to Plan-->Administration--->Username security management page.",""
+					+ "User is not navigated to Username security management page.",true);
+		planPage.addNewUser();
+		planPage.validateEditabilityOfUserFields();
+		planPage.validateEditabilityOnResetPasswordScreen();
+		planPage.validateEditabilityOnResetSecurityQues();
+		planPage.validateEditabilityOnTerminateUserScreen();
+		planPage.validateEditabilityOnReactivateUserScreen();
+		homePage.logoutPSC();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+/**<pre>This test case validates Participant QDIA notice Listing order functionality.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ * @Date 13-June-2017
+ */
+@Test(dataProvider="setData")
+public void TC09_Order_Participant_QDIA_Notice_Listing(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates Participant QDIA notice Listing order functionality.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("checkQDIARecords")[0],
+				Stock.getTestQuery("checkQDIARecords")[1],Stock.GetParameterValue("planNumber"));
+		if(DB.getRecordSetCount(queryResultSet)>0){
+			queryResultSet = DB.executeQuery(Stock.getTestQuery("getPSCMMRandQNBO1TxnCodes")[0],
+					Stock.getTestQuery("getPSCMMRandQNBO1TxnCodes")[1],"K_"+Stock.GetParameterValue("username"));
+			if(DB.getRecordSetCount(queryResultSet)==2){
+				homePage = new HomePage();
+				homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+				if(!homePage.navigateToProvidedPage("Plan","Fiduciary records","Participant QDIA notice listing order"))
+					Reporter.logEvent(Status.PASS,"Navigate to Plan-->Fiduciary records--->Participant QDIA notice listing order page.",""
+							+ "User is navigated to Participant QDIA notice listing order page.",false);
+					planPage.fill_QDIA_Notice_Mailing_Form();
+					if(Stock.GetParameterValue("ignoreDivision").equals("yes")){
+						queryResultSet=DB.executeQuery(Stock.getTestQuery("checkQDIARecords")[0],
+								Stock.getTestQuery("checkQDIARecords")[1],Stock.GetParameterValue("planNumber1"));
+						if(DB.getRecordSetCount(queryResultSet)==0){
+							homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber1"));
+							if(planPage.QDIAisDisplayed())
+								Reporter.logEvent(Status.PASS,"Validate 'Participant QDIA notice listing order' option is not displayed if GW_Service "
+										+ "records are not set up.","menu option is not displayed.", false);
+							else
+								Reporter.logEvent(Status.FAIL,"Validate 'Participant QDIA notice listing order' option is not displayed if GW_Service "
+										+ "records are not set up.","menu option is not displayed.", true);
+						}else{
+							Reporter.logEvent(Status.FAIL,"Check query "+Stock.getTestQuery("checkQDIARecords")[1]+" does not fetch"
+									+ " any record.(GW_SERVICE are not set up)","GW_SERVIC is set up and it should not be set up to validate"
+											+ "'Participant QDIA notice listing order' menu option", false);
+						}
+					}
+			}else{
+				Reporter.logEvent(Status.WARNING,"Exceute query:"+Stock.getTestQuery("getPSCMMRandQNBO1TxnCodes")[1],""
+						+ "User is not assigned with PSCMMR and QNBO1 txn codes.", false);
+			}
+		}else{
+			Reporter.logEvent(Status.WARNING,"Query "+Stock.getTestQuery("checkQDIARecords")[1]+" does not fetch any record.","Please set up test data."
+					+ " and execute test case.", false);
+		}
+		
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 	
 	
 	

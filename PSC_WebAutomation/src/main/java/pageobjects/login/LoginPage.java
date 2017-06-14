@@ -1,6 +1,9 @@
 package pageobjects.login;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,11 +72,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement logoEmpower;
 	@FindBy(xpath = ".//*[@id='loginSpinner']")
 	private WebElement loginSpinner;
-
+	ResultSet queryResultSet;
 	LoadableComponent<?> parent;
 	/*-----------------------------------------------------------------*/
 
 	private List<String> getFooterLinkList = null;
+	ArrayList<String> uscsIDsForUser;
 
 	public LoginPage() {
 		PageFactory.initElements(Web.getDriver(), this);
@@ -384,4 +388,148 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @author smykjn
+	 * @return boolean
+	 */
+	public boolean checkPlanTabTxnCodes() throws SQLException
+	{
+		boolean isAllTxnCodesDisplayed = false;
+		String[] txnCodes = new String[10];
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("checkPlanTxnCodes")[0],
+				Stock.getTestQuery("checkPlanTxnCodes")[1],"K_"+Stock.GetParameterValue("username"));
+		int count=0;
+		while(queryResultSet.next()){
+			txnCodes[count] = queryResultSet.getString("TXN_CODE");
+			count++;
+		}
+		System.out.println("Number of txnocdes:"+txnCodes.length);
+		if(Arrays.asList(txnCodes).contains("PSOVPG")&&Arrays.asList(txnCodes).contains("PSWVRS")&&
+					Arrays.asList(txnCodes).contains("PSPROV")&&Arrays.asList(txnCodes).contains("PSVSCH")&&
+					Arrays.asList(txnCodes).contains("PSOVMN")&&Arrays.asList(txnCodes).contains("PSCTOD")&&
+					Arrays.asList(txnCodes).contains("EMFIAR")&&Arrays.asList(txnCodes).contains("ESCPPE")&&
+					Arrays.asList(txnCodes).contains("ESCVPE")&&Arrays.asList(txnCodes).contains("PSCCTR"))
+			isAllTxnCodesDisplayed = true;
+		else
+			isAllTxnCodesDisplayed = false;	
+		
+		return isAllTxnCodesDisplayed;
+	}
+	
+	
+	/**
+	 * <pre>This method deletes below transaction codes from all user types assigned to a particular PSC user.
+	 * 'PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE'</pre>
+	 * @author smykjn
+	 * @Date 1st-June-2017
+	 * @return void
+	 * 
+	 */
+	public void deletePlanMenuTxnCodes1() throws SQLException
+	{
+		uscsIDsForUser = new ArrayList<String>();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser1")[0],
+				Stock.getTestQuery("getUserClassesForAUser1")[1],"K_"+Stock.GetParameterValue("username"));
+		while(queryResultSet.next()){
+			uscsIDsForUser.add(queryResultSet.getString("USCS_ID"));
+		}
+		System.out.println("User classes for a user:"+uscsIDsForUser);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("deletePlanTxnCodes")[0],
+				Stock.getTestQuery("deletePlanTxnCodes")[1],"K_"+Stock.GetParameterValue("username"));
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser1")[0],
+				Stock.getTestQuery("getUserClassesForAUser1")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(queryResultSet)==0)
+			Reporter.logEvent(Status.PASS, "Delete following txn codes from DB from all user types assigned to a user."
+					+ "'PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE'","Txn codes are "
+							+ "deleted.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Delete following txn codes from DB from all user types assigned to a user."
+					+ "'PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE'","Txn codes are "
+							+ "not deleted.", false);
+	}
+	
+	/**
+	 * <pre>This method inserts below transaction codes to all user types assigned to a particular PSC user.
+	 * 'PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE','ESCVPE','PSCCTR'</pre>
+	 * @author smykjn
+	 * @Date 1st-June-2017
+	 * @return void
+	 */
+	public void insertPlanMenuTxnCodes() throws SQLException
+	{
+		String[] txnCodes = new String[]{"PSWVRS","PSPROV","PSVSCH","PSCTOD","EMFIAR","ESCPPE"};
+		for(int i=0;i<uscsIDsForUser.size();i++){
+			for(int j=0;j<txnCodes.length;j++)
+				DB.executeQuery(Stock.getTestQuery("insertTxnCodesForPlanModule")[0],
+						Stock.getTestQuery("insertTxnCodesForPlanModule")[1],txnCodes[j],uscsIDsForUser.get(i));
+		}
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser1")[0],
+				Stock.getTestQuery("getUserClassesForAUser1")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(queryResultSet)>0)
+			Reporter.logEvent(Status.INFO,"All txn codes are inserted back.","",false);
+		else
+			Reporter.logEvent(Status.WARNING,"All txn codes are not inserted back.","",false);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("insertTxnCodesESCVPE")[0],
+				Stock.getTestQuery("insertTxnCodesESCVPE")[1],"K_"+Stock.GetParameterValue("username"));
+		
+	}
+	
+	/**
+	 * <pre>This method deletes below transaction codes from all user types assigned to a particular PSC user.
+	 * PSOVPG,PSOVMN</pre>
+	 * @author smykjn
+	 * @Date 2nd-June-2017
+	 * @return void
+	 * 
+	 */
+	public void deletePlanMenuTxnCodes2() throws SQLException
+	{
+		uscsIDsForUser.clear();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser2")[0],
+				Stock.getTestQuery("getUserClassesForAUser2")[1],"K_"+Stock.GetParameterValue("username"));
+		while(queryResultSet.next()){
+			uscsIDsForUser.add(queryResultSet.getString("USCS_ID"));
+		}
+		System.out.println("User classes for a user:"+uscsIDsForUser);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("deletePSOVPGandPSOVMNTxnCode")[0],
+				Stock.getTestQuery("deletePSOVPGandPSOVMNTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser2")[0],
+				Stock.getTestQuery("getUserClassesForAUser2")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(queryResultSet)==0)
+			Reporter.logEvent(Status.PASS, "Delete following txn codes from DB from all user types assigned to a user."
+					+ "'PSOVPG','PSOVMN'","Txn codes are "
+							+ "deleted.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Delete following txn codes from DB from all user types assigned to a user."
+					+ "'PSOVPG','PSOVMN'","Txn codes are "
+							+ "not deleted.", false);
+	}
+	
+	/**
+	 * <pre>This method inserts below transaction codes to all user types assigned to a particular PSC user.
+	 * 'PSOVPG','PSOVMN'</pre>
+	 * @author smykjn
+	 * @Date 2nd-June-2017
+	 * @return void
+	 */
+	public void insertPSOVPGandPSOVMNTxnCodes() throws SQLException
+	{
+		String[] txnCodes = new String[]{"PSOVPG","PSOVMN"};
+		for(int i=0;i<uscsIDsForUser.size();i++){
+			for(int j=0;j<txnCodes.length;j++)
+				DB.executeQuery(Stock.getTestQuery("insertTxnCodesForPlanModule")[0],
+						Stock.getTestQuery("insertTxnCodesForPlanModule")[1],txnCodes[j],uscsIDsForUser.get(i));
+		}
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser2")[0],
+				Stock.getTestQuery("getUserClassesForAUser2")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(queryResultSet)>0)
+			Reporter.logEvent(Status.INFO,"All txn codes are inserted back.","",false);
+		else
+			Reporter.logEvent(Status.WARNING,"All txn codes are not inserted back.","",false);
+		
+	}
+	
 }

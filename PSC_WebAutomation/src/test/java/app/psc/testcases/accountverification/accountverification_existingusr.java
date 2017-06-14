@@ -1,6 +1,7 @@
 package app.psc.testcases.accountverification;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -220,6 +221,7 @@ public class accountverification_existingusr {
 					"Verify the Default plan prompting sceanrio for an user according to the number of plans"
 					+ "The user has access to", false);
 			int PlanCount = 0;
+			
 			String[] setDeafultPlanNullQuery;
 			accountverification = new AccountVerificationPage();
 			userverification = new UserVerificationPage();
@@ -229,17 +231,20 @@ public class accountverification_existingusr {
 			DB.executeUpdate(setDeafultPlanNullQuery[0],
 					setDeafultPlanNullQuery[1],
 					"K_" + Stock.GetParameterValue("username"));
-
 			PlanCount = accountverification.getNumberOfplans(
 					Stock.getTestQuery("getNumberOfplansQuery"),
 					"K_" + Stock.GetParameterValue("username"));
 			System.out.println("The number of plans the user has:" + PlanCount);
-			userverification.get();
+			//userverification.get();
+			login = new LoginPage().get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password")});
+			//userverification.enterPlanWhenDefaultPlanIsNull();
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
-					Stock.GetParameterValue("UserSecondaryAns") });
+					Stock.GetParameterValue("UserSecondaryAns")});
 			if (PlanCount > 25) {
 
 				if ((Web.isWebElementDisplayed(accountverification,
@@ -412,7 +417,7 @@ public class accountverification_existingusr {
 					"Verify user is unable to use last 10 passwords", false);			
 			userverification = new UserVerificationPage();
 			accountverification = new AccountVerificationPage();
-			
+			accountverification.logoutFromApplication();
 			accountverification.resetPasswordQuery(
 					Stock.getTestQuery("updateUserEffdateQuery"),
 					Stock.GetParameterValue("username"));

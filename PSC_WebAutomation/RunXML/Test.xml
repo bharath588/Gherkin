@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Exec1">
 		<classes>
-			<class name="app.psc.testcases.userverification.userverificationtestcases">
+			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
@@ -37,10 +37,15 @@
 						<parameter name="ManualTCName" value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"/>
 					</include>
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+					 <include name="TC017_01_Internal_Employee_External_Client_Login">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC017_Internal and External User">
+						</parameter>
+					</include>
+					<!-- <include name="TC006_01_Verify_Error_Message_For_Terminated_User">
 						<parameter name="ManualTCName" value="SIT_PSC_Login_01_TC004_Terminate User"/>
 					</include>
 					<include
@@ -83,10 +88,10 @@
 					</include>
 					<include name="TC003_UI_Validations_On_JumpPage">
 						<parameter name="ManualTCName" value="UI_Validations_On_JumpPage"/>
-					</include>
+					</include> -->
 				</methods>
 			</class>
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					<include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="Employment_Info_Verification" />
@@ -121,7 +126,7 @@
 						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
 					</include>
 				</methods>
-			</class>
+			</class> -->
 		</classes>
 	</test>
 </suite>

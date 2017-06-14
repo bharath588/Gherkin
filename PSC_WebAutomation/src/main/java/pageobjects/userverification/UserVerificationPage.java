@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
+import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.login.LoginPage;
 import lib.DB;
 import lib.Reporter;
@@ -43,6 +44,10 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	private WebElement dismissErrorBox;	
 	@FindBy(xpath=".//*[@class='verificationTable']/tbody/tr[1]/td/table/tbody/tr[3]/td[2]/label")
 	private WebElement securityQuestion;
+	@FindBy(xpath=".//div//input[contains(@id,'changePasswordForm')]")
+	private WebElement planTextFieldDefaultPlanNull;
+	@FindBy(xpath=".//button//span[text()='Next']")
+	private WebElement nextButton;
 	/* variable declaration */
 	LoadableComponent<?> parent;
 	ResultSet resultset;
@@ -57,6 +62,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		this.parent = parent;
 		PageFactory.initElements(Web.getDriver(), this);
 	}
+	
 
 	@Override
 	protected void isLoaded() throws Error {
@@ -258,6 +264,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		}
 		return securityQuestionText;
 	}
+	
 	public String getSecurityAnswer()
 	{
 		String securityAnswer = "";
@@ -277,4 +284,27 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		}
 		return securityAnswer;
 	}
+	
+	
+	/**
+	 * <pre>This method Enters plan number when a user logs in for whom default plan is set to null</pre>
+	 * @param Plan Number
+	 * @return
+	 * @throws Exception
+	 */
+	public void enterPlanWhenDefaultPlanIsNull() throws Exception {
+		String planNumber = "";
+		resultset = DB.executeQuery(Stock.getTestQuery("getNumberOfplansQuery")[0],
+				Stock.getTestQuery("getNumberOfplansQuery")[0],"K_"+Stock.GetParameterValue("username"));
+		while(resultset.next()){
+			planNumber = resultset.getString("GA_ID");
+			break;
+		}
+		Web.waitForElement(planTextFieldDefaultPlanNull);
+		Web.setTextToTextBox(planTextFieldDefaultPlanNull, planNumber);
+		Web.clickOnElement(nextButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.isWebElementDisplayed(new AccountVerificationPage(), "Account Verification Title");
+	}	
+
 }

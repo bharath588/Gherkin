@@ -76,7 +76,6 @@ public class logintestcases {
 					"Validate the internal employee vs External client Login scenario", false);
 			// Step-1 : Login with internal/external employee credentials
 			login = new LoginPage().get();
-
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			//Thread.sleep(10000);
 			Web.waitForPageToLoad(Web.getDriver());
@@ -87,6 +86,7 @@ public class logintestcases {
 			} else {
 				Reporter.logEvent(Status.FAIL, "Check if the user is on the login page", "User login failed ", true);
 			}
+			//new JumpPage().logoutPSCFromJumpage();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -852,7 +852,7 @@ public class logintestcases {
 			jp.jumpPageUIValidation();
 			jp.jumpPageSearchPlanBoxValidation();
 			HomePage homepage = new HomePage();
-			homepage.logoutPSC();
+			jp.logoutPSCFromJumpage();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -938,17 +938,19 @@ public class logintestcases {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")
 			}).get();*/
-			LoginPage loginPage = new LoginPage().get();
+			/*LoginPage loginPage = new LoginPage().get();
 			loginPage.submitLoginCredentials(new String[]{
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")
-			});
-			HomePage homePage = new HomePage().get();
+			});*/
+			HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
 			Reporter.logEvent(Status.INFO, "Login Status", "Login is done", true);
 			Web.getDriver().switchTo().frame("framea");
 			home.isPlanListDisplayed();
 			Web.getDriver().switchTo().defaultContent();
-
+			homePage.logoutPSC();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -968,7 +970,66 @@ public class logintestcases {
 		}
 	}	
 
-
+	/**
+	 * This test case validates the various tabs enablity based on respective transaction codes
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void TC01_SIT_PSC_HomePage_Transaction_Security(int itr, Map<String, String> testdata) {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"This test case validates the various tabs enablity based on respective transaction codes", false);
+			login = new LoginPage();
+			JumpPage jumpPage = new JumpPage();
+			HomePage homePage = new HomePage(new LoginPage(),false,new String[]{
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+			homePage.validateHomeScreenSectionAfterLogin();
+			if(login.checkPlanTabTxnCodes()){
+				homePage.validatePlanSubmenuBasedOnTxnCodes();
+				homePage.validateOtherHomePageSecutiryTXNCodes();
+				login.deletePlanMenuTxnCodes1();
+				homePage.logoutPSC();
+				login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),Stock.GetParameterValue("password")});
+				jumpPage.ClickOnJumpPageURL();
+				homePage.validateHomePageScreenAfterDeletingTxnCodes1();
+				login.insertPlanMenuTxnCodes();
+				login.deletePlanMenuTxnCodes2();
+				homePage.logoutPSC();
+				login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),Stock.GetParameterValue("password")});
+				jumpPage.ClickOnJumpPageURL();
+				homePage.validateOverviewAndPlanDashboardAfterDeletingTxnCodes();
+				login.insertPSOVPGandPSOVMNTxnCodes();
+				
+				
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,"Validate if all Txn codes 'PSOVPG','PSWVRS','PSPROV','PSVSCH'"
+						+ " are assigned to user.", "All txn codes are not assigned.please assign all txn codes"
+								+ " to execute test case.",false);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 
 
 

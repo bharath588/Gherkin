@@ -1656,7 +1656,7 @@ try {
 		employeesearch.validateAccountDetailSectionsNonTRSFlexPlan();
 		employeesearch.validateEmployeeDetailSectionsNonTRSFlexPlan();
 		employeesearch.validateEmpDetailAccDetail_SwitchEmploye();
-	
+		employeesearch.logoutFromApplication();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;

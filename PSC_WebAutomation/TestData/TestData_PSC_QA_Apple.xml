@@ -5,7 +5,7 @@
 		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="9M0RF" />
-				<parameter name="password" value="" />
+				<parameter name="password" value=" " />
 				<parameter name="errorMessages" value="Password is required." />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
@@ -93,7 +93,7 @@
 				<parameter name="UserSecondaryAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -558,6 +558,8 @@ where uda.user_logon_id = ?" />
 			Query="update ISIS_PASSWORD set effdate =effdate-360 where user_logon_id = ?" />
 		<parameter QueryName="getEmailaddressQuery" DB="ParticipantDataDB"
 			Query="select email_address from users where logon_id = ?" />
+			<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
+			Query="select database_instance from FRIENDLY_USERNAME where user_logon_id = ? " />
 		<parameter QueryName="deleteFriendlyUsernameQuery" DB="CommonDB"
 			Query="delete from FRIENDLY_USERNAME
 where user_logon_id =?

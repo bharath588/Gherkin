@@ -95,7 +95,8 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement linkLogout;
 	@FindBy(xpath = ".//*[@id='headNav']/li[2]/a")
 	private WebElement linkLogoutAccveri;
-	
+	@FindBy(xpath="//h1[contains(text(),'Account verification')]")
+	private WebElement accountVerificationTitle;
 	
 	
 	LoadableComponent<?> parent;
@@ -188,6 +189,9 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		if (fieldName.trim().equalsIgnoreCase("CANCEL")) {
             return this.btnCancel;
 		}
+		if(fieldName.trim().equalsIgnoreCase("Account Verification Title")){
+			return this.accountVerificationTitle;
+		}
 		// Reporter.logEvent(
 		// Status.WARNING,
 		// "Get WebElement for field '" + fieldName + "'",
@@ -237,7 +241,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * @throws InterruptedException 
 	 */
 	public void answerSecurityQuestions(String ansFirstDropdown, String ansSecondDropdown, String ansThirdDropdown) throws InterruptedException {
-		Web.setTextToTextBox(txtFirstDropdownBox, ansFirstDropdown);
+		Web.setTextToTextBox(txtFirstDropdownBox, String.valueOf(ansFirstDropdown));
 		Web.setTextToTextBox(txtSecondDropdownBox, ansSecondDropdown);
 		Web.setTextToTextBox(txtThirdDropdownBox, ansThirdDropdown);
 		Web.clickOnElement(btnNext);

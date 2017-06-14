@@ -886,6 +886,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if (fieldName.trim().equalsIgnoreCase("TXT_SEARCH_BOX")) {
 			return this.txtSearchbox;
 		}
+		if(fieldName.trim().equalsIgnoreCase("PRINT PAGE HEADER")){
+			return this.printPriviewWindowHeader;
+		}
 
 		return null;
 	}
@@ -1313,10 +1316,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public boolean compareDropdownOptions() {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
+		//For Non Apple plan
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
 				"Participant ID", "Division", "--------------------","Name - all plans","SSN - all plans"};
+		
+		//for Apple plan
 		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "--------------------","Name - all plans","SSN - all plans"};*/
+				"Participant ID","Division"};*/
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -1420,7 +1426,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		boolean isRedirected;
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.clickOnElement(searchResultsFirstName);	
-		Thread.sleep(5000);
+		CommonLib.waitForProgressBar();
 		Web.waitForElement(txtOverview);		
 		if (Web.isWebElementDisplayed(txtOverview)) {
 			isRedirected = true;
@@ -1978,8 +1984,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		}catch(Exception e){
 			
-			Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
-					+"It may be due to bad data issue.Please check manually with other data.", true);
+			/*Reporter.logEvent(Status.WARNING, "error message displayed:"+processingError.getText(),""
+					+"It may be due to bad data issue.Please check manually with other data.", true);*/
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeEditEmpntInfoWindow);
@@ -2024,6 +2030,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.clickOnElement(modalWindowCloseLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			CommonLib.waitForProgressBar();
+			Web.waitForElement(modalWindowCloseLink);
 			if(overwLabel.isDisplayed())
 			{
 				Reporter.logEvent(Status.PASS, "Click on close button on history window.","Page is navigated back to overview page.", false);
@@ -3537,7 +3544,7 @@ public void editBasicInfoAndSave() throws Exception
 	Select selLanguage = new Select(language);
 	int value = Integer.parseInt(checkLanguage.getAttribute("value"));
 	if(checkLanguage.getText().trim().equals("ENGLISH")){
-	selLanguage.selectByVisibleText("SPANIS");
+	selLanguage.selectByVisibleText("SPANISH");
 	}else{
 		selLanguage.selectByVisibleText("ENGLISH");
 	}
@@ -7035,7 +7042,7 @@ public boolean enterIncomeData()
 			Reporter.logEvent(Status.FAIL,"Validate frequency drop down values as following."+expFreqOptions,""
 					+ "Frequency drop down options are:"+freq.getOptions(), true);
 		Web.setTextToTextBox(salaryInput,"1200000");
-		freq.selectByVisibleText("ANNUAL      *    1");
+		freq.selectByValue("1");
 		Web.clickOnElement(continueAddEmp);
 		Web.waitForPageToLoad(Web.getDriver());
 		if(Web.isWebElementDisplayed(employmentTitle,true)){

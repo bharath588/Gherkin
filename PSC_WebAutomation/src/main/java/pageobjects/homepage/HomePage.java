@@ -2,7 +2,6 @@ package pageobjects.homepage;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,6 +98,32 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement verifyJumpPage;
 	@FindBy(id="planListTable_data")
 	private WebElement planListData;
+	@FindBy(className="planheading")
+	private WebElement planAnalytics;
+	@FindBy(xpath="(.//*[contains(@class,'planinfopanel')])[2]")
+	private WebElement planinfoAndStatus;
+	@FindBy(xpath="(//h2[text() = 'Funds'])[2]")
+	private WebElement funds;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/a/following-sibling::ul//a[contains(text(),'Overview')]")
+	private WebElement PlanOverviewTab;
+	@FindBy(xpath="//ul//a[contains(text(),'Overview')]/following-sibling::ul//a[text()='Plan provisions']")
+	private WebElement  planProvisionTab;
+	@FindBy(xpath="//ul//a[contains(text(),'Overview')]/following-sibling::ul//a[text()='Vesting schedules']")
+	private WebElement  planVestingSchedules;
+	@FindBy(xpath="//ul//a[contains(text(),'Overview')]/following-sibling::ul//a[text()='Participant web and VRU options']")
+	private WebElement  pptWebAndvruTab;
+	@FindBy(id="tooltip_todos")
+	private WebElement toDoTab;
+	@FindBy(id="tooltip_compliance")
+	private WebElement complianceTabToolTip;
+	@FindBy(xpath=".//span[contains(text(),'File sharing')]")
+	private WebElement fileSharingTab;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/a/following-sibling::ul//a[text()='Administration']")
+	private WebElement administrationTab;
+	@FindBy(xpath="//ul//a[contains(text(),'Administration')]/following-sibling::ul//a[text()='Pay plan expenses']")
+	private WebElement payPlanExpense;
+	@FindBy(xpath=".//input[@value='View Plan Invoices']")
+	private WebElement viewPlanInvoicesBtn;
 	private WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -340,6 +365,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
 		}
 	}
+	
+	
 
 	public boolean searchPlan()
 	{ boolean planTextDisplayed = false;
@@ -503,6 +530,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	public boolean verifyLastLoginDateEquality(String dateFromDatabase)
 	{
 		boolean equalDate = false;
+		System.out.println(dateFromDatabase);
 		String dateFromDB1 = dateFromDatabase.trim().substring(0,16);
 		String dateFromDB2 = dateFromDatabase.trim().substring(16);
 		String dateFromDB = dateFromDB1+" "+dateFromDB2;
@@ -945,6 +973,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	public boolean searchPlanWithIdOrName(String iDOrName) throws Exception
 	{
 		boolean planTextDisplayed = false;
+		Actions act = new Actions(Web.getDriver());
+		act.moveToElement(weGreeting).build().perform();
 		Web.setTextToTextBox(searchPlansInput,iDOrName);
 		Web.clickOnElement(searchPlanButton);
 		Web.waitForPageToLoad(Web.getDriver());
@@ -1016,7 +1046,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 	}
 	
-	/*
+	/**
 	 * This method verifies that Plan list is not available when user is not having any plan access.
 	 */
 	
@@ -1034,37 +1064,329 @@ public class HomePage extends LoadableComponent<HomePage>{
 	
 	
 	/**
-	 * This method Takes you to the specified menu or submenu page.
+	 * <pre>This method Takes you to the specified menu or submenu page.</pre>
+	 * @author smykjn
 	 */
-	
-	public void navigateToProvidedPage(String...specifiedTab) throws Exception
+	public boolean navigateToProvidedPage(String...specifiedTab) throws Exception
 	{
+		String bredCrumbValue= "";
+		WebElement breadCrumb;
+		boolean isPageDisplayed = false;
+		Actions act = new Actions(Web.getDriver());
 		String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
 		String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
 		String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
 		String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
 		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
-			Web.clickOnElement(menuElement(specifiedTab[0]));
+			act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
+			//Web.clickOnElement(menuElement(specifiedTab[0]));
+			act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
 			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
 			{
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
 				if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
 				Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
-				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath4)));
-				Web.waitForPageToLoad(Web.getDriver());}
+				act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+				Web.waitForPageToLoad(Web.getDriver());
+				bredCrumbValue=specifiedTab[2];}
 			}
 			else
 			{
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
 				Web.waitForPageToLoad(Web.getDriver());
+				bredCrumbValue=specifiedTab[1];
 			}
-			
 		}
 		else
 		{
-			Web.clickOnElement(menuElement(specifiedTab[0]));	
+			Web.clickOnElement(menuElement(specifiedTab[0]));
+			Web.waitForPageToLoad(Web.getDriver());
+			bredCrumbValue=specifiedTab[0];
 		}
+		breadCrumb = Web.getDriver().findElement(By.tagName("i"));
+		Web.waitForElement(breadCrumb);
+		if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
+			isPageDisplayed = true;
+		else
+			isPageDisplayed = false;
+		return isPageDisplayed;
 	}
 
+	
+	/**
+	 * @author smykjn
+	 * @date 31st-May-2017
+	 * @Objective This method validates following home screen section:
+	 * <br>1.Plan Analytics<br>2.Plan information & status<br>3.Funds
+	 * @return void
+	 */
+	public void validateHomeScreenSectionAfterLogin()
+	{
+		try{
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(iFramePlanB);
+			Web.waitForElement(funds);
+			if(planAnalytics.isDisplayed()&&planinfoAndStatus.isDisplayed()&&funds.isDisplayed())
+				Reporter.logEvent(Status.PASS, "Validate Plan analytics,Plan information & status,"
+						+ " and Funds section are displayed on home page.", "All specified sections are "
+								+ "displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate Plan analytics,Plan information & status,"
+						+ " and Funds section are displayed on home page.", "All specified sections are not"
+								+ "displayed.", true);
+	  }
+	  catch(Exception e)
+	  {
+		  e.printStackTrace();
+	  }
+	}	
+	
+
+/**
+ *@author smykjn
+ *@date 31st-May-2017
+* @Objective This method validates respective features against 
+* following txn codes 'PSOVPG','PSWVRS','PSPROV','PSVSCH','ESCPPE','ESCVPE' in GUI
+* @return void
+*/
+public void validatePlanSubmenuBasedOnTxnCodes()
+{
+	try{
+		Web.getDriver().switchTo().defaultContent();
+		Actions act = new Actions(Web.getDriver());
+		act.moveToElement(planMenu).build().perform();
+		act.click(planMenu).build().perform();
+		if(PlanOverviewTab.isDisplayed()){
+			Reporter.logEvent(Status.PASS,"If txn code PSOVMN assigned,Overview menu is displayed.","Overview"
+					+ " menu is displayed.", false);
+			act.click(PlanOverviewTab).build().perform();
+			if(planProvisionTab.isDisplayed()&&planVestingSchedules.isDisplayed()&&pptWebAndvruTab.isDisplayed())
+				Reporter.logEvent(Status.PASS, "Validate Plan provisions,Vesting schedules and Participant web"
+						+ " and VRU options are displayed.", "All specified tabs are displayed since respective codes('PSWVRS','PSPROV','PSVSCH') are"
+								+ " assigned to user.", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Validate Plan provisions,Vesting schedules and Participant web"
+						+ " and VRU options are displayed.", "All specified tabs are displayed since respective codes('PSWVRS','PSPROV','PSVSCH') are"
+								+ " assigned to user.", false);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL,"If txn code PSOVMN assigned,Overview menu is displayed.","Overview"
+					+ " menu is not displayed.", true);
+		}
+		act.click(administrationTab).build().perform();
+		if(payPlanExpense.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Check if Pay plan expenses tab is displayed.","Pay plan expenses tab is displayed as"
+					+ "ESCPPE button is displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check if Pay plan expenses tab is displayed.","Pay plan expenses tab is not displayed even"
+					+ "ESCPPE button is displayed.",true);
+		act.click(payPlanExpense).build().perform();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.getDriver().switchTo().frame(iFramePlanB);
+		if(Web.isWebElementDisplayed(viewPlanInvoicesBtn, true))
+			Reporter.logEvent(Status.PASS,"Check if user can view plan invoices.","User can view plan invoices.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check if user can view plan invoices.","User can not view plan invoices.", true);
+		Web.getDriver().switchTo().defaultContent();
+		Web.clickOnElement(homePageLogo);
+		Web.waitForPageToLoad(Web.getDriver());
+	 }
+	catch(Exception e)
+	{
+			  e.printStackTrace();
+	}
+		
+		
+}
+
+
+/**
+ *@author smykjn
+ *@date 02-June-2017
+* @Objective This method validates respective features against 
+* following txn codes 'PSCTOD','EMFIAR','PSCCTR' in GUI
+* @return void
+*/
+public void validateOtherHomePageSecutiryTXNCodes()
+{
+	try{
+		Web.getDriver().switchTo().frame(iFramePlanB);
+		if(toDoTab.isDisplayed()&&fileSharingTab.isDisplayed()&&complianceTabToolTip.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
+					+ " tabs are displayed.", false);
+		else
+		Reporter.logEvent(Status.FAIL,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
+				+ " tabs are displayed.", true);
+	 }
+	catch(Exception e)
+	{
+			  e.printStackTrace();
+	}
+		
+		
+}
+
+
+/**
+ *@author smykjn
+ *@date 02-June-2017
+* @Objective This method validates respective features against 
+* following txn codes 'PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE' in GUI after deleting them from DB
+* @return void
+*/
+public void validateHomePageScreenAfterDeletingTxnCodes1()
+{
+	try{
+		Web.getDriver().switchTo().defaultContent();
+		Actions act = new Actions(Web.getDriver());
+		act.moveToElement(planMenu).build().perform();
+		act.click(planMenu).build().perform();
+		act.click(PlanOverviewTab).build().perform();
+		try{
+			planProvisionTab.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSPROV txn code and check plan provisions tab is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete PSPROV txn code and check plan provisions are not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+		try{
+			planVestingSchedules.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSVSCH txn code and check vesting schedules tab is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete PSVSCH txn code and check vesting schedules tab is not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+		try{
+			pptWebAndvruTab.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSWVRS txn code and check ppt web and vru tab is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete PSWVRS txn code and check ppt web and vru tab is not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+		act.click(administrationTab).build().perform();
+		Thread.sleep(3000);
+		try{
+			payPlanExpense.isDisplayed();
+			payPlanExpense.click();
+			Reporter.logEvent(Status.FAIL,"Delete ESCPPE txn code and check pay plan expense tab is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete ESCPPE txn code and check pay plan expense tab is not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+		act.moveToElement(planMenu).build().perform();
+		Web.getDriver().switchTo().frame(iFramePlanB);
+		try{
+			toDoTab.isDisplayed();
+			toDoTab.click();
+			Reporter.logEvent(Status.FAIL,"Delete PSCTOD txn code and check to-do's is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete PSCTOD txn code and check to-do's is not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+		try{
+			fileSharingTab.isDisplayed();
+			fileSharingTab.click();
+			Reporter.logEvent(Status.FAIL,"Delete EMFIAR txn code and check file sharing is not displayed.","it is displayed.",true);
+		}catch(Exception e)
+		{
+			Reporter.logEvent(Status.PASS,"Delete EMFIAR txn code and check file sharing is not displayed.","As expected",false);
+			e.getStackTrace();
+		}
+	 }
+	catch(Exception e)
+	{
+			  e.printStackTrace();
+	}
+		
+		
+}
+
+	
+/**
+ *@author smykjn
+ *@date 02-June-2017
+* @Objective This method validates respective features against 
+* following txn codes 'PSOVPG','PSOVMN' in GUI after deleting them from DB
+* @return void
+*/
+public void validateOverviewAndPlanDashboardAfterDeletingTxnCodes()
+{
+	try{
+		Web.getDriver().switchTo().defaultContent();
+		Actions act = new Actions(Web.getDriver());
+		act.moveToElement(planMenu).build().perform();
+		act.click(planMenu).build().perform();
+		try{
+			PlanOverviewTab.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSOVMN txn code and check plan overview page is not displayed.","Plan-->Overview tab is displayed.",true);
+		}catch(Exception e){
+			Reporter.logEvent(Status.PASS,"Delete PSOVMN txn code and check plan overview page is not displayed.","User"
+					+ " can not click on plan-->overview sicne Overview tab is not found hence plan overview page is"
+					+ " not displayed.",false);
+		}
+		Web.getDriver().switchTo().frame(iFramePlanB);
+		try{
+			planAnalytics.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSOVPG txn code from DB and check plan analytics section is not displayed.","Plan Analytics"
+					+ " section is displayed.", true);}
+		catch(Exception e){
+			Reporter.logEvent(Status.PASS,"Delete PSOVPG txn code from DB and check plan analytics section is not displayed.","As expected.", false);
+		}
+		try{
+			planinfoAndStatus.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSOVPG txn code from DB and check plan info and status section is not displayed.","Mentioned section "
+					+ "is displayed.", true);}
+		catch(Exception e){
+			Reporter.logEvent(Status.PASS,"Delete PSOVPG txn code from DB and check dashboard pages are not displayed.","As expected.", false);
+		}
+		try{
+			funds.isDisplayed();
+			Reporter.logEvent(Status.FAIL,"Delete PSOVPG txn code from DB and check Funds section are not displayed.","Mentioned section"
+					+ " is displayed.", true);}
+		catch(Exception e){
+			Reporter.logEvent(Status.PASS,"Delete PSOVPG txn code from DB and check Funds section are not displayed.","As expected.", false);
+		}
+	 }
+	catch(Exception e)
+	{
+			  e.printStackTrace();
+	}
+		
+		
+}	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -44,6 +44,8 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	private List<WebElement> jumpPageText;
 	@FindBy(xpath="//*[@id='jumpPageList']/option")
 	private WebElement jumpPageList;
+	@FindBy(xpath=".//*[@Class='lastLink']//a[contains(text(),'Logout')]")	
+	private WebElement logoutLink;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
 	@FindBy(css="div[id='greeting'] span[class='label']") private WebElement weGreeting;
@@ -117,15 +119,13 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private WebElement getWebElement(String fieldName) {
+		if (fieldName.trim().equalsIgnoreCase("LogOut Link")) {
+			return this.logoutLink;
+		}
+		
+		return null;
+	}
 	
 	
 	/**
@@ -184,8 +184,16 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 				}
 			}
 		}
-		
 	
+	public void logoutPSCFromJumpage(){
+		Web.getDriver().switchTo().defaultContent();
+		if(Web.isWebElementDisplayed(logoutLink,true)){
+			logoutLink.click();
+			Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
+		}else{
+			Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
+		}
+	}
 
 
 /**

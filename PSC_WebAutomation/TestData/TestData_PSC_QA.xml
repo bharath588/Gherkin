@@ -25,18 +25,19 @@
 				<parameter name="planNumber" value="331045-01" />
 			</Iteration>
 		</TestCase>
-<TestCase name="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered">
-	<Iteration Execution="Yes" id="1">
-		<parameter name="username" value="1ISIS" />
-		<parameter name="password" value="testing1" />
-		<parameter name="userVerificationEmail" value="discard@gwl.com" />
-		<parameter name="userVerificationAns" value="test" />
-		<parameter name="dreamCar" value="test" />
-		<parameter name="favDrink" value="test" />
-		<parameter name="spouseMidName" value="test" />
-		<parameter name="planNumber" value="331045-01" />
-	</Iteration>
-</TestCase>
+		<TestCase
+			name="Autocomplete_plan_suggestion_link_should_display_when_partial_plan number_is_entered">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value="331045-01" />
+			</Iteration>
+		</TestCase>
 		<TestCase name="Plan_Validat_error_message_when_plan_filed_blank">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
@@ -47,10 +48,11 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="planNumber" value=" " />
-				<parameter name="errortext" value="Please enter a plan in the search box."/>
+				<parameter name="errortext" value="Please enter a plan in the search box." />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+		<TestCase
+			name="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
@@ -60,10 +62,11 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="planNumber" value="4@344" />
-				<parameter name="errortext" value="Plan Not Found."/>
+				<parameter name="errortext" value="Plan Not Found." />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered">
+		<TestCase
+			name="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
@@ -74,7 +77,78 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="planName" value="Hoe. Ecug ss Fghgssgf 401" />
-				<parameter name="errortext" value="Please enter a plan in the search box."/>
+				<parameter name="errortext" value="Please enter a plan in the search box." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Investment_Fixed_Investment_Rates_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="planNumber" value="937878-01" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedFixedInvstColumn" value="Investment option,Legal name,Term,Rate" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Investment_Asset_Allocations_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="planNumber" value="937878-01" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Disable_certain_user_edit_fields_for_SAW">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="3ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="lastName" value="Boss"/>
+				<parameter name="planNumber" value="331044-01" />
+				<parameter name="firstName" value="Ken" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Order_Participant_QDIA_Notice_Listing">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value="338566-01" />
+				<parameter name="planNumber1" value="1114020-01" />
+				<parameter name="ignoreDivision" value="yes" />
+				<parameter name="Participant Identifier" value="FULL SSN 123-45-6789" />
+				<parameter name="Sort Order" value="Participant ID" />
+				<parameter name="Report Format" value="PDF" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value="338566-01" />
+				<parameter name="planNumber1" value="1114020-01" />
+				<parameter name="ignoreDivision" value="no" />
+				<parameter name="Participant Identifier" value="FULL SSN 123-45-6789" />
+				<parameter name="Sort Order" value="Participant ID" />
+				<parameter name="Report Format" value="PDF" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -103,34 +177,36 @@
 					value="Please enter a valid Username / Password combination." />
 			</Iteration>
 		</TestCase>
-		
-		<TestCase name = "User_Account_Locking_For_max_Invalid_Attempts">
+		<TestCase name="User_Account_Locking_For_max_Invalid_Attempts">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="54AFP" />
 				<parameter name="password" value="testing" />
-				<parameter name="errorMessages" value="You have exceeded the maximum number of login attempts." />
+				<parameter name="errorMessages"
+					value="You have exceeded the maximum number of login attempts." />
 			</Iteration>
 		</TestCase>
-		<TestCase name = "SIT_PSC_Login_01_TC004_Terminate User">
+		<TestCase name="SIT_PSC_Login_01_TC004_Terminate User">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="54AFP"/>
+				<parameter name="username" value="54AFP" />
 				<parameter name="password" value="testing1" />
-				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
-				<parameter name="termDate"	value="06-FEB-17"/>
+				<parameter name="errorMessages"
+					value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate" value="06-FEB-17" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="username" value="54AFP"/>
+				<parameter name="username" value="54AFP" />
 				<parameter name="password" value="testing1" />
-				<parameter name="errorMessages" value="The Username you are using is inactive. Please contact your administrator." />
-				<parameter name="termDate"	value="06-FEB-22"/>
-				<parameter name="UserVeriEmail" value="discard@gwl.com"/>
+				<parameter name="errorMessages"
+					value="The Username you are using is inactive. Please contact your administrator." />
+				<parameter name="termDate" value="06-FEB-22" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="UserSecondaryAns" value="test"/>
+				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
@@ -194,40 +270,42 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
-				<parameter name = "application" value="PSC"/>
-				<parameter name = "menu_feature_code" value="BROWSER_INFO"/>
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="application" value="PSC" />
+				<parameter name="menu_feature_code" value="BROWSER_INFO" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
-				<parameter name="userVerificationAns" value="test"/>
+				<parameter name="userVerificationAns" value="test" />
 			</Iteration>
-	</TestCase>
+		</TestCase>
 		<TestCase name="SIT_PSC_Sitenavigation_Menutabs">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="menutabs" value="Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
+				<parameter name="menutabs"
+					value="Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
-				<parameter name="username" value="5ISIS"/>
+				<parameter name="username" value="5ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="menutabs" value="PartnerLink,Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
+				<parameter name="menutabs"
+					value="PartnerLink,Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Sitenavigation_SubMenutabs">
-			 <Iteration Execution="No" id="1">
-				<parameter name="username" value="1ISIS"/>
+			<Iteration Execution="No" id="1">
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Plan" />
 				<parameter name="dreamCar" value="test" />
@@ -235,16 +313,22 @@
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="Overview,Investments &amp; Performance,Administration,Fiduciary records,Forms &amp; documents,Contacts" />
-				<parameter name="Overview" value="Summary,Plan provisions,Vesting schedules,Participant web and VRU options" />
+				<parameter name="submenu"
+					value="Overview,Investments &amp; Performance,Administration,Fiduciary records,Forms &amp; documents,Contacts" />
+				<parameter name="Overview"
+					value="Summary,Plan provisions,Vesting schedules,Participant web and VRU options" />
 				<parameter name="Investments &amp; Performance" value="" />
-				<parameter name="Administration" value="To do list,Vesting hours update &amp; verify,Vesting years update &amp; verify,Pay plan expenses,Username security management,Employee data file upload,View?change banking information,Asset allocation model setup,Plan messaging,Plan expense account" />
-				<parameter name="Fiduciary records" value="Required notices,Plan documents,Participant data extract order,Participant fee disclosure report order,Participant QDIA notice listing order" />
-				<parameter name="Forms &amp; documents" value="Administration documents,Scanned cash documents" />
-				<parameter name="Contacts" value="Plan contacts,Divisional contacts,Empower contacts" />
+				<parameter name="Administration"
+					value="To do list,Vesting hours update &amp; verify,Vesting years update &amp; verify,Pay plan expenses,Username security management,Employee data file upload,View?change banking information,Asset allocation model setup,Plan messaging,Plan expense account" />
+				<parameter name="Fiduciary records"
+					value="Required notices,Plan documents,Participant data extract order,Participant fee disclosure report order,Participant QDIA notice listing order" />
+				<parameter name="Forms &amp; documents"
+					value="Administration documents,Scanned cash documents" />
+				<parameter name="Contacts"
+					value="Plan contacts,Divisional contacts,Empower contacts" />
 			</Iteration>
 			<Iteration Execution="No" id="2">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Employees" />
 				<parameter name="dreamCar" value="test" />
@@ -257,14 +341,15 @@
 				<parameter name="Forms" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="3">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Process center" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="Overview,Enter payroll,Transmit your own file,Pending,View∕change banking information" />
+				<parameter name="submenu"
+					value="Overview,Enter payroll,Transmit your own file,Pending,View∕change banking information" />
 				<parameter name="Overview" value="" />
 				<parameter name="Enter payroll" value="" />
 				<parameter name="Transmit your own file" value="Upload payroll file,Process payroll file" />
@@ -272,21 +357,22 @@
 				<parameter name="View?change banking information" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="4">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Compliance" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="Year end compliance,Census file,Compliance user guide,Video demonstration" />
+				<parameter name="submenu"
+					value="Year end compliance,Census file,Compliance user guide,Video demonstration" />
 				<parameter name="Year end compliance" value="" />
 				<parameter name="Census file" value="Order Census File,Download Census File" />
 				<parameter name="Compliance user guide" value="" />
 				<parameter name="Video demonstration" value="" />
 			</Iteration>
 			<Iteration Execution="No" id="5">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Reports" />
 				<parameter name="dreamCar" value="test" />
@@ -298,33 +384,31 @@
 				<parameter name="My reports" value="" />
 			</Iteration>
 			<Iteration Execution="Yes" id="6">
-				<parameter name="username" value="1ISIS"/>
+				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="menuname" value="Resource center" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="Products &amp; services,Educational resources" />
+				<parameter name="submenu"
+					value="Products &amp; services,Educational resources" />
 				<parameter name="Products &amp; services" value="Recordkeeping products &amp; services" />
 				<parameter name="Educational resources" value="" />
 			</Iteration>
-			<!-- <Iteration Execution="Yes" id="7">
-				<parameter name="username" value="1ISIS"/>
-				<parameter name="password" value="testing1" />
-				<parameter name="menuname" value="File sharing" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="userVerificationAns" value="test" />
-				<parameter name="spouseMidName" value="test" />
-				<parameter name="submenu" value="" />
-			</Iteration> -->
+			<!-- <Iteration Execution="Yes" id="7"> <parameter name="username" value="1ISIS"/> 
+				<parameter name="password" value="testing1" /> <parameter name="menuname" 
+				value="File sharing" /> <parameter name="dreamCar" value="test" /> <parameter 
+				name="favDrink" value="test" /> <parameter name="userVerificationAns" value="test" 
+				/> <parameter name="spouseMidName" value="test" /> <parameter name="submenu" 
+				value="" /> </Iteration> -->
 		</TestCase>
-		<TestCase name="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite">
+		<TestCase
+			name="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username"  value="6X52E" />
-				<parameter name="password"  value="testing1" />
-				<parameter name="userid"  value="6X52E" />
+				<parameter name="username" value="6X52E" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userid" value="6X52E" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="userVerificationAns" value="test" />
@@ -333,10 +417,11 @@
 				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites">
+		<TestCase
+			name="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username"  value="6IUEF" />
-				<parameter name="password"  value="testing1" />
+				<parameter name="username" value="6IUEF" />
+				<parameter name="password" value="testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="userVerificationAns" value="test" />
@@ -347,8 +432,8 @@
 		</TestCase>
 		<TestCase name="UI_Validations_On_JumpPage">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username"  value="6IUEF" />
-				<parameter name="password"  value="testing1" />
+				<parameter name="username" value="6IUEF" />
+				<parameter name="password" value="testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="userVerificationAns" value="test" />
@@ -359,8 +444,8 @@
 		</TestCase>
 		<TestCase name="Verify_PLUser_Login_With_No_Plna_Access">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username"  value="5ISIS" />
-				<parameter name="password"  value="testing1" />
+				<parameter name="username" value="5ISIS" />
+				<parameter name="password" value="testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="userVerificationEmail" value="discard@gwl.comt" />
@@ -370,22 +455,35 @@
 				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="SIT_PSC_HomePage_Transaction_Security">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5AOAV" />
+				<parameter name="password" value="testing1" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="userVerificationEmail" value="discard@gwl.comt" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="userverification">
-		 <TestCase name="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login" >
+		<TestCase name="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				<parameter name="rv_low_value" value="lesser"/>
+				<parameter name="rv_low_value" value="lesser" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				<parameter name="rv_low_value" value="greater"/>
+				<parameter name="rv_low_value" value="greater" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -398,7 +496,7 @@
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="dreamCar" value="test" />
-			</Iteration> 
+			</Iteration>
 		</TestCase>
 		<TestCase
 			name="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid">
@@ -478,7 +576,8 @@
 				<parameter name="ifSingleSiteUser" value="False" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session" >
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5C84G" />
 				<parameter name="password" value="testing1" />
@@ -500,9 +599,10 @@
 		</TestCase>
 	</Module>
 	<Module name="accountverification">
-		<TestCase name = "SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
-				<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="4W1UQ" />
+		<TestCase
+			name="SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5SOGE" />
 				<parameter name="password" value="testing1" />
 				<parameter name="emailAddress" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
@@ -511,8 +611,11 @@
 				<parameter name="confirmPassword" value="testing1" />
 				<parameter name="expectedErrorMessage"
 					value="Invalid new password - Please re-enter password using the criteria shown below" />
+					<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
 			</Iteration>
-		</TestCase> 
+		</TestCase>
 		<TestCase name="SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5IP4Z" />
@@ -520,7 +623,7 @@
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="infoType" value="NonAvailability" />
-				<parameter name="TxnCode" value="PSCCTR"/>
+				<parameter name="TxnCode" value="PSCCTR" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
@@ -531,20 +634,20 @@
 				<parameter name="userVerificationAns" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
 				<parameter name="infoType" value="Availability" />
-				<parameter name="TxnCode" value="PSCCTR"/>
+				<parameter name="TxnCode" value="PSCCTR" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 			</Iteration>
-		</TestCase> 
+		</TestCase>
 		<TestCase name="SIT_PSC_HomePage_02_TC006_Notification Button">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5IP4Z" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="infoType" value="NonAvailability" />
-				<parameter name="TxnCode" value="PSCTOD"/>
+				<parameter name="infoType" value="Availability" />
+				<parameter name="TxnCode" value="PSCTOD" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
@@ -555,7 +658,7 @@
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="infoType" value="Availability" />
-				<parameter name="TxnCode" value="PSCTOD"/>
+				<parameter name="TxnCode" value="PSCTOD" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
@@ -703,8 +806,8 @@
 				<parameter name="newPassword" value="Testing2" />
 				<parameter name="confirmPassword" value="Testing3" />
 				<parameter name="expectedErrorMessage" value="New Password must match Confirm Password" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
@@ -715,8 +818,8 @@
 				<parameter name="CurrentPassword" value="" />
 				<parameter name="newPassword" value="" />
 				<parameter name="confirmPassword" value="" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="expectedErrorMessage"
 					value="Current password is required.&#10;&#10;New Password is required&#10;&#10;Confirm Password is required" />
@@ -729,8 +832,8 @@
 				<parameter name="CurrentPassword" value="testing2" />
 				<parameter name="newPassword" value="Testing1" />
 				<parameter name="confirmPassword" value="Testing1" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="expectedErrorMessage"
 					value="Incorrect current password. Please re-enter or contact your system administrator." />
@@ -743,8 +846,8 @@
 				<parameter name="CurrentPassword" value="testing1" />
 				<parameter name="newPassword" value="test" />
 				<parameter name="confirmPassword" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="expectedErrorMessage"
 					value="Invalid new password - Please re-enter password using the criteria shown below" />
@@ -757,7 +860,7 @@
 				<parameter name="txtPassword" value="testing1" />
 				<parameter name="emailAddress" value="abc@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				<parameter name="currentPassword" value="testing1" />
+				<parameter name="CurrentPassword" value="testing1" />
 				<parameter name="newPassword" value="Testing2" />
 				<parameter name="confirmPassword" value="Testing2" />
 				<parameter name="dreamCar" value="testr" />
@@ -772,8 +875,8 @@
 				<parameter name="txtPassword" value="testing1" />
 				<parameter name="UserVeriEmail" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 			</Iteration>
 		</TestCase>
@@ -788,6 +891,9 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="test" />
+				<parameter name="currentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing2" />
+				<parameter name="confirmPassword" value="Testing2" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -814,7 +920,7 @@
 				<parameter name="PlanNumber" value="384171-09" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="test" />			
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="addPlanNumber" value="384171-09" />
 			</Iteration>
 		</TestCase>
@@ -1195,7 +1301,7 @@
 		</TestCase>
 		<TestCase name="Employee_Search_Regression_noduplicateppt">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="1ISIS" />
+				<parameter name="username" value="2ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
@@ -1393,9 +1499,9 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="hireDate" value="01/16/2015"/>
-				<parameter name="empId" value="3654343"/>
-				<parameter name="Officer" value="No"/>
+				<parameter name="hireDate" value="01/16/2015" />
+				<parameter name="empId" value="3654343" />
+				<parameter name="Officer" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Employee_Contact_Info_Verification">
@@ -1407,9 +1513,12 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="expContactInfoLabels" value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method" />
-				<parameter name="expContactInputLabelsWindow" value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
-				<parameter name="expContactSelectLabelsWindow" value="Marital Status,Gender,Language Preference,State,Country" />
+				<parameter name="expContactInfoLabels"
+					value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method" />
+				<parameter name="expContactInputLabelsWindow"
+					value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
+				<parameter name="expContactSelectLabelsWindow"
+					value="Marital Status,Gender,Language Preference,State,Country" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Verify_Beneficiary_Info">
@@ -1500,7 +1609,8 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpectedLabels" value="Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email" />
+				<parameter name="ExpectedLabels"
+					value="Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Verify_Subset_History_Section">
@@ -1512,8 +1622,10 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="expectedHeaders" value="Client division code,Division,Division name,Effective date,Termination date" />
-				<parameter name="expectedHeadersHistory" value="Client Division Code,Division,Division Name,Effective Date,Term Date" />
+				<parameter name="expectedHeaders"
+					value="Client division code,Division,Division name,Effective date,Termination date" />
+				<parameter name="expectedHeadersHistory"
+					value="Client Division Code,Division,Division Name,Effective Date,Term Date" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Recently_Viewed_Switch_Participant_Reg">
@@ -1547,7 +1659,8 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpectedDisclaimer" value="* All dates and times are in Mountain Time unless otherwise noted."/>
+				<parameter name="ExpectedDisclaimer"
+					value="* All dates and times are in Mountain Time unless otherwise noted." />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Disable_PAE_then_renable_PAE">
@@ -1559,7 +1672,8 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpectedErrorMessage" value="Data Setup Error. Please contact Plan Technical Support, option Website Support." />
+				<parameter name="ExpectedErrorMessage"
+					value="Data Setup Error. Please contact Plan Technical Support, option Website Support." />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Supress_Menu_Items_for_TRS_Flex">
@@ -1593,7 +1707,8 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="ExpectedHeaders" value="Investment option,Fund short name,Deposit period,Default ind,Percent" />
+				<parameter name="ExpectedHeaders"
+					value="Investment option,Fund short name,Deposit period,Default ind,Percent" />
 				<parameter name="ExpectedMessage" value="Employee currently has no allocations." />
 			</Iteration>
 		</TestCase>
@@ -1607,10 +1722,11 @@
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
 				<parameter name="ExpectedHeader" value="DATE,CATEGORY,DESCRIPTION" />
-				<parameter name="empSSN" value = "622854828" />
+				<parameter name="empSSN" value="622854828" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
+		<TestCase
+			name="SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5AOAV" />
 				<parameter name="password" value="testing1" />
@@ -1630,7 +1746,8 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpectedLabels" value="Union,Insider,Super officer,FT/PT employee,Job description,Employment type,Employer classification code" />
+				<parameter name="ExpectedLabels"
+					value="Union,Insider,Super officer,FT/PT employee,Job description,Employment type,Employer classification code" />
 				<parameter name="ExpModalWindowLabels" value="Insider,Super Officer,FT/PT Employee" />
 			</Iteration>
 		</TestCase>
@@ -1655,9 +1772,12 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="400449542" />
-				<parameter name="ExpectedHeaders" value="Fee type,Process date,Effective date,Deposit type,Amount" />
-				<parameter name="ExpectedModalWinHeader" value="Fee Type,Process Date,Effective Date,Deposit Type,Amount" />
-				<parameter name="ExpectedMessage" value="There have been no fees in the past 3 months."/>
+				<parameter name="ExpectedHeaders"
+					value="Fee type,Process date,Effective date,Deposit type,Amount" />
+				<parameter name="ExpectedModalWinHeader"
+					value="Fee Type,Process Date,Effective Date,Deposit Type,Amount" />
+				<parameter name="ExpectedMessage"
+					value="There have been no fees in the past 3 months." />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Accountdetail_Vesting_Reg">
@@ -1670,7 +1790,8 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="008299768" />
-				<parameter name="ExpectedHeaders" value="Period begin date,Period end date,YTD credited hours,YTD credited hours excluded,Service years,Effective date,Process date,Total compensation,Plan compensation,Pre entry compensation" />
+				<parameter name="ExpectedElements"
+					value="Period begin date,Period end date,YTD credited hours,YTD credited hours excluded,Service years,Effective date,Process date,Total compensation,Plan compensation,Pre entry compensation" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Accountdetail_Loans_Reg">
@@ -1682,9 +1803,12 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpectedElements" value="Active loans,Max loans allowed,Minimum amount,Maximum amount" />
-				<parameter name="ExpectedLoanDetailHeaders" value="Loan number,Effective date,Loan amount,Status,Repay amount,Principal balance,Principal due,Interest due,Total due" />
-				<parameter name="ExpLoanAccountDetailColumn" value="Effective date,First due date,Maturity date,Interest rate,Loan term,Current outstanding balance,Repay frequency,Original loan amount,Payments remaining,Status,Paid off date,Days late,Default indicator,Default date"/>
+				<parameter name="ExpectedElements"
+					value="Active loans,Max loans allowed,Minimum amount,Maximum amount" />
+				<parameter name="ExpectedLoanDetailHeaders"
+					value="Loan number,Effective date,Loan amount,Status,Repay amount,Principal balance,Principal due,Interest due,Total due" />
+				<parameter name="ExpLoanAccountDetailColumn"
+					value="Effective date,First due date,Maturity date,Interest rate,Loan term,Current outstanding balance,Repay frequency,Original loan amount,Payments remaining,Status,Paid off date,Days late,Default indicator,Default date" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Accountdetail_Paycheck_Contribution_YTD">
@@ -1697,10 +1821,12 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="ExpectedYTDHeader" value="Type,YTD Contributions" />
-				<parameter name="ExpectedHeaders" value="Confirmation Number,Effective Date,Transaction Type,Amount" />
+				<parameter name="ExpectedHeaders"
+					value="Confirmation Number,Effective Date,Transaction Type,Amount" />
 				<parameter name="SSN" value="003963876" />
 				<parameter name="planId" value="331044-01" />
-				<parameter name="ExpectedMessage" value="No year to date contributions are available." />
+				<parameter name="ExpectedMessage"
+					value="No year to date contributions are available." />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Paycheck_Contribution_History">
@@ -1750,13 +1876,16 @@
 				<parameter name="PlanNumber" value="937878-01" />
 				<parameter name="LastName" value="Jain" />
 				<parameter name="FirstName" value="Samy" />
-				<parameter name="EligibilityErrorMsg" value="Eligibility Information is required.,Some fields contain errors. Please correct errors and continue." />
+				<parameter name="EligibilityErrorMsg"
+					value="Eligibility Information is required.,Some fields contain errors. Please correct errors and continue." />
 				<parameter name="IneligibilityReasonCode" value="Excluded Class,Other" />
 				<parameter name="IncomeDataErrorMsg" value="Salary Amount is not a valid number." />
-				<parameter name="FrequencyOptions" value="ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52" />
+				<parameter name="FrequencyOptions"
+					value="ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52" />
 				<parameter name="expHireDateErrorMsg" value="Hire Date is mandatory." />
-				<parameter name="ExpectedManagedAccntLabels" value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
-				<parameter name="AllocationValidationMsg" value= "Percentage do not add up to 100." />
+				<parameter name="ExpectedManagedAccntLabels"
+					value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
+				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100." />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -1810,7 +1939,7 @@ ga.termdate is null union select distinct ga.id, 'has divisions' from group_acco
 ga.gc_id = GS.GC_ID and ga.termdate is null order by id) reftable ON userdatatable.ga_id = reftable.id where
 userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
 where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
-<parameter QueryName="getPlanswithNoDivisions" DB="ISISDB_QA"
+		<parameter QueryName="getPlanswithNoDivisions" DB="ISISDB_QA"
 			Query="select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')
@@ -1942,24 +2071,24 @@ user_logon_id = ? and av.access_type_code='PSC_WEB'" />
 			Query="select distinct GA_ID from access_customization_view where  
 GA_ID in (select DISTINCT GA_ID from user_data_access where 
 user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
-<parameter QueryName="queryTofindPlansForNextGen" DB="ISISDB_QA"
+		<parameter QueryName="queryTofindPlansForNextGen" DB="ISISDB_QA"
 			Query="select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')" />
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ISISDB_QA"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
-			<parameter QueryName="queryToSetInvalidLoginCount" DB="ISISDB_QA"
+		<parameter QueryName="queryToSetInvalidLoginCount" DB="ISISDB_QA"
 			Query="update isis_password set invalid_login_count=2 where user_logon_id=?">
-			</parameter>
-			<parameter QueryName="queryToResetInvalidLoginCount" DB="ISISDB_QA"
+		</parameter>
+		<parameter QueryName="queryToResetInvalidLoginCount" DB="ISISDB_QA"
 			Query="update isis_password set invalid_login_count=0 where user_logon_id=?">
-			</parameter>
-			<parameter QueryName = "queryToTerminateUser" DB="ISISDB_QA"
-			Query = "Update users set termdate = ? where logon_id=?"></parameter>
-			<parameter QueryName = "queryToResetTermDate" DB="ISISDB_QA"
-			Query = "Update users set termdate = '06-FEB-22' where logon_id=?"></parameter>
-			<parameter QueryName = "getLastLogins" DB="ISISDB_QA"
-			Query = "select user_logon_id, TO_CHAR(DPDATE_TIME, &apos;YYYYMMDD hh24:mi&apos;) DPDATE, 
+		</parameter>
+		<parameter QueryName="queryToTerminateUser" DB="ISISDB_QA"
+			Query="Update users set termdate = ? where logon_id=?"></parameter>
+		<parameter QueryName="queryToResetTermDate" DB="ISISDB_QA"
+			Query="Update users set termdate = '06-FEB-22' where logon_id=?"></parameter>
+		<parameter QueryName="getLastLogins" DB="ISISDB_QA"
+			Query="select user_logon_id, TO_CHAR(DPDATE_TIME, &apos;YYYYMMDD hh24:mi&apos;) DPDATE, 
 substr(exception,  instr(exception, &apos;IP_ADDR&gt;&apos;)+8,  (instr(exception, &apos;&lt;/IP_ADDR&gt;&apos;) - (instr(exception, &apos;IP_ADDR&gt;&apos;)+8))) IP ,
 substr(exception,  instr(exception, &apos;BROWSER&gt;&apos;)+8,  (instr(exception, &apos;&lt;/BROWSER&gt;&apos;) - (instr(exception, &apos;BROWSER&gt;&apos;)+8))) browser , 
 substr(exception,  instr(exception, &apos;FULL_VERSION&gt;&apos;)+13,  (instr(exception, &apos;&lt;/FULL_VERSION&gt;&apos;) - (instr(exception, &apos;FULL_VERSION&gt;&apos;)+13))) major,
@@ -1967,19 +2096,20 @@ substr(exception,  instr(exception, &apos;MINOR_VERSION&gt;&apos;)+14,  (instr(e
 from menu_activity
 where application = ?
 and menu_feature_code = ?
-and user_logon_id=? order by DPDATE desc"/>
+and user_logon_id=? order by DPDATE desc" />
 
 		<parameter QueryName="getAccuCode" DB="INSTDB_QA"
 			Query="select DISTINCT(accu_code),ga_id from access_customization_view where access_type_code='PSC_WEB' and accu_code in ('PlanEmpower','PscGwrs','PscPutnamWR') and ga_id in(select ga_id from std_restrc where uscs_id=?)" />
 		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
 			Query="select database_instance from FRIENDLY_USERNAME where user_logon_id = ? " />
-		<!-- <parameter QueryName="getEmployeeID" DB="ISISDB_QA"
-			Query="select * from employment where ind_id in (select ind_id from part_agrmt where ga_id in 
-(select default_ga_id from users where logon_id=?)) and er_assigned_id is not null order by hire_date desc" /> -->
-<parameter QueryName="getEmployeeID" DB="ISISDB_QA"
+		<!-- <parameter QueryName="getEmployeeID" DB="ISISDB_QA" Query="select 
+			* from employment where ind_id in (select ind_id from part_agrmt where ga_id 
+			in (select default_ga_id from users where logon_id=?)) and er_assigned_id 
+			is not null order by hire_date desc" /> -->
+		<parameter QueryName="getEmployeeID" DB="ISISDB_QA"
 			Query="select * from individual, employment where id in (select ind_id from part_agrmt where ga_id in 
 (select default_ga_id from users where logon_id=?)) and ssn is not null and individual.id=employment.ind_id and hire_date is not null and emp_termdate is not null" />
-<parameter QueryName="getEmployeeInfo" DB="ISISDB_QA"
+		<parameter QueryName="getEmployeeInfo" DB="ISISDB_QA"
 			Query="select i.ssn,i.first_name,i.last_name,
 nvl(i.marital_status,' ') marital_status,
 nvl(i.middle_name,' ') middle_name,
@@ -1994,54 +2124,57 @@ nvl(to_char(i.home_phone_nbr),' ') home_phone_nbr,
 nvl(to_char(i.work_phone_area_code),' ') work_phone_area_code,
 nvl(to_char(i.work_phone_nbr),' ') work_phone_nbr
 from individual i, address a where a.ind_id = i.id and i.ssn =?" />
- <parameter QueryName="getBeneficiaryEmployee" DB="ISISDB_QA"
+		<parameter QueryName="getBeneficiaryEmployee" DB="ISISDB_QA"
 			Query="select * from 
 individual where id in (select pa_ind_id from 
 related_individual where pa_ga_id in (select default_ga_id from users where logon_id=?))" />
-	
-	<parameter QueryName="getMaritalStatus" DB="ISISDB_QA"
-	Query="select upper(rv_meaning) from isis_ref_values where rv_column = 'MARITAL_STATUS' and rv_table ='INTERLINK_DATA_EXCHANGE'and rv_low_value=?"/>
-	<parameter QueryName="getState" DB="ISISDB_QA"
-	Query="select * from isis_ref_values where rv_low_value=? and rv_domain='STATE'"/>
-	<parameter QueryName="getCountry" DB="ISISDB_QA"
-	Query="select * from isis_ref_values where rv_low_value=? and rv_domain='COUNTRY'"/>
-	<parameter QueryName="getBeneficiary" DB="ISISDB_QA"
-	Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,replace(mailing_name_1,' ','')mailing_name_1 ,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1"/>
-	<!-- <parameter QueryName="getIncomeDataEmployee" DB="ISISDB_QA"
-	Query="select ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data where
-	sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from part_agrmt where ga_id in (select distinct GA_ID from access_customization_view where  
-GA_ID in (select DISTINCT GA_ID from user_data_access where 
-user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'))) order by ind_id "/> -->
-<parameter QueryName="getIncomeDataEmployee" DB="ISISDB_QA"
+
+		<parameter QueryName="getMaritalStatus" DB="ISISDB_QA"
+			Query="select upper(rv_meaning) from isis_ref_values where rv_column = 'MARITAL_STATUS' and rv_table ='INTERLINK_DATA_EXCHANGE'and rv_low_value=?" />
+		<parameter QueryName="getState" DB="ISISDB_QA"
+			Query="select * from isis_ref_values where rv_low_value=? and rv_domain='STATE'" />
+		<parameter QueryName="getCountry" DB="ISISDB_QA"
+			Query="select * from isis_ref_values where rv_low_value=? and rv_domain='COUNTRY'" />
+		<parameter QueryName="getBeneficiary" DB="ISISDB_QA"
+			Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,replace(mailing_name_1,' ','')mailing_name_1 ,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1" />
+		<!-- <parameter QueryName="getIncomeDataEmployee" DB="ISISDB_QA" Query="select 
+			ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data 
+			where sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from 
+			part_agrmt where ga_id in (select distinct GA_ID from access_customization_view 
+			where GA_ID in (select DISTINCT GA_ID from user_data_access where user_logon_id=? 
+			and GA_ID is not null) and accu_code='PlanEmpower'))) order by ind_id "/> -->
+		<parameter QueryName="getIncomeDataEmployee" DB="ISISDB_QA"
 			Query="select ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data where
 	sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from part_agrmt where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')))) order by ind_id" />
-<parameter QueryName="getIndividual" DB="ISISDB_QA"
-	Query="select ssn from individual where id =?"/>
-	<parameter QueryName="getSalary" DB="ISISDB_QA"
-	Query="select sal_amt from income_data where ind_id =?"/>
-	<parameter QueryName="getSSNForPaycheckContribution" DB="ISISDB_QA"
-	Query="SELECT GA.GC_ID,I.SSN,I.LAST_NAME,I.FIRST_NAME,ED.STDT_CODE,ED.PERCENTAGE,Ed.AMOUNT FROM INDIVIDUAL I,ELECTIVE_DEFERRAL ED,GROUP_ACCOUNT GA, user_data_access uda
+		<parameter QueryName="getIndividual" DB="ISISDB_QA"
+			Query="select ssn from individual where id =?" />
+		<parameter QueryName="getSalary" DB="ISISDB_QA"
+			Query="select sal_amt from income_data where ind_id =?" />
+		<parameter QueryName="getSSNForPaycheckContribution" DB="ISISDB_QA"
+			Query="SELECT GA.GC_ID,I.SSN,I.LAST_NAME,I.FIRST_NAME,ED.STDT_CODE,ED.PERCENTAGE,Ed.AMOUNT FROM INDIVIDUAL I,ELECTIVE_DEFERRAL ED,GROUP_ACCOUNT GA, user_data_access uda
 WHERE I.ID = ED.IND_ID AND ED.PLAN_ID = GA.PLAN_ID and ga.id= uda.ga_id  and ga.id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda1
 on uda1.ga_id= acv1.ga_id and uda1.user_logon_id=? and acv1.accu_code='PlanEmpower' 
-where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))"/>
-<!-- <parameter QueryName="getEmployeeWithTermDate" DB="ISISDB_QA"
-	Query="select distinct emp.ind_id, ind.ssn from part_agrmt pa inner join employment emp  on pa.ind_id= emp.ind_id 
-inner join individual ind on ind.id=emp.ind_id where pa.ga_id in(select distinct GA_ID from access_customization_view 
-where  pa.GA_ID in (select DISTINCT GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
-and accu_code='PlanEmpower') and emp.emp_termdate is not null"/> -->
-<parameter QueryName="getEmployeeWithTermDate" DB="ISISDB_QA"
-	Query="select ind.ssn,ind.id from employment emp inner join individual ind on emp.ind_id=ind.id where ind_id in (select id from individual where ssn in(select ind.SSN 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))" />
+		<!-- <parameter QueryName="getEmployeeWithTermDate" DB="ISISDB_QA" Query="select 
+			distinct emp.ind_id, ind.ssn from part_agrmt pa inner join employment emp 
+			on pa.ind_id= emp.ind_id inner join individual ind on ind.id=emp.ind_id where 
+			pa.ga_id in(select distinct GA_ID from access_customization_view where pa.GA_ID 
+			in (select DISTINCT GA_ID from user_data_access where user_logon_id=? and 
+			GA_ID is not null) and accu_code='PlanEmpower') and emp.emp_termdate is not 
+			null"/> -->
+		<parameter QueryName="getEmployeeWithTermDate" DB="ISISDB_QA"
+			Query="select ind.ssn,ind.id from employment emp inner join individual ind on emp.ind_id=ind.id where ind_id in (select id from individual where ssn in(select ind.SSN 
 from part_agrmt pa,individual ind where
 pa.ga_id in (select distinct GA_ID from access_customization_view 
 where  GA_ID in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and accu_code='PlanEmpower')
-and pa.ind_id=ind.id)) and emp_termdate is not null"/>
-<parameter QueryName="getEmpHiringDetails" DB="ISISDB_QA"
-	Query="Select
+and pa.ind_id=ind.id)) and emp_termdate is not null" />
+		<parameter QueryName="getEmpHiringDetails" DB="ISISDB_QA"
+			Query="Select
 emp.ind_id
 , emp.gc_id
 , to_char(emp.hire_date,'MM/DD/YYYY') hire_date
@@ -2055,50 +2188,50 @@ from
  Employment emp
 , IND_ELIGIBILITY iel
 where emp.Ind_id = iel.ind_id
-and emp.ind_id =? order by emp.hire_date desc"/>
-<parameter QueryName="getEmployeeWithMultiplePlan" DB="ISISDB_QA"
-	Query="select ssn from individual where id in (select ind_id from part_agrmt where ga_id in (select GA_ID  from access_customization_view 
+and emp.ind_id =? order by emp.hire_date desc" />
+		<parameter QueryName="getEmployeeWithMultiplePlan" DB="ISISDB_QA"
+			Query="select ssn from individual where id in (select ind_id from part_agrmt where ga_id in (select GA_ID  from access_customization_view 
 where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
-and accu_code='PlanEmpower') group by ind_id having count(ga_id)>2)"/>
-<!-- <parameter QueryName="queryTofindPlansForUser" DB="ISISDB_QA"
-			Query="select distinct GA_ID from access_customization_view where  
-GA_ID in (select DISTINCT GA_ID from user_data_access where 
-user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" /> -->
-<parameter QueryName="getIndividualDetails" DB="ISISDB_QA"
-	Query="select first_Name,last_name, to_char(birth_date,'MM/DD/YYYY') birth_date,SSN,middle_name from individual where mailing_name_1 = ? and ssn like ? "/>
-	<parameter QueryName="getPlanNamesForSSN" DB="ISISDB_QA"
-	Query="select pl.gc_id,pl.name,pa.ga_id from part_agrmt pa,individual ind,group_account ga,plan pl
-where pa.ind_id=ind.id and ind.ssn=? and ga.id= pa.ga_id and pl.id= ga.plan_id"/>
-<parameter QueryName="getQDROIndividual" DB="ISISDB_QA"
-	Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+and accu_code='PlanEmpower') group by ind_id having count(ga_id)>2)" />
+		<!-- <parameter QueryName="queryTofindPlansForUser" DB="ISISDB_QA" Query="select 
+			distinct GA_ID from access_customization_view where GA_ID in (select DISTINCT 
+			GA_ID from user_data_access where user_logon_id=? and GA_ID is not null) 
+			and accu_code='PlanEmpower'" /> -->
+		<parameter QueryName="getIndividualDetails" DB="ISISDB_QA"
+			Query="select first_Name,last_name, to_char(birth_date,'MM/DD/YYYY') birth_date,SSN,middle_name from individual where mailing_name_1 = ? and ssn like ? " />
+		<parameter QueryName="getPlanNamesForSSN" DB="ISISDB_QA"
+			Query="select pl.gc_id,pl.name,pa.ga_id from part_agrmt pa,individual ind,group_account ga,plan pl
+where pa.ind_id=ind.id and ind.ssn=? and ga.id= pa.ga_id and pl.id= ga.plan_id" />
+		<parameter QueryName="getQDROIndividual" DB="ISISDB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
 i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
 pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
 where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'Q' and i.sex is not null
 and pa.ga_id in (select GA_ID from access_customization_view 
 where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
-and accu_code='PlanEmpower')"/>
-<parameter QueryName="getNormalIndividual" DB="ISISDB_QA"
-	Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+and accu_code='PlanEmpower')" />
+		<parameter QueryName="getNormalIndividual" DB="ISISDB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
 i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
 pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
 where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'N' and i.sex is not null
 and pa.ga_id in (select GA_ID from access_customization_view 
 where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
-and accu_code='PlanEmpower')"/>
-<parameter QueryName="getTransferIndividual" DB="ISISDB_QA"
-	Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+and accu_code='PlanEmpower')" />
+		<parameter QueryName="getTransferIndividual" DB="ISISDB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
 i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
 pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
 where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'T' and i.sex is not null
 and pa.ga_id in (select GA_ID from access_customization_view 
 where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
-and accu_code='PlanEmpower')"/>
-<parameter QueryName="addTransactionCode" DB="ISISDB_QA"
-    Query="Insert into user_txn_auth values(?,?,NULL,'N')"/>
-    <parameter QueryName="deleteTransactionCode" DB="ISISDB_QA"
-     Query="Delete from user_txn_auth where txn_code = ? and uscs_id=?"/>
-<parameter QueryName="getEmployeeWithSubSetSection" DB="ISISDB_QA"
-    Query="select i.ssn,ga.id, gs.basis, gs.value, gs.client_div_code from group_client gc
+and accu_code='PlanEmpower')" />
+		<parameter QueryName="addTransactionCode" DB="ISISDB_QA"
+			Query="Insert into user_txn_auth values(?,?,NULL,'N')" />
+		<parameter QueryName="deleteTransactionCode" DB="ISISDB_QA"
+			Query="Delete from user_txn_auth where txn_code = ? and uscs_id=?" />
+		<parameter QueryName="getEmployeeWithSubSetSection" DB="ISISDB_QA"
+			Query="select i.ssn,ga.id, gs.basis, gs.value, gs.client_div_code from group_client gc
 inner join group_account ga on ga.gc_id = gc.id
 inner join gc_subset gs  on gc.id=gs.gc_id
 inner join part_agrmt pa on pa.ga_id=ga.id
@@ -2109,9 +2242,9 @@ and acv.accu_code='PlanEmpower' and ga.id in (select distinct acv1.ga_id from ac
 on uda.ga_id= acv1.ga_id and uda.user_logon_id='K_1ISIS' and acv1.accu_code='PlanEmpower'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and acv.access_type_code='PSC_WEB' and uda.user_logon_id =?
-and gs.basis is not null and gs.value is not null"/>
-<parameter QueryName="getEmployeeWithoutSubSetSection" DB="ISISDB_QA"
-    Query="select i.ssn,i.id, pa.ga_id from individual i 
+and gs.basis is not null and gs.value is not null" />
+		<parameter QueryName="getEmployeeWithoutSubSetSection" DB="ISISDB_QA"
+			Query="select i.ssn,i.id, pa.ga_id from individual i 
 inner join  part_agrmt pa on i.id = pa.ind_id
 inner join access_customization_view acv on acv.ga_id= pa.ga_id
 inner join user_data_access uda on acv.ga_id= uda.ga_id
@@ -2120,70 +2253,70 @@ and uda.user_logon_id=? and pa.ga_id in (select ga.id
 from group_account ga, 
 group_client gc where ga.gc_id = gc.id 
 and not exists (select 'X' from gc_subset 
-where gc_id = ga.gc_id))"/>
-<parameter QueryName="getPartWithAccountBalance" DB="ISISDB_QA"
-    Query="select i.ssn from loan_assess la left join individual i on i.id=la.ind_id   where la.status_code in ('PARTIAL','PAID','DEFAULT') and ga_id in (
+where gc_id = ga.gc_id))" />
+		<parameter QueryName="getPartWithAccountBalance" DB="ISISDB_QA"
+			Query="select i.ssn from loan_assess la left join individual i on i.id=la.ind_id   where la.status_code in ('PARTIAL','PAID','DEFAULT') and ga_id in (
 select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
-where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))"/>
-<parameter QueryName="CheckPortalTypecodeForEmpower" DB="ISISDB_QA" 
-	Query="select portal_type_code from access_portal where accu_code like '%Empower%' and portal_type_code = 'PAE_URL' " />
-<parameter QueryName="DisablePAE" DB="ISISDB_QA"
-    Query="update ACCESS_PORTAL set portal_type_code = 'test' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Empower') and portal_type_code = 'PAE_URL' "/>
-<parameter QueryName="EnablePAE" DB="ISISDB_QA"
-    Query="update ACCESS_PORTAL set portal_type_code = 'PAE_URL' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Empower') and portal_type_code = 'test' " />
-<parameter QueryName="CheckPSCPAETxnCode" DB="ISISDB_QA"
-    Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code = 'PSCPAE'" />
-<parameter QueryName="deletePSCPAETxnCode" DB="ISISDB_QA"
-    Query="delete from user_txn_auth where txn_code = 'PSCPAE' and uscs_id = ?" />
-<parameter QueryName="insertPSCPAETxnCode" DB="ISISDB_QA"
-    Query="insert into user_txn_auth values('PSCPAE', 'PSC_USER', null, 'N')" />
-<parameter QueryName="insertPSCPAETxnCode_1" DB="ISISDB_QA"
-    Query="insert into user_txn_auth values('PSCPAE', ? , null, 'N')" />
-<parameter QueryName="getTRXFlexPlan" DB="IN02DB_QA"
-    Query="select  id ga_id from group_account where plan_type ='TRS'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))" />
+		<parameter QueryName="CheckPortalTypecodeForEmpower" DB="ISISDB_QA"
+			Query="select portal_type_code from access_portal where accu_code like '%Empower%' and portal_type_code = 'PAE_URL' " />
+		<parameter QueryName="DisablePAE" DB="ISISDB_QA"
+			Query="update ACCESS_PORTAL set portal_type_code = 'test' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Empower') and portal_type_code = 'PAE_URL' " />
+		<parameter QueryName="EnablePAE" DB="ISISDB_QA"
+			Query="update ACCESS_PORTAL set portal_type_code = 'PAE_URL' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Empower') and portal_type_code = 'test' " />
+		<parameter QueryName="CheckPSCPAETxnCode" DB="ISISDB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code = 'PSCPAE'" />
+		<parameter QueryName="deletePSCPAETxnCode" DB="ISISDB_QA"
+			Query="delete from user_txn_auth where txn_code = 'PSCPAE' and uscs_id = ?" />
+		<parameter QueryName="insertPSCPAETxnCode" DB="ISISDB_QA"
+			Query="insert into user_txn_auth values('PSCPAE', 'PSC_USER', null, 'N')" />
+		<parameter QueryName="insertPSCPAETxnCode_1" DB="ISISDB_QA"
+			Query="insert into user_txn_auth values('PSCPAE', ? , null, 'N')" />
+		<parameter QueryName="getTRXFlexPlan" DB="IN02DB_QA"
+			Query="select  id ga_id from group_account where plan_type ='TRS'
 and id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) " />
-<parameter QueryName="getNonTRXFlexPlan" DB="IN02DB_QA"
-    Query="select id ga_id from group_account where plan_type !='TRS'
+		<parameter QueryName="getNonTRXFlexPlan" DB="IN02DB_QA"
+			Query="select id ga_id from group_account where plan_type !='TRS'
 and id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' 
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) order by id desc " />
-<parameter QueryName="getInvetmentAllocationEmp" DB="ISISDB_QA"
-    Query="select  DISTINCT i.ssn from invopt_alloc ia left join individual i on i.id = ia.ind_id where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+		<parameter QueryName="getInvetmentAllocationEmp" DB="ISISDB_QA"
+			Query="select  DISTINCT i.ssn from invopt_alloc ia left join individual i on i.id = ia.ind_id where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))  and termdate is null " />
-<parameter QueryName="checkESCCPAtxnCode_1" DB="ISISDB_QA"
-    Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA','ESCPAL') " />
-<parameter QueryName="checkESCCPAtxnCode" DB="ISISDB_QA"
-    Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA') " />
-<parameter QueryName="insertESCCPAtxnCode" DB="ISISDB_QA"
-    Query="Insert into USER_TXN_AUTH (TXN_CODE, USCS_ID, MAX_AMT, UPDATE_IND) Values ('ESCCPA',?, 0, 'N') " />
-<parameter QueryName="DeleteESCCPAtxnCode" DB="ISISDB_QA"
-    Query="delete from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ? ) and txn_code in ('ESCCPA') " />
-<parameter QueryName="GetNQPlans" DB="ISISDB_QA"
-    Query="select distinct ga.id ga_id from group_account ga inner join access_customization_view acv on acv.ga_id=ga.id 
+		<parameter QueryName="checkESCCPAtxnCode_1" DB="ISISDB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA','ESCPAL') " />
+		<parameter QueryName="checkESCCPAtxnCode" DB="ISISDB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA') " />
+		<parameter QueryName="insertESCCPAtxnCode" DB="ISISDB_QA"
+			Query="Insert into USER_TXN_AUTH (TXN_CODE, USCS_ID, MAX_AMT, UPDATE_IND) Values ('ESCCPA',?, 0, 'N') " />
+		<parameter QueryName="DeleteESCCPAtxnCode" DB="ISISDB_QA"
+			Query="delete from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ? ) and txn_code in ('ESCCPA') " />
+		<parameter QueryName="GetNQPlans" DB="ISISDB_QA"
+			Query="select distinct ga.id ga_id from group_account ga inner join access_customization_view acv on acv.ga_id=ga.id 
 inner join user_data_access uda on uda.ga_id = acv.ga_id
 where ga.prod_id in(select id from product where irsrl_code in('NQDC', '457B', 'NQSP')) 
 and ga.plan_type in('DAILYVAL', 'BAL FWD' ,'DLYVALME') and acv.accu_code='PlanEmpower' 
 and acv.access_type_code='PSC_WEB' and uda.user_logon_id=? and not EXISTS
 (select * from access_customization_view acv2 where acv.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs') " />
-<parameter QueryName="GetDBPlans" DB="ISISDB_QA"
-    Query="select distinct ga.id ga_id from group_account ga inner join access_customization_view acv on acv.ga_id=ga.id 
+		<parameter QueryName="GetDBPlans" DB="ISISDB_QA"
+			Query="select distinct ga.id ga_id from group_account ga inner join access_customization_view acv on acv.ga_id=ga.id 
 inner join user_data_access uda on uda.ga_id = acv.ga_id 
 where ga.plan_type in('DEF BEN', 'DEFBENME') and acv.accu_code='PlanEmpower' 
 and acv.access_type_code='PSC_WEB' and uda.user_logon_id=? and not EXISTS
 (select * from access_customization_view acv2 where acv.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs') " />
-<parameter QueryName="getEmploymentPPT" DB="ISISDB_QA"
-    Query="select e.union_ind,e.insider_ind, e.super_officer_ind,e.full_part_time_employee,e.job_descr, e.employment_type,
+		<parameter QueryName="getEmploymentPPT" DB="ISISDB_QA"
+			Query="select e.union_ind,e.insider_ind, e.super_officer_ind,e.full_part_time_employee,e.job_descr, e.employment_type,
 e.er_classification_code, e.er_classification_chg_dpdate,i.ssn,i.id from employment e inner join individual i on i.id=e.ind_id
 where ind_id in(select ind_id from part_agrmt where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')))
 and e.er_classification_chg_dpdate is not null " />
-<parameter QueryName="getPastThreeMonthFeesCount" DB="INSTDB_QA"
-    Query="select iact.effdate Record_count from inv_acct ia, invopt_acty iact
+		<parameter QueryName="getPastThreeMonthFeesCount" DB="INSTDB_QA"
+			Query="select iact.effdate Record_count from inv_acct ia, invopt_acty iact
 where  iact.fat_code in ('CMC','EPA','FAF','SRC','TPA','TPC','TXF') 
 and iact.suppress_ind = 'N' and
 iact.effdate &#60;= SYSDATE
@@ -2191,8 +2324,8 @@ and iact.effdate &#62;= add_months(sysdate,-3)
  and ia.id = iact.iva_id  and ia.ind_id in (select id from individual where ssn=?) and ia.ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) " />
-<parameter QueryName="getNoPastThreeMonthFees" DB="INSTDB_QA"
-    Query="select distinct i.ssn from inv_acct ia, invopt_acty iact, individual i
+		<parameter QueryName="getNoPastThreeMonthFees" DB="INSTDB_QA"
+			Query="select distinct i.ssn from inv_acct ia, invopt_acty iact, individual i
 where iact.effdate NOT Between SYSDATE and add_months(sysdate,-3)
 and iact.fat_code in ('CMC','EPA','FAF','SRC','TPA','TPC','TXF') 
 and iact.suppress_ind = 'N' and i.id= ia.ind_id
@@ -2200,8 +2333,8 @@ and ia.id = iact.iva_id and ia.ga_id in (select distinct acv1.ga_id from access_
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) 
 and rownum &#60;100 " />
-<parameter QueryName="getPPTWithLoans" DB="ISISDB_QA"
-Query="select ssn from individual
+		<parameter QueryName="getPPTWithLoans" DB="ISISDB_QA"
+			Query="select ssn from individual
 where id in( 
 select pa.ind_id from part_agrmt pa, loan_acct la 
 where pa.ind_id = la.ind_id and la.status_code in ( 'A','P')
@@ -2211,18 +2344,18 @@ on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and pa.ind_id = la.ind_id group by pa.ind_id 
 having count(pa.ind_id) > 5) order by ssn desc " />
-<parameter QueryName="getLoanDetail" DB="ISISDB_QA"
-Query="select inlnag_seqnbr ,to_char(effdate,'MM/DD/YYYY') effdate, to_char(loan_amt,'999999999999999.00') loan_amt, status_code, to_char(repay_amt,'999999999999999.00') repay_amt from loan_acct where ind_id in (select id from individual where ssn=?) 
+		<parameter QueryName="getLoanDetail" DB="ISISDB_QA"
+			Query="select inlnag_seqnbr ,to_char(effdate,'MM/DD/YYYY') effdate, to_char(loan_amt,'999999999999999.00') loan_amt, status_code, to_char(repay_amt,'999999999999999.00') repay_amt from loan_acct where ind_id in (select id from individual where ssn=?) 
 and status_code in ('P','A') order by to_date(effdate,'mm/dd/yyyy') desc " />
-<parameter QueryName="getEmpAcctDetails" DB="ISISDB_QA"
-Query="select to_char(effdate,'MM/dd/yyyy') effdate, to_char(first_due_date,'MM/dd/yyyy') first_due_date, to_char(maturity_date,'MM/dd/yyyy') maturity_date,
+		<parameter QueryName="getEmpAcctDetails" DB="ISISDB_QA"
+			Query="select to_char(effdate,'MM/dd/yyyy') effdate, to_char(first_due_date,'MM/dd/yyyy') first_due_date, to_char(maturity_date,'MM/dd/yyyy') maturity_date,
 fixed_int_rate, loan_term, orig_loan_amt, status_code,default_ind from loan_acct where ind_id in
 (select id from individual where ssn=?) and inlnag_seqnbr=?" />
-<parameter QueryName="getUnpaidDueDates" DB="ISISDB_QA"
-Query="select due_date from loan_assess where ind_id 
+		<parameter QueryName="getUnpaidDueDates" DB="ISISDB_QA"
+			Query="select due_date from loan_assess where ind_id 
 in(select id from individual where ssn=?)and status_code in ('UNPAID','PARTIAL') and inlnag_seqnbr=? order by due_date asc" />
-<parameter QueryName="getYTDData"  DB="ISISDB_QA"
-Query="SELECT GDM.SDMT_CODE , AG.GDMT_SEQNBR , GDM.DESCR , to_char(SUM(IR.AMOUNT),'999999999999999.00') amount 
+		<parameter QueryName="getYTDData" DB="ISISDB_QA"
+			Query="SELECT GDM.SDMT_CODE , AG.GDMT_SEQNBR , GDM.DESCR , to_char(SUM(IR.AMOUNT),'999999999999999.00') amount 
 from IND_REMIT IR, AG_REMIT AG , REMIT_NOTICE RN , GRP_DEF_MNTY GDM
 where RN.ID = AG.RMNC_ID 
 and IR.RMNC_ID = AG.RMNC_ID 
@@ -2238,22 +2371,22 @@ AND RN.CSRS_CODE = 'PAYROLL'
 and RN.GA_ID = ? 
 and IR.IND_ID in(select id from individual where ssn=?) 
 GROUP BY GDM.SDMT_CODE , AG.GDMT_SEQNBR , GDM.DESCR" />
-<parameter QueryName="noYTDContData" DB="ISISDB_QA"
-Query="select distinct i.ssn from inv_acct ia, invopt_acty iva,individual i
+		<parameter QueryName="noYTDContData" DB="ISISDB_QA"
+			Query="select distinct i.ssn from inv_acct ia, invopt_acty iva,individual i
 where i.id =ia.ind_id  and ia.id=iva.iva_id and ia.effdate= iva.effdate and 
 ia.ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=?
 and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) 
 and ia.effdate not between trunc(sysdate,'YEAR') and sysdate and rownum&#60;50 " />
-<parameter QueryName="getPPtWithEnrollAndEligDetails" DB="ISISDB_QA"
-Query="SELECT i.ssn FROM IND_ELIGIBILITY IE INNER JOIN INDIVIDUAL I
+		<parameter QueryName="getPPtWithEnrollAndEligDetails" DB="ISISDB_QA"
+			Query="SELECT i.ssn FROM IND_ELIGIBILITY IE INNER JOIN INDIVIDUAL I
 INNER JOIN part_agrmt pa on i.id= pa.ind_id and  pa.ga_id in(select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 ON I.ID=IE.IND_ID WHERE IE.ELIGIBILITY_IND IS NOT NULL " />
-<parameter QueryName="getPPtWithEnrollAndEligDetails_1" DB="ISISDB_QA"
-Query="select eligibility_ind, 
+		<parameter QueryName="getPPtWithEnrollAndEligDetails_1" DB="ISISDB_QA"
+			Query="select eligibility_ind, 
 nvl(to_char(participation_date,'MM/dd/yyyy'),' ') participation_date,
 nvl(to_char(enroll_invite_date_time,'MM/dd/yyyy'),' ') enroll_invite_date_time,
 nvl(to_char(enroll_invite_reply_date_time,'MM/dd/yyyy'),' ') enroll_invite_reply_date_time,
@@ -2263,9 +2396,38 @@ nvl(to_char(enroll_notification_date_time,'MM/dd/yyyy'),' ') enroll_notification
 nvl(suppress_auto_enroll_ind,' ') suppress_auto_enroll_ind
 from ind_eligibility where ind_id in 
 (select id from individual where ssn=?) and eligibility_ind is not null " />
-<parameter QueryName="getAutoSuitePlan" DB="ISISDB_QA"
-Query="select distinct ga_id from enrollment_rule_entity where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+		<parameter QueryName="getAutoSuitePlan" DB="ISISDB_QA"
+			Query="select distinct ga_id from enrollment_rule_entity where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) " />
-</Module>
+<parameter QueryName="checkPlanTxnCodes" DB="ISISDB_QA"
+			Query="select DISTINCT txn_code from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_logon_id=?) 
+and txn_code in ('PSOVPG','PSOVMN','PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE','ESCVPE','PSCCTR')" />
+<parameter QueryName="deletePlanTxnCodes" DB="ISISDB_QA"
+			Query="delete from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id=?)
+and txn_code in ('PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE','ESCVPE')" />
+<parameter QueryName="deletePSOVPGandPSOVMNTxnCode" DB="ISISDB_QA"
+			Query="delete from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id=?)
+and txn_code in ('PSOVPG','PSOVMN')" />
+<parameter QueryName="getUserClassesForAUser1" DB="ISISDB_QA"
+			Query="select DISTINCT uscs_id from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_logon_id=?) 
+and txn_code in ('PSWVRS','PSPROV','PSVSCH','PSCTOD','EMFIAR','ESCPPE')" />
+<parameter QueryName="getUserClassesForAUser2" DB="ISISDB_QA"
+			Query="select DISTINCT uscs_id from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_logon_id=?) 
+and txn_code in ('PSOVPG','PSOVMN')" />
+<parameter QueryName="insertTxnCodesForPlanModule" DB="ISISDB_QA"
+			Query="insert into user_txn_auth
+values (?,?,0,'N') " />
+<parameter QueryName="insertTxnCodesESCVPE" DB="ISISDB_QA"
+			Query="insert into user_txn_auth values('ESCVPE',?,null,'N')" />
+<parameter QueryName="checkQDIARecords" DB="ISISDB_QA"
+Query="SELECT GA.GA_ID,GA.SDSV_CODE,GA.SDSV_SUBCODE,GA.METHOD_CODE,GA.EFFDATE,GA.TERMDATE FROM GA_SERVICE GA 
+WHERE ga.ga_id=? and SDSV_CODE IN ('GW FIDUCIARY', 'QDIA_LETTER') " />
+<parameter QueryName="getPSCMMRandQNBO1TxnCodes" DB="ISISDB_QA"
+Query="SELECT distinct txn_code FROM USER_TXN_AUTH WHERE TXN_CODE IN ('PSCMMR','QNBO1') AND USCS_ID IN 
+(SELECT USCS_ID FROM USER#USER_CLASS WHERE USER_LOGON_ID =?)" />
+	</Module>
 </TestData>
