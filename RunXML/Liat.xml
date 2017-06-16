@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>   
- <test name="LIAT">
+ <test name="LIAT" parallel="classes" thread-count="1">
         <classes>
             <class name="app.pptweb.testcases.liat.liattestcases">
                 <methods>

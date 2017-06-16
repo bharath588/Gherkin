@@ -426,4 +426,83 @@ public class Common {
           }
           
     }
+      /*
+  	 * Update GDR Status in Database for the Ppts in Service, Sep Service (PWD)
+  	 */
+  	public static boolean updateGDRStatus(String planId,String dsrsCode,String taxReasoncode,
+  			String sdmtCode,String gdmt_seqnum)
+  	{
+  		boolean updatedGDRStatus=false;
+  		int critDetailId=0;		
+  		try {		
+  			//Updating DB for setting GDR Rules 			
+  			String[] sqlQuery = Stock.getTestQuery("getPptCritDetailId");
+  			ResultSet getPPtCritDetailIdRs=DB.executeQuery(sqlQuery[0], sqlQuery[1], planId,dsrsCode);		
+  			critDetailId=DB.getRecordSetCount(getPPtCritDetailIdRs);
+  			if(critDetailId>0)
+  			{		
+  			while(getPPtCritDetailIdRs.next())
+  			{
+  				String critId=getPPtCritDetailIdRs.getString("Rule_Crit_Detail_ID");  				
+  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus");  				
+  				DB.executeUpdate(updateQuery[0], updateQuery[1],taxReasoncode,sdmtCode,gdmt_seqnum,critId);		
+  				Reporter.logEvent(Status.PASS, "Verify GDR Rule has been Set up for this Plan",
+  						"The GDR Rule has been set up for "+dsrsCode + " and for the Tax Reason Code "+taxReasoncode,false);
+  			}  			
+  			updatedGDRStatus=true;
+  			}
+  			else {
+  				Reporter.logEvent(Status.FAIL, "Verify GDR Rule has been Set up for this Plan",
+  						"The GDR Rule has NOT been set up for "+dsrsCode + " and for the Tax Reason Code "+taxReasoncode,false);
+  			throw new Error("GDR Rule has not been Set up for this Plan");
+  			}  			
+  		} catch (SQLException e) {			
+  			e.printStackTrace();
+  		}
+  		catch (Exception e) {		
+  			e.printStackTrace();
+  		}
+  		return updatedGDRStatus;
+  		
+  	}
+  	
+  	 /*
+  	 * Update GDR Status in Database for the Ppts in Service, Sep Service (PWD)
+  	 */
+  	public static boolean updateGDRStatus(String planId,String dsrsCode,String taxReasoncode,
+  			String sdmtCode,String gdmt_seqnum,String dsmd_Code)
+  	{
+  		boolean updatedGDRStatus=false;
+  		int critDetailId=0;		
+  		try {		
+  			//Updating DB for setting GDR Rules 			
+  			String[] sqlQuery = Stock.getTestQuery("getPptCritDetailId");
+  			ResultSet getPPtCritDetailIdRs=DB.executeQuery(sqlQuery[0], sqlQuery[1], planId,dsrsCode);		
+  			critDetailId=DB.getRecordSetCount(getPPtCritDetailIdRs);
+  			if(critDetailId>0)
+  			{		
+  			while(getPPtCritDetailIdRs.next())
+  			{
+  				String critId=getPPtCritDetailIdRs.getString("Rule_Crit_Detail_ID");  				
+  				String[] updateQuery=Stock.getTestQuery("updateGDRStatus_SepService");  				
+  				DB.executeUpdate(updateQuery[0], updateQuery[1],taxReasoncode,sdmtCode,gdmt_seqnum,dsmd_Code,critId);		
+  				Reporter.logEvent(Status.PASS, "Verify GDR Rule has been Set up for this Plan",
+  						"The GDR Rule has been set up for "+dsrsCode + " and "+dsmd_Code +" for the Tax Reason Code "+taxReasoncode,false);
+  			}  			
+  			updatedGDRStatus=true;
+  			}
+  			else {
+  				Reporter.logEvent(Status.FAIL, "Verify GDR Rule has been Set up for this Plan",
+  						"The GDR Rule has NOT been set up for "+dsrsCode + " and "+dsmd_Code +" for the Tax Reason Code "+taxReasoncode,false);
+  			throw new Error("GDR Rule has not been Set up for this Plan");
+  			}  			
+  		} catch (SQLException e) {			
+  			e.printStackTrace();
+  		}
+  		catch (Exception e) {		
+  			e.printStackTrace();
+  		}
+  		return updatedGDRStatus;
+  		
+  	}
 }

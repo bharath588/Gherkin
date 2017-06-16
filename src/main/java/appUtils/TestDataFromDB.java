@@ -28,6 +28,9 @@ public class TestDataFromDB {
 		int noOfColumns = 0;
 		int noOfRows = 0;
 		sqlQuery = Stock.getTestQuery(queryName);
+		if(!testdataFromDB.containsKey(Thread.currentThread().getId()))
+		{
+		
 		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				queryParameterValues);
 		if (DB.getRecordSetCount(participants) > 0) {
@@ -36,6 +39,9 @@ public class TestDataFromDB {
 			rsMetaData = participants.getMetaData();
 			noOfColumns = rsMetaData.getColumnCount();
 			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
+			if(!checkValueExistsniMap(testdataFromDB, "USERNAME"))
+			{
+				participants.next();
 			
 			for(int i=1;i<=noOfRows;i++){
 			rsMetaData = participants.getMetaData();
@@ -44,8 +50,10 @@ public class TestDataFromDB {
 				
 							
 				if (rsMetaData.getColumnName(j).contains("SUBSTR")) {
+					
 					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
 									.getColumnName(j))))
+						
 					mapUserDetails
 							.put("PASSWORD", participants.getString(rsMetaData
 									.getColumnName(j)));
@@ -87,21 +95,24 @@ public class TestDataFromDB {
 									.getString(rsMetaData.getColumnName(j)));
 				}
 			}
-			
-			
+			}
+			}
 			testdataFromDB.put(Thread.currentThread().getId(),mapUserDetails);
-			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1 || mapUserDetails.get("SSN").equalsIgnoreCase("000231671"))
+			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1)
 				participants.next();
 			else
 				break;*/
 			}
-
+		
 		}
 		System.out.println("TEST DATA FROM DB:"+mapUserDetails);
 
 		return testdataFromDB.get(Thread.currentThread().getId());
 	}
-
+	public  boolean checkIfUserExists(Map<String,String> testdata)
+    {
+    	return false;
+    }
 	public static synchronized boolean checkValueExistsniMap(Map<Long,LinkedHashMap<String,String>> dataMap,String value)
 	{
 		boolean isExist = false;

@@ -242,7 +242,8 @@ public class prodvalidationtestcases {
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			LoginPage login = new LoginPage();
 			login.get();
-
+			if(Web.isWebElementDisplayed(login, "DISMISS"))
+				Web.clickOnElement(login, "DISMISS");
 			String customerSupportInfo = "";
 			boolean isTextMatching = false;
 			boolean isContactNoMatching = false;
@@ -1066,7 +1067,7 @@ public class prodvalidationtestcases {
 				else
 					Common.handlePageToLoad("Transaction history");
 				
-			transaction.selectDateFrequency("Two Years");
+			transaction.selectDateFrequency("Three Years");
 			Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
@@ -1839,177 +1840,36 @@ public class prodvalidationtestcases {
 			requestWithdrawal.get();
 			Thread.sleep(4000);
 			boolean lblDisplayed = false;
-//			int confirmationNumber = 0;
-			//Web.getDriver().switchTo().defaultContent();
-			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
-				/*lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
-						"Request A Withdrawal", true);
-				if (lblDisplayed) {
-					Reporter.logEvent(Status.INFO,
-							"Verify Request A Withdrawal Page is Displayed",
-							"Request A Withdrawal Page is visible", true);
-				} else {
-					Reporter.logEvent(Status.FAIL,
-							"Verify Request A Withdrawal Page is Displayed",
-							"Request A Withdrawal Page is NOT visible", true);
-				}
-				*/
-				  lblDisplayed = requestWithdrawal.selectWithdrawalType(Stock.GetParameterValue("withdrawalType")); 
-				  if (lblDisplayed) {
-				  Reporter.logEvent(Status.INFO,
-				  "Verify WithDrawal Type is Selected",
-				  " WithDrawal Type is Selected", true); } else {
-				  Reporter.logEvent(Status.FAIL,
-				  "Verify  WithDrawal Type is Selected",
-				  " WithDrawal Type is Not Selected", true); }
-				  requestWithdrawal.isTextFieldDisplayed("Total withdrawal amount");
-				  
-				  lblDisplayed = Web.clickOnElement(requestWithdrawal,
-				  "MAX AMOUNT");
-				  
-				  if (lblDisplayed) { Reporter.logEvent(Status.INFO,
-				  "Verify Max Amount CheckBox is Selected",
-				  "Max Amount CheckBox is Selected", true); } else {
-				  Reporter.logEvent(Status.FAIL,
-				  "Verify Max Amount CheckBox is Selected",
-				  "Max Amount CheckBox is Not Selected", true); }
-				}
-				 
-				// requestWithdrawal.isTextFieldDisplayed("Max Avail");
-				///Web.getDriver().switchTo().defaultContent();
-				//Web.waitForElement(requestWithdrawal, "Request A Withdrawal");
-			if (Stock.getConfigParam("TEST_ENV").contains("PROD")) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Request A Withdrawal Page is Displayed",
-						"Request A Withdrawal Page is visible", true);
-				if (!Stock.GetParameterValue("USERNAME").equalsIgnoreCase(
-						"321444324ABC")) {
-					Web.waitForElement(requestWithdrawal,
-							"INPUT CURRENT EMPLOYER NO");
-					Web.clickOnElement(requestWithdrawal,
-							"INPUT CURRENT EMPLOYER NO");
-					Thread.sleep(4000);
-					keyBoard.sendKeys(Keys.TAB).perform();
-					keyBoard.sendKeys(Keys.ENTER).perform();
-					Thread.sleep(5000);
-				}
-		}
-
-			Web.waitForElement(requestWithdrawal, "CONTINUE");
-			if(Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE")){
-				Web.clickOnElement(requestWithdrawal, "CONTINUE");
-			}
-			else{
-				throw new Error("'Continue' is not displayed");
-			}
-			
-			Thread.sleep(2000);
-			Web.waitForElement(requestWithdrawal, "YES");
-			lblDisplayed = requestWithdrawal
-					.isTextFieldDisplayed("Plan withdrawal");
-
+			requestWithdrawal.selectWithdrawalType(Stock.GetParameterValue("withdrawalType"));
+			requestWithdrawal.enterWithdrawalAmountForInService(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("isRothAvail"), 
+					Stock.GetParameterValue("isPreTaxAvail"));
+			requestWithdrawal.citizenShipValidation(Stock.GetParameterValue("SSN"));
+			requestWithdrawal.verifyWithdrawalMethodPage(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("withdrawalMethod"), 
+					Stock.GetParameterValue("emailAddress"));			
+			requestWithdrawal.verifyWithdrawalSummary(Stock.GetParameterValue("deliveryMethod"),true);
+			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,"I AGREE AND SUBMIT", true);
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
-						"Verify Plan Withdrawal Page is Displayed",
-						"Plan Withdrawal Page is Displayed", true);
+						"Verify I Agree and Submit Button is Displayed",
+						"I Agree and Submit Button is Displayed", false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify Plan Withdrawal Page is Displayed",
-						"Plan Withdrawal Page is Not Displayed", true);
+						"Verify I Agree and Submit Button is Displayed",
+						"I Agree and Submit Button is Not Displayed", false);
 			}
-
-			requestWithdrawal.isTextFieldDisplayed("Are you a U.S. citizen or resident?");
-			lblDisplayed = Web.clickOnElement(requestWithdrawal, "YES");
-			Thread.sleep(3000);
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Please enter your Social Security number.");
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Social Security number Field is Displayed.",
-						"Social Security number Field is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Social Security number Field is Displayed",
-						"Social Security number Field is Not Displayed", true);
-			}
-
-			requestWithdrawal.enterSSN(Stock.GetParameterValue("SSN"));
-			Web.clickOnElement(requestWithdrawal, "CONFIRM AND CONTINUE");
-			Thread.sleep(4000);
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal method");
-
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Withdrawal Method Page is Displayed",
-						"Withdrawal Method Page is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Withdrawal Method Page is Displayed",
-						"Withdrawal Method Page is Not Displayed", true);
-			}
-			requestWithdrawal.isTextFieldDisplayed("How would you like your withdrawal distributed?");
-			Web.selectDropDownOption(requestWithdrawal, "WITHDRAWAL METHOD",
-					Stock.GetParameterValue("withdrawalMethod"));
-			Common.waitForProgressBar();
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Confirm your contact information");
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Contact Information is Displayed",
-						"Contact Information is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Contact Information is Displayed",
-						"Contact Information is Not Displayed", true);
-			}
-			Web.clickOnElement(requestWithdrawal, "CONTINUE TO WITHDRAWAL");
-			Common.waitForProgressBar();
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("delivery method");
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Delivery Method Page is Displayed",
-						"Delivery Method Page is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Delivery Method Page is Displayed",
-						"Delivery Method Page is Not Displayed", true);
-			}
-			Web.clickOnElement(requestWithdrawal, "FIRST CLASS MAIL");
-			//requestWithdrawal.selectDeliveryMethod(Stock.GetParameterValue("deliveryMethod"));
-			Common.waitForProgressBar();
-			Thread.sleep(5000);
-			lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Withdrawal summary");
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Withdrawal Summary is Displayed",
-						"Withdrawal Summary is Displayed", true);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify Withdrawal Summary is Displayed",
-						"Withdrawal Summary is Not Displayed", true);
-			}
-			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
-					"I AGREE AND SUBMIT", true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify I agree and Submit Button is Displayed",
-						"I agree and Submit Button is Displayed", false);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify I agree and Submit Button is Displayed",
-						"I agree and Submit Button is Not Displayed", false);
-			}
-			if (Stock.GetParameterValue("submitRequest")
-					.equalsIgnoreCase("YES")) {
-				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
+			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
+				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");				
+				Common.waitForProgressBar();
 				Thread.sleep(3000);
 				lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Request submitted!");
 				if (lblDisplayed) {
 					Reporter.logEvent(Status.INFO,
-							"Verify Request Submission Page is Displayed",
-							"Request Submission Page is Displayed", true);
+							"Verify Withdrawals Confirmation Page is Displayed",
+							"Withdrawals Confirmation Page is Displayed", true);
 				} else {
 					Reporter.logEvent(Status.FAIL,
-							"Verify Request Submission Page is Displayed",
-							"Request Submission is Not Displayed", true);
+							"Verify Withdrawals Confirmation Page is Displayed",
+							"Withdrawals Confirmation is Not Displayed", true);
 				}
 				lblDisplayed = Web.VerifyPartialText(
 						"Your confirmation number is", requestWithdrawal.getWebElementText("TEXT CONFIRMATION"), true);
@@ -2073,7 +1933,6 @@ public class prodvalidationtestcases {
 			}
 		}
 	}
-
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr,
 			Map<String, String> testdata) {

@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                    <!-- <include name="DDTC_2844_DIM_Choose_individual_funds">
+                  <!--   <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include> 
                     
@@ -57,34 +57,112 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_5410_DoItMyself_Allocation_based_on_slider"></parameter>
                     </include>  
                     
-                     <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
+                 	 <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM"></parameter>
                     </include> 
                     
                     <include name="DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N"></parameter>
-                    </include> -->
+                    </include> 
                     
-                    
-                  <!--   <include name="DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI">
+                   <include name="DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI"></parameter>
                     </include> 
                     
                      <include name="DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N"></parameter>
-                    </include>   -->
+                    </include> 
                     
-                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype">
+                     
+                    
+                     <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
+                    </include>
+                    
+                    
+                    <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_DoesNotOffer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22707_Rebal_Only_HMDI_Target_Date_DoesNotOffer_All_Mntype"></parameter>
+                    </include>
+                    
+                      <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype"></parameter>
+                    </include>
+                    
+                    
+                     <include name="DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_All_Mntype"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype"></parameter>
+                    </include>  
+                    
+                    
+                     <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_No_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_No_Mntype"></parameter>
+                    </include> 
+                   
+                     <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_No_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_No_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                    <include name="DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype"></parameter>
+                    </include> 
+                    
+                    
+                     <include name="DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype"></parameter>
+                    </include>
+                    
+                    
+                    <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype"></parameter>
                     </include>
                     
-                    <!-- <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype">
+                    
+                   <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype"></parameter>
-                    </include>
+                    </include>-->
+                    
                     
                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype"></parameter>
-                    </include> -->
+                    </include> 
+                    
+                    
+                    
+                    
                     
 				</methods>
               

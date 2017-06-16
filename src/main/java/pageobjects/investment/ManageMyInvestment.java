@@ -2,6 +2,8 @@ package pageobjects.investment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -46,7 +48,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	static String toInvestmentOption;
 	String confirmationNo;
 	static Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
-	static Map<String, String> mapCurrentInvestmentOptions = new HashMap<String, String>();
+	static Map<String, String> mapCurrentInvestmentOptionsPecentage = new HashMap<String, String>();
 
 	// @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']")
 	// private WebElement lblUserName;
@@ -287,18 +289,18 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//div[@class='row allocation-content']//p//strong") private WebElement lblConfirmationNoFutureFund;
 	
-	@FindBy(xpath = "//button[@id='target-year-fund-link']") private WebElement btnChooseTargetDateFund;
+	@FindBy(xpath = "//button[@id='target-year-fund-link' or @id='targetDateFundsButton']") private WebElement btnChooseTargetDateFund;
 	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Select a target date fund']]")
 	private WebElement txtSelectTargetDateFund;
 	
-	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund')][./td[@class='allocation-fund-name-container'][not(span)]]//td//input")
+	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund') or contains(@id,'fundRow')][./td[@class='allocation-fund-name-container'][not(span)]]//td//input")
 	private List<WebElement> inpTargetDateFund;
 	
-	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund')][./td[@class='allocation-fund-name-container'][not(span)]]//td[@class='allocation-fund-name-container']")
+	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund') or contains(@id,'fundRow')][./td[@class='allocation-fund-name-container'][not(span)]]//td[@class='allocation-fund-name-container']")
 	private List<WebElement> txtTargetDateFund;
 	
-	@FindBy(xpath = "//a[@id='submitButton']")
+	@FindBy(xpath = "//*[@id='submitButton' or @id='submit']")
 	private WebElement btnContinueToTargetDateFund;
 	
 	@FindBy(xpath = "//button[@id='target-year-fund-link']//span[text()[normalize-space()='Current']]")
@@ -333,7 +335,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
-	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds')][./td/a[contains(text(),'Investment Option')]]//td[2]";
+	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
 	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
@@ -1480,6 +1482,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	public void addInvestments(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
 		try{
 		    mapInvestmentOptions.clear();
+		    mapCurrentInvestmentOptionsPecentage.clear();
 		    Web.waitForElements(inpInvestmentOptionFutureAllocation);
 			
 			int noOfRows = inpInvestmentOptionFutureAllocation.size();
@@ -1513,6 +1516,8 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 				.xpath(inputAllocationPercrntageFuture.replace("Investment Option",
 						mapInvestmentOptions.get("investmentFundName"+i))));
 		Web.setTextToTextBox(inptAllocationPercent, percent[i]);
+		Thread.sleep(1000);
+		mapCurrentInvestmentOptionsPecentage.put(mapInvestmentOptions.get("investmentFundName"+i), inptAllocationPercent.getAttribute("value"));
 			}
 		Web.waitForPageToLoad(Web.getDriver());
 		
@@ -1939,8 +1944,13 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		String date=getInvestmentsSubmissionTime();
 		
 		if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
-		
+		if(Stock.GetParameterValue("RebalFrequency").equalsIgnoreCase("Once")){
+			
+			expectedConfirmationMsg="Your investment allocation request for current account balance, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+		}
+		else{
 			expectedConfirmationMsg="Your investment allocation request for current account balance, has been received as of "+date+", and will be processed as soon as administratively feasible. Your account will automatically rebalance "+frequencyType+".";
+		}
 			
 			actualConfirmationMsg=txtConfirmationWhenRebalneceSyncFailed.getText().toString().trim();
 		}
@@ -2013,7 +2023,7 @@ return isTextDisplayed;
 	 * 
 	 * @return String - getText
 	 */
-	public String getRebalanceConfirmation() {
+	public String getRebalanceConfirmationNO() {
 	
           String confirmationNo="";
 		if (Web.isWebElementDisplayed(txtConfirmationNumber)) {
@@ -2042,6 +2052,136 @@ return isTextDisplayed;
 		
 		
 	}
+	
+	/**
+	 * <pre>
+	 * Method to verify the Confirmation Number is updated in Data Base
+	 * Returns boolean
+	 * </pre>
+	 * 
+	 * @return Boolean - isDisplayed
+	 * @throws SQLException 
+	 */
+	public boolean verifyTRF_BasicTableInDB(String queryName,String userName,String confirmationNo,String Freequency) throws SQLException {
+	
+		boolean isRowCreated=false;
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+		Calendar calendar = Calendar.getInstance();         
+		String date=dateFormat.format(calendar.getTime());
+		System.out.println("DATE"+date);
+		String[] sqlQuery = Stock.getTestQuery(queryName);
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				userName.substring(0, 9));
+		
+		int noOfRows = DB.getRecordSetCount(participants);
+		
+		if (noOfRows>0) {
+
+			if(participants.getString("ev_id").equalsIgnoreCase(confirmationNo))
+				Reporter.logEvent(Status.PASS,
+						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table"+confirmationNo,
+						" Confirmation No is Matching in 'TRF_BASIC' Table \nConfirmation No:"+confirmationNo, false);
+			
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table"+confirmationNo,
+						" Confirmation No is Not Matching in 'TRF_BASIC' Table \nConfirmation No:"+confirmationNo, false);
+		
+		if(participants.getString("next_sched_trf_date").equalsIgnoreCase(date))
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Next_SCHED_TRF_DATE' is Matching"+confirmationNo,
+					"'Next_SCHED_TRF_DATE' is Matching \n'Next_SCHED_TRF_DATE' :"+date, false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Next_SCHED_TRF_DATE' is Matching"+confirmationNo,
+					"'Next_SCHED_TRF_DATE' is Not Matching \nExpected:"+date+"\nActual"+participants.getString("next_sched_trf_date"), false);
+		
+		if(participants.getString("status_code").equalsIgnoreCase("PER TRF"))
+			Reporter.logEvent(Status.PASS,
+					"Verify 'STATUS_CODE' is Matching"+confirmationNo,
+					"'STATUS_CODE' is Matching \n'STATUS_CODE':"+participants.getString("status_code"), false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'STATUS_CODE' is Matching"+confirmationNo,
+					"'STATUS_CODE' is Not Matching \n'Expected:PER TRF\nActual"+participants.getString("status_code"), false);
+		
+		if(participants.getString("freq_code").equalsIgnoreCase(Freequency))
+			Reporter.logEvent(Status.PASS,
+					"Verify 'FREQ_CODE' is Matching"+confirmationNo,
+					"'FREQ_CODE' is Matching \n'FREQ_CODE':"+participants.getString("status_code"), false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'FREQ_CODE' is Matching"+confirmationNo,
+					"'FREQ_CODE' is Not Matching\n'Expected:"+Freequency+"\nActual"+participants.getString("freq_code"), false);
+	
+		
+		if(participants.getString("trf_type_code").equalsIgnoreCase("RE BAL"))
+			Reporter.logEvent(Status.PASS,
+					"Verify 'TRF_TYPE_CODE' is Matching"+confirmationNo,
+					"'TRF_TYPE_CODE' is Matching \n'TRF_TYPE_CODE':"+participants.getString("trf_type_code"), false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'TRF_TYPE_CODE' is Matching"+confirmationNo,
+					"'TRF_TYPE_CODE' is Not Matching\n'Expected:RE BAL\nActual"+participants.getString("trf_type_code"), false);
+	
+		
+		}else 
+			{
+			Reporter.logEvent(Status.FAIL,
+					"Verify New Row is Cretaed in 'TRF_BASIC' Table with Confirmation No:"+confirmationNo,
+					"New Row is not Cretaed in 'TRF_BASIC' Table with Confirmation No:"+confirmationNo, false);
+			}
+		return isRowCreated;
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify the FundName and Allocated Percentage is Same in Confirmation Page
+	 * Returns String
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void VerifyAllocatedPecentageForFunds() {
+	String  actualPercentage=null;
+	String  expectedPercentage=null;
+         for(int i=0;i<mapCurrentInvestmentOptionsPecentage.size();i++){
+        	 
+        
+          WebElement txtAllocationPercent = Web.getDriver().findElement(By
+  				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
+  						mapInvestmentOptions.get("investmentOption"+i))));
+          actualPercentage=txtAllocationPercent.getText().toString().trim();
+          expectedPercentage=mapCurrentInvestmentOptionsPecentage.get(mapInvestmentOptions.get("investmentOption"+i));
+          expectedPercentage=expectedPercentage+"%";
+          if(expectedPercentage.contains(actualPercentage)){
+        	  
+        	  Reporter.logEvent(Status.PASS,
+  					"Verify Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page \n'Expected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  	
+  		
+  		}else 
+  			{
+  			Reporter.logEvent(Status.FAIL,
+  					"Verify Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Not Same in Confirmation Page \n'Expected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  	
+  			}
+          
+         }
+	}
+         
+  		
+  	
+
+	
 	public String getInvestmentsSubmissionTime(){
 		String time =null;
 		String minute=null;
@@ -2062,4 +2202,5 @@ return isTextDisplayed;
 		return time;
 		
 	}
+	
 }

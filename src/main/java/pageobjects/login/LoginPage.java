@@ -475,20 +475,20 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				String Actual = txtContactusInfo.getText().toString().trim();
 				isTextMatching = Web
 						.VerifyText(
-								"Corporate 401(k) plans\n1-855-756-4738    (TTY 1-800-482-5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 1-800-766-4952)\nAll plans based in New York State\n1-877-456-4015",
+								"Empower Retirement Participant Services\n1-800-338-4015\nWe welcome feedback on your service experience\nPlease contact Tom Lysinger — Vice President, Participant Services\n1-844-804-8989\nEmail: ServiceVP@empower-retirement.com*\n* Please do not put any confidential or personal account information in an email request",
 								Actual, true);
 				if (isTextMatching) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Verify 'Contact Us Info'  is displayed",
-							"Contact Us Info is displayed\n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 1-800-482-5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 1-800-766-4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"
+							"Contact Us Info is displayed\n Expected:Empower Retirement Participant Services\n1-800-338-4015\nWe welcome feedback on your service experience\nPlease contact Tom Lysinger — Vice President, Participant Services\n1-844-804-8989\nEmail: ServiceVP@empower-retirement.com*\n* Please do not put any confidential or personal account information in an email request \nActual:"
 									+ Actual, false);
 
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
 							"Verify 'Contact Us info' is displayed",
-							"Contact Us Info is not Same \n Expected:Corporate 401(k) plans\n1-855-756-4738    (TTY 800.482.5472)\nGovernment, healthcare, education, or faith plans\n1-800-701-8255    (TTY 800.766.4952)\nAll plans based in New York State\n1-877-456-4015 \nActual:"
+							"Contact Us Info is not Same \nExpected:Empower Retirement Participant Services\n1-800-338-4015\nWe welcome feedback on your service experience\nPlease contact Tom Lysinger — Vice President, Participant Services\n1-844-804-8989\nEmail: ServiceVP@empower-retirement.com*\n* Please do not put any confidential or personal account information in an email request \nActual:"
 									+ Actual, false);
 				}
 			}

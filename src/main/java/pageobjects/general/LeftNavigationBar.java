@@ -45,7 +45,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
 	@FindBy(xpath = "//span[@class='plan']//a")
-	private WebElement lstlnkPlanName;
+	private List<WebElement> lstlnkPlanName;
 	private String lnkStatementDocument="//a[text()[normalize-space()='Statements and documents']]";
 	
 
@@ -92,14 +92,14 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// System.out.println("inside");
 		// ((LandingPage) this.parent).dismissPopUps(true,true);
 		try {
-			if(!Web.isWebElementDisplayed(weLeftNavSection, true)){
-				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS", true)){
+			if(!Web.isWebElementDisplayed(weLeftNavSection)){
+				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS")){
 			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 			}
 				
 			else{
-				if(Web.isWebElementDisplayed(lstlnkPlanName, true))
-				Web.clickOnElement(lstlnkPlanName);
+				if(Web.isWebElementsDisplayed(lstlnkPlanName))
+				Web.clickOnElement(lstlnkPlanName.get(0));
 				
 				
 			}
