@@ -2065,7 +2065,7 @@ return isTextDisplayed;
 	public boolean verifyTRF_BasicTableInDB(String queryName,String userName,String confirmationNo,String Freequency) throws SQLException {
 	
 		boolean isRowCreated=false;
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();         
 		String date=dateFormat.format(calendar.getTime());
 		System.out.println("DATE"+date);
@@ -2075,58 +2075,62 @@ return isTextDisplayed;
 				userName.substring(0, 9));
 		
 		int noOfRows = DB.getRecordSetCount(participants);
+		Reporter.logEvent(Status.INFO,
+				"Verifying  Confirmation Details in 'TRF_BASIC' Table",
+				"", false);
 		
 		if (noOfRows>0) {
-
-			if(participants.getString("ev_id").equalsIgnoreCase(confirmationNo))
+			participants.first();
+			
+			if(participants.getString("EV_ID").equalsIgnoreCase(confirmationNo))
 				Reporter.logEvent(Status.PASS,
-						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table"+confirmationNo,
+						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table",
 						" Confirmation No is Matching in 'TRF_BASIC' Table \nConfirmation No:"+confirmationNo, false);
 			
 			else
 				Reporter.logEvent(Status.FAIL,
-						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table"+confirmationNo,
+						"Verify  Confirmation No is Matching in 'TRF_BASIC' Table",
 						" Confirmation No is Not Matching in 'TRF_BASIC' Table \nConfirmation No:"+confirmationNo, false);
 		
-		if(participants.getString("next_sched_trf_date").equalsIgnoreCase(date))
+		if(participants.getString("next_sched_trf_date").contains(date))
 			Reporter.logEvent(Status.PASS,
-					"Verify 'Next_SCHED_TRF_DATE' is Matching"+confirmationNo,
+					"Verify 'Next_SCHED_TRF_DATE' is Matching",
 					"'Next_SCHED_TRF_DATE' is Matching \n'Next_SCHED_TRF_DATE' :"+date, false);
 		
 		else
 			Reporter.logEvent(Status.FAIL,
-					"Verify 'Next_SCHED_TRF_DATE' is Matching"+confirmationNo,
+					"Verify 'Next_SCHED_TRF_DATE' is Matching",
 					"'Next_SCHED_TRF_DATE' is Not Matching \nExpected:"+date+"\nActual"+participants.getString("next_sched_trf_date"), false);
 		
 		if(participants.getString("status_code").equalsIgnoreCase("PER TRF"))
 			Reporter.logEvent(Status.PASS,
-					"Verify 'STATUS_CODE' is Matching"+confirmationNo,
+					"Verify 'STATUS_CODE' is Matching",
 					"'STATUS_CODE' is Matching \n'STATUS_CODE':"+participants.getString("status_code"), false);
 		
 		else
 			Reporter.logEvent(Status.FAIL,
-					"Verify 'STATUS_CODE' is Matching"+confirmationNo,
+					"Verify 'STATUS_CODE' is Matching",
 					"'STATUS_CODE' is Not Matching \n'Expected:PER TRF\nActual"+participants.getString("status_code"), false);
 		
 		if(participants.getString("freq_code").equalsIgnoreCase(Freequency))
 			Reporter.logEvent(Status.PASS,
-					"Verify 'FREQ_CODE' is Matching"+confirmationNo,
-					"'FREQ_CODE' is Matching \n'FREQ_CODE':"+participants.getString("status_code"), false);
+					"Verify 'FREQ_CODE' is Matching",
+					"'FREQ_CODE' is Matching \n'FREQ_CODE':"+participants.getString("freq_code"), false);
 		
 		else
 			Reporter.logEvent(Status.FAIL,
-					"Verify 'FREQ_CODE' is Matching"+confirmationNo,
+					"Verify 'FREQ_CODE' is Matching",
 					"'FREQ_CODE' is Not Matching\n'Expected:"+Freequency+"\nActual"+participants.getString("freq_code"), false);
 	
 		
 		if(participants.getString("trf_type_code").equalsIgnoreCase("RE BAL"))
 			Reporter.logEvent(Status.PASS,
-					"Verify 'TRF_TYPE_CODE' is Matching"+confirmationNo,
+					"Verify 'TRF_TYPE_CODE' is Matching",
 					"'TRF_TYPE_CODE' is Matching \n'TRF_TYPE_CODE':"+participants.getString("trf_type_code"), false);
 		
 		else
 			Reporter.logEvent(Status.FAIL,
-					"Verify 'TRF_TYPE_CODE' is Matching"+confirmationNo,
+					"Verify 'TRF_TYPE_CODE' is Matching",
 					"'TRF_TYPE_CODE' is Not Matching\n'Expected:RE BAL\nActual"+participants.getString("trf_type_code"), false);
 	
 		
@@ -2163,15 +2167,15 @@ return isTextDisplayed;
           if(expectedPercentage.contains(actualPercentage)){
         	  
         	  Reporter.logEvent(Status.PASS,
-  					"Verify Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page ",
-  					"Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page \n'Expected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  					"Verify Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
   	
   		
   		}else 
   			{
   			Reporter.logEvent(Status.FAIL,
-  					"Verify Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Same in Confirmation Page ",
-  					"Allocated Percentage For Fund "+mapInvestmentOptions.get("investmentOption"+i)+" is Not Same in Confirmation Page \n'Expected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  					"Verify Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Not Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
   	
   			}
           

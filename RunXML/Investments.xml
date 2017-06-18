@@ -71,7 +71,7 @@
                     
                      <include name="DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N"></parameter>
-                    </include> 
+                    </include> -->
                     
                      
                     
@@ -153,7 +153,7 @@
                     
                    <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype"></parameter>
-                    </include>-->
+                    </include>
                     
                     
                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype">

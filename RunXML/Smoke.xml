@@ -144,7 +144,12 @@
 					<parameter name="ManualTCName" value="LIAT_Verify_Tour_Link">
                     </parameter>
                     </include>
-				
+				 
+                    <include name="Verify_Health_care_costs_helpful_links" >
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+                    </parameter>
+                    </include> 
+                    
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
                     </parameter>
@@ -169,11 +174,7 @@
 					<parameter name="ManualTCName" value="Request_Loan_Flow">
                     </parameter>
                     </include>
-                    
-                    <include name="Verify_Health_care_costs_helpful_links" >
-					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
-                    </parameter>
-                    </include> 
+                   
 				
 				</methods>
 			</class>

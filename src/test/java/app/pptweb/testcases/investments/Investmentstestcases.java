@@ -235,7 +235,7 @@ public class Investmentstestcases {
 
 		    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			
 			//Step 17
@@ -468,7 +468,7 @@ public class Investmentstestcases {
 		    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
-			
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			//Step 17
 			leftmenu.clickNavigationLink("View/Manage my investments");
@@ -699,7 +699,7 @@ public class Investmentstestcases {
 			
 		    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			
 			//Step 17
@@ -766,7 +766,7 @@ public class Investmentstestcases {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -776,7 +776,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
 			//Step 7
 			investment.clickChangeMyInvestmentButton();
 			
@@ -1501,7 +1501,7 @@ public class Investmentstestcases {
 			}
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+			investment.VerifyAllocatedPecentageForFunds();
 		    //Step 12
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -1677,7 +1677,7 @@ public class Investmentstestcases {
 			}
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+			investment.VerifyAllocatedPecentageForFunds();
 		    //Step 36
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -2875,7 +2875,7 @@ public class Investmentstestcases {
 
 			    
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+				investment.VerifyAllocatedPecentageForFunds();
 			
 			
 			//Step 13
@@ -3089,7 +3089,7 @@ public class Investmentstestcases {
 
 			    
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			
+				investment.VerifyAllocatedPecentageForFunds();
 			
 			
 			//Step 13
@@ -3861,6 +3861,7 @@ public class Investmentstestcases {
 				}
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -4034,7 +4035,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(30000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
@@ -4089,8 +4090,8 @@ public class Investmentstestcases {
 			// throw ae;
 		} finally {
 			try {
-				/*ManageMyInvestment investment= new ManageMyInvestment();
-				investment.deleteRebalancePendingTransaction(userName);*/
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -4696,8 +4697,8 @@ public class Investmentstestcases {
 			// throw ae;
 		} finally {
 			try {
-				/*ManageMyInvestment investment= new ManageMyInvestment();
-				investment.deleteRebalancePendingTransaction(userName);*/
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -4721,7 +4722,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -4732,7 +4733,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -5322,7 +5323,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -5333,7 +5334,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -5483,6 +5484,7 @@ public class Investmentstestcases {
 				}
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -5691,6 +5693,7 @@ public class Investmentstestcases {
 				}
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -5895,6 +5898,7 @@ public class Investmentstestcases {
 				}
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			investment.VerifyAllocatedPecentageForFunds();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -5942,7 +5946,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -5953,7 +5957,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -6548,7 +6552,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -6559,7 +6563,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}
+			}*/
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
