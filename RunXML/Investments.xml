@@ -160,10 +160,7 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype"></parameter>
                     </include> 
                     
-                    
-                    
-                    
-                    
+                
 				</methods>
               
 			</class>
