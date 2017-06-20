@@ -262,11 +262,12 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		if(!Web.isWebElementDisplayed( lnkMedicare, true))
 		Web.clickOnElement(btnPersonalize);
 		if(Web.isWebElementDisplayed( lnkMedicare, true)){
-			Thread.sleep(5);
+			Thread.sleep(5000);
 			Reporter.logEvent(Status.PASS,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", false);
 			Web.clickOnElement(lnkMedicare);
 			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
 			Web.waitForElement(txtEmpowerModal);
+			Thread.sleep(10000);
 			if(Web.VerifyText("You are now leaving Empower Retirement", txtEmpowerModal.getText().trim(), true))
 				Reporter.logEvent(Status.PASS,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), false);
 			else

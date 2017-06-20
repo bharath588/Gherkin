@@ -3175,7 +3175,7 @@ public class prodvalidationtestcases {
 			
 			Web.clickOnElement(healthCareCost, "Personalize Button");
 			Reporter.logEvent(Status.INFO,"Verify 'Personalize Button' is clicked","Clicked on 'Personalize Button'", true);
-			
+			Web.waitForElement(healthCareCost, "Your full report(PDF)");
 			if(Web.isWebElementDisplayed(healthCareCost, "Your full report(PDF)", true)){
 				Reporter.logEvent(Status.PASS,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", false);
 				Web.clickOnElement(healthCareCost, "Your full report(PDF)");
@@ -3196,7 +3196,7 @@ public class prodvalidationtestcases {
 				Web.getDriver().switchTo().window(parentWindow);
 			}
 			else
-				Reporter.logEvent(Status.FAIL,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", true);
+				Reporter.logEvent(Status.FAIL,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is Not displayed", true);
 			
 			healthCareCost.verifyMedicareLink();
 			
