@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -46,6 +47,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String investmentFundName2;
 	String fromInvestmentOption;
 	static String toInvestmentOption;
+	static String targetYearFund=null;
 	String confirmationNo;
 	static Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
 	static Map<String, String> mapCurrentInvestmentOptionsPecentage = new HashMap<String, String>();
@@ -175,6 +177,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']")
 	private WebElement txtRebalanceTransactionDetails;
 	@FindBy(xpath = "//span[@id='effectiveDate']") private WebElement txtTransactionDetails;
+	@FindBy(xpath = "//span[@id='effectiveDate']//b") private WebElement txtTransactionDate;
 	@FindBy(xpath = "//div[@id='rebalanceConfirmationHeadingWhenSyncAllocationFailed']") private WebElement txtConfirmationWhenRebalneceSyncFailed;
 	@FindBy(xpath = "//i[@class='em-checkbox-icon']") private WebElement lblGreenCheck;
 	@FindBy(xpath = "//*[@id='confirmationNumber']") private WebElement lblConfirmationNumber;
@@ -277,6 +280,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//span[contains(@ng-if,'confirmChanges')]")
 	private WebElement txtConfirmation;
+	@FindBy(xpath = "//span[contains(@ng-if,'confirmChanges')]//strong")
+	private WebElement txtConfirmationDate;
 	
 	@FindBy(xpath = ".//*[@id='portfolio-link']//span[text()[normalize-space()='Current']]")
 	private WebElement lblCurrent;
@@ -359,6 +364,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		this.parent = parent;
 		
 		PageFactory.initElements(lib.Web.getDriver(), this);
+		
 	}
 
 	@Override
@@ -1699,7 +1705,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 */
 	public String selectTargetYearFund() {
 	
-          String targetYearFund="";
+        
           if (Web.isWebElementsDisplayed(inpTargetDateFund)) {
 			if(inpTargetDateFund.size()>=1){
 				Web.clickOnElement(inpTargetDateFund.get(0));
@@ -1940,8 +1946,15 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	public void verifyRebalanceInvestmentConfirmationDetails(String frequencyType) {
 		String expectedConfirmationMsg=null;
 		String actualConfirmationMsg=null;
-
-		String date=getInvestmentsSubmissionTime();
+		
+		List<String> dates=getInvestmentsSubmissionTime();
+		String date=txtTransactionDate.getText().toString().trim();
+		if(date.equalsIgnoreCase(dates.get(0))){
+			date=dates.get(0);
+		}
+		else{
+			date=dates.get(1);
+		}
 		
 		if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
 		if(Stock.GetParameterValue("RebalFrequency").equalsIgnoreCase("Once")){
@@ -2183,13 +2196,165 @@ return isTextDisplayed;
 	}
          
   		
-  	
+	/**
+	 * <pre>
+	 * Method to Verify the  Allocated Percentage for Fund Name equal to 100 in Confirmation Page for HMDI flow
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void VerifyAllocatedPecentageForHMDIFunds() {
+		if(getAllocatedPecentageForFund(targetYearFund).contains("100")){
+  			Reporter.logEvent(Status.PASS,
+  					"Verify Investment Percentage is Equals to 100",
+  					"Investment Percentage is Matching and Equals to 100", false);
 
+  		}
+  		else 
+  			{
+  			Reporter.logEvent(Status.FAIL,
+  							"Verify Investment Percentage is Equals to 100",
+  				"Investment Percentage is not Matching", true);
+  			}
+	}
+	/**
+	 * <pre>
+	 * Method to Verify the Page Header is Displayed or Not
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifyPageHeaderIsDisplayed(String webElement) {
+		
+		WebElement webelement= getWebElement(webElement);
+	 String pageHeader=webelement.getText().toString().trim();
+		if (Web.isWebElementDisplayed(webelement)) {
+			lib.Reporter.logEvent(Status.PASS, "Verify "+pageHeader 
+					+ " Page  is Displayed", "Verify "+pageHeader 
+					+ " Page  is Displayed",
+					true);
+
+		} else {
+					
+			lib.Reporter.logEvent(Status.FAIL, "Verify "+pageHeader 
+					+ " Page  is Displayed", "Verify "+pageHeader 
+					+ " Page  is Not Displayed",true);
+			throw new Error(webElement+" is not displayed");
+		}
 	
-	public String getInvestmentsSubmissionTime(){
+
+	}
+	/**
+	 * <pre>
+	 * Method to Verify Participant is Allowed to select only one fund.
+	 * This method is applicable for Target Date Fund And Risk Based Fund
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+public void verifyParticipantisAllowedToSelectOnlyOneFund(String selectedFund) {
+		
+	Map<String, String> mapInvestmentOption = new HashMap<String, String>();
+	
+	mapInvestmentOption=getCurrentFunds();
+	
+	if(mapInvestmentOption.size()==1){
+		if(getCurrentFunds().containsValue(selectedFund)){
+		Reporter.logEvent(Status.PASS,
+				"Verify Participant is allowed to select only one fund",
+				"Participant is able to select only one fund \n Selected Fund:"+selectedFund, false);
+	}
+	else{
+		Reporter.logEvent(Status.FAIL,
+				"Verify Fund is Matching in Review Page ",
+				"Funds are not matching in Review Page\nExpected:"+selectedFund+"", true);
+	}
+	}
+	else{
+		Reporter.logEvent(Status.FAIL,
+				"Verify Participant is allowed to select only one fund",
+				"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOption.size(), true);
+	}
+
+	}
+
+/**
+ * <pre>
+ * Method to Verify the Confirmation Message for Change Future Investments Flow
+ *
+ * </pre>
+ * 
+ *
+ */
+public void verifyConfirmationMessageForChangeFutureFlow() {
+	List<String> dates=getInvestmentsSubmissionTime();
+	String date=txtConfirmationDate.getText().toString().trim();
+	if(date.equalsIgnoreCase(dates.get(0))){
+		date=dates.get(0);
+	}
+	else{
+		date=dates.get(1);
+	}
+	String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+	
+	String actualConfirmationMsg=getWebElementText("Text Confirmation");
+	if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+		
+		Reporter.logEvent(Status.PASS,
+				"Verify Confirmation Message is Displayed in Confirmation Page",
+				"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+	}
+	else{
+		Reporter.logEvent(Status.INFO,
+				"Verify Confirmation Message is Displayed in Confirmation Page",
+				"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+	}
+
+	}
+
+
+/**
+ * <pre>
+ * Method to Verify the The Funds Selected are same in Review and Confirmation Pages
+ *
+ * </pre>
+ * 
+ *
+ */
+public void verifyFundsinReviewAndConfirmationPageAreMatching(Map<String, String> fundsinReviewPage,Map<String, String> fundsinConfirmationPage) {
+	
+	if(fundsinReviewPage.equals(fundsinConfirmationPage)){
+		Reporter.logEvent(Status.PASS,
+				"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+				"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+	}
+	else 
+		{
+		Reporter.logEvent(Status.FAIL,
+				"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
+				"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
+		}
+
+
+	}
+	
+	public List<String> getInvestmentsSubmissionTime(){
+		List<String> timeStamp=new ArrayList<String>();
 		String time =null;
+		String time1 =null;
 		String minute=null;
+		String hour=null;
+		
 		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.HOUR)==0){
+			hour="12";
+		}
+		else{
+			hour=Integer.toString(cal.get(Calendar.HOUR));
+		}
 		if(cal.get(Calendar.MINUTE)<=9){
 			 minute="0"+Integer.toString(cal.get(Calendar.MINUTE));
 			
@@ -2198,12 +2363,24 @@ return isTextDisplayed;
 			 minute=Integer.toString(cal.get(Calendar.MINUTE));
 		}
 		 time=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
+					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
+					+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
+					Integer.toString(cal.get(Calendar.YEAR))+","+" "+
+					hour+":"+minute+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		 
+		 time1=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
 				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
 				+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
 				Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-				Integer.toString(cal.get(Calendar.HOUR))+":"+minute+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
-		 System.out.println("TIME STAMP"+time);
-		return time;
+				hour+":"+Integer.toString(Integer.parseInt(minute)-1)+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		
+		 timeStamp.add(time);
+		 timeStamp.add(time1);
+		 
+		 System.out.println("TIME STAMP1"+time);
+		 System.out.println("TIME STAMP2"+time1);
+		 
+		return timeStamp;
 		
 	}
 	

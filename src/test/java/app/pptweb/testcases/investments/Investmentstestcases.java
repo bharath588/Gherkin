@@ -91,16 +91,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
@@ -110,22 +101,11 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			investment.verifyWebElementDisplayed("Link Add/View All Funds");
 			investment.verifyWebElementDisplayed("Reset All Changes Link");
 			investment.verifyWebElementDisplayed("Submit Button Change Future Allocation");
 			investment.verifyWebElementDisplayed("Back Link");
-			
 			
 			//precondition for step 10
 			
@@ -149,17 +129,8 @@ public class Investmentstestcases {
 			//Step 10,11,12
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			//Step 13
+				investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			//Sep 13
 			
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
@@ -177,36 +148,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			
-			String date=getInvestmentsSubmissionTime();
-			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			//actualConfirmationMsg.substring(beginIndex, endIndex)
-			
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 15
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -221,19 +166,8 @@ public class Investmentstestcases {
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-
-		    
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
+			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			investment.VerifyAllocatedPecentageForFunds();
 			
@@ -246,17 +180,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag is displayed on DIM button", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag is not displayed on DIM button", true);
-			}
-		  
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		    
 		    //Step 18
 		    
@@ -329,16 +253,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
@@ -348,16 +263,7 @@ public class Investmentstestcases {
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			investment.verifyWebElementDisplayed("Link Add/View All Funds");
 			investment.verifyWebElementDisplayed("Reset All Changes Link");
@@ -384,16 +290,8 @@ public class Investmentstestcases {
 			//Step 10,11,12
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
 			//Step 13
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -412,32 +310,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 15
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -452,19 +328,7 @@ public class Investmentstestcases {
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-			
-			
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 		    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
@@ -478,16 +342,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag is displayed on DIM button", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag  is not displayed on DIM button", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		  
 		    //Step 18
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -560,16 +415,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
@@ -579,16 +425,7 @@ public class Investmentstestcases {
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			investment.verifyWebElementDisplayed("Link Add/View All Funds");
 			investment.verifyWebElementDisplayed("Reset All Changes Link");
@@ -615,16 +452,8 @@ public class Investmentstestcases {
 			//Step 10,11,12
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
 			//Step 13
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -643,33 +472,9 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
-			String date=getInvestmentsSubmissionTime();
-			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 15
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -684,20 +489,7 @@ public class Investmentstestcases {
 			
 			//step 16
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-			
-			
-		    
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			investment.VerifyAllocatedPecentageForFunds();
 			
@@ -710,16 +502,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag is displayed on DIM button", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Current' Flag displayed on DIM button",
-						"'Current' Flag  is not displayed on DIM button", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			leftmenu.clickNavigationLink("View/Manage my investments");
 		    //Step 18
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -786,16 +569,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
@@ -805,51 +579,15 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 		
 			//Step 10
 			String targetYearFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(targetYearFund);
 			
-			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(targetYearFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+targetYearFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+targetYearFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -860,18 +598,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(targetYearFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			//Step 11
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
@@ -891,33 +618,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 13
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -944,16 +648,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
-						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
-						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			leftmenu.clickNavigationLink("View/Manage my investments");
 		  
 		    //Step 15
@@ -1022,16 +717,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			if (investment.verifyMoneyTypeGroupIsDisplayed("MTG")) {
 				Reporter.logEvent(Status.PASS,
@@ -1052,51 +738,15 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 			//Step 10
 			String targetYearFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
-			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(targetYearFund);
 			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(targetYearFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+targetYearFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+targetYearFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -1107,18 +757,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(targetYearFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			//Step 11
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
@@ -1138,32 +777,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 13
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -1256,17 +873,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Do It For Me");
@@ -1275,16 +882,7 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			investment.verifyWebElementDisplayed("Link Add/View All Funds");
 			investment.verifyWebElementDisplayed("Reset All Changes Link");
@@ -1413,31 +1011,13 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 9
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			
 			//Step 10
@@ -1458,47 +1038,16 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 11
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			investment.VerifyAllocatedPecentageForFunds();
@@ -1589,31 +1138,13 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 33
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			
 			//Step 34
@@ -1634,47 +1165,15 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 35
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			investment.VerifyAllocatedPecentageForFunds();
@@ -1726,16 +1225,7 @@ public class Investmentstestcases {
 			//Step 6
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Guidance Selection Page is displayed",
-						"Guidance Selection Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Guidance Selection Page is displayed",
-						"Guidance Selection Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
@@ -1747,16 +1237,8 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
+			
 			
 			//Step 8
 			
@@ -1773,37 +1255,10 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedRiskBasedFund);
 		
-			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(selectedRiskBasedFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+selectedRiskBasedFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+selectedRiskBasedFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -1814,18 +1269,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			//Step 10
 			
@@ -1844,32 +1288,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -1989,23 +1411,14 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 			
 			String ExpectedAllertMsg="Because your plan has multiple contribution sources, "
 					+ "we are unable to display your current allocation.  "
 					+ "Changes to your investment allocation will apply to all your contribution sources. "
 					+ "To make changes based on contribution source, go to My Accounts.";
-			
-			String actualAllertMsg=investment.getWebElementText("Risk Based Fund Allert Message");
+	//TODO		
+			/*String actualAllertMsg=investment.getWebElementText("Risk Based Fund Allert Message");
 			
 			if(ExpectedAllertMsg.contentEquals(actualAllertMsg)){
 				
@@ -2017,7 +1430,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Static Message is Displayed in Select Risk Based Fund Page",
 						"Static Message is not Displayed/Matching in Select Risk Based Fund Page\nExpected Message:"+ExpectedAllertMsg+"\nActual Message:"+actualAllertMsg, true);
-			}
+			}*/
 			
 			//Step 8
 			
@@ -2034,37 +1447,12 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(selectedRiskBasedFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+selectedRiskBasedFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+selectedRiskBasedFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedRiskBasedFund);
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -2075,18 +1463,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			//Step 10
 			/*
@@ -2105,32 +1482,9 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -2251,20 +1605,11 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
-			
-			String ExpectedAllertMsg="Because your plan has multiple contribution sources, "
-					+ "we are unable to display your current allocation.  "
+	//TODO		
+			/*String ExpectedAllertMsg="Because your plan has multiple contribution sources, "
+					+ "we are unable to display your current allocation. "
 					+ "Changes to your investment allocation will apply to all your contribution sources. "
 					+ "To make changes based on contribution source, go to My Accounts.";
 			
@@ -2281,7 +1626,7 @@ public class Investmentstestcases {
 						"Verify Static Message is Displayed in Select Target Date Fund Page",
 						"Static Message is not Displayed/Matching in Select Target Date Fund Page\nExpected Message:"+ExpectedAllertMsg+"\nActual Message:"+actualAllertMsg, true);
 			}
-			
+			*/
 			//Step 8
 			
 			if (!Web.isWebElementDisplayed(leftNav,"Left Navigation Bar")) {
@@ -2297,37 +1642,10 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedTargetDateFund=investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
-			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedTargetDateFund);
 			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(selectedTargetDateFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+selectedTargetDateFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+selectedTargetDateFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -2338,19 +1656,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
-			
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			//Step 10
 			
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
@@ -2368,32 +1674,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -2510,16 +1794,7 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 			
 		
@@ -2550,37 +1825,10 @@ public class Investmentstestcases {
 	
 			//Step 9
 			String selectedTargetDateFund=investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
-			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
-			
-			if(mapInvestmentOptionsReviewPage.size()==1){
-				if(mapInvestmentOptionsReviewPage.containsValue(selectedTargetDateFund)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is able to select only one fund \n Selected Fund:"+selectedTargetDateFund, false);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Fund is Matching in Review Page ",
-						"Funds are not matching in Review Page\nExpected:"+selectedTargetDateFund+"", true);
-			}
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Participant is allowed to select only one fund",
-						"Participant is not allowed to select only one fund \n No.of Funds Selected:"+mapInvestmentOptionsReviewPage.size(), true);
-			}
+			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedTargetDateFund);
 			if (Web.isWebElementDisplayed(investment,"Button Confirm")) {
 				Reporter.logEvent(Status.PASS,
 						"Verify Confirm button is displayed",
@@ -2591,18 +1839,7 @@ public class Investmentstestcases {
 						"Verify Confirm button is displayed",
 						"Confirm button is not displayed ", false);
 			}
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			//Step 10
 			/*
@@ -2621,32 +1858,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
 			/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 				Reporter.logEvent(Status.PASS,
@@ -2763,17 +1978,7 @@ public class Investmentstestcases {
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			
 			
@@ -2790,19 +1995,26 @@ public class Investmentstestcases {
 						"Left Navigation Bar is displayed ", true);
 			}
 			
-			//Step 9
-			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+			
+            Web.clickOnElement(investment, "Link Add/View All Funds");
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
 				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
 			}
 			else{
 				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
 			}
+			
+			//Step 9
+			String[] percentage={"50","50"};
+			investment.addInvestments(2,percentage);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2821,32 +2033,10 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-					Reporter.logEvent(Status.PASS,
-							"Verify Confirmation Page is Displayed",
-							"Confirmation Page is Displayed", true);
-				}
-				else{
-					Reporter.logEvent(Status.FAIL,
-							"Verify Confirmation Page is Displayed",
-							"Confirmation Page is Not Displayed", true);
-				}
+				Thread.sleep(15000);
+				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
-				String date=getInvestmentsSubmissionTime();
-				String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-				
-				String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-				if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-					
-					Reporter.logEvent(Status.PASS,
-							"Verify Confirmation Message is Displayed in Confirmation Page",
-							"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-				}
-				else{
-					Reporter.logEvent(Status.INFO,
-							"Verify Confirmation Message is Displayed in Confirmation Page",
-							"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-				}
+				investment.verifyConfirmationMessageForChangeFutureFlow();
 				//Step 11
 				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
@@ -2861,19 +2051,7 @@ public class Investmentstestcases {
 				
 				//step 12
 				mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-				if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-					Reporter.logEvent(Status.PASS,
-							"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-							"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-				else 
-					{
-					Reporter.logEvent(Status.FAIL,
-							"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-							"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-					}
-
-			    
+				investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 				investment.VerifyAllocatedPecentageForFunds();
 			
@@ -2980,16 +2158,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment,"Choose Individual Funds");
 			
 			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			if (Web.isWebElementDisplayed(investment,"Header Build Your Own Portfolio")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Build Your Own Portfolio Page is displayed",
-						"Build Your Own Portfolio Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
 			
 			//Step 8
 			
@@ -3004,20 +2173,24 @@ public class Investmentstestcases {
 						"Left Navigation Bar is displayed ", true);
 			}
 			
-			//Step 9
-			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
 				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
 			}
 			else{
 				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
 			}
-			
+			//Step 9
+			String[] percentage={"50","50"};
+			investment.addInvestments(2,percentage);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
@@ -3035,32 +2208,10 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-					Reporter.logEvent(Status.PASS,
-							"Verify Confirmation Page is Displayed",
-							"Confirmation Page is Displayed", true);
-				}
-				else{
-					Reporter.logEvent(Status.FAIL,
-							"Verify Confirmation Page is Displayed",
-							"Confirmation Page is Not Displayed", true);
-				}
+				Thread.sleep(15000);
+				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
-				String date=getInvestmentsSubmissionTime();
-				String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-				
-				String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-				if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-					
-					Reporter.logEvent(Status.PASS,
-							"Verify Confirmation Message is Displayed in Confirmation Page",
-							"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-				}
-				else{
-					Reporter.logEvent(Status.INFO,
-							"Verify Confirmation Message is Displayed in Confirmation Page",
-							"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-				}
+				investment.verifyConfirmationMessageForChangeFutureFlow();
 				//Step 11
 				/*if(investment.VerifyInvestmentOptionOpenInNewWindow()){
 					Reporter.logEvent(Status.PASS,
@@ -3075,18 +2226,7 @@ public class Investmentstestcases {
 				
 				//step 12
 				mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-				if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-					Reporter.logEvent(Status.PASS,
-							"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-							"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-				else 
-					{
-					Reporter.logEvent(Status.FAIL,
-							"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-							"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-					}
-
+				investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			    
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 				investment.VerifyAllocatedPecentageForFunds();
@@ -3207,45 +2347,17 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 9
 		
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 			//Step 10
 			investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 		
 			//Step 11
@@ -3253,34 +2365,9 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
-			String date=getInvestmentsSubmissionTime();
-			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-				    
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
 		    //Step 12
@@ -3370,44 +2457,16 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 33
 		
 			Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			//Step 34
 			investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
 		
@@ -3416,33 +2475,10 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
-			String date=getInvestmentsSubmissionTime();
-			
-			String expectedConfirmationMsg="Your investment allocation request for future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
-			
-			String actualConfirmationMsg=investment.getWebElementText("Text Confirmation");
-			if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
-				
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
-			else{
-				Reporter.logEvent(Status.INFO,
-						"Verify Confirmation Message is Displayed in Confirmation Page",
-						"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
-			}
+			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
@@ -3555,16 +2591,7 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 		
@@ -3603,16 +2630,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -3622,35 +2640,12 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(15000);
-			Web.waitForElement(investment, "Header Confirmation");
-			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-			
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			investment.VerifyAllocatedPecentageForFunds();
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -3764,16 +2759,7 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 		
@@ -3812,16 +2798,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"100"};
 			investment.addInvestments(1,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -3831,35 +2808,13 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(15000);
-			Web.waitForElement(investment, "Header Confirmation");
-			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
-			
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			investment.VerifyAllocatedPecentageForFunds();
 			
@@ -3969,16 +2924,7 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 		
@@ -4017,16 +2963,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"9","20","25","11","35"};
 			investment.addInvestments(5,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -4037,33 +2974,12 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(30000);
 			Web.waitForElement(investment, "Header Confirmation");
-			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -4179,32 +3095,14 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		 Common.waitForProgressBar();
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		//Step 9
 		
@@ -4216,44 +3114,17 @@ public class Investmentstestcases {
 		
 		Web.waitForElement(investment, "Header How Would You Like To Invest");
 		
-		if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is Not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		//Step 10
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		 Common.waitForProgressBar();
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 			//Step 11
 			
 		investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+		investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		//Step 12	
 			if(Web.clickOnElement(investment, "Back Link"))
@@ -4262,30 +3133,12 @@ public class Investmentstestcases {
 						"Clicked on Back Link in Review Your Changes Page", false);	
 			
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
@@ -4293,16 +3146,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header Confirmation");
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -4418,77 +3262,29 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -4602,77 +3398,28 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -4786,31 +3533,13 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		//Step 9
 		
@@ -4821,43 +3550,16 @@ public class Investmentstestcases {
 		
 		Web.waitForElement(investment, "Header How Would You Like To Invest");
 		
-		if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is Not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		//Step 10
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			
 			//Step 11
 			
 		investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+		investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		//Step 12	
 			if(Web.clickOnElement(investment, "Back Link"))
@@ -4866,47 +3568,18 @@ public class Investmentstestcases {
 						"Clicked on Back Link in Review Your Changes Page", false);	
 			
 			Web.waitForElement(investment, "Header Select Target Date Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Target Date Fund Page is displayed",
-						"Select Target Date Fund Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			
@@ -5021,77 +3694,27 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
-		
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -5205,77 +3828,29 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedTargetDateFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -5387,17 +3962,7 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			//Step 8
 		
 			Web.clickOnElement(investment,"Choose Individual Funds");
@@ -5435,16 +4000,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			investment.addInvestments(2,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -5456,32 +4012,13 @@ public class Investmentstestcases {
 			Thread.sleep(15000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			investment.VerifyAllocatedPecentageForFunds();
@@ -5596,16 +4133,7 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 		
@@ -5644,17 +4172,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"100"};
 			investment.addInvestments(1,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
 			
@@ -5665,32 +4183,12 @@ public class Investmentstestcases {
 			Thread.sleep(15000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			investment.VerifyAllocatedPecentageForFunds();
@@ -5801,16 +4299,7 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 		
@@ -5849,16 +4338,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"9","20","25","11","35"};
 			investment.addInvestments(5,percentage);
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -5870,32 +4350,12 @@ public class Investmentstestcases {
 			Thread.sleep(15000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+		
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
-			if(mapInvestmentOptionsReviewPage.equals(mapInvestmentOptionsConfirmPage)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-			}
-			else 
-				{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Selected Investment Options are in same order in Review your changes Page and Confirmation Page",
-						"Investment Options are in same order in Review your changes Page and Confirmation Page", true);
-				}
+			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			investment.VerifyAllocatedPecentageForFunds();
@@ -6011,32 +4471,14 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		 Common.waitForProgressBar();
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		//Step 9
 		
@@ -6048,43 +4490,16 @@ public class Investmentstestcases {
 		
 		Web.waitForElement(investment, "Header How Would You Like To Invest");
 		
-		if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is Not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		//Step 10
 		Web.clickOnElement(investment,"Choose Risk Based Funds");
 		Web.waitForElement(investment, "Header Select Risk Based Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Risk Based Fund Page is displayed",
-					"Select Risk Based Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Risk Based Fund Page is displayed",
-					"Select Risk Based Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 			
 			//Step 11
 			
 		investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+		investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		//Step 12	
 			if(Web.clickOnElement(investment, "Back Link"))
@@ -6093,29 +4508,11 @@ public class Investmentstestcases {
 						"Clicked on Back Link in Review Your Changes Page", false);	
 			
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
@@ -6123,17 +4520,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header Confirmation");
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
 			
@@ -6248,77 +4635,30 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -6432,80 +4772,30 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
-		
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
-			
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -6617,32 +4907,14 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 		 Web.clickOnElement(investment,"Choose Target Date Fund");
 		 Common.waitForProgressBar();
 		Web.waitForElement(investment, "Header Select Target Date Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Target Date Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Target Date Fund Page is displayed",
-					"Select Target Date Fund Page is not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 		
 		//Step 9
 		
@@ -6654,43 +4926,15 @@ public class Investmentstestcases {
 		
 		Web.waitForElement(investment, "Header How Would You Like To Invest");
 		
-		if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify How Would You Like To Invest Page is displayed",
-					"How Would You Like To Invest Page is Not displayed ", true);
-		}
+		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 		//Step 10
 		Web.clickOnElement(investment,"Choose Risk Based Funds");
 		Web.waitForElement(investment, "Header Select Risk Based Fund");
-		if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Select Risk Based Fund Page is displayed",
-					"Select Risk Based Fund Page is displayed ", true);
-		}
-		else{
-			Reporter.logEvent(Status.FAIL,
-					"Verify Select Risk Based Fund Page is displayed",
-					"Select Risk Based Fund Page is not displayed ", true);
-		}
-			
+		investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");	
 			//Step 11
 			
 		investment.selectTargetYearFund();
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+		investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		//Step 12	
 			if(Web.clickOnElement(investment, "Back Link"))
@@ -6699,46 +4943,18 @@ public class Investmentstestcases {
 						"Clicked on Back Link in Review Your Changes Page", false);	
 			
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes",true)) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header Confirmation");
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -6854,77 +5070,30 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			
 			//Step 8
 	
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -7038,79 +5207,30 @@ public class Investmentstestcases {
 			}*/
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if (Web.isWebElementDisplayed(investment,"Header How Would You Like To Invest")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify How Would You Like To Invest Page is displayed",
-						"How Would You Like To Invest Page is Not displayed ", true);
-			}
-			
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
 			//Step 8
 	
 
 			Web.clickOnElement(investment,"Choose Risk Based Funds");
 			Web.waitForElement(investment, "Header Select Risk Based Fund");
-			if (Web.isWebElementDisplayed(investment,"Header Select Risk Based Fund")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Select Risk Based Fund Page is displayed",
-						"Select Risk Based Fund Page is not displayed ", true);
-			}
-		
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
 		
 		 //Step 9 to 12 are duplicate
 	
 			//Step 13
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
 			
-			if (Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
-				Reporter.logEvent(Status.PASS,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is displayed ", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Review Your Changes Page is displayed",
-						"Review Your Changes Page is not displayed ", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
 			
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.isWebElementDisplayed(investment, "Header Confirmation", true)){
-				Reporter.logEvent(Status.PASS,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Displayed", true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL,
-						"Verify Confirmation Page is Displayed",
-						"Confirmation Page is Not Displayed", true);
-			}
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
-			if(investment.getAllocatedPecentageForFund(selectedRiskBasedFund).contains("100")){
-	  			Reporter.logEvent(Status.PASS,
-	  					"Verify Investment Percentage is Equals to 100",
-	  					"Investment Percentage is Matching and Equals to 100", false);
-
-	  		}
-	  		else 
-	  			{
-	  			Reporter.logEvent(Status.FAIL,
-	  							"Verify Investment Percentage is Equals to 100",
-	  				"Investment Percentage is not Matching", true);
-	  			}
+			investment.VerifyAllocatedPecentageForHMDIFunds();
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
@@ -7145,7 +5265,189 @@ public class Investmentstestcases {
 
 	}
 	
+
+	@Test(dataProvider = "setData")
+	public void DDTC_22685_Target_Date_Fund_Rebalance_Sync_Querterly_withALLMTG(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Expand Sources Link is displayed",
+						"Expand Sources Link is displayed ", true);
+				Web.clickOnElement(investment, "Expand Sources");
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Expand Sources Link is displayed",
+						"Expand Sources Link is Not displayed ", true);
+			}
+		
+			//Step 6
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.VerifyFrequencyForRebalanceisMatching("Annually");
+			if(Web.isWebElementDisplayed(investment, "CheckBox Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify CheckBox for Direct Future Investment is displayed",
+						"CheckBox for Direct Future Investment is Not displayed", false);
+			}
+			
+			if(Web.isWebElementDisplayed(investment, "Label Direct Future Investments")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is displayed", false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label for Direct Future Investment is displayed",
+						"Label for Direct Future Investment is Not displayed", false);
+			}
+			
+			//Step 7
+			investment.choseInvestmentOption("Rebalance Current Balance");
+			
+			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+				investment.selectFutureInvestmentCheckBox(false);
+			}
+			
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			
+			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				Web.clickOnElement(investment, "Continue Button");
+			}*/
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			//Step 8
 	
+		 Web.clickOnElement(investment,"Choose Target Date Fund");
+		Web.waitForElement(investment, "Header Select Target Date Fund");
+		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
+		
+		//Step 9
+		
+		if(Web.clickOnElement(investment, "Back Link"))
+			Reporter.logEvent(Status.INFO,
+					"Clicking on BACK Link ",
+					"Clicked on Back Link in Select Target Date Fund Page", false);
+		
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+		
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			//Step 10
+			Web.clickOnElement(investment,"Choose Target Date Fund");
+			Web.waitForElement(investment, "Header Select Target Date Fund");
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
+			//TODO  Add static Message	
+			//Step 11 &12
+			
+			investment.selectTargetYearFund();
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 13	
+			if(Web.clickOnElement(investment, "Back Link"))
+				Reporter.logEvent(Status.INFO,
+						"Clicking on BACK Link ",
+						"Clicked on Back Link in Review Your Changes Page", false);	
+			
+			Web.waitForElement(investment, "Header Select Target Date Fund");
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
+			//Step 14
+			String selectedTargetDateFund=investment.selectTargetYearFund();
+			
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 15
+			
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
+			
+			
+			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			
+			//Step 16
+			
+			leftmenu.clickNavigationLink("View/Manage my investments");
+			investment.clickChangeMyInvestmentButton();
+			investment.choseInvestmentOption("Change Future Contribution");
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
+						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
+						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
+			}
+			leftmenu.clickNavigationLink("View/Manage my investments");
+			
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			investment.verifyTRF_BasicTableInDB("VerifyRebalanceConfirmationRecord",Stock.GetParameterValue("username"), confirmationNumber, Stock.GetParameterValue("FrequencyCode"));
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 	public String getInvestmentsSubmissionTime(){
 		String time =null;
 		String minute=null;
