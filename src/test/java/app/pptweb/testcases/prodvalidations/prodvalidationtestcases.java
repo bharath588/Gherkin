@@ -308,6 +308,10 @@ public class prodvalidationtestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			homePage.get();
+			
+			homePage.dismissPopUps(true, true);
+			
+			Thread.sleep(4000);
 
 			customerSupportInfo = login.isValidCustomerSupportInfo();
 
@@ -362,6 +366,9 @@ public class prodvalidationtestcases {
 						"Contact Us Information is not Same on the Home Page",
 						false);
 			}
+			homePage.dismissPopUps(true, true);
+		
+			Thread.sleep(4000);
 
 		} catch (Exception e) {
 			e.printStackTrace();
