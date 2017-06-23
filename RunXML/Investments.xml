@@ -162,6 +162,14 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_22685_Target_Date_Fund_Rebalance_Sync_Querterly_withALLMTG"></parameter>
                     </include>
                     
+                     <include name="DDTC_22690_Target_Date_Fund_Rebalance_Sync_Annually_withNOMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22690_Target_Date_Fund_Rebalance_Sync_Annually_withNOMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
+                    </include>
+                    
                 
 				</methods>
               

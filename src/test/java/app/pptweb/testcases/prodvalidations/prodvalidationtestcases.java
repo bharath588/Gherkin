@@ -2161,9 +2161,9 @@ public class prodvalidationtestcases {
 						"Verify landing page is displayed",
 						"Landing page is not displayed", true);
 			}
-			//landingPage.dismissPopUps(true, true);
+			landingPage.dismissPopUps(true, true);
 			// Logout if opted
-			Web.clickOnElement(landingPage, "LOGOUT");
+			//Web.clickOnElement(landingPage, "LOGOUT");
 			Common.waitForProgressBar();
 			 Web.waitForPageToLoad(Web.getDriver());
 		} catch (Exception e) {

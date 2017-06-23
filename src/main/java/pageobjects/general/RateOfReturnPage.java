@@ -7,8 +7,10 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -109,10 +111,12 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn),"Rate of return Page is Not Loaded\n");
 		} else {
+			
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
+			
 		}
 
 	}

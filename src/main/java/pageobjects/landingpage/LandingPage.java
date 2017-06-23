@@ -10,6 +10,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -116,10 +117,12 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			   Assert.assertTrue(true,"Landing page is not loaded");		
 			//Assert.assertTrue(lib.Web.isWebElementDisplayed(lblRetirementIncome,true));
 		} else {
+			
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
+			
 		}
 
 	}
@@ -152,7 +155,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 			this.lnkDismiss.click();
 		}
 		if (Web.isWebElementDisplayed(btnCloseTutorial)) {
-			this.btnCloseTutorial.click();
+			//this.btnCloseTutorial.click();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

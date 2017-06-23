@@ -2346,6 +2346,7 @@ public void verifyFundsinReviewAndConfirmationPageAreMatching(Map<String, String
 		String time =null;
 		String time1 =null;
 		String minute=null;
+		String minute1=null;
 		String hour=null;
 		
 		Calendar cal = Calendar.getInstance();
@@ -2357,10 +2358,11 @@ public void verifyFundsinReviewAndConfirmationPageAreMatching(Map<String, String
 		}
 		if(cal.get(Calendar.MINUTE)<=9){
 			 minute="0"+Integer.toString(cal.get(Calendar.MINUTE));
-			
+			 minute1="0"+Integer.toString(cal.get(Calendar.MINUTE)-1);
 		}
 		else{
 			 minute=Integer.toString(cal.get(Calendar.MINUTE));
+			 minute1=Integer.toString(cal.get(Calendar.MINUTE)-1);
 		}
 		 time=cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+","+" "+
 					cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
@@ -2372,7 +2374,7 @@ public void verifyFundsinReviewAndConfirmationPageAreMatching(Map<String, String
 				cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "
 				+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+","+" "+
 				Integer.toString(cal.get(Calendar.YEAR))+","+" "+
-				hour+":"+Integer.toString(Integer.parseInt(minute)-1)+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+				hour+":"+minute1+" "+cal.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
 		
 		 timeStamp.add(time);
 		 timeStamp.add(time1);
