@@ -265,6 +265,10 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.PASS,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", false);
 			Web.clickOnElement(lnkMedicare);
+			Web.waitForElement(txtEmpowerModal);
+				if(!Web.isWebElementDisplayed(txtEmpowerModal, true)){
+					Web.clickOnElement(lnkMedicare);	
+				}
 			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
 			Web.waitForElement(txtEmpowerModal);
 			Thread.sleep(10000);
