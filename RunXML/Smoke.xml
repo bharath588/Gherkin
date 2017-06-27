@@ -17,19 +17,19 @@
 					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
 					<parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
                     </parameter>
-                    </include>
+                    </include> 
                     
 					<include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
 					<parameter name="ManualTCName" value="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
                     </parameter>
                     </include>  
 				
-					  <include name="SF01_TC018_Verify_ROR_link" >
+				   <include name="SF01_TC018_Verify_ROR_link" >
 					<parameter name="ManualTCName" value="RateOfReturn_Validations">
                     </parameter>
                     </include>
 				
-					<include name="Balance_validations" >
+						<include name="Balance_validations" >
 					<parameter name="ManualTCName" value="Balance_validations">
                     </parameter>
                     </include>
@@ -145,10 +145,7 @@
                     </parameter>
                     </include>
 				 
-                    <include name="Verify_Health_care_costs_helpful_links" >
-					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
-                    </parameter>
-                    </include> 
+                    
                     
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
@@ -175,6 +172,10 @@
                     </parameter>
                     </include>
                    
+                   <include name="Verify_Health_care_costs_helpful_links" >
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+                    </parameter>
+                    </include> 
 				
 				</methods>
 			</class>
