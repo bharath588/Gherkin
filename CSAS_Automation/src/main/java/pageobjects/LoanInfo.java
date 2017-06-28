@@ -284,8 +284,14 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 						case "REPAY_FREQ":
 							switch (loanStsVal_From_DB) {
 							case "W":
+								if (loanSts_Val_On_Web.contains("Weekly")) {
+									isLoanStsEqual = true;
+								}
 								break;
 							case "M":
+								if (loanSts_Val_On_Web.contains("Monthly")) {
+									isLoanStsEqual = true;
+								}
 								break;
 							case "BW":
 								if (loanSts_Val_On_Web.contains("Bi Weekly")) {

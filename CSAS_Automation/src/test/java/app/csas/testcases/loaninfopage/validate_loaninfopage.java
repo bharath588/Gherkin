@@ -219,7 +219,8 @@ public class validate_loaninfopage {
 				throw new AssertionError("Sql query doesnot provide any data") ;
 			}
 			
-			participantHomeObj.selectSpecificPlaINPPTHome(loanInfo_List.get(1)) ;
+			
+			//participantHomeObj.selectSpecificPlaINPPTHome(loanInfo_List.get(1)) ;
 			
 			// Step2:Search with PPT ID..
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",loanInfo_List.get(0),loanInfo_List.get(1));

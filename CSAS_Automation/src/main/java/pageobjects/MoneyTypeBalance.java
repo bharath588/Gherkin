@@ -28,13 +28,13 @@ public class MoneyTypeBalance extends LoadableComponent<MoneyTypeBalance> {
 
 	// PPT Info Menu links..
 
-	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
+	@FindBy(xpath = "//*[text()='Participant Info']")
 	private WebElement MenuPPTInfo;
 
-	@FindBy(xpath = "//*[@id='oCMenu_323'][contains(text(),'Account Balance')]")
+	@FindBy(xpath = "//*[text()='Account Balance']")
 	private WebElement MenuAccBal;
 
-	@FindBy(xpath = "//*[@id='oCMenu_325'][contains(text(),'Money Type Balance')]")
+	@FindBy(xpath = "//*[text()='Money Type Balance']")
 	private WebElement MenuMoneyTypeBal;
 
 	// Money Type Balance..(MTB)
