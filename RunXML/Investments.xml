@@ -156,19 +156,37 @@
                     
                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype"></parameter>
-                    </include> -->
+                    </include>
                     
                      <include name="DDTC_22685_Target_Date_Fund_Rebalance_Sync_Querterly_withALLMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22685_Target_Date_Fund_Rebalance_Sync_Querterly_withALLMTG"></parameter>
                     </include>
                     
-                    <!--  <include name="DDTC_22690_Target_Date_Fund_Rebalance_Sync_Annually_withNOMTG">
+                     <include name="DDTC_22690_Target_Date_Fund_Rebalance_Sync_Annually_withNOMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22690_Target_Date_Fund_Rebalance_Sync_Annually_withNOMTG"></parameter>
                     </include>
                     
                      <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
-                    </include> -->
+                    </include>   -->
+                    
+                    <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio"></parameter>
+                    </include>
+                    
+                   
                     
                 
 				</methods>

@@ -5837,6 +5837,425 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 		}
 
 	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			 String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			 sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("userName").substring(0, 9));	
+			//Step 1 to 8
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			//Step 9
+			investment.clickChangeMyInvestmentButton();
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.verifyWebElementDisplayed("Continue Button");
+			investment.verifyWebElementDisplayed("Back Button");
+			
+			//Step 10
+			
+			investment.choseInvestmentOption("Rebalance Current Balance");;
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			//investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 11
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			investment.verifyWebElementDisplayed("Link Add/View All Funds");
+			investment.verifyWebElementDisplayed("Reset All Changes Link");
+			investment.verifyWebElementDisplayed("Submit Button Change Future Allocation");
+			investment.verifyWebElementDisplayed("Back Link");
+			
+			
+			
+			//Step 12
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			//Step 13,14,15
+			String[] percentage={"50","50"};
+			investment.addInvestments(2,percentage);
+			Thread.sleep(7000);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+				//Step 16
+			 
+			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Investment Option' opened in New Window from Review Changes Page",
+						"'Investment Option' opened in New Window ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Investment Option' opened in New Window from Review Changes Page",
+						"'Investment Option' is not opened in New Window ", true);
+			}
+			
+			//Step 17
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+		    investment.verifyErrorPageDisplayed();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
+				sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+			//Step 1 to 8
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			//Step 9
+			investment.clickChangeMyInvestmentButton();
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.verifyWebElementDisplayed("Continue Button");
+			investment.verifyWebElementDisplayed("Back Button");
+			
+			//Step 10
+			
+			investment.choseInvestmentOption("Rebalance Current Balance");;
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			//investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 11		
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Choose Target Date Fund");
+			Web.waitForElement(investment, "Header Select Target Date Fund");
+			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
+		
+			//Step 12 to 15 
+			String selectedTargetDateFund=investment.selectTargetYearFund();
+			Thread.sleep(7000);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 16
+			
+			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Investment Option' opened in New Window from Review Changes Page",
+					"'Investment Option' opened in New Window ", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Investment Option' opened in New Window from Review Changes Page",
+					"'Investment Option' is not opened in New Window ", true);
+		 }
+			
+		
+			//Step 17
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+		    investment.verifyErrorPageDisplayed();
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
+				sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 8
+			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			//Step 9
+			investment.clickChangeMyInvestmentButton();
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.verifyWebElementDisplayed("Continue Button");
+			investment.verifyWebElementDisplayed("Back Button");
+			
+			//Step 10
+			
+			investment.choseInvestmentOption("Rebalance Current Balance");;
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			//investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 11		
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Choose Risk Based Funds");
+			Web.waitForElement(investment, "Header Select Risk Based Fund");
+			investment.verifyPageHeaderIsDisplayed("Header Select Risk Based Fund");
+		
+			//Step 12 to 15 
+			String selectedTargetDateFund=investment.selectTargetYearFund();
+			Thread.sleep(7000);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 16
+			
+			if(investment.VerifyInvestmentOptionOpenInNewWindow()){
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Investment Option' opened in New Window from Review Changes Page",
+					"'Investment Option' opened in New Window ", true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Investment Option' opened in New Window from Review Changes Page",
+					"'Investment Option' is not opened in New Window ", true);
+		 }
+			
+		
+			//Step 17
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+		    investment.verifyErrorPageDisplayed();
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
+				sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToI");
+			sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+			//Step 1 to 8
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			//Step 9
+			investment.clickChangeMyInvestmentButton();
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.verifyWebElementDisplayed("Continue Button");
+			investment.verifyWebElementDisplayed("Back Button");
+			
+			//Step 10
+			
+			investment.choseInvestmentOption("Rebalance Current Balance");;
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			//investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 11		
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Link Based On Model Portfolio");
+			Web.waitForElement(investment, "Select a Model Portfolio");
+			investment.verifyPageHeaderIsDisplayed("Select a Model Portfolio");
+		
+			//Step 12 to 15 
+			String selectedTargetDateFund=investment.selectTargetYearFund();
+			Thread.sleep(7000);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 16
+			/*
+			 * Verify investment is opens in new window
+			 * this step is not applicable for Model Portfolio
+			 */
+		
+			//Step 17
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+		    investment.verifyErrorPageDisplayed();
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				String[] sqlQuery = Stock.getTestQuery("updatePinAuthCodeToU");
+				sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1], userName.substring(0, 9));
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
 	public String getInvestmentsSubmissionTime(){
 		String time =null;
 		String minute=null;

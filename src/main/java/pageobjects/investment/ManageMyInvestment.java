@@ -336,6 +336,10 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//label[@aria-label='Direct my future investments this way']")
 	private WebElement lblDirectFutureInvest;
+	@FindBy(xpath="//p[text()[normalize-space()='You are not authorized to view this page.']]") private WebElement GenericErrorMsg;
+	@FindBy(id = "modelPortfolioLink") private WebElement btnBasedOnModelPortfolio;
+	@FindBy(xpath = "//h1[text()[normalize-space()='Select a model portfolio']]")
+	private WebElement txtSelectModelPortfolio;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
@@ -592,6 +596,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		if (fieldName.trim().equalsIgnoreCase("Select Target Date Fund")) {
 			return this.txtSelectTargetDateFund;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Select a Model Portfolio")) {
+			return this.txtSelectModelPortfolio;
+		}
 		if (fieldName.trim().equalsIgnoreCase("Current Flag Target Date Fund")) {
 			return this.lblCurrentTagetDateFund;
 		}
@@ -604,6 +611,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		
 		if (fieldName.trim().equalsIgnoreCase("Choose Risk Based Funds")) {
 			return this.btnChooseRiskBasedFund;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Link Based On Model Portfolio")) {
+			return this.btnBasedOnModelPortfolio;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Header Select Risk Based Fund")) {
 			return this.txtSelectRiskBasedFund;
@@ -2340,7 +2350,26 @@ public void verifyFundsinReviewAndConfirmationPageAreMatching(Map<String, String
 
 
 	}
+/**
+ * <pre>
+ * Method to Verify the Error Page is Displayed
+ *
+ * </pre>
+ * 
+ *
+ */
+public void verifyErrorPageDisplayed() {
 	
+	Web.waitForElement(GenericErrorMsg);
+	if(lib.Web.isWebElementDisplayed( GenericErrorMsg,true))
+		Reporter.logEvent(Status.PASS, "Verify 'You are not authorised to view', Page is displayed", "'You are not authorised to view', Page is displayed", false);
+	else
+		Reporter.logEvent(Status.FAIL, "Verify 'You are not authorised to view', Page is displayed", "'You are not authorised to view', Page is not displayed", true);
+		
+
+	}
+
+
 	public List<String> getInvestmentsSubmissionTime(){
 		List<String> timeStamp=new ArrayList<String>();
 		String time =null;
