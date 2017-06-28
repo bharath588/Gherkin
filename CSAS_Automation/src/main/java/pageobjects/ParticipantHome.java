@@ -10,7 +10,9 @@ import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -653,15 +655,21 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	 */
 	public void search_PPT_Plan_With_PPT_ID_OR_SSN(String ssnOrIDElement,
 			String... searchValue) throws Exception {
+		
 		WebElement searchField = getWebElement(ssnOrIDElement.toUpperCase());
 
 		boolean isElementDisplayed = false;
+
+		
 		Web.waitForElement(menuSearch);
 		Web.clickOnElement(menuSearch);
 		Web.setTextToTextBox(searchField, searchValue[0]);
 		Reporter.logEvent(Status.INFO, "Performing search using PPT ID/SSN",
 				"PPT ID/SSN : " + searchValue[0], true);
+		
 		Web.clickOnElement(SubmitPPTIdBtn);
+		  CommonLib.prevPpt =  searchValue[0];
+			
 
 		// ------------- Handle Multiple PPT Search Result -----
 		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link)
@@ -669,6 +677,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			click_And_Verify_Plan_On_Search_Page(searchValue[1]);
 		}
 
+				
 		Web.waitForElement(PPTHomePageTitle);
 		isElementDisplayed = Web.isWebElementDisplayed(PPTHomePageTitle, true);
 		if (isElementDisplayed) {
@@ -684,6 +693,9 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					"Participant Home Page with all the details are not displayed",
 					true);
 		}
+		
+		
+		
 	}
 
 	/**

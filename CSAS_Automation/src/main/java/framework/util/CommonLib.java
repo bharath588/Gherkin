@@ -7,12 +7,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import lib.Stock;
+
 public class CommonLib {
 
 	public static long startTime;
 	public static long finishTime;
 	public static long totalTime;
 	public static double totalTimeTaken_Sec;
+	public static String prevPpt = null;
+	
+	static String currentPpt = null;
 
 	/**
 	 * Method to calculate Total time taken to launch application
@@ -83,6 +88,15 @@ public class CommonLib {
 			e.printStackTrace();
 		}
 		return isAccBal;
+	}
+	
+	public static boolean checkForPpt()
+	{
+				
+		currentPpt=Stock.GetParameterValue("PPT_ID");
+	 	return currentPpt.equalsIgnoreCase(prevPpt);
+		
+		
 	}
 
 }

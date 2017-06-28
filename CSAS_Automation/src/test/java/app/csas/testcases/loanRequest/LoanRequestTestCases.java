@@ -6,6 +6,7 @@ import java.util.Map;
 
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -13,7 +14,11 @@ import org.testng.annotations.Test;
 
 import pageobjects.LoanQuote;
 import pageobjects.LoanRequest;
+import pageobjects.Loan_Request1;
 import pageobjects.ParticipantHome;
+
+
+import pageobjects.Statement_View_Update;
 
 import com.aventstack.extentreports.Status;
 
@@ -24,6 +29,7 @@ public class LoanRequestTestCases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	ParticipantHome participantHomeObj;
 	LoanRequest LoanRequestPage;
+	Statement_View_Update objStatement_View_Update;
 	boolean isPageDisplayed;
 	String ga_id = null ;
 
@@ -72,45 +78,202 @@ public class LoanRequestTestCases {
 	 * RETURNS:	VOID	
 	 * REVISION HISTORY: 
 	 * --------------------------------------------------------------------
-	 * Author:    Date : 05-04-16    
+	 * Author:  Megha   Date : 05-04-16    
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * @param <br>
 	 *        CSAS Credential</br>
 	 */
-	@Test(dataProvider = "setData")
-	public void CSAS_TC01_DDTC_01(
-			int itr, Map<String, String> testdata) {
-		LoanRequestPage = new LoanRequest();
-		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			// Step1:Launch and logged into CSAS application..
-			if (itr == 1) {
-				participantHomeObj = new ParticipantHome().get();
-		
-				participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
-						Stock.GetParameterValue("PPT_ID"));
-				// Step2:Navigating to Loan Quote
-				LoanRequestPage.get();
-			
-			}
 
-			
-			
-			
-			
-		} catch (Exception e) {
-			handleFailure(e);
-		} catch (Error ae) {
-	      	handleError(ae);
-		} finally {
-			try {
-				Reporter.finalizeTCReport();
-			} catch (Exception e1) {
-				e1.printStackTrace();
+	
+	@Test(dataProvider="setData")
+	public void validating_loan_number_link(int itr,Map<String,String> testdata) throws InterruptedException
+	{
+		  try{
+			  System.out.println("validating the loan number link");
+			  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+			  LoanRequestPage=new LoanRequest();	
+			  LoanRequestPage.get();	 
+			  LoanRequestPage.validating_loan_number_link();
 			}
-		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}finally{
+				  try{
+					  Reporter.finalizeTCReport();
+				  }catch(Exception e){
+					  e.printStackTrace();
+				  }
+				  }
+	}	 
+	
+	
+	@Test(dataProvider="setData")
+	public void validating_mobile_phone_text_box(int itr,Map<String,String> testdata) throws InterruptedException
+	{
+		  try{
+			  System.out.println("validating mobile phone field");
+			  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+			  LoanRequestPage=new LoanRequest();	
+			  LoanRequestPage.get();		
+			  LoanRequestPage.validating_mobile_phone();
+		  }
+		  catch(Exception e)
+		  {
+			  e.printStackTrace();
+		  }finally{
+			  try{
+				  Reporter.finalizeTCReport();
+			  }catch(Exception e){
+				  e.printStackTrace();
+			  }
+			  }
 	}
 	
+	
+
+@Test(dataProvider="setData")
+public void statement_order_update_confirmation(int itr,Map<String,String> testdata)throws InterruptedException
+{
+	try{
+		System.out.println("Testing update confirmation page");
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+		objStatement_View_Update=new Statement_View_Update();
+		objStatement_View_Update.get();
+		objStatement_View_Update.verifying_if_fax_is_selected();
+		objStatement_View_Update.checking_fax();
+		objStatement_View_Update.updating_delivery_information();		
+		objStatement_View_Update.confirm_delivery_information();		
+		objStatement_View_Update.return_confirmation_number();
+	
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}finally{
+		  try{
+			  Reporter.finalizeTCReport();
+		  }catch(Exception e){
+			  e.printStackTrace();
+		  }
+		  }
+}
+
+
+@Test(dataProvider="setData")
+public void validating_if_payment_method_noneditable(int itr,Map<String,String> testdata) throws InterruptedException
+{
+	try{
+		System.out.println("Validating if payment method is a non-editable field");
+		  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+		  LoanRequestPage=new LoanRequest();	
+		  LoanRequestPage.get();
+		  LoanRequestPage.validating_payment_method_noneditable();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}finally{
+		try{
+			Reporter.finalizeTCReport();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		}
+	}
+
+
+
+@Test(dataProvider="setData")
+public void validating_vesting_field(int itr,Map<String,String> testdata) throws InterruptedException
+{
+	try{
+		System.out.println("Validating the vesting field");
+		 Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+		  LoanRequestPage=new LoanRequest();	
+		  LoanRequestPage.get();
+		  LoanRequestPage.validating_vesting_field();
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}finally{
+		try{
+			Reporter.finalizeTCReport();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		}
+	
+}
+
+
+@Test(dataProvider="setData")
+public void validating_recalculate_functionality(int itr,Map<String,String> testdata) throws InterruptedException
+{
+	try{
+		System.out.println("Validating the recalculate button's functionality");
+		 Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+		  LoanRequestPage=new LoanRequest();	
+		  LoanRequestPage.get();
+		  LoanRequestPage.validating_recalculate_buttton();
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}finally{
+		try{
+			Reporter.finalizeTCReport();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		}
+}
+
+
+@Test(dataProvider="setData")
+public void validating_green_tick_on_selection_of_loan_quote(int itr,Map<String,String> testdata) throws InterruptedException
+{
+try{
+	System.out.println("Validating if green tick is appearing on selecting a loan quote");
+	Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+	  LoanRequestPage=new LoanRequest();	
+	  LoanRequestPage.get();
+	  LoanRequestPage.verifying_enable_of_select_button();
+}
+catch(Exception e)
+{
+	e.printStackTrace();
+}finally{
+	try{
+		Reporter.finalizeTCReport();
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	}
+}
+	
+
+@Test(dataProvider="setData")
+public void validating_refinance_with_adtn_loan_amnt_functionality(int itr,Map<String,String> testdata) throws InterruptedException
+{
+	try{
+		System.out.println("Validating refinance functionality of loan request with additional loan amount");
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);	
+		  LoanRequestPage=new LoanRequest();	
+		  LoanRequestPage.get();
+		  LoanRequestPage.refinance();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}finally{
+		try{
+			Reporter.finalizeTCReport();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		}
+	}
+
 
 }

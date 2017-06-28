@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite verbose="1" name="allSuites">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="Loan Request">
+		<classes>
+			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+				<methods>	
+				  <include name="statement_order_update_confirmation">
+					<parameter name="ManualTCName" 	value="csas_TC_16_Statement_Order_Update_Confirmation" />
+				</include>
+				<!-- 	 <include name="validating_mobile_phone_text_box">
+					<parameter name="ManualTCName" 	value="csas_TC_17_Validating_Mobile_Phone_Text_Box" />
+				</include>
+				 <include name="validating_loan_number_link">
+					<parameter name="ManualTCName" value="csas_TC_18_Validating_Loan_Number_Link" />
+				</include> 
+		
+						<include name="validating_if_payment_method_noneditable">
+					<parameter name="ManualTCName" 	value="csas_TC_20_Validating_Payment_Method_Field_NonEditable" />
+				</include>
+  			
+				<include name="validating_vesting_field">
+					<parameter name="ManualTCName" 	 value="csas_TC_24_Validating_Vesting_Field" />
+			</include>		
+				<include name="validating_recalculate_functionality">
+					<parameter name="ManualTCName" 	value="csas_TC_23_Validating_Recalculate_Functionality" />
+					</include>
+	
+		<include name="validating_refinance_with_adtn_loan_amnt_functionality">
+			<parameter name="ManualTCName" 	value="csas_TC_22_Validating_Refinance_With_Additional_Loan_Amount" />
+		</include> 
+			<include name="validating_green_tick_on_selection_of_loan_quote">
+				<parameter name="ManualTCName" 	value="csas_TC_25_Validating_Enable_Of_Select_Button" />
+			</include>
+	 -->
+	
+	
+	<!--     Execution Script -->
+	
+	
+	<!-- <include name="validating_email_text_box">
+		<parameter name="ManualTCName"
+			value="csas_TC_27_Validating_Email_Text_Box" />
+	</include> -->
+	
+	 <!-- <include name="validating_home_phone_text_box">
+		<parameter name="ManualTCName"
+			value="csas_TC_28_Validating_Home_Phone_Field" />
+	</include> -->
+	<!-- <include name="validating_how_is_it_calculated_link_and_minimum_loan_amount">
+		<parameter name="ManualTCName"
+			value="csas_TC_29_Validating_How_Is_It_Calculated_Link_And_Minimum_Loan_Amount" />
+	</include> -->
+	<!-- <include name="validating_amount_to_borrow_text_field">
+		<parameter name="ManualTCName"
+			value="csas_TC_30_Validating_Amount_To_Borrow_Field" />
+	</include> -->
+	
+					
+					
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+</suite>
