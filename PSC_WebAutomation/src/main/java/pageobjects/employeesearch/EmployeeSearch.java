@@ -374,6 +374,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement basicInfoEditFrame;
 	@FindBy(xpath="//*[@id='basicInfoEditDialogId']/preceding-sibling::div//span[.='close']")
 	private WebElement closeIconBasicInfoEditWindow;
+	@FindBy(xpath="//*[@id='empUpdateVestingInfoPriorDialogId']/preceding-sibling::div//span[.='close']")
+	private WebElement closeIconVestingWindow;
 	@FindBy(xpath="//font[@class='column_title'][contains(text(),'SSN')]")
 	private WebElement ssnHeaderOnModalWindow;
 	@FindBy(xpath="//font[@class='column_title'][contains(text(),'Name')]")
@@ -764,6 +766,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement zipCodeValidation;
 	@FindBy(xpath=".//div[@id='enrollEligEditDialogId']//preceding-sibling::div//*[contains(text(),'close')]")
 	private WebElement enrollEligCloseWindow;
+	@FindBy(xpath=".//a[contains(text(),'current period vesting')]")
+	private WebElement changeCurrentPeriodVesting;
+	@FindBy(xpath=".//a[contains(text(),'prior period vesting')]")
+	private WebElement changePriorPeriodVesting;
 	
 	private String transHistory = ".//*[@id='transactions']";
 	private String interactions = ".//*[@id='participantengagement']";
@@ -888,6 +894,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		if(fieldName.trim().equalsIgnoreCase("PRINT PAGE HEADER")){
 			return this.printPriviewWindowHeader;
+		}
+		if(fieldName.trim().equalsIgnoreCase("PRINT LINK")){
+			return this.print;
 		}
 
 		return null;
@@ -2934,32 +2943,14 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
 		{
 			Reporter.logEvent(Status.FAIL, "Verify account detail,employee detail and employee web button is displayed.", "Account detail,employee detail and Employee web button is not displayed.", true);
 		}
-	String parentWindow = Web.getDriver().getWindowHandle();
-	System.out.println("Parent Window:"+parentWindow);
+	/*String parentWindow = Web.getDriver().getWindowHandle();
+	System.out.println("Parent Window:"+parentWindow);*/
 	Web.waitForElement(print);
-	Web.clickOnElement(print);
-	Set<String> printWindow = Web.getDriver().getWindowHandles();
+	
+	/*Set<String> printWindow = Web.getDriver().getWindowHandles();
 	System.out.println(printWindow);
 	int count=0;
-	/*for(String childWindow:printWindow )
-	{
-		if(!parentWindow.equals(childWindow))
-		{
-			System.out.println("This is inside IF.");
-			Web.getDriver().switchTo().window(childWindow);
-			Web.waitForElement(printPriviewWindowHeader);
-			if(printPriviewWindowHeader.getText().contains("THIS IS A PRINT PREVIEW"))
-			{
-				Reporter.logEvent(Status.PASS, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is displayed.", false);
-			}
-			else
-			{
-				Reporter.logEvent(Status.FAIL, "Verify after clicking on print link,a print preview page is displayed.", "Print preview page is not displayed.", true);
-			}
-		}
-		
-	}*/
-	 while(Web.getDriver().getWindowHandles().size()==1)
+	while(Web.getDriver().getWindowHandles().size()==1)
      {
             if(count==10) break;
             Thread.sleep(500);
@@ -2984,10 +2975,28 @@ public void verifyOverviewScreenElements() throws Exception,SQLException
  				Web.getDriver().switchTo().window(parentWindow);
  				break;
   	   }
-     }
-	Web.getDriver().close();
-	Web.getDriver().switchTo().window(parentWindow);
-	Web.getDriver().switchTo().defaultContent();
+     }*/
+	if(CommonLib.getBrowserName().equalsIgnoreCase("chrome")){
+		if(print.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate print link is displayed.","Print link is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate print link is displayed.","Print link is not displayed.", true);
+	}else{
+		Web.clickOnElement(print);
+		String parentWindow = CommonLib.switchToWindow();
+		if(printPriviewWindowHeader.getText().contains("THIS IS A PRINT PREVIEW"))
+		{
+			Reporter.logEvent(Status.PASS, "Verify after clicking on print link,a "
+					+ "print preview page is displayed.", "Print preview page is displayed.", false);
+		}
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify after clicking on print link,a "
+					+ "print preview page is displayed.", "Print preview page is not displayed.", true);
+		}
+		Web.getDriver().close();
+		Web.getDriver().switchTo().window(parentWindow);
+	}
 	
 }
 
@@ -5628,6 +5637,7 @@ public void validateVestingSection_2()
 
 
 
+
 /**
  * <pre>This method validates vesting modal window section elements.</pre>
  * @author smykjn
@@ -5658,20 +5668,26 @@ public void validateVestingModalWindowSection_1()
 			Reporter.logEvent(Status.PASS,"Check click here link is displayed.", "Click here link is displayed.", false);
 		else
 			Reporter.logEvent(Status.FAIL,"Check click here link is displayed.", "Click here link is not displayed.", true);
-		
-		
 		//Step8 has to be validated
-		
-		
-		
-		
+		//method to get number of days between two dates
+		if(changeCurrentPeriodVesting.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate 'Change current period vesting' button is displayed.","As expected.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate 'Change current period vesting' button is displayed.","Specified "
+					+ "button is not displayed.",true);
+		if(changePriorPeriodVesting.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate 'Change prior period vesting' button is displayed.","As expected.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate 'Change prior period vesting' button is displayed.","Specified "
+					+ "button is not displayed.",true);
 		
 	}catch(Exception e){
 		e.getStackTrace();
 		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
 	}
 }
-
+@FindBy(id="empUpdateVestingInfoPriorFrameId")
+private WebElement empUpdateVestingPriorInfoframe;
 /**
  * <pre>This method validates 
  * 1.if Click here link is clicked then it should display Account Balance by money sources page.
@@ -5721,8 +5737,19 @@ public void validateVestingModalWindowSection_2()
 					"Vesting detail page is not displayed.", true);
 		Web.clickOnElement(vestingDetailClose);
 		Web.waitForElement(clickHereLink);
+		Web.clickOnElement(changePriorPeriodVesting);
+		Web.waitForPageToLoad(Web.getDriver());
+		if(Web.isWebElementDisplayed(empUpdateVestingPriorInfoframe,false))
+			Reporter.logEvent(Status.PASS,"Click on 'Change prior period vesting' and "
+					+ "validate modal window is displayed to change vesting period.","As expected.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on 'Change prior period vesting' and "
+					+ "validate modal window is displayed to change vesting period.","Modal window is not displayed.", true);
+		//CommonLib.switchToFrame(empUpdateVestingPriorInfoframe);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(closeIconVestingWindow);
 		Web.clickOnElement(vestingModalCloseLink);
-		CommonLib.waitForProgressBar();
+		//CommonLib.waitForProgressBar();
 		Web.getDriver().switchTo().defaultContent();
 		}else{
 			Web.clickOnElement(vestingModalCloseLink);
@@ -5730,9 +5757,6 @@ public void validateVestingModalWindowSection_2()
 			Web.getDriver().switchTo().defaultContent();
 			Reporter.logEvent(Status.WARNING,"Validate column 'Period begin date' is having dates as Links.","Date links are not displayed.Please get participant"
 				+ " with required data.", true);}
-		//Step11 has to be validated
-		
-		
 		
 	}catch(Exception e){
 		e.getStackTrace();

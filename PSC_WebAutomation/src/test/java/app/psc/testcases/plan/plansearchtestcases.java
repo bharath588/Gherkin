@@ -623,7 +623,352 @@ public void TC09_Order_Participant_QDIA_Notice_Listing(int itr, Map<String,Strin
 	}
 }
 	
-	
-	
+
+
+/**<pre>This test case validates plan documents page.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ * @Date 13-June-2017
+ */
+@Test(dataProvider="setData")
+public void TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates plan documents page.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+		homePage = new HomePage();
+		//homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+		if(homePage.navigateToProvidedPage("Plan","Fiduciary records","Plan documents"))
+			Reporter.logEvent(Status.PASS,"Navigate to Plan-->Fiduciary records--->Plan documents page.","Plan documents page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Navigate to Plan-->Fiduciary records--->Plan documents page.","Plan documents page is not displayed.", true);
+		planPage.validatePlanDocumentsPage();
+		planPage.validatePlanDocumentsLinks();
+		planPage.validateNoPlanDocMsg();
+		homePage.logoutPSC();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+
+/**<pre>This test case validates Fiduciary records-->Required notices page elements.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ * @Date 15-June-2017
+ */
+@Test(dataProvider="setData")
+public void TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates Fiduciary records-->Required notices page elements.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+		homePage = new HomePage();
+		homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumberWithPartGrp"));
+		if(CommonLib.navigateToProvidedPage("Plan","Fiduciary records","Required notices"))
+			Reporter.logEvent(Status.PASS,"Navigate to Plan-->Fiduciary records-->Required notices.",""
+					+ "Required notices page is displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Navigate to Plan-->Fiduciary records-->Required notices.",""
+					+ "Required notices page is displayed.",true);
+		planPage.validateFiduciaryRequiredNotices();
+		planPage.validateFiduciaryRequiredNotices_1();
+		planPage.validateSafeHarBorNoticeForPartGrpng();
+		planPage.validateSafeHarBorNoticeForPartGrpng_1();
+		planPage.validateSafeHarBorNoticeForPartGrpng_2();
+		planPage.validateSafeHarBorNoticeForPartGrpng_3();
+		homePage.logoutPSC();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+
+/**<pre>This test case validates 3rd level submenu options of Plan module.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ * @Date 15-June-2017
+ */
+@Test(dataProvider="setData")
+public void TC12_3rd_Level_Links(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates Fiduciary records-->Required notices page elements.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password")}).get();
+		planPage.validateThirdLevelMenuOptionForPlanOverview();
+		homePage = new HomePage();
+		homePage.navigateToHomePage();
+		homePage.logoutPSC();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+
+/**<pre>This test case validates the future rate,future effective date columns for Fixed investment rates.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ */
+@Test(dataProvider="setData")
+public void TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This test case validates the future rate,future "
+				+ "effective date columns for Fixed investment rates.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+			Stock.GetParameterValue("username"),
+			Stock.GetParameterValue("password")}).get();
+		HomePage homePage = new HomePage();
+		homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+		planPage.navigateToInvestmentAndPerformance();
+		planPage.validateInvestmentAndPerformanceColumns();
+		planPage.validateColumnFixedInvstmntRatePage();
+		homePage.logoutPSC();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	}
+
+
+/**<pre>This test case validates the Investment option page elements like columns
+ * displayed,Excel and PDf links,sorting by balance,Disclaimer,Morning start popup info,Quick links.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ */
+@Test(dataProvider="setData")
+public void TC14_SIT_PSC_Investment_Options(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This test case validates the Investment option page elements like columns "
+				+ "displayed,Excel and PDf links,sorting by balance,Disclaimer,Morning start popup info,Quick links", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+			Stock.GetParameterValue("username"),
+			Stock.GetParameterValue("password")}).get();
+		homePage = new HomePage();
+		homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+		planPage.navigateToInvestmentAndPerformance();
+		planPage.validateInvestmentAndPerformanceColumns();
+		planPage.validateInvestmentOptionsColumns();
+		planPage.validateQuickLinksOnInvOptPage();
+		planPage.validateDesclaimerForInvetmentOptionPage();
+		planPage.sortBalanceInDescAndAsc();
+		planPage.validateExcelDownload();
+		planPage.validatePDFURL();
+		planPage.validatePrintFunctionality();
+		homePage.navigateToHomePage();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	}
+
+/**<pre>This test case validates the update functionality of Bank details.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testDat
+ */
+@Test(dataProvider="setData")
+public void TC13_PLN_ADM_View_Change_Banking_Information_Regr(int itr, Map<String,String> testDat)
+{
+	try
+	{
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description",
+				"This testcase validates the update functionality of Bank details.", false);
+		planPage = new PlanPage(new LoginPage(), false, new String[] {
+			Stock.GetParameterValue("username"),
+			Stock.GetParameterValue("password")}).get();
+		homePage = new HomePage();
+		homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+		CommonLib.navigateToProvidedPage("Plan","Administration","View∕change banking information");
+		planPage.validateBankingInfoAndUpdateLink();
+		planPage.updateBankDetails();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	}
+	catch(Error ae)
+	{
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of error message",
+				errorMsg, true);
+	}
+
+	finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 }

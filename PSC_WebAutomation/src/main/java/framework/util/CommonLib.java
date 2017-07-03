@@ -1,5 +1,12 @@
 package framework.util;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -7,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import lib.DB;
 import lib.Reporter;
@@ -14,9 +23,14 @@ import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -32,7 +46,11 @@ import core.framework.Globals;
 public class CommonLib {
 	static ResultSet queryResultSet;
 	static HomePage homePage;
+	public static String browserName;
 	
+	public CommonLib(){
+		PageFactory.initElements(Web.getDriver(), this);
+	}
 	
 	public static void HighlightElement(WebElement ele, WebDriver driver) {
 		for (int i = 0; i < 3; i++) {
@@ -44,6 +62,11 @@ public class CommonLib {
 					"arguments[0].setAttribute('style', arguments[1]);", ele,
 					"");
 		}
+	}
+	
+	private static WebElement menuElement(String menuName)
+	{
+		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
 	}
 	
 	public static void enterData(WebElement ele, String value) {
@@ -485,10 +508,250 @@ public static void deleteAllCookies() throws Exception
 }	
 
 
+
+	
+
+/**
+ * <pre>This method Takes you to the specified menu or submenu page.</pre>
+ * @author smykjn
+ */
+public static boolean navigateToProvidedPage(String...specifiedTab) throws Exception
+{
+	String bredCrumbValue= "";
+	WebElement breadCrumb;
+	boolean isPageDisplayed = false;
+	Actions act = new Actions(Web.getDriver());
+	String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
+	String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
+	String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
+	String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
+	if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
+		act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
+		//Web.clickOnElement(menuElement(specifiedTab[0]));
+		act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+		Web.waitForPageToLoad(Web.getDriver());
+		if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
+		{
+			//Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+			act.click(Web.getDriver().findElement(By.xpath(xpath3))).build().perform();
+			Web.waitForElements(Web.getDriver().findElements(By.xpath(xpath4)));
+			if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
+			Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+			act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+			Web.waitForPageToLoad(Web.getDriver());
+			bredCrumbValue=specifiedTab[2];}
+		}
+		else
+		{
+			Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+			Web.waitForPageToLoad(Web.getDriver());
+			bredCrumbValue=specifiedTab[1];
+		}
+	}
+	else
+	{
+		Web.clickOnElement(menuElement(specifiedTab[0]));
+		Web.waitForPageToLoad(Web.getDriver());
+		bredCrumbValue=specifiedTab[0];
+	}
+	breadCrumb = Web.getDriver().findElement(By.tagName("i"));
+	Web.waitForElement(breadCrumb);
+	if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
+		isPageDisplayed = true;
+	else
+		isPageDisplayed = false;
+	return isPageDisplayed;
 }
+
+
+/**
+ * <pre>This method is used to switch to child window in case there is only two window.</pre>
+ * @author smykjn
+ * @return parentWindowID
+ */
+public static String switchToWindow()
+{
+	int count=0;
+	String parentWindow="";
+	try{
+		parentWindow = Web.getDriver().getWindowHandle();
+		while(Web.getDriver().getWindowHandles().size()==1)
+		{
+			if(count==10) break;
+			Thread.sleep(500);
+			count++;
+			System.out.println("Counter : "+count);
+		}
+		System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
+		Set<String> chiledWindows = Web.getDriver().getWindowHandles();
+		for(String activeWindow : chiledWindows){
+			if(!activeWindow.equals(parentWindow)){
+				Web.getDriver().switchTo().window(activeWindow);break;}
+		}
+		return parentWindow;
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+		return parentWindow="";
+	}
+}
+
+/**
+ * <pre>This method is used to switch to specified frame.</pre>
+ * @author smykjn
+ * @return void
+ */
+public static void switchToFrame(WebElement frameIDorName)
+{
+	try{
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(frameIDorName);
+	}catch(NoSuchFrameException e){
+		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+	}
+}
+
+/**
+ * This method returns the broser name and version in runtime execution
+ * @author smykjn
+ * @return
+ */
+public static String getBrowserName(){
+	Capabilities caps = ((RemoteWebDriver) Web.getDriver()).getCapabilities();
+	String browserName = caps.getBrowserName();
+	String browserVersion = caps.getVersion();
+	System.out.println("Browser name:"+browserName);
+	System.out.println("Browser version:"+browserVersion);
+	return browserName;
+}
+
+/**
+ * <pre>This method returns the browser name and version in runtime execution</pre>
+ * @author smykjn
+ * @return
+ */
+public static void waitForLoader(WebElement loader) throws Exception{
+	do{
+		Thread.sleep(1000);
+		System.out.println("Loading......................");
+	}while(loader.isDisplayed());
+}
+
+/**
+ * <pre>This method sorts list<INTEGER> in descending order.</pre>
+ * @author smykjn
+ * @return
+ */
+public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
+	boolean isSorted = false;
+	List<Double> copyList = new ArrayList<Double>(expSortedList);
+	System.out.println("List copied:"+copyList);
+	Collections.sort(copyList);
+	System.out.println("copied List in ascending order:"+copyList);
+	Collections.reverse(copyList);
+	System.out.println("copied List in descending order:"+copyList);
+	System.out.println("Original List:"+expSortedList);
+	if(expSortedList.equals(copyList))
+		isSorted = true;
+	else
+		isSorted = false;
+	return isSorted;
+}
+
+
+/**
+ * @author smykjn
+ * @param downloadDir
+ * @param fileExtension
+ * @return downloaded file name
+ */
+public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
+{	
+	String downloadedFileName = null;
+	boolean valid = true;
+	boolean found = false;
+
+	//default timeout in seconds
+	long timeOut = 20; 
+	try 
+	{					
+		Path downloadFolderPath = Paths.get(downloadDir);
+		WatchService watchService = FileSystems.getDefault().newWatchService();
+		downloadFolderPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+		long startTime = System.currentTimeMillis();
+		do 
+		{
+			WatchKey watchKey;
+			watchKey = watchService.poll(timeOut,TimeUnit.SECONDS);
+			long currentTime = (System.currentTimeMillis()-startTime)/1000;
+			if(currentTime>timeOut)
+			{
+				System.out.println("Download operation timed out.. Expected file was not downloaded");
+				return downloadedFileName;
+			}
+			
+			for (WatchEvent event : watchKey.pollEvents())
+			{
+				 WatchEvent.Kind kind = event.kind();
+				if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) 
+				{
+					String fileName = event.context().toString();
+					System.out.println("New File Created:" + fileName);
+					if(fileName.endsWith(fileExtension))
+					{
+						downloadedFileName = fileName;
+						System.out.println("Downloaded file found with extension " + fileExtension + ". File name is " + fileName);
+						Thread.sleep(500);
+						found = true;
+						break;
+					}
+				}
+			}
+			if(found)
+			{
+				return downloadedFileName;
+			}
+			else
+			{
+				currentTime = (System.currentTimeMillis()-startTime)/1000;
+				if(currentTime>timeOut)
+				{
+					System.out.println("Failed to download expected file");
+					return downloadedFileName;
+				}
+				valid = watchKey.reset();
+			}
+		} while (valid);
+	} 
 	
-	
-	
-	
+	catch (InterruptedException e) 
+	{
+		System.out.println("Interrupted error - " + e.getMessage());
+		e.printStackTrace();
+	}
+	catch (NullPointerException e) 
+	{
+		System.out.println("Download operation timed out.. Expected file was not downloaded");
+	}
+	catch (Exception e)
+	{
+		System.out.println("Error occured - " + e.getMessage());
+		e.printStackTrace();
+	}
+	return downloadedFileName;
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
 
 

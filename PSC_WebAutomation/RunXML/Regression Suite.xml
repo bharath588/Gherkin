@@ -6,9 +6,9 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Execution_2">
 		<classes>
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -165,7 +165,7 @@
 					<include name="TC39_SIT_PSC_Accountdetail_Vesting_Reg">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Vesting_Reg" />
 					</include>
-					<include name="TC40_SIT_PSC_Accountdetail_Loans_Reg">
+					 <include name="TC40_SIT_PSC_Accountdetail_Loans_Reg">
 						<parameter name="ManualTCName" value="SIT_PSC_Accountdetail_Loans_Reg" />
 					</include>
 					<include name="TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD">
@@ -192,10 +192,11 @@
 					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_Screen_Elements" />
-					</include>
+					</include> -->
+					
 				</methods>
 			</class>
-			<class name="app.psc.testcases.login.logintestcases" >
+			<!--<class name="app.psc.testcases.login.logintestcases" >
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -283,10 +284,10 @@
 							value="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login" />
 					</include>
 				</methods>
-			</class>-->
+			</class>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
-					<!--<include name="TC01_search_plan_for_valid_plan">
+					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page" />
 					</include>
@@ -323,19 +324,38 @@
 					<include name="TC08_Disable_certain_user_edit_fields_for_SAW">
 						<parameter name="ManualTCName"
 							value="Disable_certain_user_edit_fields_for_SAW" />
-					</include>-->
+					</include>
 					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
 						<parameter name="ManualTCName"
 							value="Order_Participant_QDIA_Notice_Listing" />
 					</include>
+					<include name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
+					</include>
+					<include name="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
+					</include>
+					<include name="TC12_3rd_Level_Links">
+						<parameter name="ManualTCName" value="3rd_Level_Links" />
+					</include>
+					<include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
+						<parameter name="ManualTCName" value="SIT_PSC_Investment_Fixed_Investment_FutureRates" />
+					</include>
+					<include name="TC14_SIT_PSC_Investment_Options">
+						<parameter name="ManualTCName" value="SIT_PSC_Investment_Options" />
+					</include>
+					<include name="TC13_PLN_ADM_View_Change_Banking_Information_Regr">
+						<parameter name="ManualTCName" value="PLN_ADM_View_Change_Banking_Information_Regr" />
+					</include>
 				</methods>
-			</class> 
-			<!--<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			</class>
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_screen_elements" />
-
 					</include>
 					<include name="TC018_Verify_the_sorting_in_search_results">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_sorting" />
@@ -465,6 +485,13 @@
 					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.myprofile.myprofiletestcases">
+				<methods>
+					<include name="TC01_TestPageObject">
+						<parameter name="ManualTCName" value="TestPageObject" />
 					</include>
 				</methods>
 			</class>-->

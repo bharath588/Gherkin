@@ -25,14 +25,17 @@ import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import pageobjects.accountverification.AccountVerificationPage;
+import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.ThrowException;
@@ -172,7 +175,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			//CommonLib.waitForProgressBar();
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
-			//	Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
+			Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
 		}	
 	}
 
@@ -208,9 +211,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 					
 				}
 			}
-			//urlJumpPage.click();
 			Web.waitForElement(urlJumpPage);
 			Web.clickOnElement(urlJumpPage);
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(weGreeting);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
 		} catch (Exception e) {
@@ -981,10 +984,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.getDriver().switchTo().defaultContent();
 		Web.waitForElement(iFramePlanB);
 		Web.getDriver().switchTo().frame(iFramePlanB);
-		if(!moreButton.isDisplayed())
-		{
-			Web.isWebElementDisplayed(moreButton, true);
-		}
+		Web.isWebElementDisplayed(moreButton, true);
 		Web.getDriver().switchTo().defaultContent();
 		if(iDOrName!=null)
 		if(planHeaderInfo.getText().contains(iDOrName))
@@ -1080,14 +1080,15 @@ public class HomePage extends LoadableComponent<HomePage>{
 		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
 			act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
 			//Web.clickOnElement(menuElement(specifiedTab[0]));
-			act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+			//act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+			act.click(menuElement(specifiedTab[0])).build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
 			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
 			{
 				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
 				if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
 				Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
-				act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+				act.click(Web.getDriver().findElement(By.xpath(xpath4))).build().perform();
 				Web.waitForPageToLoad(Web.getDriver());
 				bredCrumbValue=specifiedTab[2];}
 			}
@@ -1361,7 +1362,25 @@ public void validateOverviewAndPlanDashboardAfterDeletingTxnCodes()
 		
 }	
 	
-	
+
+/**
+ *<pre>This method is used to navigate to home page.</pre>
+ * @author smykjn
+ * @return
+ */
+public boolean navigateToHomePage() throws Exception{
+	boolean isDisplayed=false;
+	Web.getDriver().switchTo().defaultContent();
+	Actions act = new Actions(Web.getDriver());
+	act.moveToElement(weGreeting).build().perform();
+	Web.clickOnElement(homePageLogo);
+	Web.waitForPageToLoad(Web.getDriver());
+	if(Web.isWebElementDisplayed(iFramePlanB, true))
+		isDisplayed=true;
+	else
+		isDisplayed=false;
+	return isDisplayed;
+}
 
 	
 	
