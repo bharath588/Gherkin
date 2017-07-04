@@ -112,6 +112,9 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@FindBy(css = "table#table_paymentHistory tr>td:nth-of-type(10)")
 	private List<WebElement> PaymentEffectiveDate;
+	
+	@FindBy(css = "table#table_paymentHistory tr>td:nth-of-type(9)")
+	private List<WebElement> PaymentDueDate;
 
 	LoadableComponent<?> parent;
 
@@ -396,7 +399,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 								case "PAID":
 									if (PaymentStatus.get(j).getText()
 											.equalsIgnoreCase("PAID")
-											&& PaymentEffectiveDate
+											&& PaymentDueDate
 													.get(j)
 													.getText()
 													.matches(
