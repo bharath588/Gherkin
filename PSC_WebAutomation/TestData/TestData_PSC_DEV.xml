@@ -1795,6 +1795,33 @@
 				<parameter name="AllocationValidationMsg" value= "Percentage do not add up to 100." />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Search_Emp_Locked_Plan">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="456783-01" />
+				<parameter name="SSN" value="313776868" />
+				<parameter name="ExpectedMessage" value="One or more of the employees returned by your search belong to Plan %s, which is locked. These employees will not be displayed since searching is not allowed on locked plans." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Add_New_Employee_View_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="1260047-01" />
+				<parameter name="SSN" value="" />
+			</Iteration>
+		</TestCase>
 		
 	</Module>
 	<Module name="query">
@@ -2289,5 +2316,17 @@ WHERE ga.ga_id=? and SDSV_CODE IN ('GW FIDUCIARY', 'QDIA_LETTER') " />
 <parameter QueryName="getPSCMMRandQNBO1TxnCodes" DB="ISISDB_DEV"
 Query="SELECT distinct txn_code FROM USER_TXN_AUTH WHERE TXN_CODE IN ('PSCMMR','QNBO1') AND USCS_ID IN 
 (SELECT USCS_ID FROM USER#USER_CLASS WHERE USER_LOGON_ID =?)" />
+
+<parameter QueryName="IPBaddNewEmployeePreCondition" DB="ISISDB_DEV"
+Query="select id from group_account 
+where plan_id in (select id from plan where 
+ROLLOVR_CONTRIB_IN_ALLOWED_IND in 
+('Y' , '') and termdate>sysdate or termdate is null) and id in (select distinct s.ga_id from 
+ga_service s, grp_retention_rule r
+where s.ga_id = r.ga_id and s.sdsv_code 
+='IPB' and s.sdsv_subcode ='OUTBOUND SOLICIT' and s.termdate>sysdate or s.termdate is null)
+and id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))order by 1" />
 </Module>
 </TestData>

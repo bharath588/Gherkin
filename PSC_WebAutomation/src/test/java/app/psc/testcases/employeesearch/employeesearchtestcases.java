@@ -19,6 +19,7 @@ import pageobjects.login.LoginPage;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
+import com.mongodb.connection.QueryResult;
 
 import lib.DB;
 import lib.Stock;
@@ -1102,7 +1103,7 @@ public class employeesearchtestcases {
 							
 
 							/**
-							 * <pre>This testcase to verify Paycheck contribution section of an employee</pre>
+							 * <pre></pre>
 							 * @param itr
 							 * @param testdata
 							 */
@@ -2366,6 +2367,7 @@ try {
 				}
 			}
 		}
+		homePage.navigateToHomePage();
 		
 } catch (Exception e) {
 	e.printStackTrace();
@@ -2387,6 +2389,83 @@ try {
 }
 }
 
+
+/**
+ * @author smykjn
+ * <pre>.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 7-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_47_Search_Emp_Locked_Plan(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate Add employee functionality for Autosite plan.", false);
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"),false);
+		employeesearch.validateSSNForLockedPlan();
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+
+/**
+ * @author smykjn
+ * <pre>.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 7-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_51_Add_New_Employee_View_Page(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate Add employee functionality for Autosite plan.", false);
+		employeesearch = new EmployeeSearch().get();
+		resultset = DB.executeQuery(Stock.getTestQuery("IPBaddNewEmployeePreCondition")[0],
+				Stock.getTestQuery("IPBaddNewEmployeePreCondition")[1],Stock.GetParameterValue("username"));
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
 	
 	

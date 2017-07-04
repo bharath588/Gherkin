@@ -43,8 +43,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
+import pageobjects.userverification.UserVerificationPage;
 
 import com.aventstack.extentreports.Status;
 
@@ -967,6 +969,26 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
 		Web.clickOnElement(btnGoEmployeeSearch);
 		Web.isWebElementsDisplayed(this.getWebElementasList("EmpLastNameLink"),true);
+		Web.getDriver().switchTo().defaultContent();
+		//dismissErrorBox();
+	}
+	
+	/**
+	 * This method used to search the employee by SSN-All Plans 
+	 * @param SSN
+	 * @throws InterruptedException
+	 */
+	public void searchEmployeeBySSNAllPlans(String SSN,boolean wantWaitOrNot) throws InterruptedException {
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
+		select = new Select(drpdwnSearchEmployee);
+		select.selectByVisibleText("SSN - all plans");
+		Web.waitForElement(txtSearchbox);
+		Web.setTextToTextBox(txtSearchbox, SSN);
+		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
+		Web.clickOnElement(btnGoEmployeeSearch);
+		Web.isWebElementsDisplayed(this.getWebElementasList("EmpLastNameLink"),wantWaitOrNot);
 		Web.getDriver().switchTo().defaultContent();
 		//dismissErrorBox();
 	}
@@ -7297,6 +7319,35 @@ public void addManageAccountDetailsWithOutManageAccntEnroll()
 		{
 
 		}
+}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+/** <pre>This method validates error message when SSN under locked plan is searched.</pre>
+* @author smykjn
+* @Date 4th-July-2017
+* @return void
+*/
+public void validateSSNForLockedPlan()
+{
+	String expectedMsg = Stock.GetParameterValue("ExpectedMessage");
+	try{
+		UserVerificationPage uvp = new UserVerificationPage();
+		Web.getDriver().switchTo().defaultContent();
+		String error = uvp.getErrorMessageText();
+		if(error.equalsIgnoreCase(expectedMsg))
+			Reporter.logEvent(Status.PASS,"Search SSN that is associated with locked plan and observe the"
+					+ " error message:"+expectedMsg,"Below Error message is displayed when SSN is searched for Loacked plan."
+							+ "\n"+error, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Search SSN that is associated with locked plan and observe the"
+					+ " error message:"+expectedMsg,"below Error message is displayed when SSN is searched for Loacked plan."
+							+ "\n"+error, true);
+		Web.clickOnElement(Web.returnElement(uvp, "DISMISS"));
 }catch(Exception e)
 	{
 		e.printStackTrace();

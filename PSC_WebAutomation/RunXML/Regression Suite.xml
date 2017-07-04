@@ -193,7 +193,12 @@
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_Screen_Elements" />
 					</include> -->
-					
+					<include name="TC_47_Search_Emp_Locked_Plan">
+						<parameter name="ManualTCName" value="Search_Emp_Locked_Plan" />
+					</include>
+					<include name="TC_51_Add_New_Employee_View_Page">
+						<parameter name="ManualTCName" value="Add_New_Employee_View_Page" />
+					</include>
 				</methods>
 			</class>
 			<!--<class name="app.psc.testcases.login.logintestcases" >
