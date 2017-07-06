@@ -772,7 +772,37 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement changeCurrentPeriodVesting;
 	@FindBy(xpath=".//a[contains(text(),'prior period vesting')]")
 	private WebElement changePriorPeriodVesting;
+	@FindBy(id="suffix")
+	private WebElement suffix;
+	@FindBy(id="secondLineMailing")
+	private WebElement addressLine2;
+	@FindBy(id="workPhoneExtension")
+	private WebElement workPhoneExtension;
+	@FindBy(id="faxAreaCode")
+	private WebElement faxAreaCode;
+	@FindBy(id="faxNumber")
+	private WebElement faxNumber;
+	@FindBy(id="emailAddress")
+	private WebElement emailAddress;
+	@FindBy(id="IPB_CONTACT_1")
+	private WebElement callthisEmpRadioBtn;
+	@FindBy(id="ipbPhoneAreaCode")
+	private WebElement ipbphoneareacode;
+	@FindBy(id="ipbPhoneNumber")
+	private WebElement ipbphonenumber;
+	@FindBy(id="IPB_CONTACT_2")
+	private WebElement callworkPhone;
+	@FindBy(name="ESC_BASIC_CREATE_EXIT")
+	private WebElement exitWithoutAddEmpBtn;
+	@FindBy(xpath=".//*[@id='planTitle']/span[1]")
+	private WebElement planTitleOnBalPage;
+	@FindBy(xpath=".//*[@id='errorModal']//button[contains(text(),'Dismiss')]")
+	private WebElement dismissBtnPPTWeb;
+	@FindBy(xpath=".//h1[contains(text(),'My Accounts')]")
+	private WebElement myAccountheaderPPTWeb; 
 	
+	
+	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
 	private String transHistory = ".//*[@id='transactions']";
 	private String interactions = ".//*[@id='participantengagement']";
 	private String investments = ".//*[@id='allocations']";
@@ -7354,6 +7384,226 @@ public void validateSSNForLockedPlan()
 		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
 	}
 }
+
+
+
+/**
+ * <pre>This method validates that input fields are displayed while adding new employee.</pre>
+ * @author smykjn
+ * @Date 15th-May-2017
+ * @return boolean
+ */
+public void validateEmpInfoLabelsWhileaddingNewEmp()
+{
+	try{
+		this.fillSSNForAddNewEmp();
+		if(lName.isDisplayed()&&fName.isDisplayed()&&mName.isDisplayed()&&suffix.isDisplayed()
+				&&birthDate.isDisplayed()&&maritalSts.isDisplayed()&&gender.isDisplayed()&&language.isDisplayed()
+				&&address.isDisplayed()&&addressLine2.isDisplayed()&&city.isDisplayed()&&state_.isDisplayed()
+				&&zip.isDisplayed()&&country.isDisplayed()&&homeAreaCode.isDisplayed()&&homePhoneNumber.isDisplayed()
+				&&workAreaCode.isDisplayed()&&workPhoneNumber.isDisplayed()&&workPhoneExtension.isDisplayed()
+				&&faxNumber.isDisplayed()&&faxAreaCode.isDisplayed()&&emailAddress.isDisplayed())
+			Reporter.logEvent(Status.PASS,"below input fields are displayed for employee basic info section:\n"+
+					"participant data:Last Name,First Name,Middle Name,Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"+
+					"Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
+					+ "Work,Phone,Extension,Fax,Email", "Below fields are displayed.\nLast Name,First Name,Middle Name,"
+							+ "Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"+
+							"Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
+							+ "Work,Phone,Extension,Fax,Email",false);
+		else
+			Reporter.logEvent(Status.FAIL,"below input fields are displayed for employee basic info section:\n"+
+					"participant data:Last Name,First Name,Middle Name,Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"+
+					"Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
+					+ "Work,Phone,Extension,Fax,Email", "All or few of the mentioned fields are not displayed.",true);
+		if(incomingRollAssitance.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate Incoming Rollover Assistance is displayed.","Incoming Rollover Assistance"
+					+ " header is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate Incoming Rollover Assistance is displayed.","Incoming Rollover Assistance"
+					+ " header is not displayed.", true);
+		String exitWithAddEmp = exitWithoutAddEmpBtn.getAttribute("value").trim();
+		if(callthisEmpRadioBtn.isDisplayed()&&callworkPhone.isDisplayed()&&radioCheck.isDisplayed()&&outsideAssets.isDisplayed()
+				&&ipbphoneareacode.isDisplayed()&&ipbphonenumber.isDisplayed())
+			Reporter.logEvent(Status.PASS,"validate follwing radio buttons are displayed:\n"
+					+ "Call this employee at phone# with an areacode and phone # with input box\n"
+					+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
+					+ "Don't know if employee has outside assets\n","below radio buttons are displayed:\n"
+							+ "Call this employee at phone# with an areacode and phone # with input box\n"
+							+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
+							+ "Don't know if employee has outside assets\n",false);
+		else
+			Reporter.logEvent(Status.FAIL,"va;idate follwing radio buttons are displayed:\n"
+					+ "Call this employee at phone# with an areacode and phone # with input box\n"
+					+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
+					+ "Don't know if employee has outside assets\n","All or few radio buttons are not displayed.",true);
+		if(continueAddEmp.isDisplayed()&&(exitWithoutAddEmpBtn.isDisplayed()&&
+				exitWithAddEmp.equalsIgnoreCase("Exit without adding employee")))
+			Reporter.logEvent(Status.PASS,"Validate below two buttons are diaplayed\n1)Continue"
+					+ "\n2)Exit without adding employee","Two buttons "
+							+ "are displayed.\n1)Continue\n2)Exit without adding employee.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below two buttons are diaplayed\n1)Continue"
+					+ "\n2)Exit without adding employee","Two buttons "
+							+ "are not displayed.\n1)Continue\n2)Exit without adding employee.", true);
+		
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+		
+	}
+}
+
+
+
+/**
+ * @author smykjn
+ * @Date 6th-July-2017
+ * @Objective This method validate account balance screnn  display only selected plan record.
+ * @return void
+ */
+public void verifyAccountBalScreenByMoneySourceAndInvestments() throws Exception
+{
+	try{
+		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		for(WebElement balance : balanceList)
+		{
+			if(!balance.getText().equals("N/A"))
+			{
+				String bal = balance.getText();
+				System.out.println("Bal on Overview:"+bal);
+				Thread.sleep(2000);
+				String planOnOvwPage = balance.findElement(By.xpath(getPlanxpath)).getText().trim();
+				Web.clickOnElement(balance.findElement(By.xpath("./../following-sibling::td/button")));
+				CommonLib.waitForProgressBar();
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(viewAccountDetailFrame);
+				Web.waitForElement(accountDetailHeader);
+				String planOnBalPage = planTitleOnBalPage.getText().trim();
+				if(planOnBalPage.contains(planOnOvwPage))
+					Reporter.logEvent(Status.PASS,"Click on view button for any of the plan and"
+							+ " observe that records are displayed for the selected plan only.","After clicking "
+									+ "on view button for a plan, only records for selected plan is displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL,"Click on view button for any of the plan and"
+							+ " observe that records are displayed for the selected plan only.","After clicking "
+									+ "on view button for a plan, only records for selected plan is not displayed.", true);
+				if(moneySource.isDisplayed()&&investment.isDisplayed())
+				{
+					Reporter.logEvent(Status.PASS,"User should be able to view balance by money source"
+							+ " and balance by Investments.", "Money source and Investment sections are displayed.", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,"User should be able to view balance by money source"
+							+ " and balance by Investments.", "Money source and Investment sections are not displayed.", true);
+				}
+				Web.clickOnElement(returnToEmployeeOverview);
+				Web.waitForPageToLoad(Web.getDriver());
+				CommonLib.switchToFrame(employeeSearchFrame);
+			}
+		}
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * @author smykjn
+ * @Date 6th-July-2017
+ * @Objective This method validate that PPt web page should be displayed for 
+ * @return void
+ */
+public void verifyEmployeeWebButtonFunctionality() throws Exception
+{
+	String parentWindowId="";
+	String planId = "";
+	WebElement planLink;
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		for(WebElement plan : planNumbersUI){
+			CommonLib.switchToFrame(employeeSearchFrame);
+			planLink = plan.findElement(By.tagName("a"));
+			planId = planLink.getText().trim();
+			Web.clickOnElement(planLink);
+			CommonLib.waitForProgressBar();
+			Web.waitForElement(employeeWebButton);
+			Thread.sleep(2000);
+			Web.clickOnElement(employeeWebButton);
+			parentWindowId = CommonLib.switchToWindow();
+			System.out.println("PPT Web URL for plan: "+Web.getDriver().getCurrentUrl());
+			Web.waitForPageToLoad(Web.getDriver());
+			try{
+				if(Web.isWebElementDisplayed(dismissBtnPPTWeb, true))
+					Web.clickOnElement(dismissBtnPPTWeb);
+				Web.waitForPageToLoad(Web.getDriver());
+				if(Web.isWebElementDisplayed(myAccountheaderPPTWeb, true))
+					Reporter.logEvent(Status.PASS,"Click on employee web button for plan '"+planId+"' and"
+							+ " verify user is taken to PPT Web.", "User is navigated "
+									+ "to below URL:\n"+Web.getDriver().getCurrentUrl(), false);
+				else
+					Reporter.logEvent(Status.FAIL,"Click on employee web button for plan '"+planId+"' and"
+							+ " verify user is taken to PPT Web.", "User is not navigated to PPT Web page.", true);
+			}finally{
+				Web.getDriver().close();
+				Web.getDriver().switchTo().window(parentWindowId);
+			}
+		}
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+/**
+ * @author smykjn
+ * @Date 6th-July-2017
+ * @Objective This method validate message for recently viewed section when there is no record in
+ * work_recently_viewed_part table
+ * @return void
+ */
+public void validateRecentlyViewedMsgWhenNoData() throws Exception
+{
+	String expMessage = Stock.GetParameterValue("ExpectedMessage");
+	String actMessage = "";
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(recentlyViewedLink);
+		Web.waitForElement(recentlyViewedEmpTable);
+		actMessage = recentlyViewedEmpTable.findElement(By.tagName("td")).getText().trim();
+		System.out.println("Message is:"+actMessage);
+		if(Web.VerifyText(expMessage, actMessage, true))
+			Reporter.logEvent(Status.PASS,"Click on Recently viewed link on "
+					+ "search page and validate message as below:\n"+expMessage,""
+							+ "Message is displayed as below:\n"+actMessage,false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Recently viewed link on "
+					+ "search page and validate message as below:\n"+expMessage,""
+							+ "Message is displayed as below:\n"+actMessage,true);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

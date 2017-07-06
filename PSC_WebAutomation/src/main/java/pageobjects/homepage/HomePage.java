@@ -1080,8 +1080,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
 			act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
 			//Web.clickOnElement(menuElement(specifiedTab[0]));
-			//act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
-			act.click(menuElement(specifiedTab[0])).build().perform();
+			act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+			//act.click(menuElement(specifiedTab[0])).build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
 			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
 			{
@@ -1106,7 +1106,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			bredCrumbValue=specifiedTab[0];
 		}
 		breadCrumb = Web.getDriver().findElement(By.tagName("i"));
-		Web.waitForElement(breadCrumb);
+		Web.isWebElementDisplayed(breadCrumb,true);
 		if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
 			isPageDisplayed = true;
 		else

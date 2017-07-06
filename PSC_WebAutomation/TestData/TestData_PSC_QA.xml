@@ -2016,11 +2016,34 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="LastName" value="Jain" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SSN_Multiple_Plan_PAE">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="PlanNumber" value="" />
-				<parameter name="SSN" value="" />
+				<parameter name="SSN" value="892659888" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Info_Message_New_User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="57XU3" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedMessage" value="As you search for and view employees, your most recently viewed names will display here for easy access." />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -2565,7 +2588,7 @@ WHERE ga.ga_id=? and SDSV_CODE IN ('GW FIDUCIARY', 'QDIA_LETTER') " />
 Query="SELECT distinct txn_code FROM USER_TXN_AUTH WHERE TXN_CODE IN ('PSCMMR','QNBO1') AND USCS_ID IN 
 (SELECT USCS_ID FROM USER#USER_CLASS WHERE USER_LOGON_ID =?)" />
 
-<parameter QueryName="IPBaddNewEmployeePreCondition" DB="ISISDB_DEV"
+<parameter QueryName="IPBaddNewEmployeePreCondition" DB="ISISDB_QA"
 Query="select id from group_account 
 where plan_id in (select id from plan where 
 ROLLOVR_CONTRIB_IN_ALLOWED_IND in 
@@ -2576,5 +2599,7 @@ where s.ga_id = r.ga_id and s.sdsv_code
 and id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))order by 1" />
-	</Module>
+<parameter QueryName="DeleteRecentlyViewedRecords" DB="ISISDB_QA"
+Query="delete from work_recently_viewed_part where user_logon_id=?" />	
+</Module>
 </TestData>

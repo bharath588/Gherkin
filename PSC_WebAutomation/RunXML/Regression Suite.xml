@@ -192,12 +192,18 @@
 					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_Screen_Elements" />
-					</include> -->
+					</include> 
 					<include name="TC_47_Search_Emp_Locked_Plan">
 						<parameter name="ManualTCName" value="Search_Emp_Locked_Plan" />
 					</include>
 					<include name="TC_51_Add_New_Employee_View_Page">
 						<parameter name="ManualTCName" value="Add_New_Employee_View_Page" />
+					</include>
+					<include name="TC_50_SSN_Multiple_Plan_PAE">
+						<parameter name="ManualTCName" value="SSN_Multiple_Plan_PAE" />
+					</include>-->
+					<include name="TC_56_Info_Message_New_User">
+						<parameter name="ManualTCName" value="Info_Message_New_User" />
 					</include>
 				</methods>
 			</class>

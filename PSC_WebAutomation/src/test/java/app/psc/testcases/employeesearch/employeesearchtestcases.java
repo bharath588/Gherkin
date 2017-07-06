@@ -2432,21 +2432,31 @@ try {
 
 /**
  * @author smykjn
- * <pre>.</pre>
+ * <pre>This test case validates employee info input fields in the process of adding new employee.</pre>
  * @param itr
  * @param testdata
- * @Date 7-July-2017
+ * @Date 5-July-2017
  */
 @Test(dataProvider = "setData")
 public void TC_51_Add_New_Employee_View_Page(int itr,Map<String, String> testdata) {		
 try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
-				+ "validate Add employee functionality for Autosite plan.", false);
+				+ "validate employee info input fields in the process of adding new employee", false);
 		employeesearch = new EmployeeSearch().get();
+		String ga_id = "";
 		resultset = DB.executeQuery(Stock.getTestQuery("IPBaddNewEmployeePreCondition")[0],
-				Stock.getTestQuery("IPBaddNewEmployeePreCondition")[1],Stock.GetParameterValue("username"));
-		
+				Stock.getTestQuery("IPBaddNewEmployeePreCondition")[1],"K_"+Stock.GetParameterValue("username"));
+		while(resultset.next()){
+			ga_id = resultset.getString("ID");
+			break;
+		}
+		homePage = new HomePage();
+		homePage.searchPlanWithIdOrName(ga_id);
+		employeesearch.navigateToAddEmpPage();
+		employeesearch.validateEmpInfoLabelsWhileaddingNewEmp();
+		homePage.navigateToHomePage();
+		homePage.logoutPSC();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;
@@ -2467,9 +2477,87 @@ try {
 }
 }
 
+
+/**
+ * @author smykjn
+ * <pre>This test case validates that user is taken to PPT Web for each plan employee is assigned with.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 5-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_50_SSN_Multiple_Plan_PAE(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate that user is taken to PPT Web for each plan employee is assigned with if"
+				+ " plan is set up properly.", false);
+		employeesearch = new EmployeeSearch().get();
+		homePage = new HomePage();
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.verifyAccountBalScreenByMoneySourceAndInvestments();
+		employeesearch.verifyEmployeeWebButtonFunctionality();
+		homePage.navigateToHomePage();
+		homePage.logoutPSC();
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 	
-	
-	
+/**
+ * @author smykjn
+ * <pre>This test case validates message when there is no record in work_recently_viewed_part table.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 5-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_56_Info_Message_New_User(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate message when there is no record in work_recently_viewed_part table.", false);
+		resultset = DB.executeQuery(Stock.getTestQuery("DeleteRecentlyViewedRecords")[0],
+				Stock.getTestQuery("DeleteRecentlyViewedRecords")[1],"K_"+Stock.GetParameterValue("username"));
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.validateRecentlyViewedMsgWhenNoData();
+		homePage = new HomePage();
+		homePage.navigateToHomePage();		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 	
 
 	@AfterSuite
