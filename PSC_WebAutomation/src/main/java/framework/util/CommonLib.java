@@ -740,8 +740,19 @@ public static String getDownloadedDocumentName(String downloadDir, String fileEx
 	return downloadedFileName;
 }
 
-
-
+/**
+ * <pre>This method is to validate if user is assigned with particular transaction codes.</pre>
+ * @author smykjn 
+ */
+public static boolean isTxnCodesPresent(ResultSet resultSet,int numberOfTxnCodes) throws SQLException
+{
+	boolean isPresent = false;
+	if(DB.getRecordSetCount(resultSet)==numberOfTxnCodes)
+		isPresent=true;
+	else 
+		isPresent=false;
+	return isPresent;
+}
 
 
 

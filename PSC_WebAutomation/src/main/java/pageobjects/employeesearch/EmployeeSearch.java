@@ -800,6 +800,24 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement dismissBtnPPTWeb;
 	@FindBy(xpath=".//h1[contains(text(),'My Accounts')]")
 	private WebElement myAccountheaderPPTWeb; 
+	@FindBy(id="allocationDashboard")
+	private WebElement invetmentSection;
+	@FindBy(className="section_title_text")
+	private WebElement allocPageTitle;
+	@FindBy(xpath=".//*[@id='uses_models_1']/..")
+	private WebElement chooseOneOfTheAllocTitle;
+	@FindBy(xpath=".//*[@id='uses_models_4']/..")
+	private WebElement enterNewAllocTitle;
+	@FindBy(xpath="//form[@name='ChangeAllocations']//font[text()='Investment Option']")
+	private WebElement invOptionHeader;
+	@FindBy(xpath="//form[@name='ChangeAllocations']//font[text()='Fund Short' or text()='Name']")
+	private List<WebElement> fundShortName;
+	@FindBy(xpath="//form[@name='ChangeAllocations']//font[text()='Enter Percentage']")
+	private WebElement enterPrctgeHeader;
+	@FindBy(name="ESC_ALLOC_UPDATE_SAVE")
+	private WebElement saveAllocBtn;
+	@FindBy(name="ESC_ALLOC_UPDATE_CANCEL")
+	private WebElement cancelAllocBtn;
 	
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
@@ -1264,9 +1282,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		actions.moveToElement(tabEmployees).click().build().perform();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
-		actions = new Actions(Web.getDriver());
-		actions.moveToElement(linkProfile);
-		actions.build().perform();
+		/*actions.moveToElement(linkProfile);
+		actions.build().perform();*/
 		Thread.sleep(2000);
 		if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
 		{
@@ -3893,15 +3910,22 @@ public ResultSet selectEmployeesForUser(String[] dBQueryName,String username) th
 public String selectEmployeeFromResultSet(ResultSet resultSet) throws SQLException,InterruptedException
 {
 	String empSSN = null;
+	int count =0;
 	while(resultSet.next())
-	{
-		empSSN = resultSet.getString("SSN");
-		this.searchEmployeeBySSNAllPlans(empSSN);
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		if (fNLNMILink.size()>=1) {
-			Web.getDriver().switchTo().defaultContent();
+	{	
+		if(count!=5){
+			empSSN = resultSet.getString("SSN");
+			this.searchEmployeeBySSNAllPlans(empSSN);
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			if (fNLNMILink.size()>=1) {
+				Web.getDriver().switchTo().defaultContent();
+				break;
+			}
+		}else{
 			break;
 		}
+		count++;
+		
 	}
 	return empSSN;
 }
@@ -7587,8 +7611,156 @@ public void validateRecentlyViewedMsgWhenNoData() throws Exception
 	}
 }
 
+/**
+ * @author smykjn
+ * @Date 7th-July-2017
+ * @Objective This method navigates user to Investment tab.
+ * @return void
+ */
+public boolean navigateToInvestmentTab() throws Exception
+{
+	boolean isDisplayed=false;
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(Web.getDriver().findElement(By.xpath(investments)));
+		if(Web.isWebElementDisplayed(invetmentSection, true))
+			isDisplayed = true;
+		else
+			isDisplayed= false;
+	}catch(Exception e){
+		isDisplayed= false;
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+	return isDisplayed;
+}
 
 
+/**
+ * <pre>This method validates active asset allocation page.</pre>
+ * @author smykjn
+ * @Date 7th-July-2017
+ * @return void
+ */
+public void validateAssetAllocationPage() throws Exception
+{
+	String expTitle = Stock.GetParameterValue("ExpectedTitle");
+	String expTitle2 = Stock.GetParameterValue("ExpectedTitle2");
+	String expNewAllocTitle = Stock.GetParameterValue("ExpectedNewAllocTitle");
+	String actTitle = "";
+	String actTitle2= "";
+	String actNewAllocTitle = "";
+	
+	try{
+		Web.clickOnElement(allocMoreButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(allocModalWindowFrame);
+		Web.getDriver().switchTo().frame(allocModalWindowFrame);
+		Web.isWebElementDisplayed(changeAllocBtn,true);
+		Web.clickOnElement(changeAllocBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(save);
+		actTitle = allocPageTitle.getText().trim();
+		actTitle2 = chooseOneOfTheAllocTitle.getText().trim();
+		actNewAllocTitle = enterNewAllocTitle.getText().trim();
+		System.out.println("Choose Title:"+actTitle2);
+		System.out.println("Enter new Alloc Title:"+actNewAllocTitle);
+		boolean isTitleDisplayed = actTitle.contains(expTitle);
+		boolean isTitle2Displayed =actTitle2.contains(expTitle2); 
+		boolean isNewAllocTitleDisplayed = actNewAllocTitle.contains(expNewAllocTitle);
+		boolean isInvOptHeaderDispld = invOptionHeader.isDisplayed();
+		boolean isFundShrtName = Web.isWebElementsDisplayed(fundShortName, false);
+		boolean isPercntgHeader = enterPrctgeHeader.isDisplayed();
+		boolean isTotalDisplayed = totalPercent.isDisplayed();
+		boolean isBtnDisplayed = saveAllocBtn.isDisplayed() && cancelAllocBtn.isDisplayed();
+		/*Web.clickOnElement(newAllocRadioButton);
+		WebElement percentageIn1 = allocationsRows.get(0).findElement(By.tagName("input")); 
+		WebElement percentageIn2 = allocationsRows.get(1).findElement(By.tagName("input")); 
+		Web.setTextToTextBox(percentageIn1, "50");
+		Web.setTextToTextBox(percentageIn2, "50");
+		Web.clickOnElement(saveAllocBtn);
+		Web.waitForPageToLoad(Web.getDriver());*/
+		if(isTitleDisplayed&&isTitle2Displayed&&isNewAllocTitleDisplayed&&isInvOptHeaderDispld
+				&&isFundShrtName&&isPercntgHeader&&isTotalDisplayed&&isBtnDisplayed)
+			Reporter.logEvent(Status.PASS,"Click on more button and then click on"
+					+ " Add/change allocation button and validate below elements:\n1)"
+					+ "Title '"+expTitle+"'\n2)Title '"+expTitle2+"'"
+					+ "\n3)Title '"+expNewAllocTitle+"'\n4)Headers Investment Options,"
+					+ "Fund Short Name,Enter Percentage are displayed\n5)"
+					+ "Save adnd cancel button is displayed.","Below titles are displayed on allocation page"
+							+ "\n'"+actTitle+"'\n'"+actTitle2+"'\n'"+actNewAllocTitle+"'\n"
+							+ "All expected headers are displayed.\nSave and cancel buttons are displayed.\nTotal "
+							+ "field is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on more button and then click on"
+					+ " Add/change allocation button and validate below elements:\n1)"
+					+ "Title '"+expTitle+"'\n2)Title '"+expTitle2+"'"
+					+ "\n3)Title '"+expNewAllocTitle+"'\n4)Headers Investment Options,"
+					+ "Fund Short Name,Enter Percentage are displayed\n5)"
+					+ "Save adnd cancel button is displayed.","all or few of the expected elements are not found.", true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+	
+}
+
+/**
+ * <pre>This method adds allocations and validate that allocations have been saved.</pre>
+ * @author smykjn
+ * @param 
+ */
+public void addAllocationAndVerify(){
+	String per1 = "20";
+	String per2 = "80";
+	try{
+		WebElement alloc1 = allocationsRows.get(0).findElement(By.tagName("input"));
+		WebElement alloc2 = allocationsRows.get(1).findElement(By.tagName("input"));
+		String FundShortNameSaved1="";
+		String FundShortNameSaved2="";
+		String percent1="";
+		String percent2="";
+		List<WebElement> fstAllocElements = allocationsRows.get(0).findElements(By.tagName("font"));
+		List<WebElement> secondAllocElements = allocationsRows.get(1).findElements(By.tagName("font"));
+		WebElement alloc1_1 = fstAllocElements.get(1);
+		WebElement alloc1_2 = fstAllocElements.get(2);
+		WebElement alloc2_1 = secondAllocElements.get(1);
+		WebElement alloc2_2 = secondAllocElements.get(2);
+		String fundShortName1 = alloc1_1.getText().trim()+" "+alloc1_2.getText().trim();
+		String fundShortName2 = alloc2_1.getText().trim()+" "+alloc2_2.getText().trim();
+		System.out.println("First Fund Short Name:"+fundShortName1);
+		System.out.println("Second Fund Short Name:"+fundShortName2);
+		Web.clickOnElement(newAllocRadioButton);
+		Web.setTextToTextBox(alloc1, per1);
+		Web.setTextToTextBox(alloc2, per2);
+		Web.clickOnElement(save);
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+		Web.waitForElement(allocMoreButton);
+		FundShortNameSaved1 = maxAllocationsRow.get(0).findElements(By.tagName("td")).get(1).getText().trim();
+		FundShortNameSaved2 = maxAllocationsRow.get(1).findElements(By.tagName("td")).get(1).getText().trim();
+		percent1 = maxAllocationsRow.get(0).findElements(By.tagName("td")).get(4).
+				findElement(By.tagName("span")).getText().replace(".00","").replace("%","").trim();
+		percent2 = maxAllocationsRow.get(1).findElements(By.tagName("td")).get(4).
+				findElement(By.tagName("span")).getText().replace(".00","").replace("%","").trim();
+		System.out.println("First Allocation saved:"+FundShortNameSaved1+ " " +percent1);
+		System.out.println("First Allocation saved:"+FundShortNameSaved2+ " " +percent2);
+		if(FundShortNameSaved1.equals(fundShortName2)&&percent1.equals(per2)
+				&&FundShortNameSaved2.equals(fundShortName1)&&percent2.equals(per1))
+			Reporter.logEvent(Status.PASS,"Enter new allocations adding upto 100%  and save.","below allocations are added and"
+					+ " saved.\n"+FundShortNameSaved1+" "+percent1+"\n"+FundShortNameSaved2+" "+percent2, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Enter new allocations adding upto 100%  and save.","Allocations are"
+					+ " not saved.", true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+	
+}
 
 
 

@@ -201,9 +201,12 @@
 					</include>
 					<include name="TC_50_SSN_Multiple_Plan_PAE">
 						<parameter name="ManualTCName" value="SSN_Multiple_Plan_PAE" />
-					</include>-->
+					</include>
 					<include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="Info_Message_New_User" />
+					</include>-->
+					<include name="TC_54_Employee_Overview_With_Active_Models">
+						<parameter name="ManualTCName" value="Employee_Overview_With_Active_Models" />
 					</include>
 				</methods>
 			</class>

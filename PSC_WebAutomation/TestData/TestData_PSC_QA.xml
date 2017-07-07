@@ -2046,6 +2046,21 @@
 				<parameter name="ExpectedMessage" value="As you search for and view employees, your most recently viewed names will display here for easy access." />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Employee_Overview_With_Active_Models">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="2ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="SSN" value="068739348" />
+				<parameter name="ExpectedTitle" value="Employee Allocation Information as of:" />
+				<parameter name="ExpectedTitle2" value="Choose One of the Asset Allocation Models:" />
+				<parameter name="ExpectedNewAllocTitle" value="Enter New allocations for future contributions:" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="employeeinfo">
 	</Module>
@@ -2601,5 +2616,14 @@ on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))order by 1" />
 <parameter QueryName="DeleteRecentlyViewedRecords" DB="ISISDB_QA"
 Query="delete from work_recently_viewed_part where user_logon_id=?" />	
+<parameter QueryName="getPlanWithActiveAlloModel" DB="ISISDB_QA"
+Query="select distinct gaam_ga_id as ga_id from ga_asset_alloc_model_invopt 
+where gaam_ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
+and termdate is null" />
+<parameter QueryName="getSSNforActiveAllocation" DB="ISISDB_DEV"
+Query="select distinct i.ssn from part_agrmt pa inner join individual i on 
+i.id = pa.ind_id where pa.ga_id =?" />
 </Module>
 </TestData>

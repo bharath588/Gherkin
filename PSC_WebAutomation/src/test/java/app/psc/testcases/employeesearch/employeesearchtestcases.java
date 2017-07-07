@@ -16,6 +16,7 @@ import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
 import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
+import plan.PlanPage;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
@@ -2538,7 +2539,8 @@ try {
 		employeesearch = new EmployeeSearch().get();
 		employeesearch.validateRecentlyViewedMsgWhenNoData();
 		homePage = new HomePage();
-		homePage.navigateToHomePage();		
+		homePage.navigateToHomePage();
+		homePage.logoutPSC();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;
@@ -2558,6 +2560,86 @@ try {
 			}
 }
 }
+
+
+/**
+ * @author smykjn
+ * <pre>This test case validates Employee active asset allocation screen.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 7-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_54_Employee_Overview_With_Active_Models(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate asset allocation screen and total field.", false);
+		employeesearch = new EmployeeSearch().get();
+		/*resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithActiveAlloModel")[0],
+				Stock.getTestQuery("getPlanWithActiveAlloModel")[1],"K_"+Stock.GetParameterValue("username"));*/
+			homePage = new HomePage();
+			/*resultset = DB.executeQuery(Stock.getTestQuery("getSSNforActiveAllocation")[0],
+				Stock.getTestQuery("getSSNforActiveAllocation")[1],plan);*/
+			employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToAccountDetailPage();
+			if(employeesearch.navigateToInvestmentTab()){
+				Reporter.logEvent(Status.PASS,"Navigate to investment tab.","Investment tab is displayed.", false);
+				employeesearch.validateAssetAllocationPage();
+				employeesearch.addAllocationAndVerify();
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,"Navigate to investment tab.","Investment tab is not displayed.", true);
+			}
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 	@AfterSuite
