@@ -2,7 +2,8 @@
 
 <html>
   <head>
-  <title>TestNG new reports</title>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
 
     <link type="text/css" href="testng-reports.css" rel="stylesheet" />  
     <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
@@ -36,8 +37,8 @@
       <div class="suite">
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
-            <a href="#" class="navigator-link" panel-name="suite-testsuite">
-              <span class="suite-name border-passed">testsuite</span>
+            <a href="#" class="navigator-link" panel-name="suite-allSuites">
+              <span class="suite-name border-passed">allSuites</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -47,37 +48,37 @@
             <div class="suite-section-content">
               <ul>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="test-xml-testsuite">
-                    <span>H:\git\CSAS\CSAS_Automation\RunXML\RRT_01192016_134004.xml</span>
+                  <a href="#" class="navigator-link " panel-name="test-xml-allSuites">
+                    <span>H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\Demo.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="testlist-testsuite">
+                  <a href="#" class="navigator-link " panel-name="testlist-allSuites">
                     <span class="test-stats">1 test</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="group-testsuite">
+                  <a href="#" class="navigator-link " panel-name="group-allSuites">
                     <span>0 groups</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="times-testsuite">
+                  <a href="#" class="navigator-link " panel-name="times-allSuites">
                     <span>Times</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="reporter-testsuite">
+                  <a href="#" class="navigator-link " panel-name="reporter-allSuites">
                     <span>Reporter output</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="ignored-methods-testsuite">
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-allSuites">
                     <span>Ignored methods</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
-                  <a href="#" class="navigator-link " panel-name="chronological-testsuite">
+                  <a href="#" class="navigator-link " panel-name="chronological-allSuites">
                     <span>Chronological view</span>
                   </a> <!-- navigator-link  -->
                 </li>
@@ -93,18 +94,18 @@
                     <span class="method-stats">1 method,   1 passed</span>
                   </li>
                   <li>
-                    <span class="method-list-title passed">Passed methods</span>
-                    <span class="show-or-hide-methods passed">
-                      <a href="#" panel-name="suite-testsuite" class="hide-methods passed suite-testsuite"> (hide)</a> <!-- hide-methods passed suite-testsuite -->
-                      <a href="#" panel-name="suite-testsuite" class="show-methods passed suite-testsuite"> (show)</a> <!-- show-methods passed suite-testsuite -->
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-allSuites" class="hide-methods failed suite-allSuites"> (hide)</a> <!-- hide-methods failed suite-allSuites -->
+                      <a href="#" panel-name="suite-allSuites" class="show-methods failed suite-allSuites"> (show)</a> <!-- show-methods failed suite-allSuites -->
                     </span>
-                    <div class="method-list-content passed suite-testsuite">
+                    <div class="method-list-content failed suite-allSuites">
                       <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.csas.testcases.participanthomepage.validate_participanthomepage" hash-for-method="Validate_Employment_Status_As_Active_Or_Terminated(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa})">Validate_Employment_Status_As_Active_Or_Terminated(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa})</a> <!-- method navigator-link -->
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-allSuites" title="app.csas.testcases.loanRequest.LoanRequestTestCases" hash-for-method="CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})">CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                    </div> <!-- method-list-content passed suite-testsuite -->
+                    </div> <!-- method-list-content failed suite-allSuites -->
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -115,77 +116,79 @@
     </div> <!-- navigator-root -->
     <div class="wrapper">
       <div class="main-panel-root">
-        <div panel-name="suite-testsuite" class="panel testsuite">
-          <div class="suite-testsuite-class-passed">
+        <div panel-name="suite-allSuites" class="panel allSuites">
+          <div class="suite-allSuites-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">app.csas.testcases.participanthomepage.validate_participanthomepage</span>
+              <span class="class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="Validate_Employment_Status_As_Active_Or_Terminated(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa})">
-                  </a> <!-- Validate_Employment_Status_As_Active_Or_Terminated(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa}) -->
-                  <span class="method-name">Validate_Employment_Status_As_Active_Or_Terminated</span>
-                  <span class="parameters">(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa})</span>
+                  <a name="CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})">
+                  </a> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa}) -->
+                  <span class="method-name">CSAS_Paperless_Loan_TC02_DDTC_26947</span>
+                  <span class="parameters">(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-testsuite-class-passed -->
-        </div> <!-- panel testsuite -->
-        <div panel-name="test-xml-testsuite" class="panel">
+          </div> <!-- suite-allSuites-class-passed -->
+        </div> <!-- panel allSuites -->
+        <div panel-name="test-xml-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">H:\git\CSAS\CSAS_Automation\RunXML\RRT_01192016_134004.xml</span>
+            <span class="header-content">H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\Demo.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite name=&quot;testsuite&quot;&gt;
+&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;allSuites&quot;&gt;
   &lt;listeners&gt;
     &lt;listener class-name=&quot;core.framework.TestListener&quot;/&gt;
   &lt;/listeners&gt;
-  &lt;test name=&quot;CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE&quot; preserve-order=&quot;true&quot;&gt;
+  &lt;test name=&quot;LoanRequest&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;app.csas.testcases.participanthomepage.validate_participanthomepage&quot;&gt;
+      &lt;class name=&quot;app.csas.testcases.loanRequest.LoanRequestTestCases&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;Validate_Employment_Status_As_Active_Or_Terminated&quot;/&gt;
+          &lt;include name=&quot;CSAS_Paperless_Loan_TC02_DDTC_26947&quot;&gt;
+            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;CSAS_Loan_Request_DeliverForm&quot;/&gt;
+          &lt;/include&gt; &lt;!-- CSAS_Paperless_Loan_TC02_DDTC_26947 --&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- app.csas.testcases.participanthomepage.validate_participanthomepage --&gt;
+      &lt;/class&gt; &lt;!-- app.csas.testcases.loanRequest.LoanRequestTestCases --&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE --&gt;
-&lt;/suite&gt; &lt;!-- testsuite --&gt;
+  &lt;/test&gt; &lt;!-- LoanRequest --&gt;
+&lt;/suite&gt; &lt;!-- allSuites --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="testlist-testsuite" class="panel">
+        <div panel-name="testlist-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Tests for testsuite</span>
+            <span class="header-content">Tests for allSuites</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE (1 class)</span>
+                <span class="test-name">LoanRequest (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="group-testsuite" class="panel">
+        <div panel-name="group-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Groups for testsuite</span>
+            <span class="header-content">Groups for allSuites</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="times-testsuite" class="panel">
+        <div panel-name="times-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Times for testsuite</span>
+            <span class="header-content">Times for allSuites</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="times-div">
               <script type="text/javascript">
-suiteTableInitFunctions.push('tableData_testsuite');
-function tableData_testsuite() {
+suiteTableInitFunctions.push('tableData_allSuites');
+function tableData_allSuites() {
 var data = new google.visualization.DataTable();
 data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
@@ -193,59 +196,71 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'Validate_Employment_Status_As_Active_Or_Terminated')
-data.setCell(0, 2, 'app.csas.testcases.participanthomepage.validate_participanthomepage')
-data.setCell(0, 3, 39898);
-window.suiteTableData['testsuite']= { tableData: data, tableDiv: 'times-div-testsuite'}
+data.setCell(0, 1, 'CSAS_Paperless_Loan_TC02_DDTC_26947')
+data.setCell(0, 2, 'app.csas.testcases.loanRequest.LoanRequestTestCases')
+data.setCell(0, 3, 132456);
+window.suiteTableData['allSuites']= { tableData: data, tableDiv: 'times-div-allSuites'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 39 seconds</span>
-              <div id="times-div-testsuite">
-              </div> <!-- times-div-testsuite -->
+              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <div id="times-div-allSuites">
+              </div> <!-- times-div-allSuites -->
             </div> <!-- times-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="reporter-testsuite" class="panel">
+        <div panel-name="reporter-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">Reporter output for testsuite</span>
+            <span class="header-content">Reporter output for allSuites</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="ignored-methods-testsuite" class="panel">
+        <div panel-name="ignored-methods-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">1 ignored method</span>
+            <span class="header-content">8 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
-              <span class="ignored-class-name">app.csas.testcases.participanthomepage.validate_participanthomepage</span>
+              <span class="ignored-class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">Validate_PPT_Home_Page_Instance</span>
+                <span class="ignored-method-name">validating_mobile_phone_text_box</span>
+                <br/>
+                <span class="ignored-method-name">validating_refinance_with_adtn_loan_amnt_functionality</span>
+                <br/>
+                <span class="ignored-method-name">statement_order_update_confirmation</span>
+                <br/>
+                <span class="ignored-method-name">validating_vesting_field</span>
+                <br/>
+                <span class="ignored-method-name">validating_green_tick_on_selection_of_loan_quote</span>
+                <br/>
+                <span class="ignored-method-name">validating_if_payment_method_noneditable</span>
+                <br/>
+                <span class="ignored-method-name">validating_recalculate_functionality</span>
+                <br/>
+                <span class="ignored-method-name">validating_loan_number_link</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
-        <div panel-name="chronological-testsuite" class="panel">
+        <div panel-name="chronological-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
             <span class="header-content">Methods in chronological order</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">app.csas.testcases.participanthomepage.validate_participanthomepage</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</div> <!-- chronological-class-name -->
               <div class="configuration-class before">
-                <span class="method-name">InitTest</span>
+                <span class="method-name">ReportInit</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
-                <span class="method-name">Validate_Employment_Status_As_Active_Or_Terminated(1, {PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa})</span>
-                <span class="method-start">19902 ms</span>
+                <img src="failed.png">
+                </img>
+                <span class="method-name">CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</span>
+                <span class="method-start">31021 ms</span>
               </div> <!-- test-method -->
-              <div class="configuration-class after">
-                <span class="method-name">cleanUpSession</span>
-                <span class="method-start">59800 ms</span>
-              </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->

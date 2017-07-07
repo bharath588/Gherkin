@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [testsuite]">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [allSuites]">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE(failed)" preserve-order="true">
+  <test name="LoanRequest">
     <classes>
-      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
         <methods>
-          <include name="InitTest"/>
-          <include name="Validate_Employment_Status_As_Active_Or_Terminated" invocation-numbers="0"/>
-          <include name="cleanUpSession"/>
+          <include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
+            <parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm"/>
+          </include> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947 -->
         </methods>
-      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
+      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
     </classes>
-  </test> <!-- CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE(failed) -->
-</suite> <!-- Failed suite [testsuite] -->
+  </test> <!-- LoanRequest -->
+</suite> <!-- Failed suite [allSuites] -->

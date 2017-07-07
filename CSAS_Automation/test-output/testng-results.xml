@@ -2,14 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="60477" started-at="2016-01-20T17:47:51Z" finished-at="2016-01-20T17:48:52Z">
+  <suite name="allSuites" duration-ms="163555" started-at="2017-07-07T03:44:49Z" finished-at="2017-07-07T03:47:32Z">
     <groups>
     </groups>
-    <test name="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE" duration-ms="60477" started-at="2016-01-20T17:47:51Z" finished-at="2016-01-20T17:48:52Z">
-      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
-        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@4ec6a292]" name="InitTest" is-config="true" duration-ms="19762" started-at="2016-01-20T17:47:51Z" finished-at="2016-01-20T17:48:11Z">
-        </test-method> <!-- InitTest -->
-        <test-method status="PASS" signature="Validate_Employment_Status_As_Active_Or_Terminated(int, java.util.Map)[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@4ec6a292]" name="Validate_Employment_Status_As_Active_Or_Terminated" duration-ms="39898" started-at="2016-01-20T17:48:11Z" data-provider="setData" finished-at="2016-01-20T17:48:51Z">
+    <test name="LoanRequest" duration-ms="163555" started-at="2017-07-07T03:44:49Z" finished-at="2017-07-07T03:47:32Z">
+      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@15761df8]" name="ReportInit" is-config="true" duration-ms="30902" started-at="2017-07-07T09:14:49Z" finished-at="2017-07-07T09:15:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReportInit -->
+        <test-method status="FAIL" signature="CSAS_Paperless_Loan_TC02_DDTC_26947(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@15761df8]" name="CSAS_Paperless_Loan_TC02_DDTC_26947" duration-ms="132456" started-at="2017-07-07T09:15:20Z" data-provider="setData" finished-at="2017-07-07T09:17:32Z">
           <params>
             <param index="0">
               <value>
@@ -18,14 +20,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=baseball, PPT_ID=2581930, USERNAME=cswa}]]>
+                <![CDATA[{PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa}]]>
               </value>
             </param>
           </params>
-        </test-method> <!-- Validate_Employment_Status_As_Active_Or_Terminated -->
-        <test-method status="PASS" signature="cleanUpSession()[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@4ec6a292]" name="cleanUpSession" is-config="true" duration-ms="583" started-at="2016-01-20T17:48:51Z" finished-at="2016-01-20T17:48:52Z">
-        </test-method> <!-- cleanUpSession -->
-      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
-    </test> <!-- CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE -->
-  </suite> <!-- testsuite -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947 -->
+      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
+    </test> <!-- LoanRequest -->
+  </suite> <!-- allSuites -->
 </testng-results>

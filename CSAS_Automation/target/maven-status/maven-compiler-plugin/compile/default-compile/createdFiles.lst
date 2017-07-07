@@ -1,3 +1,12 @@
-pageobjects\ParticipantHome.class
 pageobjects\MoneyTypeBalance.class
+pageobjects\ParticipantHome.class
+pageobjects\LoanQuote.class
+pageobjects\Statement_View_Update.class
 framework\util\BuildXML.class
+pageobjects\LoanRequest.class
+framework\util\CommonLib.class
+pageobjects\Rebalancer.class
+pageobjects\ContributionAllocationChange.class
+pageobjects\DisbursementInfoOrHistory.class
+pageobjects\FundtoFund.class
+pageobjects\LoanInfo.class
