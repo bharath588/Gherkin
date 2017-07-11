@@ -204,9 +204,18 @@
 					</include>
 					<include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="Info_Message_New_User" />
-					</include>-->
+					</include>
 					<include name="TC_54_Employee_Overview_With_Active_Models">
 						<parameter name="ManualTCName" value="Employee_Overview_With_Active_Models" />
+					</include>
+					<include name="TC_53_Participant_Investments_Tab">
+						<parameter name="ManualTCName" value="Participant_Investments_Tab" />
+					</include>-->
+					<include name="TC_48_AccountDetail_Transacion_History_Reg">
+						<parameter name="ManualTCName" value="AccountDetail_Transacion_History_Reg" />
+					</include>
+					<include name="TC_55_Loan_Summary_Table">
+						<parameter name="ManualTCName" value="Loan_Summary_Table" />
 					</include>
 				</methods>
 			</class>

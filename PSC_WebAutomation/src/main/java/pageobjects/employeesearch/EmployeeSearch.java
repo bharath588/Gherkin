@@ -818,6 +818,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement saveAllocBtn;
 	@FindBy(name="ESC_ALLOC_UPDATE_CANCEL")
 	private WebElement cancelAllocBtn;
+	@FindBy(name="UPDATE_MONEY_TYP_ALLOCATION")
+	private List<WebElement> addAllocBtnForSelDirected;
 	
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
@@ -948,6 +950,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.trim().equalsIgnoreCase("PRINT LINK")){
 			return this.print;
 		}
+		if(fieldName.trim().equalsIgnoreCase("Allocation More Button")){
+			return this.allocMoreButton;
+		}
 
 		return null;
 	}
@@ -1064,6 +1069,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void searchEmployeeByName(String Name) throws InterruptedException {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Name");
 		Web.isWebElementDisplayed(txtSearchbox, true);
@@ -7673,13 +7679,6 @@ public void validateAssetAllocationPage() throws Exception
 		boolean isPercntgHeader = enterPrctgeHeader.isDisplayed();
 		boolean isTotalDisplayed = totalPercent.isDisplayed();
 		boolean isBtnDisplayed = saveAllocBtn.isDisplayed() && cancelAllocBtn.isDisplayed();
-		/*Web.clickOnElement(newAllocRadioButton);
-		WebElement percentageIn1 = allocationsRows.get(0).findElement(By.tagName("input")); 
-		WebElement percentageIn2 = allocationsRows.get(1).findElement(By.tagName("input")); 
-		Web.setTextToTextBox(percentageIn1, "50");
-		Web.setTextToTextBox(percentageIn2, "50");
-		Web.clickOnElement(saveAllocBtn);
-		Web.waitForPageToLoad(Web.getDriver());*/
 		if(isTitleDisplayed&&isTitle2Displayed&&isNewAllocTitleDisplayed&&isInvOptHeaderDispld
 				&&isFundShrtName&&isPercntgHeader&&isTotalDisplayed&&isBtnDisplayed)
 			Reporter.logEvent(Status.PASS,"Click on more button and then click on"
@@ -7731,7 +7730,13 @@ public void addAllocationAndVerify(){
 		String fundShortName2 = alloc2_1.getText().trim()+" "+alloc2_2.getText().trim();
 		System.out.println("First Fund Short Name:"+fundShortName1);
 		System.out.println("Second Fund Short Name:"+fundShortName2);
-		Web.clickOnElement(newAllocRadioButton);
+		try{
+			try{
+		if(newAllocRadioButton.isDisplayed()){
+			Web.clickOnElement(newAllocRadioButton);
+		}}catch(Exception e){
+			
+		}
 		Web.setTextToTextBox(alloc1, per1);
 		Web.setTextToTextBox(alloc2, per2);
 		Web.clickOnElement(save);
@@ -7739,6 +7744,7 @@ public void addAllocationAndVerify(){
 		CommonLib.switchToFrame(employeeSearchFrame);
 		Web.clickOnElement(allocationModalClose);
 		Web.waitForElement(allocMoreButton);
+		Thread.sleep(2000);
 		FundShortNameSaved1 = maxAllocationsRow.get(0).findElements(By.tagName("td")).get(1).getText().trim();
 		FundShortNameSaved2 = maxAllocationsRow.get(1).findElements(By.tagName("td")).get(1).getText().trim();
 		percent1 = maxAllocationsRow.get(0).findElements(By.tagName("td")).get(4).
@@ -7754,6 +7760,11 @@ public void addAllocationAndVerify(){
 		else
 			Reporter.logEvent(Status.FAIL,"Enter new allocations adding upto 100%  and save.","Allocations are"
 					+ " not saved.", true);
+		}catch(Exception e){
+			CommonLib.switchToFrame(employeeSearchFrame);
+			Web.clickOnElement(allocationModalClose);
+			Web.waitForElement(allocMoreButton);
+		}
 		
 	}catch(Exception e){
 		e.printStackTrace();
@@ -7763,15 +7774,132 @@ public void addAllocationAndVerify(){
 }
 
 
+/**
+ * @author smykjn
+ * @Date 7th-July-2017
+ */
+public void deleteESCPALAndESCCSDTxnCodes() throws SQLException{
+	uscsID.clear();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[0],
+			Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[1],"K_"+Stock.GetParameterValue("username"));
+	uscsID = CommonLib.getUscsIDForTxnCodes(queryResultSet);
+	for(int i=0;i<uscsID.size();i++){
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("DEL_ESCCPA_ESCCSD_Txn_Code")[0],
+				Stock.getTestQuery("DEL_ESCCPA_ESCCSD_Txn_Code")[1],uscsID.get(i));
+	}
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[0],
+			Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[1],"K_"+Stock.GetParameterValue("username"));
+	if(DB.getRecordSetCount(queryResultSet)==0)
+		Reporter.logEvent(Status.INFO,"Delete below txn codes for logged in user:\n"+uscsID,""
+				+ "txn codes are deleted.", false);
+	else
+		Reporter.logEvent(Status.WARNING,"Delete below txn codes for logged in user:\n"+uscsID,""
+				+ "txn codes are not deleted.", false);
+}
 
 
+/**
+ * @author smykjn
+ * @Date 7th-July-2017
+ */
+public void insertESCCPAandESCCSDTxnCodes() throws SQLException{
+	List<String> txnCodeToinsert = Arrays.asList(Stock.GetParameterValue("TXN_CODE_1").split(","));
+	for(int i=0;i<uscsID.size();i++){
+		for(int j=0;j<txnCodeToinsert.size();j++){
+			CommonLib.insertTxnCode(txnCodeToinsert.get(j), uscsID.get(i));
+		}
+	}
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[0],
+			Stock.getTestQuery("ESCCPA_ESCCSD_Chk_Txn_Code")[1],"K_"+Stock.GetParameterValue("username"));
+	if(DB.getRecordSetCount(queryResultSet)>0)
+		Reporter.logEvent(Status.PASS,"Insert back txn code 'ESCCPA' and 'ESCCSD'.",""
+				+ "Transaction codes are inserted back.", false);
+	else
+		Reporter.logEvent(Status.WARNING,"Insert back txn code 'ESCCPA' and 'ESCCSD'.",""
+				+ "Transaction codes are not inserted back.", false);
+}
+
+/**
+ * <pre>This method validates if Add/Change allocation button is displayed or not</pre>
+ * @author smykjn
+ * @Date 7th-July-2017
+ */
+public void verifyAddChangeAlocBtn(){
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocMoreButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(allocModalWindowFrame);
+		Web.getDriver().switchTo().frame(allocModalWindowFrame);
+		if(Web.isWebElementDisplayed(changeAllocBtn,true))
+			Reporter.logEvent(Status.FAIL,"Delete 'ESCCPA' and 'ESCCSD' txn codes and"
+					+ " verify Add/Change allocation button is not displayed.",""
+							+ "Add/change allocation button is displayed.", true);
+		else
+			Reporter.logEvent(Status.PASS,"Delete 'ESCCPA' and 'ESCCSD' txn codes and"
+					+ " verify Add/Change allocation button is not displayed.",""
+							+ "Add/change allocation button is not displayed.", false);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+		Web.waitForElement(allocMoreButton);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+	
+}
 
 
+/**
+ * <pre>This method validates Add/Change allocation button is displayed or not for self directed allocations.</pre>
+ * @author smykjn
+ * @Date 7th-July-2017
+ */
+public void addChangeAllocBtnForSelfDirectedPlan(){
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocMoreButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(allocModalWindowFrame);
+		Web.getDriver().switchTo().frame(allocModalWindowFrame);
+		if(Web.isWebElementDisplayed(changeAllocBtn,true)&&Web.isWebElementsDisplayed(addAllocBtnForSelDirected, false))
+			Reporter.logEvent(Status.PASS,"Make sure user is assigend with ESCCSD txn code and able to"
+					+ " see Add/Change Allocation buttons.", "Add/Change allocation buttons are displayed hence"
+							+ " user can add/change allocation for self directed allocations.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Make sure user is assigend with ESCCSD txn code and able to"
+					+ " see Add/Change Allocation buttons.", "Add/Change allocation buttons are not displayed hence"
+							+ " user can not add/change allocation for self directed allocations.",true);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocationModalClose);
+		Web.waitForElement(allocMoreButton);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
+	}
+	
+}
 
-
-
-
-
+/**
+ * <pre>This method takes user to Add Change allocation page.</pre>
+ * @author smykjn
+ * @Date 7th-July-2017
+ */
+public void navigateToAllocPage(){
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(allocMoreButton);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(allocModalWindowFrame);
+		Web.getDriver().switchTo().frame(allocModalWindowFrame);
+		Web.waitForElement(changeAllocBtn);
+		Web.clickOnElement(changeAllocBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Thread.sleep(1000);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
 
 
 

@@ -2592,6 +2592,7 @@ try {
 			else{
 				Reporter.logEvent(Status.FAIL,"Navigate to investment tab.","Investment tab is not displayed.", true);
 			}
+			homePage.logoutPSC();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;
@@ -2613,12 +2614,171 @@ try {
 }
 
 
+/**
+ * @author smykjn
+ * <pre>This test case validates employee ability to add/change allocation based on txn codes assigned/removed.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 7-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_53_Participant_Investments_Tab(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validate employee ability to add/change allocation based on txn codes assigned/removed.", false);
+		boolean ispresent = false;
+		resultset = DB.executeQuery(Stock.getTestQuery("checkESCPALTxnCode")[0],
+				Stock.getTestQuery("checkESCPALTxnCode")[1],""+
+				"K_"+Stock.GetParameterValue("username"));
+		if(CommonLib.isTxnCodesPresent(resultset,Stock.GetParameterValue("TXN_CODE"))){
+			Reporter.logEvent(Status.INFO,"Check if user is assigned with ESCPAL txn code.","User is assigned with ESCPAL"
+					+ " txn code.", false);ispresent=true;}
+		else{
+			Reporter.logEvent(Status.WARNING,"Check if user is assigned with ESCPAL txn code.","User is not assigned with ESCPAL"
+					+ " txn code.please insert ESCPAL txn code to process with this test case.", false);
+			ispresent =false;
+			CommonLib.insertTxnCode(Stock.GetParameterValue("TXN_CODE"),Stock.GetParameterValue("uscsId"));
+			resultset = DB.executeQuery(Stock.getTestQuery("checkESCPALTxnCode")[0],
+					Stock.getTestQuery("checkESCPALTxnCode")[1],""+
+							"K_"+Stock.GetParameterValue("username"));
+			if(CommonLib.isTxnCodesPresent(resultset,Stock.GetParameterValue("TXN_CODE").split(","))){
+				Reporter.logEvent(Status.INFO,"insert txn code and Check again if user is assigned with ESCPAL txn code.","User is assigned with ESCPAL"
+						+ " txn code.", false);ispresent=true;
+			}else{
+				ispresent=false;
+				Reporter.logEvent(Status.WARNING,"insert txn code and Check again if user is assigned with ESCPAL txn code.",
+						"User is not assigned with ESCPAL txn code.", false);
+			}
+		}
+		if(ispresent){
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		if(employeesearch.navigateToInvestmentTab())
+			Reporter.logEvent(Status.PASS,"Verify investment tab is displayed if user is"
+					+ " assigned with ESCPAL code.","Investment tab is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Verify investment tab is displayed if user is"
+					+ " assigned with ESCPAL code.","Investment tab is not displayed.", true);
+		}
+		employeesearch.deleteESCPALAndESCCSDTxnCodes();
+		homePage = new HomePage();
+		homePage.logoutPSC();
+		employeesearch.get();
+		employeesearch.searchEmployeeByName("");
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToInvestmentTab();
+		employeesearch.verifyAddChangeAlocBtn();
+		employeesearch.insertESCCPAandESCCSDTxnCodes();
+		homePage.logoutPSC();
+		employeesearch.get();
+		resultset = DB.executeQuery(Stock.getTestQuery("getSSNForSelfDirectedAllocation")[0],
+				Stock.getTestQuery("getSSNForSelfDirectedAllocation")[1],Stock.GetParameterValue("PlanNumber"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToInvestmentTab();
+		employeesearch.addChangeAllocBtnForSelfDirectedPlan();
+		employeesearch.navigateToAllocPage();
+		employeesearch.addAllocationAndVerify();
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
 
+/**
+ * @author smykjn
+ * <pre>This test case validates employee Transaction History page.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 10-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_48_AccountDetail_Transacion_History_Reg(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validateemployee Transaction History page.", false);
+		employeesearch = new EmployeeSearch().get();
+		
+				
+	
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
 
-
-
+/**
+ * @author smykjn
+ * <pre>This test case validates employee Transaction History page.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 10-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_55_Loan_Summary_Table(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
+				+ "validateemployee Transaction History page.", false);
+		employeesearch = new EmployeeSearch().get();
+		
+				
+	
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
 
 
 

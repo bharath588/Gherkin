@@ -2061,6 +2061,21 @@
 				<parameter name="ExpectedNewAllocTitle" value="Enter New allocations for future contributions:" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Participant_Investments_Tab">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="57XU3" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="TXN_CODE_1" value="ESCCPA,ESCCSD" />
+				<parameter name="TXN_CODE" value="ESCPAL" />
+				<parameter name="uscsId" value="K_57XU3" />
+				<parameter name="PlanNumber" value="385003-01" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="employeeinfo">
 	</Module>
@@ -2622,8 +2637,22 @@ where gaam_ga_id in (select distinct acv1.ga_id from access_customization_view a
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 and termdate is null" />
-<parameter QueryName="getSSNforActiveAllocation" DB="ISISDB_DEV"
+<parameter QueryName="getSSNforActiveAllocation" DB="ISISDB_QA"
 Query="select distinct i.ssn from part_agrmt pa inner join individual i on 
 i.id = pa.ind_id where pa.ga_id =?" />
+<parameter QueryName="insertSpecifiedTxnCode" DB="ISISDB_QA"
+Query="insert into user_txn_auth values(?,?,null,'Y')" />
+<parameter QueryName="checkESCPALTxnCode" DB="ISISDB_QA"
+Query="select DISTINCT txn_code from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_Logon_id=?) and txn_code in ('ESCPAL')" />
+<parameter QueryName="ESCCPA_ESCCSD_Chk_Txn_Code" DB="ISISDB_QA"
+Query="select DISTINCT uscs_id from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_Logon_id=?) and txn_code in ('ESCCPA','ESCCSD')" />
+<parameter QueryName="DEL_ESCCPA_ESCCSD_Txn_Code" DB="ISISDB_QA"
+Query="delete from user_txn_auth where txn_code in ('ESCCPA', 'ESCCSD') and uscs_id=?" />
+<parameter QueryName="getSSNForSelfDirectedAllocation" DB="ISISDB_QA"
+Query="select ssn from individual where id in 
+(select ind_id from part_service where ga_id =? and
+type_code = 'SDA' and sdsv_code = 'SDARTH')" />
 </Module>
 </TestData>

@@ -1860,6 +1860,21 @@
 				<parameter name="ExpectedNewAllocTitle" value="Enter New allocations for future contributions:" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="Participant_Investments_Tab">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="4OBB5" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="TXN_CODE" value="ESCPAL" />
+				<parameter name="TXN_CODE_1" value="ESCCPA,ESCCSD" />
+				<parameter name="uscsId" value="K_4OBB5" />
+				<parameter name="PlanNumber" value="385003-01" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="query">
 		<parameter QueryName="setDefaultPlanNullQuery" DB="ISISDB_DEV"
@@ -2376,5 +2391,19 @@ and termdate is null" />
 <parameter QueryName="getSSNforActiveAllocation" DB="ISISDB_DEV"
 Query="select distinct i.ssn from part_agrmt pa inner join individual i on 
 i.id = pa.ind_id where pa.ga_id =?" />
+<parameter QueryName="insertSpecifiedTxnCode" DB="ISISDB_DEV"
+Query="insert into user_txn_auth values(?,?,null,'Y')" />
+<parameter QueryName="checkESCPALTxnCode" DB="ISISDB_DEV"
+Query="select DISTINCT txn_code from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_Logon_id=?) and txn_code in ('ESCPAL')" />
+<parameter QueryName="ESCCPA_ESCCSD_Chk_Txn_Code" DB="ISISDB_DEV"
+Query="select DISTINCT uscs_id from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_Logon_id=?) and txn_code in ('ESCCPA','ESCCSD')" />
+<parameter QueryName="DEL_ESCCPA_ESCCSD_Txn_Code" DB="ISISDB_DEV"
+Query="delete from user_txn_auth where txn_code in ('ESCCPA', 'ESCCSD') and uscs_id=?" />
+<parameter QueryName="getSSNForSelfDirectedAllocation" DB="ISISDB_QA"
+Query="select ssn from individual where id in 
+(select ind_id from part_service where ga_id =? and
+type_code = 'SDA' and sdsv_code = 'SDARTH')" />
 </Module>
 </TestData>

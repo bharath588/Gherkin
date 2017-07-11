@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -741,18 +742,63 @@ public static String getDownloadedDocumentName(String downloadDir, String fileEx
 }
 
 /**
- * <pre>This method is to validate if user is assigned with particular transaction codes.</pre>
+ * <pre>This method is to validate if user is assigned with particular transaction code/codes.</pre>
  * @author smykjn 
+ * @param Resultset which should return distinct transaction codes
+ * @param String[] of expected transaction codes
  */
-public static boolean isTxnCodesPresent(ResultSet resultSet,int numberOfTxnCodes) throws SQLException
+public static boolean isTxnCodesPresent(ResultSet resultSet,String...expTxnCodes) throws SQLException
 {
 	boolean isPresent = false;
-	if(DB.getRecordSetCount(resultSet)==numberOfTxnCodes)
-		isPresent=true;
-	else 
-		isPresent=false;
+	List<String> expTxnCodesList = Arrays.asList(expTxnCodes);
+	List<String> acttxncodes = new ArrayList<String>();
+	
+	while(resultSet.next()){
+		acttxncodes.add(resultSet.getString("TXN_CODE"));
+	}
+	System.out.println("ActTxn codes:"+acttxncodes);
+	System.out.println("ExpTxn codes:"+expTxnCodes);
+	if(acttxncodes.size()>0){
+		if(expTxnCodesList.equals(acttxncodes))
+			isPresent=true;
+		else
+			isPresent=false;
+	}
 	return isPresent;
 }
+
+
+
+/**
+ * <pre>This method is to insert a Txn code for a specified uscs id.</pre>
+ * @author smykjn 
+ * @param txncode
+ * @param uscsId
+ */
+public static void insertTxnCode(String txncode,String uscsId) throws SQLException
+{
+	DB.executeQuery(Stock.getTestQuery("insertSpecifiedTxnCode")[0],
+			Stock.getTestQuery("insertSpecifiedTxnCode")[1],txncode,uscsId);
+	
+}
+
+
+/**
+ * <pre>This method is to know the list of Uscs ids to which specific txn codes are assigned with.</pre>
+ * @author smykjn 
+ * @param resultSet
+ * @return : list of Uscs ids
+ */
+public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLException
+{
+	ArrayList<String> uscsId = new ArrayList<String>();
+	while(resultSet.next()){
+		uscsId.add(resultSet.getString("USCS_ID"));
+	}
+	System.out.println("Assigned uscs ids for txn codes :"+uscsId);
+	return uscsId;
+}
+
 
 
 
