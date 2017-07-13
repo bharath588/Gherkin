@@ -15,35 +15,41 @@ import lib.Stock;
 
 public class TestDataFromDB {
 	private static HashMap<String, String> tempMap = null;
-
+	private static HashMap<String, String> tempMap1 = null;
+	static LinkedHashMap<String, String> mapUserDetails = new LinkedHashMap<String, String>();
+	static LinkedHashMap<Long, LinkedHashMap<String, String>> testdataFromDB = new LinkedHashMap<Long, LinkedHashMap<String, String>>();
+	static ResultSet participants ;
+	static boolean queryExecuted=false;
+	static int j=2;
+	
+	static ResultSetMetaData rsMetaData = null;
 	@SuppressWarnings("null")
 	public static synchronized HashMap<String, String> getParticipantDetails(
 			String queryName, String... queryParameterValues)
 			throws SQLException {
 
-		String[] sqlQuery = null;
-		LinkedHashMap<String, String> mapUserDetails = new LinkedHashMap<String, String>();
-		LinkedHashMap<Long, LinkedHashMap<String, String>> testdataFromDB = new LinkedHashMap<Long, LinkedHashMap<String, String>>();
-		ResultSetMetaData rsMetaData = null;
+		
+	
 		int noOfColumns = 0;
 		int noOfRows = 0;
-		sqlQuery = Stock.getTestQuery(queryName);
-		if(!testdataFromDB.containsKey(Thread.currentThread().getId()))
+		//sqlQuery = Stock.getTestQuery(queryName);
+		if(testdataFromDB.size() == 0 || !testdataFromDB.containsKey(Thread.currentThread().getId()) )
 		{
-		
-		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
-				queryParameterValues);
-		if (DB.getRecordSetCount(participants) > 0) {
-			noOfRows = DB.getRecordSetCount(participants);
-			participants.first();
-			rsMetaData = participants.getMetaData();
-			noOfColumns = rsMetaData.getColumnCount();
-			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
-			if(!checkValueExistsniMap(testdataFromDB, "USERNAME"))
+		mapUserDetails = new LinkedHashMap<>();
+		if(!queryExecuted){
+			executeQuery(queryName, queryParameterValues);
+		}
+		noOfRows = DB.getRecordSetCount(participants);
+			if(testdataFromDB.size() == 0 || !testdataFromDB.containsKey(Thread.currentThread().getId()) || testdataFromDB.get(Thread.currentThread().getId()).containsValue(participants.getString("USERNAME")))
 			{
-				participants.next();
+				participants.absolute(j);
+			//	participants.next();
+				j++;
+			}
 			
-			for(int i=1;i<=noOfRows;i++){
+		
+			System.out.println("no.of rows"+noOfRows);
+			while(participants.next()){
 			rsMetaData = participants.getMetaData();
 			noOfColumns = rsMetaData.getColumnCount();
 			for (int j = 1; j <= noOfColumns; j++) {
@@ -51,8 +57,8 @@ public class TestDataFromDB {
 							
 				if (rsMetaData.getColumnName(j).contains("SUBSTR")) {
 					
-					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
-									.getColumnName(j))))
+					/*if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+									.getColumnName(j))))*/
 						
 					mapUserDetails
 							.put("PASSWORD", participants.getString(rsMetaData
@@ -70,8 +76,8 @@ public class TestDataFromDB {
 						Date date = formatter.parse(dateInString);
 						SimpleDateFormat formatter1 = new SimpleDateFormat(
 								"MMddyyyy");
-						if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
-								.getColumnName(j))))
+						/*if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+								.getColumnName(j))))*/
 						mapUserDetails.put(rsMetaData.getColumnName(j),
 								formatter1.format(date));
 
@@ -82,20 +88,21 @@ public class TestDataFromDB {
 				} else if(rsMetaData.getColumnName(j).contains("FIRST_LINE_MAILING")){
 					String address = participants.getString(rsMetaData
 							.getColumnName(j));
-					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
-							.getColumnName(j))))
+				/*	if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+							.getColumnName(j))))*/
 					mapUserDetails.put(rsMetaData.getColumnName(j),
 							address.split(" ")[0]);
 				}
 				else {
-					if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
-							.getColumnName(j))))
+					/*if(!checkValueExistsniMap(testdataFromDB, participants.getString(rsMetaData
+							.getColumnName(j))))*/
 					mapUserDetails
 							.put(rsMetaData.getColumnName(j), participants
 									.getString(rsMetaData.getColumnName(j)));
 				}
 			}
-			}
+			break;
+			
 			}
 			testdataFromDB.put(Thread.currentThread().getId(),mapUserDetails);
 			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1)
@@ -104,10 +111,19 @@ public class TestDataFromDB {
 				break;*/
 			}
 		
-		}
+		System.out.println("THREAD ID:"+Thread.currentThread().getId());
 		System.out.println("TEST DATA FROM DB:"+mapUserDetails);
+		
+		tempMap = (HashMap<String, String>) Stock.globalTestdata.get(Thread.currentThread().getId());
+		
+		tempMap.putAll(mapUserDetails);
+		
 
-		return testdataFromDB.get(Thread.currentThread().getId());
+		Stock.globalTestdata.put(Thread.currentThread().getId(),tempMap);
+		System.out.println("TEST DATA FROM BOTH" + tempMap);
+		System.out.println("TEST DATA FROM GLOBAL" + Stock.globalTestdata);
+
+		return null;
 	}
 	public  boolean checkIfUserExists(Map<String,String> testdata)
     {
@@ -120,20 +136,23 @@ public class TestDataFromDB {
 		{
 			return false;
 		}
-		
+		else{
 		for(Map.Entry<Long, LinkedHashMap<String,String>> refMap : dataMap.entrySet())
 		{
 			if(refMap.getValue().containsValue(value))
 				isExist = true;
 		}
+		}
 	return isExist;	
 	}
 	
-	public static void addUserDetailsToGlobalMap(Map<String, String> paramMap) {
+	public synchronized static void addUserDetailsToGlobalMap(HashMap<Long,Map<String, String>> paramMap) {
 
 		tempMap = (HashMap<String, String>) Stock.globalTestdata.get(Thread.currentThread().getId());
+		tempMap1= (HashMap<String, String>) paramMap.get(Thread.currentThread().getId());
 		// System.out.println("TEST DATA FROM EXCEL"+tempMap);
-		for (Entry<String, String> entry : paramMap.entrySet()) {
+		tempMap.putAll(tempMap1);
+		for (Entry<String, String> entry : tempMap1.entrySet()) {
 			tempMap.put(entry.getKey(), entry.getValue());
 
 		}
@@ -222,4 +241,127 @@ public class TestDataFromDB {
 		return IndID;
 
 	}
+	
+	@SuppressWarnings("null")
+	public static  ResultSet executeQuery(
+			String queryName, String... queryParameterValues)
+			throws SQLException {
+
+		String[] sqlQuery = null;
+		
+		
+		sqlQuery = Stock.getTestQuery(queryName);
+		
+		participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				queryParameterValues);
+		 queryExecuted=true;
+		 
+		
+		/*if (DB.getRecordSetCount(participants) > 0) {
+			noOfRows = DB.getRecordSetCount(participants);
+			participants.first();
+			rsMetaData = participants.getMetaData();
+			noOfColumns = rsMetaData.getColumnCount();
+			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
+		}*/
+		return null;
+		}
+	
+	
+	public static synchronized HashMap<String, String> getParticipantDataFromDB(
+			String queryName, String... queryParameterValues)
+			throws SQLException {
+
+		String[] sqlQuery = null;
+		LinkedHashMap<String, String> mapUserDetails = new LinkedHashMap<String, String>();
+		LinkedHashMap<Long, LinkedHashMap<String, String>> testdataFromDB = new LinkedHashMap<Long, LinkedHashMap<String, String>>();
+		ResultSetMetaData rsMetaData = null;
+		int noOfColumns = 0;
+		int noOfRows = 0;
+		sqlQuery = Stock.getTestQuery(queryName);
+		
+		ResultSet participants = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				queryParameterValues);
+		if (DB.getRecordSetCount(participants) > 0) {
+			noOfRows = DB.getRecordSetCount(participants);
+			participants.first();
+			rsMetaData = participants.getMetaData();
+			noOfColumns = rsMetaData.getColumnCount();
+			System.out.println("no of rows : "+noOfRows+" No of columns : "+noOfColumns);
+			
+			for(int i=1;i<=noOfRows;i++){
+			rsMetaData = participants.getMetaData();
+			noOfColumns = rsMetaData.getColumnCount();
+			for (int j = 1; j <= noOfColumns; j++) {
+				
+							
+				if (rsMetaData.getColumnName(j).contains("SUBSTR")) {
+					
+					
+					mapUserDetails
+							.put("PASSWORD", participants.getString(rsMetaData
+									.getColumnName(j)));
+				} else if (rsMetaData.getColumnName(j).equalsIgnoreCase(
+						"BIRTH_DATE")) {
+					
+					SimpleDateFormat formatter = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss");
+					String dateInString = participants.getString(rsMetaData
+							.getColumnName(j));
+
+					try {
+
+						Date date = formatter.parse(dateInString);
+						SimpleDateFormat formatter1 = new SimpleDateFormat(
+								"MMddyyyy");
+						
+						mapUserDetails.put(rsMetaData.getColumnName(j),
+								formatter1.format(date));
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else if(rsMetaData.getColumnName(j).contains("FIRST_LINE_MAILING")){
+					String address = participants.getString(rsMetaData
+							.getColumnName(j));
+					
+					mapUserDetails.put(rsMetaData.getColumnName(j),
+							address.split(" ")[0]);
+				}
+				else {
+					
+					mapUserDetails
+							.put(rsMetaData.getColumnName(j), participants
+									.getString(rsMetaData.getColumnName(j)));
+				}
+			}
+			break;
+			}
+			
+			testdataFromDB.put(Thread.currentThread().getId(),mapUserDetails);
+			/*if(fetchNoOfPlans(mapUserDetails.get("SSN")) != 1)
+				participants.next();
+			else
+				break;*/
+			}
+		
+
+
+		System.out.println("THREAD ID:"+Thread.currentThread().getId());
+		System.out.println("TEST DATA FROM DB:"+mapUserDetails);
+		
+		tempMap = (HashMap<String, String>) Stock.globalTestdata.get(Thread.currentThread().getId());
+		
+		tempMap.putAll(mapUserDetails);
+		
+
+		Stock.globalTestdata.put(Thread.currentThread().getId(),tempMap);
+		System.out.println("TEST DATA FROM BOTH" + tempMap);
+		System.out.println("TEST DATA FROM GLOBAL" + Stock.globalTestdata);
+		return null;
+	
 }
+	
+}
+

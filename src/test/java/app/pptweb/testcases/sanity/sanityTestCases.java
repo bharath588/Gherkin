@@ -66,9 +66,9 @@ public class sanityTestCases {
 	}
 	public void prepareLoginTestData() {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					"getRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -76,9 +76,9 @@ public class sanityTestCases {
 	}
 	public void prepareDynamicTestData(String query, String... queryParameterValues) {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					query, queryParameterValues);
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -86,9 +86,9 @@ public class sanityTestCases {
 	}
 	public void prepareRegisrationTestData() {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					"getUnRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -97,9 +97,9 @@ public class sanityTestCases {
 	
 	 public void prepareBeneficiaryTestData(String quesryNmae,String... queryParam) {
 			try {
-				testDataFromDB = TestDataFromDB.getParticipantDetails(
+				testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 						quesryNmae, queryParam);
-				TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+				//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

@@ -1,16 +1,16 @@
-
-[
- {"Browser": "CHROME",
-	"Port": "http://10.4.61.208:5555/wd/hub",
-	"Platform": "Windows.xp"
-	},
-	{"Browser": "IE",
-	"Port": "http://10.4.61.208:6666/wd/hub",
-	"Platform": "Windows.xp"
-	},
-	{
-	"Browser": "CHROME",
-	"Port": "http:/10.4.61.208:7777/wd/hub",
-	"Platform": "Windows.xp"
+[ {
+       "Browser": "IE",
+       "Port": "http://10.4.61.208:5555/wd/hub",
+       "Platform": "Windows.xp"
+},
+{
+       "Browser": "Chrome",
+       "Port": "http://10.4.61.208:6666/wd/hub",
+       "Platform": "Windows.xp"
+},
+{
+       "Browser": "FF",
+       "Port": "http://10.4.61.208:5566/wd/hub",
+       "Platform": "Windows.xp"
 }
-]	
+]

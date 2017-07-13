@@ -114,7 +114,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 
 			//Add Auto Increase		
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'After Tax')]/../td[3]/.//a") private WebElement lnkAfterTaxAutoIncrease;
-			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
+			@FindBy(xpath="/.//td[contains(text(),'Before')]/../td[3]/.//a") private WebElement lnkBeforeTaxAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Before')]/../td[3]/.//a") private WebElement lnkCatchupBeforeAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Catch-Up Roth')]/../td[3]/.//a") private WebElement lnkCatchupRothAutoIncrease;
 			@FindBy(xpath=".//*[@id='account-details-container']/.//td[contains(text(),'Before Tax Bonus')]/../td[3]/.//a") private WebElement lnkBeforeBonusAutoIncrease;
@@ -219,6 +219,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String deferralTiredRule="//div[contains(@class,'deferral-codes')]//h2[@class='DeferralType']//a";
 			String lableViewOnlyABONUS="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//span[contains(text(),'View Only')]";
 			String inpViewOnly="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//input";
+			private String textField="//*[contains(text(),'webElementText')]";
+
 			Actions mouse=new Actions(Web.getDriver());
 		/**
 		 * Default Constructor
@@ -465,6 +467,28 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			if(fieldName.trim().equalsIgnoreCase("Input Before Tax Bonus")) {
 				return this.txtSplitBeforeBonus;
+			}
+			
+			if(fieldName.trim().equalsIgnoreCase("Select Another Contribution Radio Button")) {
+				return this.radioSelectAnotherContributionRate;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Percent Button")) {
+				return this.lnkPercent;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Dollar Button")) {
+				return this.lnkDollar;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Back Button")) {
+				return this.btnBack;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Continue Button")) {
+				return this.btnContinue;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Split Contribution")) {
+				return this.radioSplitContribution;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Button Confirm And Continue")) {
+				return this.btnConfirmAndContinue;
 			}
 			return null;
 			}		
@@ -1647,12 +1671,23 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				autoIncreaseDeferralType.click();
 				try {
 					Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+					if(chkDeleteAutoIncrease.isDisplayed()){
+						Web.clickOnElement(chkDeleteAutoIncrease);
+						Web.waitForElement(btnDeleteAddAutoIncreaseModal);
+						Web.clickOnElement(btnDeleteAddAutoIncreaseModal);
+						Web.waitForElement(autoIncreaseDeferralType);
+						Web.clickOnElement(autoIncreaseDeferralType);
+						Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+					}
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
 				Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
-				Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				//Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, "1");
 				Thread.sleep(3000);
 				Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
 				payRoll_Date=drpDownAutoIncreasePeriod.getAttribute("value");
@@ -2165,7 +2200,185 @@ return expectedCompanyMatch;
 						"Input Field for"+deferralType+"is Not Greyed Out", true);
 		
 		}
+		/**
+	   	 * <pre>
+	   	 * Method to Verify Webelement is Displayed
+	   	 * 
+	   	 * </pre>
+	   	*/
+	    public boolean verifyWebElementDisplayed(String fieldName) {
+
+			boolean isDisplayed = Web.isWebElementDisplayed(
+					this.getWebElement(fieldName), true);
+
+			if (isDisplayed) {
+
+				Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\' is displayed",
+						"\'"+fieldName+"\' is displayed", false);
+				isDisplayed = true;
+
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify\'"+fieldName+"\' is displayed",
+						"\'"+fieldName+"\' is not displayed", false);
+			}
+
+			return isDisplayed;
+
+		}
+	    
+	    /**
+		 * <pre>
+		 * Method to Verify Text Field is Displayed on the WebPage
+		 * </pre>
+		 * 
+		 * @return boolean isTextDisplayed
+		 */
+
+	    public boolean isTextFieldDisplayed(String fieldName) {
+			boolean isTextDisplayed=false;
+			 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
+		
+			isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+			if (isTextDisplayed) {
+				lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
+						+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+						+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
+				throw new Error(fieldName+" is not displayed");
+			}
+		
+			return isTextDisplayed;
+		}
+		
+		/**<pre> Method to Verify Contribution Rate Page For Enrollment Flow
+		 * 	
+		 */
+		public void verifyContributionRatePage()
+		{
+			verifyWebElementDisplayed("Select Another Contribution Radio Button");
+			isTextFieldDisplayed("My Standard Contribution");
+			verifyWebElementDisplayed("Percent Button");
+			verifyWebElementDisplayed("Dollar Button");
+			verifyWebElementDisplayed("Continue Button");
+			verifyWebElementDisplayed("Back Button");
+			isTextFieldDisplayed("The estimated amount to be deducted from your paycheck is based on the salary provided times your contribution rate.");
+			
 	}		
+		
+		/**<pre> Method to Verify Plan Rules PopUp
+		 * 	
+		 */
+		public void verifyPlanRulesPopUp()
+		{	
+	
+		Web.clickOnElement(lnkPlanRules);
+		Web.waitForElement(headerPlanRule);
+
+		if (Web.isWebElementDisplayed(headerPlanRule))
+			Reporter.logEvent(Status.PASS, "Verify Pan Rule PopUp is Displayed",
+					"Pan Rule PopUp is Displayed", true);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Pan Rule PopUp is Displayed",
+					"Pan Rule PopUp is Not Displayed", true);
+		
+		if (Web.isWebElementDisplayed(txtPlanRule))
+			Reporter.logEvent(Status.PASS, "Verify Pan Rule Text is Displayed and Proper",
+					"Pan Rule Text is Displayed and Proper", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify Pan Rule Text is Displayed and Proper",
+					"Pan Rule Text is Not Proper", false);
+		Web.clickOnElement(btnOk);
+		}
+		
+		public void verifyContributionTypesDisplayed()
+		{		
+			
+			Web.waitForElement(radioSplitContribution);
+			
+				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution)  )  
+						
+					
+					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is Displayed", "Split Contibution is Displayed", true);
+				
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is Displayed", "Split Contibution is not Displayed", true);
+		
+		
+				if(lstradioSelectContibution.size()==2){
+					if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(0).getText(), "Before"))
+						Reporter.logEvent(Status.PASS, "Verify Before Tax Radio button is Displayed", "Before Tax Contibution is Displayed", false);
+					
+					else
+						Reporter.logEvent(Status.FAIL, "Verify Before Tax Radio button is Displayed", "Before Tax Contibution is not Displayed", false);
+					
+					if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(1).getText(), "Roth"))
+						Reporter.logEvent(Status.PASS, "Verify Roth Radio button is Displayed", "Roth Contibution is Displayed", false);
+					
+					else
+						Reporter.logEvent(Status.FAIL, "Verify Roth Radio button is Displayed", "Roth Contibution is not Displayed", false);
+				
+			}
+			
+			this.btnContinue.click();
+				
+		}
+		public void selectContributionType(String contributionType)
+		{		
+			Web.waitForElement(radioSplitContribution);
+			
+			if(contributionType.equalsIgnoreCase("Split") ){
+				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
+				{				
+					this.radioSplitContribution.click();
+					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", true);
+					
+					
+					if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
+//					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
+//						befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
+//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
+//						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+						before_tax =Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*irs_limit;
+						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
+						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+					}
+					else{
+//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+//                        int i=Integer.parseInt(contrbution_rate);
+//                        int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));
+//                        lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
+						
+						before_tax = Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*Float.parseFloat(contrbution_rate);
+						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*Float.parseFloat(contrbution_rate);
+						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+					}
+							
+				}
+				else
+					Reporter.logEvent(Status.FAIL, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is not clicked", false);
+			}
+			else{
+				for(int i=0;i<lstradioSelectContibution.size();i++){
+					if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(i).getText(), contributionType))
+					{
+						lstradioSelectContibution.get(i).click();
+						Reporter.logEvent(Status.PASS, "Verify "+contributionType+" Contribution is selected", contributionType+" Contribution is selected", false);
+						break;
+					}
+				}
+			}
+			
+			this.btnContinue.click();
+				
+		}
+}
 	
 
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import lib.DB;
 import lib.Reporter;
@@ -21,6 +22,8 @@ import appUtils.Common;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+import pageobjects.deferrals.Deferrals;
+import pageobjects.enrollment.Enrollment;
 import pageobjects.general.GuidancePage;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.investment.ManageMyInvestment;
@@ -32,6 +35,7 @@ public class Investmentstestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	public Map<String, String> mapInvestmentOptionsReviewPage = new HashMap<String, String>();
 	public Map<String, String> mapInvestmentOptionsConfirmPage = new HashMap<String, String>();
+	public Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
 	LoginPage login;
 	String tcName;
 	static String printTestData="";
@@ -128,7 +132,7 @@ public class Investmentstestcases {
 			}
 			//Step 10,11,12
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 				investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Sep 13
 			
@@ -169,7 +173,7 @@ public class Investmentstestcases {
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			
 			//Step 17
@@ -289,7 +293,7 @@ public class Investmentstestcases {
 			}
 			//Step 10,11,12
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 13
@@ -332,7 +336,7 @@ public class Investmentstestcases {
 		    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
 			
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			//Step 17
 			leftmenu.clickNavigationLink("View/Manage my investments");
@@ -451,7 +455,7 @@ public class Investmentstestcases {
 			}
 			//Step 10,11,12
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 13
@@ -491,7 +495,7 @@ public class Investmentstestcases {
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			
 			//Step 17
@@ -1037,7 +1041,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 11
 			
@@ -1050,7 +1054,7 @@ public class Investmentstestcases {
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 		    //Step 12
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -1164,7 +1168,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 35
 			
@@ -1176,7 +1180,7 @@ public class Investmentstestcases {
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 		    //Step 36
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -2013,7 +2017,7 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
@@ -2053,7 +2057,7 @@ public class Investmentstestcases {
 				mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 				investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-				investment.VerifyAllocatedPecentageForFunds();
+				investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			
 			//Step 13
@@ -2189,7 +2193,7 @@ public class Investmentstestcases {
 			}
 			//Step 9
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2229,7 +2233,7 @@ public class Investmentstestcases {
 				investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			    
 				String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
-				investment.VerifyAllocatedPecentageForFunds();
+				investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			
 			//Step 13
@@ -2629,7 +2633,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2646,7 +2650,7 @@ public class Investmentstestcases {
 			
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -2797,7 +2801,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"100"};
-			investment.addInvestments(1,percentage);
+			mapInvestmentOptions=investment.addInvestments(1,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2816,7 +2820,7 @@ public class Investmentstestcases {
 			mapInvestmentOptionsConfirmPage=investment.getCurrentFunds();
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -2962,7 +2966,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"9","20","25","11","35"};
-			investment.addInvestments(5,percentage);
+			mapInvestmentOptions=investment.addInvestments(5,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2983,7 +2987,7 @@ public class Investmentstestcases {
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
 			
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -3999,7 +4003,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"50","50"};
-			investment.addInvestments(2,percentage);
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -4021,7 +4025,7 @@ public class Investmentstestcases {
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -4171,7 +4175,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"100"};
-			investment.addInvestments(1,percentage);
+			mapInvestmentOptions=investment.addInvestments(1,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
 			
@@ -4191,7 +4195,7 @@ public class Investmentstestcases {
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -4337,7 +4341,7 @@ public class Investmentstestcases {
 			}
 			
 			String[] percentage={"9","20","25","11","35"};
-			investment.addInvestments(5,percentage);
+			mapInvestmentOptions=investment.addInvestments(5,percentage);
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -4358,7 +4362,7 @@ public class Investmentstestcases {
 			investment.verifyFundsinReviewAndConfirmationPageAreMatching(mapInvestmentOptionsReviewPage, mapInvestmentOptionsConfirmPage);
 			
 			String confirmationNumber=investment.getRebalanceConfirmationNO();
-			investment.VerifyAllocatedPecentageForFunds();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions);
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -5064,7 +5068,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			
-			
+		
 			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
 			}*/
@@ -5881,8 +5885,8 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			//Step 11
 			
 			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			Web.waitForElement(investment, "Header Rebalance your portfolio");
+			investment.verifyPageHeaderIsDisplayed("Header Rebalance your portfolio");
 			investment.verifyWebElementDisplayed("Link Add/View All Funds");
 			investment.verifyWebElementDisplayed("Reset All Changes Link");
 			investment.verifyWebElementDisplayed("Submit Button Change Future Allocation");
@@ -6255,6 +6259,153 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 		}
 
 	}
+	@Test(dataProvider = "setData")
+	public void DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 5
+			String sqlQuery[]=Stock.getTestQuery(Stock.GetParameterValue("queryName"));
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("ga_id"),Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping"));
+			
+			//Step 1 to 6
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			if(Stock.GetParameterValue("EmployerDirected").equalsIgnoreCase("Yes"))	{
+			if(!investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is Filtered out and not Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping")+" is Filtered out and not Displayed on My Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is Filtered out and not Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping")+" is not Filtered out and is Displayed on My Investments Page", true);
+			}
+			}
+			
+		if(Stock.GetParameterValue("EmployerDirected").equalsIgnoreCase("No"))	{
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				Web.clickOnElement(investment, "Expand Sources");
+			}
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is included and Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping")+" is included and Displayed on My Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is included and Displayed on My Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("EmpDirectedmoneyTypeGrouping")+" is not Displayed on My Investments Page", true);
+			}
+		}
+			
+			//Step 7
+			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is Displayed on Change Investments Page", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Money Type Grouping is Displayed on Change Investments Page",
+						"Money Type Grouping:"+Stock.GetParameterValue("moneyTypeGrouping")+" is not Displayed on Change Investments Page", true);
+			}
+			
+			//Step 8
+			investment.choseInvestmentOption("Rebalance Current Balance");
+			investment.selectFrequencyForRebalance(Stock.GetParameterValue("RebalFrequency"));
+			
+			if(Stock.GetParameterValue("selectFutureInvestmentCheckBox").equalsIgnoreCase("NO")){
+				investment.selectFutureInvestmentCheckBox(false);
+			}
+			
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if(investment.isTextFieldDisplayed("Rebalance my current balance")){
+			
+			Web.clickOnElement(investment, "Continue Button");
+			}
+		
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			//Step 9
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			
+			Web.waitForElement(investment, "Header Rebalance your portfolio");
+			investment.verifyPageHeaderIsDisplayed("Header Rebalance your portfolio");
+			
+		
+			//Step 10
+			Web.waitForElement(investment, "Rebalance Add/View All Funds");
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			String[] percentage={"50","50"};
+			investment.addInvestments(2,percentage);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			//Step 11
+			
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			
+			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
+			
+			String confirmationNumber=investment.getRebalanceConfirmationNO();
+			//Step12
+			
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			investment.verifyTRF_BasicTableInDB("VerifyRebalanceConfirmationRecord",Stock.GetParameterValue("username"), confirmationNumber, Stock.GetParameterValue("FrequencyCode"));
+		   
+			
+			Web.clickOnElement(homePage, "LOG OUT");
+			Web.waitForElement(login, "SIGN IN");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 	
 	public String getInvestmentsSubmissionTime(){
 		String time =null;
@@ -6276,4 +6427,874 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 		return time;
 		
 	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_22678_FullRebal_ModelPortfolio(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
+			investment.get();
+			//Step 6
+			investment.clickChangeMyInvestmentButton();
+			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
+			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
+			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			investment.verifyWebElementDisplayed("Continue Button");
+			investment.verifyWebElementDisplayed("Back Button");
+			
+			//Step 7
+			
+			investment.choseInvestmentOption("Rebalance Current Balance");;
+			Web.clickOnElement(investment, "Continue Button");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+		
+			
+			//Step 8 & 9		
+			
+			Web.clickOnElement(investment,"Link Based On Model Portfolio");
+			Web.waitForElement(investment, "Select a Model Portfolio");
+			investment.verifyPageHeaderIsDisplayed("Select a Model Portfolio");
+			investment.isTextFieldDisplayed("Because you own investments with restrictions, only your unrestricted assets will be exchanged into the model portfolio you select.");
+			investment.isTextFieldDisplayed("Changing your investment allocation will result in your current core account balance and future contributions being allocated to your selected investment(s).");
+			investment.isTextFieldDisplayed("Model portfolios contain a mix of funds offered by your plan and your allocations will be automatically rebalanced on a periodic basis. The underlying funds, allocations, and rebalance frequency of the portfolio are subject to change by your plan. By selecting a model portfolio, you can view the funds within the portfolio.");
+			
+			//Step 10 11 & 12
+			String selectedModelPortfolioFund=investment.selectModelPortfolioFund();
+			Thread.sleep(7000);
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			//Step 13
+			investment.isTextFieldDisplayed("Changing your investment allocation will result in your current core account balance and future contributions being allocated to your selected investment(s).");
+			investment.isTextFieldDisplayed("Model portfolios contain a mix of funds offered by your plan. Your allocations will be automatically rebalanced on a quarterly basis. The underlying funds, allocations, and rebalance frequency of the portfolio are subject to change by your plan.");
+			investment.isTextFieldDisplayed("The funds you are selecting are part of a model portfolio. The automatic rebalancing feature of the model will override any other rebalancing elections you may have requested.");
+			
+			
+			//Step 15
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(15000);
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForModelPortfolio();    
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 16
+			
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 to 6
+			enrollment.selectCustomizeEnroll();
+			Common.waitForProgressBar();
+			enrollment.verifyPriorPlanContributionsPage();
+			
+			//Step 7 & 8
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			
+			deferral.verifyWebElementDisplayed("Split Contribution");
+			//Step 13
+			deferral.verifyPlanRulesPopUp();
+			//Step 14
+			deferral.verifyContributionTypesDisplayed();
+			//Step 15
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			//Step 16
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			investment.verifyPageHeaderIsDisplayed("Header My Allocations");
+			investment.isTextFieldDisplayed("Select investments for each of your allocation groups.");
+			//Step 17
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			}
+			
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping1")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			}
+			//Step 18
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			//Step 19
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 20
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+		
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			//Step 21
+			if (!Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is not displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is displayed", true);
+			}
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 22
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+		 		investment.isInvestmentOptiondDisplayed(key);
+		 	};
+			
+			//Step 23
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 24
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+		 
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			
+			//Step 25
+			enrollment.isTextFieldDisplayed("By clicking the \"I Agree, Enroll Now\" button, you confirm you have reviewed and agree to the ");
+			enrollment.isTextFieldDisplayed("Participation Agreement for Online Enrollment");
+			
+			//Step 26
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 27
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+			
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 to 6
+			enrollment.selectCustomizeEnroll();
+			Common.waitForProgressBar();
+			enrollment.verifyPriorPlanContributionsPage();
+			
+			//Step 7 & 8
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			//Step 13
+					
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 14
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 15
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			//Step 16
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 17
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_25496_Custom_Enrollment_PPT_with_PartLevel_MTGs(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 to 6
+			enrollment.selectCustomizeEnroll();
+			Common.waitForProgressBar();
+			enrollment.verifyPriorPlanContributionsPage();
+			
+			//Step 7 & 8
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			
+			deferral.verifyWebElementDisplayed("Split Contribution");
+			//Step 13
+			deferral.verifyPlanRulesPopUp();
+			//Step 14
+			deferral.verifyContributionTypesDisplayed();
+			//Step 15
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			//Step 16
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			investment.verifyPageHeaderIsDisplayed("Header My Allocations");
+			investment.isTextFieldDisplayed("Select investments for each of your allocation groups.");
+			//Step 17
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			}
+			
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping1")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			}
+			//Step 18
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			//Step 19
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 20
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+		
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			//Step 21
+			if (!Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is not displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is displayed", true);
+			}
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 22
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+		 		investment.isInvestmentOptiondDisplayed(key);
+		 	};
+			
+			//Step 23
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 24
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+		 
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			
+			//Step 25
+			enrollment.isTextFieldDisplayed("By clicking the \"I Agree, Enroll Now\" button, you confirm you have reviewed and agree to the ");
+			enrollment.isTextFieldDisplayed("Participation Agreement for Online Enrollment");
+			
+			//Step 26
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 27
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+			
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	@Test(dataProvider = "setData")
+	public void DDTC_25497_Custom_Enrollment_PPT_with_EmployerDirected_MTGs(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 to 6
+			enrollment.selectCustomizeEnroll();
+			Common.waitForProgressBar();
+			enrollment.verifyPriorPlanContributionsPage();
+			
+			//Step 7 & 8
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			
+			deferral.verifyWebElementDisplayed("Split Contribution");
+			//Step 13
+			deferral.verifyPlanRulesPopUp();
+			//Step 14
+			deferral.verifyContributionTypesDisplayed();
+			//Step 15
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			//Step 16
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			investment.verifyPageHeaderIsDisplayed("Header My Allocations");
+			investment.isTextFieldDisplayed("Select investments for each of your allocation groups.");
+			//Step 17
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			}
+			
+			if(investment.verifyMoneyTypeGroupDisplayed(Stock.GetParameterValue("moneyTypeGrouping1")))
+			{
+				investment.verifyInvestmentButtonDisplayedforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			}
+			//Step 18
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			//Step 19
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			//Step 20
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+		
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			//Step 21
+			if (!Web.isWebElementDisplayed(investment,"Header Review Your Changes")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is not displayed", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Review Your Changes is not displayed",
+						"Review Your Changes is displayed", true);
+			}
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			
+			investment.verifyWebElementDisplayed("Do It Myself");
+			investment.verifyWebElementDisplayed("Help Me Do It");
+			investment.verifyWebElementDisplayed("Do It For Me");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 22
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+		 		investment.isInvestmentOptiondDisplayed(key);
+		 	};
+			
+			//Step 23
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 24
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+		 
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			
+			//Step 25
+			enrollment.isTextFieldDisplayed("By clicking the \"I Agree, Enroll Now\" button, you confirm you have reviewed and agree to the ");
+			enrollment.isTextFieldDisplayed("Participation Agreement for Online Enrollment");
+			
+			//Step 26
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 27
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+			
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+
+	
 }

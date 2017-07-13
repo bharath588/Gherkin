@@ -61,9 +61,9 @@ public class logintestcases {
 
 	public void prepareLoginTestData(String quesryNmae,String... queryParam) {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					quesryNmae, queryParam);
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,9 +71,9 @@ public class logintestcases {
 	}
 	public void prepareLoginTestData() {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					"getRegisteredUser", Stock.GetParameterValue("ga_PlanId"));
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

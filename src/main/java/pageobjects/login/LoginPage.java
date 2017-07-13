@@ -36,7 +36,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement weHelpBlock;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Login help?']]")
 	private WebElement lnkForgotPassword;
-	@FindBy(xpath = ".//*[@id='customerSupport']//p[1]")
+	@FindBy(xpath = ".//*[@id='customer-support']//p[1]")
 	private WebElement hrdCustomerSupport;
 	@FindBy(linkText = "contact us")
 	private WebElement lnkContactus;

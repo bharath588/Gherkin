@@ -65,9 +65,9 @@ public class deferralstestcases {
 	
 	 public void prepareDynamicTestData(String quesryNmae,String... queryParam) {
 			try {
-				testDataFromDB = TestDataFromDB.getParticipantDetails(
+				testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 						quesryNmae, queryParam);
-				TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+				//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -2600,6 +2600,7 @@ public class deferralstestcases {
 			
 			//Step 17
 			deferrals.myContributions_Confirmation_Page();
+			deferrals.verifyConfirmationMessage();
 			//Step 18
 			Web.clickOnElement(deferrals, "MyContribution Button");
 			if (Web.isWebElementDisplayed(deferrals,
@@ -3238,9 +3239,11 @@ public class deferralstestcases {
 			//Step 11 to 16
 			deferrals.add_Auto_Increase_Date_DropDown(lib.Stock
 					.GetParameterValue("Add_auto_increase_BeforeTax"));
+		
 			
 			//Step 17
 			deferrals.myContributions_Confirmation_Page();
+			
 			deferrals.verifyConfirmationMessage();
 			
 			//Step 18

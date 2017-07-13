@@ -9,11 +9,11 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                 <!--    <include name="DDTC_2844_DIM_Choose_individual_funds">
+                    <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include> 
                     
-                  	<include name="DDTC_2714_HMDI_target_based_Offer_all_mntype">
+                 	<include name="DDTC_2714_HMDI_target_based_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2714_HMDI_target_based_Offer_all_mntype"></parameter>
                     </include>
                     
@@ -168,7 +168,7 @@
                     
                      <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
-                    </include>   -->
+                    </include>   
                     
                     <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
@@ -186,8 +186,29 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio"></parameter>
                     </include>
                     
-                   
+                    <include name="DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
+                    </include>
                     
+                    <include name="DDTC_22678_FullRebal_ModelPortfolio">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs"></parameter>
+                    </include>-->
+                    
+                     <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
+                    </include>
+                   
+                    <include name="DDTC_25497_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_25496_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
+                    </include>
                 
 				</methods>
               

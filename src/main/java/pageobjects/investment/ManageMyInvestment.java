@@ -49,8 +49,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	static String toInvestmentOption;
 	static String targetYearFund=null;
 	String confirmationNo;
-	static Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
-	static Map<String, String> mapCurrentInvestmentOptionsPecentage = new HashMap<String, String>();
+	public  Map<String, String> mapInvestmentOptions ;
+	public  Map<String, String> mapCurrentInvestmentOptionsPecentage ;
 
 	// @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='userProfileName']")
 	// private WebElement lblUserName;
@@ -340,15 +340,22 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(id = "modelPortfolioLink") private WebElement btnBasedOnModelPortfolio;
 	@FindBy(xpath = "//h1[text()[normalize-space()='Select a model portfolio']]")
 	private WebElement txtSelectModelPortfolio;
+	@FindBy(xpath = ".//div[contains(@class,'allocation-model-funds')]//table")
+	private WebElement tableAssetClass;
+	@FindBy(xpath = "//h1[text()[normalize-space()='My Allocations']]")
+	private WebElement lblMyAllocations;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
-	String inputAllocationPercrntageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
+	String inputAllocationPercentageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
 	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
+	String txtMoneyType="//div[contains(text(),'Money Type Grouping')]";
+	String selectInvestment="//div[./div[./div[contains(text(),'Money Type Grouping')]]]//button[contains(text(),'Select Investments ')]";
 	private String textField="//*[contains(text(),'webElementText')]";
+	String inputAllocationPercentageFutureEnroll="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String choice=null;
 	/**
 	 * Empty args constructor
@@ -630,6 +637,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		
 		if (fieldName.trim().equalsIgnoreCase("Label Direct Future Investments")) {
 			return this.lblDirectFutureInvest;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header My Allocations")) {
+			return this.lblMyAllocations;
 		}
 		
 		// Log out
@@ -1495,10 +1505,10 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 *@param percent
 	 *
 	 */
-	public void addInvestments(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
+	public synchronized Map<String, String>  addInvestments(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
 		try{
-		    mapInvestmentOptions.clear();
-		    mapCurrentInvestmentOptionsPecentage.clear();
+		    mapInvestmentOptions=new HashMap<String, String>();
+		    mapCurrentInvestmentOptionsPecentage=new HashMap<String, String>();
 		    Web.waitForElements(inpInvestmentOptionFutureAllocation);
 			
 			int noOfRows = inpInvestmentOptionFutureAllocation.size();
@@ -1529,7 +1539,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 			
 			for(int i=0;i<noOfInvestmentoptions;i++){
 		WebElement inptAllocationPercent = Web.getDriver().findElement(By
-				.xpath(inputAllocationPercrntageFuture.replace("Investment Option",
+				.xpath(inputAllocationPercentageFuture.replace("Investment Option",
 						mapInvestmentOptions.get("investmentFundName"+i))));
 		Web.setTextToTextBox(inptAllocationPercent, percent[i]);
 		Thread.sleep(1000);
@@ -1560,6 +1570,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		catch(Exception e){
 			
 		}
+		return mapCurrentInvestmentOptionsPecentage;
 	}
 	
 	/**
@@ -1633,7 +1644,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 */
 	public Map<String, String> getCurrentFunds() {
 	
-          mapInvestmentOptions.clear();
+          mapInvestmentOptions=new HashMap<String,String>();
 		if (Web.isWebElementsDisplayed(txtCurrentFundsforChangeFutureFlow)) {
 
 			for(int i=0;i<txtCurrentFundsforChangeFutureFlow.size();i++){
@@ -2175,30 +2186,34 @@ return isTextDisplayed;
 	 * 
 	 *
 	 */
-	public void VerifyAllocatedPecentageForFunds() {
+	public synchronized void VerifyAllocatedPecentageForFunds(Map<String,String> mapInvestmentOptions) {
 	String  actualPercentage=null;
 	String  expectedPercentage=null;
-         for(int i=0;i<mapCurrentInvestmentOptionsPecentage.size();i++){
-        	 
-        
+	
+	
+	
+	 	Set<String> keys = mapInvestmentOptions.keySet();
+	 	for(String key: keys){
+        System.out.println(key);
+
           WebElement txtAllocationPercent = Web.getDriver().findElement(By
   				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
-  						mapInvestmentOptions.get("investmentOption"+i))));
+  						mapInvestmentOptions.get(key))));
           actualPercentage=txtAllocationPercent.getText().toString().trim();
-          expectedPercentage=mapCurrentInvestmentOptionsPecentage.get(mapInvestmentOptions.get("investmentOption"+i));
+          expectedPercentage=mapCurrentInvestmentOptionsPecentage.get(mapInvestmentOptions.get(key));
           expectedPercentage=expectedPercentage+"%";
           if(expectedPercentage.contains(actualPercentage)){
         	  
         	  Reporter.logEvent(Status.PASS,
-  					"Verify Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page ",
-  					"Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  					"Verify Allocated Percentage For Fund '"+key+"' is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund '"+key+"' is Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
   	
   		
   		}else 
   			{
   			Reporter.logEvent(Status.FAIL,
-  					"Verify Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Same in Confirmation Page ",
-  					"Allocated Percentage For Fund '"+mapInvestmentOptions.get("investmentOption"+i)+"' is Not Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+  					"Verify Allocated Percentage For Fund '"+key+"' is Same in Confirmation Page ",
+  					"Allocated Percentage For Fund '"+key+"' is Not Same in Confirmation Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
   	
   			}
           
@@ -2242,14 +2257,14 @@ return isTextDisplayed;
 	 String pageHeader=webelement.getText().toString().trim();
 		if (Web.isWebElementDisplayed(webelement)) {
 			lib.Reporter.logEvent(Status.PASS, "Verify "+pageHeader 
-					+ " Page  is Displayed", "Verify "+pageHeader 
+					+ " Page  is Displayed", pageHeader 
 					+ " Page  is Displayed",
 					true);
 
 		} else {
 					
 			lib.Reporter.logEvent(Status.FAIL, "Verify "+pageHeader 
-					+ " Page  is Displayed", "Verify "+pageHeader 
+					+ " Page  is Displayed", pageHeader 
 					+ " Page  is Not Displayed",true);
 			throw new Error(webElement+" is not displayed");
 		}
@@ -2368,6 +2383,50 @@ public void verifyErrorPageDisplayed() {
 		
 
 	}
+/**
+ * <pre>
+ * Method to select the Model Portfolio  for Change Future Allocation-HMDI
+ * Returns String
+ * </pre>
+ * 
+ * @return String - modelPortfolioFund
+ */
+public String selectModelPortfolioFund() {
+
+    
+      if (Web.isWebElementsDisplayed(inpTargetDateFund)) {
+		if(inpTargetDateFund.size()>=1){
+			Web.clickOnElement(inpTargetDateFund.get(0));
+			targetYearFund=txtTargetDateFund.get(0).getText().toString().trim();
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Model Portfolio Fund' is selected",
+					"Selected 'Model Portfolio Fund' is:"+targetYearFund, true);
+			
+		}
+		else 
+			{
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Model Portfolio Fund' is selected",
+					"'Model Portfolio Fund is not selected", true);
+			}
+		
+	}
+
+      if (Web.isWebElementDisplayed(tableAssetClass))
+    	  Reporter.logEvent(Status.PASS,
+					"Verify 'Asset Table' is Displayed",
+					"Asset Table' is Displayed", true);
+      
+      else
+    	  Reporter.logEvent(Status.FAIL,
+					"Verify 'Asset Table' is Displayed",
+					"Asset Table' is Not Displayed", true);  
+    
+      Web.clickOnElement(btnContinueToTargetDateFund);
+      Web.waitForElement(hdrReviewYourChanges);
+	return targetYearFund;
+
+}
 
 
 	public List<String> getInvestmentsSubmissionTime(){
@@ -2414,5 +2473,214 @@ public void verifyErrorPageDisplayed() {
 		return timeStamp;
 		
 	}
+	/**
+	 * <pre>
+	 * Method to Verify the Confirmation Message for Model Portfolio Investments Flow
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifyConfirmationMessageForModelPortfolio() {
+		List<String> dates=getInvestmentsSubmissionTime();
+		String date=txtConfirmationDate.getText().toString().trim();
+		if(date.equalsIgnoreCase(dates.get(0))){
+			date=dates.get(0);
+		}
+		else{
+			date=dates.get(1);
+		}
+		String expectedConfirmationMsg="Your investment allocation request for current account balance, and future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+		
+		String actualConfirmationMsg=getWebElementText("Text Confirmation");
+		if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+			
+			Reporter.logEvent(Status.PASS,
+					"Verify Confirmation Message is Displayed in Confirmation Page",
+					"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+		}
+		else{
+			Reporter.logEvent(Status.INFO,
+					"Verify Confirmation Message is Displayed in Confirmation Page",
+					"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+		}
+
+		}
+	/**
+	 * <pre>
+	 * Method to Verify Select Investment Button is displayed for Money Type Grouping
+	 * 
+	 * </pre>
+	 * 
+	 * 
+	 */
+	public void verifyInvestmentButtonDisplayedforMoneyTypeGroup(String moneyTypeGroup) {
+		
+		try
+		{
+			WebElement btnSelectInvestment = Web.getDriver().findElement(By		
+				.xpath(selectInvestment.replace("Money Type Grouping",moneyTypeGroup)));
+			if(Web.isWebElementDisplayed(btnSelectInvestment)){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Select Investments' Button is Displayed for "+moneyTypeGroup,
+						"'Select Investments' Button is Displayed for "+moneyTypeGroup, false);
+			}
+			else{
+				Reporter.logEvent(Status.INFO,
+						"Verify 'Select Investments' Button is Displayed for "+moneyTypeGroup,
+						"'Select Investments' Button is Not Displayed for "+moneyTypeGroup, true);
+				}
+		}
+          catch(NoSuchElementException e){
+        	 
+          }
+  
+	}
 	
+	/**
+	 * <pre>
+	 * Method to click on Select Investment Button is displayed for Money Type Grouping
+	 * 
+	 * </pre>
+	 * 
+	 * 
+	 */
+	public void clickSelectInvestmentButtonforMoneyTypeGroup(String moneyTypeGroup) {
+		
+		try
+		{
+			WebElement btnSelectInvestment = Web.getDriver().findElement(By		
+				.xpath(selectInvestment.replace("Money Type Grouping",moneyTypeGroup)));
+			if(Web.isWebElementDisplayed(btnSelectInvestment)){
+				
+				Web.clickOnElement(btnSelectInvestment);
+				}
+		}
+          catch(NoSuchElementException e){
+        	 
+          }
+  
+	}
+	
+
+	public boolean isInvestmentOptiondDisplayed(String investmentOption) {
+		boolean isTextDisplayed=false;
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", investmentOption)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		if (isTextDisplayed) {
+			lib.Reporter.logEvent(Status.PASS, "Verify Investment Option " + investmentOption
+					+ "  is Displayed", "Investment Option '"+investmentOption + "' is Displayed",
+					false);
+
+		} else {
+					
+			lib.Reporter.logEvent(Status.FAIL, "Verify Investment Option " + investmentOption
+					+ "  is Displayed", "Investment Option'"+investmentOption + "' is Not Displayed", false);
+			throw new Error(investmentOption+" is not displayed");
+		}
+	
+return isTextDisplayed;
+	}
+	/**
+	 * <pre>
+	 * Method to Verify Money Type Grouping is Displayed in Enrollment Flow
+	 * Returns boolean
+	 * </pre>
+	 * 
+	 * @return boolean - isDisplayed
+	 */
+	public boolean verifyMoneyTypeGroupDisplayed(String moneyTypeGrouping) {
+	
+		boolean isDisplayed=false;
+		
+		try
+		{
+			WebElement textMoneyTypeGrouping = Web.getDriver().findElement(By		
+				.xpath(txtMoneyType.replace("Money Type Grouping",moneyTypeGrouping)));
+			if(textMoneyTypeGrouping.isDisplayed())
+				isDisplayed=true;
+		}
+          catch(NoSuchElementException e){
+        	  isDisplayed=false;
+          }
+  		
+  		return isDisplayed;
+
+	}
+	/**
+	 * This Method to select the investment options and enter the percentage for Enrollment Flow
+	 * @author srsksr
+	 *@param noOfInvestmentoptions
+	 *@param percent
+	 *
+	 */
+	public synchronized Map<String, String> addInvestmentsforEnrollmentFlow(int noOfInvestmentoptions,String[] percent) throws InterruptedException {
+		try{
+			mapInvestmentOptions=new HashMap<String, String>();
+		    mapCurrentInvestmentOptionsPecentage=new HashMap<String, String>();
+		    Web.waitForElements(inpInvestmentOptionFutureAllocation);
+			
+			int noOfRows = inpInvestmentOptionFutureAllocation.size();
+			if (noOfRows >= noOfInvestmentoptions) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment options are available",
+						"Investment options are available ", false);
+				for(int i=0;i<noOfInvestmentoptions;i++){
+					int j=i+1;
+					mapInvestmentOptions.put("investmentFundName"+i, txtInvestmentOption.get(i).getText());
+				
+				Web.clickOnElement(inpInvestmentOptionFutureAllocation.get(i));
+				
+				Reporter.logEvent(Status.INFO, "Selected Investment Option",
+						"Selected Investment Option"+j+" : \n" 
+								+ mapInvestmentOptions.get("investmentFundName"+i) , true);
+				}
+			
+				
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment options are available",
+						noOfInvestmentoptions+"Investment options are not available ", true);
+
+			Web.clickOnElement(btnAdd);
+		
+			Web.waitForElement(lnkAddViewAllFundsFuture);
+			
+			for(int i=0;i<noOfInvestmentoptions;i++){
+		WebElement inptAllocationPercent = Web.getDriver().findElement(By
+				.xpath(inputAllocationPercentageFutureEnroll.replace("Investment Option",
+						mapInvestmentOptions.get("investmentFundName"+i))));
+		Web.setTextToTextBox(inptAllocationPercent, percent[i]);
+		Thread.sleep(1000);
+		mapCurrentInvestmentOptionsPecentage.put(mapInvestmentOptions.get("investmentFundName"+i), inptAllocationPercent.getAttribute("value"));
+			}
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		if(txttotalInvestmentPercent.getText().contains("100")){
+			Reporter.logEvent(Status.PASS,
+					"Verify Investment Percentage is Entered and Equals to 100",
+					"Investment Percentage is Matching and Equals to 100", true);
+
+		}
+		else 
+			{
+			Reporter.logEvent(Status.FAIL,
+							"Verify Investment Percentage is Entered and Matching",
+				"Investment Percentage is not Matching", true);
+			}
+		btnSubmitChangeFutureFund.click();
+		if(Web.isWebElementDisplayed(btnAlertContinue, true)){
+			Web.clickOnElement(btnAlertContinue);
+		}
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElements(txtCurrentFundsforChangeFutureFlow);
+		}
+		catch(Exception e){
+			
+		}
+		return mapCurrentInvestmentOptionsPecentage;
+	}	
 }

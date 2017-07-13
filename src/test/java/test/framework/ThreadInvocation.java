@@ -35,7 +35,7 @@ public class ThreadInvocation {
 			};
 
 				//Runnable runnable = new DriverScript();
-			    Thread[] threads = new Thread[1];
+			    Thread[] threads = new Thread[3];
 		
 			for (int i = 0; i < threads.length; i++) {
 			    threads[i] = new Thread(threadRunnable);

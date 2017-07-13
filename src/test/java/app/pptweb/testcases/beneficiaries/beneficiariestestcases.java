@@ -11,6 +11,8 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.jboss.netty.handler.traffic.GlobalTrafficShapingHandler;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,7 +32,8 @@ import core.framework.Globals;
 public class beneficiariestestcases {
 	
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
-	private static HashMap<String, String> testDataFromDB = null;
+	private static HashMap<Long,Map<String, String>> testDataFromDB = null;
+	private static Map<String, String> testDataForCurrentThread = null;
 	LoginPage login;
 	String tcName;
 	public static String participant_SSN = null;
@@ -38,7 +41,13 @@ public class beneficiariestestcases {
 	static String printTestData="";
 	
 	@BeforeClass
-    public void ReportInit(){               
+    public void ReportInit(){     
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Reporter.initializeModule(this.getClass().getName());
     }
 
@@ -54,19 +63,23 @@ public class beneficiariestestcases {
 
     }
     
-    public void prepareBeneficiaryTestData(String quesryNmae,String... queryParam) {
+    public synchronized Map<String, String> prepareBeneficiaryTestData(String quesryNmae,String... queryParam) {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			 TestDataFromDB.getParticipantDetails(
 					quesryNmae, queryParam);
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
-		} catch (SQLException e) {
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			/*testDataForCurrentThread=Stock.globalTestdata.get(Thread.currentThread().getId());*/
+			
+		} 
+	
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return testDataForCurrentThread;
 	}
     
     
-    private String printTestData() throws Exception {
+   private String printTestData() throws Exception {
 		printTestData="";
 		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
 			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
@@ -85,6 +98,14 @@ public class beneficiariestestcases {
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			participant_SSN = Stock.GetParameterValue("SSN");
 			first_Name=Stock.GetParameterValue("FIRST_NAME");
+			MyBeneficiaries beneficiary = new MyBeneficiaries();
+			try {
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
+				
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -97,7 +118,7 @@ public class beneficiariestestcases {
 			//			leftmenu = new LeftNavigationBar(accountPage);
 			//		}
 			leftmenu = new LeftNavigationBar(homePage);
-			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+			beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
 			
@@ -1822,5 +1843,12 @@ public class beneficiariestestcases {
 		public void Beneficiary_TC012_UnMarried_Multiple_Individual_beneficiary_Sanity(int itr, Map<String, String> testdata){
 			UnMarried_Multiple_Individual_beneficiary(itr, testdata);
 		}
+		
+		@AfterSuite
+		public void closeWebdriver(){     
+			Web.getDriver().quit();
+				
+	    }
+
 		
 }

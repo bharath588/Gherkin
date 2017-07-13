@@ -48,9 +48,9 @@ public class authenticationtestcases {
 	
 	public void prepareLoginTestData(String quesryNmae,String... queryParam) {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(
 					quesryNmae, queryParam);
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

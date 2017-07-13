@@ -60,9 +60,9 @@ public class registrationtestcases {
 	public void prepareLoginTestData() {
 		try {
 			testDataFromDB = TestDataFromDB
-					.getParticipantDetails("getUnRegisteredUser",
+					.getParticipantDataFromDB("getUnRegisteredUser",
 							Stock.GetParameterValue("ga_PlanId"));
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,9 +71,9 @@ public class registrationtestcases {
 
 	public void prepareLoginTestData(String quesryNmae, String... queryParam) {
 		try {
-			testDataFromDB = TestDataFromDB.getParticipantDetails(quesryNmae,
+			testDataFromDB = TestDataFromDB.getParticipantDataFromDB(quesryNmae,
 					queryParam);
-			TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
