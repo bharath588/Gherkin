@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
@@ -2681,7 +2682,7 @@ try {
 		employeesearch.addChangeAllocBtnForSelfDirectedPlan();
 		employeesearch.navigateToAllocPage();
 		employeesearch.addAllocationAndVerify();
-		
+		homePage.logoutPSC();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;
@@ -2717,9 +2718,36 @@ try {
 		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
 				+ "validateemployee Transaction History page.", false);
 		employeesearch = new EmployeeSearch().get();
-		
-				
-	
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToTxnHistoryTab();
+		String expMsg = Stock.GetParameterValue("ExpPastThreeMonthsTxnMsg");
+		String actMsg =  Web.returnElement(employeesearch,"TXN_HISTORY_PAST_THREE_MONTH_MSG").getText().trim();
+		if(Web.VerifyText(expMsg,actMsg,true))
+			Reporter.logEvent(Status.PASS,"Validate below message is displayed under transation history"
+					+ " section\n"+expMsg,"Below message is displayed:\n"+actMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below message is displayed under transation history"
+					+ " section\n"+expMsg,"Below message is displayed:\n"+actMsg, true);
+		employeesearch.validateTxnHistPageScreenElements();
+		employeesearch.dateRangeValidationTxnHist();
+		employeesearch.validateConfirmationNbrWindow();
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN_NoPastThreeMonth"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		CommonLib.switchToFrame(Web.returnElement(employeesearch,"FRAME"));
+		String expNoDataMsg = Stock.GetParameterValue("ExpMsg_NoPastThreeMonth");
+		String actNoDataMsg = 
+				Web.returnElement(employeesearch,"NO_DATA_TXN_HIST_Click_HERE_LINK").findElement(By.xpath("./..")).getText().trim();
+		System.out.println("Actual No Data message:"+actNoDataMsg);
+		if(actNoDataMsg.contains(expNoDataMsg)) 
+			Reporter.logEvent(Status.PASS,"Validate below message for employee having no"
+					+ " past three month transactions.\n"+actNoDataMsg,"Below message is displayed for ppt not having"
+							+ " past three month transaction.\n"+actNoDataMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below message for employee having no"
+					+ " past three month transactions.\n"+actNoDataMsg,"Below message is displayed for ppt not having"
+							+ " past three month transaction.\n"+actNoDataMsg, true);
+		employeesearch.clickHereOpensModalWindow();
 		
 } catch (Exception e) {
 	e.printStackTrace();
@@ -2744,22 +2772,48 @@ try {
 
 /**
  * @author smykjn
- * <pre>This test case validates employee Transaction History page.</pre>
+ * <pre>This test case validates external loan page elements and data.</pre>
  * @param itr
  * @param testdata
  * @Date 10-July-2017
  */
 @Test(dataProvider = "setData")
-public void TC_55_Loan_Summary_Table(int itr,Map<String, String> testdata) {		
+public void TC_55_Loan_Summary_Table_External_Loan(int itr,Map<String, String> testdata) {		
 try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
 				+ "validateemployee Transaction History page.", false);
 		employeesearch = new EmployeeSearch().get();
-		
-				
-	
-		
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		employeesearch.navigateToEmployeeOverViewPage();	
+		if(employeesearch.isMoreDisplayedAndExtLoanHeaders()){
+		employeesearch.validateExtLoanDetailPage_1();
+		employeesearch.validateExtLoanDetailPage_2();}
+		Web.getDriver().switchTo().defaultContent();
+		employeesearch.searchPlan(Stock.GetParameterValue("GA_ID"));
+		employeesearch.searchByParticipantID(Stock.GetParameterValue("PPTId_NO_Loan_Amt"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.noExtLoanDataValidation();
+		employeesearch.returnToEmpOvwPage();
+		employeesearch.searchByParticipantID(Stock.GetParameterValue("PPTId_NO_Loan"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		CommonLib.switchToFrame(Web.returnElement(employeesearch,"FRAME"));
+		String text = Web.returnElement(employeesearch,"NO LOANS PAYOUT ID").getText();
+		if(Web.returnElement(employeesearch,"NO LOANS PAYOUT ID").isDisplayed())
+			Reporter.logEvent(Status.PASS,"Search for ppt with no loan payout data and check"
+					+ " on overview page loan data block is suppressed and below message is dislayed:\n"+text,""
+							+ "Loan data block is suppressed and below message is displayed.\n"+text,false);
+		else
+			Reporter.logEvent(Status.FAIL,"Search for ppt with no loan payout data and check"
+					+ " on overview page loan data block is suppressed.","Loan data block is not suppressed.",true);
+		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.dateFieldValidatnOnLoanPage();
+		employeesearch.returnToEmpOvwPage();
+		employeesearch.searchByParticipantID(Stock.GetParameterValue("PPTId_NoLoanRepayments"));
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.validateIfNoLoanRepaymenet();
+		employeesearch.logoutFromApplication();
 } catch (Exception e) {
 	e.printStackTrace();
 	Globals.exception = e;

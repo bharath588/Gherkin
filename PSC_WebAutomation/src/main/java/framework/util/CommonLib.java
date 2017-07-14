@@ -9,13 +9,16 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import lib.DB;
@@ -423,7 +426,7 @@ public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<Str
 {
 	boolean isdisplayed = false;
 	for(WebElement header : actHeaders){
-		System.out.println("Actual Header is"+header.getText().trim());
+		System.out.println("Actual Header is "+header.getText().trim());
 		if(expHeaders.contains(header.getText().replaceAll(":", "").trim()))
 		{isdisplayed = true;}
 		else
@@ -800,6 +803,48 @@ public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLE
 }
 
 
+/**
+ * <pre>Return date with specific time zone.</pre>
+ * @author smykjn
+ */
+public static Date getSysDateWithTimeZone(String timezone){
+	Date date=null;
+	Calendar present;
+	try{
+		TimeZone zone = TimeZone.getTimeZone(timezone);
+		present= Calendar.getInstance(zone);
+	    present.setTime(present.getTime());
+	    date = present.getTime();
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+	}
+	return date;
+}
+
+/**
+ * @author smykjn
+ */
+public static String getDateStringInDateFormat(String dateformat,Date date){
+	String dateString="";
+	try{
+		DateFormat df = new SimpleDateFormat(dateformat);
+		dateString= df.format(date);
+		
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+	}
+	return dateString;
+}
+
+/**
+ * <pre>This method returns a random number within a defined range</pre>
+ * @author smykjn
+ * @param integer
+ */
+public static int getRandomNumber(int range){
+	int random = (int )(Math.random() * range + 1);
+	return random;
+}
 
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" > <!-- parallel="classes" thread-count="4" -->
+<suite name="testsuite"> <!-- parallel="classes" thread-count="3" >-->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -61,7 +61,7 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatename">
 						</parameter>
-					</include> 
+					</include>  -->
 					<include
 						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
@@ -74,7 +74,7 @@
 							value="Employee_Search_Regression_noduplicateppt">
 						</parameter>
 					</include>
-					<include
+					<!-- <include
 						name="TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatediv">
@@ -100,11 +100,11 @@
 					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="Employee_Contact_Info_Verification" />
-					</include>  
+					</include>  --> 
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="Verify_Beneficiary_Info" />
 					</include>
-					 <include name="TC020_Recently_Viewed_Employee">
+					 <!-- <include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="Recently_Viewed_Employee" />
 					</include>
 					<include name="TC021_Salary_View_And_Update">
@@ -112,35 +112,35 @@
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="Paycheck_contribution_View" />
-					</include> 
+					</include> --> 
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="EnrolmmentAndEligibility" />
 					</include>
-					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+					<!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include>
+					</include> -->
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
 					</include>
-					<include name="TC027_Verify_Subset_History_Section">
+					<!-- <include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName" value="Verify_Subset_History_Section" />
 					</include> 
 					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName" value="Recently_Viewed_Switch_Participant_Reg" />
-					</include>
+					</include> -->
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName" value="Edit_Enrollment_And_Eligibility" />
 					</include>
-					<include name="TC30_Account_balance_Tab">
+					<!-- <include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="Validate_Account_balance_Tab" />
-					</include>
+					</include> -->
 					<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="Disable_PAE_then_renable_PAE" />
 					</include>
-					<include name="TC32_Supress_Menu_Items_for_TRS_Flex">
+					<!-- <include name="TC32_Supress_Menu_Items_for_TRS_Flex">
 						<parameter name="ManualTCName" value="Supress_Menu_Items_for_TRS_Flex" />
-					</include>
+					</include> -->
 					<include name="TC33_Suppress_Account_Detail_elements_TRS_NonTRS">
 						<parameter name="ManualTCName"
 							value="Suppress_Account_Detail_elements_TRS_NonTRS" />
@@ -175,10 +175,10 @@
 					<include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="Paycheck_Contribution_History" />
 					</include>
-					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
+					<!-- <include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
 						<parameter name="ManualTCName"
 							value="Enroll_And_Eligibility_Fields_Type_Validations" />
-					</include> 
+					</include> --> 
 					<include
 						name="TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page">
 						<parameter name="ManualTCName"
@@ -189,10 +189,10 @@
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page" />
 					</include>
-					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
+					<!-- <include name="TC024_Verify_Employee_Overview_Screen_Elements">
 						<parameter name="ManualTCName"
 							value="Verify_Employee_Overview_Screen_Elements" />
-					</include> 
+					</include>  -->
 					<include name="TC_47_Search_Emp_Locked_Plan">
 						<parameter name="ManualTCName" value="Search_Emp_Locked_Plan" />
 					</include>
@@ -202,7 +202,7 @@
 					<include name="TC_50_SSN_Multiple_Plan_PAE">
 						<parameter name="ManualTCName" value="SSN_Multiple_Plan_PAE" />
 					</include>
-					<include name="TC_56_Info_Message_New_User">
+					<!-- <include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="Info_Message_New_User" />
 					</include>
 					<include name="TC_54_Employee_Overview_With_Active_Models">
@@ -210,16 +210,16 @@
 					</include>
 					<include name="TC_53_Participant_Investments_Tab">
 						<parameter name="ManualTCName" value="Participant_Investments_Tab" />
-					</include>-->
+					</include> -->
+					<include name="TC_55_Loan_Summary_Table_External_Loan">
+						<parameter name="ManualTCName" value="Loan_Summary_Table_External_Loan" />
+					</include>
 					<include name="TC_48_AccountDetail_Transacion_History_Reg">
 						<parameter name="ManualTCName" value="AccountDetail_Transacion_History_Reg" />
 					</include>
-					<include name="TC_55_Loan_Summary_Table">
-						<parameter name="ManualTCName" value="Loan_Summary_Table" />
-					</include>
 				</methods>
 			</class>
-			<!--<class name="app.psc.testcases.login.logintestcases" >
+			<!-- <class name="app.psc.testcases.login.logintestcases" >
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -510,14 +510,14 @@
 							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
 					</include>
 				</methods>
-			</class>
-			<class name="app.psc.testcases.myprofile.myprofiletestcases">
+			</class> -->
+			<!-- <class name="app.psc.testcases.myprofile.myprofiletestcases">
 				<methods>
 					<include name="TC01_TestPageObject">
 						<parameter name="ManualTCName" value="TestPageObject" />
 					</include>
 				</methods>
-			</class>-->
+			</class> -->
 		</classes>
 	</test>
 </suite>

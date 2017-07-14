@@ -660,6 +660,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement txnHistoryMoreBtn;
 	@FindBy(xpath=".//*[@id='transactionDashboard_content']//div[@class='noData']//a")
 	private WebElement clickHereLinkInTxnHist;
+	@FindBy(xpath=".//*[@id='transactionDashboard']//tr[not(ancestor::thead)]")
+	private List<WebElement> txnHistryRowOnAcccntDetailPage;
+	@FindBy(id="transactionDashboard")
+	private WebElement txnHistDashboard;
 	@FindBy(id="transactionHistSSOFrame")
 	private WebElement txnHistFrame;
 	@FindBy(xpath="(.//input[@type='RADIO'])[3]")
@@ -712,6 +716,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement addEmpTitle;
 	@FindBy(id="ssnId")
 	private WebElement enterSSN;
+	@FindBy(xpath=".//div[@class='bulletinAlignment']//span/span")
+	private WebElement noExtLoanDtaMsgOnLonDetlPage;
 	@FindBy(id="ssnReId")
 	private WebElement reEnterSSN;
 	@FindBy(id="date_of_birth")
@@ -820,7 +826,56 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement cancelAllocBtn;
 	@FindBy(name="UPDATE_MONEY_TYP_ALLOCATION")
 	private List<WebElement> addAllocBtnForSelDirected;
-	
+	@FindBy(xpath="//*[@id='loanDashboard']//button[.='More']")
+	private WebElement loanMoreBtn;
+	@FindBy(xpath="//*[@id='externalLoanDashboard']//th//span")
+	private List<WebElement> extLoanHeaders;
+	@FindBy(xpath=".//*[@id='loanInfo']//h1")
+	private WebElement loanDetailHeader;
+	@FindBy(xpath=".//span[.='SSN']")
+	private WebElement ssnLabelOnLoanDetailPage;
+	@FindBy(xpath=".//span[.='Participant ID']")
+	private WebElement pptIdLabelOnLoanDetailPage;
+	@FindBy(id="date-picker-begin")
+	private WebElement fromDateOnExtLoanPage;
+	@FindBy(id="date-picker-end")
+	private WebElement toDateOnExtLoanPage;
+	@FindBy(xpath=".//span[contains(text(),'Loans taken')]")
+	private WebElement loanTakenTitle;
+	@FindBy(xpath=".//th/span")
+	private List<WebElement> headersOnLoanDetailPage;
+	@FindBy(xpath=".//span[contains(text(),'Loans payments receieved')]")
+	private WebElement loansPaymentReceTitle;
+	@FindBy(xpath=".//tr[contains(@data-ng-repeat,'loanDisbursements')]//td[2]")
+	private List<WebElement> listOfExtLoanAmount;
+	@FindBy(id="no_loans_info_available")
+	private WebElement noExtLoanMsg;
+	@FindBy(id="no_loans_payout_available")
+	private WebElement noLoanPayout;
+	@FindBy(xpath=".//span[.='Date range:']/following-sibling::span")
+	private WebElement datRangeError;
+	@FindBy(xpath=".//button[contains(text(),'Submit')]")
+	private WebElement submitBtn;
+	@FindBy(xpath=".//*[@id='rsTable']//tr[position()<2]//a")
+	private List<WebElement> txnHistModalHeader;
+	@FindBy(xpath=".//*[@id='rsTable']//tr[not(position()<2)]//a")
+	private List<WebElement> txnHistryConfmtionNumbr;
+	@FindBy(xpath=".//input[@value='SUMMARY']")
+	private WebElement summaryRadioBtn;
+	@FindBy(xpath=".//input[@value='ALL']")
+	private WebElement allTxnRadioBtn;
+	@FindBy(xpath=".//input[@value='C']")
+	private WebElement contributionRadioBtn;
+	@FindBy(xpath=".//input[@value='TI']")
+	private WebElement txfrTxnRadioBtn;
+	@FindBy(xpath=".//input[@value='W']")
+	private WebElement withdwTxnRadioBtn;
+	@FindBy(id="empUpdateVestingInfoPriorFrameId")
+	private WebElement empUpdateVestingPriorInfoframe;
+	@FindBy(xpath="//*[@id='rsTable']//tr[position()>1]//td[2]/font")
+	private List<WebElement> effDateTxnHist;
+	@FindBy(xpath="//*[@id='transactionDashboard']//span[@class='caption']")
+	private WebElement pastThreeTxnMessage;
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
 	private String transHistory = ".//*[@id='transactions']";
@@ -838,6 +893,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private String enrollAndEligSection = ".//*[@id='enrollmentAndEligibilityInfo']";
 	private String payCheckContriSection = ".//*[@id='paycheckContributionInfo']";
 	private String feesDataForThreeMonth = ".//*[@id='feeDashboard']//thead/following-sibling::tbody";
+	private String empIdOnLoanDetail = ".//span[.='Employee ID']";
+	
+	
 	
 	
 	String qdroPart = null;
@@ -953,7 +1011,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.trim().equalsIgnoreCase("Allocation More Button")){
 			return this.allocMoreButton;
 		}
-
+		if(fieldName.trim().equalsIgnoreCase("NO LOANS PAYOUT ID")){
+			return this.noLoanPayout;
+		}
+		if(fieldName.trim().equalsIgnoreCase("TXN_HISTORY_PAST_THREE_MONTH_MSG")){
+			return this.pastThreeTxnMessage;
+		}
+		if(fieldName.trim().equalsIgnoreCase("NO_DATA_TXN_HIST_Click_HERE_LINK")){
+			return clickHereLinkInTxnHist;
+		}
 		return null;
 	}
 
@@ -1330,7 +1396,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchByParticipantID(String pptID) throws InterruptedException {
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.switchToFrame(employeeSearchFrame);
 		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("Participant ID");
@@ -5768,8 +5834,7 @@ public void validateVestingModalWindowSection_1()
 		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);
 	}
 }
-@FindBy(id="empUpdateVestingInfoPriorFrameId")
-private WebElement empUpdateVestingPriorInfoframe;
+
 /**
  * <pre>This method validates 
  * 1.if Click here link is clicked then it should display Account Balance by money sources page.
@@ -7896,6 +7961,511 @@ public void navigateToAllocPage(){
 		Web.clickOnElement(changeAllocBtn);
 		Web.waitForPageToLoad(Web.getDriver());
 		Thread.sleep(1000);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+
+/**
+ * <pre>This method validates the more button(if loan > 5),loans columns</pre>
+ * @author smykjn
+ * @Date 11-July-2017
+ */
+public boolean isMoreDisplayedAndExtLoanHeaders(){
+	List<String> expExtLoanHeader = Arrays.asList(Stock.GetParameterValue("ExpExtLoanHeader").split(","));
+	boolean ismoreDisplayed = false;
+	try{
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getExtLoansDetails")[0],
+				Stock.getTestQuery("getExtLoansDetails")[1],Stock.GetParameterValue("GA_ID"),Stock.GetParameterValue("SSN"));
+		int count = DB.getRecordSetCount(queryResultSet);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		if(count>5)
+			ismoreDisplayed=loanMoreBtn.isDisplayed();
+		else{
+			try{
+				ismoreDisplayed=loanMoreBtn.isDisplayed();
+			}catch(Exception e){
+				ismoreDisplayed = false;
+			}
+		}
+		if(ismoreDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate more button is displayed if number of loans>5 else"
+					+ " more button is not displayed.","More button displayed:"+ismoreDisplayed+"\n"
+							+ "Number of loan is:"+count, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate more button is displayed if number of loans>5 else"
+					+ " more button is not displayed.","More button displayed:"+ismoreDisplayed+"\n"
+							+ " Number of loan is:"+count, true);
+		
+		
+		boolean isHeaderDisplayed = CommonLib.isAllHeadersDisplayed(extLoanHeaders, expExtLoanHeader);
+		if(isHeaderDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate below columns are displayed for external loans:\n"
+					+expExtLoanHeader,"Expected columns are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below columns are displayed for external loans:\n"
+					+expExtLoanHeader,"Expected columns are not displayed.", true);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	return ismoreDisplayed;
+}
+
+
+
+/**
+ * <pre>This method validated the external loan detail page.</pre>
+ * @author smykjn
+ */
+public void validateExtLoanDetailPage_1(){
+	String pptName="";
+	try{
+		pptName = empNameHeader.getText().trim();
+		Web.clickOnElement(loanMoreBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(loanDetailFrame);
+		CommonLib.switchToFrame(loanDetailFrame);
+		System.out.println("name on loan detail page:"+loanDetailHeader.getText().trim());
+		boolean isNameDisplayed= loanDetailHeader.getText().trim().contains(pptName);
+		if(isNameDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate participant name is displayed on loan detail page."
+					+ "\nPPT name:"+pptName,"Header is displayed containing ppt name as below:\n"+
+							loanDetailHeader.getText().trim(), false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate participant name is displayed on loan detail page."
+					+ "\nPPT name:"+pptName,"Header is not displayed containing ppt name.\n"+
+							loanDetailHeader.getText().trim(), true);
+		boolean isEmpId = CommonLib.isElementExistByXpath(empIdOnLoanDetail);
+		WebElement ssn = ssnLabelOnLoanDetailPage.findElement(By.xpath("./.."));
+		WebElement pptId = pptIdLabelOnLoanDetailPage.findElement(By.xpath("./.."));
+		if(ssn.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate if SSN is displayed on loan detail page.","SSN is displayed on"
+					+ " loan detail page:\n"+ssn.getText(),false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate if SSN is displayed on loan detail page.","SSN is not displayed on"
+					+ " loan detail page:\n"+ssn.getText(),true);
+		if(pptId.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate if Participant id is displayed on loan detail page.","Participant id"
+					+ " is displayed on loan detail page:\n"+pptId.getText(),false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate if Participant id is displayed on loan detail page.","Participant id"
+					+ " is not displayed on loan detail page:\n"+pptId.getText(),false);
+		if(isEmpId)
+		{
+			WebElement empIdLabel = Web.getDriver().findElement(By.xpath(empIdOnLoanDetail));
+			WebElement empId = empIdLabel.findElement(By.xpath("./.."));
+			if(empId.isDisplayed())
+				Reporter.logEvent(Status.PASS,"Validate emp id is displayed on loan detail page.", "Emp id is displayed"
+						+ " on loan detail page.\n"+empId.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate emp id is displayed on loan detail page.", "Emp id is not displayed"
+						+ " on loan detail page with label.\n"+empId.getText(), true);
+		}else{
+			Reporter.logEvent(Status.INFO,"Validate emp id is displayed on loan detail page.", "Emp id is not displayed"
+					+ " on loan detail page as ppt is not assigned with emp id.", true);
+		}
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+
+
+/**
+ * <pre>This method validated the external loan detail page and total of loan amounts.</pre>
+ * @author smykjn
+ */
+public void validateExtLoanDetailPage_2(){
+	double sum = 0;
+	double sumDB=0;
+	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpHeadersOnLoanDetail").split(","));
+	List<Double> loanAmounts = new ArrayList<Double>();
+	try{
+		boolean isFromDateDisplayed = fromDateOnExtLoanPage.isDisplayed();
+		boolean isEndDateDisplayed = toDateOnExtLoanPage.isDisplayed();
+		boolean isLoanTakenDisplayed = loanTakenTitle.isDisplayed();
+		boolean isHeadersDisplayed = CommonLib.isAllHeadersDisplayed(headersOnLoanDetailPage,expHeaders);
+		boolean isLoanReceievedTitleDis = loansPaymentReceTitle.isDisplayed();
+		if(isLoanTakenDisplayed&&isHeadersDisplayed&&isLoanReceievedTitleDis&&isFromDateDisplayed&&isEndDateDisplayed)
+			Reporter.logEvent(Status.PASS,"Verify below title and fields:\n"
+					+ "1.Loans Taken\n2.Loan payments\n3.from and to date fields.\n4.Effective date,"
+					+ "Payroll date,Loan amount.", "All the expected fields and titles are displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Verify below title and fields:\n"
+					+ "1.Loans Taken\n2.Loan payments\n3.from and to date fields.\n4.Effective date,"
+					+ "Payroll date,Loan amount.", "All the expected fields and titles are not displayed.",true);
+		
+		for(WebElement loan : listOfExtLoanAmount){
+			loanAmounts.add(Double.parseDouble(loan.getText().replace("$","").replace(",","").trim()));
+		}
+		System.out.println("Loan amounts from detail page:"+loanAmounts);
+		for(int i=0;i<loanAmounts.size();i++){
+			sum = sum+loanAmounts.get(i);
+		}
+		System.out.println("Sum of loan amount from detail page:"+sum);
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getSumOfExtLoanAmount")[0],
+				Stock.getTestQuery("getSumOfExtLoanAmount")[1],Stock.GetParameterValue("GA_ID"),Stock.GetParameterValue("SSN"));
+		while(queryResultSet.next()){
+			sumDB = Double.parseDouble(queryResultSet.getString("LOAN_AMT_TOTAL"));
+		}
+		System.out.println("Amount obtained from DB:"+sumDB);
+		if(sumDB==sum)
+			Reporter.logEvent(Status.PASS,"Validate loan details with DB(Total of loan amount taken)\n"
+					+ " Total loan amount from DB:"+sumDB,"Total Loan amount on detail Page:"+sum, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate loan details with DB(Total of loan amount taken)\n"
+					+ " Total loan amount from DB:"+sumDB,"Total Loan amount on detail Page:"+sum, true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+/**
+ * @author smykjn
+ */
+public void noExtLoanDataValidation(){
+	String expMsg = Stock.GetParameterValue("ExpNoExtLoanDataMsg");
+	String expMsgOnDetailPage = Stock.GetParameterValue("ExpNoExtLoanDataMsgOnDetlPage");
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		String actMsg = noExtLoanMsg.getText().trim();
+		System.out.println("Exp message:"+actMsg);
+		System.out.println("Act message:"+actMsg);
+		if(expMsg.equals(actMsg))
+			Reporter.logEvent(Status.PASS,"Validate message for PPT who does not have loan detail:\nmessage should be:"
+					+expMsg,"Message displayed is as below:\n"+actMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate message for PPT who does not have loan detail:\nmessage should be:"
+					+expMsg,"Message displayed is as below:\n"+actMsg, true);
+		Web.clickOnElement(loanMoreBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(loanDetailFrame);
+		CommonLib.switchToFrame(loanDetailFrame);
+		String actMsgOnLoanPage = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+		if(actMsgOnLoanPage.equals(expMsgOnDetailPage))
+			Reporter.logEvent(Status.PASS,"Click on m ore button and verify below message:\n"+
+					expMsgOnDetailPage,"Actual message displayed is:\n"+actMsgOnLoanPage, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on m ore button and verify below message:\n"+
+					expMsgOnDetailPage,"Actual message displayed is:\n"+actMsgOnLoanPage, true);
+		if(loansPaymentReceTitle.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate Loans Repayments title is displayed.","Loans Repayments"
+					+ " title is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate Loans Repayments title is displayed.","Loans Repayments"
+					+ " title is not displayed.", true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
+}
+
+/**
+ * @author smykjn
+ */
+public void returnToEmpOvwPage(){
+	try{
+	Web.clickOnElement(returnToEmployeeOverview);
+	Web.waitForPageToLoad(Web.getDriver());
+	CommonLib.switchToFrame(employeeSearchFrame);
+	Web.waitForElement(txtOverview);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+/**
+ * <pre>Date field validation for Loan details page</pre>
+ * @author smykjn
+ * @Date 12th-July-2017
+ */
+public void dateFieldValidatnOnLoanPage(){
+	String expError = Stock.GetParameterValue("ExpectedDateRangeError");
+	String expInvalidError = Stock.GetParameterValue("ExpectedInvdDateError");
+	String actError = "";
+	String actInvldDateError="";
+	String fromDateString = Stock.GetParameterValue("FromDate");
+	String todateString = Stock.GetParameterValue("ToDate");
+	String noDataWithinDateRange = Stock.GetParameterValue("NoDataWithinDateRange");
+	String actDataWithinDateRange = "";
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(loanMoreBtn);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(loanDetailFrame);
+		CommonLib.switchToFrame(loanDetailFrame);
+		Date fromDate = CommonLib.getSysDateWithTimeZone("MST");
+		String frmDateString = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", fromDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fromDate);
+		cal.add(Calendar.DAY_OF_MONTH,-1);
+		Date toDate = cal.getTime();
+		String toDateString = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", toDate);
+	    Web.setTextToTextBox(fromDateOnExtLoanPage,frmDateString);
+	    Web.setTextToTextBox(toDateOnExtLoanPage,toDateString);
+		Web.waitForElement(datRangeError);
+		actError = datRangeError.getText().trim();
+		if(expError.equals(actError))
+			Reporter.logEvent(Status.PASS,"On loan detail page select to date before from date.below"
+					+ " validation message is displayed.\n"+expError,"below error message is displayed\n"+actError,false);
+		else
+			Reporter.logEvent(Status.FAIL,"On loan detail page select to date before from date.below"
+					+ " validation message is displayed.\n"+expError,"below error message is displayed\n"+actError,true);
+		 Web.setTextToTextBox(fromDateOnExtLoanPage,"12/2017");
+		 Web.waitForElement(datRangeError);
+		 actInvldDateError = datRangeError.getText().trim();
+		 if(expInvalidError.equals(actInvldDateError))
+			 Reporter.logEvent(Status.PASS,"Select invalid date like '12/2017' and validate below"
+					 + " error message:\n"+expInvalidError,"below error message is displayed\n"+actInvldDateError,false);
+		 else
+			 Reporter.logEvent(Status.FAIL,"Select invalid date like '12/2017' and validate below"
+					 + " error message:\n"+expInvalidError,"below error message is displayed\n"+actInvldDateError,true);
+		 Web.setTextToTextBox(fromDateOnExtLoanPage,fromDateString);
+		 Web.setTextToTextBox(toDateOnExtLoanPage,todateString);
+		 Web.clickOnElement(submitBtn);
+		 Web.waitForPageToLoad(Web.getDriver());
+		 Web.waitForElement(noExtLoanDtaMsgOnLonDetlPage);
+		 actDataWithinDateRange = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+		 if(actDataWithinDateRange.equals(noDataWithinDateRange))
+			 Reporter.logEvent(Status.PASS,"Enter date range within where no data exists.below message"
+			 		+ " is displayed.\n"+noDataWithinDateRange,"Below validation message is "
+			 				+ "displayed:\n"+actDataWithinDateRange,false);
+		 else
+			 Reporter.logEvent(Status.FAIL,"Enter date range within where no data exists.below message"
+				 		+ " is displayed.\n"+noDataWithinDateRange,"Below validation message is "
+				 				+ "displayed:\n"+actDataWithinDateRange,true);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+/**
+ * <pre>This methos validates msg if PPT has no loan repayment records.</pre>
+ * @author smykjn
+ * @Date 12th-Jul-2017
+ */
+public void validateIfNoLoanRepaymenet(){
+	String expNoLoanRepayMsg = Stock.GetParameterValue("NoLoanRepayMsg");
+	String actNoLoanRepayMsg = "";
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(loanMoreBtn);
+		Web.waitForElement(loanDetailFrame);
+		CommonLib.switchToFrame(loanDetailFrame);
+		actNoLoanRepayMsg = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+		if(actNoLoanRepayMsg.equals(expNoLoanRepayMsg))
+			Reporter.logEvent(Status.PASS,"Validate below message is displayed if"
+					+ " no loan repayment data is available:\n"+expNoLoanRepayMsg,"Below message is displayed:"
+							+ "\n"+actNoLoanRepayMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below message is displayed if"
+					+ " no loan repayment data is available:\n"+expNoLoanRepayMsg,"Below message is displayed:"
+							+ "\n"+actNoLoanRepayMsg, true);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+
+/**
+ * <pre>This method is used to navigate to Transaction History tab</pre>
+ * @author smykjn
+ */
+public void navigateToTxnHistoryTab(){
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		WebElement txnHistry = Web.getDriver().findElement(By.xpath(transHistory));
+		Web.waitForElement(txnHistry);
+		Web.clickOnElement(txnHistry);
+		if(Web.isWebElementDisplayed(txnHistDashboard, true))
+			Reporter.logEvent(Status.PASS,"Navigate to transaction history.","Transaction history section"
+					+ " is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Navigate to transaction history.","Transaction history section"
+					+ " is not displayed.", true);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+
+/**
+ * <pre>This method validates transaction history page elements.</pre>
+ * @author smykjn
+ */
+public void validateTxnHistPageScreenElements(){
+	
+	List<String> expheadersOnModalWindow = Arrays.asList(Stock.GetParameterValue("TxnHistModalHeaders").split(","));
+	try{
+		try{
+		Web.clickOnElement(txnHistoryMoreBtn);
+		}catch(Exception e){
+			Web.clickOnElement(clickHereLinkInTxnHist);
+		}
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(txnHistFrame);
+		Web.getDriver().switchTo().frame(txnHistFrame);
+		Web.waitForElement(summaryRadioBtn);
+		boolean isColumnsDisplayed = 
+				CommonLib.isAllHeadersDisplayed(txnHistModalHeader,expheadersOnModalWindow);
+		boolean isSummryDisplayed=summaryRadioBtn.isDisplayed();
+		boolean isallTxnBtnDisplayed = allTxnRadioBtn.isDisplayed();
+		boolean isContTxnBtnDisplayed = contributionRadioBtn.isDisplayed();
+		boolean isTxfrTxnBtnDisplayed = txfrTxnRadioBtn.isDisplayed();
+		boolean isWithdwlTxnBtnDisplayed = withdwTxnRadioBtn.isDisplayed();
+		
+		if(isColumnsDisplayed)
+			Reporter.logEvent(Status.PASS,"Click on more button andValidate "
+					+ "below column headers are displayed on modal window:\n"+expheadersOnModalWindow,""
+							+ "Specified column headers are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on more button andValidate "
+					+ "below column headers are displayed on modal window:\n"+expheadersOnModalWindow,""
+							+ "Specified column headers are not displayed.", true);
+		
+		if(isSummryDisplayed && isallTxnBtnDisplayed && isContTxnBtnDisplayed && isTxfrTxnBtnDisplayed
+				&&isWithdwlTxnBtnDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate if below radio buttons are displayed:\n"
+					+ "1.Summary\n2.All Transaction\n3.Contribution Transactions\n4.Transfer Transaction\n5."
+					+ "Withdrawal Transaction","All the mentioned readio buttons are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate if below radio buttons are displayed:\n"
+					+ "1.Summary\n2.All Transaction\n3.Contribution Transactions\n4.Transfer Transaction\n5."
+					+ "Withdrawal Transaction","All the mentioned readio buttons are not displayed.", true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(txnHistClose);
+		Web.waitForPageToLoad(Web.getDriver());
+	}
+}
+
+
+
+/**
+ * <pre>This method validates if all records filtered are within selected date range and
+ * validates confirmation number as link.</pre>
+ * @author smykjn
+ */
+public void dateRangeValidationTxnHist(){
+	boolean isConfirmationLink = false;
+	List<Date> effDate = new ArrayList<Date>();
+	try{
+		LocalDate localDate = LocalDate.now();
+		
+		Select month = new Select(from_date.get(0));
+		month.selectByIndex(0);
+		
+		Select day = new Select(from_date.get(1));
+		day.selectByIndex(0);
+		
+		int year = localDate.getYear() - 1;
+		Select yr = new Select(from_date.get(2));
+		yr.selectByVisibleText(Integer.toString(year));
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR,year);
+		cal.set(Calendar.MONTH,0);
+		cal.set(Calendar.DATE,1);
+		System.out.println("Date selected is:"+cal.getTime());
+		
+		Date startDate = cal.getTime();
+		Date endDate = new Date();
+		Web.clickOnElement(submit);
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		for(WebElement stringDate : effDateTxnHist){
+			effDate.add(df.parse(stringDate.getText().trim()));
+		}
+		int nmbrOfRecds = effDateTxnHist.size();
+		System.out.println("number of records:"+nmbrOfRecds);
+		int random = (int )(Math.random() * nmbrOfRecds + 1);
+		System.out.println("Random number:"+random);
+		
+		System.out.println("Random Date selected is:"+effDate.get(random-1));
+		
+		if(startDate.before(effDate.get(random-1)) && endDate.after(effDate.get(random-1)))
+			Reporter.logEvent(Status.PASS,"Select a date range as below:\n"+df.format(cal.getTime())
+					+" to "+df.format(endDate), "Records are filtered within that date range.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Select a date range as below:\n"+df.format(cal.getTime())
+					+" to "+df.format(endDate), "Records are not filtered within that date range.", true);
+		
+		for(WebElement confNumber : txnHistryConfmtionNumbr){
+			String tagname = confNumber.getTagName();
+			if(tagname.equals("a")){
+				isConfirmationLink = true;
+			}else{
+				isConfirmationLink = false;break;
+			}
+		}
+		if(isConfirmationLink)
+			Reporter.logEvent(Status.PASS,"Validate all the confirmation numbers are links.","All the "
+					+ "cofirmation numbers are link.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate all the confirmation numbers are links.","All the "
+					+ "cofirmation numbers are link.", true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
+
+/**
+ * <pre>This method validates that new window is opened once click on confirmation 
+ * number on Transaction History page.</pre>
+ * @author smykjn
+ * @Date 13th-July-2017
+ */
+public void validateConfirmationNbrWindow(){
+	try{
+		int randomNumber = CommonLib.getRandomNumber(txnHistryConfmtionNumbr.size());
+		Web.clickOnElement(txnHistryConfmtionNumbr.get(randomNumber));
+		String parentWindow = CommonLib.switchToWindow();
+		Web.getDriver().close();
+		Web.getDriver().switchTo().window(parentWindow);
+		Reporter.logEvent(Status.PASS,"Click on confirmation link and validate that"
+				+ " transaction detail page opens in a seperate window.","Transaction detail page opens in"
+						+ " a seperate window.", false);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(txnHistClose);
+		Web.waitForElement(txnHistoryMoreBtn);
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Click on confirmation link and validate that"
+				+ " transaction detail page opens in a seperate window.","Transaction detail page does not open in"
+						+ " a seperate window.", true);
+	}
+}
+
+/**
+ * <pre>This method validates that new window is opened once user clicks on 'click here' link 
+ * on transaction history section.</pre>
+ * @author smykjn
+ * @Date 14th-July-2017
+ */
+public void clickHereOpensModalWindow(){
+	try{
+		Web.clickOnElement(clickHereLinkInTxnHist);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(txnHistFrame);
+		Web.waitForPageToLoad(Web.getDriver());
+		if(txnHistFrame.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Click on 'click here' link and verify a new modal window is "
+					+ "opened.", "A modal window is opened once user clicks on 'Click here' link.'", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on 'click here' link and verify a new modal window is "
+					+ "opened.", "A modal window is not opened once user clicks on 'Click here' link.'", true);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		Web.clickOnElement(txnHistClose);
+		Web.waitForElement(txnHistoryMoreBtn);
 	}catch(Exception e){
 		e.printStackTrace();
 	}

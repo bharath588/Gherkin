@@ -2002,9 +2002,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="teste" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="PlanNumber" value="" />
 				<parameter name="SSN" value="" />
 				<parameter name="ExpectedMessage" value="One or more of the employees returned by your search belong to Plan %s, which is locked. These employees will not be displayed since searching is not allowed on locked plans." />
@@ -2028,9 +2028,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="teste" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="892659888" />
 			</Iteration>
 		</TestCase>
@@ -2074,6 +2074,48 @@
 				<parameter name="TXN_CODE" value="ESCPAL" />
 				<parameter name="uscsId" value="K_57XU3" />
 				<parameter name="PlanNumber" value="385003-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Loan_Summary_Table_External_Loan">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="SSN" value="544936093" />
+				<parameter name="PPTId_NO_Loan_Amt" value="4641986" />
+				<parameter name="PPTId_NO_Loan" value="12270176" />
+				<parameter name="ExpNoExtLoanDataMsg" value="Loan amount not available, click &quot;More&quot; to see repayments." />
+				<parameter name="ExpNoExtLoanDataMsgOnDetlPage" value="There is no loans data available, see repayments data below." />
+				<parameter name="GA_ID" value="930126-01" />
+				<parameter name="ExpExtLoanHeader" value="Effective Date,Loan Amount" />
+				<parameter name="ExpHeadersOnLoanDetail" value="Effective date,Payroll date,Loan amount,Effective date,Loan amount"/>
+				<parameter name="ExpectedDateRangeError" value="To date cannot be before From date." />
+				<parameter name="ExpectedInvdDateError" value="Invalid Date." />
+				<parameter name="FromDate" value="7/12/2013" />
+				<parameter name="ToDate" value="7/13/2013" />
+				<parameter name="NoDataWithinDateRange" value="There are no loans for the date criteria selected. Please modify the dates." />
+				<parameter name="PPTId_NoLoanRepayments" value="1640201" />
+				<parameter name="NoLoanRepayMsg" value="There are no loan repayments available. See loan information above." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="AccountDetail_Transacion_History_Reg">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="SSN" value="522430088" />
+				<parameter name="TxnHistModalHeaders" value="Confirmation Number,Effective Date,Transaction Type,Amount"/>
+				<parameter name="ExpPastThreeMonthsTxnMsg" value="*Shows up to 5 transactions over the past 3 months."/>
+				<parameter name="SSN_NoPastThreeMonth" value="195323781" />
+				<parameter name="ExpMsg_NoPastThreeMonth" value="There have been no transactions in the past 3 months. Click here to access the Transactions search page." />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -2654,5 +2696,23 @@ Query="delete from user_txn_auth where txn_code in ('ESCCPA', 'ESCCSD') and uscs
 Query="select ssn from individual where id in 
 (select ind_id from part_service where ga_id =? and
 type_code = 'SDA' and sdsv_code = 'SDARTH')" />
+<parameter QueryName="getExtLoansDetails" DB="ISISDB_QA"
+Query="SELECT inlnag_ga_id, ind_id, effdate, termdate,id
+FROM disb_basic
+WHERE EXISTS
+  (SELECT 'X' FROM disb_detl d WHERE d.ga_id = ? AND disb_basic.id = d.dsba_id
+  )
+AND disb_basic.dsrs_code   = 'LOAN'
+AND disb_basic.status_code = 'COMPLETE'
+AND disb_basic.ind_id in (select id from individual where ssn=?)" />
+<parameter QueryName="getSumOfExtLoanAmount" DB="ISIS_QA"
+Query="SELECT SUM(ACCT_DR_AMT) AS LOAN_AMT_TOTAL
+FROM DISB_DETL
+WHERE DSBA_ID in (SELECT id
+FROM disb_basic
+WHERE EXISTS(SELECT 'X' FROM disb_detl d WHERE d.ga_id = ? AND disb_basic.id = d.dsba_id)
+AND disb_basic.dsrs_code   = 'LOAN'
+AND disb_basic.status_code = 'COMPLETE'
+AND disb_basic.ind_id in (select id from individual where ssn=?))" />
 </Module>
 </TestData>
