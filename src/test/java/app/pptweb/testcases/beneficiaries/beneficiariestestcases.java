@@ -1349,7 +1349,7 @@ public class beneficiariestestcases {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			Enrollment enrollmentpage = new Enrollment(mfaPage);
 			enrollmentpage.get();
-			enrollmentpage.quickEnroll();
+			enrollmentpage.selectQuickEnroll();
 			
 			
 			

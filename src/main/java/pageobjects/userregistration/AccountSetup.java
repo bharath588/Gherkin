@@ -77,6 +77,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	private WebElement btnLogin;
 	@FindBy(xpath = "//*[text()[normalize-space()='Create username and password']]")
 	private WebElement lblCreateUsernameAndPassword;
+	@FindBy(xpath = "//*[text()[normalize-space()='Provide contact information']]")
+	private WebElement lblProvideContactInfo;
 
 	/**
 	 * Empty args constructor
@@ -951,18 +953,18 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 			throws InterruptedException {
 
 		try {
-			Web.waitForElement(this.lblCreateUsernameAndPassword);
+			Web.waitForElement(this.lblProvideContactInfo);
 		} catch (Exception e) {
 		}
 
 		Thread.sleep(5000);
 
 		boolean isHeaderPresent = Web
-				.isWebElementDisplayed(this.lblCreateUsernameAndPassword);
+				.isWebElementDisplayed(this.lblProvideContactInfo);
 		String headerText = "";
 
 		if (isHeaderPresent) {
-			headerText = this.lblCreateUsernameAndPassword.getText().trim();
+			headerText = this.lblProvideContactInfo.getText().trim();
 		} else {
 			return null;
 		}

@@ -53,6 +53,9 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//*[@id='companyMatch']") private WebElement txtCoMpanyMatch;
 	@FindBy(xpath="//tr[./th[contains(text(),'Confirmation Number:')]]/td") private WebElement txtConfirmationNo;
 	@FindBy(xpath="//a[text()[normalize-space()='View My Account']]") private WebElement btnViewMyAccount;
+	@FindBy(id="autoEnrollEligibleMsg3") private WebElement txtAutoEnrollment;
+	@FindBy(id="quickEnrollEligibleMsg") private WebElement txtQuickEnrollment;
+	@FindBy(xpath="//div[@ng-if='contributionRate']/span") private WebElement txtAutoEnrollContributionPecent;
 	
 	
 	
@@ -61,7 +64,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	/** Empty args constructor
      * 
      */
-	 /** Empty args constructor
+	 /** Empty args constructors
      * 
      */
     public Enrollment() {
@@ -142,6 +145,12 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		if (fieldName.trim().equalsIgnoreCase("Button View My Account")) {
 			return this.btnViewMyAccount;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Auto Enrollment Message")) {
+			return this.txtAutoEnrollment;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Quick Enrollment Message")) {
+			return this.txtQuickEnrollment;
+		}
 		
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
@@ -156,17 +165,16 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	}
 
     
-    public void quickEnroll(){
-    	lib.Web.clickOnElement(btnEnrollSubmit);
-//    	lib.Web.waitForElement(btnSkipAndViewAccount);
+    public void selectQuickEnroll(){
+    	Web.waitForElement(inpQuickEnrollment);
+    	Web.clickOnElement(inpQuickEnrollment);
     	try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	System.out.println(lib.Web.isWebElementDisplayed(btnSkipAndViewAccount));
-    	lib.Web.clickOnElement(btnSkipAndViewAccount);
+    	
     }
     
     /**
@@ -201,7 +209,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 
 		} else {
 					
-			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+			lib.Reporter.logEvent(Status.FAIL, "Verify TEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
 			throw new Error(fieldName+" is not displayed");
 		}
@@ -378,4 +386,67 @@ return isTextDisplayed;
 		return getText;
 
 	}
+	
+	 public void verifyAutoEnrollmentSection(){
+	   
+		 Web.waitForElement(btnEnrollSubmit);
+		 String actualMsg=getWebElementText("Auto Enrollment Message");
+		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree Enroll Now.\"  "
+		 		+ "Or you may customize your enrollment below. If you do not make an election before 7/29/2017, "
+		 		+ "you will be automatically enrolled using the identified contribution rate(s) and investment option(s), "
+		 		+ "and the changes will be effective as soon as administratively feasible.";
+		 if (actualMsg.equalsIgnoreCase(expectedMsg)) {
+			Reporter.logEvent(Status.PASS, "Verify Auto Enrollment Message is Displayed",
+						"Auto Enrollment Message is Displayed\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify Auto Enrollment Message is Displayed",
+						"Auto Enrollment Message is Not Matching\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+						false);
+			}
+		 isTextFieldDisplayed("CONTRIBUTION RATE");
+		 if(Web.isWebElementDisplayed(txtAutoEnrollContributionPecent)){
+			 if(txtAutoEnrollContributionPecent.getText().contains("%"))
+			 Reporter.logEvent(Status.PASS, "Verify Contribution Percent is Displayed",
+						"Contribution Percent is Displayed in Percent(%) ",
+						false);
+		else
+			 Reporter.logEvent(Status.FAIL,  "Verify Contribution Percent is Displayed",
+						"Contribution is Not in %",
+						false);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,  "Verify Contribution Percent is Displayed",
+						"Contribution Percent is Not Displayed",
+						false);
+		 }
+		 
+	 } 	
+	 
+	 
+	 public void verifyQuickEnrollmentSection(){
+		   
+		 Web.waitForElement(btnEnrollSubmit);
+		 String actualMsg=getWebElementText("Quick Enrollment Message");
+		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree, Enroll Now.\" "
+		 		+ "Or you may customize your enrollment below.";
+		 if (actualMsg.equalsIgnoreCase(expectedMsg)) {
+			Reporter.logEvent(Status.PASS, "Verify Auto Enrollment Message is Displayed",
+						"Auto Enrollment Message is Displayed\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+						true);
+
+			} else {
+						
+				Reporter.logEvent(Status.FAIL,  "Verify Auto Enrollment Message is Displayed",
+						"Auto Enrollment Message is Not Matching\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+						true);
+			}
+		 isTextFieldDisplayed("CONTRIBUTION RATE");
+		 isTextFieldDisplayed("COMPANY MATCH");
+		
+	 } 	
+	    
+	    
 	}

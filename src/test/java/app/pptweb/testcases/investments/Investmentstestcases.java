@@ -553,7 +553,7 @@ public class Investmentstestcases {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -563,7 +563,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 			//Step 7
 			investment.clickChangeMyInvestmentButton();
 			
@@ -588,7 +588,7 @@ public class Investmentstestcases {
 		
 			//Step 10
 			String targetYearFund=investment.selectTargetYearFund();
-			
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			investment.verifyParticipantisAllowedToSelectOnlyOneFund(targetYearFund);
 			
@@ -746,7 +746,7 @@ public class Investmentstestcases {
 		
 			//Step 10
 			String targetYearFund=investment.selectTargetYearFund();
-			
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			investment.verifyParticipantisAllowedToSelectOnlyOneFund(targetYearFund);
@@ -804,7 +804,7 @@ public class Investmentstestcases {
 			
 			
 			//Step 14
-			leftmenu.clickNavigationLink("View/Manage my investments");
+			/*leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -820,7 +820,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 			leftmenu.clickNavigationLink("View/Manage my investments");
 		    //Step 15
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -1042,6 +1042,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 11
 			
@@ -1169,6 +1170,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			//Step 35
 			
@@ -1259,6 +1261,7 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedRiskBasedFund);
@@ -1319,7 +1322,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is displayed for HMDI on Risk Based Funds button", true);
@@ -1328,7 +1331,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is not displayed for HMDI on Risk Based Funds button", true);
-			}
+			}*/
 		  
 		    
 		    //Step 14
@@ -1451,6 +1454,7 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedRiskBasedFund=investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
@@ -1512,7 +1516,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is displayed for HMDI on Risk Based Funds button", true);
@@ -1522,7 +1526,7 @@ public class Investmentstestcases {
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is not displayed for HMDI on Risk Based Funds button", true);
 			}
-		  
+		  */
 		    
 		    //Step 14
 		    
@@ -1646,6 +1650,7 @@ public class Investmentstestcases {
 			
 			//Step 9
 			String selectedTargetDateFund=investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 			investment.verifyParticipantisAllowedToSelectOnlyOneFund(selectedTargetDateFund);
@@ -1702,7 +1707,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
@@ -1711,7 +1716,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 		  
 		    
 		    //Step 14
@@ -1829,6 +1834,7 @@ public class Investmentstestcases {
 	
 			//Step 9
 			String selectedTargetDateFund=investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
@@ -1886,7 +1892,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
@@ -1895,7 +1901,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 		  
 		    
 		    //Step 14
@@ -2018,6 +2024,7 @@ public class Investmentstestcases {
 			//Step 9
 			String[] percentage={"50","50"};
 			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
@@ -2066,7 +2073,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is displayed on DIM Choose Individual Funds button", true);
@@ -2075,7 +2082,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is not displayed on DIM Choose Individual Funds button", true);
-			}
+			}*/
 		  
 		    
 		    //Step 14
@@ -2194,6 +2201,7 @@ public class Investmentstestcases {
 			//Step 9
 			String[] percentage={"50","50"};
 			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 			 mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2242,7 +2250,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+			/*if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is displayed on DIM Choose Individual Funds button", true);
@@ -2251,7 +2259,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is not displayed on DIM Choose Individual Funds button", true);
-			}
+			}*/
 		  
 		    
 		    //Step 14
@@ -2361,6 +2369,7 @@ public class Investmentstestcases {
 			
 			//Step 10
 			investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 		
 		
@@ -2470,6 +2479,7 @@ public class Investmentstestcases {
 			investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
 			//Step 34
 			investment.selectTargetYearFund();
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		
@@ -2634,6 +2644,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"50","50"};
 			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -2802,6 +2813,7 @@ public class Investmentstestcases {
 			
 			String[] percentage={"100"};
 			mapInvestmentOptions=investment.addInvestments(1,percentage);
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			mapInvestmentOptionsReviewPage=investment.getCurrentFunds();
@@ -3128,6 +3140,7 @@ public class Investmentstestcases {
 			//Step 11
 			
 		investment.selectTargetYearFund();
+		Web.waitForElement(investment, "Header Review Your Changes");
 		investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 		//Step 12	
@@ -3277,7 +3290,7 @@ public class Investmentstestcases {
 	
 			//Step 13
 			String selectedTargetDateFund=investment.selectTargetYearFund();
-			
+			Web.waitForElement(investment, "Header Review Your Changes");
 			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
 			
 			//Step 14
@@ -3285,6 +3298,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(10000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5423,7 +5437,7 @@ public class Investmentstestcases {
 			
 			//Step 16
 			
-			leftmenu.clickNavigationLink("View/Manage my investments");
+			/*leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5439,7 +5453,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -5611,7 +5625,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			//Step 16
 			
-			leftmenu.clickNavigationLink("View/Manage my investments");
+			/*leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5627,7 +5641,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			
@@ -5794,7 +5808,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			//Step 16
 			
-			leftmenu.clickNavigationLink("View/Manage my investments");
+			/*leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5810,7 +5824,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}
+			}*/
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			
@@ -7295,6 +7309,272 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 
 	}
 	
+	@Test(dataProvider = "setData")
+	public void DDTC_25500_Custom_Enrollment_with_No_MTGs(int itr, Map<String, String> testdata) {
 
-	
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 to 6
+			enrollment.selectCustomizeEnroll();
+			Common.waitForProgressBar();
+			enrollment.verifyPriorPlanContributionsPage();
+			
+			//Step 7 & 8
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			//Step 13
+					
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 14
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 15
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			//Step 16
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 17
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	@Test(dataProvider = "setData")
+	public void DDTC_25438_Auto_Enrollment_for_NonAllMTG(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 
+			enrollment.selectCustomizeEnroll();
+			
+			//Step 4 & 5
+			enrollment.verifyAutoEnrollmentSection();
+			
+			//TODO
+			//Step 6 ,7 & 8
+			
+			
+			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
+			
+			deferral.verifyContributionRatePage();
+			//Step 9 to 11
+			deferral.click_Select_Your_Contribution_Rate();
+			//Step 12
+			Web.clickOnElement(deferral, "Continue Button");
+			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
+			deferral.add_Auto_Increase("Before Add Auto Increase");
+			Web.clickOnElement(deferral, "Button Confirm And Continue");
+			//Step 13
+					
+			ManageMyInvestment investment = new ManageMyInvestment();
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Header My Allocations");
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
+			
+		
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage={"50","50"};
+			investment.addInvestmentsforEnrollmentFlow(2,percentage);
+			
+			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
+			
+			Web.waitForElement(investment, "Header How Would You Like To Invest");
+			
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			
+			String[] percentage1={"50","50"};
+			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
+			//Step 14
+			Web.clickOnElement(investment,"Continue Button");
+			
+			//Step 15
+			Common.waitForProgressBar();
+			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
+			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
+			enrollment.isTextFieldDisplayed("COMPANY MATCH");
+			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
+			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
+			Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			
+			//Step 16
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			//Step 17
+			Web.waitForElement(enrollment, "Confirmation Number");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			enrollment.isTextFieldDisplayed("Investment Options");
+			
+		 	for(String key: keys){
+			enrollment.isInvestmentOptiondDisplayed(key);
+		 	}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 }

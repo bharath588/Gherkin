@@ -6,7 +6,7 @@
     </listeners>
     <test name="LOGIN">
         <classes>
-           <!--  <class name="app.pptweb.testcases.login.logintestcases">
+           <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                    
                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
@@ -51,7 +51,7 @@
                  
                     
                 </methods>
-            </class>  -->
+            </class>  
        
            <class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
@@ -101,7 +101,7 @@
                 
                     <include name="AccountSetup_WithOutPin_Validate_UserNameInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC004_UI_Validation_WithOutPin_Username_Password"></parameter>
-                    </include>
+                    </include> 
                 
 					<include name="Registration_MFA_ON_5Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin"></parameter>
@@ -121,7 +121,7 @@
 				</methods>
 			</class> 
 		
-       <!--   <class name="app.pptweb.testcases.login.authenticationtestcases">
+         <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>
                     <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>
@@ -147,7 +147,7 @@
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
                     </include>
                 </methods>
-            </class>  -->  
+            </class>    
         </classes>
     </test> 
 </suite>

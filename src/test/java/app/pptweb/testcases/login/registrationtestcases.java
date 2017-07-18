@@ -2069,8 +2069,8 @@ public class registrationtestcases {
 			// Verify set up your account page is displayed
 			hdrBlockText = accSetup.getAccountSetupHeaderBlockText();
 			if (hdrBlockText == null) {
-				
-				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+		
+				hdrBlockText = accSetup.getAccountSetupHeaderText();
 				isMatching = Web
 						.VerifyText(
 								"Create username and password",
@@ -2217,7 +2217,7 @@ public class registrationtestcases {
 			boolean isMatching =false;
 			if (hdrBlockText == null) {
 				
-				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				hdrBlockText = accSetup.getAccountSetupHeaderText();
 				isMatching = Web
 						.VerifyText(
 								"Create username and password",
@@ -2436,7 +2436,7 @@ public class registrationtestcases {
 			keyBoard.sendKeys(Keys.TAB).perform();
 			keyBoard.sendKeys(Keys.ENTER).perform();
 			// Web.clickOnElement(accSetup, "REGISTER");
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			objAuth.selectCodeDeliveryOption(Stock
 					.GetParameterValue("codeDeliveryOption"));
 			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
@@ -2607,7 +2607,7 @@ public class registrationtestcases {
 			
 			if (hdrBlockText == null) {
 				
-				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				hdrBlockText = accSetup.getAccountSetupHeaderText();
 				isMatching = Web
 						.VerifyText(
 								"Create username and password",
@@ -2729,7 +2729,7 @@ public class registrationtestcases {
 			keyBoard.sendKeys(Keys.ENTER).perform();
 			// Web.clickOnElement(accSetup, "REGISTER");
 
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			objAuth.selectCodeDeliveryOption(Stock
 					.GetParameterValue("codeDeliveryOption"));
 			if (lib.Stock.GetParameterValue("codeDeliveryOption").trim()
@@ -2851,7 +2851,7 @@ public class registrationtestcases {
 			
 			if (hdrBlockText == null) {
 				
-				hdrBlockText = accSetup.getAccountSetupContactInfoHeaderText();
+				hdrBlockText = accSetup.getAccountSetupHeaderText();
 				isMatching = Web
 						.VerifyText(
 								"Create username and password",

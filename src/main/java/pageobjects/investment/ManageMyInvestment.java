@@ -2198,9 +2198,9 @@ return isTextDisplayed;
 
           WebElement txtAllocationPercent = Web.getDriver().findElement(By
   				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
-  						mapInvestmentOptions.get(key))));
+  						key)));
           actualPercentage=txtAllocationPercent.getText().toString().trim();
-          expectedPercentage=mapCurrentInvestmentOptionsPecentage.get(mapInvestmentOptions.get(key));
+          expectedPercentage=mapInvestmentOptions.get(key);
           expectedPercentage=expectedPercentage+"%";
           if(expectedPercentage.contains(actualPercentage)){
         	  
