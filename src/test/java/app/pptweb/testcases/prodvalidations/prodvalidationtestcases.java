@@ -1404,6 +1404,7 @@ public class prodvalidationtestcases {
 			}
 			Web.getDriver().switchTo().defaultContent();
 			//lib.Web.clickOnElement(deferral, "LOG OUT");
+			Web.clickOnElement(homePage, "HOME");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
