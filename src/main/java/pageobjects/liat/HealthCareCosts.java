@@ -256,6 +256,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	
 	
 	public void verifyMedicareLink() throws InterruptedException{
+		  JavascriptExecutor executor = (JavascriptExecutor)Web.getDriver();
 		Web.clickOnElement(lblHelathCareCosts);
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
@@ -264,10 +265,11 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 		if(Web.isWebElementDisplayed( lnkMedicare, true)){
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.PASS,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", false);
-			Web.clickOnElement(lnkMedicare);
+			 executor.executeScript("arguments[0].click();", lnkMedicare);
+			//Web.clickOnElement(lnkMedicare);
 			Web.waitForElement(txtEmpowerModal);
 				if(!Web.isWebElementDisplayed(txtEmpowerModal, true)){
-					Web.clickOnElement(lnkMedicare);	
+					executor.executeScript("arguments[0].click();", lnkMedicare);
 				}
 			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
 			Web.waitForElement(txtEmpowerModal);
