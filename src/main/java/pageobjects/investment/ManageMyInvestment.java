@@ -176,8 +176,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblTransferToPercent;
 	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeading']")
 	private WebElement txtRebalanceTransactionDetails;
-	@FindBy(xpath = "//span[@id='effectiveDate']") private WebElement txtTransactionDetails;
-	@FindBy(xpath = "//span[@id='effectiveDate']//b") private WebElement txtTransactionDate;
+	@FindBy(xpath = "//*[@id='rebalanceConfirmationHeadingWhenSyncAllocationFailed' or @id='effectiveDate']") private WebElement txtTransactionDetails;
+	@FindBy(xpath = "//span[contains(@translate-values,'effectiveChangeDate')]//b") private WebElement txtTransactionDate;
+	//@FindBy(xpath = "//span[contains(@translate-values,'effectiveChangeDate')]//b") private WebElement txtTransactionDateforRebalSyncFail;
 	@FindBy(xpath = "//div[@id='rebalanceConfirmationHeadingWhenSyncAllocationFailed']") private WebElement txtConfirmationWhenRebalneceSyncFailed;
 	@FindBy(xpath = "//i[@class='em-checkbox-icon']") private WebElement lblGreenCheck;
 	@FindBy(xpath = "//*[@id='confirmationNumber']") private WebElement lblConfirmationNumber;
@@ -317,7 +318,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//span[./span[text()[normalize-space()='Collapse sources']]]")
 	private WebElement lnkCollapseSources;
 	
-	@FindBy(xpath = "//button[@id='risk-based-fund-link']") private WebElement btnChooseRiskBasedFund;
+	@FindBy(xpath = "//button[@id='riskBasedFundsButton']") private WebElement btnChooseRiskBasedFund;
 	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Select a risk-based fund']]")
 	private WebElement txtSelectRiskBasedFund;
@@ -347,7 +348,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
-	String inputAllocationPercentageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
+	String inputAllocationPercentageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')] or .//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
@@ -1538,13 +1539,22 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 			Web.waitForElement(lnkAddViewAllFundsFuture);
 			
 			for(int i=0;i<noOfInvestmentoptions;i++){
+		try{		
 		WebElement inptAllocationPercent = Web.getDriver().findElement(By
 				.xpath(inputAllocationPercentageFuture.replace("Investment Option",
 						mapInvestmentOptions.get("investmentFundName"+i))));
+		
+		
 		Web.setTextToTextBox(inptAllocationPercent, percent[i]);
 		Thread.sleep(1000);
 		mapCurrentInvestmentOptionsPecentage.put(mapInvestmentOptions.get("investmentFundName"+i), inptAllocationPercent.getAttribute("value"));
+		
 			}
+		catch(NoSuchElementException e){
+			e.printStackTrace();
+		}
+			}
+			
 		Web.waitForPageToLoad(Web.getDriver());
 		
 		if(txttotalInvestmentPercent.getText().contains("100")){
@@ -1567,7 +1577,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElements(txtCurrentFundsforChangeFutureFlow);
 		}
-		catch(Exception e){
+		catch(NoSuchElementException e){
 			
 		}
 		return mapCurrentInvestmentOptionsPecentage;
@@ -2031,22 +2041,24 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	
 	public boolean isTextFieldDisplayed(String fieldName) {
 		boolean isTextDisplayed=false;
+		try{
 		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
-		if (isTextDisplayed) {
+		
+		if (isTextDisplayed)
 			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
 					false);
 
-		} else {
-					
+		}
+		catch(NoSuchElementException e){
 			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
-			throw new Error(fieldName+" is not displayed");
+			isTextDisplayed=false;
 		}
 	
-return isTextDisplayed;
+  return isTextDisplayed;
 	}
 	
 	/**
@@ -2682,5 +2694,24 @@ return isTextDisplayed;
 			
 		}
 		return mapCurrentInvestmentOptionsPecentage;
-	}	
+	}
+	
+	
+	/**<pre> Method to update Employer Directed Funds to Normal.
+	 *.</pre>
+	 * @param planId - 
+	 * @param 
+	 * @return - 
+	 * @throws Exception 
+	 */
+	public void removeEmployerDirectedRule(String planId) throws Exception{
+		String[] sqlQuery=null;
+		
+		sqlQuery = Stock.getTestQuery("updateBackEmployerDirecyedIndicator");
+	
+	
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], planId);
+		
+		
+	}
 }

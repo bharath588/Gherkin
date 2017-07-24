@@ -11,6 +11,7 @@ import lib.Web;
 import com.aventstack.extentreports.Status;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -164,6 +165,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	public boolean clickNavigationLink(String linkName)  {
 		boolean success = false;
 		Actions mouse = new Actions(Web.getDriver());
+		  JavascriptExecutor executor = (JavascriptExecutor)Web.getDriver();
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
@@ -193,8 +195,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
-			//mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).build().perform();
+			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			  executor.executeScript("arguments[0].click();", leftNavLink);
+			
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
@@ -207,9 +210,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		else if(linkName.equalsIgnoreCase("Brokerage")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
 			
-			//mouse.moveToElement(leftNavLink).clickAndHold(leftNavLink).build().perform();
+			  executor.executeScript("arguments[0].click();", leftNavLink);
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
@@ -223,8 +226,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		else if(linkName.equalsIgnoreCase("Statements and documents")){
 			lnkLeftNavItem=By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
-			
+			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			  executor.executeScript("arguments[0].click();", leftNavLink);
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
@@ -242,14 +245,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 
 		if (leftNavLink.size() > 0) {
 		
-			mouse.moveToElement(leftNavLink.get(0)).build().perform();
+
+              executor.executeScript("arguments[0].click();", leftNavLink.get(0));
+
+             // mouse.moveToElement(leftNavLink.get(0)).build().perform();
 			try {
 				Thread.sleep(2000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			mouse.click().build().perform();
+		
+			//mouse.click().build().perform();
 			//leftNavLink.get(0).click();;
 			success = true;
 		} 

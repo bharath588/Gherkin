@@ -148,7 +148,7 @@ public class prodvalidationtestcases {
 						.logEvent(
 								Status.FAIL,
 								"Check CopyRight Information on the Login Page",
-								"CopyRight Informatio is Not Same on the Login Page",
+								"CopyRight Informatio is Not Same on the Login Page\nExpected:"+Stock.GetParameterValue("copyright info")+"\nActual:"+copyRightInfo,
 								false);
 			}
 			if (!Common.getSponser().equalsIgnoreCase("Apple")) {
@@ -564,11 +564,11 @@ public class prodvalidationtestcases {
 			RequestLonePage requestLone = new RequestLonePage(lftBar);
 			requestLone.get();
 			String parentWindow = Web.getDriver().getWindowHandle();
-			for (String winHandle : Web.getDriver().getWindowHandles()) {
+			/*for (String winHandle : Web.getDriver().getWindowHandles()) {
 				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
 				Web.waitForPageToLoad(Web.getDriver());
 			}
-
+*/
 			boolean lblDisplayed = false;
 //			int confirmationNumber = 0;
             Thread.sleep(5000);
@@ -815,9 +815,9 @@ public class prodvalidationtestcases {
 				}
 			}
 			Web.getDriver().switchTo().defaultContent();
-			Web.getDriver().close();
-			Web.getDriver().switchTo().window(parentWindow);
-			Web.getDriver().switchTo().defaultContent();
+			//Web.getDriver().close();
+			//Web.getDriver().switchTo().window(parentWindow);
+			//Web.getDriver().switchTo().defaultContent();
 			/*Web.clickOnElement(requestLone, "LOGOUT");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
@@ -1136,10 +1136,10 @@ public class prodvalidationtestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			String parentWindow = Web.getDriver().getWindowHandle();
-			for (String winHandle : Web.getDriver().getWindowHandles()) {
+			/*for (String winHandle : Web.getDriver().getWindowHandles()) {
 	       Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
 	       Web.waitForPageToLoad(Web.getDriver());
-       }
+       }*/
 			String parentWindow1 = Web.getDriver().getWindowHandle();
 			/*if(Common.switchToLegacyFutureFrame()){
 			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
@@ -1171,9 +1171,9 @@ public class prodvalidationtestcases {
 			//closing child window
 	   		 Web.getDriver().close();
 	          //cntrl to parent window1
-	      	  Web.getDriver().switchTo().window(parentWindow1);
+	      	//  Web.getDriver().switchTo().window(parentWindow1);
 	      	  //close parent window 1
-	      	 Web.getDriver().close();
+	      	// Web.getDriver().close();
 	      	 //cntrl to parent window
 	      	 Web.getDriver().switchTo().window(parentWindow);
 	      	Web.getDriver().switchTo().defaultContent();
@@ -1445,10 +1445,10 @@ public class prodvalidationtestcases {
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
 			String parentWindow = Web.getDriver().getWindowHandle();
-						for (String winHandle : Web.getDriver().getWindowHandles()) {
+						/*for (String winHandle : Web.getDriver().getWindowHandles()) {
 				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
 				Web.waitForPageToLoad(Web.getDriver());
-			}
+			}*/
 			//Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
 
@@ -1458,8 +1458,8 @@ public class prodvalidationtestcases {
 			brokerage.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
 			Web.getDriver().switchTo().defaultContent();
-			Web.getDriver().close();
-			Web.getDriver().switchTo().window(parentWindow);
+			/*Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);*/
 			Web.getDriver().switchTo().defaultContent();
 			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
 				Web.clickOnElement(brokerage, "LOGOUT");

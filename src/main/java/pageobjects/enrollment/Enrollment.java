@@ -13,6 +13,7 @@ import lib.Web;
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -151,6 +152,9 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		if (fieldName.trim().equalsIgnoreCase("Quick Enrollment Message")) {
 			return this.txtQuickEnrollment;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Auto Enrollment Contribution Percent")) {
+			return this.txtAutoEnrollContributionPecent;
+		}
 		
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
@@ -194,27 +198,51 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	 * Method to Verify Text Field is Displayed on the WebPage
 	 * </pre>
 	 * 
-	 * @return boolean isTextDisplayed
+	 *
 	 */
 
     public boolean isTextFieldDisplayed(String fieldName) {
 		boolean isTextDisplayed=false;
+		try{
 		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
-		if (isTextDisplayed) {
+		
+		if (isTextDisplayed)
 			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
 					false);
 
-		} else {
-					
-			lib.Reporter.logEvent(Status.FAIL, "Verify TEXT Field " + fieldName
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
-			throw new Error(fieldName+" is not displayed");
+			isTextDisplayed=false;
 		}
 	
-		return isTextDisplayed;
+  return isTextDisplayed;
+	}
+    /**
+	 * <pre>
+	 * Method to Verify Text Field is Displayed on the WebPage
+	 * </pre>
+	 * 
+	 * @return boolean isTextDisplayed
+	 */
+
+    public boolean verifyTextFieldDisplayed(String fieldName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		}
+		catch(NoSuchElementException e){
+			
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
 	}
     /**
    	 * <pre>
@@ -387,12 +415,12 @@ return isTextDisplayed;
 
 	}
 	
-	 public void verifyAutoEnrollmentSection(){
-	   
+	 public String  verifyAutoEnrollmentSection(){
+	   String contributionPecent="";
 		 Web.waitForElement(btnEnrollSubmit);
 		 String actualMsg=getWebElementText("Auto Enrollment Message");
-		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree Enroll Now.\"  "
-		 		+ "Or you may customize your enrollment below. If you do not make an election before 7/29/2017, "
+		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree Enroll Now.\" "
+		 		+ "Or you may customize your enrollment below. If you do not make an election before 8/23/2017, "
 		 		+ "you will be automatically enrolled using the identified contribution rate(s) and investment option(s), "
 		 		+ "and the changes will be effective as soon as administratively feasible.";
 		 if (actualMsg.equalsIgnoreCase(expectedMsg)) {
@@ -408,10 +436,12 @@ return isTextDisplayed;
 			}
 		 isTextFieldDisplayed("CONTRIBUTION RATE");
 		 if(Web.isWebElementDisplayed(txtAutoEnrollContributionPecent)){
-			 if(txtAutoEnrollContributionPecent.getText().contains("%"))
+			 if(txtAutoEnrollContributionPecent.getText().contains("%")){
+				 contributionPecent=txtAutoEnrollContributionPecent.getText().toString().trim();	 
 			 Reporter.logEvent(Status.PASS, "Verify Contribution Percent is Displayed",
 						"Contribution Percent is Displayed in Percent(%) ",
 						false);
+			 }
 		else
 			 Reporter.logEvent(Status.FAIL,  "Verify Contribution Percent is Displayed",
 						"Contribution is Not in %",
@@ -422,7 +452,17 @@ return isTextDisplayed;
 						"Contribution Percent is Not Displayed",
 						false);
 		 }
-		 
+		//Step 6 ,7 & 8 are not feasible
+		 //Step 9
+		 if(btnEnrollSubmit.isEnabled())
+			 Reporter.logEvent(Status.PASS, "Verify 'I Agree,Enroll Now' Button is Enabled",
+					"'I Agree,Enroll Now' Button is Enabled",
+					false);
+	else
+		 Reporter.logEvent(Status.FAIL,  "Verify 'I Agree,Enroll Now' Button is Enabled",
+					"'I Agree,Enroll Now' Button is Not Enabled",
+					false);
+		 return contributionPecent;
 	 } 	
 	 
 	 

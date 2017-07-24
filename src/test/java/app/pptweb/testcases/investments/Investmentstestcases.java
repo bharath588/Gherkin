@@ -152,7 +152,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -314,7 +314,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -476,7 +476,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 15
@@ -622,7 +622,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -781,7 +781,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -997,6 +997,8 @@ public class Investmentstestcases {
 			
 			//Step 7
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping1"));
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Rebalance Current Balance");
 			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping1"))){
 				
 				Reporter.logEvent(Status.PASS,
@@ -1010,8 +1012,10 @@ public class Investmentstestcases {
 			}
 			
 			//Step 8
+			if(Web.isWebElementDisplayed(investment, "Change Future Contribution", true)){
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
+			}
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
@@ -1049,7 +1053,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1081,6 +1085,8 @@ public class Investmentstestcases {
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.removeEmployerDirectedRule(Stock.GetParameterValue("ga_id"));
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1125,6 +1131,8 @@ public class Investmentstestcases {
 			
 			//Step 31
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Rebalance Current Balance");
 			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				
 				Reporter.logEvent(Status.PASS,
@@ -1177,7 +1185,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
@@ -1206,6 +1214,8 @@ public class Investmentstestcases {
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.removeEmployerDirectedRule(Stock.GetParameterValue("ga_id"));
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -1237,7 +1247,7 @@ public class Investmentstestcases {
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			
 			
 			//Step 7
 			
@@ -1295,7 +1305,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1412,7 +1422,7 @@ public class Investmentstestcases {
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			
 			
 			//Step 7
 			
@@ -1490,7 +1500,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
@@ -1606,8 +1616,8 @@ public class Investmentstestcases {
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
 			investment.verifyWebElementDisplayed("Help Me Do It");
-			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			investment.verifyWebElementDisplayed("Choose Target Date Fund");
+			
 			
 			//Step 7
 			
@@ -1683,7 +1693,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1796,8 +1806,8 @@ public class Investmentstestcases {
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
 			investment.verifyWebElementDisplayed("Help Me Do It");
-			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			investment.verifyWebElementDisplayed("Choose Target Date Fund");
+			
 			
 			//Step 7
 			
@@ -1868,7 +1878,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1981,8 +1991,7 @@ public class Investmentstestcases {
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Choose Individual Funds");
 			investment.verifyWebElementDisplayed("Help Me Do It");
-			investment.verifyWebElementDisplayed("Choose Risk Based Funds");
-			investment.verifyWebElementDisplayed("Do It For Me");
+			
 			
 			//Step 7
 			
@@ -2044,7 +2053,7 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(15000);
+				Thread.sleep(25000);
 				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
 				investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2220,7 +2229,7 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(15000);
+				Thread.sleep(25000);
 				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
 				investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2341,6 +2350,8 @@ public class Investmentstestcases {
 			
 			//Step 7
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping1"));
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Rebalance Current Balance");
 			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				
 				Reporter.logEvent(Status.PASS,
@@ -2378,7 +2389,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -2408,6 +2419,8 @@ public class Investmentstestcases {
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.removeEmployerDirectedRule(Stock.GetParameterValue("ga_id"));
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2452,6 +2465,8 @@ public class Investmentstestcases {
 			
 			//Step 31
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Rebalance Current Balance");
 			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				
 				Reporter.logEvent(Status.PASS,
@@ -2489,7 +2504,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2519,6 +2534,8 @@ public class Investmentstestcases {
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.removeEmployerDirectedRule(Stock.GetParameterValue("ga_id"));
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -2654,7 +2671,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -2823,7 +2840,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			
@@ -3046,7 +3063,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -3057,7 +3074,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -3435,6 +3452,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			investment.VerifyAllocatedPecentageForHMDIFunds();
@@ -3487,7 +3505,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -3498,7 +3516,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -3597,6 +3615,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -3729,6 +3748,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -3866,6 +3886,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			investment.VerifyAllocatedPecentageForHMDIFunds();
@@ -3916,7 +3937,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -3927,7 +3948,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -4027,7 +4048,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4198,7 +4219,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4365,7 +4386,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4424,7 +4445,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -4435,7 +4456,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -4537,6 +4558,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -4673,6 +4695,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -4810,6 +4833,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -4860,7 +4884,7 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			/*if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				
 				Reporter.logEvent(Status.PASS,
 						"Verify Expand Sources Link is displayed",
@@ -4871,7 +4895,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify Expand Sources Link is displayed",
 						"Expand Sources Link is Not displayed ", true);
-			}*/
+			}
 		
 			//Step 6
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
@@ -4971,6 +4995,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
@@ -5108,6 +5133,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5245,6 +5271,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5428,7 +5455,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -5613,7 +5640,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -5796,7 +5823,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -6278,7 +6305,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			userName=Stock.GetParameterValue("userName");
 			//Step 5
 			String sqlQuery[]=Stock.getTestQuery(Stock.GetParameterValue("queryName"));
@@ -6325,6 +6352,8 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			//Step 7
 			investment.clickChangeMyInvestmentButton(Stock.GetParameterValue("moneyTypeGrouping"));
+			Common.waitForProgressBar();
+			Web.waitForElement(investment, "Rebalance Current Balance");
 			if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				
 				Reporter.logEvent(Status.PASS,
@@ -6349,10 +6378,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			
-			if(investment.isTextFieldDisplayed("Rebalance my current balance")){
+			/*if(investment.isTextFieldDisplayed("Rebalance my current balance")){
 			
 			Web.clickOnElement(investment, "Continue Button");
-			}
+			}*/
 		
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -6379,7 +6408,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -6413,6 +6442,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			try {
 				ManageMyInvestment investment= new ManageMyInvestment();
 				investment.deleteRebalancePendingTransaction(userName);
+				investment.removeEmployerDirectedRule(Stock.GetParameterValue("ga_id"));
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -6499,7 +6529,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(15000);
+			Thread.sleep(25000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForModelPortfolio();    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -7448,6 +7478,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			userName=Stock.GetParameterValue("userName");
+			ManageMyInvestment investment=new ManageMyInvestment();
 			//Step 1 to 2
 			Deferrals deferral=new Deferrals();
 			LandingPage homePage=new LandingPage();
@@ -7457,74 +7488,31 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Enrollment enrollment=new Enrollment(mfaPage);
 			enrollment.get();
 			//Step 3 
-			enrollment.selectCustomizeEnroll();
+			enrollment.selectQuickEnroll();;
 			
-			//Step 4 & 5
-			enrollment.verifyAutoEnrollmentSection();
+			//Step 4 to 9
+			String contributionPercent=enrollment.verifyAutoEnrollmentSection();
 			
-			//TODO
-			//Step 6 ,7 & 8
-			
-			
-			enrollment.addPreviousContribution(Stock.GetParameterValue("contibutionAmount"));
-			
-			deferral.verifyContributionRatePage();
-			//Step 9 to 11
-			deferral.click_Select_Your_Contribution_Rate();
-			//Step 12
-			Web.clickOnElement(deferral, "Continue Button");
-			deferral.selectContributionType(Stock.GetParameterValue("Contribution_type"));
-			deferral.add_Auto_Increase("Before Add Auto Increase");
-			Web.clickOnElement(deferral, "Button Confirm And Continue");
-			//Step 13
-					
-			ManageMyInvestment investment = new ManageMyInvestment();
-			Common.waitForProgressBar();
-			Web.waitForElement(investment, "Header My Allocations");
-			
-			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping"));
-			
-		
-			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			
-			String[] percentage={"50","50"};
-			investment.addInvestmentsforEnrollmentFlow(2,percentage);
-			
-			investment.clickSelectInvestmentButtonforMoneyTypeGroup(Stock.GetParameterValue("moneyTypeGrouping1"));
-			
-			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			
-			Web.clickOnElement(investment,"Choose Individual Funds");
-			Web.waitForElement(investment, "Header Build Your Own Portfolio");
-			
-			String[] percentage1={"50","50"};
-			mapInvestmentOptions=investment.addInvestmentsforEnrollmentFlow(2,percentage1);
-			//Step 14
-			Web.clickOnElement(investment,"Continue Button");
-			
-			//Step 15
-			Common.waitForProgressBar();
-			Web.waitForElement(enrollment, "Button I Agree Enroll Now");
-			enrollment.isTextFieldDisplayed("CONTRIBUTION RATE");
-			enrollment.isTextFieldDisplayed("COMPANY MATCH");
-			enrollment.isTextFieldDisplayed("INVESTMENT OPTION");
-			enrollment.verifyContributionRateMatching(Stock.GetParameterValue("Contribution Rate"));
-			Set<String> keys = mapInvestmentOptions.keySet();
-		 	for(String key: keys){
-			enrollment.isInvestmentOptiondDisplayed(key);
-		 	}
-			
-			//Step 16
+			//Step 10
 			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
-			//Step 17
-			Web.waitForElement(enrollment, "Confirmation Number");
-			enrollment.isTextFieldDisplayed("Contribution Rate");
-			enrollment.isTextFieldDisplayed("Investment Options");
 			
-		 	for(String key: keys){
-			enrollment.isInvestmentOptiondDisplayed(key);
-		 	}
+			
+		    //Step 11
+			Web.waitForElement(enrollment, "Button View My Account");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			if(enrollment.verifyTextFieldDisplayed(contributionPercent)){
+				
+				lib.Reporter.logEvent(Status.PASS, "Verify Contribution Perecent is Displayed", 
+						"Contribution Perecent is Displayed\nContribution Perecent:"+contributionPercent,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Contribution Perecent is Displayed", 
+						"Contribution Perecent is Not Displayed",
+						true);
+				
+			}
 			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
 			
 			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
@@ -7538,6 +7526,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 						"Confirmation Number is not Displayed", true);
 				
 			}
+			//Step 12
 			Web.clickOnElement(enrollment, "Button View My Account");
 			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
 				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
@@ -7551,7 +7540,8 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 						true);
 				
 			}
-			
+			//Step 13
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
