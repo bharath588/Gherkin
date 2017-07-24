@@ -14,7 +14,7 @@
                     </include> 
 				
 					
-					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
+					 <include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
 					<parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
                     </parameter>
                     </include> 
