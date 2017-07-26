@@ -9,29 +9,24 @@
         <classes>
             <class name="app.pptweb.testcases.sanity.sanityTestCases">
                 <methods>
-                    <include name="Pre_Login_Page_footer_links_check"> <parameter name="ManualTCName" value="Pre_Post_Login_Page_footer_links_check">
+                    <include name="Pre_Login_Page_footer_links_check"> 
+                    <parameter name="ManualTCName" value="Pre_Post_Login_Page_footer_links_check">
                     </parameter>
                     </include>
                
-                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"> <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device"> 
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
                     </parameter>
                     </include>
                
-                    <!-- <include name="AccountLookup_PositiveFlow_WithOutPIN">
-                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow">
-                    </parameter>
-                    </include>
-               
-                    <include name="AccountLookup_PositiveFlow_WithPIN">
-                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_04_04_TC002_Functionality_With_PIN__Positive_flow">
-                    </parameter>
-                    </include> -->
                     <include name="Registration_MFA_OFF_5Point_registration">
-					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin"></parameter>
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin">
+					</parameter>
                     </include>
 				
 					<include name="Registration_MFA_OFF_2Point_registration">
-					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin">
+					</parameter>
                     </include>
                 
                     <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Email">
@@ -85,7 +80,7 @@
              </methods>
          </class>
    
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+			<!-- <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 			
 				<methods>
 														
@@ -119,10 +114,10 @@
                     </parameter>
                     </include>
 				
-					<!-- <include name="PlanForms_Validations">
+					<include name="PlanForms_Validations">
 					<parameter name="ManualTCName" value="PlanForms_Validations">
                     </parameter>
-                    </include> -->
+                    </include>
 				
 					<include name="Dollar_Cost_Average_Flow">
 					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
@@ -224,7 +219,7 @@
                     </parameter>
 				</include>
 				</methods>
-			</class>
+			</class> -->
 		</classes>
 	</test> 
 	 

@@ -772,7 +772,7 @@ public class beneficiariestestcases {
 			
 			lib.Web.clickOnElement(beneficiary, "Unmarried");
 			lib.Web.selectDropDownOption(beneficiary,"Beneficiary Relation","A Trust");
-			String alert_msg= beneficiary.readErrorMessage("Alert Msg");
+			String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 			if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
 				Reporter.logEvent(Status.PASS, "verify Trust warning Message", "Trust Warning Message is displayed", false);
 			else
@@ -842,8 +842,8 @@ public class beneficiariestestcases {
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg",true )){
-				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
+			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg",true )){
+				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
 					Reporter.logEvent(Status.PASS, "verify Error message displayed for QJSA account is matching", "Error Message is matching", false);
 				else
@@ -992,8 +992,8 @@ public class beneficiariestestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			
-			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Msg" )){
-				String alert_msg= beneficiary.readErrorMessage("Alert Msg");
+			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg" )){
+				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
 					Reporter.logEvent(Status.PASS, "verify Error message displayed for married no allocations beneficiary is matching", "Error Message is matching", true);
 				else
@@ -1345,20 +1345,27 @@ public class beneficiariestestcases {
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
 			LeftNavigationBar leftmenu;
+			LandingPage homePage= new LandingPage();
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			Enrollment enrollmentpage = new Enrollment(mfaPage);
 			enrollmentpage.get();
 			enrollmentpage.selectQuickEnroll();
+			Web.clickOnElement(enrollmentpage, "Button I Agree Enroll Now");
+			Web.waitForElement(enrollmentpage, "Button View My Account");
+			Web.clickOnElement(enrollmentpage, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
 			
-			
-			
-//			if(homePage.getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn")) <= 2)			
-//			leftmenu = new LeftNavigationBar(homePage);			
-//		else {
-//			MyAccountsPage accountPage = new MyAccountsPage(homePage);
-//			leftmenu = new LeftNavigationBar(accountPage);
-//		}
+			}
 			leftmenu = new LeftNavigationBar(enrollmentpage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			beneficiary.get();
@@ -1538,8 +1545,7 @@ public class beneficiariestestcases {
 					}
 					if(Stock.GetParameterValue("bene_spousal_rule_code").contains("75%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("66%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("50%") ){
 						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
-						if(Web.isWebElementDisplayed(beneficiary, "ContinueAndConfirm"))
-							Web.clickOnElement(beneficiary, "ContinueAndConfirm");	
+						Web.waitForElement(beneficiary, "View Beneficiary Button");
 						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", true);
 						if(beneficiary.verifyConfirmationPageDisplayed()){
 							Reporter.logEvent(Status.PASS, "Verify Confirmation page displayed", "Confirmation page displayed", true);

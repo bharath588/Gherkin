@@ -57,8 +57,13 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(id="autoEnrollEligibleMsg3") private WebElement txtAutoEnrollment;
 	@FindBy(id="quickEnrollEligibleMsg") private WebElement txtQuickEnrollment;
 	@FindBy(xpath="//div[@ng-if='contributionRate']/span") private WebElement txtAutoEnrollContributionPecent;
+	@FindBy(xpath="//pw-quick-enrollment//legend") private WebElement txtAutoEnrollPriorContribution;
+	@FindBy(xpath="//label[@id='madeContributionsThisYearYes']") private WebElement inpAutoEnrollPriorPlanYes;
+	@FindBy(xpath="//label[@id='madeContributionsThisYearNo']") private WebElement inpAutoEnrollPriorPlanNo;
 	
-	
+	@FindBy(linkText="Participation Agreement for Online Enrollment") private WebElement lnkParticipationAgreement;
+	@FindBy(xpath="//div[contains(@class,'participation-agreement-modal')]//div[@class='modal-content']") private WebElement txtModalContent;
+	@FindBy(linkText="//a[text()[normalize-space()='I Agree']]") private WebElement lnkIAgree;
 	
 	private String textField="//*[contains(text(),'webElementText')]";
 
@@ -155,7 +160,21 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		if (fieldName.trim().equalsIgnoreCase("Auto Enrollment Contribution Percent")) {
 			return this.txtAutoEnrollContributionPecent;
 		}
-		
+		if (fieldName.trim().equalsIgnoreCase("Label Yes")) {
+			return this.inpAutoEnrollPriorPlanYes;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Label No")) {
+			return this.inpAutoEnrollPriorPlanNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Link Participation Agreement")) {
+			return this.lnkParticipationAgreement;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Participation Agreement Modal")) {
+			return this.txtModalContent;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Link I Agree")) {
+			return this.lnkIAgree;
+		}
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -417,6 +436,7 @@ return isTextDisplayed;
 	
 	 public String  verifyAutoEnrollmentSection(){
 	   String contributionPecent="";
+	   String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
 		 Web.waitForElement(btnEnrollSubmit);
 		 String actualMsg=getWebElementText("Auto Enrollment Message");
 		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree Enroll Now.\" "
@@ -452,8 +472,15 @@ return isTextDisplayed;
 						"Contribution Percent is Not Displayed",
 						false);
 		 }
-		//Step 6 ,7 & 8 are not feasible
-		 //Step 9
+		  String actualText = txtAutoEnrollPriorContribution.getText().toString().trim();
+			if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
+				Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
+			verifyWebElementDisplayed("Label Yes");
+			verifyWebElementDisplayed("Label No");
+			
+		
 		 if(btnEnrollSubmit.isEnabled())
 			 Reporter.logEvent(Status.PASS, "Verify 'I Agree,Enroll Now' Button is Enabled",
 					"'I Agree,Enroll Now' Button is Enabled",

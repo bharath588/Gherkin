@@ -90,7 +90,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath = "//img[@class='site-logo']")private WebElement lblSponser;
-	
+	@FindBy(xpath="//div[contains(@class,'alert-warning')]//p") private WebElement lblAlertWarning;
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody/tr")private List<WebElement> lstPrimaryBeneficiaries;
 	@FindBy(xpath = "//input[contains(@id,'primaryBeneficiaryAllocationPercent')]")private List<WebElement> lstPriBeneAllocations;
 	@FindBy(xpath = "//table[@class='beneficiaries primary-beneficiaries table']/tbody")private WebElement tblPrimaryBeneficiary;
@@ -193,7 +193,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("DesignateBeneficiary")) {
 			return this.lblDesignateBeneficiary;
 		}
-		
+				
 		if (fieldName.trim().equalsIgnoreCase("AddAnotherBeneficiary")) {
 			return this.btnAddAnotherBeneficiary;
 		}
@@ -255,6 +255,9 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		if (fieldName.trim().equalsIgnoreCase("Alert Msg")) {
 			return this.lblAlertMsg;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Alert Warning Msg")) {
+			return this.lblAlertWarning;
+		}		
 		if (fieldName.trim().equalsIgnoreCase("First name")) {
 			return this.txtFirstName;
 		}

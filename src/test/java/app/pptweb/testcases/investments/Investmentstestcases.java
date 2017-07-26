@@ -7567,4 +7567,127 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 		}
 
 	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+			ManageMyInvestment investment=new ManageMyInvestment();
+			//Step 1 to 2
+			Deferrals deferral=new Deferrals();
+			LandingPage homePage=new LandingPage();
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			
+			Enrollment enrollment=new Enrollment(mfaPage);
+			enrollment.get();
+			//Step 3 
+			enrollment.selectQuickEnroll();;
+			
+			//Step 4 to 10
+			String contributionPercent=enrollment.verifyAutoEnrollmentSection();
+			
+			//Step 11
+			Web.clickOnElement(enrollment, "Label No");
+			//Step 12
+			enrollment.isTextFieldDisplayed("By clicking the \"I Agree, Enroll Now\" button, you confirm you have reviewed and agree to the ");
+			enrollment.isTextFieldDisplayed("Participation Agreement for Online Enrollment");
+			Web.clickOnElement(enrollment, "Link Participation Agreement");
+			
+			lib.Reporter.logEvent(Status.INFO, "Clicking on Participation Agreement Link", 
+					"Clicked on Participation Agreement Link",
+					false);
+			
+			if(Web.isWebElementDisplayed(enrollment, "Participation Agreement Modal", true)){
+				
+				lib.Reporter.logEvent(Status.PASS, "Verify Participation Agreement Modal is Displayed", 
+						"Participation Agreement Modal is Displayed",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Participation Agreement Modal is Displayed", 
+						"Participation Agreement Modal is Not Displayed",
+						true);
+
+			}
+			//Step13
+			Web.clickOnElement(enrollment, "Link I Agree");
+			
+			//Step 14
+			Web.clickOnElement(enrollment, "Button I Agree Enroll Now");
+			
+		    //Step 15
+			Web.waitForElement(enrollment, "Button View My Account");
+			enrollment.isTextFieldDisplayed("Contribution Rate");
+			if(enrollment.verifyTextFieldDisplayed(contributionPercent)){
+				
+				lib.Reporter.logEvent(Status.PASS, "Verify Contribution Perecent is Displayed", 
+						"Contribution Perecent is Displayed\nContribution Perecent:"+contributionPercent,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Contribution Perecent is Displayed", 
+						"Contribution Perecent is Not Displayed",
+						true);
+				
+			}
+			String confirmationNumber=enrollment.getWebElementText("Confirmation Number");
+			
+			if(Web.isWebElementDisplayed(enrollment, "Confirmation Number")){
+				lib.Reporter.logEvent(Status.PASS, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is Displayed\nConfirmation Number:"+confirmationNumber,
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Confirmation Number is Displayed", 
+						"Confirmation Number is not Displayed", true);
+				
+			}
+			//Step 16
+			Web.clickOnElement(enrollment, "Button View My Account");
+			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Home Page is Displayed", 
+						"User is Navigated to Home Page",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify Home Page is Displayed", 
+						"User is not Navigated to Home Page",
+						true);
+				
+			}
+			//Step 17
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 }
