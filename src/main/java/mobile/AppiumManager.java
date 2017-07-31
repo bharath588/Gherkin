@@ -55,10 +55,10 @@ public class AppiumManager {
 	    /**
 	     * start appium with auto generated ports : appium port, chrome port,
 	     * bootstrap port and device UDID
-	     * @param deviceID
-	     * @param webKitPort
-	     * @return
-	     * @throws Exception
+	     * @param deviceID should be UIDI  for iOS devices 
+	     * @param webKitPort  by default it is 8100 but can be randomly generate while executing parallel
+	     * @return   return AppiumServiceBuilder
+	     * @throws Exception If appium JS path is not present throw exception
 	     */
 
 	    public AppiumServiceBuilder appiumServerForIOS(String deviceID, String webKitPort) throws Exception {

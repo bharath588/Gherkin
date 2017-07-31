@@ -28,11 +28,11 @@ public class CommandPrompt {
 
 
     /**
-     * Run unix command in teminal
-     * @param command
-     * @return
-     * @throws InterruptedException
-     * @throws IOException
+     * Run Unix command in terminal
+     * @param command Unix command to execute in Mac machine
+     * @return   status of command 
+     * @throws InterruptedException If interrupt  exception occur
+     * @throws IOException If i/O exception occur
      */
     public String runCommand(String[] command) throws InterruptedException, IOException {
     	cmd = Arrays.asList(command);     
@@ -54,9 +54,9 @@ public class CommandPrompt {
 
 
     /**
-     * Run unix command in teminal
-     * @param command
-     * @return
+     * Run Unix command in terminal
+     * @param command  Unix command to execute in Mac machine
+     * @return  
      * @throws InterruptedException
      * @throws IOException
      */
@@ -79,9 +79,9 @@ public class CommandPrompt {
     }
     /**
      * Return buffer reader input stream for list of command  
-     * @param cmd2
-     * @return
-     * @throws IOException
+     * @param cmd2  Unix command to execute in Mac machine
+     * @return Buffer reader 
+     * @throws IOException If i/O exception occur
      */
     
     public BufferedReader getBufferedReaderTest(List<String> cmd2) throws IOException {
@@ -114,10 +114,10 @@ public class CommandPrompt {
 
     /**
      *  Run Process in Command terminal to get Device ID details
-     * @param command
-     * @return
-     * @throws InterruptedException
-     * @throws IOException
+     * @param command  Unix command to execute in Mac machine
+     * @return get device udid 
+     * @throws InterruptedException If interrupt exception occur
+     * @throws IOException If i/O exception occur
      */
     public String runProcessCommandToGetDeviceID(String command)
         throws InterruptedException, IOException {
@@ -132,9 +132,9 @@ public class CommandPrompt {
 
     /**
      * Return buffer reader input stream for command  
-     * @param cmd2
+     * @param cmd2  Unix command to execute in Mac machine
      * @return
-     * @throws IOException
+     * @throws IOException- If i/O exception occur
      */
     public BufferedReader getBufferedReader(String command) throws IOException {
         List<String> commands = new ArrayList<>();

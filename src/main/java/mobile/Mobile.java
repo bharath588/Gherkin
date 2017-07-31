@@ -1093,8 +1093,8 @@ public class Mobile {
 	 * Method to return iOS web element
 	 * </pre>
 	 * 
-	 * @param ele
-	 * @return
+	 * @param ele  element for which IOSElemet is return
+	 * @return  IOS element
 	 */
 	public static IOSElement getIOSElement(By by) {
 		int waitTime = 5;	
@@ -1111,9 +1111,9 @@ public class Mobile {
 	
 	/**
 	 *  Method will Tap on element 
-	 * @param iXaxis
-	 * @param iYaxix
-	 * @param element
+	 * @param iXaxis  in int
+	 * @param iYaxix  in int for Y axis
+	 * @param element  tap on element
 	 */
 
 	public static void onTap(int iXaxis, int iYaxix,MobileElement element) {
@@ -1152,7 +1152,7 @@ public class Mobile {
 
 	/**
 	 *  Method will scroll  to find element 
-	 * @param link
+	 * @param link scroll till this locator
 	 */
 	
 	public static void scrollTillElementIsDisplay(By link){
@@ -1222,7 +1222,7 @@ public class Mobile {
 
 	/**
 	 * Method will select radio button 
-	 * @param sLabel
+	 * @param sLabel select option by clicking this value
 	 */
 	
 	public static void selectRadioButton(String sLabel) {
@@ -1240,12 +1240,13 @@ public class Mobile {
 	
 /**
  * Method will find element with Predicate
- * @param sLabel
- * @return
+ * @param sLabel element for which IOSElemet is return
+ * @return  IOS Element
  */
 	
 	public static IOSElement findElementWithPredicate(String sLabel){
-		IOSElement ele = (IOSElement) Mobile.getDriver().findElement(MobileBy.iOSNsPredicateString("label CONTAINS '"+sLabel+"'"));
+		//IOSElement ele = (IOSElement) Mobile.getDriver().findElement(MobileBy.iOSNsPredicateString("label CONTAINS '"+sLabel+"'"));
+		IOSElement ele  =  (IOSElement) Mobile.getDriver().findElement(By.xpath(""));
 		if(ele != null){
 			if(!ele.isDisplayed()){
 				Mobile.scroll_Down();
@@ -1256,7 +1257,7 @@ public class Mobile {
 	
 	/**
 	 * Method will set the flag for Switch Button
-	 * @param bValue
+	 * @param bValue true will set switch ON and false will switch OFF 
 	 */
 	public static void switchButton( Boolean bValue) {
 		try{
@@ -1279,8 +1280,8 @@ public class Mobile {
 	
 	/**
 	 * Find List of element with class
-	 * @param element
-	 * @return
+	 * @param element element for which IOSElement is return
+	 * @return  list of IOSElement 
 	 */
 	
 	public static List<IOSElement> getListOfElements_By_Class(String element){
@@ -1291,8 +1292,8 @@ public class Mobile {
 	
 	/**
 	 * Find element with by class name
-	 * @param ele
-	 * @return
+	 * @param ele element for which IOSElemet is return
+	 * @return IosElement
 	 */
 	public static IOSElement findElement_By_Class(String ele){
 		return Mobile.getIOSElement(By.className(ele));
@@ -1300,7 +1301,7 @@ public class Mobile {
 	
 	/**
 	 * Method will verify element is  selected
-	 * @param sObj
+	 * @param sObj 
 	 * @param sMsg
 	 */
 	public static void verify_Element_Is_Selected(String sObj,String sMsg){

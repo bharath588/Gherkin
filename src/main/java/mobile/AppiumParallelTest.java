@@ -36,7 +36,7 @@ public class AppiumParallelTest {
      
     /**
      * return  available devices for execution
-     * @return
+     * @return Available  free devices
      */
     
     public static synchronized String getNextAvailableDeviceId() {
