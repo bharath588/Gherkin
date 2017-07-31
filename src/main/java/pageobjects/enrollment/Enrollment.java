@@ -39,7 +39,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[@class='row']//a[text()='Skip & View My Account']") private WebElement btnSkipAndViewAccount;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath="//*[@id='quickEnrollmentLabel']/span") private WebElement inpQuickEnrollment;
-	@FindBy(xpath="//*[@id='customEnrollmentLabel']/span") private WebElement inpCustomEnrollment;
+	@FindBy(xpath="//[@id='customEnrollmentLabel']/span") private WebElement inpCustomEnrollment;
 	@FindBy(id="btnCustom") private WebElement btnGetStarted;
 	@FindBy(xpath="//div[contains(@class,'title')]//h1") private WebElement hdrPriorContribution;
 	@FindBy(xpath="//div[contains(@class,'title')]//p") private WebElement txtPriorContribution;
@@ -60,10 +60,11 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//pw-quick-enrollment//legend") private WebElement txtAutoEnrollPriorContribution;
 	@FindBy(xpath="//label[@id='madeContributionsThisYearYes']") private WebElement inpAutoEnrollPriorPlanYes;
 	@FindBy(xpath="//label[@id='madeContributionsThisYearNo']") private WebElement inpAutoEnrollPriorPlanNo;
-	
+	@FindBy(className="paycheck-contribution") private WebElement txtPayCheckEstimate;
 	@FindBy(linkText="Participation Agreement for Online Enrollment") private WebElement lnkParticipationAgreement;
 	@FindBy(xpath="//div[contains(@class,'participation-agreement-modal')]//div[@class='modal-content']") private WebElement txtModalContent;
-	@FindBy(linkText="//a[text()[normalize-space()='I Agree']]") private WebElement lnkIAgree;
+	@FindBy(xpath="//a[text()[normalize-space()='I Agree']]") private WebElement lnkIAgree;
+	@FindBy(xpath="//div[contains(@ng-if,'investmentOptions')]//h4") private WebElement txtInvestmentOption;
 	
 	private String textField="//*[contains(text(),'webElementText')]";
 
@@ -433,7 +434,10 @@ return isTextDisplayed;
 		return getText;
 
 	}
-	
+	/**
+	 * Method to verify Auto Enrollment Section
+	 * @return contributionPecent
+	 */
 	 public String  verifyAutoEnrollmentSection(){
 	   String contributionPecent="";
 	   String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
@@ -493,27 +497,92 @@ return isTextDisplayed;
 	 } 	
 	 
 	 
-	 public void verifyQuickEnrollmentSection(){
-		   
+	 public String verifyQuickEnrollmentSection(){
+		 String contributionPecent="";
+		   String year = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+			
 		 Web.waitForElement(btnEnrollSubmit);
 		 String actualMsg=getWebElementText("Quick Enrollment Message");
 		 String expectedMsg="To elect to enroll using the following contribution rate and investment option, click \"I Agree, Enroll Now.\" "
 		 		+ "Or you may customize your enrollment below.";
 		 if (actualMsg.equalsIgnoreCase(expectedMsg)) {
-			Reporter.logEvent(Status.PASS, "Verify Auto Enrollment Message is Displayed",
-						"Auto Enrollment Message is Displayed\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+			Reporter.logEvent(Status.PASS, "Verify Quick Enrollment Message is Displayed",
+						"Quick Enrollment Message is Displayed\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
 						true);
 
 			} else {
 						
-				Reporter.logEvent(Status.FAIL,  "Verify Auto Enrollment Message is Displayed",
-						"Auto Enrollment Message is Not Matching\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
+				Reporter.logEvent(Status.FAIL,  "Verify Quick Enrollment Message is Displayed",
+						"Quick Enrollment Message is Not Matching\nExpected:"+expectedMsg+"\nActual:"+actualMsg,
 						true);
 			}
 		 isTextFieldDisplayed("CONTRIBUTION RATE");
-		 isTextFieldDisplayed("COMPANY MATCH");
+		 if(Web.isWebElementDisplayed(txtAutoEnrollContributionPecent)){
+			 if(txtAutoEnrollContributionPecent.getText().contains("%")){
+				 contributionPecent=txtAutoEnrollContributionPecent.getText().toString().trim();	 
+			 Reporter.logEvent(Status.PASS, "Verify Contribution Percent is Displayed",
+						"Contribution Percent is Displayed in Percent(%) ",
+						false);
+			 }
+		else
+			 Reporter.logEvent(Status.FAIL,  "Verify Contribution Percent is Displayed",
+						"Contribution is Not in %",
+						false);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,  "Verify Contribution Percent is Displayed",
+						"Contribution Percent is Not Displayed",
+						false);
+		 }
+		 
+		 if(Web.isWebElementDisplayed(txtPayCheckEstimate)){
+			 if(txtPayCheckEstimate.getText().contains("$")){
+				
+			 Reporter.logEvent(Status.PASS, "Verify Paycheck Estimate is Displayed",
+						"Paycheck Estimate is Displayed in Dollar($) ",
+						false);
+			 }
+		else
+			 Reporter.logEvent(Status.FAIL,  "Verify Paycheck Estimate is Displayed",
+						"Paycheck Estimate is Not Displayed in Dollar($) ",
+						false);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL, "Verify Paycheck Estimate is Displayed",
+						"Paycheck Estimate is Not Displayed",
+						false);
+		 }
+		 
+		 isTextFieldDisplayed("INVESTMENT OPTION");
+		 
+		 if (Web.isWebElementDisplayed(txtInvestmentOption)) {
+				Reporter.logEvent(Status.PASS, "Verify Default Investment Option is Displayed",
+							" Default Investment Option is Displayed\nInvestment Option:"+txtInvestmentOption.getText().toString().trim(),
+							true);
+
+				} else {
+							
+					Reporter.logEvent(Status.FAIL,  "Verify Default Investment Option is Displayed",
+							" Default Investment Option is Not Displayed",
+							true);
+				}
+		  String actualText = txtAutoEnrollPriorContribution.getText().toString().trim();
+			if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
+				Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify text in Prior Contributions page", "text is not matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);
+			verifyWebElementDisplayed("Label Yes");
+			verifyWebElementDisplayed("Label No");
+			
 		
-	 } 	
-	    
-	    
+		 if(btnEnrollSubmit.isEnabled())
+			 Reporter.logEvent(Status.PASS, "Verify 'I Agree,Enroll Now' Button is Enabled",
+					"'I Agree,Enroll Now' Button is Enabled",
+					false);
+		 else
+		 Reporter.logEvent(Status.FAIL,  "Verify 'I Agree,Enroll Now' Button is Enabled",
+					"'I Agree,Enroll Now' Button is Not Enabled",
+					false);
+		 return contributionPecent;
 	}
+}

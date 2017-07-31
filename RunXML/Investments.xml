@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                     <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
+                      <!-- <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -49,18 +49,18 @@
                     
                     <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
-                    </include>    -->
+                    </include>   
                      
-                     <!--  <include name="DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype">
+                     <include name="DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype"></parameter>
                     </include> 
                    
                      <include name="DDTC_2640_MTG_Viewmanage_invest_HDMI_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2640_MTG_Viewmanage_invest_HDMI_Doesnot_Offer_all_mntype"></parameter>
-                    </include> 
+                    </include>  -->
                     
                   
-                	   <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
+                	    <!-- <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM"></parameter>
                     </include> 
                     
@@ -78,9 +78,9 @@
                     
                      <include name="DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
-                    </include> -->
-                  
-                     <!--   <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
+                    </include>  -->
+                 
+                    <!-- <include name="DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
                     </include>
                     
@@ -105,33 +105,33 @@
                      <include name="DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype"></parameter>
                     </include>  
-                    -->
+                   
                     
-                    <!--   <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype">
+                     <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype"></parameter>
                     </include> 
                     
                     
                      <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype"></parameter>
-                    </include>  --> 
+                    </include>  
                     
                    
-                     <!-- <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_No_Mntype">
+                     <include name="DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_No_Mntype"></parameter>
-                    </include>  -->
+                    </include>  
                    
-                    <!--  <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype">
+                     <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype"></parameter>
                     </include> 
                     
                     
                      <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype"></parameter>
-                    </include>   -->
+                    </include>   
                     
                     
-                     <!-- <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_No_Mntype">
+                     <include name="DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_No_Mntype"></parameter>
                     </include> 
                     
@@ -149,7 +149,7 @@
                      <include name="DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_No_Mntype"></parameter>
                     </include>
-                     -->
+                    
                     
                     <include name="DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype"></parameter>
@@ -175,9 +175,13 @@
                     
                      <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
-                    </include>   
-                    
-                    <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
+                    </include>  
+                                         
+                    <include name="DDTC_22678_FullRebal_ModelPortfolio">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
+                    </include> 
+                     -->
+                   <!--  <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
                     </include>
                     
@@ -192,20 +196,16 @@
                      <include name="DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio">
                     <parameter  name="ManualTCName" value="SIT_DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio"></parameter>
                     </include>
-                     
-                    <include name="DDTC_22678_FullRebal_ModelPortfolio">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
-                    </include>
+                    
+                     -->
                     
                     
-                     <!--  
                    
-                    
                     <include name="DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs">
                     <parameter  name="ManualTCName" value="SIT_DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs"></parameter>
                     </include>
                     
-                      <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                   <!--        <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
                     <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
                     </include>
                    
@@ -223,7 +223,29 @@
                     
                      <include name="DDTC_25438_Auto_Enrollment_for_NonAllMTG">
                     <parameter  name="ManualTCName" value="SIT_DDTC_25438_Auto_Enrollment_for_NonAllMTG"></parameter>
-                    </include> -->
+                    </include> 
+                    
+                     <include name="DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                      
+                    -->
                 
 				</methods>
               

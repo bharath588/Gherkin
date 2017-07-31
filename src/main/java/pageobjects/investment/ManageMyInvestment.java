@@ -318,7 +318,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//span[./span[text()[normalize-space()='Collapse sources']]]")
 	private WebElement lnkCollapseSources;
 	
-	@FindBy(xpath = "//button[@id='riskBasedFundsButton']") private WebElement btnChooseRiskBasedFund;
+	@FindBy(xpath = "//button[@id='riskBasedFundsButton' or @id='risk-based-fund-link']") private WebElement btnChooseRiskBasedFund;
 	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Select a risk-based fund']]")
 	private WebElement txtSelectRiskBasedFund;
@@ -1781,7 +1781,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	}
 	
 	/**
-	 * This Method to select the investment options and enter the percentage
+	 * This Method to select the investment options 
 	 * @author srsksr
 	 *@param noOfInvestmentoptions
 	 *@param percent
@@ -1789,7 +1789,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	 */
 	public Map<String,String> selectInvestmentOptions(int noOfInvestmentoptions) throws InterruptedException {
 		try{
-		    mapInvestmentOptions.clear();
+		    mapInvestmentOptions=new HashMap<String, String>();
 			
 			int noOfRows = inpInvestmentOptionFutureAllocation.size();
 			if (noOfRows >= noOfInvestmentoptions) {
