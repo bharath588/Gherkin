@@ -1545,6 +1545,7 @@ public class beneficiariestestcases {
 					}
 					if(Stock.GetParameterValue("bene_spousal_rule_code").contains("75%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("66%") || Stock.GetParameterValue("bene_spousal_rule_code").contains("50%") ){
 						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
+						Web.clickOnElement(beneficiary, "ContinueAndConfirm");
 						Web.waitForElement(beneficiary, "View Beneficiary Button");
 						Reporter.logEvent(Status.INFO, "Confirm and Continue button", "Clicked confirm and continue button", true);
 						if(beneficiary.verifyConfirmationPageDisplayed()){
