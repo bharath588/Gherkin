@@ -22,7 +22,11 @@ import com.google.common.base.Throwables;
 
 import core.framework.Globals;
 import core.framework.TestListener;
-
+/**
+ * Reporter - Class contains methods to initialize and log report events
+ * @author vrjnyk
+ *
+ */
 public class Reporter{
 	
 	public static Map<Long,ExtentTest> testCaseMap = new LinkedHashMap<>();
@@ -364,7 +368,12 @@ public class Reporter{
 			}
 		}
 	}
-
+/**
+ * Method to capture screen shot
+ * @param logStatus
+ * @param attachScreenshot
+ * @return
+ */
 	public static boolean isScreenshotRequired(Status logStatus,
 			boolean attachScreenshot) {
 		boolean isRequired = false;

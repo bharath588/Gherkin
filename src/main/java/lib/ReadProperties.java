@@ -7,12 +7,18 @@ import java.io.FileNotFoundException;
 //import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+/**
+ * ReadProperties - This Class to read properties file
+ * @author rnjbdn
+ *
+ */
 public class ReadProperties {
 	private static Properties defaultProp = new Properties();	
 	private final static String DEFAULTPROPERTIESFILENAME = "config.properties";
 
-	
+	/**
+	 * Method to read values from properties file
+	 */
 	public static void readAllProperties() {
 		try {
 			InputStream inStream = ReadProperties.class.getClassLoader().getResourceAsStream(DEFAULTPROPERTIESFILENAME);

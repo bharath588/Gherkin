@@ -27,7 +27,11 @@ import lib.Log.Level;
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
-
+/**
+ * Stock - Class contains methods to read test data from xml files
+ * @author rnjbdn
+ *
+ */
 public class Stock {
 	public static   Map<String, String> globalParam = new LinkedHashMap<String, String>();
 	private static   int dataProviderIterations;
@@ -39,7 +43,11 @@ public class Stock {
 	public static   int iterationNumber = 0;
 	public static Map<Integer,Map<Integer, Map<String, String>>> map = new LinkedHashMap<>();
 	
-	
+	/**
+	 * Method to add iterations data to data provider
+	 * @param dataObj
+	 * @return Object[][] - testDataObject
+	 */
 	public static   Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
 		// Converting Map to Object[][] to handle @DataProvider
 		Object[][] tdObject = null;
@@ -64,7 +72,11 @@ public class Stock {
 	public static   int getIterations(){
 		return dataProviderIterations;
 	}
-	
+	/**
+	 * Method to get the test environment
+	 * @param envName
+	 * @return String - Globals.DB_TYPE.get(envName)
+	 */
 	private static   String checkEnv(String envName){
 		if(envName.contains("PROJ")){
 			return Globals.DB_TYPE.get("PROJ");
@@ -77,7 +89,13 @@ public class Stock {
 		}
 		return null;
 	}
-
+/**
+ * Method returns  test data for the provided test case and iteration
+ * @param tcAbsPath
+ * @param tcName
+ * @return 
+ * @throws ParserConfigurationException
+ */
 	public  static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) throws ParserConfigurationException {
 		
 		Stock.iterationNumber = 0;
@@ -191,7 +209,11 @@ public class Stock {
 		}
 		return null;
 	}
-
+/**
+ * Method to get the iteration numbers which has to execute
+ * @param indexString
+ * @return Map - mapIndex
+ */
 	public static   Map<String, String> getLoopIndex(String indexString) {
 		String GET_INDEX_PATTERN = "[0-9,>temp]+";
 		String[] arrFirstSplit = null;
@@ -241,7 +263,10 @@ public class Stock {
 		}
 		return null;
 	}
-
+/**
+ * Method to read the values from properties file and add them to globalParam map
+ * @param configPath
+ */
 	public static   void getParam(String configPath) {
 		String key = Globals.GC_EMPTY;
 		String val = Globals.GC_EMPTY;
@@ -318,7 +343,11 @@ public class Stock {
 	public static Map<String, String> getGlobalParam() {
 		return globalParam;
 	}
-	
+	/**
+	 * Method to get the parameter value from test data 
+	 * @param strParamName
+	 * @return
+	 */
 	public static String GetParameterValue(String strParamName) {
 		
 		String value = null;
@@ -334,7 +363,11 @@ public class Stock {
 		return value;
 	}
 	
-		
+	/**
+	 * Method to get query name from test data sheet	
+	 * @param queryName
+	 * @return String[] - queryData
+	 */
 	public static String[] getTestQuery(String queryName) {
 		try {
 			String[] queryData = new String[3];
@@ -381,7 +414,11 @@ public class Stock {
 		return null;
 
 	}
-	
+	/**
+	 * Method to get parameter value from properties file
+	 * @param parameterName
+	 * @return String parameterValue
+	 */
 	public static   String getConfigParam(String parameterName){
 		return globalParam.get(parameterName.trim().toUpperCase()) ;
 	}
@@ -419,6 +456,12 @@ public class Stock {
 		return globalTestData.get(index);
 	}
 	
+	
+	/**
+	 * <pre>This method returns the test data for the current iteration to access them in @Beforemethod</pre>
+	 * @param globalTestData<pre>It is the test data map for the respective test case</pre>
+	 * @return <pre><b>Returns the data for the running iteration number</b></pre>
+	 */
 	public static   LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) throws ParserConfigurationException {
 		Stock.iterationNumber = 0;
 		//tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
