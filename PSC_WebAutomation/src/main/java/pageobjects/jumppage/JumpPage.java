@@ -82,7 +82,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 		UserVerificationPage userVeriPg = new UserVerificationPage();
 		LoginPage loginObj =  new LoginPage();
 		try{			
-			if(ifUserOrAccntVerificationMandate) {	// Performs User or Account Verification 		
+			if(ifUserOrAccntVerificationMandate) {		
 				invokeMethod = this.parent.getClass().getDeclaredMethod("performVerification", String[].class);
 				invokeMethod.invoke(this.parent.getClass().newInstance(),new Object[]{userData});			
 			}else{

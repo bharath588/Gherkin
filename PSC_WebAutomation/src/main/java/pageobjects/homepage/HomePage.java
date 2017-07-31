@@ -181,7 +181,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 	@Override
 	protected void load() {		
-		this.parent.get();
+ 		this.parent.get();
 		UserVerificationPage userVeriPg = new UserVerificationPage();
 		LoginPage loginObj =  new LoginPage();
 		try{			
@@ -1217,7 +1217,7 @@ public void validateOtherHomePageSecutiryTXNCodes()
 			Reporter.logEvent(Status.PASS,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
 					+ " tabs are displayed.", false);
 		else
-		Reporter.logEvent(Status.FAIL,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
+		Reporter.logEvent(Status.FAIL,"Check Todo,File sharing and compliance tabs are not displayed.","All mentioned"
 				+ " tabs are displayed.", true);
 	 }
 	catch(Exception e)

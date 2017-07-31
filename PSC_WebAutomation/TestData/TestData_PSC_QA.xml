@@ -205,7 +205,6 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="ExpPlanOverviewOptions" value="Plan provisions,Vesting schedules,Participant web and VRU options" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Investment_Fixed_Investment_FutureRates">
@@ -350,6 +349,7 @@
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="SIT_PSC_Login_01_TC006_Gwrs- Forcelogin">
@@ -367,11 +367,21 @@
 				<parameter name="username" value="7ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="Comments" value="User ID for Internal users" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="2ISIS" />
 				<parameter name="password" value="testing1" />
 				<parameter name="Comments" value="User ID for External users" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Display correct date and time of my last login">
@@ -554,8 +564,8 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5ISIS" />
 				<parameter name="password" value="testing1" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
 				<parameter name="userVerificationEmail" value="discard@gwl.comt" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="spouseMidName" value="test" />
@@ -730,7 +740,7 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="infoType" value="NonAvailability" />
+				<parameter name="infoType" value="Availability" />
 				<parameter name="TxnCode" value="PSCCTR" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
@@ -741,7 +751,7 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationAns" value="discard@gwl.com" />
 				<parameter name="UserSecondaryAns" value="test" />
-				<parameter name="infoType" value="Availability" />
+				<parameter name="infoType" value="NonAvailability" />
 				<parameter name="TxnCode" value="PSCCTR" />
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
@@ -1790,9 +1800,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Suppress_Account_Detail_elements_TRS_NonTRS">
@@ -1897,7 +1907,7 @@
 				<parameter name="dreamCar" value="test" />
 				<parameter name="favDrink" value="test" />
 				<parameter name="spouseMidName" value="test" />
-				<parameter name="SSN" value="734473241" />
+				<parameter name="SSN" value="877979132" />
 				<parameter name="ExpectedElements"
 					value="Period begin date,Period end date,YTD credited hours,YTD credited hours excluded,Service years,Effective date,Process date,Total compensation,Plan compensation,Pre entry compensation" />
 			</Iteration>
@@ -1954,11 +1964,11 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5YD9I" />
 				<parameter name="password" value="testing1" />
-				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationEmail" value="raman@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Enroll_And_Eligibility_Fields_Type_Validations">
@@ -2108,14 +2118,82 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="teste" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
 				<parameter name="SSN" value="522430088" />
 				<parameter name="TxnHistModalHeaders" value="Confirmation Number,Effective Date,Transaction Type,Amount"/>
 				<parameter name="ExpPastThreeMonthsTxnMsg" value="*Shows up to 5 transactions over the past 3 months."/>
 				<parameter name="SSN_NoPastThreeMonth" value="195323781" />
 				<parameter name="ExpMsg_NoPastThreeMonth" value="There have been no transactions in the past 3 months. Click here to access the Transactions search page." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpRehireFields" value="Rehire date,Term date,Term reason,Employee ID,Insider,Officer,Super officer,Highly compensated,Ownership percentage,Trade monitoring indicator,FT/PT employee,Overseas employee,Overseas date" />
+				<parameter name="ExpEmpHistoryTopFields" value="Employee ID,Hire date,Term date,Term date change date,Term reason" />
+				<parameter name="ExpEmpHistoryDetailsFields" value="Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date" />
+				<parameter name="ExpectedRehireMsg1" value="Hire date must be greater than a prior termination date." />
+				<parameter name="ExpectedRehireMsg2" value="Termination date cannot be earlier than hire date." />
+				<parameter name="HireDateInFutureMsg" value="Hire date cannot be in the future." />
+				<parameter name="ExpReasonValidationMsg" value="Termination reason cannot be added without a termination date." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpRehireFields" value="Rehire date,Term date,Term reason,Employee ID,Insider,Officer,Super officer,Highly compensated,Ownership percentage,Trade monitoring indicator,FT/PT employee,Overseas employee,Overseas date" />
+				<parameter name="ExpEmpHistoryTopFields" value="Employee ID,Hire date,Term date,Term date change date,Term reason" />
+				<parameter name="ExpEmpHistoryDetailsFields" value="Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date" />
+				<parameter name="ExpectedRehireMsg1" value="Hire date must be greater than a prior termination date." />
+				<parameter name="ExpectedRehireMsg2" value="Termination date cannot be earlier than hire date." />
+				<parameter name="HireDateInFutureMsg" value="Hire date cannot be in the future." />
+				<parameter name="ExpReasonValidationMsg" value="Termination reason cannot be added without a termination date." />
+				<parameter name="MsgWhenTermLessThan18Mon" value="This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.
+If you need to correct the existing termination date please contact website support." />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="EmployeeID" value="1456RTO" />
+				<parameter name="ExpOverseasValidation" value="Overseas date cannot be added without overseas indicator selected as true." />
+				<parameter name="MsgWhenTermLessThan18Mon" value="This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.
+If you need to correct the existing termination date please contact website support." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpEmpHistoryTopFields" value="Employee ID,Hire date,Term date,Term date change date,Term reason" />
+				<parameter name="ExpEmpHistoryDetailsFields" value="Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date" />
+				<parameter name="EmployeeID" value="1456RTO" />
+				<parameter name="ExpOverseasValidation" value="Overseas date cannot be added without overseas indicator selected as true." />
+				<parameter name="MsgWhenTermLessThan18Mon" value="This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.
+If you need to correct the existing termination date please contact website support." />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -2308,7 +2386,7 @@ where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= 
 		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ISISDB_QA"
 			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
 		<parameter QueryName="queryToSetInvalidLoginCount" DB="ISISDB_QA"
-			Query="update isis_password set invalid_login_count=2 where user_logon_id=?">
+			Query="update isis_password set invalid_login_count=3 where user_logon_id=?">
 		</parameter>
 		<parameter QueryName="queryToResetInvalidLoginCount" DB="ISISDB_QA"
 			Query="update isis_password set invalid_login_count=0 where user_logon_id=?">
@@ -2714,5 +2792,64 @@ WHERE EXISTS(SELECT 'X' FROM disb_detl d WHERE d.ga_id = ? AND disb_basic.id = d
 AND disb_basic.dsrs_code   = 'LOAN'
 AND disb_basic.status_code = 'COMPLETE'
 AND disb_basic.ind_id in (select id from individual where ssn=?))" />
+<parameter QueryName="getPlanWithEligiRuleSet" DB="ISISDB_QA"
+Query="select id GA_ID from group_account where plan_id in (select plan_id from ELIGIBILITY_RULE_SET) and id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) order by ga_id asc" />
+<parameter QueryName="chkEmploymentAndEditTxnCode" DB="ISISDB_QA"
+Query="select DISTINCT txn_code from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_logon_id =?) and txn_code in ('PSVEMP','ESCCEM')" />
+<parameter QueryName="getSSNTermedGrtrThan18Months" DB="ISISDB_QA"
+Query="select i.ssn,to_char(ADD_MONTHS(e.emp_termdate,18),'MM/dd/yyyy') emp_termdate_ModifiedDate,
+to_char(e.emp_termdate,'MM/dd/yyyy') emp_termDate,to_char(e.hire_date,'MM/dd/yyyy') hire_date
+from employment e inner join individual i on i.id=e.ind_id 
+where e.hire_date is not null
+and e.emp_termdate is not null
+and sysdate &#60;(ADD_MONTHS(e.emp_termdate,18))
+and e.ind_id in (
+select ind_id from PART_AGRMT
+where ga_id=?) 
+order by e.emp_termdate desc" />
+<parameter QueryName="getSSNTermedLessThan18Months" DB="ISISDB_QA"
+Query="select i.ssn,to_char(ADD_MONTHS(e.emp_termdate,18),'MM/dd/yyyy') emp_termdate_ModifiedDate,
+to_char(e.emp_termdate,'MM/dd/yyyy') emp_termDate,to_char(e.hire_date,'MM/dd/yyyy') hire_date
+from employment e inner join individual i on i.id=e.ind_id 
+where e.hire_date is not null
+and e.emp_termdate is not null
+and sysdate &gt;(ADD_MONTHS(e.emp_termdate,18))
+and e.ind_id in (
+select ind_id from PART_AGRMT
+where ga_id=?) 
+order by e.emp_termdate desc" />
+<parameter QueryName="getSSNWithNullTermDate" DB="ISISDB_QA"
+Query="select i.ssn,e.* from employment e inner join individual i on i.id= e.ind_id 
+where e.hire_date is not null
+and e.emp_termdate is null
+and e.ind_id in (select ind_id from PART_AGRMT
+where ga_id=?)" />
+<parameter QueryName="checkTxnCodeIsAssigned" DB="ISISDB_QA"
+Query="select * from user_txn_auth where uscs_id in 
+(select uscs_id from user#user_class where user_logon_id=?) and txn_code=?" />
+<parameter QueryName="validateEventId" DB="ISISDB_QA"
+Query="select * from event where id=?" />
+<parameter QueryName="updateEmploymentTableTermDate" DB="ISISDB_QA"
+Query="update employment set emp_termdate = ? where ind_id in (select id from individual where ssn=?)" />
+<parameter QueryName="getPPTWithTransactionHistory" DB="INSTDB_QA"
+Query="select distinct T1.SSN,T2.GA_ID,T2.first_cnt_date from individual T1
+join txn_summ T2 on T1.ID=T2.IND_ID
+join user_data_access T3 on T3.GA_ID=T2.GA_ID
+and T2.GA_ID IN (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
+and t2.first_cnt_date > add_months(sysdate,-3)" />
+<parameter QueryName="getEmploymentDataForSSN" DB="ISISDB_QA"
+Query="select to_char(emp_termdate,'MM/dd/yyyy') emp_termdate,
+to_char(hire_date,'MM/dd/yyyy') hire_Date,
+full_part_time_employee, termination_reason_code, percent_ownership,
+er_assigned_id from employment 
+where ind_id in (select id from individual where ssn=?)" />
+<parameter QueryName="getTerminationReasonValues" DB="ISISDB_QA"
+Query="select nvl(RV_MEANING,' ') RV_MEANING, rv_low_value from 
+isis_ref_values where rv_table='EMPLOYMENT' and rv_column='TERMINATION_REASON_CODE' " />
 </Module>
 </TestData>

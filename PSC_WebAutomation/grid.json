@@ -10,22 +10,12 @@
 },
 {
 
-        "Browser": "Chrome",
+        "Browser": "chrome",
 
         "Port": "http://10.4.61.69:5557/wd/hub",
 
         "Platform": "Windows.xp"
 
-},
-{
-
-        "Browser": "IE",
-
-        "Port": "http://10.4.61.208:5558/wd/hub",
-
-        "Platform": "Windows.xp"
-
-},
-
+}
 ]
 

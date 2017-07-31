@@ -2,6 +2,7 @@ package app.psc.testcases.employeesearch;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -2718,7 +2719,9 @@ try {
 		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
 				+ "validateemployee Transaction History page.", false);
 		employeesearch = new EmployeeSearch().get();
-		employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		resultset = DB.executeQuery(Stock.getTestQuery("getPPTWithTransactionHistory")[0],
+				Stock.getTestQuery("getPPTWithTransactionHistory")[1],"K_"+Stock.GetParameterValue("username"));
+		employeesearch.selectEmployeeFromResultSet(resultset);
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.navigateToTxnHistoryTab();
 		String expMsg = Stock.GetParameterValue("ExpPastThreeMonthsTxnMsg");
@@ -2833,6 +2836,293 @@ try {
 			}
 }
 }
+
+
+
+/**
+ * @author smykjn
+ * <pre>This testcase will cover UI changes and work flow for Active employee.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 10-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_56_PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to validate"
+				+ " employment angular page and hire date and term date validations.", false);
+		String planNumber="";
+		String dateToRevertBack="";
+		String ssn = "";
+		String hireDate="";
+		String termDate="";
+		String termDateModified = "";
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithEligiRuleSet")[0],
+					Stock.getTestQuery("getPlanWithEligiRuleSet")[1],"K_"+Stock.GetParameterValue("username"));
+			
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				break;
+			}
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNTermedGrtrThan18Months")[0],
+					Stock.getTestQuery("getSSNTermedGrtrThan18Months")[1],planNumber);
+			
+			while(resultset.next()){
+				ssn = resultset.getString("SSN");
+				hireDate = resultset.getString("HIRE_DATE");
+				termDate = resultset.getString("EMP_TERMDATE");
+				termDateModified = resultset.getString("EMP_TERMDATE_MODIFIEDDATE");
+				break;
+			}
+			Date dbTermDate = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDate);
+			
+			if(dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))){
+				dateToRevertBack = CommonLib.getDateStringInDateFormat("dd-MMM-yy", dbTermDate);
+				System.out.println("TermDate from DB :"+dateToRevertBack);
+				String modifyDate = CommonLib.getDate("dd-MMM-yy", -60);
+				System.out.println("TermDate modified by -60 days :"+modifyDate);
+				DB.executeUpdate(Stock.getTestQuery("updateEmploymentTableTermDate")[0],
+						Stock.getTestQuery("updateEmploymentTableTermDate")[1],modifyDate,ssn);
+			}
+			employeesearch = new EmployeeSearch().get();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchEmployeeBySSN(ssn);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.employmentInfoForTermedEmp(termDateModified);
+				employeesearch.ediTTermDateValidation(hireDate,termDate);
+				Web.clickOnElement(Web.returnElement(employeesearch, "CANCEL_BUTTON"));
+				employeesearch.validateRehireFeature();
+				employeesearch.validateBreadCrumb("Employment information");
+				employeesearch.validateBasicEmploymentElements(planNumber, ssn);
+				employeesearch.validateEmploymentHistoryLabels();
+				employeesearch.updateReHireDateValidation(termDate);
+				employeesearch.fillRehireDetailFormAndCheckForCnfMsg(termDate);
+			}
+			
+			if(dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))){
+				DB.executeUpdate(Stock.getTestQuery("updateEmploymentTableTermDate")[0],
+						Stock.getTestQuery("updateEmploymentTableTermDate")[1],dateToRevertBack,ssn);
+				}
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+/**
+ * @author smykjn
+ * <pre>This testcase covers hire date and term date validations for ppt whose termdate+18months<current date.</pre>
+ * @param itr
+ * @param testdata
+ * @Date 10-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month
+(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to fill employment"
+				+ " details,save and validate for event id generated.", false);
+		String planNumber="";
+		String dateToRevertBack="";
+		String ssn = "";
+		String hireDate="";
+		String termDate="";
+		String termDateModified = "";
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithEligiRuleSet")[0],
+					Stock.getTestQuery("getPlanWithEligiRuleSet")[1],"K_"+Stock.GetParameterValue("username"));
+			
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				break;
+			}
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNTermedLessThan18Months")[0],
+					Stock.getTestQuery("getSSNTermedLessThan18Months")[1],planNumber);
+			
+			while(resultset.next()){
+				ssn = resultset.getString("SSN");
+				hireDate = resultset.getString("HIRE_DATE");
+				termDate = resultset.getString("EMP_TERMDATE");
+				termDateModified = resultset.getString("EMP_TERMDATE_MODIFIEDDATE");
+				break;
+			}
+			Date dbTermDate = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDate);
+			
+			if(dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))){
+				dateToRevertBack = CommonLib.getDateStringInDateFormat("dd-MMM-yy", dbTermDate);
+				System.out.println("TermDate from DB :"+dateToRevertBack);
+				String modifyDate = CommonLib.getDate("dd-MMM-yy", -560);
+				System.out.println("TermDate modified by -60 days :"+modifyDate);
+				DB.executeUpdate(Stock.getTestQuery("updateEmploymentTableTermDate")[0],
+						Stock.getTestQuery("updateEmploymentTableTermDate")[1],modifyDate,ssn);
+			}
+			employeesearch = new EmployeeSearch().get();
+			if(itr==1){
+				employeesearch.searchPlan(planNumber);
+				employeesearch.searchEmployeeBySSN(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.navigateToEmpDetailPage();
+				if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+					employeesearch.employmentInfoForTermedEmp(termDateModified);
+					employeesearch.validateRehireFeature();
+					employeesearch.validateBreadCrumb("Employment information");
+					employeesearch.validateBasicEmploymentElements(planNumber, ssn);
+					employeesearch.validateEmploymentHistoryLabels();
+					employeesearch.updateReHireDateValidation(termDate);
+					employeesearch.fillRehireDetailFormAndCheckForCnfMsg(termDate);
+				}
+			}
+			if(itr==2){
+				employeesearch.searchPlan(planNumber);
+				employeesearch.searchEmployeeBySSN(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.navigateToEmpDetailPage();
+				if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+					employeesearch.employmentInfoForTermedEmp(termDateModified);
+					employeesearch.navigateToEmpRehirePage();
+					employeesearch.fillEmploymentDetails();
+				}
+			}
+			
+			if(dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))){
+				DB.executeUpdate(Stock.getTestQuery("updateEmploymentTableTermDate")[0],
+						Stock.getTestQuery("updateEmploymentTableTermDate")[1],dateToRevertBack,ssn);
+				}
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+/**
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 10-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active(int itr,Map<String, String> testdata) {		
+try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		String planNumber="";
+		String ssn = "";
+		String hireDate="";
+		String termDate="";
+		
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithEligiRuleSet")[0],
+					Stock.getTestQuery("getPlanWithEligiRuleSet")[1],"K_"+Stock.GetParameterValue("username"));
+			
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				break;
+			}
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNWithNullTermDate")[0],
+					Stock.getTestQuery("getSSNWithNullTermDate")[1],planNumber);
+			
+			while(resultset.next()){
+				ssn = resultset.getString("SSN");
+				hireDate = resultset.getString("HIRE_DATE");
+				termDate = resultset.getString("EMP_TERMDATE");
+				break;
+			}
+			//Date dbTermDate = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDate);
+			employeesearch = new EmployeeSearch().get();
+			employeesearch.searchPlan(planNumber);
+				employeesearch.searchEmployeeBySSN(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.navigateToEmpDetailPage();
+				if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+					employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+					employeesearch.validateBreadCrumb("Employment information");
+					employeesearch.validateBasicEmploymentElements(planNumber, ssn);
+					employeesearch.validateEmploymentHistoryLabels();
+					employeesearch.hireTermDateCalendarValidation();
+					employeesearch.compareTerminationReason();
+					employeesearch.fillEmploymentDetails();
+					employeesearch.compareEmploymentData(ssn);
+				}
+			
+		}
+		
+} catch (Exception e) {
+	e.printStackTrace();
+	Globals.exception = e;
+	String exceptionMessage = e.getMessage();
+	Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+	exceptionMessage, true);
+} catch (Error ae) {
+	ae.printStackTrace();
+	Globals.error = ae;
+	String errorMsg = ae.getMessage();
+	Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+} finally {
+		try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+}
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

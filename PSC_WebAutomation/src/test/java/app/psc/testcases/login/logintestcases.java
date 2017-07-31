@@ -547,6 +547,7 @@ public class logintestcases {
 			Thread.sleep(3000);
 			home.verifySubMenuAndOptions(Stock.GetParameterValue("menuname"));
 			Web.waitForPageToLoad(Web.getDriver());
+			home.logoutPSC();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -980,7 +981,7 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
-					"This test case validates the various tabs enablity based on respective transaction codes", false);
+					"This test case validates the various tabs enability based on respective transaction codes", false);
 			login = new LoginPage();
 			JumpPage jumpPage = new JumpPage();
 			HomePage homePage = new HomePage(new LoginPage(),false,new String[]{

@@ -175,7 +175,8 @@ public class accountverificationtest_plan {
 			Reporter.initializeReportForTC(itr,
 					Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
-					"Verify if the plan number field is displayed when a new plan is added for an existing user"+":"
+					"Verify if the plan "
+					+ "r field is displayed when a new plan is added for an existing user"+":"
 			+"Negative Sceanrio", false);
 			accountverificationpage.addPlanNumber(
 					Stock.getTestQuery("addPlanNumberQuery"),

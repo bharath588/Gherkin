@@ -33,7 +33,9 @@ import lib.Web;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.http.cookie.Cookie;
+import org.apache.regexp.REProgram;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -41,6 +43,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
+import org.springframework.expression.spel.ast.Ternary;
 import org.testng.Assert;
 
 import pageobjects.accountverification.AccountVerificationPage;
@@ -154,7 +157,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement linkLogout;
 	@FindBy(id = "planSearchAutocompleteButton")
 	private WebElement btnGoPlanNumber;
-	@FindBy(xpath = ".//tbody[contains(@id,'searchResultsTable_data')]/tr/td[5] | .//tbody[contains(@id,'searchResultsTable_data')]/tr/td[4]")
+	@FindBy(xpath = ".//tbody[contains(@id,'searchResultsTable_data')]/tr/td[4]")
+			//+ " | .//tbody[contains(@id,'searchResultsTable_data')]/tr/td[5]")
 	private List<WebElement> searchResultsSSNMItable;
 	@FindBy(xpath="//td/a[contains(@id,'searchResultsTable')]")
 	private List<WebElement> fNLNMILink;
@@ -177,6 +181,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(id="termDate")
 	private WebElement termDate;
 	@FindBy(id="terminationReasonCode")
+	private WebElement termReasonCode;
+	@FindBy(name="termReason")
 	private WebElement termReason;
 	@FindBy(id="employeeId")
 	private WebElement empId;
@@ -205,6 +211,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	//@FindBy(xpath="//a[@href='#' and @role='button']")
 	@FindBy(xpath=".//*[@id='employmentInfo_content']//span[.='close']")
 	private WebElement modalWindowCloseLink;
+	@FindBy(id="empInfoEditLinkNextGen")
+	private WebElement employmntEditLink; 
 	@FindBy(xpath="//div[@class='oheading']//label[contains(text(),'Overview')]")
 	private WebElement overwLabel;
 	@FindBy(xpath="//div[@id='contactInfo_content']/table")
@@ -766,7 +774,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement conWithoutDeffNgBtn;@FindBy(id="uses_models_4")
 	private WebElement newAllocRadioButton;
 	@FindBy(xpath=".//font[@class='important_note']//li"
-			+ "[contains(text(),'First Name contains 1 or more invalid characters.  Invalid characters')]")
+			+ "[contains(text(),'First Name contains 1 or more invalid characters.')]")
 	private WebElement fNValidation;
 	@FindBy(xpath=".//font[@class='important_note']//li[contains(text(),'Field contains invalid characters')]")
 	private WebElement addressValidation;
@@ -876,6 +884,57 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private List<WebElement> effDateTxnHist;
 	@FindBy(xpath="//*[@id='transactionDashboard']//span[@class='caption']")
 	private WebElement pastThreeTxnMessage;
+	@FindBy(xpath=".//button[contains(text(),'Return to employee page')]")
+	private List<WebElement> returnToEmployeePageButton;
+	@FindBy(xpath=".//button[contains(text(),'Return to employee page')]")
+	private WebElement returnToEmployeePageButtonsingleBtn;
+	@FindBy(xpath=".//button[contains(text(),'Rehire employee')]")
+	private WebElement rehireempBtn;
+	@FindBy(xpath=".//button[contains(text(),'Edit termination date')]")
+	private WebElement editTerminationDateBtn;
+	@FindBy(xpath=".//span[contains(text(),'This employee is currently in a terminated employment status.')]")
+	private WebElement termedMsg1;
+	@FindBy(xpath=".//span[contains(text(),'Please choose an option below to continue.')]")
+	private WebElement termedMsg2;@FindBy(name="hireDate")
+	private WebElement empHiredate;
+	@FindBy(name="termDate")
+	private WebElement emptermDate;
+	@FindBy(xpath="//button[contains(text(),'Cancel')]")
+	private WebElement cancelButton;
+	@FindBy(xpath=".//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//label")
+	private List<WebElement> listofRehireLabels;@FindBy(xpath=".//div[@class='breadcrumb']")
+	private List<WebElement> breadCrumb;
+	@FindBy(linkText="Print")
+	private WebElement printLink;
+	@FindBy(xpath=".//label[contains(text(),'SSN:')]/following-sibling::span")
+	private WebElement ssnOnEmploymentPage;
+	@FindBy(xpath=".//label[contains(text(),'Name:')]/following-sibling::span")
+	private WebElement empNameOnEmploymentPage;@FindBy(xpath=".//tr[@class='topheader']//th//p[not(text()=' ')]")
+	private List<WebElement> empHistTopHeaders;
+	@FindBy(xpath=".//*[@class='topheader']/../following-sibling::tbody//label")
+	private List<WebElement> empDetailsLabels;
+	@FindBy(linkText="Details")
+	private WebElement detailLink;
+	@FindBy(xpath=".//button[contains(text(),'Save')]")
+	private WebElement saveOnEmpPage;
+	@FindBy(xpath=".//div[@class='bulletinAlignment']//span[contains(text(),'Confirmation')]/following-sibling::span")
+	private WebElement confirmationNumber;
+	@FindBy(xpath=".//div[@class='bulletinAlignment']/span")
+	private WebElement confirmationText;
+	@FindBy(name="employeeId")
+	private WebElement angEmployeeId;
+	@FindBy(name="insiderInd")
+	private WebElement angInsider;
+	@FindBy(name="percentOwnership")
+	private WebElement angOwnerShipPer;
+	@FindBy(name="fullPartTimeEmployee")
+	private WebElement angFullParEmp;
+	@FindBy(name="overseasEffDate")
+	private WebElement angOverseasDate;
+	@FindBy(xpath=".//button[.='Today']")
+	private List<WebElement> todaysCalendarBtn;
+	@FindBy(xpath=".//*[@name='termReason']/option[not(self::option[@value='0'])]")
+	private List<WebElement> termReasonDropDownUI;
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
 	private String transHistory = ".//*[@id='transactions']";
@@ -894,8 +953,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private String payCheckContriSection = ".//*[@id='paycheckContributionInfo']";
 	private String feesDataForThreeMonth = ".//*[@id='feeDashboard']//thead/following-sibling::tbody";
 	private String empIdOnLoanDetail = ".//span[.='Employee ID']";
-	
-	
+	private WebElement getDateFromCalendar(String dateField,String datestring){
+		return Web.getDriver().findElement(By.xpath("//input[@name='"+dateField+"']//following-sibling::div//div[@aria-label='"+datestring+"']"));
+	}
+	@FindBy(xpath=".//input[@name='hireDate']//following-sibling::span/i[@title='Click to open calendar']")
+	private WebElement hireDateCalendar; 
+	@FindBy(xpath=".//input[@name='termDate']//following-sibling::span/i[@title='Click to open calendar']")
+	private WebElement termDateCalendar; 
 	
 	
 	String qdroPart = null;
@@ -917,6 +981,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private List<String> uscsID = new ArrayList<String>();
 	private List<String> uscsIDReset;
 	Map<String,String> m = new LinkedHashMap<String,String>();
+	private static Map<String,String> reasonCodeValues;
 	LoadableComponent<?> parent;
 	Actions actions;
 	Select select;
@@ -929,6 +994,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	Map<String,String> employmentDetailsAfterRehiring = new LinkedHashMap<String,String>();
 	//List<String> planNameList;
 	List<String> planNumberList;
+	Map<String,String> employmentDataUI;
 
 	public EmployeeSearch() {
 		PageFactory.initElements(Web.getDriver(), this);
@@ -1020,6 +1086,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.trim().equalsIgnoreCase("NO_DATA_TXN_HIST_Click_HERE_LINK")){
 			return clickHereLinkInTxnHist;
 		}
+		if(fieldName.trim().equalsIgnoreCase("CANCEL_BUTTON")){
+			return cancelButton;
+		}
+		if(fieldName.equalsIgnoreCase("EMPLOYMENT_EDIT_LINK")){
+			return employmntEditLink;
+		}
 		return null;
 	}
 
@@ -1059,6 +1131,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void searchEmployeeBySSN(String SSN) throws InterruptedException {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
 		Web.waitForElement(txtSearchbox);
@@ -1468,7 +1541,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		boolean areDropdownOptionsSame;
 		//For Non Apple plan
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division", "--------------------","Name - all plans","SSN - all plans"};
+				"Participant ID", "Division","--------------------","Name - all plans","SSN - all plans"};
 		
 		//for Apple plan
 		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
@@ -2081,10 +2154,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		String ssn = empSSN.getText();
 		String empName = empNameHeader.getText();
-		Web.clickOnElement(empInfoEditLink);
+		Web.clickOnElement(employmntEditLink);
 		Thread.sleep(3000);
 		Web.waitForPageToLoad(Web.getDriver());
-		Web.waitForElement(empInfoEditFrame);
+		Web.waitForElement(employmntEditLink);
 		CommonLib.waitForProgressBar();
 		Web.getDriver().switchTo().frame(empInfoEditFrame);
 		Web.waitForElement(Web.getDriver().findElement(By.xpath("//font[contains(text(),'"+ssn+"')]")));
@@ -2449,7 +2522,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			else
 			{*/
 				employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
-				Thread.sleep(2000);
+				//Thread.sleep(2000);
 				Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
 			//}
 		}
@@ -6977,6 +7050,7 @@ public void fillNewEmpBasicInfoInvalid()
 		Web.clickOnElement(outsideAssets);}
 		Web.clickOnElement(continueAddEmp);
 		Web.waitForPageToLoad(Web.getDriver());
+		Thread.sleep(4000);
 		try{
 			if(fNValidation.isDisplayed()){
 				Reporter.logEvent(Status.PASS,"Enter invalid first name and observe the error message."+fNValidation.getText(),""
@@ -8453,7 +8527,9 @@ public void validateConfirmationNbrWindow(){
  */
 public void clickHereOpensModalWindow(){
 	try{
-		Web.clickOnElement(clickHereLinkInTxnHist);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		//Web.clickOnElement(clickHereLinkInTxnHist);
+		Web.jsClick(clickHereLinkInTxnHist);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(txnHistFrame);
 		Web.waitForPageToLoad(Web.getDriver());
@@ -8472,8 +8548,703 @@ public void clickHereOpensModalWindow(){
 }
 
 
+/**
+ * <pre>This method checks that employment info section and edit link is displayed on overview page.</pre>
+ * @author smykjn
+ * @Date 19th-July-2017
+ * @return
+ */
+public boolean employmentInfoSectionAndEditLinkValidation(){
+	boolean isDisplayed=false;
+	try{
+		CommonLib.switchToFrame(employeeSearchFrame);
+		boolean isEmploymentDisplayed = 
+		Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(employmentInfoSection)), true);
+		if(isEmploymentDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate Employment information section is displayed.",""
+					+ "Employment information section is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate Employment information section is displayed.",""
+					+ "Employment information section is not displayed.", true);
+		boolean isEditLinkDisplayed= Web.isWebElementDisplayed(employmntEditLink,false);
+		if(isEditLinkDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate edit link is displayed.","Edit link is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate edit link is displayed.","Edit link is not displayed.", true);
+		boolean isHistoryLinkDisplayed= empInfoHistroyLink.isDisplayed();
+		if(isHistoryLinkDisplayed)
+			Reporter.logEvent(Status.PASS,"Validate History link is displayed.","History link is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate History link is displayed.","History link is not displayed.", true);
+		
+		isDisplayed = isEditLinkDisplayed&&isEmploymentDisplayed&&isHistoryLinkDisplayed;
+		System.out.println("Employment Sec:"+isEmploymentDisplayed+" ,Edit link:"+isEditLinkDisplayed+" "
+				+ ",History link:"+isHistoryLinkDisplayed);
+		System.out.println("All sections displayed:"+isDisplayed);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	return isDisplayed;
+}
+
+@FindBy(xpath="//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//span")
+private WebElement msgFortermDateLessthn18months;
 
 
+/**
+ * @author smykjn
+ */
+public void clickOnReturnToEmployeeBtn() throws Exception{
+	
+	for(WebElement btn : returnToEmployeePageButton){
+		if(btn.isDisplayed()){
+			Web.clickOnElement(btn);
+			break;
+		}
+	}
+	
+}
+
+/**
+ * <pre>This method validates new angular page buttons for employment information section 
+ *  for termed employee.</pre>
+ * @author smykjn
+ * @Date 20th-July-2017
+ * @return
+ */
+public void employmentInfoForTermedEmp(String termDateModified){
+	try{
+		//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date termDate =CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateModified);// sdf.parse(termDateModified);
+		Date currentDate = CommonLib.getSysDateWithTimeZone("MST");
+		Web.clickOnElement(employmntEditLink);
+		Web.waitForPageToLoad(Web.getDriver());
+		CommonLib.switchToFrame(framecA);
+		this.clickOnReturnToEmployeeBtn();
+		System.out.println("Term date:"+termDate);
+		System.out.println("Sysdate:"+currentDate);
+		if(termDate.after(currentDate)){
+			Web.waitForElement(editTerminationDateBtn);
+			if(editTerminationDateBtn.isDisplayed())
+				Reporter.logEvent(Status.PASS,"If emp termdate+18 monnths is greater than current date"
+						+ " then edit termination button should be displayed.","Edit termination button is displayed as "
+								+ "emp termdate+18months is:"+termDateModified, false);
+			else
+				Reporter.logEvent(Status.FAIL,"If emp termdate+18 monnths is greater than current date"
+						+ " then edit termination button should be displayed.","Edit termination button is not displayed.\n"
+								+ "emp termdate+18months is:"+termDateModified, true);
+			String actMsg = termedMsg1.getText()+" "+termedMsg2.getText();
+			if(termedMsg1.isDisplayed()&&termedMsg2.isDisplayed())
+				Reporter.logEvent(Status.PASS,"Validate below message is displayed.\n"+actMsg,"Message is displayed:\n"
+						+actMsg,false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate below message is displayed.\n"+actMsg,"Below message is not displayed:\n"
+						+actMsg,true);
+		}else
+		{
+			String expMsgForLessThan18Month = Stock.GetParameterValue("MsgWhenTermLessThan18Mon");
+			try{
+				if(editTerminationDateBtn.isDisplayed()){
+					Reporter.logEvent(Status.FAIL,"If emp termdate+18 months is less than current date"
+							+ " then edit termination button should not be displayed.","Edit termination button is displayed.\n"
+									+ "emp termdate+18months is:"+termDateModified, true);}
+				else{
+					Reporter.logEvent(Status.PASS,"If emp termdate_18 months is less than current date"
+							+ " then edit termination button should not be displayed.","Edit termination button is not displayed.\n"
+									+ "emp termdate+18months is:"+termDateModified, false);
+				}}catch(Exception e){
+					Reporter.logEvent(Status.PASS,"If emp termdate_18 months is less than current date"
+							+ " then edit termination button should not be displayed.","Edit termination button is not displayed.\n"
+									+ "emp termdate+18months is:"+termDateModified, false);
+				}
+			String actMsg = msgFortermDateLessthn18months.getText();
+			System.out.println("Actual message when termdate+18month<currentdate:"+actMsg);
+			String actLinkText = msgFortermDateLessthn18months.findElement(By.tagName("a")).getText();
+			if(actMsg.equals(expMsgForLessThan18Month))
+				Reporter.logEvent(Status.PASS,"Validate message under 'update employment information' section."
+						+ "below message is displayed:\n"+expMsgForLessThan18Month,"Below message is displayed.\n"+
+								actMsg, false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate message under 'update employment information' section."
+						+ "below message is displayed:\n"+expMsgForLessThan18Month,"Below message is displayed.\n"+
+								actMsg, true);
+			if(actLinkText.equals("website support"))
+				Reporter.logEvent(Status.PASS,"Validate website support is a link within message.","website support is "
+						+ "found to be a link.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate website support is a link within message.","website support is "
+						+ "not found to be a link.", true);
+			
+		}
+		if(returnToEmployeePageButtonsingleBtn.isDisplayed() && rehireempBtn.isDisplayed())
+			Reporter.logEvent(Status.PASS,"Validate if 'Retrun to employee page' and 'Rehire employee' "
+					+ "buttons are displayed.","'Return to employee page' and 'Rehire employee' buttons are"
+							+ " displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate if 'Retrun to employee page' and 'Rehire employee' "
+					+ "buttons are displayed.","'Return to employee page' and 'Rehire employee' buttons are not"
+							+ " displayed.\n"+returnToEmployeePageButtonsingleBtn.isDisplayed()+"\n"+rehireempBtn.isDisplayed(), true);
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+	}
+	
+}
+
+
+/**
+ * <pre>This method validates the edit term date features on edit employment page.</pre>
+ * @author smykjn
+ * @date 20th-July-2017
+ */
+public void ediTTermDateValidation(String hireDateString,String termDateString){
+	try{
+		Web.clickOnElement(editTerminationDateBtn);
+		Web.waitForElement(empHiredate);
+		String disabledAttribute = empHiredate.getAttribute("disabled");
+		
+		if(empHiredate.isDisplayed()&&emptermDate.isDisplayed())
+			Reporter.logEvent(Status.PASS,"click on Edit Termination Date and validate emp hire date and "
+					+ "term date fields are displayed." ,"Emp Hire date and term date fields are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"click on Edit Termination Date and validate emp hire date and "
+					+ "term date fields are displayed." ,"Emp Hire date and term date fields are not displayed.", true);
+		
+		if(disabledAttribute.equals("true"))
+			Reporter.logEvent(Status.PASS,"Validate Hire date cannot be editted.","Hire date is not editable.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate Hire date cannot be editted.","Hire date is editable.",true);
+		
+		try{
+			Web.setTextToTextBox(emptermDate,"05/02/2018");
+			Reporter.logEvent(Status.PASS,"Validate if user can edit term date.","User can edit term date.",false);
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL,"Validate if user can edit term date.","User can not edit term date.",true);
+		}
+		
+		Date hireDate = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", hireDateString);
+		Date termDate = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateString);
+		if(termDate.after(hireDate) || termDate.equals(hireDate))
+			Reporter.logEvent(Status.PASS,"Validate that termDate must be after hire date or equal to hire"
+					+ " date.","Term date is after hire date or equal to hire date.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate that termDate must be after hire date or equal to hire"
+					+ " date.","Term date is not found to be after hire date or equal to hire date.", true);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+	}
+}
+
+
+/**
+ * <pre>This method validates rehire options/fields for new angular page on employment information page.</pre>
+ * @author smykjn
+ * @date 20th-July-2017
+ */
+public void validateRehireFeature(){
+	List<String> expRehireFields = Arrays.asList(Stock.GetParameterValue("ExpRehireFields").split(","));
+	try{
+		Web.waitForElement(rehireempBtn);
+		Web.clickOnElement(rehireempBtn);
+		Web.waitForElements(listofRehireLabels);
+		if(CommonLib.isAllHeadersDisplayed(listofRehireLabels, expRehireFields))
+			Reporter.logEvent(Status.PASS,"Click on Rehire button and validate employee rehire options "
+					+ "are displayed.","Below rehire fields are displayed.\n"+expRehireFields, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Rehire button and validate employee rehire options "
+					+ "are displayed.","Below rehire fields are not displayed.\n"+expRehireFields, true);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+	}
+}
+
+/**
+ * <pre>This method validates given breadcrumb.</pre>
+ * @author smykjn
+ * @date 20th-July-2017
+ */
+public void validateBreadCrumb(String expBreadCrumbEndString){
+	try{
+		int count=0;
+		WebElement brdcrmb=null;
+		Web.getDriver().switchTo().defaultContent();
+		for(int i=0;i<breadCrumb.size();i++){
+			brdcrmb  = breadCrumb.get(i).findElement(By.tagName("i"));
+			if(brdcrmb.isDisplayed()){
+				count = i;
+				break;
+			}
+		}
+		String brdcrmbstring = breadCrumb.get(count).getText();
+		System.out.println("Bread crumb string:"+brdcrmbstring);
+		if(brdcrmbstring.contains(expBreadCrumbEndString))
+			Reporter.logEvent(Status.PASS,"Validate bread crumb for "+expBreadCrumbEndString+" page.",""
+					+ "Below bread crumb is displayed on top.\n"+brdcrmbstring, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate bread crumb for "+expBreadCrumbEndString+" page.",""
+					+ "Below bread crumb is not displayed", true);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+	}
+}
+
+
+/**
+ * <pre>This method validates the plan name(Id),print icon,SSN,name are displayed on 
+ * employment information page.</pre>
+ * @author smykjn
+ */
+public void validateBasicEmploymentElements(String planNumber,String ssn) throws Exception{
+	CommonLib.switchToFrame(framecA);
+	String planName = planTitleOnBalPage.getText().trim();
+	String ssnText = ssnOnEmploymentPage.getText().replace("-","").replace("XXX-XX-","").trim();
+	String empName = empNameOnEmploymentPage.getText().trim();
+	if(planName.contains(planNumber))
+		Reporter.logEvent(Status.PASS,"Validate plan name is displayed on employment page.", 
+				"Plan name is displayed as below:\n"+planName, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate plan name is displayed on employment page.", 
+				"Plan name is not displayed as below:\n"+planName, true);
+	if(printLink.isDisplayed())
+		Reporter.logEvent(Status.PASS,"Verify print button is displayed.","Print button is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Verify print button is displayed.","Print button is not displayed.", true);
+	if(empName.contains(employeeSearched) && ssn.contains(ssnText))
+		Reporter.logEvent(Status.PASS,"Validate name and ssn are displayed.",""
+				+ "Name and SSN are displayed as below:\nSSN:"+ssnText+"\nName:"+empName, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate name and ssn are displayed.",""
+				+ "Name and SSN are not displayed.", true);
+	
+	
+}
+
+
+
+/**
+ * <pre>This method validates employment history section labels.</pre>
+ * @author smykjn
+ * @date 24th-July-2017
+ */
+public void validateEmploymentHistoryLabels() throws Exception{
+	List<String> expEmpHistTopHeaders = Arrays.asList(Stock.GetParameterValue("ExpEmpHistoryTopFields").split(","));
+	List<String> expEmpHistDetailsLabels = Arrays.asList(Stock.GetParameterValue("ExpEmpHistoryDetailsFields").split(","));
+	boolean isAllHeadersDisplayed = CommonLib.isAllHeadersDisplayed(empHistTopHeaders, expEmpHistTopHeaders);
+	
+	try{
+		Web.clickOnElement(detailLink);
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL, "Check for Detail link.",""
+				+ "Detail link is not displayed or not clickable.\n"+e.getMessage(), true);
+	}
+	boolean isAllLabelsDisplayed = CommonLib.isAllHeadersDisplayed(empDetailsLabels, expEmpHistDetailsLabels);
+	if(isAllHeadersDisplayed)
+		Reporter.logEvent(Status.PASS,"Validate below top headers are displayed under employment"
+				+ " History section.\n"+expEmpHistTopHeaders,""
+						+ "Below top headers are dislayed.\n"+expEmpHistTopHeaders, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate below top headers are displayed under employment"
+				+ " History section.\n"+expEmpHistTopHeaders,""
+						+ "Below top headers are dislayed.\n"+expEmpHistTopHeaders, true);
+	if(isAllLabelsDisplayed)
+		Reporter.logEvent(Status.PASS,"Validate below labels are displayed under employment"
+				+ " History section once user clicks on Details link.\n"+expEmpHistTopHeaders,""
+						+ "Below labels are dislayed.\n"+expEmpHistDetailsLabels, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate below top headers are displayed under employment"
+				+ " History section once user clicks on Details link.\n"+expEmpHistTopHeaders,""
+						+ "Below labels are dislayed.\n"+expEmpHistDetailsLabels, true);
+	
+}
+
+
+/**
+ * <pre>This method validates 'Update Employment information' section validation.</pre>
+ * @author smykjn
+ * @date 24th-July-2017
+ */
+public void updateReHireDateValidation(String termDate) throws Exception{
+	String expRehireMsg = Stock.GetParameterValue("ExpectedRehireMsg1");
+	String expFutureDateMsg = Stock.GetParameterValue("HireDateInFutureMsg");
+	String actRehireMsg="";
+	
+	//rehire date = term date
+	//Date termDatOfEmp = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDate);
+	Web.setTextToTextBox(empHiredate, termDate);
+	Web.clickOnElement(saveOnEmpPage);
+	do{
+		Thread.sleep(2000);
+		System.out.println("Waiting............");
+	}while(!noExtLoanDtaMsgOnLonDetlPage.isDisplayed());
+	actRehireMsg = noExtLoanDtaMsgOnLonDetlPage.getText();
+	if(Web.VerifyText(expRehireMsg, actRehireMsg, true))
+		Reporter.logEvent(Status.PASS,"Enter rehire date equals to term date and validate below"
+				+ " message on save.\n"+expRehireMsg, "Below message is displayed when rehire date equals to term date.\n"+actRehireMsg, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Enter rehire date equals to term date and validate below"
+				+ " message on save.\n"+expRehireMsg, "Below message is displayed when rehire date equals to term date.\n"+actRehireMsg, true);
+	
+	//future Rehire date
+	System.out.println("Future date:"+CommonLib.getDate("MM/dd/yyyy",60));
+	 Web.setTextToTextBox(empHiredate,CommonLib.getDate("MM/dd/yyyy",60));
+	 Web.clickOnElement(saveOnEmpPage);
+	 do{
+			Thread.sleep(2000);
+			System.out.println("Waiting............");
+		}while(!noExtLoanDtaMsgOnLonDetlPage.isDisplayed());
+	 actRehireMsg = noExtLoanDtaMsgOnLonDetlPage.getText();
+	 if(Web.VerifyText(expFutureDateMsg, actRehireMsg, true))
+			Reporter.logEvent(Status.PASS,"Enter rehire date in future and validate below"
+					+ " message on save.\n"+expFutureDateMsg, "Below message is displayed when rehire date in future.\n"+actRehireMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Enter rehire date in future and validate below"
+					+ " message on save.\n"+expFutureDateMsg, "Below message is displayed when rehire date in future.\n"+actRehireMsg, false);
+
+	 	Web.clickOnElement(cancelButton);
+		Web.waitForPageToLoad(Web.getDriver());
+}
+
+
+/**
+ * <pre>this method does term date validation</pre>
+ * @author smykjn
+ */
+public void fillRehireDetailFormAndCheckForCnfMsg(String termDate) throws Exception{
+	String termCantBeEarlier = Stock.GetParameterValue("ExpectedRehireMsg2");
+	String expReasonValidation = Stock.GetParameterValue("ExpReasonValidationMsg");
+	try{
+		Web.waitForElement(rehireempBtn);
+		Web.clickOnElement(rehireempBtn);
+		Web.waitForElement(empHiredate);
+	
+		Date termDatOfEmp = CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDate);
+		Date randomDate = 
+				CommonLib.getRandomDateBetweenTwoDates(termDatOfEmp,CommonLib.getSysDateWithTimeZone("MST"));
+		String hireDate = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", randomDate);
+		System.out.println("Random:"+randomDate+" -->"+hireDate);
+		Web.setTextToTextBox(empHiredate,hireDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(randomDate);
+		cal.add(Calendar.DATE, -1);
+		String termDateBeforeHireDate = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", cal.getTime());
+		Web.setTextToTextBox(emptermDate,termDateBeforeHireDate);
+		Web.clickOnElement(saveOnEmpPage);
+		 do{
+				Thread.sleep(1000);
+				System.out.println("Waiting............");
+			}while(!noExtLoanDtaMsgOnLonDetlPage.isDisplayed());
+		String acttermCantBeEarlier = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+		if(Web.VerifyText(termCantBeEarlier, acttermCantBeEarlier, true))
+			Reporter.logEvent(Status.PASS,"select term date before hire date and observe below message.\n"+termCantBeEarlier,""
+					+ "Below message is displayed once term date<hire date\n"+termCantBeEarlier, false);
+		else
+			Reporter.logEvent(Status.FAIL,"select term date before hire date and observe below message.\n"+termCantBeEarlier,""
+					+ "Below message is displayed once term date<hire date\n"+termCantBeEarlier, true);
+		
+		/*String disabled = this.getDateFromCalendar(termDateBeforeHireDate).getAttribute("aria-disabled");
+		System.out.println("Calendar date is disabled:"+disabled);
+		if(disabled.equals("true"))
+			Reporter.logEvent(Status.PASS,"Validate user cannot select term date before hire date from calendar.",""
+					+ "user cannot select term date before hiredate", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate user cannot select term date before hire date from calendar.",""
+					+ "user can select term date before hiredate", true);*/
+		emptermDate.clear();
+		Web.selectDropDownOption(termReason,"TERMINATION--Health");
+		Web.clickOnElement(saveOnEmpPage);
+		 do{
+				Thread.sleep(1000);
+				System.out.println("Waiting............");
+			}while(!noExtLoanDtaMsgOnLonDetlPage.isDisplayed());
+		String actReasonValidation = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+		
+		if(Web.VerifyText(expReasonValidation, actReasonValidation, true))
+			Reporter.logEvent(Status.PASS,"clear term date and select term reason and observe below message.\n"+expReasonValidation,""
+					+ "Below message is displayed:\n"+actReasonValidation, false);
+		else
+			Reporter.logEvent(Status.FAIL,"clear term date and select term reason and observe below message.\n"+expReasonValidation,""
+					+ "Below message is displayed:\n"+actReasonValidation, true);
+		cal.add(Calendar.DATE, 2);
+		String termDateAfterHireDate = CommonLib.getDateStringInDateFormat("MM/dd/yyyy",cal.getTime());
+		Web.setTextToTextBox(emptermDate,termDateAfterHireDate);
+		Web.clickOnElement(saveOnEmpPage);
+		if(Web.isWebElementDisplayed(confirmationNumber, true)){
+			String confNumber = confirmationNumber.getText().trim();
+			if(CommonLib.validateEventID(confNumber)){
+				Reporter.logEvent(Status.PASS,"select hire date between last term date and current date,fill term date in future,"
+				+ "fill term reason and save","details are saved"
+						+ " and confirmation message is displayed and corresponding record is found in DB in event table.\n"+confirmationText.getText(), false);
+				this.clickOnReturnToEmployeeBtn();
+				CommonLib.waitForProgressBar();
+			}else{
+				Reporter.logEvent(Status.FAIL,"select hire date between last term date and current date,fill term date in future,"
+				+ "fill term reason and save","Rehire date is not updated"
+						+ " as no record is found in event table for confiramtion number:"+confNumber, true);
+			}
+		}else{
+			Reporter.logEvent(Status.FAIL,"Update a rehire date to any date between last term date and current date.","Rehire date is not updated"
+					+ " as no confirmation message is displayed.", true);
+			Web.clickOnElement(cancelButton);
+			Web.waitForPageToLoad(Web.getDriver());
+			this.clickOnReturnToEmployeeBtn();
+			CommonLib.waitForProgressBar();
+		}
+	}catch(Exception e1){
+		Reporter.logEvent(Status.FAIL,"select hire date between last term date and current date,fill term date in future,"
+				+ "fill term reason and save.","Error occurred."+e1.getMessage(), true);
+	}
+	
+	
+	
+}
+
+
+
+/**
+ * <pre>This method validates the positive flow for filling update employment information section.</pre>
+ * @author smykjn
+ */
+public Map<String,String> fillEmploymentDetails() throws Exception
+{
+	String expOverseasMsg = Stock.GetParameterValue("ExpOverseasValidation");
+	employmentDataUI = new HashMap<String,String>();
+	String alphaNumeric = Stock.GetParameterValue("EmployeeID");
+	String hireDateAsTodaysDate = 
+			CommonLib.getDateStringInDateFormat("MM/dd/yyyy",CommonLib.getSysDateWithTimeZone("MST"));
+	System.out.println("Hire Date as todays Date:"+hireDateAsTodaysDate);
+	Web.setTextToTextBox(empHiredate,hireDateAsTodaysDate);
+	employmentDataUI.put("HireDate", hireDateAsTodaysDate);
+	String termDateAfterHireDate = CommonLib.getDate("MM/dd/yyyy",1);
+	System.out.println("term Date after hire Date:"+hireDateAsTodaysDate);
+	Web.setTextToTextBox(emptermDate, termDateAfterHireDate);
+	employmentDataUI.put("TermDate", termDateAfterHireDate);
+	Web.selectDropDownOption(termReason,"TERMINATION--Health");
+	employmentDataUI.put("TermReason", "TERMINATION--Health");
+	Web.setTextToTextBox(angEmployeeId,alphaNumeric);
+	employmentDataUI.put("EmployeeID", alphaNumeric);
+	Web.setTextToTextBox(angOwnerShipPer,"50");
+	employmentDataUI.put("OwnershipPercentage","50");
+	Web.selectDropDownOption(angFullParEmp,"Full time");
+	employmentDataUI.put("FullPartEmployee","F");
+	String overseasDate = CommonLib.getDate("MM/dd/yyyy",50);
+	Web.setTextToTextBox(angOverseasDate, overseasDate);
+	Web.clickOnElement(saveOnEmpPage);
+	Web.waitForElement(noExtLoanDtaMsgOnLonDetlPage);
+	String actOverseasValidation = noExtLoanDtaMsgOnLonDetlPage.getText().trim();
+	if(Web.VerifyText(expOverseasMsg, actOverseasValidation, true))
+		Reporter.logEvent(Status.PASS,"Select Overseas employee radion button as No and select"
+				+ " overseas date.Below validation message should displayed.\n"+expOverseasMsg,""
+						+ "User selects overseas empployee as No and select overseas date and"
+						+ " below message is displayed.\n"+actOverseasValidation, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Select Overseas employee radion button as No and select"
+				+ " overseas date.Below validation message should displayed.\n"+expOverseasMsg,""
+						+ "User selects overseas empployee as No and select overseas date and"
+						+ " below message is displayed.\n"+actOverseasValidation, true);
+	
+	angOverseasDate.clear();
+	Web.clickOnElement(saveOnEmpPage);
+	System.out.println("Employee data from UI:"+employmentDataUI);
+	try{
+		Web.isWebElementDisplayed(confirmationNumber, true);
+		String confNumber = confirmationNumber.getText().trim();
+		if(CommonLib.validateEventID(confNumber)){
+			Reporter.logEvent(Status.PASS,"Fill all the employee details and validate confirmation messgae and query event table"
+					+ ",search for event id(Confirmation no.):"+confNumber,""
+					+ "Confirmation message is displayed with confirmation message\n"+confirmationText.getText()+"\n and"
+							+ "Record is found in event table.", true);
+			this.clickOnReturnToEmployeeBtn();
+			CommonLib.waitForProgressBar();
+		}else{
+			Reporter.logEvent(Status.FAIL,"Fill all the employee details and validate confirmation messgae.",""
+					+ "Confirmation message is displayed with confirmation message\n"+confirmationText.getText(), true);
+		}
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Fill all the employee details and validate confirmation messgae.",""
+				+ "Confirmation message is not displayed.", true);
+	}
+	return employmentDataUI;
+}
+
+
+/**
+ * <pre>Navigate to employee Rehire page</pre>
+ * @author smykjn
+ */
+public void navigateToEmpRehirePage() throws Exception{
+	CommonLib.switchToFrame(framecA);
+	Web.clickOnElement(rehireempBtn);
+	Web.waitForPageToLoad(Web.getDriver());
+	Web.waitForElement(upDateEmploymentHeader);
+}
+
+/**
+ * <pre>Navigate to employment hire page directly from Overview page when employee is active and term date is null</pre>
+ * @author smykjn
+ */
+public boolean navigateToHirePageWhenEmpActiveNoTermDate() throws Exception{
+	boolean isLoaded =false;
+	Web.clickOnElement(employmntEditLink);
+	CommonLib.switchToFrame(framecA);
+	if(Web.isWebElementDisplayed(empHiredate, true))
+		isLoaded = true;
+	else
+		isLoaded = false;
+	return isLoaded;
+	
+}
+
+
+
+
+/**
+ * @author smykjn
+ */
+public void hireTermDateCalendarValidation() throws Exception{
+	String fututreHireDate =CommonLib.getDate("MM/dd/yyyy",1);
+	String pastHireDate =CommonLib.getDate("MM/dd/yyyy",-1);
+	String pastHireDate1 =CommonLib.getDate("MM/dd/yyyy",-2);
+	String disableAttribute="";
+	System.out.println("Current Date+1:"+fututreHireDate);
+	System.out.println("Current Date-1:"+pastHireDate);
+	System.out.println("Current Date-2:"+pastHireDate1);
+	Web.clickOnElement(hireDateCalendar);
+	for(WebElement ele : todaysCalendarBtn){
+		if(ele.isDisplayed()){
+			Web.clickOnElement(ele);
+			break;}
+	}
+	disableAttribute= getDateFromCalendar("hireDate",fututreHireDate).getAttribute("aria-disabled");
+	System.out.println("Date :"+fututreHireDate+" is disabled:"+disableAttribute);
+	if(disableAttribute.equals("true"))
+		Reporter.logEvent(Status.PASS,"Validate that user cannot select future hire date from calendar.",""
+				+ "User cannot select future hire date.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate that user cannot select future hire date from calendar.",""
+				+ "User can select future hire date.", true);
+	disableAttribute = getDateFromCalendar("hireDate",pastHireDate).getAttribute("aria-disabled");
+	System.out.println("Date :"+pastHireDate+" is disabled:"+disableAttribute);
+	if(disableAttribute==null)
+		Reporter.logEvent(Status.PASS,"Validate that user can select hire date < current date from calendar.",""
+				+ "User can select hire date < current date.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate that user can select hire date < current date from calendar.",""
+				+ "User cannot select hire date < current date.", true);
+	//Web.clickOnElement(hireDateCalendar);
+	Thread.sleep(1000);
+	Web.setTextToTextBox(empHiredate, pastHireDate);
+	Web.clickOnElement(termDateCalendar);
+	String todaysDate = CommonLib.getDate("MM/dd/yyyy",0);
+	String termdateValidation  = getDateFromCalendar("termDate",todaysDate).getAttribute("aria-disabled");
+	System.out.println("When termdate>hiredate:"+termdateValidation);
+	String termdateValidation1  = getDateFromCalendar("termDate",pastHireDate).getAttribute("aria-disabled");
+	System.out.println("When termdate=hiredate:"+termdateValidation1);
+	String termdateValidation2  = getDateFromCalendar("termDate",pastHireDate1).getAttribute("aria-disabled");
+	System.out.println("When termdate<Hiredate:"+termdateValidation2);
+	if(termdateValidation==null && termdateValidation1==null)
+		Reporter.logEvent(Status.PASS,"Validate user can select term date=hire date,>hiredate from calendar.",""
+				+ "User can select term date=hire date,>hireDate from calendar.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate user can select term date=hire date,termDate>hiredate from calendar.",""
+				+ "User cannot select termdate when termdate=hiredate or termdate>hireDate from calendar.", true);
+	if(termdateValidation2.equals("true"))
+		Reporter.logEvent(Status.PASS,"Validate user cannot select term date<hire date from calendar.",""
+				+ "User cannot select termdat<hire date from calendar.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate user cannot select term date<hire date from calendar.",""
+				+ "User can select termdat<hire date from calendar.", true);
+	Web.clickOnElement(termDateCalendar);
+}
+
+
+/**
+ * <pre>This method compare Employment saved data with DB<//pre>
+ * @author smykjn
+ * @param Map<String,String>
+ */
+public void compareEmploymentData(String ssn) throws SQLException
+{
+	String termReason = "";
+	Map<String,String> dataFromDB = new HashMap<String,String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getEmploymentDataForSSN")[0],
+			Stock.getTestQuery("getEmploymentDataForSSN")[1],ssn);
+
+	while(queryResultSet.next()){
+		termReason = queryResultSet.getString("TERMINATION_REASON_CODE");
+		dataFromDB.put("TermReason",reasonCodeValues.get(termReason));
+		dataFromDB.put("FullPartEmployee",queryResultSet.getString("FULL_PART_TIME_EMPLOYEE"));
+		dataFromDB.put("OwnershipPercentage",queryResultSet.getString("PERCENT_OWNERSHIP"));
+		dataFromDB.put("HireDate",queryResultSet.getString("HIRE_DATE"));
+		dataFromDB.put("TermDate",queryResultSet.getString("EMP_TERMDATE"));
+		dataFromDB.put("EmployeeID",queryResultSet.getString("ER_ASSIGNED_ID"));
+		break;
+	}
+	System.out.println("Map from DB:"+dataFromDB);
+	if(employmentDataUI.equals(dataFromDB))
+		Reporter.logEvent(Status.PASS,"After saving employment detail as below,compare data in DB.\n"+employmentDataUI,""
+				+ "Data is updated correctly in DB as below:\n"+dataFromDB, false);
+	else
+		Reporter.logEvent(Status.FAIL,"After saving employment detail as below,compare data in DB.\n"+employmentDataUI,""
+				+ "Data is not updated correctly in DB as below:\n"+dataFromDB, false);
+	
+}
+
+
+/**
+ * <pre>This method stores all the termination reason code and their values in MAP from DB.</pre>
+ * @author smykjn
+ * @return Map<String,String>
+ */
+public Map<String,String> getTerminationReasondropDownFromDB() throws SQLException{
+	reasonCodeValues = new HashMap<String,String>();
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getTerminationReasonValues")[0],
+			Stock.getTestQuery("getTerminationReasonValues")[1]);
+	while(queryResultSet.next()){
+		String reasonCode = queryResultSet.getString("RV_LOW_VALUE");
+		String codeValue = queryResultSet.getString("RV_MEANING");
+		reasonCodeValues.put(reasonCode, codeValue);
+	}
+	System.out.println("Term reason from DB:"+reasonCodeValues);
+	return reasonCodeValues;
+}
+
+
+
+/**
+ * <pre>Compare drop down values for Termination reason from DB.</pre>
+ * @author smykjn
+ */
+public void compareTerminationReason() throws Exception{
+	boolean isExist=false;
+	Map<String,String> termReasonDB = this.getTerminationReasondropDownFromDB();
+	List<String> termResnListUI = new ArrayList<String>();
+	for(WebElement reason : termReasonDropDownUI){
+		String rsn = reason.getText().trim(); 
+		termResnListUI.add(rsn);
+	}
+	System.out.println("Term reason from UI:"+termResnListUI);
+	String reasonValue="";
+	for(String str:termResnListUI){
+		if(termReasonDB.containsValue(str))
+		{isExist=true;}
+		else{isExist=false;
+		reasonValue=str;break;}
+	}
+	if(isExist)
+		Reporter.logEvent(Status.PASS,"Validate all Term reason drop down values matches with the results"
+				+ " fetched by query:"+Stock.getTestQuery("getTerminationReasonValues")[1],""
+						+ "All the reason codes are matching with the query results.\n"+termResnListUI,false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate all Term reason drop down values matches with the results"
+				+ " fetched by query:"+Stock.getTestQuery("getTerminationReasonValues")[1],""
+						+ "Below reason code is not found in UI.\n"+reasonValue,true);
+	
+	
+}
 
 
 

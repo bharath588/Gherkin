@@ -144,7 +144,7 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement userAccessdropDwon1;
 	@FindBy(xpath="(.//select[@name='selectedAnswer_0'])[1]")
 	private WebElement userAccessdropDwon2;
-	@FindBy(id="availablePlans")
+	@FindBy(id="availablePlan")
 	private WebElement availablePlan;
 	private String autoCompletePlanLink = ".//ul[contains(@class,'ui-autocomplete')]//a";
 	@FindBy(id="createuserbutton")
@@ -328,6 +328,7 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 
 	@Override
 	protected void isLoaded() throws Error {	
+		Web.waitForElement(weGreeting);
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
 			//CommonLib.waitForProgressBar();
 			throw new AssertionError("Plan service center landing page not loaded.");
@@ -753,6 +754,7 @@ public void addNewUser()
 		Web.waitForElement(frameb);
 		Web.getDriver().switchTo().frame(frameb);
 		Thread.sleep(2000);
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.clickOnElement(addNewUserBtn);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(addNewUserTitle);
@@ -796,7 +798,7 @@ public void addNewUser()
 			Thread.sleep(2000);
 		}
 		Web.clickOnElement(createUserBtn);
-		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(confirmMsgBox);
 		if(Web.isWebElementDisplayed(confirmMsgBox,true))
 			Reporter.logEvent(Status.PASS,"Fill all the required details to create user and click on"
 					+ " create new user button.", "Confirmation message is displayed displaying following message:"+confirmMsgBox.getText(), false);
@@ -1191,10 +1193,12 @@ public void validatePlanDocumentsPage()
 {
 	try{
 		Web.getDriver().switchTo().frame(frameb);
-		do{
-			Thread.sleep(2000);
-			System.out.println("Loading.......");
-		}while(planDocLoader.isDisplayed());
+		if(Web.isWebElementDisplayed(planDocLoader, true)){
+			do{
+				Thread.sleep(2000);
+				System.out.println("Loading.......");
+			}while(planDocLoader.isDisplayed());
+		}
 		if(Web.isWebElementDisplayed(genFormAndDocTitle,true)&&Web.isWebElementDisplayed(planSpecificDocTitle, true))
 			Reporter.logEvent(Status.PASS,"Validate title 'General forms and documents' "
 					+ "and 'Plan-specific documents' are displayed.",""
@@ -1363,8 +1367,10 @@ public void validateFiduciaryRequiredNotices_1()
 		else
 			Reporter.logEvent(Status.FAIL,"Validate static label 'Required notices'.","static label 'Required notices'"
 					+ " is not displayed", false);
+		try{
 		WebElement accept = disclaimerDesc.findElement(By.xpath(".//button[.='Accept']"));
-		Web.clickOnElement(accept);
+		Web.clickOnElement(accept);}catch(Exception e)
+		{}
 		WebElement backTextElement =  backArrowLink.findElement(By.tagName("i"));
 		String backText = backArrowLink.findElement(By.tagName("i")).getText().trim();
 		
@@ -1812,12 +1818,12 @@ public void validateExcelDownload(){
 	try{
 		CommonLib.switchToFrame(frameb);
 		Web.clickOnElement(excellink);
-		if(CommonLib.getBrowserName().equalsIgnoreCase("firefox")){
+		/*if(CommonLib.getBrowserName().equalsIgnoreCase("firefox")){
 			Robot rb = new Robot();
 			Thread.sleep(2000);
 			rb.keyPress(KeyEvent.VK_ENTER);
 			rb.keyRelease(KeyEvent.VK_ENTER);
-		}
+		}*/
 		String fileName  =CommonLib.getDownloadedDocumentName(Stock.getConfigParam("Download_Directory"),".xls");
 		if(fileName.contains(".xls"))
 			Reporter.logEvent(Status.PASS,"Click on excel link and observe that "

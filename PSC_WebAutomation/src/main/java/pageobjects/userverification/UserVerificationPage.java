@@ -141,6 +141,9 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		if(fieldName.trim().equalsIgnoreCase("SECURITYQUESTION")){
 			return this.securityQuestion;
 		}
+		if(fieldName.trim().equalsIgnoreCase("DEFAULT_PLAN_INPUT_FIELD")){
+			return this.planTextFieldDefaultPlanNull;
+		}
 		//
 		// Reporter.logEvent(
 		// Status.WARNING,
@@ -307,4 +310,19 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Web.isWebElementDisplayed(new AccountVerificationPage(), "Account Verification Title");
 	}	
 
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

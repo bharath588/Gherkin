@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -427,7 +428,7 @@ public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<Str
 	boolean isdisplayed = false;
 	for(WebElement header : actHeaders){
 		System.out.println("Actual Header is "+header.getText().trim());
-		if(expHeaders.contains(header.getText().replaceAll(":", "").trim()))
+		if(expHeaders.contains(header.getText().replaceAll(":", "").replace("*","").trim()))
 		{isdisplayed = true;}
 		else
 		{isdisplayed = false;break;}
@@ -837,6 +838,23 @@ public static String getDateStringInDateFormat(String dateformat,Date date){
 }
 
 /**
+ * @author smykjn
+ */
+public static Date getDateInDateFormatFromDateString(String dateformat,String dateString){
+	Date date=null;
+	try{
+		DateFormat df = new SimpleDateFormat(dateformat);
+		date= df.parse(dateString);
+		
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		e.printStackTrace();
+	}
+	return date;
+}
+
+
+/**
  * <pre>This method returns a random number within a defined range</pre>
  * @author smykjn
  * @param integer
@@ -845,6 +863,81 @@ public static int getRandomNumber(int range){
 	int random = (int )(Math.random() * range + 1);
 	return random;
 }
+
+/**
+ * <pre>This method let user select a random date between two specified dates</pre>
+ * @author smykjn
+ */
+public static Date getRandomDateBetweenTwoDates(Date startRange,Date endRange) throws Exception{
+	List<Date> listDate = new ArrayList<Date>();
+	Calendar calendar = new GregorianCalendar();
+    calendar.setTime(startRange);
+	int count=0;
+	 while (calendar.getTime().before(endRange))
+	    {
+		 calendar.add(Calendar.DATE, 1);
+	        Date result = calendar.getTime();
+	        if(calendar.getTime().before(endRange)){
+	        	count++;
+	        	listDate.add(result);
+	        }
+	    }
+    System.out.println("Number of days:"+count);
+    System.out.println("Dates:"+listDate);
+   int randomNumber =  CommonLib.getRandomNumber(listDate.size());
+   
+   return listDate.get(randomNumber);
+    
+}
+
+
+public static Date calculateDay(int offset)
+{
+       final Calendar cal = Calendar.getInstance();
+       if(offset!=0){
+              cal.add(Calendar.DATE, offset);
+              return cal.getTime();}
+       else
+       {
+              return cal.getTime();
+       }
+}
+
+public static String getDate(String dateformat,int offset)
+{
+       String date=null;
+       DateFormat df = new SimpleDateFormat(dateformat);
+       df.setLenient(false);
+       try{
+              date = df.format(calculateDay(offset));
+       }
+       catch(Exception e)
+       {
+              System.out.println (e.getMessage()) ;
+       }
+       System.out.println("Formatted date is:"+date);
+       return date;
+}
+
+
+/**
+ * <pre>This method validates that event table is having entry with specified event id(confirmation number in UI)</pre>
+ * @author smykjn
+ */
+public static boolean validateEventID(String evenId) throws SQLException
+{
+	boolean isRecordFound = false;
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("validateEventId")[0],Stock.getTestQuery("validateEventId")[1],evenId);
+	if(DB.getRecordSetCount(queryResultSet)>0)
+		isRecordFound=true;
+	else
+		isRecordFound=false;
+	return isRecordFound;
+	
+}
+
+
+
 
 
 

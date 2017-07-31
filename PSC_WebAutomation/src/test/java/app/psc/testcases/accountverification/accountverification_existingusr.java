@@ -239,12 +239,16 @@ public class accountverification_existingusr {
 			login = new LoginPage().get();
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password")});
-			//userverification.enterPlanWhenDefaultPlanIsNull();
+			if(Web.isWebElementDisplayed(userverification,"DEFAULT_PLAN_INPUT_FIELD",true)){
+			userverification.enterPlanWhenDefaultPlanIsNull();
+			}
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
 					Stock.GetParameterValue("UserSecondaryAns")});
+			
+			
 			if (PlanCount > 25) {
 
 				if ((Web.isWebElementDisplayed(accountverification,
@@ -575,7 +579,7 @@ public class accountverification_existingusr {
 				else
 				{
 					Reporter.logEvent(Status.FAIL, "Verify Compliance button is not available and working as expected if txn code is not given to user", 
-							"Compliance hyperlink is not available on home page", true);
+							"Compliance hyperlink is available on home page", true);
 					homePage.logoutPSC();
 				}
 			}
