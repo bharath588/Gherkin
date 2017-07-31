@@ -1,11 +1,6 @@
 package mobile;
-/*
- * @Author Siddartha Pradhan	
- * @Date 30/12/2016
- *  Appium Manager - this class contains method to start and stops appium server
- *  To execute the tests from eclipse, you need to set PATH as
- *  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin in run configuration
- */
+
+
 
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -20,7 +15,15 @@ import java.util.Properties;
 
 
 
-
+/**
+ *  Appium Manager - this class contains method to start and stops appium server
+ *  To execute the tests from eclipse, you need to set PATH as
+ *  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin in run configuration
+ * 
+ * @author sddprd
+ * @since30/12/2016
+ *
+ */
 
 public class AppiumManager {
 	
@@ -40,6 +43,7 @@ public class AppiumManager {
 	     * start appium with auto generated ports : appium port, chrome port,
 	     * bootstrap port and device UDID
 	     */
+	
 	    ServerArgument webKitProxy = new ServerArgument() {
 	        @Override public String getArgument() {
 	            return "--webkit-debug-proxy-port";
@@ -47,9 +51,14 @@ public class AppiumManager {
 	    };
 	    
 
+	  
 	    /**
 	     * start appium with auto generated ports : appium port, chrome port,
 	     * bootstrap port and device UDID
+	     * @param deviceID
+	     * @param webKitPort
+	     * @return
+	     * @throws Exception
 	     */
 
 	    public AppiumServiceBuilder appiumServerForIOS(String deviceID, String webKitPort) throws Exception {
@@ -82,6 +91,9 @@ public class AppiumManager {
 	        return appiumDriverLocalService.getUrl();
 	    }
 	    
+	    /**
+	     * createAppliumLogFolder  create folder for Appium server Log
+	     */
 	    public void createAppliumLogFolder(){
 	    	 File f = new File(System.getProperty("user.dir") + "/TestReport/appiumlogs/");
 	    	 if(f.exists()){
@@ -100,6 +112,9 @@ public class AppiumManager {
 	         
 
 	    }
+	    /**
+	     * kill all iProxy and Webkit proxy once appium server is stop in devices
+	     */
 
 	    public void destroyAppiumNode() {
 	        try {

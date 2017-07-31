@@ -14,6 +14,11 @@ import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
+/**
+ * Class will read Mobile Config file
+ * @author siddartha
+ *
+ */
 public class Reader {
 	private static Map<String, String> globalMobileParam = new LinkedHashMap<String, String>();
 	private static Map<String, String> userNameParam = new LinkedHashMap<String, String>();
@@ -52,6 +57,10 @@ public class Reader {
 		return userNameParam;
 	}
     
+	/**
+	 * Read mobile config file
+	 * @param configPath
+	 */
     public static void readConfigPropertyForMobile(String configPath) {
 		Properties prop = new Properties();
 		InputStream ins = null;

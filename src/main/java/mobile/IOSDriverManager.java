@@ -1,4 +1,5 @@
 package mobile;
+
 /* @Author Siddartha 
  * @Date 30/Dec/2016
  * 
@@ -28,6 +29,11 @@ import core.framework.Globals;
 //If server does not start Run 
 // ps -ax|grep -i "iproxy"|grep -v grep|awk '{print "kill -9 " $1}'|sh  in terminal 
 
+/**
+ * IOSDriverManager class will set capabilities for iOS devices 
+ * @author sddprd
+ *
+ */
 public class IOSDriverManager {
 	public static AppiumDriver<MobileElement> webdriver = null;
 	private static DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -42,7 +48,10 @@ public class IOSDriverManager {
 	      return  setIOSNativeCapabilities();
 	    }
 	  
-	
+	/**
+	 * This method will set capabilities for iOS devices 
+	 * @return
+	 */
 
 	public static AppiumDriver<MobileElement> setIOSNativeCapabilities()
 			 {
@@ -51,11 +60,20 @@ public class IOSDriverManager {
 				+ "MobileConfig.properties");
 		capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION,
 				Reader.getConfigParam("APPIUM_VERSION"));
+		capabilities.setCapability("waitForQuiescence",false);
+		
 		capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,
 				AutomationName.IOS_XCUI_TEST);
 		capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT,
-				5000);
+				5000);	
+
+	//	capabilities.setCapability("updatedWDABundleId","com.greatwest.WebDriverAgentRunner");		
+
+		capabilities.setCapability("useNewWDA",false);	
+		
+	
 		capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
+
 		Mobile.figlet("Mobile App");
 
 		String sURL = "http://" + Reader.getConfigParam("APPIUM_SERVER") + ":"
@@ -142,11 +160,18 @@ public class IOSDriverManager {
 		return deviceName;
 	}
 
-	public static DesiredCapabilities iosNative() {
+	/**
+	 * Capabilities for iOS devices 
+	 * @return
+	 */
+	private static DesiredCapabilities iosNative() {
 		System.out.println("Setting iOS Desired Capabilities:");
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, " iOS");
 		capabilities.setCapability(IOSMobileCapabilityType.INTER_KEY_DELAY,
 				Reader.getConfigParam("INTER_KEY_DELAY"));
+//		capabilities.setCapability(IOSMobileCapabilityType.SHOW_XCODE_LOG,true);
+//		capabilities.setCapability(IOSMobileCapabilityType.SHOW_IOS_LOG,true);
+//		
 		capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
 				"10.0");
 		if (Reader.getConfigParam("DEVICE").equalsIgnoreCase("RealDevice")) {
@@ -191,6 +216,12 @@ public class IOSDriverManager {
 
 		return capabilities;
 	}
+	
+	
+	/**
+	 * Capabilities for Andriod native devices
+	 * @return
+	 */
 
 	public static DesiredCapabilities androidNative() {
 		System.out.println("Setting Android Desired Capabilities:");

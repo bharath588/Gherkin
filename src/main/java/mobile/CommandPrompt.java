@@ -2,6 +2,7 @@ package mobile;
 
 /**
  * Command Prompt - this class contains method to run windows and mac commands
+ * @author sddprd
  */
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,13 @@ public class CommandPrompt {
     }
 
 
+    /**
+     * Run unix command in teminal
+     * @param command
+     * @return
+     * @throws InterruptedException
+     * @throws IOException
+     */
     public String runCommand(String[] command) throws InterruptedException, IOException {
     	cmd = Arrays.asList(command);     
         BufferedReader r = getBufferedReaderTest(cmd);
@@ -44,7 +52,14 @@ public class CommandPrompt {
 
     }
 
-    
+
+    /**
+     * Run unix command in teminal
+     * @param command
+     * @return
+     * @throws InterruptedException
+     * @throws IOException
+     */
     public String runCommand1(String command) throws InterruptedException, IOException {
         p = Runtime.getRuntime().exec(command);
         // get std output
@@ -62,6 +77,12 @@ public class CommandPrompt {
         return allLine;
 
     }
+    /**
+     * Return buffer reader input stream for list of command  
+     * @param cmd2
+     * @return
+     * @throws IOException
+     */
     
     public BufferedReader getBufferedReaderTest(List<String> cmd2) throws IOException {
         List commands = new ArrayList<>();
@@ -91,6 +112,13 @@ public class CommandPrompt {
         return allLine.split(":")[1].replace("\n", "").trim();
     }
 
+    /**
+     *  Run Process in Command terminal to get Device ID details
+     * @param command
+     * @return
+     * @throws InterruptedException
+     * @throws IOException
+     */
     public String runProcessCommandToGetDeviceID(String command)
         throws InterruptedException, IOException {
         BufferedReader br = getBufferedReader(command);
@@ -102,6 +130,12 @@ public class CommandPrompt {
         return allLine.trim();
     }
 
+    /**
+     * Return buffer reader input stream for command  
+     * @param cmd2
+     * @return
+     * @throws IOException
+     */
     public BufferedReader getBufferedReader(String command) throws IOException {
         List<String> commands = new ArrayList<>();
         commands.add("/bin/sh");
@@ -116,6 +150,10 @@ public class CommandPrompt {
         return new BufferedReader(isr);
     }
 
+    /**
+     *  Run Process in Command terminal to get Device ID details
+     * 
+     */
     public void runCommandThruProcess(String command)
         throws InterruptedException, IOException {
         BufferedReader br = getBufferedReader(command);

@@ -4,9 +4,10 @@ import java.net.ServerSocket;
 
 public class AvailablePorts {
 
-    /*
+    /**
      * Generates Random ports
      * Used during starting appium server
+     * @author sddprd
      */
     public int getPort() throws Exception {
         ServerSocket socket = new ServerSocket(0);
