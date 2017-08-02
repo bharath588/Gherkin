@@ -110,7 +110,7 @@ public class Balance extends LoadableComponent<Balance> {
 		}*/
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			if(Web.isWebElementDisplayed(lblBalance, true) && Web.isWebElementDisplayed(tabBalance, true))
+			if(Web.isWebElementDisplayed(lblBalance, true) || Web.isWebElementDisplayed(tabBalance, true))
 			Assert.assertTrue(true,"Balance Page is not Loadeed\n");
 			else
 				Assert.assertTrue(false,"Balance Page is not Loadeed\n");
