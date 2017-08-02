@@ -346,6 +346,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//h1[text()[normalize-space()='My Allocations']]")
 	private WebElement lblMyAllocations;
 	@FindBy(xpath = "//strong[contains(@ng-if,'isRebalancerAllowed')]")	private WebElement errMsgSmartRestriction;
+	@FindBy(xpath = "//div[contains(@ng-if,'restrictedFunds')]//table//tbody//tr")	private WebElement tblRestrictedFunds;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";

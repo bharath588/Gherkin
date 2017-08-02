@@ -5886,7 +5886,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds(int itr, Map<String, String> testdata) {
+	public void DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -6006,7 +6006,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds(int itr, Map<String, String> testdata) {
+	public void DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -6107,7 +6107,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds(int itr, Map<String, String> testdata) {
+	public void DDTC_29165_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -6210,7 +6210,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_23601_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio(int itr, Map<String, String> testdata) {
+	public void DDTC_29166_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
