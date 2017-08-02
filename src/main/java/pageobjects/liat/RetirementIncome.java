@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -20,6 +22,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
+
 
 
 
@@ -97,7 +100,7 @@ private String modalHeader="//h3[text()[normalize-space()='webElementText']]";
 @FindBy(xpath=".//*[@id='contribution-rate-slider']//span[contains(@class,'editable-text-trigger')]") private WebElement lnkContributionPercent;
 @FindBy(xpath=".//*[@id='contributionRate-text-edit']") private WebElement inputContributionRate;
 @FindBy(xpath="//button[contains(text(),'Done')]") private WebElement btnDone;
-@FindBy(xpath=".//*[@id='pending-changes-btn']") private WebElement btnReviewChanges;
+@FindBy(id="pending-changes-btn") private WebElement btnReviewChanges;
 @FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
 String labelViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//div[contains(@class,'viewDetailsLabel')]";
@@ -809,6 +812,48 @@ public void enterContributionRate(String contributionRate,boolean... args) throw
 	}
 	
 }
+/**<pre> Method to navigate to smart restriction page.
+ *.</pre>
+ ** @throws InterruptedException 
+ */
 
+public void navigateToSmartRestrictionPage() throws InterruptedException{
+	
+		if(Web.isWebElementDisplayed(lnkPlanSavings,true)){
+			Web.clickOnElement(lnkPlanSavings);
+			Web.waitForElement(lnkDoItMyself);
+			Web.clickOnElement(lnkDoItMyself);
+			Web.waitForElement(sliderInvestmentMix);
+			moveSlider("Investment mix slider",60);
+			Web.waitForElement(btnReviewChanges);
+			Web.clickOnElement(btnReviewChanges);
+			Common.waitForProgressBar();
+			}
+		else{
+			throw new Error("Plan Savings Tab is Not Displayed");
+		}
+}
+
+public void moveSlider(String sliderName,int percentage){
+	
+	WebElement inpSlider = getWebElement(sliderName);
+	
+	    int width=inpSlider.getSize().getWidth();
+	    int currentPercent=Integer.parseInt(inpSlider.getAttribute("aria-valuenow"));
+	    if(currentPercent==percentage){
+	    	percentage=percentage+1;
+	    }
+	    
+	    System.out.println("Slider width"+width);
+	    System.out.println("Previous Percentage"+currentPercent);
+	    System.out.println("Slider moved to Percentage"+percentage);
+	    Actions move = new Actions(Web.getDriver());
+	    move.moveToElement(inpSlider, ((width*percentage)/100), 0).click();
+	  
+	    move.build().perform();
+	   
+	  
+		
+	}
 }
 		

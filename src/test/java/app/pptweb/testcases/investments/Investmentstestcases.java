@@ -2545,7 +2545,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29167_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -2713,7 +2713,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22712_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29168_Rebal_Sync_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3050,7 +3050,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3179,6 +3179,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(20000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
@@ -3219,7 +3220,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22707_Rebal_Only_HMDI_Target_Date_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29170_Rebal_Only_HMDI_Target_Date_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3492,7 +3493,7 @@ public class Investmentstestcases {
 	
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29171_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3654,7 +3655,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29172_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3924,7 +3925,7 @@ public class Investmentstestcases {
 
 	}
 	@Test(dataProvider = "setData")
-	public void DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29178_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -4094,7 +4095,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22711_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29179_Rebal_Only_Allocation_DIM_Choose_Individual_Funds_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -4432,7 +4433,7 @@ public class Investmentstestcases {
 	
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22709_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29173_Rebal_Only_HMDI_RiskBased_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -4598,7 +4599,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22709_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29174_Rebal_Only_HMDI_RiskBased_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -4871,7 +4872,7 @@ public class Investmentstestcases {
 
 	}
 	@Test(dataProvider = "setData")
-	public void DDTC_22710_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29176_Rebal_Sync_HMDI_RiskBased_Offer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -4953,7 +4954,7 @@ public class Investmentstestcases {
 			
 			//Step 8
 	
-		 Web.clickOnElement(investment,"Choose Target Date Fund");
+		/* Web.clickOnElement(investment,"Choose Risk Based Funds");
 		 Common.waitForProgressBar();
 		Web.waitForElement(investment, "Header Select Target Date Fund");
 		investment.verifyPageHeaderIsDisplayed("Header Select Target Date Fund");
@@ -4968,7 +4969,7 @@ public class Investmentstestcases {
 		
 		Web.waitForElement(investment, "Header How Would You Like To Invest");
 		
-		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+		investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");*/
 		//Step 10
 		Web.clickOnElement(investment,"Choose Risk Based Funds");
 		Web.waitForElement(investment, "Header Select Risk Based Fund");
@@ -5036,7 +5037,7 @@ public class Investmentstestcases {
 	}
 	
 	@Test(dataProvider = "setData")
-	public void DDTC_22710_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
+	public void DDTC_29177_Rebal_Sync_HMDI_RiskBased_DoesNotOffer_All_Mntype(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));

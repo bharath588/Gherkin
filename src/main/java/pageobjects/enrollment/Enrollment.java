@@ -39,7 +39,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[@class='row']//a[text()='Skip & View My Account']") private WebElement btnSkipAndViewAccount;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath="//*[@id='quickEnrollmentLabel']/span") private WebElement inpQuickEnrollment;
-	@FindBy(xpath="//[@id='customEnrollmentLabel']/span") private WebElement inpCustomEnrollment;
+	@FindBy(xpath="//*[@id='customEnrollmentLabel']/span") private WebElement inpCustomEnrollment;
 	@FindBy(id="btnCustom") private WebElement btnGetStarted;
 	@FindBy(xpath="//div[contains(@class,'title')]//h1") private WebElement hdrPriorContribution;
 	@FindBy(xpath="//div[contains(@class,'title')]//p") private WebElement txtPriorContribution;

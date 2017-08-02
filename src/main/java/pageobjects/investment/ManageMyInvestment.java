@@ -345,6 +345,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement tableAssetClass;
 	@FindBy(xpath = "//h1[text()[normalize-space()='My Allocations']]")
 	private WebElement lblMyAllocations;
+	@FindBy(xpath = "//strong[contains(@ng-if,'isRebalancerAllowed')]")	private WebElement errMsgSmartRestriction;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
@@ -641,6 +642,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Header My Allocations")) {
 			return this.lblMyAllocations;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Smart Restriction Error Message")) {
+			return this.errMsgSmartRestriction;
 		}
 		
 		// Log out
