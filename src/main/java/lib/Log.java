@@ -2,7 +2,11 @@ package lib;
 
 import org.apache.log4j.Logger;
 import core.framework.Globals;
-
+/**
+ * Log - This Class have the methods to log steps in report
+ * @author svkdtt
+ *
+ */
 public class Log {
 
 	private static final String DEBUG = Globals.GC_LOG_DEBUG;
@@ -14,6 +18,11 @@ public class Log {
 	public enum Level {
 		DEBUG, INFO, WARN, ERROR, TRACE
 	}
+	/**
+	 * Method to log the step in HTML report
+	 * @param level
+	 * @param description
+	 */
 		
 	public static void Report(Log.Level level,String description){
 		final Logger report = Logger.getLogger(Log.class.getName());

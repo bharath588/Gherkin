@@ -3,9 +3,16 @@ package lib;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-
+/**
+ * Email - This class contains methods to establish mail server connection and send email
+ * @author sndkmt
+ *
+ */
 public class Email
 {
+	/**
+	 * Method to send Email to the recipient
+	 */
    public void send()
    {    
       // Recipient's email ID needs to be mentioned.

@@ -24,7 +24,11 @@ import com.sun.rowset.FilteredRowSetImpl;
 
 import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
-
+/**
+ *  DB - This class contains methods to connect to data base and execute querys
+ * @author srsksr
+ *
+ */
 @SuppressWarnings("restriction")
 public class DB {
 
@@ -33,6 +37,16 @@ public class DB {
 	private static FilteredRowSetImpl filterObj;
 	static int count = 0;
 	
+	
+	/**
+	 *<pre>
+	 * Method to execute the query and return ResultSet
+	 * </pre>
+	 * @param dbName
+	 * @param query
+	 * @param queryParameterValues
+	 * @return <b>ResultSet-tempRecordSet </b>
+	 */
 	public static ResultSet executeQuery(String dbName,String query,String... queryParameterValues) {
 		
 		ResultSet tempRecordSet = null;
@@ -50,7 +64,16 @@ public class DB {
 	}
 	
 
-	
+	/**
+	 *<pre>
+	 * Method to update the records in Data Base
+	 * </pre>
+	 * @param dbName
+	 * @param query
+	 * @param queryParameterValues
+	 * @return integer - recordsUpdated
+	 * @throws Exception
+	 */
 	public static int executeUpdate(String dbName,String query,String... queryParameterValues) throws Exception{
 		
 		int recordsUpdated = 0;
@@ -65,7 +88,16 @@ public class DB {
 		}
 		return recordsUpdated;
 	}
-	
+	/**
+	 * <pre>
+	 * Method to establish data base connection and prepare Sql statement
+	 * </pre>
+	 * @param dbName
+	 * @param query
+	 * @param queryParameterValues
+	 * @return PreparedStatement - stmt
+	 */
+
 	private static PreparedStatement getPreparedStatement(String dbName,String query,String[] queryParameterValues)  {
 		PreparedStatement stmt = null;
 		int queryParamCnt = 0;
@@ -104,7 +136,12 @@ public class DB {
 		return stmt;
 	}
 	
-	
+	/**
+	 * <pre>
+	 * Method to establish data base connection
+	 * @param DBName
+	 * @return Connection - conn 
+	 */
 	private static Connection getDBConnection(String DBName) {
 		
 		OracleDataSource dataSource;
@@ -145,7 +182,11 @@ public class DB {
 		
 		
 	}
-	
+	/**
+	 * Method to get no.of rows for ResultSet
+	 * @param resultSet
+	 * @return integer - rowSize
+	 */
 	public static int getRecordSetCount(ResultSet resultSet) {
 		
 		int rSize = 0;
@@ -163,7 +204,10 @@ public class DB {
 		
 	}
 	
-
+/**
+ * Method to close data base connection
+ * @throws Exception
+ */
 	public static void closeDBConnections() throws Exception{
 		
 		Iterator<String> connectionsIterator = dbConnections.keySet().iterator();
@@ -205,8 +249,8 @@ public class DB {
 		
 	}
 
-	/*
-	 * Compare data base date and web date
+	/**
+	 * Method to compare data base date and web date
 	 * 
 	 * @PARAMETER = dbDate
 	 * 
@@ -266,6 +310,12 @@ public class DB {
 	        }
 		return filterObj;
 	}
+	/**
+	 * Method to get Filtered RowSet Count 
+	 * @param frs
+	 * @return Integer - count
+	 * @throws SQLException
+	 */
 	public static int getFilteredRowSetCount(FilteredRowSet frs) throws SQLException {
 
 		count = 0;
@@ -304,6 +354,14 @@ public class DB {
 	{
 		return (getDBConnection(dbName)).prepareStatement(query);
 	}*/
+	/**
+	 * Method to get string  from record set
+	 * @param recordSet
+	 * @param paramTobeFetched
+	 * @return String - paramValue
+	 * @throws SQLException
+	 */
+	
 	public static String getRecordFromRecordSet(FilteredRowSet recordSet,String paramTobeFetched) throws SQLException
 	{
 		String paramValue = null;

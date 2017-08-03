@@ -13,7 +13,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * This class is used to run Appium server programmatically
+ * @author sddprd
+ *
+ */
 
 public class IOSDeviceConfiguration {
 
@@ -32,21 +36,16 @@ public class IOSDeviceConfiguration {
 	    
 	  
 	  public static void main(String a[]) throws Exception{
-		//System.out.println( getDeviceName("bd4f254c81b0ca007f813a4a59f5433dce8a9446"));
-//		  ArrayList<String> list =	  getIOSUDID();
-//		  for (String string : list) {
-//			  if(checkiOSDevice(string))
-//				  System.out.println(" Divice present "+string);
-//			  
-//			  System.out.println("Device Name :"+getDeviceName(string));
-//		}
-	//		new   IOSDeviceConfiguration().setIOSWebKitProxyPorts("bd4f254c81b0ca007f813a4a59f5433dce8a9446");
-//		new   IOSDeviceConfiguration().startIOSWebKit("bd4f254c81b0ca007f813a4a59f5433dce8a9446");
-//		new IOSDeviceConfiguration().destroyIOSWebKitProxy();
 		  closeAllIProxy();
 		  
 	  }
 	  
+	  /**
+	   * Set  and return map for ios Webkit Proxy Port 
+	   * @param device_udid
+	   * @return iosWebKit Proxy port map
+	   * @throws Exception
+	   */
 	  public HashMap<String, String> setIOSWebKitProxyPorts(String device_udid) throws Exception {
 	        try {
 	            int webkitproxyport = ap.getPort();
@@ -57,11 +56,14 @@ public class IOSDeviceConfiguration {
 	        return deviceMap;
 	    }
 	  
+	  /**
+	   * 
+	   * @param udid
+	   * @return
+	   * @throws Exception
+	   */
 	  public String startIOSWebKit(String udid) throws Exception {
-//	        input = new FileInputStream("config.properties");
-//	        prop.load(input);
-		   setIOSWebKitProxyPorts(udid);
-	     //   String serverPath = prop.getProperty(Reader.getConfigParam("APPIUM_JS_PATH"));
+		   setIOSWebKitProxyPorts(udid);	 
 	        File file = new File(Reader.getConfigParam("APPIUM_JS_PATH"));
 	        File curentPath = new File(file.getParent());
 	        System.out.println(curentPath);
@@ -96,6 +98,11 @@ public class IOSDeviceConfiguration {
 	        }
 	    }
 	    
+	    /**
+	     * This methos will closed all the iProxy 
+	     * @throws IOException
+	     * @throws InterruptedException
+	     */
 	    public static void closeAllIProxy()throws IOException, InterruptedException {	    	 
 	    	    String[] args = new String[] {"/bin/bash", "-c", "ps -ax | grep -i '8100'|grep -v grep|awk '{print \"kill -9 \" $1}'|sh"};
 	    	    Process proc;
@@ -139,6 +146,10 @@ public class IOSDeviceConfiguration {
 	    }
 
 	  
+	  /**
+	   * This method will return list of devices connected in MAC USB 
+	   * @return
+	   */
 	  public static ArrayList<String> getIOSUDID() {
 
 	        try {
@@ -184,6 +195,8 @@ public class IOSDeviceConfiguration {
 	            return null;
 	        }
 	    }
+	  
+	  
 	  public void checkExecutePermissionForIOSDebugProxyLauncher() throws IOException {
 
 	        String serverPath = Reader.getConfigParam("APPIUM_JS_PATH");
@@ -215,7 +228,13 @@ public class IOSDeviceConfiguration {
 	        }
 
 	    }
-	  
+	  /**
+	   * 
+	   * @param udid
+	   * @return
+	   * @throws InterruptedException
+	   * @throws IOException
+	   */
 	  public static String getDeviceName(String udid) throws InterruptedException, IOException {
 		  String[] cmd = {"idevice_id", "-u",udid};	
 	        String deviceName =

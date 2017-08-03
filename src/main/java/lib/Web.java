@@ -468,7 +468,18 @@ public class Web {
             multiDriver.set(webDriver);
             return webDriver;
      }
-
+     /**
+      * <pre>
+      * Method to initiate remote webDriver object based on used specified browser type and node url when execution type is set to grid 
+      * Browser Types:
+      *     1. <b>INTERNET_EXPLORER</b> or <b>IEXPLORE</b> or <b>IE</b>
+      *     2. <b>FIREFOX</b> or <b>FF</b>
+      *     3. <b>CHROME</b>
+      * </pre>
+      * 
+       * @param webBrowser
+      * @return
+      */
      public static WebDriver getRemoteWebDriver(String webBrowser,String nodeUrl) throws MalformedURLException {           
             RemoteWebDriver remoteWebDriver = multiRemoteDriver.get();
             if(Mobile.mobilePlatform){               
@@ -997,7 +1008,7 @@ public class Web {
 				+ File.separator+"Screenshots" + File.separator + fileName;
 	}
 
-	/*
+	/**
 	 * Method to Mouse hover on specific web element
 	 * 
 	 * @PARAMETER = WebElement

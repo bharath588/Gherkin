@@ -27,19 +27,27 @@ import lib.Log.Level;
 import core.framework.Globals;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
-
+/**
+ * Stock - Class contains methods to read test data from xml files
+ * @author rnjbdn
+ *
+ */
 public class Stock {
 	public static   Map<String, String> globalParam = new LinkedHashMap<String, String>();
 	private static   int dataProviderIterations;
 	//public static   Map<Integer,Map<String, String>> globalTestdata;
 	public static  Map<Long,Map<String, String>> globalTestdata = new LinkedHashMap<>();
-
+	
 
 	public   String globalManualTCName;
 	public static   int iterationNumber = 0;
 	public static Map<Integer,Map<Integer, Map<String, String>>> map = new LinkedHashMap<>();
-
-
+	
+	/**
+	 * Method to add iterations data to data provider
+	 * @param dataObj
+	 * @return Object[][] - testDataObject
+	 */
 	public static   Object[][] setDataProvider(LinkedHashMap<Integer, Map<String, String>> dataObj) {
 		// Converting Map to Object[][] to handle @DataProvider
 		Object[][] tdObject = null;
@@ -60,11 +68,15 @@ public class Stock {
 		}	
 		return new Object[][] { {} }; // As null cannot be returned in DataProvider
 	}
-
+	
 	public static   int getIterations(){
 		return dataProviderIterations;
 	}
-
+	/**
+	 * Method to get the test environment
+	 * @param envName
+	 * @return String - Globals.DB_TYPE.get(envName)
+	 */
 	private static   String checkEnv(String envName){
 		if(envName.contains("PROJ")){
 			return Globals.DB_TYPE.get("PROJ");
@@ -77,9 +89,15 @@ public class Stock {
 		}
 		return null;
 	}
-
+/**
+ * Method returns  test data for the provided test case and iteration
+ * @param tcAbsPath
+ * @param tcName
+ * @return 
+ * @throws ParserConfigurationException
+ */
 	public  static LinkedHashMap<Integer, Map<String, String>> getTestData(String tcAbsPath, String tcName) throws ParserConfigurationException {
-
+		
 		Stock.iterationNumber = 0;
 		tcName = Globals.manualtoAutoTCMap.get(tcName);
 		Globals.GC_MANUAL_TC_REPORTER_MAP.put(Thread.currentThread().getId(),tcName);
@@ -109,9 +127,9 @@ public class Stock {
 						+ Globals.GC_TESTDATAPREFIX + appName + "_"
 						+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
 			}
-
+			
 			Document doc = dBuilder.parse(xmlfile);
-
+			
 			doc.getDocumentElement().normalize();
 			td = new LinkedHashMap<Integer, Map<String, String>>();
 			NodeList nList = doc.getElementsByTagName("Module");
@@ -120,10 +138,10 @@ public class Stock {
 
 				Node nNode = nList.item(temp);
 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-					Element eElement = (Element) nNode;
-
+	  if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+	  
+	  Element eElement = (Element) nNode;
+	  
 					String name = eElement.getAttribute("name");
 					if (name.equals(modName)) {
 						// System.out.println(name);
@@ -161,10 +179,10 @@ public class Stock {
 
 											mapData.put(
 													parameterElement
-													.getAttribute(
-															"name")
+															.getAttribute(
+																	"name")
 															.toUpperCase(),
-															parameterElement
+													parameterElement
 															.getAttribute("value"));
 										}
 										if (!td.containsKey(key))
@@ -181,17 +199,21 @@ public class Stock {
 			System.out.println(td);
 			return td;
 		} 
-		catch(FileNotFoundException ex){
-			ThrowException.Report(TYPE.EXCEPTION,
-					"Not able to Find suite File: "+  ex.getMessage());
-		}
+	catch(FileNotFoundException ex){
+		ThrowException.Report(TYPE.EXCEPTION,
+				"Not able to Find suite File: "+  ex.getMessage());
+	}
 		catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION,
 					"Exception at getLoopIndex() : " + e.getMessage());
 		}
 		return null;
 	}
-
+/**
+ * Method to get the iteration numbers which has to execute
+ * @param indexString
+ * @return Map - mapIndex
+ */
 	public static   Map<String, String> getLoopIndex(String indexString) {
 		String GET_INDEX_PATTERN = "[0-9,>temp]+";
 		String[] arrFirstSplit = null;
@@ -241,7 +263,10 @@ public class Stock {
 		}
 		return null;
 	}
-
+/**
+ * Method to read the values from properties file and add them to globalParam map
+ * @param configPath
+ */
 	public static   void getParam(String configPath) {
 		String key = Globals.GC_EMPTY;
 		String val = Globals.GC_EMPTY;
@@ -314,13 +339,17 @@ public class Stock {
 			}
 		}
 	}
-
+	
 	public static Map<String, String> getGlobalParam() {
 		return globalParam;
 	}
-
+	/**
+	 * Method to get the parameter value from test data 
+	 * @param strParamName
+	 * @return
+	 */
 	public static String GetParameterValue(String strParamName) {
-
+		
 		String value = null;
 		if(globalTestdata.get(Thread.currentThread().getId()).containsKey(strParamName.toUpperCase().trim())){
 			if(globalTestdata.get(Thread.currentThread().getId()).get(strParamName.trim().toUpperCase()).length() > 0)
@@ -333,8 +362,12 @@ public class Stock {
 		}		
 		return value;
 	}
-
-
+	
+	/**
+	 * Method to get query name from test data sheet	
+	 * @param queryName
+	 * @return String[] - queryData
+	 */
 	public static String[] getTestQuery(String queryName) {
 		try {
 			String[] queryData = new String[3];
@@ -381,11 +414,15 @@ public class Stock {
 		return null;
 
 	}
-
+	/**
+	 * Method to get parameter value from properties file
+	 * @param parameterName
+	 * @return String parameterValue
+	 */
 	public static   String getConfigParam(String parameterName){
 		return globalParam.get(parameterName.trim().toUpperCase()) ;
 	}
-
+	
 	/**
 	 * <pre>Method to set config property in globalParam map</pre>
 	 * <pre>If overWriteExisting is 
@@ -396,7 +433,7 @@ public class Stock {
 	 * Default is <b>true</b></pre>
 	 */
 	public static  void setConfigParam(String parameterName,String parameterValue,boolean... overWriteExisting) {
-
+		
 		if (overWriteExisting.length > 0) {
 			if (!overWriteExisting[0])
 				if (globalParam.containsKey(parameterName.trim().toUpperCase())) {
@@ -418,7 +455,13 @@ public class Stock {
 		iterationNumber++;
 		return globalTestData.get(index);
 	}
-
+	
+	
+	/**
+	 * <pre>This method returns the test data for the current iteration to access them in @Beforemethod</pre>
+	 * @param globalTestData<pre>It is the test data map for the respective test case</pre>
+	 * @return <pre><b>Returns the data for the running iteration number</b></pre>
+	 */
 	public static   LinkedHashMap<Integer, Map<String, String>> getTestDataforAuto(String tcAbsPath, String tcName) throws ParserConfigurationException {
 		Stock.iterationNumber = 0;
 		//tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
@@ -450,9 +493,9 @@ public class Stock {
 						+ Globals.GC_TESTDATAPREFIX + appName + "_"
 						+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
 			}
-
+			
 			Document doc = dBuilder.parse(xmlfile);
-
+			
 			doc.getDocumentElement().normalize();
 			td = new LinkedHashMap<Integer, Map<String, String>>();
 			NodeList nList = doc.getElementsByTagName("Module");
@@ -461,10 +504,10 @@ public class Stock {
 
 				Node nNode = nList.item(temp);
 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-					Element eElement = (Element) nNode;
-
+	  if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+	  
+	  Element eElement = (Element) nNode;
+	  
 					String name = eElement.getAttribute("name");
 					if (name.equals(modName)) {
 						// System.out.println(name);
@@ -502,10 +545,10 @@ public class Stock {
 
 											mapData.put(
 													parameterElement
-													.getAttribute(
-															"name")
+															.getAttribute(
+																	"name")
 															.toUpperCase(),
-															parameterElement
+													parameterElement
 															.getAttribute("value"));
 										}
 										if (!td.containsKey(key))
@@ -526,114 +569,6 @@ public class Stock {
 					"Exception at getLoopIndex() : " + e.getMessage());
 		}
 		return null;
-	}
-
-	public static   LinkedHashMap<Integer, Map<String, String>> getTestDataAsCaseSensitive(String tcAbsPath, String tcName) throws ParserConfigurationException {
-		Stock.iterationNumber = 0;
-		//tcName = Globals.manualtoAutoTCMap.get(Globals.GC_MANUAL_TC_NAME_MAP.get(Thread.currentThread().getId())).get(tcName);
-		tcName = Globals.manualtoAutoTCMap.get(tcName);
-		Log.Report(Level.INFO, Globals.GC_LOG_INITTC_MSG + tcAbsPath + "." + tcName + Globals.GC_LOG_INITTC_MSG);
-
-		// Getting Application name and Module name so that the
-		// correct excel is picked up
-		LinkedHashMap<Integer, Map<String, String>> td = null;
-		Map<String, String> mapData = null;
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		String appName = getConfigParam("AUT");
-		String modName = tcAbsPath.split("\\.")[(tcAbsPath.split("\\.").length) - 1];
-
-		try {
-			/*File xmlfile = new File(Globals.GC_TESTDATALOC
-                            + Globals.GC_TESTDATAPREFIX + appName + "_"
-                            + checkEnv(getConfigParam("TEST_ENV")) + ".xml");*/
-			File xmlfile ;
-			if (System.getProperties().containsKey("testDataPath")
-					&& System.getProperty("testDataPath").equalsIgnoreCase(
-							"true")) {
-				xmlfile = new File(Globals.GC_COMMON_TESTDATALOC + appName
-						+ "\\\\" + Globals.GC_TESTDATAPREFIX + appName + "_"
-						+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
-			} else {
-				xmlfile = new File(Globals.GC_TESTDATALOC
-						+ Globals.GC_TESTDATAPREFIX + appName + "_"
-						+ checkEnv(getConfigParam("TEST_ENV")) + ".xml");
-			}
-
-			Document doc = dBuilder.parse(xmlfile);
-
-			doc.getDocumentElement().normalize();
-			td = new LinkedHashMap<Integer, Map<String, String>>();
-			NodeList nList = doc.getElementsByTagName("Module");
-
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-
-				Node nNode = nList.item(temp);
-
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-					Element eElement = (Element) nNode;
-
-					String name = eElement.getAttribute("name");
-					if (name.equals(modName)) {
-						// System.out.println(name);
-						NodeList testcaseList = eElement
-								.getElementsByTagName("TestCase");
-						for (int temp1 = 0; temp1 < testcaseList.getLength(); temp1++) {
-							Node testCaseNode = testcaseList.item(temp1);
-							Element testCaseElement = (Element) testCaseNode;
-							if (testCaseElement.getAttribute("name").equals(
-									tcName)) {
-								NodeList iterationList = testCaseElement
-										.getElementsByTagName("Iteration"); //
-								System.out.println(iterationList.getLength());
-								for (int iteration = 0; iteration < iterationList
-										.getLength(); iteration++) {
-									Node iterationNode = iterationList
-											.item(iteration);
-									Element iterationElement = (Element) iterationNode;
-
-									if (iterationElement.getAttribute(
-											"Execution").equals("Yes")) {
-										mapData = new HashMap<String, String>();
-										int key = Integer
-												.parseInt(iterationElement
-														.getAttribute("id"));
-
-										NodeList parameterList = iterationElement
-												.getElementsByTagName("parameter");
-
-										for (int parameter = 0; parameter < parameterList
-												.getLength(); parameter++) {
-											Node parameterNode = parameterList
-													.item(parameter);
-											Element parameterElement = (Element) parameterNode;
-
-											mapData.put(
-													parameterElement
-													.getAttribute(
-															"name"),
-															parameterElement
-															.getAttribute("value"));
-										}
-										if (!td.containsKey(key))
-											td.put(key, mapData);
-									}
-								}
-								break;
-							}
-						}
-						break;
-					}
-				}
-			} //ystem.out.println(td);
-			return td;
-		} catch (Exception e) {
-			ThrowException.Report(TYPE.EXCEPTION,
-					"Exception at getLoopIndex() : " + e.getMessage());
-		}
-		return null;
-	}
-
-
+}
+	
 }

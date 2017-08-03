@@ -35,7 +35,7 @@ import core.framework.Globals;
 
 
 
-/*  ****************************************************************************************************************************************
+/**  ****************************************************************************************************************************************
 	CLASS:				XL_ReadWrite	
 	DESCRIPTION:	    XL_ReadWrite contains multiple methods which helps to interact with Excel.
 	                    Methods listed in this class are meant to work with .xlsx files (XSSF - POI api used)
@@ -55,7 +55,7 @@ public class XL_ReadWrite {
 	private HSSFRow row = null;
 	public HSSFCell cell = null;
 	
-/* ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/** ------------------------------------------------------------------------------------------------------------------------------------------------------------
    	CONSTRUCTOR:		XL_ReadWrite(String path)	
     DESCRIPTION:	    Default Constructor for Class XL_ReadWrite
     PARAMETERS: 		String path - (Excel Path)
@@ -80,7 +80,7 @@ public class XL_ReadWrite {
 	    	throw new Exception("Exception occurred while XLS initialize .Exception details : "+ e.getMessage());
 	  }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
    	FUNCTION:			getRowCount(String sheetName)	
     DESCRIPTION:	    gets the total used row count in a sheet 
     PARAMETERS: 		String sheetName
@@ -105,7 +105,7 @@ public class XL_ReadWrite {
 	    	throw new Exception("Exception occurred while getting row count for sheetname :" + sheetName+" . Exception details : "+e.getMessage());
 	    }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			getColCount(int RowNum,String sheetName)	
 	DESCRIPTION:	    gets the total used column count in a row in a sheet 
 	PARAMETERS: 		int RowNum,String sheetName
@@ -127,7 +127,7 @@ public class XL_ReadWrite {
 		    throw new Exception("Exception occurred while getting col count for row number : " + RowNum + " in sheet name : " +sheetName+" .Exception details : "+e.getMessage());
 	    }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			getCellData(String sheetName,int rowNum,String colName)	
 	DESCRIPTION:	    gets the cell data from a specific sheet,specific row and specific column name 
 	PARAMETERS: 		String sheetName,int rowNum,String colName
@@ -181,7 +181,7 @@ public class XL_ReadWrite {
 	    	 throw new Exception("Exception occurred while getting cell data from Row: " + rowNum + "and Column Name : " + colName+". Exception details : "+e.getMessage());
 	    }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			getCellData(String sheetName,int rowNum,int colNum)	 OVERLOADED
 	DESCRIPTION:	    gets the cell data from a specific sheet,specific row and specific col number
 	PARAMETERS: 		String sheetName,int rowNum,int colNum
@@ -234,7 +234,7 @@ public class XL_ReadWrite {
    	    	throw new Exception("Exception occurred while getting cell data from Row: " + rowNum + "and Column number : " + colNum+". Exception details : "+e.getMessage());
 	    }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			getColNum(String sheetName,int rowNum,String colName)
 	DESCRIPTION:	    gets the column number from a specific sheet and specific column name 
 	PARAMETERS: 		String sheetName,int rowNum,String colName
@@ -263,7 +263,7 @@ public class XL_ReadWrite {
 		}
     }
 
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			setCellData(String sheetName,String colName,int rowNum,String Data)
 	DESCRIPTION:	    sets a cell value on a specific sheet,specific column name in a specific row
 	PARAMETERS: 		String sheetName,String colName,int rowNum,String Data
@@ -304,7 +304,7 @@ public class XL_ReadWrite {
 			throw new Exception("Exception occurred while setting data for Column: " + colName + " and Row: "+ rowNum+". Exception details : "+e.getMessage());  		
 	    }
     }
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			setCellData(String sheetName,int rowNum,int colNum,String Data)  OVERLOADED
 	DESCRIPTION:	    sets a cell value on a specific sheet,specific column column in a specific row
 	PARAMETERS: 		String sheetName,int rowNum,int colNum,String Data
@@ -336,7 +336,7 @@ public class XL_ReadWrite {
 		   throw new Exception("Exception occurred while setting data for Column: " + colNum + " and Row: "+ rowNum+". Exception details : "+e.getMessage());  			  
 	    }
     }
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			addSheet(String sheetName)
 	DESCRIPTION:	    Adds a sheet to a particular file
 	PARAMETERS: 		String sheetName
@@ -362,7 +362,7 @@ public class XL_ReadWrite {
 	    	throw new FileNotFoundException("Error : " + path + " not found");
 	    }
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			deleteSheet(String sheetName)
 	DESCRIPTION:	    Deletes a sheet from a particular file
 	PARAMETERS: 		String sheetName
@@ -380,7 +380,7 @@ public class XL_ReadWrite {
 			throw new Exception("Exception occurred while deleting sheet : " + sheetName+". Exception details : "+e.getMessage());
 		}
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			isSheetExist(String sheetName)
 	DESCRIPTION:	    Confirms if the given sheet exist in a particular file
 	PARAMETERS: 		String sheetName
@@ -399,7 +399,7 @@ public class XL_ReadWrite {
 			throw new Exception("Exception occurred checking if sheet exist : " + sheetName+". Exception details : "+e.getMessage());
 		}
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			addColumn(String sheetName,String colName)
 	DESCRIPTION:	    Adds a column with a colName to a sheet  
 	PARAMETERS: 		String sheetName,String colName
@@ -421,7 +421,7 @@ public class XL_ReadWrite {
 			throw new Exception("Exception occurred while adding column : " + colName + " for sheet name : "+ sheetName+". Exception details : "+e.getMessage());
 		}
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	FUNCTION:			setStyle(Cell cell,int rowNum)
 	DESCRIPTION:	    Sets a Cell style  
 	PARAMETERS: 		Cell cell,int rowNum
@@ -453,7 +453,7 @@ public class XL_ReadWrite {
 				throw new Exception("Exception occurred while setting cell style ");
 			}
 		}
-/*------------------------------------------------------------------------------------------------------------------------------------------------------------
+/** ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			setCellData(String sheetName,int rowNum,int colNum,String Data)  OVERLOADED
 DESCRIPTION:	    sets a cell value on a specific sheet,specific column column in a specific row
 PARAMETERS: 		String sheetName,int rowNum,int colNum,String Data
@@ -483,7 +483,7 @@ Author : Souvik     Date : 03-10-2013
 		 throw new Exception("Exception occurred while setting data for Column: " + colNum + " and Row : "+ rowNum + " and Sheet name: "+ sheetName+". Exception details : "+e.getMessage());
     }
 }
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			setStyle(Cell cell,int rowNum)
 DESCRIPTION:	    Sets a Cell style  
 PARAMETERS: 		Cell cell,int rowNum
@@ -535,7 +535,7 @@ Author : Souvik     Date : 03-10-2013
 			throw new Exception("Exception occurred while setting cell style. Exception details : "+e.getMessage());
 		}
 	}
-/*  ------------------------------------------------------------------------------------------------------------------------------------------------------------
+/**  ------------------------------------------------------------------------------------------------------------------------------------------------------------
 FUNCTION:			setDataValidation(String sheetName,int rowNum,String colName,ArrayList<String> dataItems)
 DESCRIPTION:	    
 PARAMETERS: 		
@@ -602,7 +602,10 @@ Author : Souvik     Date : 03-10-2013
 		}
 	}
 
-
+/**		
+ * Method to close excel sheet
+ * @throws Exception
+ */
 	public void clearXL() throws Exception{	
 		try{
 			this.workbook.close();					
@@ -611,7 +614,10 @@ Author : Souvik     Date : 03-10-2013
 		}
 			
 	}
-
+/**
+ * Method to save excel sheet
+ * @throws Exception
+ */
 	public void saveXL() throws Exception{		
 		try{
 			fout = new FileOutputStream(path);	
@@ -621,7 +627,14 @@ Author : Souvik     Date : 03-10-2013
 			throw new Exception("Exception occurred while saving excel. Exception details :" +e.getMessage());
 		}	
 	}
-	
+	/**
+	 * Method to set formulae for particular cell in excel sheet
+	 * @param sheetName
+	 * @param rowNum
+	 * @param colNo
+	 * @param xlFormulae
+	 * @throws Exception
+	 */
 	public void setFormulae(String sheetName,int rowNum,int colNo,String xlFormulae) throws Exception{
 		try{			
 			int index = workbook.getSheetIndex(sheetName);		   		 

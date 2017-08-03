@@ -6,20 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 
-
-
-
-/* @Author :- Siddartha 
- * @Date 29-Dec -2016
+/**
  * This class picks the devices connected and distributes across multiple thread.
+ * @author Siddartha
+ * @since29-Dec -2016
+ *
  */
+
+
 public class ParallelThread {
 
 	protected int deviceCount =0;
 	 Map<String, String> devices = new HashMap<String, String>();
 	 Map<String, String> iOSdevices = new HashMap<String, String>();
 	 private IOSDeviceConfiguration iosDevice = new IOSDeviceConfiguration();
-	   private MyTestExecutor myTestExecutor = new MyTestExecutor();
+	 private MyTestExecutor myTestExecutor = new MyTestExecutor();
 	   
 	 
 	

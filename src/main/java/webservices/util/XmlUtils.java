@@ -24,11 +24,6 @@ import core.framework.Globals;
 
 
 
-/**<pre>
- * This class contains utilities to work with an XML document.</pre>
- * @author krsbhr
- *
- */
 public class XmlUtils {
 	private static DocumentBuilderFactory dbFactory =null;
 	private static DocumentBuilder dBuilder = null;
@@ -36,14 +31,6 @@ public class XmlUtils {
 	private static Element rootElement;
 	
 	
-	/**<pre>
-	 * Reads the xml file and returns the root node of the document with all the depth
-	 * </pre>
-	 * @param fileName
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 */
 	public static void initDocumentFactory(String fileName) throws SAXException, IOException, ParserConfigurationException
 	{
 		 dbFactory = DocumentBuilderFactory.newInstance();
@@ -53,13 +40,6 @@ public class XmlUtils {
          rootElement = document.getDocumentElement();
 	}
 	
-	/**<pre>
-	 * Reads an XML string and returns the root node of the XML string with all the depth.
-	 * @param xml
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 */
 	public static void initDocumentFactoryForXmlString(String xml) throws SAXException, IOException, ParserConfigurationException
 	{
 		 dbFactory = DocumentBuilderFactory.newInstance();
@@ -70,12 +50,6 @@ public class XmlUtils {
          rootElement = document.getDocumentElement();
 	}
 	
-	/**<pre>
-	 * returns the value of the inputed tag name
-	 * </pre>
-	 * @param tagName
-	 * @return
-	 */
 	public static String getString(String tagName)
 	{
 		NodeList elementList = rootElement.getElementsByTagName(tagName);
@@ -89,14 +63,6 @@ public class XmlUtils {
 		return null;
 	}
 	
-	/**<pre>
-	 * Returns the parent node of the inputed tag name which has inputed node value.
-	 * </pre> 
-	 * @param fileName
-	 * @param nodeValue
-	 * @param tagName
-	 * @return
-	 */
 	public static Node getParentNode(String fileName,String nodeValue,String tagName)
 	{
 		
@@ -117,14 +83,7 @@ public class XmlUtils {
 		return parentNode;
 	}
 	
-	 /**<pre>
-	  * Returns the node value of the inputed tag name. Traversal of the xml file is done<br>using inputed string xpath</br></pre>
-	 * @param fileName
-	 * @param xpath
-	 * @param tagName
-	 * @return
-	 */
-	public static String getParticipantFromXpath(String fileName,String xpath,String tagName)
+	 public static String getParticipantFromXpath(String fileName,String xpath,String tagName)
 	 {   
 		 String value = "";
 		 NodeList prospectHouseHoldLst=null;
@@ -141,16 +100,7 @@ public class XmlUtils {
 		 return value;
 	 }		
 
-	 /**<pre>
-	  * Returns the node value of the inputed tag name available in inputed file</pre>
-	 * @param fileName
-	 * @param tagName
-	 * @return
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 */
-	public static String getNodeValueFromXmlFile(String fileName,String tagName) throws SAXException, IOException, ParserConfigurationException
+	 public static String getNodeValueFromXmlFile(String fileName,String tagName) throws SAXException, IOException, ParserConfigurationException
 	 {
 		 String nodeValue = " ";
 		 initDocumentFactory(Globals.GC_REMOTE_OUTPUT_PATH+"\\\\"+fileName);
@@ -162,16 +112,7 @@ public class XmlUtils {
 		return nodeValue;
 	 }
 	 
-	 /**<pre>
-	  * This method returns node value of a tag under parent node.</pre>
-	 * @param fileName
-	 * @param nodeValue
-	 * @param tagName
-	 * @param tagNameTobeFound
-	 * @return
-	 */
-	public static String getNodeValueFromParentNode(String fileName,String nodeValue,
-			 String tagName,String tagNameTobeFound)
+	 public static String getNodeValueFromParentNode(String fileName,String nodeValue,String tagName,String tagNameTobeFound)
 	 {
 		String value = "";
 		Node parentNode = getParentNode(fileName,nodeValue,tagNameTobeFound);
@@ -181,32 +122,13 @@ public class XmlUtils {
 	 }
 	 
 	 
-	 /**<pre>
-	  * Evaluates the existence of an xml element</pre>
-	 * @param fileName
-	 * @param tagName
-	 * @return
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 */
-	public static boolean isElementExists(String fileName,String tagName) 
-			 throws SAXException, IOException, ParserConfigurationException {
+	 public static boolean isElementExists(String fileName,String tagName) throws SAXException, IOException, ParserConfigurationException {
 		 initDocumentFactory(Globals.GC_REMOTE_OUTPUT_PATH+"\\\\"+fileName);
 		    NodeList nodeList = document.getElementsByTagName(tagName);
 		    return nodeList.getLength() > 0 ? true : false;
 		}
 	 
-	 /**<pre> Evaluates existence of an element for inputed string xpath</pre>
-	 * @param fileName
-	 * @param xpath
-	 * @return
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws XPathExpressionException
-	 */
-	public static boolean isElementExistsforXpath(String fileName,String xpath) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
+	 public static boolean isElementExistsforXpath(String fileName,String xpath) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
 		 NodeList prospectHouseHoldLst=null;
 		 XPathFactory xPathFact = XPathFactory.newInstance();
 		 XPath objXPath = xPathFact.newXPath();
@@ -216,13 +138,7 @@ public class XmlUtils {
 		 prospectHouseHoldLst = (NodeList) xPathExp.evaluate(document, XPathConstants.NODESET);	
 		    return prospectHouseHoldLst.getLength() > 0 ? true : false;
 		}
-	
-	 /**<pre> This method returns the nodelist in xml file relative to given xpath</pre>
-	 * @param fileName
-	 * @param xpath
-	 * @return
-	 */
-	public static NodeList getEligibleParticipantsNodeList(String fileName,String xpath)
+	 public static NodeList getEligibleParticipantsNodeList(String fileName,String xpath)
 	 {   
 		 NodeList prospectHouseHoldLst=null;
 		 XPathFactory xPathFact = XPathFactory.newInstance();
@@ -235,17 +151,6 @@ public class XmlUtils {
 		 }catch(Exception e ) { e.printStackTrace();}
 		 return prospectHouseHoldLst;
 	 }
-	
-	/**<pre>
-	 * This method returns the node list available at inputed xpath.</pre>
-	 * @param xml
-	 * @param xpath
-	 * @return
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws XPathExpressionException
-	 */
 	 
 	 
 	 public static NodeList getXmlTagValues(String xml,String xpath) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException

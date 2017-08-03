@@ -3,6 +3,11 @@ package mobile;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+/**
+ * AppiumParallelTest  is sed for parallel execution in mobile devices
+ * @author sddprd
+ *
+ */
 
 public class AppiumParallelTest {
 	public static ArrayList<String> devices = new ArrayList<String>();
@@ -29,6 +34,10 @@ public class AppiumParallelTest {
         }
     }
      
+    /**
+     * return  available devices for execution
+     * @return Available  free devices
+     */
     
     public static synchronized String getNextAvailableDeviceId() {
         ConcurrentHashMap.KeySetView<String, Boolean> devices = deviceMapping.keySet();
