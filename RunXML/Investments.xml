@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                      <include name="DDTC_2844_DIM_Choose_individual_funds">
+                     <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -79,8 +79,8 @@
                      <include name="DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
                     </include>  
-                    
-                     <!-- <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
+                     -->
+                   <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
                     </include>
                     
@@ -180,12 +180,12 @@
                     <include name="DDTC_22678_FullRebal_ModelPortfolio">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
                     </include> 
-                      -->
-                    <!-- <include name="DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
+                      
+                     <!-- <include name="DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
                     </include>
                     
-                     <include name="DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds">
+                    <include name="DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds"></parameter>
                     </include>
                     
