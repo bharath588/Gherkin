@@ -11,8 +11,7 @@
 					   <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
 					<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
                     </parameter>
-                    </include> 
-				
+                    </include> 				
 					
 					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >
 					<parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
@@ -78,12 +77,12 @@
 					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
                     </parameter>
                     </include>
-				
+					<!-- 
 					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link" >
 					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
                     </parameter>
                     </include>
-				
+				 -->
                     <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
                     </parameter>
