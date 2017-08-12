@@ -19,21 +19,19 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
-
-import com.aventstack.extentreports.Status;
-
-import core.framework.Globals;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.enrollment.Enrollment;
-import pageobjects.general.GuidancePage;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.investment.ManageMyInvestment;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
-import sun.invoke.util.VerifyAccess;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 
 public class Investmentstestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
