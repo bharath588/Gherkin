@@ -1,9 +1,11 @@
 package app.pptweb.testcases.investments;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -28,14 +30,18 @@ import pageobjects.general.GuidancePage;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.investment.ManageMyInvestment;
 import pageobjects.landingpage.LandingPage;
+import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+import sun.invoke.util.VerifyAccess;
 
 public class Investmentstestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	public Map<String, String> mapInvestmentOptionsReviewPage = new HashMap<String, String>();
 	public Map<String, String> mapInvestmentOptionsConfirmPage = new HashMap<String, String>();
 	public Map<String, String> mapInvestmentOptions = new HashMap<String, String>();
+	public Map<String, String> mapInvestmentOptionsRebalance = new HashMap<String, String>();
+	public List<String> ConfirmationNos = new ArrayList<String>();
 	LoginPage login;
 	String tcName;
 	static String printTestData="";
@@ -8339,4 +8345,962 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 		}
 
 	}
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 4
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome objretirementIncome=new RetirementIncome(homePage);
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			
+			objretirementIncome.get();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s). Your current account balance also will be allocated to your selected investment(s)"
+					+ " unless such investment(s) are restricted, requiring you to separately select your current account balance investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9 & 10
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Header Rebalance your portfolio")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is not displayed ", true);
+			}
+			//Step 11 & 12
+			investment.verifyUnRestrictedFundsWarningSymbol();
+			
+			//Step 13 & 14
+			
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			
+			String[] percentage1={"20","50","30"};
+			mapInvestmentOptionsRebalance=investment.addInvestments(3,percentage1);
+			Web.waitForElement(investment,"Header Review Your Changes");
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			//Step 15
+			investment.isTextFieldDisplayed("Future Investments");
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			investment.isTextFieldDisplayed("Rebalance Your Portfolio");
+			investment.VerifySmartRestrictionReviewChangesPageforRebalanceInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptionsRebalance, "Rebalance Investment");
+			//Step 16
+			//investment.verifyEvaluationMessageinReviewPage();
+			//Step 17
+			
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForSmartRestriction();
+			ConfirmationNos=investment.verifyConfirmationNumbersForSmartRestriction();
+			//Step 18
+			investment.isTextFieldDisplayed("Future Investments");
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			investment.isTextFieldDisplayed("Rebalance your portfolio");
+			investment.VerifySmartRestrictionReviewChangesPageforRebalanceInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptionsRebalance, "Rebalance Investment");
+			
+			//Step 19
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), ConfirmationNos.get(0), "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(0), "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(0), "Invopt_alloc");
+			//verifying in DB for Rebalance Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(1), "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), ConfirmationNos.get(1), "Step");
+			investment.verifyTRF_BasicTableInDB("VerifyRebalanceConfirmationRecord",Stock.GetParameterValue("username"), ConfirmationNos.get(1), Stock.GetParameterValue("FrequencyCode"));
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	@Test(dataProvider = "setData")
+	public void DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome objretirementIncome=new RetirementIncome(homePage);
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			//Step 1 to 4
+			objretirementIncome.get();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s). Your current account balance also will be allocated to your selected investment(s)"
+					+ " unless such investment(s) are restricted, requiring you to separately select your current account balance investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9 & 10
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			if (Web.isWebElementDisplayed(investment,"Header Rebalance your portfolio")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance your Portfolio Page is displayed",
+						"Rebalance your Portfolio Page is not displayed ", true);
+			}
+			//Step 11 & 12
+			investment.verifyRestrictedFundsWarningSymbol();
+			investment.verifyUnRestrictedFundsWarningSymbol();
+			
+			//Step 13 & 14
+			
+			Web.clickOnElement(investment, "Rebalance Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			
+			String[] percentage1={"20","50","30"};
+			mapInvestmentOptionsRebalance=investment.addInvestments(3,percentage1);
+			Web.waitForElement(investment,"Header Review Your Changes");
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			//Step 15
+			investment.isTextFieldDisplayed("Future Investments");
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			investment.isTextFieldDisplayed("Rebalance Your Portfolio");
+			investment.VerifySmartRestrictionReviewChangesPageforRebalanceInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptionsRebalance, "Rebalance Investment");
+			//Step 16
+			//TODO no restricted funds should display in review page
+			//Step 17
+			//investment.verifyEvaluationMessageinReviewPage();
+			
+			//Step 18
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForSmartRestriction();
+			ConfirmationNos=investment.verifyConfirmationNumbersForSmartRestriction();
+			//Step 19
+			investment.isTextFieldDisplayed("Future Investments");
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			investment.isTextFieldDisplayed("Rebalance your portfolio");
+			investment.VerifySmartRestrictionReviewChangesPageforRebalanceInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptionsRebalance, "Rebalance Investment");
+			
+			//Step 20
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), ConfirmationNos.get(0), "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(0), "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(0), "Invopt_alloc");
+			//verifying in DB for Rebalance Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"),  ConfirmationNos.get(1), "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), ConfirmationNos.get(1), "Step");
+			investment.verifyTRF_BasicTableInDB("VerifyRebalanceConfirmationRecord",Stock.GetParameterValue("username"), ConfirmationNos.get(1), Stock.GetParameterValue("FrequencyCode"));
+		   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftNav= new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftNav);
+			//Step 1 to 4
+			investment.get();
+			//preCondition
+			investment.submitFundToFundTransfer();
+			Web.clickOnElement(homePage, "HOME");
+			RetirementIncome objretirementIncome=new RetirementIncome();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 10
+			Web.waitForElement(investment,"Header Review Your Changes");
+			if(!Web.isWebElementDisplayed(investment, "Header Rebalance Your Portfolio")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is Not displayed", true);
+			} else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is displayed", true);
+		}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+						//Step 11
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
+			//Step 12
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 13
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  confirmationNumber, "Invopt_alloc");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftNav= new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftNav);
+			//Step 1 to 4
+			investment.get();
+			//preCondition
+			investment.submitDollarCostAverageTransaction();
+			Web.clickOnElement(homePage, "HOME");
+			RetirementIncome objretirementIncome=new RetirementIncome();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 10
+			Web.waitForElement(investment,"Header Review Your Changes");
+			if(!Web.isWebElementDisplayed(investment, "Header Rebalance Your Portfolio")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is Not displayed", true);
+			} else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is displayed", true);
+		}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 11
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
+			//Step 12
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 13
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  confirmationNumber, "Invopt_alloc");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29367_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_LeftNav(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 5
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftNav= new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftNav);
+			//Step 1 to 4
+			investment.get();
+			//preCondition
+			investment.submitRebalanceAllocationViaLeftNav();
+			Web.clickOnElement(homePage, "HOME");
+			RetirementIncome objretirementIncome=new RetirementIncome();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 10
+			Web.waitForElement(investment,"Header Review Your Changes");
+			if(!Web.isWebElementDisplayed(investment, "Header Rebalance Your Portfolio")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is Not displayed", true);
+			} else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is displayed", true);
+		}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 11
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
+			//Step 12
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 13
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  confirmationNumber, "Invopt_alloc");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 4
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			RetirementIncome objretirementIncome=new RetirementIncome(homePage);
+			
+			ManageMyInvestment investment = new ManageMyInvestment();
+			
+			objretirementIncome.get();
+			//preCondition
+			objretirementIncome.navigateToSmartRestrictionPage();
+			
+			investment.submitFullRebalanceAllocationViaSmartRestriction();
+			
+			Web.clickOnElement(homePage, "HOME");
+			
+			
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 10
+			Web.waitForElement(investment,"Header Review Your Changes");
+			if(!Web.isWebElementDisplayed(investment, "Header Rebalance Your Portfolio")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is Not displayed", true);
+			} else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is displayed", true);
+		}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+		
+			//Step 11
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
+			//Step 12
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 13
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  confirmationNumber, "Invopt_alloc");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	@Test(dataProvider = "setData")
+	public void DDTC_29369_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_ModelPortfolio_Transaction(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			userName=Stock.GetParameterValue("userName");
+		
+			//Step 1 to 4
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftNav= new LeftNavigationBar(homePage);
+			ManageMyInvestment investment = new ManageMyInvestment(leftNav);
+			investment.get();
+			//preCondition
+			//investment.submitFundToFundTransfer();
+			Web.clickOnElement(homePage, "HOME");
+			RetirementIncome objretirementIncome=new RetirementIncome();
+			//Step 5 & 6
+			objretirementIncome.navigateToSmartRestrictionPage();
+			investment.isTextFieldDisplayed("Select your investment strategy");
+			//Step 7
+			Web.clickOnElement(investment,"Choose Individual Funds");
+			Web.waitForElement(investment, "Header Build Your Own Portfolio");
+			//Step 8
+			investment.verifyPageHeaderIsDisplayed("Header Build Your Own Portfolio");
+			
+			investment.verifyWebElementDisplayed("Smart Restriction Error Message");
+			
+			String expectedErrorMsg="Changing your investment allocation will result in your future contributions being allocated "
+					+ "to your selected investment(s).";
+			
+			String ActualErrorMsg=investment.getWebElementText("Smart Restriction Error Message");
+			
+			if(Web.VerifyText(expectedErrorMsg, ActualErrorMsg)){
+				Reporter.logEvent(Status.PASS,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is displayed\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Smart Restriction Error Message is displayed",
+						"Smart Restriction Error Message is not Matching\nExpected:"+expectedErrorMsg+"\nActual:"+ActualErrorMsg, true);
+			}
+			
+			//Step 9
+			Web.clickOnElement(investment, "Link Add/View All Funds");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(investment,"Table Select Funds");
+	
+			if (Web.isWebElementDisplayed(investment,"Table Select Funds",true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is displayed ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Investment Allocation table is displayed",
+						"Investment Allocation table is not displayed ", true);
+			}
+			
+			String[] percentage={"50","50"};
+			mapInvestmentOptions=investment.addInvestments(2,percentage);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			//Step 10
+			Web.waitForElement(investment,"Header Review Your Changes");
+			if(!Web.isWebElementDisplayed(investment, "Header Rebalance Your Portfolio")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is Not displayed", true);
+			} else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Rebalance Your Portfolio Section is Not displayed",
+						"Rebalance Your Portfolio Section is displayed", true);
+		}
+			investment.verifyPageHeaderIsDisplayed("Header Review Your Changes");
+			
+			//Step 11
+			Web.clickOnElement(investment, "Button Confirm");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(25000);
+			Web.waitForElement(investment, "Header Confirmation");
+			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
+			investment.verifyConfirmationMessageForChangeFutureFlow();
+			//Step 12
+			investment.VerifySmartRestrictionReviewChangesPageforFutureInvestments();
+			investment.VerifyAllocatedPecentageForFunds(mapInvestmentOptions, "Future Investment");
+			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
+			//Step 13
+			//verifying in DB for Future Investments
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"),  confirmationNumber, "Step");
+			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFrominvopt_allocTable", Stock.GetParameterValue("username"),  confirmationNumber, "Invopt_alloc");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				ManageMyInvestment investment= new ManageMyInvestment();
+				investment.deleteRebalancePendingTransaction(userName);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}	
+	
+	
+	
+
+	
 }

@@ -39,6 +39,8 @@ private LoadableComponent<?> parent;
 
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security']") private WebElement lnkSocialSecurity;
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Social Security' and @role='tab']") private WebElement lnkSocialSecurity;
+@FindBy(linkText = "Home")
+private WebElement lnkHome;
 @FindBy(linkText="Social Security") private WebElement lnkSocialSecurity;
 @FindBy(xpath=".//*[text()='Social Security Administration']") private WebElement lnkSocialSecuirtyAdministration;
 //@FindBy(xpath=".//*[@class='ng-binding' and text() = 'Other Assets']") private WebElement lnkOtherAssets;
@@ -102,6 +104,10 @@ private String modalHeader="//h3[text()[normalize-space()='webElementText']]";
 @FindBy(xpath="//button[contains(text(),'Done')]") private WebElement btnDone;
 @FindBy(id="pending-changes-btn") private WebElement btnReviewChanges;
 @FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+@FindBy(xpath = "//*[@id='investment-mix-slider']//span[@class='editable-text-trigger']") private WebElement lnkInvestmentParcentage;
+@FindBy(id = "investmentMix-text-edit") private WebElement inpInvestmentParcentage;
+@FindBy(xpath = "//*[@id='investment-mix-slider']//button[contains(text(),'Done')]") private WebElement btnDoneInvestments;
+
 
 String labelViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//div[contains(@class,'viewDetailsLabel')]";
 String valueViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//span[contains(@class,'paycheck-item-val')]";
@@ -132,7 +138,7 @@ public RetirementIncome(LoadableComponent<?> parent) {
 @Override
 protected void isLoaded() throws Error {
 	Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Retirement Income Page is Not Loaded");
-	String ssn = Stock.GetParameterValue("userName");
+	/*String ssn = Stock.GetParameterValue("userName");
 	String userFromDatasheet = null;
 	ResultSet strUserInfo=null;
 	if(Stock.getConfigParam(Globals.GC_COLNAME_TEST_ENV).contains("PROD"))
@@ -154,8 +160,8 @@ protected void isLoaded() throws Error {
 	}		
 	}
 	String userLogedIn = this.lblUserName.getText();
-	if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
-		Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
+	if (userFromDatasheet.equalsIgnoreCase(userLogedIn))*/if(Common.verifyLoggedInUserIsSame())  {
+		//Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
 		Assert.assertTrue(Web.isWebElementDisplayed(this.hdrEstimatedRetirementIncome));
 	} else {
 		this.lnkLogout.click();
@@ -170,6 +176,9 @@ protected void isLoaded() throws Error {
 protected void load() {
 	this.parent.get();
 	//((LandingPage) this.parent).dismissPopUps(true,true);
+	this.lnkHome.click();
+	Web.waitForElement(tabRetirementIncome);
+	Web.waitForElement(tabRetirementIncome);
 	this.tabRetirementIncome.click();
 	Common.waitForProgressBar();
 	Web.waitForPageToLoad(Web.getDriver());
@@ -818,7 +827,7 @@ public void enterContributionRate(String contributionRate,boolean... args) throw
  */
 
 public void navigateToSmartRestrictionPage() throws InterruptedException{
-	
+	    this.tabRetirementIncome.click();
 		if(Web.isWebElementDisplayed(lnkPlanSavings,true)){
 			Web.clickOnElement(lnkPlanSavings);
 			Web.waitForElement(lnkDoItMyself);
@@ -838,21 +847,16 @@ public void moveSlider(String sliderName,int percentage){
 	
 	WebElement inpSlider = getWebElement(sliderName);
 	
-	    int width=inpSlider.getSize().getWidth();
 	    int currentPercent=Integer.parseInt(inpSlider.getAttribute("aria-valuenow"));
 	    if(currentPercent==percentage){
 	    	percentage=percentage+1;
 	    }
-	    
-	    System.out.println("Slider width"+width);
-	    System.out.println("Previous Percentage"+currentPercent);
-	    System.out.println("Slider moved to Percentage"+percentage);
-	    Actions move = new Actions(Web.getDriver());
-	    move.moveToElement(inpSlider, ((width*percentage)/100), 0).click();
-	  
-	    move.build().perform();
+	   Web.clickOnElement(lnkInvestmentParcentage);
+	   Web.waitForElement(inpInvestmentParcentage);
+	   Web.setTextToTextBox(inpInvestmentParcentage, Integer.toString(percentage));
+	   Web.clickOnElement(btnDoneInvestments);
+	   Web.clickOnElement(btnDoneInvestments);
 	   
-	  
 		
 	}
 }

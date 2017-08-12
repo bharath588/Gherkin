@@ -33,12 +33,16 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.balance.Balance;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
+import pageobjects.login.LoginPage;
+import pageobjects.login.TwoStepVerification;
+import sun.awt.ModalExclude;
 
 public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
@@ -221,6 +225,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement radioMTG1;
 	@FindBy(xpath = "//input[@value='MTG1']")
 	private WebElement radioF2fMTG1;
+	@FindBy(xpath = "//input[@value='ALL']")
+	private WebElement radioF2fAll;
 	
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath = "//input[@name='Total']")
@@ -254,6 +260,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//h1[text()[normalize-space()='Rebalance your portfolio']]")
 	private WebElement txtRebalanceYourPortfolio;
+	@FindBy(xpath = "//h1[text()[normalize-space()='Rebalance Your Portfolio']]")
+	private WebElement hdrRebalanceYourPortfolio;
 	
 	@FindBy(xpath = "//a[contains(text(),'Back')]")
 	private WebElement lnkBack;
@@ -347,11 +355,28 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lblMyAllocations;
 	@FindBy(xpath = "//strong[contains(@ng-if,'isRebalancerAllowed')]")	private WebElement errMsgSmartRestriction;
 	@FindBy(xpath = "//div[contains(@ng-if,'restrictedFunds')]//table//tbody//tr")	private WebElement tblRestrictedFunds;
+	@FindBy(xpath = "//table[@id='rebalance-restricted-funds-table']/tbody/tr/td[1]/div/span")	private WebElement restrictedFundWarningIcon;
+	@FindBy(xpath = "//show-restrictions//div[@class='modal-body']") private WebElement modalDialogRestrictedFund;
+	@FindBy(xpath = "//button[contains(text(),'Close')]") private WebElement btnClose;
+	@FindBy(xpath = "//*[@id='rebalance-destination-funds-table']//tbody//tr//td[2]//div//span") private WebElement unRestrictedFundWarningIcon;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]") private WebElement tblFutureInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]//div[@id='old-fund-container']") private WebElement fromSectionFutureInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]//div[@id='new-fund-container']") private WebElement toSectionFutureInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]") private WebElement tblRebalanceInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='old-fund-container']") private WebElement fromSectionRebalanceInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='new-fund-container']") private WebElement toSectionRebalanceInvestments;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]//div[@id='new-fund-container']//table//tr[./td]") private List<WebElement> listFutureInvestmentsToFunds;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='new-fund-container']//table//tr[./td]") private List<WebElement> listRebalanceInvestmentsToFunds;
+	@FindBy(xpath = "//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='new-fund-container']//table//tr//td//span[contains(@class,'warning-icon')]") private WebElement unRestrictedFundWarningIconReviewPage;
+	@FindBy(xpath = "//p[contains(@ng-if,'rebalanceConfirmationNumber')]//span[1]") private WebElement smartestrictionConfirmationMsg;
+	@FindBy(xpath = "//p[contains(@ng-if,'rebalanceConfirmationNumber')]//span[2]") private WebElement smartestrictionConfirmationNos;
+	@FindBy(xpath = "//p[contains(@ng-if,'rebalanceConfirmationNumber')]//span[1]/Strong") private WebElement smartestrictionConfirmationdate;
+
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercentageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')] or .//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
-	String txtFutureFundAllocationPercrntage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
+	String txtFutureFundAllocationPercentage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
 	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
@@ -360,6 +385,10 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private String textField="//*[contains(text(),'webElementText')]";
 	String inputAllocationPercentageFutureEnroll="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String choice=null;
+	String smartRestrictionFutureFundAllocationPercentag="//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]//div[@id='new-fund-container']//table//tr[contains(.,'Investment Option')]//td[2]";
+	String smartRestrictionRebalanceFundAllocationPercentag="//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='new-fund-container']//table//tr[contains(.,'Investment Option')]//td[3]";
+	
+
 	/**
 	 * Empty args constructor
 	 * 
@@ -493,6 +522,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("F2F MTG1")) {
 			return this.radioF2fMTG1;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Radio Buuton F2F ALL")) {
+			return this.radioF2fAll;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Submit button F2F")) {
 			return this.btnSubmitForF2F;
@@ -648,6 +680,16 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			return this.errMsgSmartRestriction;
 		}
 		
+		if (fieldName.trim().equalsIgnoreCase("Warning Message Restricted Funds")) {
+			return this.restrictedFundWarningIcon;
+		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Text Confirmation Smart Restriction")) {
+			return this.smartestrictionConfirmationMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Rebalance Your Portfolio")) {
+			return this.hdrRebalanceYourPortfolio;
+		}
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -1096,11 +1138,51 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 		Web.waitForElement(btnReviewTransfer.get(1));
 		btnReviewTransfer.get(1).click();
-		// Web.waitForElement(btnPreValidationOK);
-		// btnPreValidationOK.click();
+		/*Web.waitForElement(btnPreValidationOK);
+		Web.clickOnElement(btnPreValidationOK);*/
+		
 		Web.getDriver().switchTo().defaultContent();
 	}
+	public void submitFundToFundTransfer() throws InterruptedException {
 
+			clickChangeMyInvestmentButton();
+			choseInvestmentOption("Change Current Balance Investment");
+			Web.clickOnElement(btnContinue1);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().frame("legacyFeatureIframe");
+			Web.clickOnElement(radioF2fAll);
+			Thread.sleep(2000);
+			Web.clickOnElement(btnSubmitForRebalancer);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+			Web.clickOnElement(btnPercent);
+			Web.setTextToTextBox(txtTransferFromPercent.get(0), "90");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			Web.setTextToTextBox(txtTransferToPercent.get(1), "100");
+			toInvestmentOption = lnkTransferToInvestmentOption.get(1).getText();
+		
+		 ((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		 Web.waitForElement(btnReviewTransfer.get(1));
+		btnReviewTransfer.get(1).click();
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		Web.waitForElement(btnPreValidationOK);
+		Web.clickOnElement(btnPreValidationOK);
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		Web.clickOnElement(btnSubmitForF2F);
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		
+		Web.getDriver().switchTo().defaultContent();
+					
+		
+	}
 	public void ReviewFundToFundTransfer(String fromPercent, String toPercent) throws InterruptedException {
 		Web.waitForElement(iframeLegacyFeature);
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
@@ -1777,7 +1859,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
 	
           String percentage="";
           WebElement txtAllocationPercent = Web.getDriver().findElement(By
-  				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
+  				.xpath(txtFutureFundAllocationPercentage.replace("Investment Option",
   						fundName)));
           percentage=txtAllocationPercent.getText().toString().trim();
   		
@@ -2214,7 +2296,7 @@ if(iscurrentFund1Matching&&iscurrentFund2Matching){
         System.out.println(key);
 
           WebElement txtAllocationPercent = Web.getDriver().findElement(By
-  				.xpath(txtFutureFundAllocationPercrntage.replace("Investment Option",
+  				.xpath(txtFutureFundAllocationPercentage.replace("Investment Option",
   						key)));
           actualPercentage=txtAllocationPercent.getText().toString().trim();
           expectedPercentage=mapInvestmentOptions.get(key);
@@ -2719,4 +2801,494 @@ return isTextDisplayed;
 		
 		
 	}
+	
+	 public void verifyRestrictedFundsWarningSymbol(){
+		
+		 if (Web.isWebElementDisplayed(tblRestrictedFunds)) {
+			Reporter.logEvent(Status.PASS, "Verify Restricted Funds Table is Displayed",
+						"Restricted Funds Table is Displayed",
+						true);
+			
+			
+			Web.clickOnElement(restrictedFundWarningIcon);
+			Web.waitForElement(modalDialogRestrictedFund);
+			 if (Web.isWebElementDisplayed(modalDialogRestrictedFund)) {
+					Reporter.logEvent(Status.PASS, "Verify Evaluation Message for Restricted Funds is Displayed",
+								"Evaluation Message for Restricted Funds is Displayed",
+								true);
+					Web.clickOnElement(btnClose);
+					Web.waitForElement(restrictedFundWarningIcon);
+			 }	
+			 else {
+						
+						Reporter.logEvent(Status.FAIL, "Verify Evaluation Message for Restricted Funds is Displayed",
+								"Evaluation Message for Restricted Funds is Not Displayed",
+								true);
+			
+			}
+		 }else {
+						
+				Reporter.logEvent(Status.FAIL, "Verify Restricted Funds Table is Displayed",
+						"Restricted Funds Table is Not Displayed",
+						true);
+			}
+		  
+			
+	}
+	 
+	 public void verifyUnRestrictedFundsWarningSymbol(){
+			
+		 if (Web.isWebElementDisplayed(unRestrictedFundWarningIcon)) {
+				Reporter.logEvent(Status.PASS, "Verify Warning Symbol is Displayed for UnRestricted Fund",
+							"Warning Symbol is Displayed for UnRestricted Fund",
+							true);
+				
+				
+			Web.clickOnElement(unRestrictedFundWarningIcon);
+			Web.waitForElement(modalDialogRestrictedFund);
+			 if (Web.isWebElementDisplayed(modalDialogRestrictedFund)) {
+					Reporter.logEvent(Status.PASS, "Verify Evaluation Message for Un Restricted Funds is Displayed",
+								"Verify Evaluation Message for Un Restricted Funds is Displayed",
+								true);
+					Web.clickOnElement(btnClose);
+					Web.waitForElement(restrictedFundWarningIcon);
+			 }	
+			 else {
+						Reporter.logEvent(Status.FAIL, "Verify Evaluation Message for Un Restricted Funds is Displayed",
+								"Verify Evaluation Message for Un Restricted Funds is Not Displayed",
+								true);
+			
+			}
+		 }
+	
+			 else {
+					
+					Reporter.logEvent(Status.FAIL, "Verify Warning Symbol is Displayed for UnRestricted Fund",
+							"Warning Symbol is Not Displayed for UnRestricted Fund",
+							true);
+			
+	}
+}
+	 
+	 /**
+	  *  Method to Verify  Review Changes page for Smart Restriction flow for Future Investments
+	 	  */
+	 public synchronized void VerifySmartRestrictionReviewChangesPageforFutureInvestments() {
+			
+			if(Web.isWebElementDisplayed(fromSectionFutureInvestments)){
+				Reporter.logEvent(Status.PASS, "Verify From Section For Future Investments is Displayed",
+						"From Section is Displayed for Future Investments",
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Verify From Section For Future Investments is Displayed",
+						"From Section is Not Displayed for Future Investments",
+						true);
+			}
+			if(Web.isWebElementDisplayed(toSectionFutureInvestments)){
+				Reporter.logEvent(Status.PASS, "Verify TO Section For Future Investments is Displayed",
+						"TO Section is Displayed for Future Investments",
+						false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Verify TO Section For Future Investments is Displayed",
+						"TO Section is Not Displayed for Future Investments",
+						false);
+			}
+			
+			
+			
+	 }
+	 
+	 /**
+	  *  Method to Verify  Review Changes page for Smart Restriction flow for Rebalance Investments
+	  */
+	 public synchronized void VerifySmartRestrictionReviewChangesPageforRebalanceInvestments() {
+			
+		
+			if(Web.isWebElementDisplayed(fromSectionRebalanceInvestments)){
+				Reporter.logEvent(Status.PASS, "Verify From Section For Rebalance Investments is Displayed",
+						"From Section is Displayed for Rebalance Investments",
+						false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Verify From Section For Rebalance Investments is Displayed",
+						"From Section is Not Displayed for Rebalance Investments",
+						false);
+			}
+			if(Web.isWebElementDisplayed(toSectionRebalanceInvestments)){
+				Reporter.logEvent(Status.PASS, "Verify TO Section For Rebalance Investments is Displayed",
+						"TO Section is Displayed for Rebalance Investments",
+						false);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL, "Verify TO Section For Rebalance Investments is Displayed",
+						"TO Section is Not Displayed for Rebalance Investments",
+						false);
+			}
+			
+	 }
+			
+	 /**
+	  * Method to Verify the FundName and Allocated Percentage is Same in Review page for Smart Restriction flow
+	  * @param mapInvestmentOptions
+	  * @param investmentType - Future Investment/Rebalance Investment
+	  */
+		public synchronized void VerifyAllocatedPecentageForFunds(Map<String,String> mapInvestmentOptions,String investmentType) {
+		String  actualPercentage=null;
+		String  expectedPercentage=null;
+		
+		
+		if(investmentType.equalsIgnoreCase("Future Investment")){
+			if(listFutureInvestmentsToFunds.size()==mapInvestmentOptions.size()){
+		 	Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+	        System.out.println(key);
+
+	          WebElement txtAllocationPercent = Web.getDriver().findElement(By
+	  				.xpath(smartRestrictionFutureFundAllocationPercentag.replace("Investment Option",
+	  						key)));
+	          actualPercentage=txtAllocationPercent.getText().toString().trim();
+	          expectedPercentage=mapInvestmentOptions.get(key);
+	          expectedPercentage=expectedPercentage+"%";
+	          if(expectedPercentage.contains(actualPercentage)){
+	        	  
+	        	  Reporter.logEvent(Status.PASS,
+	  					"Verify Allocated Percentage For Future Investment Fund '"+key+"' is Same in Review Page ",
+	  					"Allocated Percentage For Future Investment Fund '"+key+"' is Same in Review Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+	  	
+	  		
+	  		}else 
+	  			{
+	  			Reporter.logEvent(Status.FAIL,
+	  					"Verify Allocated Percentage For Future Investment Fund '"+key+"' is Same in Review Page ",
+	  					"Allocated Percentage For Future Investment Fund '"+key+"' is Not Same in Review Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, true);
+	  	
+	  			}
+		 	}
+			}
+		 	else{
+		 		Reporter.logEvent(Status.FAIL,
+	  					"Verify Future Investment Options in To Section are Matching",
+	  					"Future Investment Options in To Section are Not Same in Review Page \nExpected Funds:"+mapInvestmentOptions.size()+"\nActual Funds:"+listFutureInvestmentsToFunds, true);
+		 	}
+	          
+	         }
+		
+		if(investmentType.equalsIgnoreCase("Rebalance Investment")){
+			if(listRebalanceInvestmentsToFunds.size()==mapInvestmentOptions.size()){
+		 	Set<String> keys = mapInvestmentOptions.keySet();
+		 	for(String key: keys){
+	        System.out.println(key);
+
+	          WebElement txtAllocationPercent = Web.getDriver().findElement(By
+	  				.xpath(smartRestrictionRebalanceFundAllocationPercentag.replace("Investment Option",
+	  						key)));
+	          actualPercentage=txtAllocationPercent.getText().toString().trim();
+	          expectedPercentage=mapInvestmentOptions.get(key);
+	          expectedPercentage=expectedPercentage+"%";
+	          if(expectedPercentage.contains(actualPercentage)){
+	        	  
+	        	  Reporter.logEvent(Status.PASS,
+	  					"Verify Allocated Percentage For Rebalance Investment Option '"+key+"' is Same in Review Page ",
+	  					"Allocated Percentage For Rebalance Investment Option '"+key+"' is Same in Review Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, false);
+	  	
+	  		
+	  		}else 
+	  			{
+	  			Reporter.logEvent(Status.FAIL,
+	  					"Verify Allocated Percentage For Rebalance Investment Option '"+key+"' is Same in Review Page ",
+	  					"Allocated Percentage For Rebalance Investment Option '"+key+"' is Not Same in Review Page \nExpected Pecentage:"+expectedPercentage+"\nActual Pecentage:"+actualPercentage, true);
+	  	
+	  			}
+		 	}
+			}
+		 	else{
+		 		Reporter.logEvent(Status.FAIL,
+	  					"Verify Rebalance Investment Options in To Section are Matching",
+	  					"Rebalance Investment Options in To Section are Not Same in Review Page \nExpected Funds:"+mapInvestmentOptions.size()+"\nActual Funds:"+listFutureInvestmentsToFunds, true);
+		 	}
+	          
+	         }
+		}
+		
+		
+		public void verifyEvaluationMessageinReviewPage(){
+			
+			 if (Web.isWebElementDisplayed(unRestrictedFundWarningIconReviewPage)) {
+				Reporter.logEvent(Status.PASS, "Verify Warning Symbol Displayed for UnRestricted Fund",
+							"Warning Symbol Displayed for UnRestricted Fund",
+							true);
+				
+				
+				Web.clickOnElement(unRestrictedFundWarningIconReviewPage);
+				Reporter.logEvent(Status.INFO, "Clicked on Warning Symbol",
+						"",
+						false);
+				Web.waitForElement(modalDialogRestrictedFund);
+				 if (Web.isWebElementDisplayed(modalDialogRestrictedFund)) {
+						Reporter.logEvent(Status.PASS, "Verify Evaluation Message is Displayed",
+									"valuation Message is Displayed",
+									true);
+						Web.clickOnElement(btnClose);
+						Web.waitForElement(unRestrictedFundWarningIconReviewPage);
+				 }	
+				 else {
+							
+							Reporter.logEvent(Status.FAIL, "Verify Evaluation Message is Displayed",
+									"Evaluation Messageis Not Displayed",
+									true);
+				
+				}
+			 }else {
+							
+					Reporter.logEvent(Status.INFO, "Verify Warning Symbol Displayed for UnRestricted Fund",
+							"Warning Symbol is Not Displayed for UnRestricted Fund",
+							true);
+				}
+			  
+				
+		}
+		 
+		
+		
+	     /**
+	  	 * <pre>
+	  	 * Method to Verify the Confirmation Message for Smart Restriction Flow
+	  	 *
+	  	 * </pre>
+	  	 */
+	  	public void verifyConfirmationMessageForSmartRestriction() {
+	  		List<String> dates=getInvestmentsSubmissionTime();
+	  		String date=smartestrictionConfirmationdate.getText().toString().trim();
+	  		if(date.equalsIgnoreCase(dates.get(0))){
+	  			date=dates.get(0);
+	  		}
+	  		else{
+	  			date=dates.get(1);
+	  		}
+	  		String expectedConfirmationMsg="Your investment allocation request for current account balance, and future contributions, has been received as of "+date+", and will be processed as soon as administratively feasible.";
+	  		
+	  		String actualConfirmationMsg=getWebElementText("Text Confirmation Smart Restriction");
+	  		if(Web.VerifyText(expectedConfirmationMsg, actualConfirmationMsg, true)){
+	  			
+	  			Reporter.logEvent(Status.PASS,
+	  					"Verify Confirmation Message is Displayed in Confirmation Page",
+	  					"Confirmation Message is Displayed in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+	  		}
+	  		else{
+	  			Reporter.logEvent(Status.INFO,
+	  					"Verify Confirmation Message is Displayed in Confirmation Page",
+	  					"Confirmation Message is not Matching in Confirmation Page\nExpected:"+expectedConfirmationMsg+"\nActual:"+actualConfirmationMsg, true);
+	  		}
+
+	  		}  
+	  	
+	  	/**
+	  	 * <pre>
+	  	 * Method to Verify Confirmation page is having 2 confirmation numbers for Smart Restriction Flow
+	  	 *
+	  	 * </pre>
+	  	 */
+	  	public List<String> verifyConfirmationNumbersForSmartRestriction() {
+	  		
+	  		List<String> ConfirmationNos=new ArrayList<String>();
+	  		
+	  		try{	
+	  			
+	  		String txtConfirmationNumbers=smartestrictionConfirmationNos.getText().toString().trim();
+	  	String[] txtConfirmationNos=txtConfirmationNumbers.split("is");
+	  	
+	  	String futureFundsConfirmationNo=txtConfirmationNos[1].split(",")[0].toString().trim();
+	  	String rebalanceConfirmationNo=txtConfirmationNos[2].replace(".", "").toString().trim();
+	  	
+	  		if(futureFundsConfirmationNo.length()==9 && rebalanceConfirmationNo.length()==9  ){
+	  			ConfirmationNos.add(futureFundsConfirmationNo);
+	  			ConfirmationNos.add(rebalanceConfirmationNo);
+	  			Reporter.logEvent(Status.PASS,
+	  					"Verify 2 Confirmation Numbers Displayed in Confirmation Page",
+	  					"2 Confirmation Numbers Displayed in Confirmation Page\nConfirmation Number for Future Investments:"+futureFundsConfirmationNo+"\nConfirmation Number for Rebalance:"+rebalanceConfirmationNo, true);
+	  		}
+	  		else{
+	  			Reporter.logEvent(Status.FAIL,
+	  					"Verify 2 Confirmation Numbers Displayed in Confirmation Page",
+	  					"2 Confirmation Numbers are not Displayed in Confirmation Page\nConfirmation Number for Future Investments:"+futureFundsConfirmationNo+"\nConfirmation Number for Rebalance:"+rebalanceConfirmationNo, true);
+
+	  		}
+	  		}
+	  		catch(Exception e){
+	  		e.printStackTrace();	
+	  		}
+	  		return ConfirmationNos;
+	  		}  
+	  	
+	  	
+	
+		public void submitDollarCostAverageTransaction() {
+
+			try {
+				
+				clickChangeMyInvestmentButton();
+				choseInvestmentOption("Dollar Cost");
+				Web.clickOnElement(btnContinue1);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				Actions keyBoard = new Actions(Web.getDriver());
+				
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(iframeLegacyFeature);
+			
+				if(Web.isWebElementDisplayed(iframeLegacyFeature, true))
+					Web.getDriver().switchTo().frame(iframeLegacyFeature);
+					else{
+						Web.waitForElement(iframeLegacyFeature);			
+					Web.getDriver().switchTo().frame(iframeLegacyFeature);
+					}
+					WebElement freq = this.getWebElement("Once");
+					WebElement date = this.getWebElement("Today");
+					Web.clickOnElement(freq);
+					
+					Web.clickOnElement(date);
+					
+					btnContinueToNextStep.click();
+				
+				    radioDoNoTerminate.click();
+				
+				lstChkInvestmentOptionDollarCost.get(0).click();
+
+				
+				btnContinueToNextStep.click();
+				Web.waitForElement(txtTransferAmtDollarCost);
+				Web.setTextToTextBox(txtTransferAmtDollarCost, "1000");
+				
+				btnContinueToNextStep.click();
+				Common.waitForProgressBar();
+				
+				Web.waitForElement(lstChkInvestmentOptionDollarCost.get(0));
+				lstChkInvestmentOptionDollarCost.get(0).click();
+				
+				btnContinueToNextStep.click();
+				
+				Common.waitForProgressBar();
+				
+				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+				Web.waitForElements(lstInvestmentOptionsDollarCost);
+				
+				Web.waitForElement(lstInvestmentPercentDollarCost);
+				Web.clickOnElement(lstInvestmentPercentDollarCost);
+				keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+				Web.setTextToTextBox(lstInvestmentPercentDollarCost,
+						"100");
+				
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(iframeLegacyFeature);
+				keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
+				Web.setTextToTextBox(inpTotal,"100");
+				keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
+						
+				// to handle allert
+				for(int i=0;i<3;i++){
+		            if(Common.isAlerPresent()){
+		            Common.HandlePopAlert();
+		            Web.clickOnElement(lstInvestmentPercentDollarCost);
+		            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+		            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+		            keyBoard.sendKeys(Keys.BACK_SPACE).perform();
+		            Web.setTextToTextBox(lstInvestmentPercentDollarCost,"100");  
+		            keyBoard.sendKeys(Keys.TAB).perform();                  
+		            keyBoard.moveToElement(inpTotal).clickAndHold(inpTotal).release(inpTotal).build().perform();
+		            Web.clickOnElement(inpTotal);
+		            keyBoard.moveToElement(btnContinueToNextStep).click(btnContinueToNextStep).build().perform();
+		            }
+		    }
+
+				Web.clickOnElement(btnContinueToNextStep);
+				Web.getDriver().switchTo().defaultContent();
+			}
+				  catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			
+		}	
+	  	
+		public void submitRebalanceAllocationViaLeftNav() {
+
+			try {
+				
+				clickChangeMyInvestmentButton();
+				choseInvestmentOption("Rebalance Current Balance");
+				
+				Web.clickOnElement(btnContinue1);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(txtHowWouldLikeToInvest);
+				
+				Web.clickOnElement(btnChooseIndividualFunds);
+				Web.waitForElement(txtRebalanceYourPortfolio);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+					
+				Web.waitForElement(lnkAddViewAllFunds);
+				Web.clickOnElement(lnkAddViewAllFunds);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(tableAllocationFund);
+		
+				String[] percentage={"50","50"};
+				addInvestments(2,percentage);
+				Web.waitForElement(hdrReviewYourChanges);
+				
+				Web.clickOnElement(btnConfirm);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+			
+			}
+				  catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			
+		}	 	
+	  	
+		public void submitFullRebalanceAllocationViaSmartRestriction() {
+
+			try {
+				
+				Web.waitForElement(btnChooseIndividualFunds);
+				Web.clickOnElement(btnChooseIndividualFunds);
+				Web.waitForElement(txtBuildYourOwnPortfolio);
+				
+				Web.clickOnElement(lnkAddViewAllFundsFuture);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(tableAllocationFund);
+				String[] percentage={"50","50"};
+				addInvestments(2,percentage);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(hdrRebalanceYourPortfolio);
+				
+				Web.clickOnElement(lnkAddViewAllFunds);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Web.waitForElement(tableAllocationFund);
+				String[] percentage1={"100"};
+				addInvestments(1,percentage1);
+				Web.waitForElement(hdrReviewYourChanges);
+				
+				Web.clickOnElement(btnConfirm);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(15000);
+				Web.waitForElement(hdrConfirmation);
+				
+			}
+				  catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			
+		}	
 }

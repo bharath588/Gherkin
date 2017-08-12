@@ -10,7 +10,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
-import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -34,7 +34,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	private WebElement drpPeriod;
 	@FindBy(id = "submit")
 	private WebElement btnGo;
-	@FindBy(xpath = ".//*[@id='overview-investments-table']//th[2]")
+	/*@FindBy(xpath = ".//*[@id='overview-investments-table']//th[2]")
 	private WebElement tableHeaderFrom;
 	@FindBy(xpath = ".//*[@id='overview-investments-table']//th[3]")
 	private WebElement tableHeaderTo;
@@ -46,6 +46,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	private WebElement tableBodyTo;
 	@FindBy(xpath = ".//*[@id='overview-investments-table']//tr//td[4]")
 	private WebElement tableBodyReturn;
+	*/
 	@FindBy(xpath = ".//*[@ng-model='rateOfReturnCtrl.startDate']")
 	private WebElement startDate;
 	@FindBy(xpath = ".//*[@ng-model='rateOfReturnCtrl.endDate']")
@@ -58,7 +59,8 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	@FindBy(xpath=".//*[text()[normalize-space()='Dismiss']]") private WebElement lnkDismiss;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
-
+	private String tableHeader =".//*[@id='overview-investments-table']//th[HeaderIndex]";
+	private String tableContent=".//*[@id='overview-investments-table']//tr//td[ContentIndex]";
 	/**
 	 * Default Constructor
 	 */
@@ -111,12 +113,10 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));	
 			Assert.assertTrue(Web.isWebElementDisplayed(this.lblRateOfReturn),"Rate of return Page is Not Loaded\n");
 		} else {
-			
 			this.lnkLogout.click();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Assert.assertTrue(false,"Login Page is not loaded\n");
-			
 		}
 
 	}
@@ -174,7 +174,7 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 	 * @return String - Displayed
 	 * @throws InterruptedException 
 	 */
-	public boolean verifyDataInRateOfReturnPage() throws InterruptedException {
+/*	public boolean verifyDataInRateOfReturnPage() throws InterruptedException {
 		boolean isElementDisplayed = false;
 		boolean isTextMatching = false;
 
@@ -273,6 +273,151 @@ public class RateOfReturnPage extends LoadableComponent<RateOfReturnPage> {
 			Reporter.logEvent(Status.FAIL,
 					" Verify 'RATE OF RETURN'  is Displayed In Table",
 					"'RATE OF RETURN' is Not Displayed in Table", true);
+		}
+		
+		return isTextMatching;
+
+	}
+	*/
+	public boolean verifyDataInRateOfReturnPage() throws InterruptedException {
+		boolean isElementDisplayed = false;
+		boolean isTextMatching = false;
+
+		isTextMatching = Web.VerifyText("Rate of Return", this.lblRateOfReturn
+				.getText().trim(), true);
+
+		if (isTextMatching) {
+
+			Reporter.logEvent(Status.PASS,
+					" Verify 'Rate Of Return' Page is displayed",
+					"User 'Rate Of Return' Page is displayed", true);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" Verify 'Rate Of Return' Page is displayed",
+					"User 'Rate Of Return' Page is not displayed", true);
+		}
+		//Thread.sleep(5000);
+		WebElement tableHeaderFrom=Web.getDriver().findElement(By.xpath(tableHeader.replace("HeaderIndex", "2")));
+		isElementDisplayed = Web.isWebElementDisplayed(tableHeaderFrom,true);
+		if (isElementDisplayed) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Table Header'  is displayed",
+					"Table Header FROM is displayed", false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Table Header'  is displayed",
+					"Table Header FROM is Not displayed", false);
+		}
+		WebElement tableHeaderTo=Web.getDriver().findElement(By.xpath(tableHeader.replace("HeaderIndex", "3")));
+		isElementDisplayed = Web.isWebElementDisplayed(tableHeaderTo);
+		if (isElementDisplayed) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Table Header'  is displayed",
+					"Table Header TO is displayed", false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Table Header'  is displayed",
+					"Table Header TO is Not displayed", false);
+		}
+		WebElement tableHeaderAnnualized=Web.getDriver().findElement(By.xpath(tableHeader.replace("HeaderIndex", "4")));
+		isElementDisplayed = Web.isWebElementDisplayed(tableHeaderAnnualized);
+		if (isElementDisplayed) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Table Header'  is displayed",
+					"Table Header ANNUALIZED is displayed", false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Table Header'  is displayed",
+					"Table Header ANNUALIZED is Not displayed", false);
+		}
+		
+		WebElement tableHeaderCumulative=Web.getDriver().findElement(By.xpath(tableHeader.replace("HeaderIndex", "5")));
+		isElementDisplayed = Web.isWebElementDisplayed(tableHeaderCumulative);
+		if (isElementDisplayed) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Table Header'  is displayed",
+					"Table Header CUMULATIVE is displayed", false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Table Header'  is displayed",
+					"Table Header CUMULATIVE is Not displayed", false);
+		}	
+		
+		//verify annualized and Cumulative tool tip
+		String expectedAnnualizedToolTipText="Annualized rate of return is the average annual return over a period of years, taking into account the effect of compounding.";
+		String expectedCumulativeToolTipText="Cumulative rate of return is the aggregate amount an investment has gained or lost over a given time period.";
+		WebElement annualizedToolTipText=Web.getDriver().
+				findElement((By.xpath(tableHeader.replace("HeaderIndex", "4").concat("/span"))));
+		String actualAnnualizedToolTipText=annualizedToolTipText.getAttribute("title");		
+		System.out.println("Actual Annualized \n"+actualAnnualizedToolTipText);
+		
+		WebElement cumulativeToolTipText=Web.getDriver().
+				findElement((By.xpath(tableHeader.replace("HeaderIndex", "5").concat("/span"))));
+		String actualCumulativeToolTipText=annualizedToolTipText.getAttribute("value");
+		System.out.println("Actual Cumulative \n"+actualCumulativeToolTipText);
+		
+		
+		WebElement tableContentFrom=Web.getDriver().findElement(By.xpath(tableContent.replace("ContentIndex", "2")));
+		String fromDate = tableContentFrom.getText().toString().trim();
+
+		if (!fromDate.isEmpty()) {
+
+			Reporter.logEvent(Status.PASS,
+					" Verify 'FROM DATE'  is Displayed In Table",
+					"'FROM DATE' is Displayed in Table as : "+fromDate, false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" Verify 'FROM DATE'  is Displayed In Table",
+					"'FROM DATE' is Not Displayed in Table", true);
+		}
+		WebElement tableContentTo=Web.getDriver().findElement(By.xpath(tableContent.replace("ContentIndex", "3")));
+		String toDate = tableContentTo.getText().toString().trim();
+
+		if (!toDate.isEmpty()) {
+			Reporter.logEvent(Status.PASS,
+					" Verify 'TO DATE'  is Displayed In Table",
+					"'TO DATE' is Displayed in Table as "+toDate, false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" Verify 'TO DATE'  is Displayed In Table",
+					"'TO DATE' is Not Displayed in Table", true);
+		}
+
+		WebElement tableContentAnnualizedReturn=Web.getDriver().findElement(By.xpath(tableContent.replace("ContentIndex", "4")));
+		String annualizedReturn = tableContentAnnualizedReturn.getText().toString().trim();
+
+		if (!annualizedReturn.isEmpty()) {
+
+			Reporter.logEvent(Status.PASS,
+					" Verify 'ANNUALIZED RATE OF RETURN'  is Displayed In Table",
+					"'ANNUALIZED RATE OF RETURN' is Displayed in Table as "+annualizedReturn, false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" Verify 'ANNUALIZED RATE OF RETURN'  is Displayed In Table",
+					"'ANNUALIZED RATE OF RETURN' is Not Displayed in Table", true);
+		}
+		
+		WebElement tableContentCumulativeReturn=Web.getDriver().findElement(By.xpath(tableContent.replace("ContentIndex", "5")));
+		String cumulativeReturn = tableContentCumulativeReturn.getText().toString().trim();
+
+		if (!cumulativeReturn.isEmpty()) {
+
+			Reporter.logEvent(Status.PASS,
+					" Verify 'CUMULATIVE RATE OF RETURN'  is Displayed In Table",
+					"'CUMULATIVE RATE OF RETURN' is Displayed in Table as "+cumulativeReturn, true);
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" Verify 'CUMULATIVE RATE OF RETURN'  is Displayed In Table",
+					"'CUMULATIVE RATE OF RETURN' is Not Displayed in Table", true);
 		}
 		
 		return isTextMatching;
