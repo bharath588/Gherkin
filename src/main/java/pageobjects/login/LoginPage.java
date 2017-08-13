@@ -36,7 +36,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement weHelpBlock;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Login help?']]")
 	private WebElement lnkForgotPassword;
-	@FindBy(xpath = ".//*[@id='customer-support']//p[1]")
+	@FindBy(xpath = "//div[@class='customer-support']//p[1]")
 	private WebElement hrdCustomerSupport;
 	@FindBy(linkText = "contact us")
 	private WebElement lnkContactus;
@@ -44,9 +44,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement txtContactus;
 	@FindBy(xpath = ".//div[@class='modal-content']/div[2]/.")
 	private WebElement txtContactusInfo;
-	@FindBy(xpath = ".//span[@id='prelogin-footer-phone']")
+	@FindBy(xpath = "//a[@class='phone not-link']/span")
 	private WebElement lnkContactNoPreLogin;
-	@FindBy(xpath = ".//*[@id='customerSupport']//span")
+	@FindBy(xpath = "//a[@class='phone not-link']/span")
 	private WebElement lnkContactNoPostLogin;
 	@FindBy(xpath = "//a[text()='Log out']")
     private WebElement  lnkLogOut;
@@ -685,16 +685,16 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@SuppressWarnings("null")
 	public List<String> getPreLoginTelePhoneNo(String sponsorName) {
 		ArrayList<String> telPhoneNos = new ArrayList<String>();
-		if (sponsorName.equalsIgnoreCase(Common.GC_DEFAULT_SPONSER)) {
+		/*if (sponsorName.equalsIgnoreCase(Common.GC_DEFAULT_SPONSER)) {
 
 			int no = this.txtTelPhoneNos.size();
 			for (int i = 0; i < no; i++) {
 				telPhoneNos.add(txtTelPhoneNos.get(i).getText());
 				
 			}
-		} else {
+		} else {*/
 			telPhoneNos.add(lnkContactNoPreLogin.getText());
-		}
+		//}
 		
 		return telPhoneNos;
 	}
