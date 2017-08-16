@@ -1166,15 +1166,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Web.setTextToTextBox(txtTransferToPercent.get(1), "100");
 			toInvestmentOption = lnkTransferToInvestmentOption.get(1).getText();
 		
-		 ((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		 ((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 		 Web.waitForElement(btnReviewTransfer.get(1));
 		btnReviewTransfer.get(1).click();
-		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
-		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 		Web.waitForElement(btnPreValidationOK);
 		Web.clickOnElement(btnPreValidationOK);
 		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+		 Web.waitForElement(btnSubmitForF2F);
 		Web.clickOnElement(btnSubmitForF2F);
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());

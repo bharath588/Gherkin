@@ -8678,6 +8678,8 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			//preCondition
 			investment.submitFundToFundTransfer();
 			Web.clickOnElement(homePage, "HOME");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			RetirementIncome objretirementIncome=new RetirementIncome();
 			//Step 5 & 6
 			objretirementIncome.navigateToSmartRestrictionPage();

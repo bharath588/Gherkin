@@ -8,7 +8,7 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					    <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
+				 	    <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
 					<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
                     </parameter>
                     </include> 
@@ -27,7 +27,7 @@
 				   <include name="SF01_TC018_Verify_ROR_link" >
 					<parameter name="ManualTCName" value="RateOfReturn_Validations">
                     </parameter>
-                    </include>
+                    </include> 
 				
 					
 					<include name="Transaction_History_validations" >
@@ -61,10 +61,10 @@
                     </parameter>
                     </include>
 				
-					<include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" >
+					<!-- <include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" >
 					<parameter name="ManualTCName" value="Request_Loan_Flow">
                     </parameter>
-                    </include>
+                    </include> -->
                     
                     	<include name="Balance_validations" >
 					<parameter name="ManualTCName" value="Balance_validations">
@@ -171,16 +171,16 @@
                		  <include name="HCC_TC009_To_verify_Health_care_costs">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
                     </parameter>
-                    </include>
+                    </include> 
                
 					<!-- <include name="SF01_TC019_Verify_Request_A_Withdrawal_link" >
 					<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
                     </parameter>
                     </include> -->
-					<include name="PlanForms_Validations" >
+					 <include name="PlanForms_Validations" >
 					<parameter name="ManualTCName" value="PlanForms_Validations">
                     </parameter>
-                    </include> 
+                    </include>  
                    
 				
 				
