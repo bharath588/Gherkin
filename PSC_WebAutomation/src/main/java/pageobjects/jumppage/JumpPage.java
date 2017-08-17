@@ -174,6 +174,7 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 				Web.setTextToTextBox(jumpPageSearchBox, str);
 				WebElement option = Web.getDriver().findElement(By.xpath(jumpageList));
 				Web.waitForElement(option);
+				Thread.sleep(2000);
 				if(option.getText().contains(str))
 				{
 					Reporter.logEvent(Status.PASS,"Verify Search plan Box options when a valid plan number "+str+" is entered.","Plan '"+option.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",false);

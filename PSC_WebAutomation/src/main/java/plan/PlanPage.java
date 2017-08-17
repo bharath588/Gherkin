@@ -54,6 +54,8 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	@FindBy(css="div[id='greeting'] span[class='label']") private WebElement weGreeting;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
+	@FindBy(className="employeeSpinner")
+	private WebElement employeespinner;
 	@FindBy(xpath=".//div[@class='breadcrumb']//i")
 	private WebElement invAndPerformance;
 	@FindBy(xpath=".//*[@id='addMessagesTab']/a")
@@ -737,6 +739,39 @@ public void validateAssetAllocPage()
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}
 }	
+
+/**
+ * <pre>This method checks for spinner and wait until spinning is done.</pre>
+ * @author smykjn
+ */
+public void waitForEmployeeSpinner() throws Exception
+{
+	int iTimeInSecond=100;
+	try{
+		Web.waitForElement(employeespinner);
+		int iCount = 0;
+		while (employeespinner.isDisplayed()){
+			if(iCount ==iTimeInSecond){
+				break;
+			}   
+
+			System.out.println("Employee Spinner displaying......");
+			Thread.sleep(1000);                       
+			iCount++;
+		}
+
+
+	}catch(Exception e){
+		e.getMessage();
+	}
+
+
+}
+
+
+
+
+
 
 
 /**

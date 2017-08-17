@@ -608,8 +608,27 @@ public static String switchToWindow()
 public static void switchToFrame(WebElement frameIDorName)
 {
 	try{
+		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frameIDorName);
+	}catch(NoSuchFrameException e){
+		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+	}
+}
+
+
+
+/**
+ * <pre>This method is used to switch to specified frame from another frame.</pre>
+ * @author smykjn
+ * @return void
+ */
+public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
+{
+	try{
+		Web.getDriver().switchTo().defaultContent();
+		Web.getDriver().switchTo().frame(frameFrom);
+		Web.getDriver().switchTo().frame(frameTo);
 	}catch(NoSuchFrameException e){
 		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
 	}
@@ -635,6 +654,7 @@ public static String getBrowserName(){
  * @return
  */
 public static void waitForLoader(WebElement loader) throws Exception{
+	Web.waitForElement(loader);
 	do{
 		Thread.sleep(1000);
 		System.out.println("Loading......................");
@@ -805,15 +825,16 @@ public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLE
 
 
 /**
- * <pre>Return date with specific time zone.</pre>
+ * <pre>Return date in specific time zone.</pre>
  * @author smykjn
  */
 public static Date getSysDateWithTimeZone(String timezone){
 	Date date=null;
 	Calendar present;
 	try{
-		TimeZone zone = TimeZone.getTimeZone(timezone);
-		present= Calendar.getInstance(zone);
+		SimpleDateFormat isoFormat = new SimpleDateFormat();
+		isoFormat.setTimeZone(TimeZone.getTimeZone(timezone));
+		present= Calendar.getInstance();
 	    present.setTime(present.getTime());
 	    date = present.getTime();
 	}catch(Exception e){

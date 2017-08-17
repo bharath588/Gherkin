@@ -8,9 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -18,11 +18,9 @@ import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
 import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
-import plan.PlanPage;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
-import com.mongodb.connection.QueryResult;
 
 import lib.DB;
 import lib.Stock;
@@ -1268,6 +1266,7 @@ try {
 		employeesearch.verifyBasicInformationOnOverviewPage();
 		employeesearch.verifyBasicInfoModalWindow();
 		employeesearch.editBasicInfoAndSave();
+		employeesearch.logoutFromApplication();
 	} catch (Exception e) {
 		e.printStackTrace();
 		Globals.exception = e;
@@ -1413,10 +1412,19 @@ try {
 		employeesearch = new EmployeeSearch().get();
 		resultset = employeesearch.selectEmployeesForUser(Stock.getTestQuery("getEmployeeWithTermDate"),
 				Stock.GetParameterValue("username"));
-		employeesearch.selectEmployeeFromResultSet(resultset);
+		String ssn = employeesearch.selectEmployeeFromResultSet(resultset);
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.navigateToEmpDetailPage();
+		employeesearch =	new EmployeeSearch();
 		employeesearch.editEnrollmentAndEligibilityAndSave();
+		Map<String,String> dbMap =employeesearch.getEnrollAndEligDataFromDB(ssn);
+		Map<String,String> uiMap = employeesearch.getEnrollAndEligDataFromUI();
+		if(dbMap.equals(uiMap))
+			Reporter.logEvent(Status.PASS,"Compare UI data from DB for enroll and eligibility section.",""
+					+"DB data:"+dbMap+" and UI data:"+uiMap, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Compare UI data from DB for enroll and eligibility section.",""
+					+"DB data:"+dbMap+" and UI data:"+uiMap, true);
 	} catch (Exception e) {
 		e.printStackTrace();
 		Globals.exception = e;
@@ -3050,7 +3058,8 @@ try {
 public void TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active(int itr,Map<String, String> testdata) {		
 try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates employment positive flow"
+				+ " with some hire and term date validations.", false);
 		String planNumber="";
 		String ssn = "";
 		String hireDate="";
@@ -3115,9 +3124,224 @@ try {
 }
 
 
+/**
+ * <pre>This test case aims to change hire info for active participant.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_60_PSC_Employee_Information_Active_ChageHireInfo(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case aims to change hire info for active participant", false);
+		String planNumber="";
+		String ssn = "";
+		String hireDate="";
+		String termDate="";
+
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithEligiRuleSet")[0],
+					Stock.getTestQuery("getPlanWithEligiRuleSet")[1],"K_"+Stock.GetParameterValue("username"));
+
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				break;
+			}
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNWithNullTermDate")[0],
+					Stock.getTestQuery("getSSNWithNullTermDate")[1],planNumber);
+
+			while(resultset.next()){
+				ssn = resultset.getString("SSN");
+				hireDate = resultset.getString("HIRE_DATE");
+				termDate = resultset.getString("EMP_TERMDATE");
+				break;
+			}
+			employeesearch = new EmployeeSearch().get();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchEmployeeBySSN(ssn);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+				employeesearch.employmentFieldValidation();
+				employeesearch.fillEmploymentDetails();
+				employeesearch.returnToEmployeeOverview();
+				employeesearch.searchEmployeeBySSN(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+				WebElement msgEle1 = Web.returnElement(employeesearch,"UPDATE_EMP_MSG_FOR_TEMRED_1");
+				WebElement msgEle2 = Web.returnElement(employeesearch,"UPDATE_EMP_MSG_FOR_TEMRED_2");
+				String msg = msgEle1.getText().trim()+" "+ msgEle2.getText().trim();
+				if(Web.isWebElementDisplayed(msgEle1,false)&&Web.isWebElementDisplayed(msgEle2,false))
+					Reporter.logEvent(Status.PASS,"validate below message is displayed for termed employee:\n"
+							+ "'This employee is currently in a terminated employment status. Please choose an option below to continue.'",
+							"Below message is displayed:\n"+msg,false);
+				else
+					Reporter.logEvent(Status.FAIL,"validate below message is displayed for termed employee:\n"
+							+ "'This employee is currently in a terminated employment status. Please choose an option below to continue.'",
+							"Below message is displayed:\n"+msg,true);
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+/**
+ * <pre>This test case covers different scenario for Hire and terminate features for Zero deferral plan.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		String planNumber="";
+		String ssn = "";
+		String hireDate="";
+		String termDate="";
+
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithEligiRuleAndZeroDeferral")[0],
+					Stock.getTestQuery("getPlanWithEligiRuleAndZeroDeferral")[1],"K_"+Stock.GetParameterValue("username"));
+
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				break;
+			}
+			
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNWithNullTermDate")[0],
+					Stock.getTestQuery("getSSNWithNullTermDate")[1],planNumber);
+			
+
+			while(resultset.next()){
+				ssn = resultset.getString("SSN");
+				hireDate = resultset.getString("HIRE_DATE");
+				termDate = resultset.getString("EMP_TERMDATE");
+				break;
+			}
+			employeesearch = new EmployeeSearch().get();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchEmployeeBySSN(ssn);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+				employeesearch.terminateEmpWithCurrentDate();
+				CommonLib.switchToFrame(Web.returnElement(employeesearch, "FRAME_C_A"));
+				Web.clickOnElement(Web.returnElement(employeesearch,"RETURN_TO_EMPLOYEE_PAGE_BTN"));
+				employeesearch.searchEmployeeBySSN(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.zeroDeferralValidationScenario_1();
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
+/**
+ * <pre>This test case covers different scenario for Hire and terminate features for Zero deferral plan.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		String planNumber="";
+		String ssn = "";
+		String zero_after_x_days="";
 
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[0],
+					Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[1],"K_"+Stock.GetParameterValue("username"));
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				zero_after_x_days = resultset.getString("ZERO_AFTER_X_DAYS");
+				break;
+			}
+			
+			resultset = DB.executeQuery(Stock.getTestQuery("XdaysPlusTermDateGrtrThnSysdate")[0],
+					Stock.getTestQuery("XdaysPlusTermDateGrtrThnSysdate")[1],zero_after_x_days,zero_after_x_days,planNumber);
+		
+			while(resultset.next()){
+				ssn=resultset.getString("SSN");
+			}
+			employeesearch = new EmployeeSearch().get();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchEmployeeBySSN(ssn);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.zeroDeferralValidationScenario_1();
+				employeesearch.employmentsectionandDetailLinkValidation();
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
 

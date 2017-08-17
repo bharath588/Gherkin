@@ -1,4 +1,4 @@
-/*package app.psc.testcases.guidedpayroll;
+package app.psc.testcases.guidedpayroll;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
@@ -304,4 +304,3 @@ public class guidedpayrolltc_regression {
 
 	
 }
-*/

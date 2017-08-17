@@ -213,7 +213,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}
 			Web.waitForElement(urlJumpPage);
 			Web.clickOnElement(urlJumpPage);
-			Web.waitForPageToLoad(Web.getDriver());
+			//Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+			Web.ispageloaded("framec");
 			Web.waitForElement(weGreeting);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
 		} catch (Exception e) {

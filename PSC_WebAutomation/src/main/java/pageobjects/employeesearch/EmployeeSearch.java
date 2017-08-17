@@ -32,10 +32,7 @@ import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
-import org.apache.http.cookie.Cookie;
-import org.apache.regexp.REProgram;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -43,10 +40,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
-import org.springframework.expression.spel.ast.Ternary;
 import org.testng.Assert;
 
-import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
@@ -902,7 +897,23 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath="//button[contains(text(),'Cancel')]")
 	private WebElement cancelButton;
 	@FindBy(xpath=".//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//label")
-	private List<WebElement> listofRehireLabels;@FindBy(xpath=".//div[@class='breadcrumb']")
+	private List<WebElement> listofRehireLabels;
+	@FindBy(xpath=".//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//label/following-sibling::div//input")
+	private List<WebElement> listofUpdateEmpInfoInputFields;
+	@FindBy(xpath=".//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//label/following-sibling::div//select")
+	private List<WebElement> updateEmpInfoSelectDropDownList;
+	@FindBy(xpath="//div[@id='employmentInfoPage']//section//span")
+	private WebElement termonationMsg;
+	@FindBy(xpath=".//span[contains(text(),'Employment history')]")
+	private WebElement empHistoryTitle;
+	@FindBy(xpath=".//span[contains(text(),'Update employment information')]")
+	private WebElement updateEmpInfoTitle;
+	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo']//label")
+	private List<WebElement> enrollmntAndElgLabels;
+	@FindBy(xpath=".//*[@id='enrollmentAndEligibilityInfo']//label/../following-sibling::td//td")
+	private List<WebElement> enrolmntAndElgValues;
+	
+	@FindBy(xpath=".//div[@class='breadcrumb']")
 	private List<WebElement> breadCrumb;
 	@FindBy(linkText="Print")
 	private WebElement printLink;
@@ -935,6 +946,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private List<WebElement> todaysCalendarBtn;
 	@FindBy(xpath=".//*[@name='termReason']/option[not(self::option[@value='0'])]")
 	private List<WebElement> termReasonDropDownUI;
+	@FindBy(xpath="//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//span")
+	private WebElement msgFortermDateLessthn18months;
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
 	private String transHistory = ".//*[@id='transactions']";
@@ -1092,6 +1105,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.equalsIgnoreCase("EMPLOYMENT_EDIT_LINK")){
 			return employmntEditLink;
 		}
+		if(fieldName.equalsIgnoreCase("UPDATE_EMP_MSG_FOR_TEMRED_1")){
+			return termedMsg1;
+		}
+		if(fieldName.equalsIgnoreCase("UPDATE_EMP_MSG_FOR_TEMRED_2")){
+			return termedMsg2;
+		}
+		if(fieldName.equalsIgnoreCase("RETURN_TO_EMPLOYEE_PAGE_BTN")){
+			return returnToEmployeePageButtonsingleBtn;
+		}
+		if(fieldName.equalsIgnoreCase("FRAME_C_A")){
+			return framecA;
+		}
 		return null;
 	}
 
@@ -1130,7 +1155,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void searchEmployeeBySSN(String SSN) throws InterruptedException {
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		//Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(drpdwnSearchEmployee);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
@@ -1541,7 +1567,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		boolean areDropdownOptionsSame;
 		//For Non Apple plan
 		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division","--------------------","Name - all plans","SSN - all plans"};
+				"Participant ID", "Division"};//,"--------------------","Name - all plans","SSN - all plans"};
 		
 		//for Apple plan
 		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
@@ -2510,6 +2536,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 	public void navigateToEmployeeOverViewPage() throws Exception
 	{
+		Web.getDriver().switchTo().defaultContent();
+		Web.ispageloaded("framec");
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		if(this.getWebElementasList("EmpLastNameLink").size()>0)
 		{
@@ -2521,15 +2549,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 			else
 			{*/
+				Web.waitForElement(fNLNMILink.get(0));
 				employeeSearched = this.getWebElementasList("EmpLastNameLink").get(0).getText();
 				//Thread.sleep(2000);
+				try{
 				Web.clickOnElement(this.getWebElementasList("EmpLastNameLink").get(0));
+				}catch(Exception e){
+					Web.clickOnElement(fNLNMILink.get(0));
+				}
 			//}
 		}
 		CommonLib.waitForProgressBar();
-		Web.waitForPageToLoad(Web.getDriver());
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
+		CommonLib.switchToFrame(employeeSearchFrame);
 		Web.waitForElement(empNameHeader);
 		if(Web.isWebElementDisplayed(empNameHeader, true))
 		{
@@ -2554,9 +2585,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		{
 			Web.clickOnElement(accntLink);
 		}
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.getDriver().switchTo().frame(beneFiciaryFrame);
+		CommonLib.switchToFrameFromAnotherFrame(employeeSearchFrame,beneFiciaryFrame);
 		Web.waitForElement(benFiciary);
 		if(Web.isWebElementDisplayed(benFiciary, true))
 		{
@@ -3625,6 +3654,7 @@ public boolean verifyViewPageForAPlanHavingBalance() throws Exception
 	
 	public void returnToEmployeeOverview()
 	{
+		CommonLib.switchToFrame(framecA);
 		Web.clickOnElement(returnToEmployeeOverview);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
@@ -4109,112 +4139,160 @@ public void validateNoPastThreeMonthDataMessage()
  * @author smykjn
  * This method update the Enrollment and Eligibility section and save.
  */
-public boolean editEnrollmentAndEligibilityAndSave() throws InterruptedException,Exception
+public void editEnrollmentAndEligibilityAndSave() throws InterruptedException,Exception
 {
-	boolean isEnrollmentSectionDisplayed = false;
+	
 	String updatedEliCode= null;
 	String updatedInEliCode = null;
-	Web.getDriver().switchTo().defaultContent();
-	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	CommonLib.switchToFrame(employeeSearchFrame);
 	if(enrollmentAndEligibilitySection.size()>0)
 	{
-		isEnrollmentSectionDisplayed = true;
+		
 		Reporter.logEvent(Status.PASS,"Validate Enrollment and eligibility section is displayed.",""
 				+"Enrollment and eligibility section is displayed.", false);
 		try{
-		Web.clickOnElement(enrolAndEligibltyEditLink);
-		Web.waitForPageToLoad(Web.getDriver());
-		Web.waitForElement(enrollAndEligEditFrame);
-		Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
-		Select eligibilityCode = new Select(eligiCode);
-		Select inEligibilityCode = new Select(inEligiReasonCode);
-		if(selectedEligiCode.getText().equals("No"))
-		{
-			eligibilityCode.selectByVisibleText("Yes");
-			inEligibilityCode.selectByValue("0");
-			updatedEliCode = "Yes";
-			updatedInEliCode = "";
-		}
-		else
-		{
-			eligibilityCode.selectByVisibleText("No");
-			inEligibilityCode.selectByVisibleText("Other");
-			updatedEliCode = "No";
-			updatedInEliCode = "Other";
-		}
-		Web.clickOnElement(this.save);
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		CommonLib.waitForProgressBar();
-		if(eligibilityCodeOverview.getText().trim().equals(updatedEliCode)
-				&& inEligibilityCodeOverview.getText().trim().equals(updatedInEliCode))
-		{
-			Reporter.logEvent(Status.PASS, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are saved correctly.", false);
-		}
-		else
-		{
-			Reporter.logEvent(Status.FAIL, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are not saved correctly.", true);
-		}
-		Web.clickOnElement(enrolAndEligibltyEditLink);
-		Web.waitForPageToLoad(Web.getDriver());
-		Web.waitForElement(enrollAndEligEditFrame);
-		Web.getDriver().switchTo().frame(enrollAndEligEditFrame);
-		String participationDate = partDate.getAttribute("value");
-		DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
-		Date dt = dateFormat.parse(participationDate);
-		Calendar calendar = Calendar.getInstance();         
-		calendar.setTime(dt);
-		calendar.add(Calendar.DATE, 1);
-		String partDateInString  = dateFormat.format(calendar.getTime());
-		Web.setTextToTextBox(partDate,partDateInString);
-		if(selectedEligiCode.getText().equals("No"))
-		{
-			eligibilityCode.selectByVisibleText("Yes");
-			inEligibilityCode.selectByValue("0");
-			updatedEliCode = "Yes";
-			updatedInEliCode = "";
-		}
-		else
-		{
-			eligibilityCode.selectByVisibleText("No");
-			inEligibilityCode.selectByVisibleText("Other");
-			updatedEliCode = "No";
-			updatedInEliCode = "Other";
-		}
-		Web.clickOnElement(this.cancel);
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(employeeSearchFrame);
-		CommonLib.waitForProgressBar();
-		if(!updatedEliCode.equals(eligibilityCodeOverview.getText().trim())
-				&&!updatedInEliCode.equals(inEligibilityCodeOverview.getText().trim())
-				&&!partDateInString.equals(partDateOverview.getText().trim()))
-		{
-			Reporter.logEvent(Status.PASS, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
-					+  " and click on cancel.", "Changes are not saved.", false);
-		}
-		else
-		{
-			Reporter.logEvent(Status.FAIL, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
-					+  " and click on cancel.", "Changes are saved.", true);
-		}
+			Web.clickOnElement(enrolAndEligibltyEditLink);
+			CommonLib.switchToFrame(enrollAndEligEditFrame);
+			Select eligibilityCode = new Select(eligiCode);
+			Select inEligibilityCode = new Select(inEligiReasonCode);
+			if(selectedEligiCode.getText().equals("No"))
+			{
+				eligibilityCode.selectByVisibleText("Yes");
+				inEligibilityCode.selectByValue("0");
+				updatedEliCode = "Yes";
+				updatedInEliCode = "";
+			}
+			else
+			{
+				eligibilityCode.selectByVisibleText("No");
+				inEligibilityCode.selectByVisibleText("Other");
+				updatedEliCode = "No";
+				updatedInEliCode = "Other";
+			}
+			Web.clickOnElement(this.save);
+			CommonLib.switchToFrame(employeeSearchFrame);
+			CommonLib.waitForProgressBar();
+		 
+			if(eligibilityCodeOverview.getText().trim().equals(updatedEliCode)
+					&& inEligibilityCodeOverview.getText().trim().equals(updatedInEliCode))
+			{
+				Reporter.logEvent(Status.PASS, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are saved correctly.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.", "Details are not saved correctly.", true);
+			}
+			Web.clickOnElement(enrolAndEligibltyEditLink);
+			CommonLib.switchToFrame(enrollAndEligEditFrame);
+			String participationDate = partDate.getAttribute("value");
+			DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+			Date dt = dateFormat.parse(participationDate);
+			Calendar calendar = Calendar.getInstance();         
+			calendar.setTime(dt);
+			calendar.add(Calendar.DATE, 1);
+			String partDateInString  = dateFormat.format(calendar.getTime());
+			Web.setTextToTextBox(partDate,partDateInString);
+			if(selectedEligiCode.getText().equals("No"))
+			{
+				eligibilityCode.selectByVisibleText("Yes");
+				inEligibilityCode.selectByValue("0");
+				updatedEliCode = "Yes";
+				updatedInEliCode = "";
+			}
+			else
+			{
+				eligibilityCode.selectByVisibleText("No");
+				inEligibilityCode.selectByVisibleText("Other");
+				updatedEliCode = "No";
+				updatedInEliCode = "Other";
+			}
+			Web.clickOnElement(this.cancel);
+			CommonLib.switchToFrame(employeeSearchFrame);
+			CommonLib.waitForProgressBar();
+			if(!updatedEliCode.equals(eligibilityCodeOverview.getText().trim())
+					&&!updatedInEliCode.equals(inEligibilityCodeOverview.getText().trim())
+					&&!partDateInString.equals(partDateOverview.getText().trim()))
+			{
+				Reporter.logEvent(Status.PASS, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
+						+  " and click on cancel.", "Changes are not saved.", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Again click on Edit link and change eligibility code,Ineligibility code and participation date"
+						+  " and click on cancel.", "Changes are saved.", true);
+			}
 		}catch(Exception e){
 			Reporter.logEvent(Status.FAIL,"Some error occurred.either Processing error or blank screen.",""
 					+ "this may be due to bad data.kindly check manually once.", true);
-			Web.getDriver().switchTo().defaultContent();
-			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			CommonLib.switchToFrame(employeeSearchFrame);
 			Web.clickOnElement(enrollEligCloseWindow);
 		}
 	}
 	else
 	{
-		isEnrollmentSectionDisplayed = false;
 		Reporter.logEvent(Status.FAIL,"Validate Enrollment and eligibility section is displayed.",""
 				+"Enrollment and eligibility section is not displayed.It may be due to bad data.Please check with"
 				+ " different participant.", true);
 	}
 	
-	return isEnrollmentSectionDisplayed;
+	//return isEnrollmentSectionDisplayed;
 }
+
+/**
+ * <pre>This methiod collects data from Enrollment and Eligibility section.</pre>
+ * @return Map
+ * @throws Exception
+
+ *//*
+public Map<String,String> enrollAndEligDataFromUI() throws Exception
+{
+	Map<String,String> enrollAndElgMapUI = new HashMap<String,String>();
+	if(enrollmntAndElgLabels.size()==enrolmntAndElgValues.size()){
+		for(WebElement data : enrolmntAndElgValues){
+			String value = data.getText().trim();
+					for(WebElement label : enrollmntAndElgLabels){
+						String key = label.getText().trim();
+						enrollAndElgMapUI.put(key, value);
+					}
+		}
+		System.out.println("Map from UI:"+enrollAndElgMapUI);
+	}
+	return enrollAndElgMapUI;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 public boolean validateAccountBalanceScreen_0() throws Exception
@@ -8587,8 +8665,7 @@ public boolean employmentInfoSectionAndEditLinkValidation(){
 	return isDisplayed;
 }
 
-@FindBy(xpath="//span[contains(text(),'Update employment information')]/ancestor::div[1]/following-sibling::div//span")
-private WebElement msgFortermDateLessthn18months;
+
 
 
 /**
@@ -9014,7 +9091,7 @@ public Map<String,String> fillEmploymentDetails() throws Exception
 	employmentDataUI = new HashMap<String,String>();
 	String alphaNumeric = Stock.GetParameterValue("EmployeeID");
 	String hireDateAsTodaysDate = 
-			CommonLib.getDateStringInDateFormat("MM/dd/yyyy",CommonLib.getSysDateWithTimeZone("MST"));
+			CommonLib.getDateStringInDateFormat("MM/dd/yyyy",CommonLib.getSysDateWithTimeZone("America/Denver"));
 	System.out.println("Hire Date as todays Date:"+hireDateAsTodaysDate);
 	Web.setTextToTextBox(empHiredate,hireDateAsTodaysDate);
 	employmentDataUI.put("HireDate", hireDateAsTodaysDate);
@@ -9065,7 +9142,7 @@ public Map<String,String> fillEmploymentDetails() throws Exception
 		}
 	}catch(Exception e){
 		Reporter.logEvent(Status.FAIL,"Fill all the employee details and validate confirmation messgae.",""
-				+ "Confirmation message is not displayed.", true);
+				+ "Confirmation message is not displayed.below message is displayed.\n"+confirmationText.getText(), true);
 	}
 	return employmentDataUI;
 }
@@ -9088,6 +9165,7 @@ public void navigateToEmpRehirePage() throws Exception{
  */
 public boolean navigateToHirePageWhenEmpActiveNoTermDate() throws Exception{
 	boolean isLoaded =false;
+	CommonLib.switchToFrame(employeeSearchFrame);
 	Web.clickOnElement(employmntEditLink);
 	CommonLib.switchToFrame(framecA);
 	if(Web.isWebElementDisplayed(empHiredate, true))
@@ -9246,6 +9324,152 @@ public void compareTerminationReason() throws Exception{
 	
 }
 
+/**
+ * <pre>This method validates the field validations for Update Employment information section.</pre>
+ * @author smykjn
+ */
+public void employmentFieldValidation() throws Exception
+{
+	boolean isEnabled_= false;
+	Map<String,String> fieldNames = new HashMap<String,String>();
+	//List<String> expectedFields = Arrays.asList(Stock.GetParameterValue("ExpectedUpdateEmploymentInfoFields").split(","));
+	//System.out.println("Expected fields:"+expectedFields);
+	for(WebElement input : listofUpdateEmpInfoInputFields){
+		String elementname = input.getAttribute("name");
+		if(input.isEnabled()){
+			isEnabled_=true;
+			fieldNames.put(elementname,"Enabled");
+		}
+		else{
+			isEnabled_=false;
+			fieldNames.put(elementname,"Disabled");
+			break;
+		}
+	}
+	if(isEnabled_)
+		Reporter.logEvent(Status.PASS,"Validate all the fields on Update Employment Information is editable.","All the"
+				+ " below fields are editable.\n"+fieldNames,false);
+	else
+		Reporter.logEvent(Status.PASS,"Validate all the fields on Update Employment Information is editable.","All the"
+				+ " fields are not editable.\n"+fieldNames,true);
+	isEnabled_ = false;
+	fieldNames.clear();
+	for(WebElement dropdown : updateEmpInfoSelectDropDownList){
+		String elementname = dropdown.getAttribute("name");
+		if(dropdown.isEnabled()){
+			isEnabled_=true;
+			fieldNames.put(elementname,"Enabled");
+		}
+		else{
+			isEnabled_=false;
+			fieldNames.put(elementname,"Disabled");
+			break;
+		}
+	}
+	if(isEnabled_)
+		Reporter.logEvent(Status.PASS,"Validate all the drop down fields on Update Employment Information is editable.","All the"
+				+ " below fields are editable.\n"+fieldNames,false);
+	else
+		Reporter.logEvent(Status.PASS,"Validate all the drop down fields on Update Employment Information is editable.","All the"
+				+ " fields are not editable.\n"+fieldNames,true);
+	
+}
+
+/**
+ * <pre>This method terminates employee with current date.</pre>
+ * @author smykjn
+ * @Date 04-Aug-2017
+ * @param String 
+ */
+public void terminateEmpWithCurrentDate() throws Exception{
+	Date todaysDate = CommonLib.getSysDateWithTimeZone("America/Denver");
+	String todaysDate_string = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", todaysDate);
+	Web.setTextToTextBox(emptermDate, todaysDate_string);
+	Web.clickOnElement(saveOnEmpPage);
+	if(Web.isWebElementDisplayed(confirmationNumber,true)){
+		String eventId=confirmationNumber.getText().trim();
+		boolean isExists = CommonLib.validateEventID(eventId);
+		if(isExists)
+			Reporter.logEvent(Status.PASS,"Terminate employee with current date,save and verify in event table.",""
+					+ "Employee has been terminated successfully with current date.\below is event id:"+eventId, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Terminate employee with current date,save and verify in event table.",""
+					+ "Employee has not been terminated successfully with current date.\below is event id:"+eventId, true);
+		
+	}
+}
+
+
+/**
+ * <pre>This method terminates employee with current date.</pre>
+ * @author smykjn
+ * @Date 04-Aug-2017
+ * @param String 
+ */
+public void zeroDeferralValidationScenario_1() throws Exception{
+	CommonLib.switchToFrame(employeeSearchFrame);
+	Web.clickOnElement(employmntEditLink);
+	Web.getDriver().switchTo().defaultContent();
+	Web.ispageloaded("framecA");
+	CommonLib.switchToFrame(framecA);
+	if(Web.isWebElementsDisplayed(returnToEmployeePageButton, true))
+		Reporter.logEvent(Status.PASS,"Validate 'Return to employee page' button is displayed.","Return to"
+				+ " employee page button is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate 'Return to employee page' button is displayed.","Return to"
+				+ " employee page button is not displayed.", true);
+	if(rehireempBtn.isDisplayed())
+		Reporter.logEvent(Status.PASS,"validate 'Rehire employee' button is displayed.", "Rehire employee button is displayed.",false);
+	else
+		Reporter.logEvent(Status.FAIL,"validate 'Rehire employee' button is displayed.", "Rehire employee button is not displayed.",true);
+	try{
+		editTerminationDateBtn.isDisplayed();
+		Reporter.logEvent(Status.FAIL,"Validate if Edit termination date button is not displayed.","Edit termination date"
+				+ " button is displayed.",true);
+	}catch(Exception e){
+		Reporter.logEvent(Status.PASS,"Validate if Edit termination date button is not displayed.","Edit termination date"
+				+ " button is not displayed.",false);
+	}
+	String actMsg = termonationMsg.getText().trim();
+	String expMsg = Stock.GetParameterValue("MsgWhenTerminated");
+	System.out.println("Message is :"+actMsg);
+	if(actMsg.equals(expMsg))
+		Reporter.logEvent(Status.PASS,"Validate below message on update Rehire information page.\n"+expMsg,""
+				+ "Below message is displayed\n"+actMsg,false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate below message on update Rehire information page.\n"+expMsg,""
+				+ "Below message is displayed\n"+actMsg,true);
+}
+
+
+/**
+ * <pre>This method validates below title on Employment page.
+ * Update employment information
+ * Employment history
+ * Details link</pre>
+ * @author smykjn
+ */
+public void employmentsectionandDetailLinkValidation()
+{
+	if(empHistoryTitle.isDisplayed())
+		Reporter.logEvent(Status.PASS,"Validate Employment history title is displayed.",""
+				+ "Employment history title is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate Employment history title is displayed.",""
+				+ "Employment history title is not displayed.", true);
+	
+	if(updateEmpInfoTitle.isDisplayed())
+		Reporter.logEvent(Status.PASS,"Validate Update employment information title is displayed.",""
+				+ "Update employment information title is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate Update employment information title is displayed.",""
+				+ "Update employment information title is not displayed.", true);
+	
+	if(detailLink.isDisplayed())
+		Reporter.logEvent(Status.PASS,"Validate Detail link is displayed.","Detail link is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate Detail link is displayed.","Detail link is not displayed.", true);
+}
 
 
 
