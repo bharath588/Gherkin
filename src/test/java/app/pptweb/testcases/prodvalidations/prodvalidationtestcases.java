@@ -586,8 +586,8 @@ public class prodvalidationtestcases {
 		
 			
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
-			Web.getDriver().switchTo().frame("legacyFeatureIframe");
-			lblDisplayed = Web
+			
+			/*lblDisplayed = Web
 					.VerifyPartialText(
 							"Selected Loan Type:\nGeneral Purpose (Available for any purpose.)",
 							requestLone.getWebElementText("TEXT LOAN TYPE"),
@@ -606,15 +606,32 @@ public class prodvalidationtestcases {
 						"Selected Loan Type"
 								+ Stock.GetParameterValue("loanType")
 								+ " is Not visible", true);
-			}
-			Web.getDriver().switchTo().defaultContent();
-			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
-				requestLone.EnterLoanAmtAndTerm("$100", "12");
-			}
-			else
+			}*/
+			
+		
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
 			
-			Web.getDriver().switchTo().frame("legacyFeatureIframe");
+			Web.waitForElement(requestLone, "BUTTON CONTINUE");
+			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
+			
+			
+			lblDisplayed = Web.isWebElementDisplayed(requestLone, "ProActive Notification Screen",true);
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify ProActive Notification Screen is Displayed",
+						"ProActive Notification Screen is Displayed",	
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify ProActive Notification Screen is Displayed",
+						"ProActive Notification Screen is Not Displayed",	
+						true);
+			}
+			requestLone.isTextFieldDisplayed("Sign up for updates on your loan process");
+			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
+			
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
 			if (lblDisplayed) {

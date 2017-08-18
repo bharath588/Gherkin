@@ -45,10 +45,10 @@
                     </parameter>
                     </include>
                     
-					<include name="Edit_MyContribution" >
+					<!-- <include name="Edit_MyContribution" >
 					<parameter name="ManualTCName" value="Edit_MyContribution">
                     </parameter>
-                    </include>
+                    </include> -->
                     
                       <include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" >
 					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
@@ -114,11 +114,11 @@
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section_Prod">
                     </parameter>
                     </include>
-               
+               <!-- 
                     <include name="HDIC_TC010_To_verify_How_do_I_compare_tab">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab_Prod">
                     </parameter>
-                    </include>
+                    </include> -->
                 
                     <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC0011_To verify Retirement Income tab_Plan Savings_Prod">

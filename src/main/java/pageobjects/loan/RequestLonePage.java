@@ -7,6 +7,7 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.By;
@@ -29,20 +30,20 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private LoadableComponent<?> parent;
 	private static boolean waitforLoad = false;
 
-	@FindBy(xpath = ".//h1[text()[normalize-space()='Request a loan']]")
+	@FindBy(xpath = "//h1[text()[normalize-space()='Loans']]")
 	private WebElement lblRequestALoan;
-	@FindBy(xpath = ".//*[@id='genPurp']")
+	@FindBy(xpath = "//button[@id='reqGenPurposeLoan']")
 	private WebElement inputLonatypeGeneral;
-	@FindBy(xpath = ".//*[@id='mortPurp']")
+	@FindBy(id = "reqPrimaryResLoan")
 	private WebElement inputLonatypeMortgage;
-	@FindBy(id = "loanInitiation")
+	@FindBy(xpath = "//button[contains(text(),'Continue')]")
 	private WebElement btnContinue;
     @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
-	@FindBy(id = "loan_amount")
+	@FindBy(id = "loanQuoteAmount0")
 	private WebElement inputLoanAmount;
 	@FindBy(xpath = ".//input[@name='loan_term']")
 	private WebElement inputLoanTerm;
@@ -82,9 +83,15 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement lnkLoanSummary;
 	@FindBy(id = "legacyFeatureIframe")
 	private WebElement iFrame;
+	@FindBy(xpath = "//button[text()[normalize-space()='Request a new loan']]")
+	private WebElement btnRequestNewLoan;
+	@FindBy(xpath = "//button[contains(text(),'Update')]")
+	private WebElement btnUpdate;
+	@FindBy(id = "proActiveNotificationScreen")
+	private WebElement hdrProactiveNotificationScreen;
 
 	private String loanQuote="//*[contains(text(),'webElementText')]";
-	
+	private String loanTerm="//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
 	/**
 	 * Default Constructor
 	 */
@@ -223,6 +230,15 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (fieldName.trim().equalsIgnoreCase("LOAN TYPE GENERAL")) {
 			return this.inputLonatypeGeneral;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Button Update")) {
+			return this.btnUpdate;
+		}
+		if (fieldName.trim().equalsIgnoreCase("BUTTON CONTINUE")) {
+			return this.btnContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ProActive Notification Screen")) {
+			return this.hdrProactiveNotificationScreen;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -238,43 +254,27 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	 * 
 	 */
 	public void selectLoneType(String loanType) {
-		Web.waitForElement(iFrame);
-		if(Web.isWebElementDisplayed(iFrame, true))
-		Web.getDriver().switchTo().frame("legacyFeatureIframe");
-		
-		if (!Web.isWebElementDisplayed(inputLonatypeGeneral)) {
-			Web.getDriver().navigate().refresh();
-			try {
-				Thread.sleep(7000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Web.getDriver().switchTo().defaultContent();
-			Web.waitForElement(iFrame);
-			if(Web.isWebElementDisplayed(iFrame, true))
-			Web.getDriver().switchTo().frame("legacyFeatureIframe");
-		}
+	
 		if (loanType.equalsIgnoreCase("GENERAL")) {
 					
-			if (Web.isWebElementDisplayed(inputLonatypeGeneral)) {
+			if (Web.isWebElementDisplayed(inputLonatypeGeneral,true)) {
 				inputLonatypeGeneral.click();
 			} else {
-				Web.getDriver().switchTo().defaultContent();
+				
 				throw new Error("Loan type radio button 'General' is not displayed");
 			}
 			
 		} else if (loanType.equalsIgnoreCase("MORTGAGE")) {
-			if (Web.isWebElementDisplayed(inputLonatypeMortgage)) {
+			if (Web.isWebElementDisplayed(inputLonatypeMortgage, true)) {
 				this.inputLonatypeMortgage.click();
 			} else {
-				Web.getDriver().switchTo().defaultContent();
+				
 				throw new Error("Loan type radio button 'Mortgage' is not displayed");
 			}
 		}
 
-		this.btnContinue.click();
-		Web.getDriver().switchTo().defaultContent();
+		//this.btnContinue.click();
+		
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -311,11 +311,12 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		 * 
 		 */
 		public void EnterLoanAmtAndTerm(String loanAmount,String loanTerm) {
-			Web.getDriver().switchTo().frame("legacyFeatureIframe");
+		
 			Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
-			Web.setTextToTextBox(this.inputLoanTerm, loanTerm);
-			this.btnCaluculatePaymentInfo.click();
-			Web.getDriver().switchTo().defaultContent();
+			Web.clickOnElement(btnContinue);
+			 WebElement inpLoanTerm= Web.getDriver().findElement(By.xpath(this.loanTerm.replace("Repayment Term", loanTerm)));
+			Web.clickOnElement(inpLoanTerm);
+			
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -340,5 +341,34 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 			}
 		
 return isTextDisplayed;
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Verify the Page Header is Displayed or Not
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyPageHeaderIsDisplayed(String webElement) {
+			
+			WebElement webelement= getWebElement(webElement);
+		 String pageHeader=webelement.getText().toString().trim();
+			if (Web.isWebElementDisplayed(webelement)) {
+				lib.Reporter.logEvent(Status.PASS, "Verify "+pageHeader 
+						+ " Page  is Displayed", pageHeader 
+						+ " Page  is Displayed",
+						true);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL, "Verify "+pageHeader 
+						+ " Page  is Displayed", pageHeader 
+						+ " Page  is Not Displayed",true);
+				throw new Error(webElement+" is not displayed");
+			}
+		
+
 		}
 }
