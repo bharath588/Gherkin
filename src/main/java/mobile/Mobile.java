@@ -539,7 +539,7 @@ public class Mobile {
 		if(Mobile.isElementPresent(sObj)){
 			Reporter.logEvent(Status.PASS,sStep ,sMsg+ "  is Displayed " ,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL,sStep,sMsg+"  Not Displayed",true);
+		     Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
 		          
 		}
 		
@@ -558,11 +558,11 @@ public class Mobile {
 			if(sObj.isDisplayed()){
 			Reporter.logEvent(Status.PASS,sStep ,sMsg+ "  is Displayed " ,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL,sStep,sMsg+"  Not Displayed",true);
+		     Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
 		          
 		}
 		}else{
-			   Reporter.logEvent(Status.FAIL,sStep,sMsg+"  Not Displayed",true);
+			   Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
 		}
 		
 	}
@@ -579,12 +579,12 @@ public class Mobile {
 		  String sActValue = getElementValue(sObj);
 		if(sActValue != null){
 		if(sActValue.replaceAll("\\n","").trim().equals(sExpText.trim())){
-			Reporter.logEvent(Status.PASS,"Expected Value : "+sExpText ,"Actucal Value :  "+sActValue,false);
+			Reporter.logEvent(Status.PASS,sMsg, "Actual Value :  "+sActValue,false);
 		}else{
-		     Reporter.logEvent(Status.FAIL," Expected Value : "+sExpText ,"But Actucal was:  "+sActValue,true);
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\n But Actucal was:  "+sActValue,true);
 		}
 		}else{
-		     Reporter.logEvent(Status.FAIL," Expected Value : "+sExpText ,"But Actual it was not present",true);
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\nBut Actual it was not present",true);
 
 		}
 		}
@@ -603,12 +603,12 @@ public class Mobile {
 	
 	if(sActValue != null){
 	if(sActValue.replaceAll("\\n","").trim().equals(sExpText.trim())){
-		Reporter.logEvent(Status.PASS,"Expected Value : "+sExpText ,"Actucal Value :  "+sActValue,false);
+		Reporter.logEvent(Status.PASS,sMsg, "Actual Value :  "+sActValue,false);
 	}else{
-	     Reporter.logEvent(Status.FAIL," Expected Value : "+sExpText ,"But Actucal was:  "+sActValue,true);
+	     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\n But Actucal was:  "+sActValue,true);
 	}
 	}else{
-	     Reporter.logEvent(Status.FAIL," Expected Value : "+sExpText ,"But Actual it was not present",true);
+	     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\nBut Actual it was not present",true);
 
 	}
 	
@@ -618,7 +618,7 @@ public class Mobile {
 
 	public  static void verifyElementNotPresent(String sStep,String sObj,String sMsg){			
 		if(!isElementPresent(sObj)){
-			Reporter.logEvent(Status.PASS,sStep,"Not Displayed :  " +sMsg,true);
+			Reporter.logEvent(Status.PASS,sStep,"Not Displayed :  " +sMsg,false);
 		}else{
 		     Reporter.logEvent(Status.FAIL,sStep ," Displayed : "+ sMsg,true);
 		}
@@ -747,9 +747,9 @@ public class Mobile {
 	public static void  verifyElementEnable(MobileElement ele,String sMsg){		
 	if (ele != null) {
 		  if(ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, sMsg,"", false);
+			  Reporter.logEvent(Status.PASS, sMsg +" should be enable",sMsg+ " is enable", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, sMsg,"", true);
+			  Reporter.logEvent(Status.FAIL, sMsg +" should be enable",sMsg+ " is not enable", true);
 		}  		
   	}
 	
@@ -780,9 +780,9 @@ public class Mobile {
 		
 		if (ele != null) {
 		  if(!ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, "Element is Disable",sMsg, false);
+			  Reporter.logEvent(Status.PASS, sMsg,ele.getText()+ " is Disable", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, "Element is Not Disable",sMsg, true);
+			  Reporter.logEvent(Status.FAIL, sMsg,ele.getText()+ "  is Not Disable", true);
 		}
 			  		
   	}
@@ -944,6 +944,9 @@ public class Mobile {
 		return flag;
 	}
 	
+	
+	
+	
 	/**
 	 * Verify if element is present 
 	 * @param ele in MobileElement
@@ -953,7 +956,6 @@ public class Mobile {
 	public static boolean assertElementPresent(MobileElement ele) {
 		Boolean flag = false;
 		try{		
-		
 		if (ele != null) {
 			int j =0;
 			while (!ele.isDisplayed() && j<3) {	 

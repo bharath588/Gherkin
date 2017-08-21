@@ -244,7 +244,10 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		{
 		BuildFailedTestNG(failedXmlMap);
 		}
-			if (Web.getDriver().getWindowHandles().size() >= 0)
+		    if(Mobile.mobilePlatform){
+		    	Mobile.cleanupSessions();
+		    }		
+		    else if (Web.getDriver().getWindowHandles().size() >= 0)
 				Web.getDriver().quit();
 		}
 		catch (Exception e) {
@@ -261,7 +264,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 			if (!Web.getDriver().getWindowHandle().isEmpty()) {
 				Log.Report(Level.INFO,
-						"Web Driver instance fou      nd to be active for the Test Case :"
+						"Web Driver instance found to be active for the Test Case :"
 								);
 			}
 		} catch (Exception t) {

@@ -11,6 +11,7 @@ import java.util.Random;
 import mobile.IOSDeviceConfiguration;
 import mobile.IOSDriverManager;
 import mobile.Mobile;
+import mobile.Reader;
 import shell.utils.SftpUtils;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -103,10 +104,19 @@ public class Reporter{
 			objReport.setSystemInfo("Environment", Stock.getConfigParam("TEST_ENV"));
 			 objReport.setSystemInfo("Selenium Version", "3.0.1");
 			 objReport.setSystemInfo("Type ", Stock.getConfigParam("type"));
-		      
+			 String deviceName ="";
 			if(Mobile.mobilePlatform){
-				 objReport.setSystemInfo("AppiumClient", "4.1.2");
-				 objReport.setSystemInfo("AppiumServer", "1.6.3");
+				 objReport.setSystemInfo("IOS Version", "10.0.2");
+				 objReport.setSystemInfo("Device UDID ", IOSDriverManager.deviceName);	
+				
+				try {
+					deviceName = IOSDeviceConfiguration.getDeviceName(IOSDriverManager.deviceName);
+				} catch (InterruptedException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				 objReport.setSystemInfo("Device Name ",deviceName );	
+				
 				
 			 }
 			if(moduleNameMap == null || !moduleNameMap.containsKey(className))
@@ -124,13 +134,9 @@ public class Reporter{
 			objMachineDetNode = moduleNameMap.get(className).createNode(SftpUtils.getHostname(TestListener.portMap.get(Thread.currentThread().getId())));
 			}else{
 				if(Mobile.mobilePlatform){
-					String deviceInfo="";
-					try {
-						deviceInfo = IOSDeviceConfiguration.getDeviceName(IOSDriverManager.deviceName)+"_"+IOSDriverManager.deviceName;
-					} catch (InterruptedException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					String deviceInfo="";					
+						deviceInfo = deviceName+"_"+IOSDriverManager.deviceName;
+				
 					objMachineDetNode = moduleNameMap.get(className).createNode(deviceInfo).assignCategory("Machine Details");
 					
 				}else{
@@ -302,6 +308,7 @@ public class Reporter{
 						+ "</pre></font>";
 				checkTestStatusMap.put(Thread.currentThread().getId(), false);
 				Details += stackTraceLnk;
+			//	Mobile.reportStatus = true;
 				break;
 			case WARNING:
 				tmpLogStatus = Status.WARNING;
@@ -419,6 +426,7 @@ public class Reporter{
 			TestListener.setFinalTestStatus(true);
 		}
 		if(Mobile.mobilePlatform){
+			if(Reader.getConfigParam("APPIUMSEVER").equalsIgnoreCase("PROGRAM")){
 			objModuleNameNode.log(Status.INFO, "<a target=\"_parent\" href="
 	                    + IOSDriverManager.getDeviceName().replaceAll("\\W", "_") + "__AppiumLog.txt"+ ">AppiumServerLogs</a>");
 //			Reporter.parent.log(LogStatus.INFO,
@@ -426,6 +434,8 @@ public class Reporter{
 //	                    + IOSDriverManager.getDeviceName().replaceAll("\\W", "_") + "__AppiumLog.txt"+ ">AppiumServerLogs</a>");
 		}
 	}
+	}
+
 	
 	
    

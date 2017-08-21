@@ -202,7 +202,7 @@ public class Globals {
           public static Map<String,String> testNGPropertiesMap = new LinkedHashMap<>();
     	  
     	  public static final Map<String, String> databaseConnectionStrings;
-		public static final String option_UserDefault = null;
+		public static final String option_UserDefault = "AS_USER_DEFINED";
 	//	public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
     	  
     	  static
