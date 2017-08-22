@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-allSuites">
-                    <span>H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\Demo.xml</span>
+                    <span>H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\OnlineEnrollment.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -102,7 +102,7 @@
                     <div class="method-list-content failed suite-allSuites">
                       <span>
                         <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-allSuites" title="app.csas.testcases.loanRequest.LoanRequestTestCases" hash-for-method="CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})">CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-allSuites" title="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases" hash-for-method="ValidateIndicativeCity(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=ba...)">ValidateIndicativeCity(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=ba...)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content failed suite-allSuites -->
@@ -120,15 +120,15 @@
           <div class="suite-allSuites-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</span>
+              <span class="class-name">app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})">
-                  </a> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa}) -->
-                  <span class="method-name">CSAS_Paperless_Loan_TC02_DDTC_26947</span>
-                  <span class="parameters">(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</span>
+                  <a name="ValidateIndicativeCity(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=ba...)">
+                  </a> <!-- ValidateIndicativeCity(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=ba...) -->
+                  <span class="method-name">ValidateIndicativeCity</span>
+                  <span class="parameters">(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=baseball, LAST NAME=Brown, CITY=Florida, DOB=05-Nov-1993, USERNAME=cswa, ANNUAL INCOME=12365, ZIP CODE=123654789, DOH=18-Aug-2017, PERSONAL EMAIL=discard@gwl.com})</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -136,7 +136,7 @@
         </div> <!-- panel allSuites -->
         <div panel-name="test-xml-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\Demo.xml</span>
+            <span class="header-content">H:\git\CSAS_ranjan\CSAS\CSAS_Automation\RunXML\OnlineEnrollment.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -146,17 +146,17 @@
   &lt;listeners&gt;
     &lt;listener class-name=&quot;core.framework.TestListener&quot;/&gt;
   &lt;/listeners&gt;
-  &lt;test name=&quot;LoanRequest&quot;&gt;
+  &lt;test name=&quot;OnlineEnrollment&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;app.csas.testcases.loanRequest.LoanRequestTestCases&quot;&gt;
+      &lt;class name=&quot;app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;CSAS_Paperless_Loan_TC02_DDTC_26947&quot;&gt;
-            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;CSAS_Loan_Request_DeliverForm&quot;/&gt;
-          &lt;/include&gt; &lt;!-- CSAS_Paperless_Loan_TC02_DDTC_26947 --&gt;
+          &lt;include name=&quot;ValidateIndicativeCity&quot;&gt;
+            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;ValidateCity&quot;/&gt;
+          &lt;/include&gt; &lt;!-- ValidateIndicativeCity --&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- app.csas.testcases.loanRequest.LoanRequestTestCases --&gt;
+      &lt;/class&gt; &lt;!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases --&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- LoanRequest --&gt;
+  &lt;/test&gt; &lt;!-- OnlineEnrollment --&gt;
 &lt;/suite&gt; &lt;!-- allSuites --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -168,7 +168,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">LoanRequest (1 class)</span>
+                <span class="test-name">OnlineEnrollment (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -196,14 +196,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'CSAS_Paperless_Loan_TC02_DDTC_26947')
-data.setCell(0, 2, 'app.csas.testcases.loanRequest.LoanRequestTestCases')
-data.setCell(0, 3, 132456);
+data.setCell(0, 1, 'ValidateIndicativeCity')
+data.setCell(0, 2, 'app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases')
+data.setCell(0, 3, 46708);
 window.suiteTableData['allSuites']= { tableData: data, tableDiv: 'times-div-allSuites'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <span class="suite-total-time">Total running time: 46 seconds</span>
               <div id="times-div-allSuites">
               </div> <!-- times-div-allSuites -->
             </div> <!-- times-div -->
@@ -218,27 +218,23 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-allSuites" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">8 ignored methods</span>
+            <span class="header-content">6 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
-              <span class="ignored-class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</span>
+              <span class="ignored-class-name">app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">validating_mobile_phone_text_box</span>
+                <span class="ignored-method-name">validateIndicativeData_InlineValidation</span>
                 <br/>
-                <span class="ignored-method-name">validating_refinance_with_adtn_loan_amnt_functionality</span>
+                <span class="ignored-method-name">ValidateGrpIdField</span>
                 <br/>
-                <span class="ignored-method-name">statement_order_update_confirmation</span>
+                <span class="ignored-method-name">ValidateIndicativePersonalEmail</span>
                 <br/>
-                <span class="ignored-method-name">validating_vesting_field</span>
+                <span class="ignored-method-name">validateIndicative_ValidationErrorMessage</span>
                 <br/>
-                <span class="ignored-method-name">validating_green_tick_on_selection_of_loan_quote</span>
+                <span class="ignored-method-name">validateIndicativeMobilePhone</span>
                 <br/>
-                <span class="ignored-method-name">validating_if_payment_method_noneditable</span>
-                <br/>
-                <span class="ignored-method-name">validating_recalculate_functionality</span>
-                <br/>
-                <span class="ignored-method-name">validating_loan_number_link</span>
+                <span class="ignored-method-name">validateIndicativeHomePhone</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -250,7 +246,7 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">app.csas.testcases.loanRequest.LoanRequestTestCases</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</div> <!-- chronological-class-name -->
               <div class="configuration-class before">
                 <span class="method-name">ReportInit</span>
                 <span class="method-start">0 ms</span>
@@ -258,8 +254,8 @@ return data;
               <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">CSAS_Paperless_Loan_TC02_DDTC_26947(1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa})</span>
-                <span class="method-start">31021 ms</span>
+                <span class="method-name">ValidateIndicativeCity(1, {ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=ba...)</span>
+                <span class="method-start">49696 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

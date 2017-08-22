@@ -198,49 +198,7 @@
 			</Iteration>
 		</TestCase>
 	</Module>
-	<Module name="moneytypebalance">
-		<TestCase
-			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Allocation_Percentage">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="cswa" />
-				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="5325573" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Variable_Investments_Money_Type_Link">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="cswa" />
-				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="202752" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Variable_Investments_Balance">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="cswa" />
-				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="202752" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Fixed_Investments_Balance">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="cswa" />
-				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="202752" />
-			</Iteration>
-		</TestCase>
-		<TestCase
-			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="cswa" />
-				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="202752" />
-			</Iteration>
-		</TestCase>
-	</Module>
-	<Module name="loanquotepage">
+		<Module name="loanquotepage">
 		<TestCase name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
@@ -493,6 +451,51 @@ ORDER BY wb.ga_id,
 		<parameter QueryName="getGAIDorpptID_RestrictionType" DB="ISISDB_QA"
 			Query="select * from loan_acct where status_code='A'and TRF_loan_acct_ind='Y' and rownum &lt;= 1" />
 	</Module>
+	
+	
+	<Module name="moneytypebalance">
+		<TestCase
+			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Allocation_Percentage">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="5325573" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Variable_Investments_Money_Type_Link">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="202752" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Variable_Investments_Balance">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="202752" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Fixed_Investments_Balance">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="202752" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="202752" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	
 	<Module name="disbursementhistory">
 		<TestCase name="CSAS_PPT_Info_Disbursement_Histroy_Payment_History">
 			<Iteration Execution="Yes" id="1">
@@ -652,8 +655,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="202752" />
-				<parameter name="InvestmentPercentage" value="100
-" />
+				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
 		</TestCase>
@@ -663,21 +665,26 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="11550346" />
-				<parameter name="InvestmentPercentage" value="100
-" />
+				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
 		</TestCase>
 	</Module>
+	
+	<!-- 
+	
+	LOAN REQUEST MODULE
+	 -->
+	
 	<Module name="loanRequest">
 		<TestCase name="csas_TC_16_Statement_Order_Update_Confirmation">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="Value" value="General Purpose" />
-				<parameter name="PPT_ID" value="6188410" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -696,11 +703,11 @@ ORDER BY wb.ga_id,
 		<TestCase name="csas_TC_17_Validating_Mobile_Phone_Text_Box">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="Value" value="General Purpose" />
-				<parameter name="PPT_ID" value="6188410" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -723,7 +730,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -736,7 +743,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -750,7 +757,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="1000" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -763,7 +770,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -776,7 +783,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />	<!-- 773727 -->
 				<parameter name="Amount to Borrow" value="100" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -786,11 +793,11 @@ ORDER BY wb.ga_id,
 		<TestCase name="csas_TC_25_Validating_Enable_Of_Select_Button">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="Value" value="General Purpose" />
-				<parameter name="PPT_ID" value="10762793" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="borrow_amount" value="37554.82" />
-				<parameter name="Participant Id" value="773727" />
+				<parameter name="Participant Id" value="1731515" />
 				<parameter name="Amount to Borrow" value="1000" />
 				<parameter name="address" value="No.12 L Street" />
 				<parameter name="Mobile Phone" value="8220816396" />
@@ -854,7 +861,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11300720" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />				
@@ -874,7 +881,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="16345511" /><!-- 7305060 -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />	
@@ -910,7 +917,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11300720" />
+				<parameter name="PPT_ID" value="1731515" />
 			</Iteration>
 		</TestCase>		
 		<TestCase name = "CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount">
@@ -956,6 +963,134 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="1731515" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name = "onlineenrollment">
+		<TestCase name = "ValidateGrpId">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "99512-01" />
+				<parameter name = "PEC" value = "99512" />
+				<parameter name = "SSN" value = "912106416" />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "ValidateCity">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "ValidatePersonalEmail">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
+				<parameter name = "PERSONAL EMAIL INVALID1" value = "discardgwl.com" />
+				<parameter name = "PERSONAL EMAIL INVALID2" value = "discard@gwl" />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "ValidateMobilePhone">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
+				<parameter name = "MOBILE PHONE INVALID" value = "4+789654$y" />
+				<parameter name = "MOBILE PHONE" value = "7896541230" />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "ValidateHomePhone">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
+				<parameter name = "HOME PHONE INVALID" value = "4+789654$y" />
+				<parameter name = "HOME PHONE" value = "7896541230" />
+			</Iteration>
+		</TestCase>
+		<TestCase name = "ValidateErrorMessage">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />				
+			</Iteration>
+		</TestCase>
+		<TestCase name = "InlineValidation">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />	
+				<parameter name = "HOME PHONE INVALID" value = "4+789654$y" />	
+				<parameter name = "MOBILE PHONE INVALID" value = "4+789654$y" />
+				<parameter name = "WORK PHONE INVALID" value = "4+789654$y" />
+				<parameter name = "INTERNATIONAL PHONE INVALID" value = "4+789654$y" />
 			</Iteration>
 		</TestCase>
 	</Module>

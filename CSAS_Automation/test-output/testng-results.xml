@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="allSuites" duration-ms="163555" started-at="2017-07-07T03:44:49Z" finished-at="2017-07-07T03:47:32Z">
+  <suite name="allSuites" duration-ms="96442" started-at="2017-08-22T05:19:16Z" finished-at="2017-08-22T05:20:52Z">
     <groups>
     </groups>
-    <test name="LoanRequest" duration-ms="163555" started-at="2017-07-07T03:44:49Z" finished-at="2017-07-07T03:47:32Z">
-      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@15761df8]" name="ReportInit" is-config="true" duration-ms="30902" started-at="2017-07-07T09:14:49Z" finished-at="2017-07-07T09:15:20Z">
+    <test name="OnlineEnrollment" duration-ms="96442" started-at="2017-08-22T05:19:16Z" finished-at="2017-08-22T05:20:52Z">
+      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@6b2fad11]" name="ReportInit" is-config="true" duration-ms="49535" started-at="2017-08-22T10:49:16Z" finished-at="2017-08-22T10:50:06Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="FAIL" signature="CSAS_Paperless_Loan_TC02_DDTC_26947(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@15761df8]" name="CSAS_Paperless_Loan_TC02_DDTC_26947" duration-ms="132456" started-at="2017-07-07T09:15:20Z" data-provider="setData" finished-at="2017-07-07T09:17:32Z">
+        <test-method status="FAIL" signature="ValidateIndicativeCity(int, java.util.Map)[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@6b2fad11]" name="ValidateIndicativeCity" duration-ms="46708" started-at="2017-08-22T10:50:06Z" data-provider="setData" finished-at="2017-08-22T10:50:52Z">
           <params>
             <param index="0">
               <value>
@@ -20,14 +20,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=100.00, USERNAME=cswa}]]>
+                <![CDATA[{ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=baseball, LAST NAME=Brown, CITY=Florida, DOB=05-Nov-1993, USERNAME=cswa, ANNUAL INCOME=12365, ZIP CODE=123654789, DOH=18-Aug-2017, PERSONAL EMAIL=discard@gwl.com}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947 -->
-      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
-    </test> <!-- LoanRequest -->
+        </test-method> <!-- ValidateIndicativeCity -->
+      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
+    </test> <!-- OnlineEnrollment -->
   </suite> <!-- allSuites -->
 </testng-results>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [allSuites]">
+  <listeners>
+    <listener class-name="core.framework.TestListener"/>
+  </listeners>
+  <test name="OnlineEnrollment">
+    <classes>
+      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+        <methods>
+          <include name="ValidateIndicativeCity">
+            <parameter name="ManualTCName" value="ValidateCity"/>
+          </include> <!-- ValidateIndicativeCity -->
+        </methods>
+      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
+    </classes>
+  </test> <!-- OnlineEnrollment -->
+</suite> <!-- Failed suite [allSuites] -->

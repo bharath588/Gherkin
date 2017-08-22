@@ -4,15 +4,15 @@
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="LoanRequest">
+  <test name="OnlineEnrollment">
     <classes>
-      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
         <methods>
-          <include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
-            <parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm"/>
-          </include> <!-- CSAS_Paperless_Loan_TC02_DDTC_26947 -->
+          <include name="ValidateIndicativeCity">
+            <parameter name="ManualTCName" value="ValidateCity"/>
+          </include> <!-- ValidateIndicativeCity -->
         </methods>
-      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
+      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
     </classes>
-  </test> <!-- LoanRequest -->
+  </test> <!-- OnlineEnrollment -->
 </suite> <!-- Failed suite [allSuites] -->

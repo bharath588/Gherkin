@@ -668,8 +668,8 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 				"PPT ID/SSN : " + searchValue[0], true);
 		
 		Web.clickOnElement(SubmitPPTIdBtn);
-		  CommonLib.prevPpt =  searchValue[0];
-			
+		CommonLib.prevPpt =  searchValue[0];
+			  
 
 		// ------------- Handle Multiple PPT Search Result -----
 		if (Web.isWebElementsDisplayed(PlanNoOnPartList_Link)
