@@ -1117,6 +1117,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.equalsIgnoreCase("FRAME_C_A")){
 			return framecA;
 		}
+		if(fieldName.trim().equalsIgnoreCase("EmpLastNameLink"))
+		{
+			return (WebElement) this.fNLNMILink;
+		}
 		return null;
 	}
 
@@ -8692,12 +8696,12 @@ public void clickOnReturnToEmployeeBtn() throws Exception{
 public void employmentInfoForTermedEmp(String termDateModified){
 	try{
 		//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Date termDate =CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateModified);// sdf.parse(termDateModified);
+		Date termDate =CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateModified);
 		Date currentDate = CommonLib.getSysDateWithTimeZone("MST");
 		Web.clickOnElement(employmntEditLink);
 		Web.waitForPageToLoad(Web.getDriver());
 		CommonLib.switchToFrame(framecA);
-		this.clickOnReturnToEmployeeBtn();
+		//this.clickOnReturnToEmployeeBtn();
 		System.out.println("Term date:"+termDate);
 		System.out.println("Sysdate:"+currentDate);
 		if(termDate.after(currentDate)){
@@ -8729,14 +8733,18 @@ public void employmentInfoForTermedEmp(String termDateModified){
 					Reporter.logEvent(Status.PASS,"If emp termdate_18 months is less than current date"
 							+ " then edit termination button should not be displayed.","Edit termination button is not displayed.\n"
 									+ "emp termdate+18months is:"+termDateModified, false);
-				}}catch(Exception e){
-					Reporter.logEvent(Status.PASS,"If emp termdate_18 months is less than current date"
-							+ " then edit termination button should not be displayed.","Edit termination button is not displayed.\n"
-									+ "emp termdate+18months is:"+termDateModified, false);
 				}
+			}catch(Exception e){
+				Reporter.logEvent(Status.PASS,"If emp termdate_18 months is less than current date"
+						+ " then edit termination button should not be displayed.","Edit termination button is not displayed.\n"
+								+ "emp termdate+18months is:"+termDateModified, false);
+			}
+			/*Web.getDriver().switchTo().defaultContent();
+			CommonLib.switchToFrame(employeeSearchFrame);
+			CommonLib.switchToFrameFromAnotherFrame(employeeSearchFrame, framecA);*/
 			String actMsg = msgFortermDateLessthn18months.getText();
 			System.out.println("Actual message when termdate+18month<currentdate:"+actMsg);
-			String actLinkText = msgFortermDateLessthn18months.findElement(By.tagName("a")).getText();
+			//String actLinkText = msgFortermDateLessthn18months.findElement(By.tagName("a")).getText();
 			if(actMsg.equals(expMsgForLessThan18Month))
 				Reporter.logEvent(Status.PASS,"Validate message under 'update employment information' section."
 						+ "below message is displayed:\n"+expMsgForLessThan18Month,"Below message is displayed.\n"+
@@ -8745,12 +8753,12 @@ public void employmentInfoForTermedEmp(String termDateModified){
 				Reporter.logEvent(Status.FAIL,"Validate message under 'update employment information' section."
 						+ "below message is displayed:\n"+expMsgForLessThan18Month,"Below message is displayed.\n"+
 								actMsg, true);
-			if(actLinkText.equals("website support"))
+			/*if(actLinkText.equals("website support"))
 				Reporter.logEvent(Status.PASS,"Validate website support is a link within message.","website support is "
 						+ "found to be a link.", false);
 			else
 				Reporter.logEvent(Status.FAIL,"Validate website support is a link within message.","website support is "
-						+ "not found to be a link.", true);
+						+ "not found to be a link.", true);*/
 			
 		}
 		if(returnToEmployeePageButtonsingleBtn.isDisplayed() && rehireempBtn.isDisplayed())
@@ -9376,28 +9384,43 @@ public void employmentFieldValidation() throws Exception
 }
 
 /**
- * <pre>This method terminates employee with current date.</pre>
+ * <pre>This method terminates employee with any date as per requirement.</pre>
  * @author smykjn
  * @Date 04-Aug-2017
  * @param String 
  */
-public void terminateEmpWithCurrentDate() throws Exception{
-	Date todaysDate = CommonLib.getSysDateWithTimeZone("America/Denver");
-	String todaysDate_string = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", todaysDate);
+public void terminateEmpWithCurrentDate(Date terminationDate) throws Exception{
+	//terminationDate = CommonLib.getSysDateWithTimeZone("America/Denver");
+	String todaysDate_string = CommonLib.getDateStringInDateFormat("MM/dd/yyyy", terminationDate);
 	Web.setTextToTextBox(emptermDate, todaysDate_string);
 	Web.clickOnElement(saveOnEmpPage);
 	if(Web.isWebElementDisplayed(confirmationNumber,true)){
 		String eventId=confirmationNumber.getText().trim();
 		boolean isExists = CommonLib.validateEventID(eventId);
 		if(isExists)
-			Reporter.logEvent(Status.PASS,"Terminate employee with current date,save and verify in event table.",""
+			Reporter.logEvent(Status.PASS,"Terminate employee with date '"+terminationDate+"',save and verify in event table.",""
 					+ "Employee has been terminated successfully with current date.\below is event id:"+eventId, false);
 		else
-			Reporter.logEvent(Status.FAIL,"Terminate employee with current date,save and verify in event table.",""
+			Reporter.logEvent(Status.FAIL,"Terminate employee with date '"+terminationDate+"',save and verify in event table.",""
 					+ "Employee has not been terminated successfully with current date.\below is event id:"+eventId, true);
 		
 	}
 }
+
+/**
+ * @author smykjn
+ */
+public String getDateWithReferenceToAnyDate(Date date,int offset,String dateformat){
+	SimpleDateFormat sdf = new SimpleDateFormat(dateformat);
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(date);
+	cal.add(Calendar.DATE, offset);
+	Date returnDate = cal.getTime();
+	System.out.println("Date returned:"+sdf.format(returnDate));
+	return sdf.format(returnDate);
+}
+
+
 
 
 /**
@@ -9422,14 +9445,14 @@ public void zeroDeferralValidationScenario_1() throws Exception{
 		Reporter.logEvent(Status.PASS,"validate 'Rehire employee' button is displayed.", "Rehire employee button is displayed.",false);
 	else
 		Reporter.logEvent(Status.FAIL,"validate 'Rehire employee' button is displayed.", "Rehire employee button is not displayed.",true);
-	try{
-		editTerminationDateBtn.isDisplayed();
+	
+		if(editTerminationDateBtn.isDisplayed())
 		Reporter.logEvent(Status.FAIL,"Validate if Edit termination date button is not displayed.","Edit termination date"
 				+ " button is displayed.",true);
-	}catch(Exception e){
+		else
 		Reporter.logEvent(Status.PASS,"Validate if Edit termination date button is not displayed.","Edit termination date"
 				+ " button is not displayed.",false);
-	}
+	
 	String actMsg = termonationMsg.getText().trim();
 	String expMsg = Stock.GetParameterValue("MsgWhenTerminated");
 	System.out.println("Message is :"+actMsg);
@@ -9449,7 +9472,7 @@ public void zeroDeferralValidationScenario_1() throws Exception{
  * Details link</pre>
  * @author smykjn
  */
-public void employmentsectionandDetailLinkValidation()
+public void employmentsectionandDetailLinkValidation() throws Exception
 {
 	if(empHistoryTitle.isDisplayed())
 		Reporter.logEvent(Status.PASS,"Validate Employment history title is displayed.",""
@@ -9470,6 +9493,42 @@ public void employmentsectionandDetailLinkValidation()
 	else
 		Reporter.logEvent(Status.FAIL,"Validate Detail link is displayed.","Detail link is not displayed.", true);
 }
+
+/**
+ * <pre>Thie method rehire emp with given Date</pre>
+ * @author smykjn
+ */
+public void rehireEmp(String dateString,String ssn)
+{
+	try{
+		CommonLib.navigateToProvidedPage("Employees","Search employee");
+		System.out.println("SSN:"+ssn);
+		this.searchEmployeeBySSNAllPlans(ssn);
+		this.navigateToEmployeeOverViewPage();
+		this.navigateToEmpDetailPage();
+		Web.clickOnElement(employmntEditLink);
+		this.navigateToEmpRehirePage();
+		Web.setTextToTextBox(empHiredate, dateString);
+		Web.clickOnElement(saveOnEmpPage);
+		if(Web.isWebElementDisplayed(confirmationNumber,true)){
+			String eventId=confirmationNumber.getText().trim();
+			boolean isExists = CommonLib.validateEventID(eventId);
+			if(isExists)
+				Reporter.logEvent(Status.PASS,"Rehire employee with date '"+dateString+"',save and verify in event table.",""
+						+ "Employee has been rehired successfully with date '"+dateString+"'.\below is event id:"+eventId, false);
+			else
+				Reporter.logEvent(Status.PASS,"Rehire employee with date '"+dateString+"',save and verify in event table.",""
+						+ "Employee has not been rehired successfully with date '"+dateString+"'", true);
+		}
+		
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.WARNING,"Rehire employee with date '"+dateString+"',save and verify in event table.",""
+				+ e.getMessage(), true);
+	}
+	
+}
+
 
 
 

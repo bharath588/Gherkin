@@ -2986,8 +2986,8 @@ try {
 			if(dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))){
 				dateToRevertBack = CommonLib.getDateStringInDateFormat("dd-MMM-yy", dbTermDate);
 				System.out.println("TermDate from DB :"+dateToRevertBack);
-				String modifyDate = CommonLib.getDate("dd-MMM-yy", -560);
-				System.out.println("TermDate modified by -60 days :"+modifyDate);
+				String modifyDate = CommonLib.getDate("dd-MMM-yy", -740);
+				System.out.println("TermDate modified by -560 days :"+modifyDate);
 				DB.executeUpdate(Stock.getTestQuery("updateEmploymentTableTermDate")[0],
 						Stock.getTestQuery("updateEmploymentTableTermDate")[1],modifyDate,ssn);
 			}
@@ -3217,11 +3217,10 @@ public void TC_60_PSC_Employee_Information_Active_ChageHireInfo(int itr,Map<Stri
 public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1(int itr,Map<String, String> testdata) {		
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates Edit termination button is"
+				+ " not displayed if plan is set for zero deferral with 0 days set for zero deferral rule.", false);
 		String planNumber="";
 		String ssn = "";
-		String hireDate="";
-		String termDate="";
 
 		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
 				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
@@ -3240,10 +3239,9 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
 
 			while(resultset.next()){
 				ssn = resultset.getString("SSN");
-				hireDate = resultset.getString("HIRE_DATE");
-				termDate = resultset.getString("EMP_TERMDATE");
 				break;
 			}
+			Date currentDate = new Date();
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchPlan(planNumber);
 			employeesearch.searchEmployeeBySSN(ssn);
@@ -3251,8 +3249,7 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
 			employeesearch.navigateToEmpDetailPage();
 			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
 				employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
-				employeesearch.terminateEmpWithCurrentDate();
-				CommonLib.switchToFrame(Web.returnElement(employeesearch, "FRAME_C_A"));
+				employeesearch.terminateEmpWithCurrentDate(currentDate);
 				Web.clickOnElement(Web.returnElement(employeesearch,"RETURN_TO_EMPLOYEE_PAGE_BTN"));
 				employeesearch.searchEmployeeBySSN(ssn);
 				employeesearch.navigateToEmployeeOverViewPage();
@@ -3291,9 +3288,10 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
 public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2(int itr,Map<String, String> testdata) {		
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-		Reporter.logEvent(Status.INFO, "Testcase Description","", false);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates Edit termination button is"
+				+ " not displayed when termDate+zero_after_x_days<currentdate", false);
 		String planNumber="";
-		String ssn = "";
+		String indid = "";
 		String zero_after_x_days="";
 
 		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
@@ -3307,15 +3305,195 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
 				break;
 			}
 			
-			resultset = DB.executeQuery(Stock.getTestQuery("XdaysPlusTermDateGrtrThnSysdate")[0],
-					Stock.getTestQuery("XdaysPlusTermDateGrtrThnSysdate")[1],zero_after_x_days,zero_after_x_days,planNumber);
+			resultset = DB.executeQuery(Stock.getTestQuery("Xdays+TermDateLessThnSysdtWithZeroDeferral")[0],
+					Stock.getTestQuery("Xdays+TermDateLessThnSysdtWithZeroDeferral")[1],planNumber,zero_after_x_days);
 		
 			while(resultset.next()){
-				ssn=resultset.getString("SSN");
+				indid=resultset.getString("IND_ID");
 			}
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.searchPlan(planNumber);
-			employeesearch.searchEmployeeBySSN(ssn);
+			employeesearch.searchByParticipantID(indid);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.zeroDeferralValidationScenario_1();
+				employeesearch.employmentsectionandDetailLinkValidation();
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+/**
+ * <pre>This test case covers different scenario for Hire and terminate features for Zero deferral plan.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates Edit termination button is"
+				+ " not displayed when termDate+zero_after_x_days=currentdate", false);
+		String planNumber="";
+		String indId = "";
+		String zero_after_x_days="";
+		String ssn="";
+		boolean isIndIdEmpty=false;
+		employeesearch = new EmployeeSearch().get();
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[0],
+					Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[1],"K_"+Stock.GetParameterValue("username"));
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				zero_after_x_days = resultset.getString("ZERO_AFTER_X_DAYS");
+				break;
+			}
+			
+			
+				resultset = DB.executeQuery(Stock.getTestQuery("Xdays+TermDateEqulsSysdtWithZeroDeferral")[0],
+						Stock.getTestQuery("Xdays+TermDateEqulsSysdtWithZeroDeferral")[1],planNumber,zero_after_x_days);
+				while(resultset.next()){
+					indId=resultset.getString("IND_ID").trim();
+				}
+			
+				if(indId.isEmpty()){
+					isIndIdEmpty = true;
+					resultset = DB.executeQuery(Stock.getTestQuery("getSSNWithNullTermDate")[0],
+							Stock.getTestQuery("getSSNWithNullTermDate")[1],planNumber);
+					while(resultset.next()){
+						ssn=resultset.getString("SSN");
+						break;
+					}
+					String termDateString = 
+							employeesearch.getDateWithReferenceToAnyDate(new Date(),-Integer.parseInt(zero_after_x_days),"MM/dd/yyyy");
+					employeesearch.searchEmployeeBySSNAllPlans(ssn);
+					employeesearch.navigateToEmployeeOverViewPage();
+					employeesearch.navigateToEmpDetailPage();
+					employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+					employeesearch.terminateEmpWithCurrentDate(
+							CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateString));
+					resultset = DB.executeQuery(Stock.getTestQuery("Xdays+TermDateEqulsSysdtWithZeroDeferral")[0],
+							Stock.getTestQuery("Xdays+TermDateEqulsSysdtWithZeroDeferral")[1],planNumber,zero_after_x_days);
+					while(resultset.next()){
+						indId=resultset.getString("IND_ID");
+					}
+				}
+			
+			Web.getDriver().switchTo().defaultContent();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchByParticipantID(indId);
+			employeesearch.navigateToEmployeeOverViewPage();
+			employeesearch.navigateToEmpDetailPage();
+			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
+				employeesearch.zeroDeferralValidationScenario_1();
+				employeesearch.employmentsectionandDetailLinkValidation();
+			}
+			if(isIndIdEmpty){
+				employeesearch.rehireEmp(CommonLib.getDateStringInDateFormat("MM/dd/yyyy", new Date()), ssn);
+			}
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
+
+
+
+/**
+ * <pre>This test case covers different scenario for Hire and terminate features for Zero deferral plan.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","This test case validates Edit termination button is"
+				+ " not displayed when termDate+zero_after_x_days>currentdate", false);
+		String planNumber="";
+		String indId = "";
+		String zero_after_x_days="";
+		String ssn="";
+		employeesearch = new EmployeeSearch().get();
+		resultset = DB.executeQuery(Stock.getTestQuery("chkEmploymentAndEditTxnCode")[0],
+				Stock.getTestQuery("chkEmploymentAndEditTxnCode")[1],"K_"+Stock.GetParameterValue("username"));
+		if(DB.getRecordSetCount(resultset)==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[0],
+					Stock.getTestQuery("getPlanAndZeroDeferralDaysRecord")[1],"K_"+Stock.GetParameterValue("username"));
+			while(resultset.next()){
+				planNumber = resultset.getString("GA_ID");
+				zero_after_x_days = resultset.getString("ZERO_AFTER_X_DAYS");
+				break;
+			}
+			
+				resultset = DB.executeQuery(Stock.getTestQuery("Xdays+TermDateGrtrThnSysdtWithNonZeroDeferral")[0],
+						Stock.getTestQuery("Xdays+TermDateGrtrThnSysdtWithNonZeroDeferral")[1],planNumber,zero_after_x_days);
+				while(resultset.next()){
+					indId=resultset.getString("IND_ID");
+				}
+			if(indId.isEmpty()){
+				resultset = DB.executeQuery(Stock.getTestQuery("getSSNWithNullTermDate")[0],
+						Stock.getTestQuery("getSSNWithNullTermDate")[1],planNumber);
+				while(resultset.next()){
+					ssn=resultset.getString("SSN");
+				}
+				String termDateString = 
+				employeesearch.getDateWithReferenceToAnyDate(new Date(),Integer.parseInt(zero_after_x_days),"MM/dd/yyyy");
+				employeesearch.searchEmployeeBySSNAllPlans(ssn);
+				employeesearch.navigateToEmployeeOverViewPage();
+				employeesearch.navigateToEmpDetailPage();
+				employeesearch.navigateToHirePageWhenEmpActiveNoTermDate();
+				employeesearch.terminateEmpWithCurrentDate(
+						CommonLib.getDateInDateFormatFromDateString("MM/dd/yyyy", termDateString));
+				resultset = DB.executeQuery(Stock.getTestQuery("Xdays+TermDateGrtrThnSysdtWithNonZeroDeferral")[0],
+						Stock.getTestQuery("Xdays+TermDateGrtrThnSysdtWithNonZeroDeferral")[1],planNumber,zero_after_x_days);
+				while(resultset.next()){
+					indId=resultset.getString("IND_ID");
+				}
+				
+			}
+			Web.getDriver().switchTo().defaultContent();
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchByParticipantID(indId);
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			if(employeesearch.employmentInfoSectionAndEditLinkValidation()){
@@ -3345,11 +3523,68 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
 
 
 
-
-
-
-
-
+/**
+ * <pre>This test case covers different scenario for Hire and terminate features for Zero deferral plan.</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 31-July-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_61_SIT_PSC_Search_Employee_based_on_User_access_Automation(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
+				"is to verify Employee Search functionality based on User category.", false);
+		resultset = DB.executeQuery(Stock.getTestQuery("getNumberOfPlansQuery")[0],Stock.getTestQuery("getNumberOfPlansQuery")[1],
+				"K_"+Stock.GetParameterValue("username"));
+		int numberOfPlans = DB.getRecordSetCount(resultset);
+		String ssn="";
+		String planNumber="";
+		System.out.println("Number of plans:"+numberOfPlans);
+		while(resultset.next()){
+			planNumber = resultset.getString("GA_ID");
+				break;
+			}
+		resultset = DB.executeQuery(Stock.getTestQuery("queryToFindSSNforAplan")[0],
+				Stock.getTestQuery("queryToFindSSNforAplan")[1],planNumber);
+		while(resultset.next()){
+			ssn =  resultset.getString("SSN");
+			break;
+		}
+		employeesearch = new EmployeeSearch().get();
+		if(numberOfPlans==1){
+			employeesearch.searchEmployeeBySSN(ssn);
+		}else{
+			employeesearch.searchPlan(planNumber);
+			employeesearch.searchEmployeeBySSN(ssn);
+		}
+		if(Web.returnElement(employeesearch, "EmpLastNameLink").isDisplayed())
+			Reporter.logEvent(Status.PASS,"Login as PSC user with only 1 plan and search for an"
+					+ " employee within that plan.","Employee is found.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Login as PSC user with only 1 plan and search for an"
+					+ " employee within that plan.","Employee is not found.", true);
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
 

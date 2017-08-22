@@ -219,7 +219,7 @@
 					</include> 
 					<include name="TC_56_PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month" />
-					</include> 
+					</include>
 					<include name="TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month" />
 					</include>
@@ -231,18 +231,21 @@
 					</include>
 					<include name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1" />
-					</include>-->
+					</include>
 					<include name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2" />
 					</include>
-					<!-- <include name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3">
+					<include name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3" />
 					</include>
 					<include name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4" />
 					</include> -->
+					<include name="TC_61_SIT_PSC_Search_Employee_based_on_User_access_Automation">
+						<parameter name="ManualTCName" value="SIT_PSC_Search_Employee_based_on_User_access_Automation" />
+					</include> 
 				</methods>
-			</class> 
+			</class>
 			<!-- <class name="app.psc.testcases.login.logintestcases" >
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
@@ -314,17 +317,22 @@
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Invalid" />
+							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
 					</include>
 					<include
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_New Browser_Valid" />
+							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session" />
+							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session" />
+					</include>
+					<include
+						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_multiple_site_within_same_browser_session" />
 					</include> 
 					<include name="Verify_TUDS_table_for_Magic_login">
 						<parameter name="ManualTCName"

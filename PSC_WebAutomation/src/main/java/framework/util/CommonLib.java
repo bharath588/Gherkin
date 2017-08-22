@@ -610,6 +610,7 @@ public static void switchToFrame(WebElement frameIDorName)
 	try{
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
+		Web.waitForElement(frameIDorName);
 		Web.getDriver().switchTo().frame(frameIDorName);
 	}catch(NoSuchFrameException e){
 		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);

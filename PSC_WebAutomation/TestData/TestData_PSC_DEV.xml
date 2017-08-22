@@ -2697,16 +2697,17 @@ and t2.ga_id in (select id GA_ID from group_account where plan_id in
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')))
  order by t2.active_datetime desc" />
- <parameter QueryName="XdaysPlusTermDateGrtrThnSysdate" DB="ISISDB_DEV"
- Query="select i.ssn,to_char(e.emp_termdate+?,'MM/dd/yyyy') emp_termdate_PlusZero_days,
-to_char(e.emp_termdate,'MM/dd/yyyy') emp_termDate
-from employment e inner join individual i on i.id=e.ind_id 
-where e.hire_date is not null
-and e.emp_termdate is not null
-and sysdate>e.emp_termdate+?
-and e.ind_id in (
-select ind_id from PART_AGRMT
-where ga_id=?) 
-order by e.emp_termdate desc" />
+  <parameter QueryName="Xdays+TermDateGrtrThnSysdtWithNonZeroDeferral" DB="ISISDB_DEV"
+ Query="select emp.ind_id,emp.emp_termDate from elective_deferral e inner join group_account ga on e.plan_id=ga.plan_id and ga.id=?
+ inner join employment emp on emp.ind_id= e.ind_id and emp.emp_termdate is not null and e.amount is not null and emp.emp_termdate+? &#62; sysdate
+ order by emp.emp_termdate desc" />
+ <parameter QueryName="Xdays+TermDateLessThnSysdtWithZeroDeferral" DB="ISISDB_DEV"
+ Query="select emp.ind_id,emp.emp_termDate from elective_deferral e inner join group_account ga on e.plan_id=ga.plan_id and ga.id=?
+ inner join employment emp on emp.ind_id= e.ind_id and emp.emp_termdate is not null and e.amount=0 and emp.emp_termdate+? &#60; sysdate
+ order by emp.emp_termdate desc" />
+ <parameter QueryName="Xdays+TermDateEqulsSysdtWithZeroDeferral" DB="ISISDB_DEV"
+ Query="select emp.ind_id,emp.emp_termDate from elective_deferral e inner join group_account ga on e.plan_id=ga.plan_id and ga.id=?
+inner join employment emp on emp.ind_id= e.ind_id and emp.emp_termdate is not null and e.amount=0 
+and to_char(emp.emp_termdate+?) = to_char(sysdate) order by emp.emp_termdate desc" />
 </Module>
 </TestData>
