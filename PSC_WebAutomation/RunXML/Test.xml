@@ -6,38 +6,41 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Exec1">
 		<classes>
-			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow- 
-				Existing user_accessing_single_site_within_same_browser_session"/>
+							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session" />
 					</include>
 				</methods>
 			</class>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
-					 <include name="TC01_search_plan_for_valid_plan">
+					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
-							value="Plan_Search_Redirection_Plan_Summary_Page"/>
-					</include>				
-					<include name="TC02_Validate_error_message_when_plan_field_is_left_blank">
-						<parameter name="ManualTCName"
-							value="Plan_Validat_error_message_when_plan_filed_blank"/>
-					</include> 
-					<include name="TC03_Verify_planDetails_Populated">
-						<parameter name="ManualTCName" value="Autocomplete_plan_suggestion_link_should_display_when_partial_plan 
-				number_is_entered"/>
+							value="Plan_Search_Redirection_Plan_Summary_Page" />
 					</include>
-					 <include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
-						<parameter name="ManualTCName" value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"/>
-					</include> 
+					<include
+						name="TC02_Validate_error_message_when_plan_field_is_left_blank">
+						<parameter name="ManualTCName"
+							value="Plan_Validat_error_message_when_plan_filed_blank" />
+					</include>
+					<include name="TC03_Verify_planDetails_Populated">
+						<parameter name="ManualTCName"
+							value="Autocomplete_plan_suggestion_link_should_display_when_partial_plannumber_is_entered" />
+					</include>
+					<include
+						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+						<parameter name="ManualTCName"
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
+					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
-						<parameter name="ManualTCName" value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"/>
+						<parameter name="ManualTCName"
+							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					 <include name="TC017_01_Internal_Employee_External_Client_Login">
@@ -45,53 +48,53 @@
 							value="SIT_PSC_Login_01_TC017_Internal and External User">
 						</parameter>
 					</include>
-					<!-- <include name="TC006_01_Verify_Error_Message_For_Terminated_User">
-						<parameter name="ManualTCName" value="SIT_PSC_Login_01_TC004_Terminate User"/>
+					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+						<parameter name="ManualTCName" value="SIT_PSC_Login_01_TC004_Terminate User" />
 					</include>
 					<include
 						name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
-							value="User_Account_Locking_For_max_Invalid_Attempts"/>
+							value="User_Account_Locking_For_max_Invalid_Attempts" />
 					</include>
 					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
 						<parameter name="ManualTCName"
-							value="Display correct date and time of my last login"/>
+							value="Display correct date and time of my last login" />
 					</include>
 					<include
 						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
-							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered"/>
+							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
-							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered"/>
+							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
 					</include>
 					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
-						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs"/>
+						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs" />
 					</include>
 					<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
-						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs"/>
+						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs" />
 					</include>
 					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
 						<parameter name="ManualTCName"
-							value="Verify_PLUser_Login_With_No_Plna_Access"/>
+							value="Verify_PLUser_Login_With_No_Plna_Access" />
 					</include>
 					<include
 						name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
 						<parameter name="ManualTCName"
-							value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite"/>
+							value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite" />
 					</include>
 					<include
 						name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
 						<parameter name="ManualTCName"
-							value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites"/>
+							value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites" />
 					</include>
 					<include name="TC003_UI_Validations_On_JumpPage">
 						<parameter name="ManualTCName" value="UI_Validations_On_JumpPage"/>
-					</include> -->
+					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					<include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="Employment_Info_Verification" />
@@ -126,7 +129,94 @@
 						<parameter name="ManualTCName" value="Verify_Employee_Basic_Info" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
+			<class
+				name="app.psc.testcases.accountverification.accountverification_existingusr">
+				<methods>
+					<include name="TC019_Verify_Default_Plan_Prompting">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
+						</parameter>
+					</include>
+					<include
+						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC002_Expired Password_negative">
+						</parameter>
+					</include>
+					<include
+						name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC002_Expired Password_positive">
+						</parameter>
+					</include>
+					<include name="TC018_Security_Question_Validation_Existing_User">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
+						</parameter>
+					</include>
+					<include
+						name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
+						</parameter>
+					</include>
+					<include name="TC006_01_Verify_Display_Of_Notification_On_HomePage">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_HomePage_02_TC006_Notification Button">
+						</parameter>
+					</include>
+					<include name="TC006_01_Verify_Display_Of_Compliance_On_HomePage">
+						<parameter name="ManualTCName"
+							value="SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
+						</parameter>
+					</include>
+					<include name="TC009_01_Verify_Multifactoring">
+						<parameter name="ManualTCName" value="Multifactoring_Regr">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
+				<methods>
+					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_My_profile_Default_Plan" />
+					</include>
+					<include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_My_profile_Default_Plan_Negative" />
+					</include>
+					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_Email_Address_Positive_Flow" />
+					</include>
+					<include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_Email_Address_Negative_Flow" />
+					</include>
+					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_Email_Address_Invalid_Password" />
+					</include>
+					<include name="TC003_01_SIT_PSC_Update_User_Name">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_User_Name" />
+					</include> 
+					<include name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_My_profile_Security_Questions" />
+					</include>
+					<include name="TC005_01_SIT_PSC_Update_My_profile_Password">
+						<parameter name="ManualTCName" 
+						value="SIT_PSC_Update_My_profile_Password" />
+					</include>
+					<include name="TC006_01_FAQ_DDTC_245">
+						<parameter name="ManualTCName" 
+						value="FAQ_DDTC_245" />
+					</include>
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

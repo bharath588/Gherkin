@@ -4,8 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -235,7 +242,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Web.getDriver().switchTo().frame(frmLogin);	
 			Web.isWebElementDisplayed(wePreLoginError, true);
 			textMatch = Web.VerifyPartialText(errorMsg, wePreLoginError.getText(), true);
-		
+
 			if(textMatch){
 				Reporter.logEvent(Status.PASS, "Check if the appropiate error displayed",
 						"Expected Error message displayed: "+wePreLoginError.getText(), false);
@@ -279,7 +286,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		String testData;
 		int linkObjSize = linkObjList.size();
 		try{
-			 //Looping through the list of Header/Footer links
+			//Looping through the list of Header/Footer links
 			for (int iLoopCnt = 0; iLoopCnt < linkObjSize - 1; iLoopCnt++) {
 				new LoginPage();
 				testData = Stock.GetParameterValue(testDataColNm + (iLoopCnt + 1));
@@ -302,15 +309,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				}
 
 				// Verification against redirected URLs
-				
+
 				if((Web.VerifyPartialText(testData, currentURL, false))){
 					Reporter.logEvent(Status.PASS,"Check if the respective page is loaded",
-							 "Verified that the respective page :" + testData + " is loaded successfully", false);
+							"Verified that the respective page :" + testData + " is loaded successfully", false);
 				}else{
 					Reporter.logEvent(Status.FAIL,"Check if the respective page is loaded",
 							"Respective page :" + testData + " is not loaded", true);
 				}
-				
+
 				if (!(testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")
 						&& !(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
 					Web.waitForElement(linkPSCBreadCrumHome);
@@ -318,25 +325,25 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				}
 			}
 		}catch(Exception e){
-			 throw new Error("Error occurred while checking " +
-			 testDataColNm.split("link_")[1] +
-			 " links , Exception:"+e.getMessage());
+			throw new Error("Error occurred while checking " +
+					testDataColNm.split("link_")[1] +
+					" links , Exception:"+e.getMessage());
 		}
 	}
-	
+
 	public void waitForSuccessfulLogin() throws InterruptedException
 	{
 		if(Web.isWebElementDisplayed(frmLogin))
 		{
-		Web.getDriver().switchTo().frame(frmLogin);
-		do
-		{
-		Thread.sleep(3000);	
-		}while(Web.isWebElementDisplayed(loginSpinner));
+			Web.getDriver().switchTo().frame(frmLogin);
+			do
+			{
+				Thread.sleep(3000);	
+			}while(Web.isWebElementDisplayed(loginSpinner));
 		}
 		Web.getDriver().switchTo().defaultContent();
 	}
-	
+
 	/**
 	 * @param updateInvalidLogonAttemptQuery
 	 * @param userName
@@ -361,7 +368,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @param queryToTerminateUser
 	 * @param termDate
@@ -380,14 +387,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			{
 				Reporter.logEvent(Status.FAIL, "Execute query to update termdate in Users table", 
 						"Query did not execut successfully", false);
-			 
-		}
+
+			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+
 	
 	/**
 	 * @author smykjn
@@ -532,4 +540,61 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		
 	}
 	
+
+	private Date calculateDay(int offset)
+	{
+		final Calendar cal = Calendar.getInstance();
+		if(offset!=0){
+			cal.add(Calendar.DATE, offset);
+			return cal.getTime();}
+		else
+		{
+			return cal.getTime();
+		}
+	}
+
+	private String getDate(String dateformat,int offset)
+	{
+		String date=null;
+		DateFormat df = new SimpleDateFormat(dateformat);
+		df.setLenient(false);
+		try{
+			date = df.format(calculateDay(offset));
+		}
+		catch(Exception e)
+		{
+			System.out.println (e.getMessage()) ;
+		}
+		System.out.println("Formatted date is:"+date);
+		return date;
+	}
+
+	private boolean updateInvalidLoginDpDate(String[] queryToUpdateInvalidLoginDpDate,
+			String dateToUpdate, String userName) throws Exception
+	{
+
+		int rowsUpdated = DB.executeUpdate(queryToUpdateInvalidLoginDpDate[0], 
+				queryToUpdateInvalidLoginDpDate[1],
+				dateToUpdate,userName);
+		if(rowsUpdated>0)
+			return true;
+		else
+			return false;
+
+
+	}
+
+	public boolean isInvalidLoginDpDateUpdated()
+	{
+		boolean updated = false;
+		try{
+			updated = updateInvalidLoginDpDate(Stock.getTestQuery("updateInvalidLoginDpDate"),
+					getDate("dd-MMM-yy",-1),"K_"+Stock.GetParameterValue("username"));
+		}
+		catch(Exception e)
+		{
+
+		}
+		return updated;
+	}
 }

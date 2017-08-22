@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
+  <listeners>
+    <listener class-name="core.framework.TestListener"/>
+  </listeners>
+  <test name="Regression_Orange_Period_Exec1(failed)">
+    <classes>
+      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+        <methods>
+          <include name="TC006_01_FAQ_DDTC_245">
+            <parameter name="ManualTCName" value="FAQ_DDTC_245"/>
+          </include> <!-- TC006_01_FAQ_DDTC_245 -->
+          <include name="InitTest"/>
+        </methods>
+      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
+    </classes>
+  </test> <!-- Regression_Orange_Period_Exec1(failed) -->
+</suite> <!-- Failed suite [testsuite] -->

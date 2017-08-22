@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
@@ -52,7 +55,7 @@ public class CommonLib {
 	static ResultSet queryResultSet;
 	static HomePage homePage;
 	public static String browserName;
-	
+	//private static String progressBar =".//*[@id='pscSpinnerId']";
 	public CommonLib(){
 		PageFactory.initElements(Web.getDriver(), this);
 	}
@@ -73,7 +76,7 @@ public class CommonLib {
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
 	}
-	
+
 	public static void enterData(WebElement ele, String value) {
 		String tagName = "";
 		try {
@@ -156,365 +159,388 @@ public class CommonLib {
 		}
 		return isMatching;
 	}
-	
+
 	public static ResultSet getParticipantInfoFromDataBase(String userName)
-            throws SQLException {
+			throws SQLException {
 
-     String[] sqlQuery = null;
-     try {
-            sqlQuery = Stock.getTestQuery("getParticipantInfo");
-     } catch (Exception e) {
-            e.printStackTrace();
-     }
-     sqlQuery[0] = getUserDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
-     ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
-                  userName.substring(0, 9));
+		String[] sqlQuery = null;
+		try {
+			sqlQuery = Stock.getTestQuery("getParticipantInfo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		sqlQuery[0] = getUserDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
+		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+				userName.substring(0, 9));
 
-     if (DB.getRecordSetCount(participantInfo) > 0) {
-            try {
-                  participantInfo.last();
-            } catch (SQLException e) {
-                  e.printStackTrace();
-                  Reporter.logEvent(
-                                com.aventstack.extentreports.Status.WARNING,
-                                "Query Participant Info from DB:" + sqlQuery[0],
-                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
-                                false);
-            }
-     }
-     return participantInfo;
-}
-
-public static String getUserDBName(String userName) throws SQLException {
-
-     // query to get the no of plans
-     String[] sqlQuery = null;
-     ResultSet participantDB = null;
-     try {
-            sqlQuery = Stock.getTestQuery("getPartcipantDBInfo");
-     } catch (Exception e) {
-            e.printStackTrace();
-     }
-     
-     participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],"K_"+userName);
-     if (DB.getRecordSetCount(participantDB) > 0) {
-            try {
-                  participantDB.last();
-            } catch (SQLException e) {
-                  e.printStackTrace();
-                  Reporter.logEvent(
-                                Status.WARNING,
-                                "Query Participant DB:" + sqlQuery[0],
-                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
-                                false);
-            }
-
-     }
-     System.out.println("DATA BASE Name"+ participantDB.getString("DATABASE_INSTANCE"));
-     String db = participantDB.getString("DATABASE_INSTANCE");
-     if(db.equals("QASK"))
-     {
-    	 db="ISIS";
-     }
-     return db;
-}
-
-public static String getParticipantID(String ssn) throws SQLException {
-
-     // query to get the no of plans
-     String[] sqlQuery = null;
-     ResultSet participantID = null;
-
-     try {
-            sqlQuery = Stock.getTestQuery("getParticipantID");
-     } catch (Exception e) {
-            e.printStackTrace();
-     }
-
-     participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
-
-     if (DB.getRecordSetCount(participantID) > 0) {
-            try {
-                  participantID.last();
-            } catch (SQLException e) {
-                  e.printStackTrace();
-                  Reporter.logEvent(
-                                Status.WARNING,
-                                "Query Participant DB:" + sqlQuery[0],
-                                "The Query did not return any results. Please check participant test data as the appropriate data base.",
-                                false);
-            }
-     } else {
-            try {
-                  sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDBISIS");
-            } catch (Exception e) {
-                  e.printStackTrace();
-            }
-
-            participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
-
-            if (DB.getRecordSetCount(participantID) > 0) {
-                  try {
-                         participantID.last();
-                  } catch (SQLException e) {
-                         e.printStackTrace();
-                         Reporter.logEvent(
-                                       Status.WARNING,
-                                       "Query Participant DB:" + sqlQuery[0],
-                                       "The Query did not return any results. Please check participant test data as the appropriate data base.",
-                                       false);
-                  }
-            } else {
-                  try {
-                         sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
-                  } catch (Exception e) {
-                         e.printStackTrace();
-                  }
-
-                  participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
-
-                  if (DB.getRecordSetCount(participantID) > 0) {
-                         try {
-                                participantID.last();
-                         } catch (SQLException e) {
-                                e.printStackTrace();
-                                Reporter.logEvent(
-                                              Status.WARNING,
-                                              "Query Participant DB:" + sqlQuery[0],
-                                              "The Query did not return any results. Please check participant test data as the appropriate data base.",
-                                              false);
-                         }
-                  }
-            }
-     }
-     System.out.println("ID is " + participantID.getString("ID"));
-     return participantID.getString("ID");
-}
-
-
-public static String checkEnv(String envName) {
-    if (envName.contains("PROJ")) {
-           return Globals.DB_TYPE.get("PROJ");
-    }
-    if (envName.contains("QA")) {
-           return Globals.DB_TYPE.get("QA");
-    }
-    if (envName.contains("PROD")) {
-           return Globals.DB_TYPE.get("PROD");
-    }
-    return null;
-}
-
-	
-	
-/**
- * @author smykjn<br>
- * This method returns true if xpath exist else false.
- */
-
-public static boolean isElementExistByXpath(String xpath)
-{
-	boolean xpathExist = false;
-	List<WebElement> webElements = Web.getDriver().findElements(By.xpath(xpath));
-	if(webElements.size()==0)
-	{
-		xpathExist = false;
+		if (DB.getRecordSetCount(participantInfo) > 0) {
+			try {
+				participantInfo.last();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						com.aventstack.extentreports.Status.WARNING,
+						"Query Participant Info from DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+		}
+		return participantInfo;
 	}
-	else
+
+	public static String getUserDBName(String userName) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet participantDB = null;
+		try {
+			sqlQuery = Stock.getTestQuery("getPartcipantDBInfo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],"K_"+userName);
+		if (DB.getRecordSetCount(participantDB) > 0) {
+			try {
+				participantDB.last();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Participant DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+
+		}
+		System.out.println("DATA BASE Name"+ participantDB.getString("DATABASE_INSTANCE"));
+		String db = participantDB.getString("DATABASE_INSTANCE");
+		if(db.equals("QASK"))
+		{
+			db="ISIS";
+		}
+		return db;
+	}
+
+	public static String getParticipantID(String ssn) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet participantID = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("getParticipantID");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+		if (DB.getRecordSetCount(participantID) > 0) {
+			try {
+				participantID.last();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Participant DB:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+		} else {
+			try {
+				sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDBISIS");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+			if (DB.getRecordSetCount(participantID) > 0) {
+				try {
+					participantID.last();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					Reporter.logEvent(
+							Status.WARNING,
+							"Query Participant DB:" + sqlQuery[0],
+							"The Query did not return any results. Please check participant test data as the appropriate data base.",
+							false);
+				}
+			} else {
+				try {
+					sqlQuery = Stock.getTestQuery("getParticipantIDfromDiffDB");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
+
+				if (DB.getRecordSetCount(participantID) > 0) {
+					try {
+						participantID.last();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						Reporter.logEvent(
+								Status.WARNING,
+								"Query Participant DB:" + sqlQuery[0],
+								"The Query did not return any results. Please check participant test data as the appropriate data base.",
+								false);
+					}
+				}
+			}
+		}
+		System.out.println("ID is " + participantID.getString("ID"));
+		return participantID.getString("ID");
+	}
+
+
+	public static String checkEnv(String envName) {
+		if (envName.contains("PROJ")) {
+			return Globals.DB_TYPE.get("PROJ");
+		}
+		if (envName.contains("QA")) {
+			return Globals.DB_TYPE.get("QA");
+		}
+		if (envName.contains("PROD")) {
+			return Globals.DB_TYPE.get("PROD");
+		}
+		return null;
+	}
+
+
+
+	/**
+	 * @author smykjn<br>
+	 * This method returns true if xpath exist else false.
+	 */
+
+	public static boolean isElementExistByXpath(String xpath)
 	{
-		WebElement element = Web.getDriver().findElement(By.xpath(xpath));
-		if(element.isDisplayed())
-			xpathExist=true;
-		else
+		boolean xpathExist = false;
+		List<WebElement> webElements = Web.getDriver().findElements(By.xpath(xpath));
+		if(webElements.size()==0)
+		{
+			xpathExist = false;
+		}
+		else{
 			xpathExist=false;
 	}
 	return xpathExist;
 }	
-	
-	
+	private static String progressBar =".//*[@id='pscSpinnerId']";    
+	public static void waitForProgressBar(){
+		int iTimeInSecond=100;
+		try{
 
-private static String progressBar =".//*[@id='pscSpinnerId']";    
-public static void waitForProgressBar(){
-         int iTimeInSecond=100;
-           try{
-        	   
-        	   WebElement ele = Web.getDriver().findElement(By.xpath(progressBar));
-        	   Web.waitForElement(ele);
-                  int iCount = 0;
-                  while (ele.isDisplayed()){
-                     
-                         if(iCount ==iTimeInSecond){
-                               break;
-                         }   
-                         
-                         System.out.println("Progress Bar displaying..");
-                         Thread.sleep(1000);                       
-                         iCount++;
-                  }
-                  
-                  
-           }catch(Exception e){
-                  e.getMessage();
-           }
-           
-        }
+			WebElement ele = Web.getDriver().findElement(By.xpath(progressBar));
+			Web.waitForElement(ele);
+			int iCount = 0;
+			while (ele.isDisplayed()){
 
-	
-/**	
- * @author smykjn
- * @Objective This method switches to default plan page
- * @throws SQLException
- * @throws Exception
- */
-public static void switchToDefaultPlan() throws SQLException,Exception
-{
-	String defaultPlan = null;
-	homePage = new HomePage();
-	queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
-			"K_"+Stock.GetParameterValue("username"));
-	while(queryResultSet.next())
-	{
-		defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
+				if(iCount ==iTimeInSecond){
+					break;
+				}   
+
+				System.out.println("Progress Bar displaying..");
+				Thread.sleep(1000);                       
+				iCount++;
+			}
+
+
+		}catch(Exception e){
+			e.getMessage();
+		}
+
 	}
-	Web.getDriver().switchTo().defaultContent();
-	homePage.searchPlanWithIdOrName(defaultPlan);
-}
-	
-	
-/**
- * @author smykjn
- * @Objective This method returns true of list is sorted in ascending order
- * @return boolean
- */
 
-public static boolean isSortedByDescOrder(List<Double> list)
-{
-    boolean sorted = false; 
-    if(list.size()==1)
+
+	/**	
+	 * @author smykjn
+	 * @Objective This method switches to default plan page
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public static void switchToDefaultPlan() throws SQLException,Exception
 	{
-		sorted = true;
-		Reporter.logEvent(Status.INFO, "Only one allocation is found so sorting validation is not required.", "", true);
+		String defaultPlan = null;
+		homePage = new HomePage();
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
+				"K_"+Stock.GetParameterValue("username"));
+		while(queryResultSet.next())
+		{
+			defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
+		}
+		Web.getDriver().switchTo().defaultContent();
+		homePage.searchPlanWithIdOrName(defaultPlan);
 	}
-    else{
-    for (int i = 1; i < list.size(); i++) {
-    	
-        if (list.get(i-1).compareTo(list.get(i)) > 0) {
-        	sorted = true;}
-        else{
-        	sorted = false;
-        	break;
-        	}
-    	}
-    }
 
-    return sorted;
-}
-	
 
-/**
- * @author smykjn
- * @param actHeaders
- * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
- * @param expHeaders
- * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
- * @return boolean
- * <pre>This method returns true if all actual headers are present in exppcted header list.
- * if any of the header is missing from expHeaders the returns false.</pre>
- * @throws Exception
- * @Date 2nd-May-2017
- */
-public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
-{
-	boolean isdisplayed = false;
-	for(WebElement header : actHeaders){
-		System.out.println("Actual Header is "+header.getText().trim());
-		if(expHeaders.contains(header.getText().replaceAll(":", "").replace("*","").trim()))
-		{isdisplayed = true;}
+	/**
+	 * @author smykjn
+	 * @Objective This method returns true of list is sorted in ascending order
+	 * @return boolean
+	 */
+
+	public static boolean isSortedByDescOrder(List<Double> list)
+	{
+		boolean sorted = false; 
+		if(list.size()==1)
+		{
+			sorted = true;
+			Reporter.logEvent(Status.INFO, "Only one allocation is found so sorting validation is not required.", "", true);
+		}
+		else{
+			for (int i = 1; i < list.size(); i++) {
+
+				if (list.get(i-1).compareTo(list.get(i)) > 0) {
+					sorted = true;}
+				else{
+					sorted = false;
+					break;
+				}
+			}
+		}
+
+		return sorted;
+	}
+
+
+	/**
+	 * @author smykjn
+	 * @param actHeaders
+	 * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
+	 * @param expHeaders
+	 * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
+	 * @return boolean
+	 * <pre>This method returns true if all actual headers are present in exppcted header list.
+	 * if any of the header is missing from expHeaders the returns false.</pre>
+	 * @throws Exception
+	 * @Date 2nd-May-2017
+	 */
+	public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
+	{
+		boolean isdisplayed = false;
+		for(WebElement header : actHeaders){
+			System.out.println("Actual Header is"+header.getText().trim());
+			if(expHeaders.contains(header.getText().replaceAll(":", "").trim()))
+			{isdisplayed = true;}
+			else
+			{isdisplayed = false;break;}
+		}	
+		return isdisplayed;
+	}
+
+	/**
+	 * @author smykjn
+	 * @param actHeaders
+	 * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
+	 * @param expHeaders
+	 * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
+	 * @return boolean
+	 * <pre>This method returns true if all actual headers are present in exppcted header list.
+	 * if any of the header is missing from expHeaders the returns false.</pre>
+	 * @throws Exception
+	 * @Date 2nd-May-2017
+	 */
+	public static boolean isAllHeadersDisplayedWhiteSpace(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
+	{
+		boolean isdisplayed = false;
+		for(WebElement header : actHeaders){
+			System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
+			if(expHeaders.contains(header.getText().replaceAll(":", "").replaceAll("\\s+", " ").trim()))
+			{isdisplayed = true;}
+			else
+			{isdisplayed = false;break;}
+		}	
+		return isdisplayed;
+	}
+
+	/**
+	 * <pre>This method converts String list into Date List and sort it in descending order.</pre>
+	 * @Date 3rd-May-2017
+	 * @author smykjn
+	 * @return boolean
+	 * <pre>returns true if list is sorted in descending order else false.</pre>
+	 * @throws Exception
+	 * @Parameter List of WebElements
+	 */
+	public static boolean validateDateSorting(List<WebElement> dateStringElements) throws Exception
+	{
+		boolean isSortedInDescen=false;
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		List<String> dateStringList = new ArrayList<String>();
+		List<Date> dateList = new ArrayList<Date>();
+		for(WebElement dateStringEle : dateStringElements)
+		{
+			dateStringList.add(dateStringEle.getText().trim());
+		}
+		for(String dateString : dateStringList)
+		{
+			dateList.add(simpleDateFormat.parse(dateString));
+		}
+		List<Date> dateListOriginalOrder = new ArrayList<Date>(dateList);
+		System.out.println("Copy List to another list:"+dateListOriginalOrder);
+		Collections.sort(dateList);
+		System.out.println("Natural sorting:"+dateList);
+		Collections.reverse(dateList);
+		System.out.println("Descending:"+dateList);
+		if(dateList.equals(dateListOriginalOrder))
+			isSortedInDescen=true;
 		else
-		{isdisplayed = false;break;}
+			isSortedInDescen=false;
+		return isSortedInDescen;
 	}	
-	return isdisplayed;
-}
 
-/**
- * @author smykjn
- * @param actHeaders
- * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
- * @param expHeaders
- * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
- * @return boolean
- * <pre>This method returns true if all actual headers are present in exppcted header list.
- * if any of the header is missing from expHeaders the returns false.</pre>
- * @throws Exception
- * @Date 2nd-May-2017
- */
-public static boolean isAllHeadersDisplayedWhiteSpace(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
-{
-	boolean isdisplayed = false;
-	for(WebElement header : actHeaders){
-		System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
-		if(expHeaders.contains(header.getText().replaceAll(":", "").replaceAll("\\s+", " ").trim()))
-		{isdisplayed = true;}
-		else
-		{isdisplayed = false;break;}
+
+	/**
+	 * <pre>This method deletes all cookies.</pre>
+	 * @Date 11th-May-2017
+	 * @author smykjn
+	 * @return void
+	 * <pre>returns true if list is sorted in descending order else false.</pre>
+	 * @throws Exception
+	 * @Parameter List of WebElements
+	 */
+	public static void deleteAllCookies() throws Exception
+	{
+		Web.getDriver().manage().deleteAllCookies();
 	}	
-	return isdisplayed;
-}
-	
-/**
- * <pre>This method converts String list into Date List and sort it in descending order.</pre>
- * @Date 3rd-May-2017
- * @author smykjn
- * @return boolean
- * <pre>returns true if list is sorted in descending order else false.</pre>
- * @throws Exception
- * @Parameter List of WebElements
- */
-public static boolean validateDateSorting(List<WebElement> dateStringElements) throws Exception
-{
-	boolean isSortedInDescen=false;
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-	List<String> dateStringList = new ArrayList<String>();
-	List<Date> dateList = new ArrayList<Date>();
-	for(WebElement dateStringEle : dateStringElements)
-	{
-		dateStringList.add(dateStringEle.getText().trim());
+
+	public static int getRandomNumber(int range){
+
+		int random = (int )(Math.random() * range + 1);
+
+		return random;
+
 	}
-	for(String dateString : dateStringList)
-	{
-		dateList.add(simpleDateFormat.parse(dateString));
+
+	public static String appendRandomNumberToText(String text){
+		return text + getRandomNumber(7);
 	}
-	List<Date> dateListOriginalOrder = new ArrayList<Date>(dateList);
-	System.out.println("Copy List to another list:"+dateListOriginalOrder);
-	Collections.sort(dateList);
-	System.out.println("Natural sorting:"+dateList);
-	Collections.reverse(dateList);
-	System.out.println("Descending:"+dateList);
-	if(dateList.equals(dateListOriginalOrder))
-		isSortedInDescen=true;
-	else
-		isSortedInDescen=false;
-	return isSortedInDescen;
-}	
 
+	public static boolean isValidEmailAddress(String email) {
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
+		}
+		return result;
+	}
 
-/**
- * <pre>This method deletes all cookies.</pre>
- * @Date 11th-May-2017
- * @author smykjn
- * @return void
- * <pre>returns true if list is sorted in descending order else false.</pre>
- * @throws Exception
- * @Parameter List of WebElements
- */
-public static void deleteAllCookies() throws Exception
-{
-	Web.getDriver().manage().deleteAllCookies();
-}	
-
-
-
-	
+	public boolean textEquality(String existingText, String newText, boolean exactMatch){
+		if(exactMatch){
+			if(newText.equalsIgnoreCase(existingText))
+				return true;
+			return false;
+		}
+		else if(newText.contains(existingText)){
+			return true;
+		}
+		return false;
+	}
 
 /**
  * <pre>This method Takes you to the specified menu or submenu page.</pre>
@@ -876,15 +902,6 @@ public static Date getDateInDateFormatFromDateString(String dateformat,String da
 }
 
 
-/**
- * <pre>This method returns a random number within a defined range</pre>
- * @author smykjn
- * @param integer
- */
-public static int getRandomNumber(int range){
-	int random = (int )(Math.random() * range + 1);
-	return random;
-}
 
 /**
  * <pre>This method let user select a random date between two specified dates</pre>

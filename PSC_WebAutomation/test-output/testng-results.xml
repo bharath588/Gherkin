@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="8" total="9" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="testsuite" duration-ms="68108" started-at="2017-08-21T12:56:18Z" finished-at="2017-08-21T12:57:27Z">
+    <groups>
+    </groups>
+    <test name="Regression_Orange_Period_Exec1" duration-ms="68108" started-at="2017-08-21T12:56:18Z" finished-at="2017-08-21T12:57:27Z">
+      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@7c16905e]" name="InitTest" is-config="true" duration-ms="13330" started-at="2017-08-21T18:26:18Z" finished-at="2017-08-21T18:26:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="PASS" signature="TC006_01_FAQ_DDTC_245(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@7c16905e]" name="TC006_01_FAQ_DDTC_245" duration-ms="53777" started-at="2017-08-21T18:26:33Z" data-provider="setData" finished-at="2017-08-21T18:27:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_FAQ_DDTC_245 -->
+      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
+    </test> <!-- Regression_Orange_Period_Exec1 -->
+  </suite> <!-- testsuite -->
+</testng-results>

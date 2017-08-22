@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
+import pageobjects.myProfile.MyProfilePage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.Globals;
 
@@ -48,7 +49,7 @@ public class accountverification_existingusr {
 				.getName(), testCase.getName());
 	}
 
-	
+
 	/**
 	 * <pre>Verify the expired password scenario for invalid user input</pre>
 	 * @param itr
@@ -56,7 +57,7 @@ public class accountverification_existingusr {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	
+
 	@Test(dataProvider = "setData")
 	public void TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(
 			int itr, Map<String, String> testdata) throws SQLException,
@@ -81,7 +82,7 @@ public class accountverification_existingusr {
 						(userverification.getEmailAddressOfuser(
 								Stock.getTestQuery("getEmailaddressQuery"),
 								Stock.GetParameterValue("username"))).trim(),
-						Stock.GetParameterValue("UserSecondaryAns") });
+								Stock.GetParameterValue("UserSecondaryAns") });
 			}
 			accountverification.resetPassword(
 					Stock.GetParameterValue("CurrentPassword"),
@@ -94,7 +95,7 @@ public class accountverification_existingusr {
 				Web.clickOnElement(accountverification, "DISMISS");
 			}
 			accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage, 
-			        Stock.GetParameterValue("expectedErrorMessage"));
+					Stock.GetParameterValue("expectedErrorMessage"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -142,7 +143,7 @@ public class accountverification_existingusr {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
-					Stock.GetParameterValue("UserSecondaryAns") });
+							Stock.GetParameterValue("UserSecondaryAns") });
 			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
 				Web.clickOnElement(accountverification, "ERRORMSG");
 				Web.clickOnElement(accountverification, "DISMISS");
@@ -187,7 +188,7 @@ public class accountverification_existingusr {
 			}
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Login_01_TC019_Default plan access</u></b>
@@ -219,7 +220,7 @@ public class accountverification_existingusr {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the Default plan prompting sceanrio for an user according to the number of plans"
-					+ "The user has access to", false);
+							+ "The user has access to", false);
 			int PlanCount = 0;
 			
 			String[] setDeafultPlanNullQuery;
@@ -247,8 +248,6 @@ public class accountverification_existingusr {
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
 					Stock.GetParameterValue("UserSecondaryAns")});
-			
-			
 			if (PlanCount > 25) {
 
 				if ((Web.isWebElementDisplayed(accountverification,
@@ -324,29 +323,29 @@ public class accountverification_existingusr {
 	}
 
 
-/**
- * <pre>
- * Testcase: <b><u>SIT_PSC_Login_01_TC018_Existing User_Security questions validation</u></b>
- *  
- *  Application: <b>PSC</b>
- *  Functionality: <b>Login</b>
- *  Sub-functionality: <b>Security Questions</b>
- *  Test Type: <b>Positive validation</b>
- *  
- *  <b>Description:</b>
- *  When the security questions are deleted for the user should be asked to re-enter them 
- *  
- *  <u><b>Test data:</b></u>
- *   <b>txtUserName       -</b> Valid user name
- *             <b>txtPassword               -</b> Valid password
- *             <b>deleteSecurityQuesQuery -</b> Query to delete security questions
- *  <b>firstDrpdwnAns -</b> Answer for the first dropdown 
- *  <b>secondDrpdwnAns -</b> Answer for the second dropdown 
- *  <b>thirdDrpdwnAns -</b> Answer for the third fropdown
- * <b>Number of iterations = </b> 1
- * @author krsbhr
- * 
- */
+	/**
+	 * <pre>
+	 * Testcase: <b><u>SIT_PSC_Login_01_TC018_Existing User_Security questions validation</u></b>
+	 *  
+	 *  Application: <b>PSC</b>
+	 *  Functionality: <b>Login</b>
+	 *  Sub-functionality: <b>Security Questions</b>
+	 *  Test Type: <b>Positive validation</b>
+	 *  
+	 *  <b>Description:</b>
+	 *  When the security questions are deleted for the user should be asked to re-enter them 
+	 *  
+	 *  <u><b>Test data:</b></u>
+	 *   <b>txtUserName       -</b> Valid user name
+	 *             <b>txtPassword               -</b> Valid password
+	 *             <b>deleteSecurityQuesQuery -</b> Query to delete security questions
+	 *  <b>firstDrpdwnAns -</b> Answer for the first dropdown 
+	 *  <b>secondDrpdwnAns -</b> Answer for the second dropdown 
+	 *  <b>thirdDrpdwnAns -</b> Answer for the third fropdown
+	 * <b>Number of iterations = </b> 1
+	 * @author krsbhr
+	 * 
+	 */
 	@Test(dataProvider = "setData")
 	public void TC018_Security_Question_Validation_Existing_User(int itr,
 			Map<String, String> testdata) {
@@ -354,7 +353,7 @@ public class accountverification_existingusr {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"This testcase validates if the user is navigated to security answers page when the security answers are"
-					+ "deleted in database", false);
+							+ "deleted in database", false);
 			accountverification = new AccountVerificationPage();
 			String[] queryDeleteSecurityAnswers;
 			accountverification.logoutFromApplication();
@@ -410,7 +409,7 @@ public class accountverification_existingusr {
 			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
 	public void TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords(int itr,Map<String,String> testData)
 	{
@@ -426,13 +425,13 @@ public class accountverification_existingusr {
 					Stock.getTestQuery("updateUserEffdateQuery"),
 					Stock.GetParameterValue("username"));
 			accountverification.get();
-			
+
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
-					Stock.GetParameterValue("UserSecondaryAns") });
-			
+							Stock.GetParameterValue("UserSecondaryAns") });
+
 			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
 				Web.clickOnElement(accountverification, "ERRORMSG");
 				Web.clickOnElement(accountverification, "DISMISS");
@@ -442,12 +441,12 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));
-			
+
 			accountverification.setOldPassword(
 					Stock.getTestQuery("deleteRecentPasswordRows"),
 					Stock.getTestQuery("queryTosetOldPassword"),
 					Stock.GetParameterValue("username"));
-			
+
 			actualErrorMessage = accountverification.getErrorMessageText();
 			System.out.println(actualErrorMessage);
 			accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage,
@@ -496,7 +495,7 @@ public class accountverification_existingusr {
 					Reporter.logEvent(Status.PASS, "Verify Notification button is not available and working as expected if txn code is not given to user", 
 							"Notification and To Do hyperlinks are not available on home page", false);
 					homePage.logoutPSC();
-					
+
 				}
 				else
 				{
@@ -516,7 +515,7 @@ public class accountverification_existingusr {
 					Reporter.logEvent(Status.PASS, "Verify Notification button is available and working as expected if txn code is given to user", 
 							"Notification and To Do hyperlinks are available on home page", false);
 					homePage.logoutPSC();
-					
+
 				}
 				else
 				{
@@ -524,11 +523,11 @@ public class accountverification_existingusr {
 							"Notification and To Do hyperlinks are not available on home page", true);
 					homePage.logoutPSC();
 				}
-				
+
 				accountverification.deleteTransactionCode(Stock.getTestQuery("deleteTransactionCode"), Stock.GetParameterValue("TxnCode"), 
 						Stock.GetParameterValue("username"));
 			}
-			
+
 		}
 		catch(Exception e)
 		{
@@ -556,7 +555,7 @@ public class accountverification_existingusr {
 			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
 	public void TC006_01_Verify_Display_Of_Compliance_On_HomePage(int itr,Map<String,String> testData)
 	{
@@ -574,7 +573,7 @@ public class accountverification_existingusr {
 					Reporter.logEvent(Status.PASS, "Verify Compliance hyperlink is not available and working as expected if txn code is not given to user", 
 							"Compliance hyperlink is not available on home page", false);
 					homePage.logoutPSC();
-					
+
 				}
 				else
 				{
@@ -594,7 +593,7 @@ public class accountverification_existingusr {
 					Reporter.logEvent(Status.PASS, "Verify Compliance button is available and working as expected if txn code is given to user", 
 							"Compliance hyperlink is available on home page", false);
 					homePage.logoutPSC();
-					
+
 				}
 				else
 				{
@@ -602,11 +601,11 @@ public class accountverification_existingusr {
 							"Compliance hyperlink is not available on home page", true);
 					homePage.logoutPSC();
 				}
-				
+
 				accountverification.deleteTransactionCode(Stock.getTestQuery("deleteTransactionCode"), Stock.GetParameterValue("TxnCode"), 
 						Stock.GetParameterValue("username"));
 			}
-			
+
 		}
 		catch(Exception e)
 		{
@@ -634,6 +633,226 @@ public class accountverification_existingusr {
 			}
 		}
 	}
+
+	@Test(dataProvider = "setData")
+	public void TC009_01_Verify_Multifactoring(int itr, Map<String,String> testData)
+	{
+		String prevEmailAddress = null;
+		String updatedEmailAddress = null;
+		boolean isEmailUpdatedFromUI = false;
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify Multifactoring", false);
+			UserVerificationPage userVer = new UserVerificationPage();
+
+			prevEmailAddress = userVer.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"), 
+					Stock.GetParameterValue("username"));
+			MyProfilePage myProfPage = new MyProfilePage().get();
+			isEmailUpdatedFromUI = myProfPage.updateEmailAddress();
+			updatedEmailAddress = userVer.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"), 
+					Stock.GetParameterValue("username"));
+			if(isEmailUpdatedFromUI && (!prevEmailAddress.equals(updatedEmailAddress)))
+			{
+				Reporter.logEvent(Status.PASS, "Email Id is updated in UI and DB", "Email ID is updated in UI and DB", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Email Id is updated in UI", "Email ID is not updated", true);
+			}
+
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page/login page/My Profile Page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@Test(dataProvider="setData")
+	public void TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security(int itr, Map<String,String>testData)
+	{
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME, 
+					"Compliance security: Cheking group/plan in database whether it has "
+							+ "permission to access compliance button in UI");
+			HomePage homepage = new HomePage();
+			new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			AccountVerificationPage actVerPage = new AccountVerificationPage();
+			if(Stock.GetParameterValue("complianceEnable").equalsIgnoreCase("true")){
+				Reporter.logEvent(Status.INFO, "Check compliance option enablity for a plan", 
+						"Checking compliance option enablity",
+						false);
+				if(actVerPage.fetchCompanyCodeForPlan(Stock.getTestQuery("complianceSecurity"), 
+						Stock.GetParameterValue("PlanNumber"))){
+
+
+					if(homepage.searchPlan())
+					{
+						if(Web.isWebElementDisplayed(new HomePage(), "Compliance Menu", true)&&
+								!Web.returnElement(new HomePage(), 
+										"Compliance Menu").getAttribute("class").contains("ui-state-disabled")){
+							Reporter.logEvent(Status.PASS, "Verify compliance option is available and enabled",
+									"compliance option is available and enabled", false);
+						}
+					}
+					else
+					{
+						Reporter.logEvent(Status.PASS, "Verify switching to plan with compliance option availability",
+								"Plan is not switched", true);
+					}
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify Compliance option is available for the given plan number", 
+							"Compliance option is not available for the given plan", true);
+				}
+
+
+			}
+			if(Stock.GetParameterValue("complianceEnable").equalsIgnoreCase("false")){
+
+				Reporter.logEvent(Status.INFO, "Check compliance option disability for a plan", 
+						"Checking compliance option disability for a plan",
+						false);
+				if(!actVerPage.fetchCompanyCodeForPlan(Stock.getTestQuery("complianceSecurity"), 
+						Stock.GetParameterValue("PlanNumber"))){
+
+
+					if(homepage.searchPlan())
+					{
+						if(Web.returnElement(new HomePage(), 
+								"Compliance Menu").getAttribute("class").contains("ui-state-disabled")){
+							Reporter.logEvent(Status.PASS, "Verify compliance option is available and disabled",
+									"compliance option is available and disabled on home page", false);
+						}
+						else
+						{
+							Reporter.logEvent(Status.FAIL, "Verify compliance option is available and disabled",
+									"compliance option disablility could not be verified on home page", true);
+						}
+					}
+					else
+					{
+						Reporter.logEvent(Status.PASS, "Verify switching to plan with compliance option availability",
+								"Plan is not switched", true);
+					}
+				}
+
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page/login page/My Profile Page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
+	@Test(dataProvider="setData")
+	public void TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages(int itr, Map<String, String>testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME, 
+					"Regression testing after after getting keystores");
+			HomePage homePage = new HomePage();
+			new HomePage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			if(Stock.GetParameterValue("menuType").equalsIgnoreCase("menu")){
+				if(homePage.navigatedToMenuPage(Stock.GetParameterValue("menuLabel"),
+						Stock.GetParameterValue("breadCrumb")))
+				{
+					Reporter.logEvent(Status.PASS, "Verify page visits", "Required page visit completed", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL, "Verify page visits", "Required page visit failed", true);
+				}
+			}
+			else if(Stock.GetParameterValue("menuType").equalsIgnoreCase("actionButton"))
+			{
+				if(homePage.navigatedFromActionButton(Stock.GetParameterValue("menuLabel"),
+						Stock.GetParameterValue("breadCrumb")))
+					Reporter.logEvent(Status.PASS, "Verfy page visit from home page action button",
+							"Page visit verified", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verfy page visit from home page action button",
+							"Page visit could not be verified", true);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		}
+		catch(Error ae)
+		{
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, 
+					"Assertion Error Occured. Loading of home page/login page/My Profile Page could not be verified.",
+					errorMsg, true);
+		}
+		finally{
+			try
+			{
+				Reporter.finalizeTCReport();
+			}
+			catch(Exception e1)
+			{
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
 
 	@AfterSuite
 	public void DriverQuite() {

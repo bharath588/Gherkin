@@ -97,8 +97,6 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	private WebElement linkLogoutAccveri;
 	@FindBy(xpath="//h1[contains(text(),'Account verification')]")
 	private WebElement accountVerificationTitle;
-	
-	
 	LoadableComponent<?> parent;
 	Select dropDownSelect;
 	List<String> footerlinksList;
@@ -122,7 +120,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(empowerPscLogo));
 	}
-	
+
 	@Override
 	protected void load() {
 		LoginPage login = (LoginPage) this.parent;
@@ -182,12 +180,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		if (fieldName.trim().equalsIgnoreCase("ERRORMSG")) {
 			return this.errorMsg;
 		}
-		
+
 		if (fieldName.trim().equalsIgnoreCase("CANCEL PLANDEFAULT")) {
-		    return this.btnCancelDefaultPlan;
+			return this.btnCancelDefaultPlan;
 		}
 		if (fieldName.trim().equalsIgnoreCase("CANCEL")) {
-            return this.btnCancel;
+			return this.btnCancel;
 		}
 		if(fieldName.trim().equalsIgnoreCase("Account Verification Title")){
 			return this.accountVerificationTitle;
@@ -324,10 +322,10 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		count = DB.getRecordSetCount(resultset);
 		return count;
 	}
-/**
- * This method takes the user input for the new user flow in account verification screen
- * @param accountVerificationData
- */
+	/**
+	 * This method takes the user input for the new user flow in account verification screen
+	 * @param accountVerificationData
+	 */
 	public void performVerification(String[] accountVerificationData) {
 		String PlanNumber = accountVerificationData[0];
 		String txtFirstDropdownAns = accountVerificationData[1];
@@ -340,7 +338,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 
 		if (!Web.isWebElementDisplayed(errorMsgBox)) {
 			Reporter.logEvent(Status.PASS, "Check the user input in plan number field",
-					  "The user has input valid plan number", true);
+					"The user has input valid plan number", true);
 			// Reporter.logEvent(Status.PASS,
 			// "Check the user input in plan number field",
 			// "The user has input valid plan number", true);
@@ -376,7 +374,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 
 	}
 
-//	
+	//	
 
 	/**
 	 * This method selects the unlocked plan for the user
@@ -416,26 +414,26 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	/**
 	 * The method used to reset password when it is expired
 	 */
-//	public void resetPassword(String currentPwd, String newPwd, String confirmPwd) {
-//		createNewPwdfields.get(iLoopCnt).click();
-//		Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),currentPwd);
-////	createNewPwdfields.get(1).click();
-////	Web.setTextToTextBox(createNewPwdfields.get(1), newPwd);
-////	createNewPwdfields.get(2).click();
-////	Web.setTextToTextBox(createNewPwdfields.get(2), confirmPwd);
-//		btnNext.click();	
-//	}
-	
+	//	public void resetPassword(String currentPwd, String newPwd, String confirmPwd) {
+	//		createNewPwdfields.get(iLoopCnt).click();
+	//		Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),currentPwd);
+	////	createNewPwdfields.get(1).click();
+	////	Web.setTextToTextBox(createNewPwdfields.get(1), newPwd);
+	////	createNewPwdfields.get(2).click();
+	////	Web.setTextToTextBox(createNewPwdfields.get(2), confirmPwd);
+	//		btnNext.click();	
+	//	}
+
 	public void resetPassword(String... params) {
-		 int iLoopCnt=0;
-		 for(String param : params){
-			 if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)){
-			      createNewPwdfields.get(iLoopCnt).click();
-				  Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),param);
-			  }
-			 iLoopCnt=iLoopCnt+1;
-		 }		 
-		 btnNext.click();	
+		int iLoopCnt=0;
+		for(String param : params){
+			if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)){
+				createNewPwdfields.get(iLoopCnt).click();
+				Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),param);
+			}
+			iLoopCnt=iLoopCnt+1;
+		}		 
+		btnNext.click();	
 	}
 
 	/**
@@ -455,7 +453,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		DB.executeUpdate(updateAttributesQuery[0], updateAttributesQuery[1], username);
 		DB.executeUpdate(deleteSecurityQuestions[0], deleteSecurityQuestions[1], username);
 		DB.executeUpdate(deleteFriendlyUsernameQuery[0], deleteFriendlyUsernameQuery[1], username, username);
-		
+
 		resultset = DB.executeQuery(getRecentPlanQuery[0], getRecentPlanQuery[1], username);
 		if (resultset != null) {
 			while (resultset.next()) {
@@ -473,35 +471,35 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		{
 			urlJumpPage.click();
 		}
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * This method fetches the accu_code from Q-INST db to make sure that plan is for Nextgen/Heritafe or putnum
 	 * @param queryDeleteOldPassword
 	 * @param username
 	 * @throws Exception
 	 */
-	
+
 	public int get_Accu_Code_Count(String[] queryForAccuCode,String userId) throws Exception
 	{
-	
+
 		resultset = DB.executeQuery(queryForAccuCode[0], queryForAccuCode[1],userId);
 		return DB.getRecordSetCount(resultset);
-	/*	if (resultset != null) 
+		/*	if (resultset != null) 
 		{
 			while (resultset.next()) {
 			accuCode.add(resultset.getString("Accu_Code"));
 		}*/
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * This method adds a plan to an existing user
@@ -535,15 +533,15 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 * @param username
 	 * @throws Exception
 	 */
-	
+
 	public void deleteOldPasswordrows(String[] queryDeleteOldPassword,String username) throws Exception
 	{
 		if(getNumberOfRows(Stock.getTestQuery("queryToNumberOfrows"),Stock.GetParameterValue("username")) > 1)
 		{
-		DB.executeUpdate(queryDeleteOldPassword[0], queryDeleteOldPassword[1],"K_"+username,"K_"+username);
+			DB.executeUpdate(queryDeleteOldPassword[0], queryDeleteOldPassword[1],"K_"+username,"K_"+username);
 		}
 	}
-	
+
 	/**
 	 * This method used to reset the password to user by a query which updates the effdate to effdate - 365
 	 * @param updateUserEffdateQuery
@@ -553,7 +551,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public void resetPasswordQuery(String[] updateUserEffdateQuery,String username) throws Exception
 	{
 		DB.executeUpdate(updateUserEffdateQuery[0], updateUserEffdateQuery[1], "K_"+username);
-		
+
 	}
 	/**
 	 * This method sets the old password for the user by deleting the recently created row
@@ -565,12 +563,12 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public void setOldPassword(String[] querytoDeleterecentRows,String[] queryResetOldPassword,String username) throws Exception
 	{
 		DB.executeUpdate(querytoDeleterecentRows[0],querytoDeleterecentRows[1],"K_"+username,"K_"+username);
-		
+
 		Reporter.logEvent(Status.PASS, "Check if the query for deletion of the recent rows successful",
 				"The query "+querytoDeleterecentRows[1]+"Executed successfully",false);
-		
+
 		DB.executeUpdate(queryResetOldPassword[0], queryResetOldPassword[1], "K_"+username);
-		
+
 		Reporter.logEvent(Status.PASS, "Check if the query for updating the old password successfull",
 				"The query "+queryResetOldPassword[1]+"Executed successfully",false);
 	}
@@ -584,10 +582,10 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 */
 	public int getUseraccessForSites(String[] queryTofindAccesstoSites,String username) throws Exception
 	{
-	 	
+
 		resultset =	DB.executeQuery(queryTofindAccesstoSites[0], queryTofindAccesstoSites[1], "K_"+username);
 		return DB.getRecordSetCount(resultset);
-		
+
 	}
 	/**
 	 * This method will log out user from the application
@@ -601,11 +599,11 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		else if(Web.isWebElementDisplayed(linkLogoutAccveri))
 		{
 			linkLogoutAccveri.click();
-	
+
 		}
 		Thread.sleep(3000);
 	}
-	
+
 	/**
 	 * This method used to fetch the email address of the user
 	 * @param getEmailQuery
@@ -623,7 +621,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		}
 		return emailAddr;
 	}
-	
+
 	/**
 	 * Method compares the actual error message with expected one
 	 * @param actualErrorMessage
@@ -648,7 +646,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 						Status.FAIL,
 						"Check if appropriate error message is displayed for invalid input",
 						"Appropriate error message is not displayed, Expected Message : "
-						+expectedErrorMsg +" Actual : "+actualErrorMessage, true);
+								+expectedErrorMsg +" Actual : "+actualErrorMessage, true);
 			}
 		} else {
 			Reporter.logEvent(
@@ -658,7 +656,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 					true);
 		}
 	}
-	
+
 	/**
 	 * Method checks if any error message is displayed for valid input and report appropriately
 	 * @param actualErrorMessage
@@ -697,7 +695,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 					Stock.GetParameterValue("confirmPassword"));
 		}		
 	}
-	
+
 	public void addTransactionCode(String[] addTxnCodeQuery, String txnCode,String userName)
 	{
 		try {
@@ -715,5 +713,25 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public boolean fetchCompanyCodeForPlan(String[] getCompanyCodeQuery, String planID)
+	{
+		ResultSet result = null;
+		boolean isResult = false;
+		try
+		{
+			result=DB.executeQuery(getCompanyCodeQuery[0], getCompanyCodeQuery[1], planID);
+			while(result.next())
+
+
+				if(!result.getString("COMPANY_NAME").isEmpty())
+					isResult = true;
+		}
+		catch(Exception e)
+		{
+			isResult = false;
+		}
+		return isResult;
 	}
 }

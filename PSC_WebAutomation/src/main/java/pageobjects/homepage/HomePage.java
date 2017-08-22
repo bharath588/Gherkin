@@ -15,6 +15,8 @@ import java.util.Set;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
@@ -54,7 +56,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@FindBy(css="iframe[id='ifrmFooter']") private WebElement frmModalWindow;
 	@FindBy(css="section[id='main'] > div[class='row'] h1[class='text-red flush-top']") private WebElement weModalWindowHeadertxt;
 	@FindBy(css="div[class*='footerDialog ui-draggable'] a[class*='close']") private WebElement linkModalClose;
-	@FindBy(css = "a[id = 'profileLink']") private WebElement myProfileLink;
+	@FindBy(css = "a[id = 'angularProfileLink']") private WebElement myProfileLink;
+	@FindBy(css = "a[id = 'faqHeaderLink']") private WebElement faqLink;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
 	@FindBy(xpath="//div[@id='logo']/img")
@@ -82,6 +85,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement iFramePlanB;
 	@FindBy(xpath = ".//*[@id='main']/div/a/following-sibling::div[@class='breadcrumb']")
 	private WebElement tdlBreadcrumb;
+	@FindBy(xpath=".//div[@class='breadcrumb']/i")
+	private List<WebElement> breadCrumb;
 	@FindBy(xpath = ".//*[@id='main']/div/a")
 	private WebElement homeLink;
 	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/a")
@@ -127,6 +132,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement payPlanExpense;
 	@FindBy(xpath=".//input[@value='View Plan Invoices']")
 	private WebElement viewPlanInvoicesBtn;
+	@FindBy(xpath = ".//*[@id='newMenu']/li[8]/a")
+	private WebElement fileSharingMenu;
+	@FindBy(xpath="//*[@id='newMenu']/li[5]/a")
+	private WebElement complianceMenu;
 	private WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -141,8 +150,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 	}
 	private List<WebElement> subSubMenuItems(String subMenu)
 	{
-		
+
 		return Web.getDriver().findElements(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+Stock.GetParameterValue("menuname")+"')]/following-sibling::ul/li/a[contains(text(),'"+subMenu+"')]/following-sibling::ul//a"));
+	}
+	private WebElement returnActionButtonsOnHomePage(String actionButtonName)
+	{
+		return Web.getDriver().findElement(By.xpath(".//*[@id='tooltip_"+actionButtonName+"']"));
 	}
 	/*-----------------------------------------------------------------*/
 	private LoadableComponent<?> parent;
@@ -151,7 +164,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private Method invokeMethodforUserVerification;
 	private String[] userData;
 	private String[] userVeriData;
-	
+
 	Map<String,String> securityAnsMap=null;
 	ResultSet queryResultSet;
 
@@ -208,7 +221,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 					invokeMethodforUserVerification = userVeriPg.getClass().getDeclaredMethod("performVerification",String[].class);
 					invokeMethodforUserVerification.invoke(userVeriPg,new Object[]{userVeriData});
 				}else{
-					
+
 				}
 			}
 			Web.waitForElement(urlJumpPage);
@@ -217,6 +230,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Web.getDriver().switchTo().defaultContent();
 			Web.ispageloaded("framec");
 			Web.waitForElement(weGreeting);
+			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
 		} catch (Exception e) {
 			try {
@@ -227,15 +241,15 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
 	 *  </pre>
@@ -247,6 +261,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 		if (fieldName.trim().equalsIgnoreCase("MY PROFILE")) {
 			return this.myProfileLink;
+		}
+		if(fieldName.trim().equalsIgnoreCase("FAQ")){
+			return this.faqLink;
 		}
 		if(fieldName.trim().equalsIgnoreCase("Plan Menu")) {
 			return this.planMenu;
@@ -284,6 +301,16 @@ public class HomePage extends LoadableComponent<HomePage>{
 		{
 			Web.getDriver().switchTo().defaultContent();
 			return this.homePageLogo;
+		}
+		if(fieldName.trim().equalsIgnoreCase("File Sharing"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+			return this.fileSharingMenu;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Compliance Menu"))
+		{
+			Web.getDriver().switchTo().defaultContent();
+			return this.complianceMenu;
 		}
 		return null;
 	}
@@ -380,7 +407,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.clickOnElement(searchPlanButton);
 		Web.isWebElementDisplayed(moreButton, true);
 		if(Stock.GetParameterValue("planNumber")!=null)
-		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
+			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planNumber")))
 				return planTextDisplayed = true;
 	}
 	catch(Exception e)
@@ -389,7 +416,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	}
 	return planTextDisplayed;
 	}
-	
+
 	public boolean verifyErrorText()
 	{
 		boolean errorVerified = false;
@@ -404,7 +431,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return errorVerified;
 	}
-	
+
 	public void enterPartialPlanNumber()
 	{
 		try{
@@ -421,7 +448,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean verifyAutocompletePlanSuggestion()
 	{
 		boolean autoCompleteSuggested = false;
@@ -443,12 +470,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return autoCompleteSuggested;
 	}
-	
+
 	public ResultSet getLastLoginsFromDB(String[] getLastLogins,String application, String menuFeatureCode, String user)
 	{
 		return DB.executeQuery(getLastLogins[0], getLastLogins[1], application,menuFeatureCode,"K_"+user);
 	}
-	
+
 	public String getLastLoginDate()
 	{
 		String lastLoginDate = "";
@@ -478,10 +505,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 		return lastLoginDate;
 	}
 
-	
+
 	public void verifyHomePageMenuTabs()
 	{
-		
+
 		try{
 			String expectedTabs = Stock.GetParameterValue("menutabs");
 			String[] splitTabs = expectedTabs.split(",");
@@ -501,14 +528,14 @@ public class HomePage extends LoadableComponent<HomePage>{
 			{
 				Reporter.logEvent(Status.FAIL,"Verify if all menu tabs are displayed on home page.","All menu tabs are not displayed",true);
 			}
-			
+
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getLastLoginDateFromWeb()
 	{
 		String displayedLastLoginDate = "";
@@ -531,7 +558,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return displayedLastLoginDate;
 	}
-	
+
 	public boolean verifyLastLoginDateEquality(String dateFromDatabase)
 	{
 		boolean equalDate = false;
@@ -559,16 +586,16 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}
 			else
 				equalDate = false;
-	
-	}
+
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		return equalDate;
 	}
-	
-	
+
+
 	public void verifySubMenuAndOptions(String menu)
 	{
 		WebElement menuItem = menuElement(menu);
@@ -577,31 +604,31 @@ public class HomePage extends LoadableComponent<HomePage>{
 		List<String> actualSubSubMenuItems = new ArrayList<String>();	
 		Map<String,List<String>> expMenuMap = new LinkedHashMap<String,List<String>>();
 		Map<String,List<String>> actMenuMap = new LinkedHashMap<String,List<String>>();
-		
+
 		for(int i=0;i<expectSubMenuItems.size();i++)
 		{
 			if(expectSubMenuItems.get(i).equalsIgnoreCase("Investments & Performance")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Search employee")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Add employee")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Forms")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Overview")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Enter payroll")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Pending")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("View∕change banking information")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Year end compliance")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Compliance user guide")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Video demonstration")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Standard reports")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("My reports")||
-			   expectSubMenuItems.get(i).equalsIgnoreCase("Educational resources")
-			  )
+					expectSubMenuItems.get(i).equalsIgnoreCase("Search employee")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Add employee")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Forms")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Overview")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Enter payroll")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Pending")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("View∕change banking information")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Year end compliance")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Compliance user guide")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Video demonstration")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Standard reports")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("My reports")||
+					expectSubMenuItems.get(i).equalsIgnoreCase("Educational resources")
+					)
 			{
 				if(menu.equals("Plan") && expectSubMenuItems.get(i).equalsIgnoreCase("Overview"))
 					expMenuMap.put(expectSubMenuItems.get(i), Arrays.asList(Stock.GetParameterValue(expectSubMenuItems.get(i)).split(",")));
 				else
 				{
 					expMenuMap.put(expectSubMenuItems.get(i), new LinkedList<String>());
-					
+
 				}
 			}
 			else
@@ -613,84 +640,84 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.waitForPageToLoad(Web.getDriver());
 		Actions act = new Actions(Web.getDriver());
 		try{
-				if(menuItem.getText().equals(menu))
+			if(menuItem.getText().equals(menu))
+			{
+				Web.clickOnElement(menuItem);
+				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(10000);
+				act.moveToElement(menuItem).click(menuItem).build().perform();
+
+				for(WebElement ele : subMenuItems())
 				{
-					Web.clickOnElement(menuItem);
-					Web.waitForPageToLoad(Web.getDriver());
-					Thread.sleep(10000);
-					act.moveToElement(menuItem).click(menuItem).build().perform();
-					
-					for(WebElement ele : subMenuItems())
+					actualSubMenuItems.add(ele.getText().replace("...", "").trim());
+					if(ele.getText().equals("Investments & Performance") || ele.getText().equals("Search employee") ||
+							ele.getText().equals("Add employee") || ele.getText().equals("Forms")||
+							ele.getText().equals("Overview")||ele.getText().equals("Enter payroll")||
+							ele.getText().equals("Pending")|| ele.getText().equals("View∕change banking information")||
+							ele.getText().equals("Year end compliance")|| ele.getText().equals("Compliance user guide")||ele.getText().equals("Video demonstration")|| 
+							ele.getText().equals("Standard reports")|| ele.getText().equals("My reports")||ele.getText().equals("Educational resource"))
 					{
-						actualSubMenuItems.add(ele.getText().replace("...", "").trim());
-						if(ele.getText().equals("Investments & Performance") || ele.getText().equals("Search employee") ||
-						ele.getText().equals("Add employee") || ele.getText().equals("Forms")||
-						ele.getText().equals("Overview")||ele.getText().equals("Enter payroll")||
-						ele.getText().equals("Pending")|| ele.getText().equals("View∕change banking information")||
-						ele.getText().equals("Year end compliance")|| ele.getText().equals("Compliance user guide")||ele.getText().equals("Video demonstration")|| 
-						ele.getText().equals("Standard reports")|| ele.getText().equals("My reports")||ele.getText().equals("Educational resource"))
-						{
-						
-						}
-						else
-						{
-							act.click(ele).build().perform();
-						}
-							Thread.sleep(2000);
-							actualSubSubMenuItems = new ArrayList<String>();
-							for(WebElement ele2 : subSubMenuItems(ele.getText().replace("...", "").trim()))
-							{
-								actualSubSubMenuItems.add(ele2.getText());
-							}
-							actMenuMap.put(ele.getText().replace("...", "").trim(), actualSubSubMenuItems);
+
 					}
-					
-					System.out.println("Actual subMenu items are:"+actualSubMenuItems);
-					System.out.println("Expected submenu items fetched from xml are :"+expectSubMenuItems);
-					System.out.println("Actual Map is:"+actMenuMap);
-					System.out.println("Expected Map is:"+expMenuMap);
-					
-					for(int j=0;j<expectSubMenuItems.size();j++){
-						
-						if(actMenuMap.get(actualSubMenuItems.get(j)).isEmpty() && expMenuMap.get(expectSubMenuItems.get(j)).isEmpty()){
-							Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
-							
-						}
-						
-						else if(actMenuMap.get(actualSubMenuItems.get(j)).containsAll(expMenuMap.get(expectSubMenuItems.get(j))))
-						{
-							Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
-						}
-						else
-						{
-							Reporter.logEvent(Status.FAIL,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are not displayed.",true);
-						}
+					else
+					{
+						act.click(ele).build().perform();
+					}
+					Thread.sleep(2000);
+					actualSubSubMenuItems = new ArrayList<String>();
+					for(WebElement ele2 : subSubMenuItems(ele.getText().replace("...", "").trim()))
+					{
+						actualSubSubMenuItems.add(ele2.getText());
+					}
+					actMenuMap.put(ele.getText().replace("...", "").trim(), actualSubSubMenuItems);
+				}
+
+				System.out.println("Actual subMenu items are:"+actualSubMenuItems);
+				System.out.println("Expected submenu items fetched from xml are :"+expectSubMenuItems);
+				System.out.println("Actual Map is:"+actMenuMap);
+				System.out.println("Expected Map is:"+expMenuMap);
+
+				for(int j=0;j<expectSubMenuItems.size();j++){
+
+					if(actMenuMap.get(actualSubMenuItems.get(j)).isEmpty() && expMenuMap.get(expectSubMenuItems.get(j)).isEmpty()){
+						Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
+
+					}
+
+					else if(actMenuMap.get(actualSubMenuItems.get(j)).containsAll(expMenuMap.get(expectSubMenuItems.get(j))))
+					{
+						Reporter.logEvent(Status.PASS,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are displayed.",false);
+					}
+					else
+					{
+						Reporter.logEvent(Status.FAIL,"Verify if all sub menu options are displayed on home page for '"+expectSubMenuItems.get(j)+"'.","All submenu options are not displayed.",true);
 					}
 				}
-				
-				if(actualSubMenuItems.containsAll(expectSubMenuItems))
-				{
-					Reporter.logEvent(Status.PASS,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are displayed.",false);
-				}
-				else
-				{
-					Reporter.logEvent(Status.FAIL,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are not displayed.",true);
-				}
-				
+			}
+
+			if(actualSubMenuItems.containsAll(expectSubMenuItems))
+			{
+				Reporter.logEvent(Status.PASS,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are displayed.",false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,"Verify if all submenu options are displayed on home page for '"+menu+"'.","All submenu tabs '"+actualSubMenuItems+"' are not displayed.",true);
+			}
+
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public ResultSet getSessionIDFromDB(String[] getSessionIDFromDB,String application, String menuFeatureCode, String user)
 	{
 		System.out.println("Query is:"+getSessionIDFromDB[1]);
 		return DB.executeQuery(getSessionIDFromDB[0], getSessionIDFromDB[1], application,menuFeatureCode,"K_"+user);
 	}
-	
+
 	public List<String> getActiveSessionIDFromDB()
 	{
 		List<String> sessionID = new ArrayList<String>();
@@ -703,7 +730,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				//System.out.println(rs);
 				sessionID.add(rs.getString("session_id")) ;
 			}
-			
+
 			if(sessionID.size()>0)
 			{
 				Reporter.logEvent(Status.INFO, "Get Session ID from DB", 
@@ -716,7 +743,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return sessionID;
 	}
-	
+
 	public String getSessionIDFromBrowserCookie()
 	{
 		String cookieSessionID = null;
@@ -739,7 +766,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return cookieSessionID;
 	}
-	
+
 	public boolean validateCookieValue()
 	{
 		boolean equalSessionIds = false;
@@ -755,7 +782,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 					equalSessionIds = true;
 				}
 			}
-			
+
 		}
 		catch(Exception e)
 		{
@@ -763,7 +790,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return equalSessionIds;
 	}
-	
+
 	public boolean clickOnToDoFromHome()
 	{
 		boolean clickedOnToDoFromHomePage = false;
@@ -774,7 +801,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				Reporter.logEvent(Status.PASS, "Click on To Do from home page and check if to do list is loaded",
 						"Clicked on To Do from home page and to do list is loaded", false);
 				clickedOnToDoFromHomePage = true;
-				}
+			}
 			else
 			{
 				Reporter.logEvent(Status.FAIL, "Click on To Do from home page and check if to do list is loaded",
@@ -789,7 +816,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return clickedOnToDoFromHomePage;
 	}
-	
+
 	public boolean clickOnNotificationFromHome()
 	{
 		boolean clickedOnNotificationFromHomePage = false;
@@ -815,7 +842,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return clickedOnNotificationFromHomePage;
 	}
-	
+
 	public boolean clickOnToDoFromPlanAdministration()
 	{
 		boolean clickedOnToDoFromPlanAdmin = false;
@@ -847,7 +874,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return clickedOnToDoFromPlanAdmin;
 	}
-	
+
 	public boolean verifyToDoSiteNavigation(String buttonName)
 	{
 		boolean verified = false;
@@ -874,7 +901,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return verified;
 	}
-	
+
 	public boolean verifySentenceCase(String buttonText)
 	{
 		buttonText = buttonText.trim();
@@ -902,7 +929,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return sentenceCase;
 	}
-	
+
 	public boolean verifyButtonTextForSentenceCase()
 	{
 		boolean isButtonTextInSentenceCase = false;
@@ -927,7 +954,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		return isButtonTextInSentenceCase;
 	}
-	
+
 	public String getSecurityAnswer(String securityQuestion) {
 		String securityAnswer = null;
 		initSecurityAnsMap();
@@ -942,7 +969,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 	private void initSecurityAnsMap() {
 		String secAns = Stock.getConfigParam("SecurityAns_"
-	                   +Stock.getConfigParam("TEST_ENV"));
+				+Stock.getConfigParam("TEST_ENV"));
 		if (securityAnsMap == null & !secAns.isEmpty()) {
 			securityAnsMap = new LinkedHashMap<String, String>();
 			for (String QA : secAns.split("\\|")) {
@@ -951,8 +978,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}
 		}
 	}
-	
-	
+
+
 	public boolean searchPlanWithName()
 	{ boolean planTextDisplayed = false;
 	try{
@@ -960,11 +987,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.clickOnElement(searchPlanButton);
 		Web.isWebElementDisplayed(moreButton, true);
 		if(Stock.GetParameterValue("planName")!=null)
-		if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
-		
-			Web.clickOnElement(searchPlanButton);
-			Web.isWebElementDisplayed(moreButton, true);
-			if(Stock.GetParameterValue("planName")!=null)
+			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
+
+				Web.clickOnElement(searchPlanButton);
+		Web.isWebElementDisplayed(moreButton, true);
+		if(Stock.GetParameterValue("planName")!=null)
 			if(planHeaderInfo.getText().contains(Stock.GetParameterValue("planName")))
 				return planTextDisplayed = true;
 	}
@@ -974,7 +1001,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	}
 	return planTextDisplayed;
 	}	
-	
+
 	public boolean searchPlanWithIdOrName(String iDOrName) throws Exception
 	{
 		boolean planTextDisplayed = false;
@@ -989,18 +1016,18 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Web.isWebElementDisplayed(moreButton, true);
 		Web.getDriver().switchTo().defaultContent();
 		if(iDOrName!=null)
-		if(planHeaderInfo.getText().contains(iDOrName))
-			planTextDisplayed = true;
-		else
-			planTextDisplayed =false;
+			if(planHeaderInfo.getText().contains(iDOrName))
+				planTextDisplayed = true;
+			else
+				planTextDisplayed =false;
 		return planTextDisplayed;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
 	 * This method checks if the jump page is displayed for the users having access to multiple sites and skip it as required
 	 * @throws Exception 
@@ -1020,8 +1047,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 		System.out.println("Boolean value for jump page is:"+isJumpDisplayed);
 		return isJumpDisplayed;
 	}
-	
-	
+
+
 	public void jumpPageVerificationWhenPlanAccessInSingleSite() throws Exception
 	{
 		//AccountVerificationPage act = new AccountVerificationPage();
@@ -1034,7 +1061,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Reporter.logEvent(Status.PASS,"Verify if Jump page is not displayed if user has access to plans only in single site","Jump page is not displayed.",false);
 		}
 	}
-	
+
 	public void jumpPageVerificationWhenPlanAccessInAllSite() throws Exception
 	{
 		//AccountVerificationPage act = new AccountVerificationPage();
@@ -1051,7 +1078,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	/**
 	 * This method verifies that Plan list is not available when user is not having any plan access.
 	 */
-	
+
 	public void isPlanListDisplayed()
 	{
 		if(Web.isWebElementDisplayed(planListData, true))
@@ -1063,13 +1090,15 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Reporter.logEvent(Status.PASS,"Verify Plan list data is not displayed on home page since user is not having any plan access.","Plan List is not displayed.",false);
 		}
 	}
-	
-	
+
+
 	/**
 	 * <pre>This method Takes you to the specified menu or submenu page.</pre>
 	 * @author smykjn
-	 */
-	public boolean navigateToProvidedPage(String...specifiedTab) throws Exception
+	 *//*
+
+
+	public void navigateToProvidedPage(String...specifiedTab) throws Exception
 	{
 		String bredCrumbValue= "";
 		WebElement breadCrumb;
@@ -1093,6 +1122,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 				act.click(Web.getDriver().findElement(By.xpath(xpath4))).build().perform();
 				Web.waitForPageToLoad(Web.getDriver());
 				bredCrumbValue=specifiedTab[2];}
+					Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+					Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath4)));
+					Web.waitForPageToLoad(Web.getDriver());}
 			}
 			else
 			{
@@ -1100,21 +1132,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				Web.waitForPageToLoad(Web.getDriver());
 				bredCrumbValue=specifiedTab[1];
 			}
-		}
-		else
-		{
-			Web.clickOnElement(menuElement(specifiedTab[0]));
-			Web.waitForPageToLoad(Web.getDriver());
-			bredCrumbValue=specifiedTab[0];
-		}
-		breadCrumb = Web.getDriver().findElement(By.tagName("i"));
-		Web.isWebElementDisplayed(breadCrumb,true);
-		if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
-			isPageDisplayed = true;
-		else
-			isPageDisplayed = false;
-		return isPageDisplayed;
-	}
+		}*/
 
 	
 	/**
@@ -1383,31 +1401,165 @@ public boolean navigateToHomePage() throws Exception{
 		isDisplayed=false;
 	return isDisplayed;
 }
+	public boolean navigatedToMenuPage(String...menuNamesAndBreadCrumbs)
+	{
+		boolean isNavigated = false;
+		int counter = 0,navigated=0;
+		String[] menuNames  = null,breadCrumbs = null;
+		String concatedMenuNames = null, concatedBreadCrumbs = null;
+		try
+		{
+			
+			if(menuNamesAndBreadCrumbs.length>0)
+			{
+				concatedMenuNames = menuNamesAndBreadCrumbs[0];
+				concatedBreadCrumbs = menuNamesAndBreadCrumbs[1];
+				menuNames = concatedMenuNames.split(",");
+				breadCrumbs = concatedBreadCrumbs.split(",");
 
+				for(String menuName : menuNames){
+					WebElement menuItem = menuElement(menuName);
+					if(menuItem.isDisplayed())
+						Web.clickOnElement(menuItem);
+					Thread.sleep(5000);
+					if(pageRedirected(breadCrumbs[counter]))
+						navigated++;
+					counter++;
+				}
+			}
+			if(navigated==breadCrumbs.length)
+				return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return isNavigated;
+	}
+	public boolean navigatedFromActionButton(String...actionButtonAndBreadCrumbs)
+	{
+		int counter = 0,navigated=0;
+		String[] actionButtonNames  = null,breadCrumbs = null;
+		String concatenatedButtonNames = null, concatenatedBreadCrumbs = null;
+		try
+		{
+			if(actionButtonAndBreadCrumbs.length>0)
+			{
+				concatenatedButtonNames = actionButtonAndBreadCrumbs[0];
+				concatenatedBreadCrumbs = actionButtonAndBreadCrumbs[1];
+				actionButtonNames = concatenatedButtonNames.split(",");
+				breadCrumbs = concatenatedBreadCrumbs.split(",");
+
+				for(String buttonName : actionButtonNames){
+					Web.clickOnElement(this.homePageLogo);
+					Web.waitForElement(this.weGreeting);
+					Web.getDriver().switchTo().defaultContent();
+					Web.getDriver().switchTo().frame("frameb");
+					WebElement buttonElement = returnActionButtonsOnHomePage(buttonName);
+					if(buttonElement.isDisplayed())
+						Web.clickOnElement(buttonElement);
+					Thread.sleep(5000);
+					if(pageRedirected(breadCrumbs[counter]))
+						navigated++;
+					counter++;
+				}
+			}
+			if(navigated==breadCrumbs.length)
+				return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+	}
+	private boolean pageRedirected(String... breadCrumbsAsPageIdentifiers) {
+		if(breadCrumbsAsPageIdentifiers.length>0)
+		{
+			for(String breadCrumb : breadCrumbsAsPageIdentifiers)
+			{
+				if(validateBreadCrumb(breadCrumb))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean validateBreadCrumb(String expBreadCrumbEndString){
+		boolean isValidated = false;
+		try{
+			int count=0;
+			Web.getDriver().switchTo().defaultContent();
+			for(WebElement crumb : breadCrumb)
+			{
+				if(crumb.isDisplayed()){
+					break;
+				}
+				count++;
+			}
+			String brdcrmbstring = breadCrumb.get(count).getText();
+			if(brdcrmbstring.contains(expBreadCrumbEndString)){
+				isValidated = true;
+				Reporter.logEvent(Status.PASS,"Validate bread crumb for "+expBreadCrumbEndString+" page.",""
+						+ "Below bread crumb is displayed on top.\n"+brdcrmbstring, false);}
+			else
+				Reporter.logEvent(Status.FAIL,"Validate bread crumb for "+expBreadCrumbEndString+" page.",""
+						+ "Below bread crumb is not displayed", true);
+		}catch(Exception e){
+			e.printStackTrace();
+			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),true);
+		}
+		return isValidated;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public boolean navigateToProvidedPage(String...specifiedTab) throws Exception
+    {
+             String bredCrumbValue= "";
+             WebElement breadCrumb;
+             boolean isPageDisplayed = false;
+             Actions act = new Actions(Web.getDriver());
+             String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
+             String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
+             String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
+             String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
+             if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
+                       act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
+                       //Web.clickOnElement(menuElement(specifiedTab[0]));
+                       act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+                       //act.click(menuElement(specifiedTab[0])).build().perform();
+                       Web.waitForPageToLoad(Web.getDriver());
+                       if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
+                       {
+                                Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+                                if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
+                                Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+                                act.click(Web.getDriver().findElement(By.xpath(xpath4))).build().perform();
+                                Web.waitForPageToLoad(Web.getDriver());
+                                bredCrumbValue=specifiedTab[2];}
+                       }
+                       else
+                       {
+                                Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+                                Web.waitForPageToLoad(Web.getDriver());
+                                bredCrumbValue=specifiedTab[1];
+                       }
+             }
+             else
+             {
+                       Web.clickOnElement(menuElement(specifiedTab[0]));
+                       Web.waitForPageToLoad(Web.getDriver());
+                       bredCrumbValue=specifiedTab[0];
+             }
+             breadCrumb = Web.getDriver().findElement(By.tagName("i"));
+             Web.isWebElementDisplayed(breadCrumb,true);
+             if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
+                       isPageDisplayed = true;
+             else
+                       isPageDisplayed = false;
+             return isPageDisplayed;
+    }
+
 }

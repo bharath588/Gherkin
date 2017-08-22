@@ -12,6 +12,7 @@ import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +21,7 @@ import org.testng.annotations.Test;
 
 import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.employeesearch.EmployeeSearch;
+import pageobjects.fileSharing.FileSharing;
 import pageobjects.homepage.HomePage;
 import pageobjects.jumppage.JumpPage;
 import pageobjects.login.LoginPage;
@@ -941,6 +943,7 @@ public class logintestcases {
 			}).get();*/
 			/*LoginPage loginPage = new LoginPage().get();
 			loginPage.submitLoginCredentials(new String[]{
+<<<<<<< Upstream, based on origin/smykjn
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")
 			});*/
@@ -970,6 +973,45 @@ public class logintestcases {
 			}
 		}
 	}	
+	@Test(dataProvider = "setData")
+	public void TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages
+	(int itr, Map<String,String> testData)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Resize iframe height based on content from Angular app", false);
+			FileSharing fileSharing = new FileSharing();
+			fileSharing.get();
+			if(fileSharing.verifyPaginationOnFileSharingPage())
+			{
+				Reporter.logEvent(Status.PASS, "Check pagination on file sharing page", 
+						"Pagination on File Sharing page is displayed", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Check pagination on file sharing page", 
+						"Pagination on File Sharing page is not displayed", true);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}}
 
 	/**
 	 * This test case validates the various tabs enablity based on respective transaction codes
@@ -1032,11 +1074,80 @@ public class logintestcases {
 		}
 	}
 
-
-
-
-
-
+	/**
+	 * <pre>
+	 * Testcase: <b>
+	 * SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts
+	 * </b>
+	 * 
+	 * Application: <b>PSC</b> Functionality: <b>Validating invalid login attempts and account locking</b> 
+	 * Test Type: <b>Negative validation</b>
+	 * 
+	 * <b>Description:</b> Verify that user account is locked out for 24 hours after 3 invalid tries
+	 * 
+	 * <u><b>Test data:</b></u> <b>username -</b> Valid user name <b>password
+	 * -</b> Valid password and Invalid Password
+	 * @param itr iteration 
+	 * @param testData testData
+	 */
+	@Test(dataProvider = "setData")
+	public void TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts(int itr, Map<String,String> testData)
+	{
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description",
+					"Verify user account is getting locked for 24 hours "
+					+ "if user enters wrong password for 4 times", false);
+			login = new LoginPage();
+			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToSetInvalidLoginCount"),
+					Stock.GetParameterValue("username"));
+			login.get();
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), 
+					Stock.GetParameterValue("incorrectPassword")});
+			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));
+			if(login.isInvalidLoginDpDateUpdated())
+			{
+				Reporter.logEvent(Status.PASS, "Update invalid login DP date column in DB to yesterday's date",
+						"Invalid login DP date column is updated", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Update invalid login DP date column in DB to yesterday's date",
+						"Invalid login DP date column is not updated", false);
+			}
+			
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),
+					Stock.GetParameterValue("password")});
+			WebElement userVerificationEmailbox = Web.returnElement(new UserVerificationPage(), "EMAIL ADDRESS");
+			if(Web.isWebElementDisplayed(userVerificationEmailbox, true))
+			{
+				Reporter.logEvent(Status.PASS, "Verify user is able to login after 24 hours of locking out period", 
+						"user is able to login after 24 hours of locking out period", false);
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL, "Verify user is able to login after 24 hours of locking out period", 
+						"user is unable to login after 24 hours of locking out period", true);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					errorMsg, true);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 
 	/*@Test(dataProvider = "setData")
 	public void */

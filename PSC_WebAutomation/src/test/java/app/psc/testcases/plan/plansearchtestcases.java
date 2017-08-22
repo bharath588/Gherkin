@@ -9,8 +9,6 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-
-import org.aspectj.weaver.Iterators.Getter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,12 +23,12 @@ import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import plan.PlanPage;
 
+
 public class plansearchtestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	HomePage homePage;
 	PlanPage planPage;
 	ResultSet queryResultSet; 
-	
 	@BeforeClass
 	public void ReportInit()
 	{
@@ -335,8 +333,8 @@ public class plansearchtestcases {
 	 * @param itr
 	 * @param testDat
 	 */
-	@Test(dataProvider="setData")
-	public void TC05_SIT_PSC_Plan_messaging_confirmation_page(int itr, Map<String,String> testDat)
+	//@Test(dataProvider="setData")
+	/*public void TC05_SIT_PSC_Plan_messaging_confirmation_page(int itr, Map<String,String> testDat)
 	{
 		try
 		{
@@ -375,7 +373,7 @@ public class plansearchtestcases {
 				e1.printStackTrace();
 			}
 		}
-		}		
+		}*/		
 	
 	
 	/**<pre>This test case validates the Investment and Performance Tabs columns and Print functionality.
