@@ -161,7 +161,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Web.setTextToTextBox(txtUserVerificationSecAns, getSecurityAnswer());
+			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
 			/*if(Web.isWebElementDisplayed(imgEmpowerPsc))
@@ -180,7 +180,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			}*/
 		}		
 		//if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
-		if (!Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {
+		if (!Web.isWebElementDisplayed(txtUserVerificationEmail)) {
 				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
 						"The user verification screen is not loaded", false);
 			}else{
@@ -258,8 +258,10 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 				return securityQuestionText="car";
 			else if(securityQuestion.getText().contains("drink"))
 				return securityQuestionText="drink";
-			else
+			else if(securityQuestion.getText().contains("spouse"))
 				return securityQuestionText="spouse";
+			return
+					securityQuestionText;
 		}
 		catch(Exception e)
 		{
@@ -273,7 +275,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		String securityAnswer = "";
 		try{
 			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
-				securityAnswer =    Stock.GetParameterValue("dreamCar");
+				securityAnswer =    Stock.GetParameterValue("UserSecondaryAns");
 			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
 				securityAnswer = Stock.GetParameterValue("favDrink");
 			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))

@@ -8,10 +8,13 @@ import java.util.Map;
 
 import lib.DB;
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -738,8 +741,9 @@ public class employeesearchtestcases_db {
 		}
 	}
 
-	@AfterSuite
+	@AfterClass
 	public void cleanUpSession() {
+		lib.Web.removeWebDriverInstance();
 		Web.getDriver().close();
 		Web.getDriver().quit();
 	}

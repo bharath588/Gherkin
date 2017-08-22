@@ -12,7 +12,9 @@ import com.aventstack.extentreports.*;
 import lib.Stock;
 import lib.Web;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -572,9 +574,11 @@ public class accountverificationtestcases {
 			}
 		}
 	}
+	
 
-	@AfterSuite
+	@AfterClass
 	public void DriverQuite() {
+		lib.Web.removeWebDriverInstance();
 		lib.Web.getDriver().close();
 		lib.Web.getDriver().quit();
 	}
