@@ -675,14 +675,32 @@ public class Stock {
 						break;
 					}
 				}
-			} //
-			System.out.println(td);
+			} 
+
 			return td;
 		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION,
 					"Exception at getLoopIndex() : " + e.getMessage());
 		}
 		return null;
+	}
+
+	/**Method to get comma separated parameter values
+	 * @param paramName
+	 * @return
+	 */
+	public static String[] getCsvParameterValue(String paramName){
+		String[] values = null;
+		if(globalTestdata.get(Thread.currentThread().getId()).containsKey(paramName.toUpperCase().trim())){
+			if(globalTestdata.get(Thread.currentThread().getId()).get(paramName.trim().toUpperCase()).length() > 0)
+				values = globalTestdata.get(Thread.currentThread().getId()).get(paramName.trim().toUpperCase()).split(",");                
+		}else{
+			throw new Error(
+					"Parameter '"
+							+ paramName
+							+ "' does not exist in Test data!\nStopping script execution!");
+		}                
+		return values;
 	}
 
 
