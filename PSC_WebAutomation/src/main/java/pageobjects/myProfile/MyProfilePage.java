@@ -374,21 +374,21 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 			Web.clickOnElement(updateCurrentEmailBtn());
 			if(!Web.VerifyText(currentEmailAddress().getText(), 
 					this.getRandomEmailId(Stock.GetParameterValue("newEmailID"),true))){
-				Web.setTextToTextBox(newEmailBox(),randomEmailId);
-				Web.setTextToTextBox(confirmEmailBox(), randomEmailId);
+				Web.setTextToAngularTextBox(newEmailBox(),randomEmailId);
+				Web.setTextToAngularTextBox(confirmEmailBox(), randomEmailId);
 				Web.clickOnElement(updateEmailBtn());
 			}
 			else{
-				Web.setTextToTextBox(newEmailBox(),
+				Web.setTextToAngularTextBox(newEmailBox(),
 						this.getRandomEmailId(Stock.GetParameterValue("newEmailID"),true));
-				Web.setTextToTextBox(confirmEmailBox(), randomEmailId);
+				Web.setTextToAngularTextBox(confirmEmailBox(), randomEmailId);
 				Web.clickOnElement(updateEmailBtn());
 			}
 
 
 			if(Web.isWebElementDisplayed(confirmModalBox()))
 			{
-				Web.setTextToTextBox(confirmModalBox(), Stock.GetParameterValue("Password"));
+				Web.setTextToAngularTextBox(confirmModalBox(), Stock.GetParameterValue("Password"));
 				Web.clickOnElement(confirmPwdButton);
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();
 			}
@@ -424,9 +424,9 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 				Web.getDriver().switchTo().defaultContent();
 				Web.getDriver().switchTo().frame(myProfileFrame);
 				Web.clickOnElement(updateCurrentEmailBtn());
-				Web.setTextToTextBox(newEmailBox(),
+				Web.setTextToAngularTextBox(newEmailBox(),
 						this.getRandomEmailId(Stock.GetParameterValue("newEmailID"),false));
-				Web.setTextToTextBox(confirmEmailBox(), 
+				Web.setTextToAngularTextBox(confirmEmailBox(), 
 						this.getRandomEmailId(Stock.GetParameterValue("newEmailID"),false));
 				if(!Web.isWebEementEnabled(this, "Update Email Button")
 						&&Web.isWebElementDisplayed(invalidEmailError())){
@@ -464,7 +464,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		try
 		{
 			Web.clickOnElement(changeDefaultPlanButton());
-			Web.setTextToTextBox(searchPlanBox(), gaID);
+			Web.setTextToAngularTextBox(searchPlanBox(), gaID);
 			Web.clickOnElement(planOptionSuggestions());
 			Web.clickOnElement(updateDefaultPlanBtn());
 			Web.gwgWebDriver.waitForAngularRequestsToFinish();
@@ -547,7 +547,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 				for(String value : values){
 					Web.clickOnElement(updateEmailBtn());
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
-					Web.setTextToTextBox(confirmModalBox(), value);
+					Web.setTextToAngularTextBox(confirmModalBox(), value);
 					Web.clickOnElement(confirmPwdButton);
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
 					Reporter.logEvent(Status.INFO, "Incorrect password error message", 
@@ -569,7 +569,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 				for(String value : values){
 					Web.clickOnElement(button);
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
-					Web.setTextToTextBox(confirmModalBox(), value);
+					Web.setTextToAngularTextBox(confirmModalBox(), value);
 					Web.clickOnElement(confirmPwdButton);
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
 					Reporter.logEvent(Status.INFO, "Incorrect password error message", 
@@ -593,9 +593,9 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 			if(values.length>1){
 				for(String value : values){
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
-					Web.setTextToTextBox(textBox, value);
-					Web.setTextToTextBox(newPwdBox(), Stock.GetParameterValue("newPassword"));
-					Web.setTextToTextBox(confirmPwdBox(), Stock.GetParameterValue("newPassword"));
+					Web.setTextToAngularTextBox(textBox, value);
+					Web.setTextToAngularTextBox(newPwdBox(), Stock.GetParameterValue("newPassword"));
+					Web.setTextToAngularTextBox(confirmPwdBox(), Stock.GetParameterValue("newPassword"));
 					Web.clickOnElement(button);
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
 					Reporter.logEvent(Status.INFO, "Incorrect password error message", 
@@ -618,7 +618,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		boolean isUpdated = false;
 		try{
 			Web.clickOnElement(updateUserNameBtn());
-			Web.setTextToTextBox(updateRegisteredUsrnameBox(), 
+			Web.setTextToAngularTextBox(updateRegisteredUsrnameBox(), 
 					Stock.GetParameterValue("NewAssignedUserName"));
 			if(!negativeVerify&&updateUserNameButton().isEnabled()&&Web.isWebElementDisplayed(regUserNameValidMessage()) 
 					){
@@ -626,7 +626,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 						"New assigned user name is entered", false);
 				Web.clickOnElement(updateUserNameButton());
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();
-				Web.setTextToTextBox(confirmModalBox(), Stock.GetParameterValue("password"));
+				Web.setTextToAngularTextBox(confirmModalBox(), Stock.GetParameterValue("password"));
 				Web.clickOnElement(confirmPwdButton);
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();
 				if(successMessageDiv.isDisplayed())
@@ -699,7 +699,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		if(sameAnswer){
 			for(WebElement ele : securityQuestionDropDowns()){
 				WebElement answerBoxes = ele.findElement(securityAnswerTextBox);
-				Web.setTextToTextBox(answerBoxes, ans0);
+				Web.setTextToAngularTextBox(answerBoxes, ans0);
 			}
 			Reporter.logEvent(Status.INFO, "Set same answer in three text boxes", 
 					"Same answer is set\n"+duplicateAnswerError().getText(), true);
@@ -711,11 +711,11 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 			for(WebElement ele : securityQuestionDropDowns()){
 				answerBoxes = ele.findElement(securityAnswerTextBox);
 				if(i == 0)
-					Web.setTextToTextBox(answerBoxes,ans0);
+					Web.setTextToAngularTextBox(answerBoxes,ans0);
 				if(i == 1)
-					Web.setTextToTextBox(answerBoxes,ans1);
+					Web.setTextToAngularTextBox(answerBoxes,ans1);
 				if(i == 2)
-					Web.setTextToTextBox(answerBoxes,ans2);
+					Web.setTextToAngularTextBox(answerBoxes,ans2);
 				i++;
 			}
 		}
@@ -747,7 +747,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 
 	}
 	private void fillPasswordInModalBox(){
-		Web.setTextToTextBox(confirmModalBox(), Stock.GetParameterValue("password"));
+		Web.setTextToAngularTextBox(confirmModalBox(), Stock.GetParameterValue("password"));
 		Web.clickOnElement(confirmPwdButton);
 		Web.gwgWebDriver.waitForAngularRequestsToFinish();
 	}
@@ -756,9 +756,9 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		boolean isPwdUpdated = false;
 		try{
 			Web.clickOnElement(changePasswordButton());
-			Web.setTextToTextBox(currentPwdBox(), currentPwd);
-			Web.setTextToTextBox(newPwdBox(), newPassword);
-			Web.setTextToTextBox(confirmPwdBox(), newPassword);
+			Web.setTextToAngularTextBox(currentPwdBox(), currentPwd);
+			Web.setTextToAngularTextBox(newPwdBox(), newPassword);
+			Web.setTextToAngularTextBox(confirmPwdBox(), newPassword);
 			if(updatePwdBtn().isEnabled()){
 				Web.clickOnElement(updatePwdBtn());
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();

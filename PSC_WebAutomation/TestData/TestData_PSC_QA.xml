@@ -1249,30 +1249,6 @@ Confirm Password is required" />
 				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100." />
 			</Iteration>
 		</TestCase>
-		<TestCase name="SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page">
-			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="1ISIS" />
-				<parameter name="password" value="testing1" />
-				<parameter name="userVerificationEmail" value="discard@gwl.com" />
-				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="testr" />
-				<parameter name="favDrink" value="testk" />
-				<parameter name="spouseMidName" value="teste" />
-				<parameter name="PlanNumber" value="937878-01" />
-				<parameter name="LastName" value="Jain" />
-				<parameter name="FirstName" value="Samy" />
-				<parameter name="EligibilityErrorMsg"
-					value="Eligibility Information is required.,Some fields contain errors. Please correct errors and continue." />
-				<parameter name="IneligibilityReasonCode" value="Excluded Class,Other" />
-				<parameter name="IncomeDataErrorMsg" value="Salary Amount is not a valid number." />
-				<parameter name="FrequencyOptions"
-					value="ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52" />
-				<parameter name="expHireDateErrorMsg" value="Hire Date is mandatory." />
-				<parameter name="ExpectedManagedAccntLabels"
-					value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
-				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100." />
-			</Iteration>
-		</TestCase>
 		<TestCase name="Verify_Employee_Overview_Screen_Elements">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
@@ -2513,4 +2489,191 @@ and pa.ind_id=ind.id" />
 			</Iteration>
 		</TestCase>
 	</Module>
+	<Module name="myprofile">
+		<TestCase name="SIT_PSC_Update_My_profile_Default_Plan">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="defaultGaId" value="null" />
+				<parameter name="UserSecondaryAns" value="test"></parameter>
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="defaultGaId" value="1111117-01" />
+				<parameter name="UserSecondaryAns" value="test"></parameter>
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_My_profile_Default_Plan_Negative">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="InvalidGaId" value="1111114-01" />
+				<parameter name="UserSecondaryAns" value="test"></parameter>
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_Email_Address_Positive_Flow">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl.com" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_Email_Address_Negative_Flow">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_Email_Address_Invalid_Password">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="badPasswords" value="test,test1,test2" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl.com" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_User_Name">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K1INST1" />
+				<parameter name="NegativeVerify" value="No" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NewAssignedUserName" value=" " />
+				<parameter name="NegativeVerify" value="Yes" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K1INS" />
+				<parameter name="NegativeVerify" value="Yes" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K1INST%" />
+				<parameter name="NegativeVerify" value="Yes" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_My_profile_Security_Questions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="true" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+				<parameter name="badPasswords" value="test,test1,test2" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameQuestions" value="true" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="sameAnswer" value="true" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Update_My_profile_Password">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="newPassword" value="Testing1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="newPassword" value="Test1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="newPassword" value=" " />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="true" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="badPasswords" value="test,test1,test2" />
+			</Iteration>
+			<TestCase name="FAQ_DDTC_245">
+				<Iteration Execution="Yes" id="1">
+					<parameter name="username" value="1INST" />
+					<parameter name="password" value="testing1" />
+					<parameter name="userVerificationAns" value="test" />
+					<parameter name="UserSecondaryAns" value="test" />
+				</Iteration>
+			</TestCase>
+		</TestCase>
+		</Module>
 </TestData>
