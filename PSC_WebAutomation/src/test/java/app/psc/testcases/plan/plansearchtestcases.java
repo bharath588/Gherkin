@@ -8,20 +8,19 @@ import java.util.Map;
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
-import lib.Web;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageobjects.homepage.HomePage;
+import pageobjects.login.LoginPage;
+import plan.PlanPage;
+
 import com.aventstack.extentreports.Status;
-import com.mongodb.connection.QueryResult;
 
 import core.framework.Globals;
 import framework.util.CommonLib;
-import pageobjects.homepage.HomePage;
-import pageobjects.login.LoginPage;
-import pageobjects.userverification.UserVerificationPage;
-import plan.PlanPage;
 
 
 public class plansearchtestcases {
