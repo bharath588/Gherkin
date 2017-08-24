@@ -1581,6 +1581,8 @@ ON uda.ga_id = reftable.ga_id
 where uda.user_logon_id = ?" />
 		<parameter QueryName="deleteSecurityAnsQuery" DB="CommonDB_QA"
 			Query="delete from user_security_questions where user_logon_id =?" />
+			<parameter QueryName="updateSecurityQuestions" DB="CommonDB_QA"
+			Query="update user_security_questions set encrypted_security_answer='3549616654736245664542536F' where user_logon_id = ?"/>
 		<parameter QueryName="updateUserEffdateQuery" DB="ISISDB_QA"
 			Query="update ISIS_PASSWORD set effdate =effdate-360 where user_logon_id = ?" />
 		<parameter QueryName="getEmailaddressQuery" DB="ISISDB_QA"

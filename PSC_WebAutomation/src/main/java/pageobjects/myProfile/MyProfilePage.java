@@ -720,7 +720,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 			}
 		}
 	}
-	public boolean selectSecQuestnAndAnswers(boolean sameQuestions,boolean sameAnswer,int index,boolean negativeVerify){
+	public boolean selectSecQuestnAndAnswers(boolean sameQuestions,boolean sameAnswer,int index,boolean negativeVerify) throws Exception{
 		boolean secQuestnAnsUpdated = false;
 		Web.clickOnElement(changeSecurityQuestnButton());
 		selectSecurityQuestion(sameQuestions,index);
@@ -742,6 +742,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 			secQuestnAnsUpdated = true;
 			Reporter.logEvent(Status.INFO, "Check user is able to update security questions and answers", 
 					"User has updated security questions and answers successfully\n"+successMessageDiv.getText(), false);
+			DB.executeUpdate(Stock.getTestQuery("updateSecurityQuestions")[0], Stock.getTestQuery("updateSecurityQuestions")[1], "K_"+Stock.GetParameterValue("username"));
 		}
 		return secQuestnAnsUpdated;
 
