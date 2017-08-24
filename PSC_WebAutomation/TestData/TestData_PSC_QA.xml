@@ -1592,6 +1592,8 @@ where uda.user_logon_id = ?" />
 where user_logon_id =?
 and FRIENDLY_USERNAME in
 ( select  FRIENDLY_USERNAME from users where logon_id = ?)" />
+<parameter QueryName="updatePasswordTotesting1" DB="CommonDB_QA"
+			Query="update isis_password set hash_value='50000:964bea4afe7e9cfffc63a7edcd832857:ac09816956b32d0a6154691804054de335c7642028258528c153c27a1b16071765c7104607018a41f1f0e00af1d5b3382535ef40fb77990d7df8b637a1be9a506f40fcfc170649393d37be6ba8cee4b68fc356a0af9043fc111b11b315140783b2768f95250e2c3d34e0fdc30408f6cf6de361e145db76f3dfa54f5e627cd211' where user_logon_id=?" />
 		<parameter QueryName="updateAttributesQuery" DB="ISISDB_QA"
 			Query="update users
 set LAST_LOGIN_DATE_TIME = null ,
