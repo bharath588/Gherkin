@@ -10,7 +10,7 @@
 		<dependency>
 			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
-			<version>3.0.3-SNAPSHOT</version>
+			<version>3.0.6-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
