@@ -227,6 +227,9 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (fieldName.trim().equalsIgnoreCase("Text Confirmation Number")) {
 			return this.txtConfirmationNo;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Button Request A New Loan")) {
+			return this.btnRequestNewLoan;
+		}
 		if (fieldName.trim().equalsIgnoreCase("LOAN TYPE GENERAL")) {
 			return this.inputLonatypeGeneral;
 		}
@@ -314,6 +317,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		
 			Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
 			Web.clickOnElement(btnContinue);
+			Common.waitForProgressBar();
 			 WebElement inpLoanTerm= Web.getDriver().findElement(By.xpath(this.loanTerm.replace("Repayment Term", loanTerm)));
 			Web.clickOnElement(inpLoanTerm);
 			
