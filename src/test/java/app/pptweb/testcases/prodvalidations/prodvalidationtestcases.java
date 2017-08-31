@@ -3412,14 +3412,42 @@ public class prodvalidationtestcases {
 			}
 		
 			Web.waitForElement(requestLone, "Button Request A New Loan");
+			
 			Web.clickOnElement(requestLone, "Button Request A New Loan");
+			Web.waitForElement(requestLone, "LOAN TYPE GENERAL");
+			requestLone.isTextFieldDisplayed("Loan purpose");
+			requestLone.isTextFieldDisplayed("Maximum loan");
+			requestLone.isTextFieldDisplayed("Minimum loan");
+			requestLone.isTextFieldDisplayed("Repayment term");
+			requestLone.isTextFieldDisplayed("Documentation required");
+			requestLone.isTextFieldDisplayed("Interest rate");
+			requestLone.isTextFieldDisplayed("Repayment");
+			requestLone.isTextFieldDisplayed("Fees");
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
 			
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
 			
 			Web.waitForElement(requestLone, "BUTTON CONTINUE");
+			requestLone.isTextFieldDisplayed("My loan summary");
+			requestLone.isTextFieldDisplayed("INTEREST RATE");
+			requestLone.isTextFieldDisplayed("FEES*");
+			requestLone.isTextFieldDisplayed("CHECK TOTAL");
+			requestLone.isTextFieldDisplayed("LOAN TOTAL");
+			if(Web.VerifyPartialText("$1,000", requestLone.getWebElementText("LOAN TOTAL"), true)){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Loan Total Amount is Matching",
+						"Loan Total Amount is Matching in Loan summary Table\nLoan Total:"+requestLone.getWebElementText("LOAN TOTAL"),	
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Loan Total Amount is Matching",
+						"Loan Total Amount is Not Matching in Loan summary Table\nExpected:$1,000.00\nActual:"+requestLone.getWebElementText("LOAN TOTAL"),	
+						true);
+			}
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
-			
 			
 			lblDisplayed = Web.isWebElementDisplayed(requestLone, "ProActive Notification Screen",true);
 			if (lblDisplayed) {
@@ -3437,164 +3465,45 @@ public class prodvalidationtestcases {
 			}
 			requestLone.isTextFieldDisplayed("Sign up for updates on your loan process");
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLone.verifyPageHeaderIsDisplayed("Header Loan Review");
+			requestLone.isTextFieldDisplayed("Loan Details");
+			requestLone.isTextFieldDisplayed("PLAN:");
+			requestLone.isTextFieldDisplayed("LOAN TYPE:");
+			requestLone.isTextFieldDisplayed("TERM:");
+			requestLone.isTextFieldDisplayed("MATURITY DATE:");
+			requestLone.isTextFieldDisplayed("INTEREST RATE:");
+			requestLone.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
+			requestLone.isTextFieldDisplayed("CHECK AMOUNT:");
+			requestLone.isTextFieldDisplayed("LOAN AMOUNT:");
+			requestLone.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
+			requestLone.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
+			requestLone.isTextFieldDisplayed("Payment Information");
+			requestLone.isTextFieldDisplayed("FIRST PAYMENT DUE:");
+			requestLone.isTextFieldDisplayed("LAST PAYMENT DUE:");
+			requestLone.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
+			requestLone.isTextFieldDisplayed("PAYMENT AMOUNT:");
+			requestLone.isTextFieldDisplayed("PAYMENT METHOD:");
+			requestLone.isTextFieldDisplayed("PAYMENT FREQUENCY:");
+			requestLone.isTextFieldDisplayed("Fees and Taxes");
+			requestLone.isTextFieldDisplayed("ORIGINATION FEE:");
+			requestLone.isTextFieldDisplayed("Delivery Information");
+			requestLone.isTextFieldDisplayed("DELIVERY METHOD:");
+			requestLone.isTextFieldDisplayed("MAILING ADDRESS:");
+			requestLone.isTextFieldDisplayed("Loan Provisions");
 			
-			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
-					requestLone.getWebElementText("TEXT LOAN TERM"), true);
-			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.PASS,
-						"Verify Loan Term is Displayed",
-						"Loan Term is Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone.getWebElementText("TEXT LOAN TERM"),
-						false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Loan Term is Displayed",
-						"Loan Term is Not Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone.getWebElementText("TEXT LOAN TERM"),
-						false);
-			}
-			requestLone.isTextFieldDisplayed("Loan Origination Fee:");
-			requestLone.isTextFieldDisplayed("Check Amount:");
-			requestLone.isTextFieldDisplayed("Loan Amount:");
-			requestLone.isTextFieldDisplayed("Interest Rate:");
-			requestLone.isTextFieldDisplayed("Annual Percentage Rate (APR):");
-			requestLone.isTextFieldDisplayed("Payment Frequency:");
-			requestLone.isTextFieldDisplayed("Payment Method:");
-			requestLone.isTextFieldDisplayed("Payment Amount:");
-			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
-			Web.getDriver().switchTo().defaultContent();
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(10000);
-			Web.getDriver().switchTo().frame("legacyFeatureIframe");
-			lblDisplayed = requestLone
-					.isTextFieldDisplayed("MAILING AND CONTACT INFORMATION:");
-
-			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.INFO,
-						"Verify MAILING AND CONTACT INFORMATION Page is Displayed",
-						"MAILING AND CONTACT INFORMATION Page is Dispalyed",
-						true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify MAILING AND CONTACT INFORMATION Page is Displayed",
-						"MAILING AND CONTACT INFORMATION Page is Not Dispalyed",
-						true);
-			}
-			requestLone.isTextFieldDisplayed("Home Phone:");
-			requestLone.isTextFieldDisplayed("Mobile Phone:");
-			requestLone.isTextFieldDisplayed("Work Phone/Ext:");
-			requestLone.isTextFieldDisplayed("Email Address:");
-			requestLone.isTextFieldDisplayed("Please review the above contact information and make any necessary changes before you continue.");
-			Web.setTextToTextBox("INPUT HOME AREA CODE", requestLone, "123");
-			Web.setTextToTextBox("INPUT HOME PREFIX", requestLone, "456");
-			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
-			Web.clickOnElement(requestLone, "CONTINUE LOAN REQUEST");
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.waitForElement(requestLone, "CHECKBOX I ACCEPT");
-			lblDisplayed = Web.VerifyText(
-							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
-							requestLone.getWebElementText("TEXT VERIFY ALL INFO").trim(),
-							true);
-
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.INFO,
-						"Verify Text PLEASE VERIFY ALL INFO..... is Displayed",
-						"PLEASE VERIFY ALL INFO..... Text is Dispalyed", true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Text PLEASE VERIFY ALL INFO..... is Displayed",
-						"PLEASE VERIFY ALL INFO..... Text is Not Dispalyed Expected:"
-								+ "PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\"."
-								+ "\nActual:"
-								+ requestLone.getWebElementText("TEXT VERIFY ALL INFO"),
-						true);
-			}
-			lblDisplayed = Web
-					.VerifyText(
-							"Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions.",
-							requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
-							true);
-
-			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.INFO,
-						"Verify Text ONCE YOU CLICK I ACCEPT..... is Displayed",
-						"ONCE YOU CLICK I ACCEPT..... Text is Dispalyed", false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Text ONCE YOU CLICK I ACCEPT..... is Displayed",
-						"ONCE YOU CLICK I ACCEPT..... Text is Not Dispalyed Expected:"
-								+ "Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions."
-								+ "\nActual:"
-								+ requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
-						false);
-			}
-
-			requestLone.isTextFieldDisplayed("Loan Information");
-			requestLone.isTextFieldDisplayed("Loan Amount");
-			requestLone.isTextFieldDisplayed("Total Interest Charge");
-			requestLone.isTextFieldDisplayed("Total Principal and Interest Amount");
-			requestLone.isTextFieldDisplayed("Interest Rate ");
-			requestLone.isTextFieldDisplayed("Loan Type");
-			requestLone.isTextFieldDisplayed("Loan Term");
-			requestLone.isTextFieldDisplayed("Maturity Date");
-			requestLone.isTextFieldDisplayed("Annual Percentage Rate (APR)");
-			requestLone.isTextFieldDisplayed("Loan Payment Information");
-			requestLone.isTextFieldDisplayed("First Payment Date");
-			requestLone.isTextFieldDisplayed("Last Payment Date");
-			requestLone.isTextFieldDisplayed("Number of Payments");
-			requestLone.isTextFieldDisplayed("Payment Amount");
-			requestLone.isTextFieldDisplayed("Payment Method");
-			requestLone.isTextFieldDisplayed("Payment Frequency");
-			requestLone.isTextFieldDisplayed("Loan Fees or Taxes");
-			requestLone.isTextFieldDisplayed("Loan Origination Fee");
-			requestLone.isTextFieldDisplayed("Loan Maintenance Fee");
-			requestLone.isTextFieldDisplayed("Documentary Stamp Tax");
-			requestLone.isTextFieldDisplayed("Express Mail Fee");
-			requestLone.isTextFieldDisplayed("Plan Bank ACH Charge");
-			requestLone.isTextFieldDisplayed("Loan Delivery Information.");
-			requestLone.isTextFieldDisplayed("Check Amount");
-			requestLone.isTextFieldDisplayed("Name");
-			requestLone.isTextFieldDisplayed("Address");
-			requestLone.isTextFieldDisplayed("City");
-			requestLone.isTextFieldDisplayed("State");
-			requestLone.isTextFieldDisplayed("Zip");
-			requestLone.isTextFieldDisplayed("Country");
-			requestLone.isTextFieldDisplayed("Express Mail Service");
-			requestLone.isTextFieldDisplayed("I have read and agree to the Plan");
-			lblDisplayed = Web.isWebElementDisplayed(requestLone,
-					"CHECKBOX I ACCEPT", true);
-			if (lblDisplayed) {
-				Reporter.logEvent(Status.PASS,
-						"Verify I Accept CheckBox is Displayed",
-						"I ACCEPT CheckBox is Displayed", false);
-			} else {
-				Reporter.logEvent(Status.FAIL,
-						"Verify I Accept CheckBox is Displayed",
-						"I ACCEPT CheckBox is Not Displayed", false);
-			}
-			Web.clickOnElement(requestLone, "CHECKBOX I ACCEPT");
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(3000);
-			lblDisplayed = Web.isWebElementDisplayed(requestLone, "I ACCEPT",
+			lblDisplayed = Web.isWebElementDisplayed(requestLone, "I AGREE AND SUBMIT",
 					true);
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.PASS,
-						"Verify I Accept Button is Displayed",
-						"I ACCEPT Button is Displayed", false);
+						"Verify 'I Agree and Submit' Button is Displayed",
+						"'I Agree and Submit' Button is Displayed", true);
 			} else {
 				Reporter.logEvent(Status.FAIL,
-						"Verify I Accept Button is Displayed",
-						"I ACCEPT Button is Not Displayed", false);
+						"Verify 'I Agree and Submit' Button is Displayed",
+						"'I Agree and Submit' Button is Not Displayed", true);
 			}
 			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestLone, "I ACCEPT");

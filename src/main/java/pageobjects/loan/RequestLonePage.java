@@ -67,8 +67,8 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement txtVerifyAllInfo;
 	@FindBy(xpath = "//p[1]/strong[2]")
 	private WebElement txtOnceYouClick;
-	@FindBy(id = "CommitLoanRequest")
-	private WebElement btnIAccept;
+	@FindBy(xpath = "//button[contains(text(),'I agree & submit')]")
+	private WebElement btnIAgreeAndSubmit;
 	@FindBy(id = "checkLoanProvision")
 	private WebElement inputIAccept;
 	@FindBy(xpath = "//p[1]/span[2]")
@@ -89,7 +89,10 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement btnUpdate;
 	@FindBy(id = "proActiveNotificationScreen")
 	private WebElement hdrProactiveNotificationScreen;
-
+	@FindBy(id = "loan-total")
+	private WebElement txtLoanTotal;
+	@FindBy(xpath = "//h1[text()[normalize-space()='Loan review']]")
+	private WebElement lblLoanReview;
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	private String loanTerm="//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
 	/**
@@ -215,8 +218,8 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		if (fieldName.trim().equalsIgnoreCase("TEXT ONCE YOU CLICK")) {
 			return this.txtOnceYouClick;
 		}
-		if (fieldName.trim().equalsIgnoreCase("I ACCEPT")) {
-			return this.btnIAccept;
+		if (fieldName.trim().equalsIgnoreCase("I AGREE AND SUBMIT")) {
+			return this.btnIAgreeAndSubmit;
 		}
 		if (fieldName.trim().equalsIgnoreCase("CHECKBOX I ACCEPT")) {
 			return this.inputIAccept;
@@ -241,6 +244,12 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("ProActive Notification Screen")) {
 			return this.hdrProactiveNotificationScreen;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Header Loan Review")) {
+			return this.lblLoanReview;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LOAN TOTAL")) {
+			return this.txtLoanTotal;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -355,9 +364,9 @@ return isTextDisplayed;
 		 * 
 		 *
 		 */
-		public void verifyPageHeaderIsDisplayed(String webElement) {
+		public void verifyPageHeaderIsDisplayed(String fieldName) {
 			
-			WebElement webelement= getWebElement(webElement);
+			WebElement webelement= getWebElement(fieldName);
 		 String pageHeader=webelement.getText().toString().trim();
 			if (Web.isWebElementDisplayed(webelement)) {
 				lib.Reporter.logEvent(Status.PASS, "Verify "+pageHeader 
@@ -370,7 +379,7 @@ return isTextDisplayed;
 				lib.Reporter.logEvent(Status.FAIL, "Verify "+pageHeader 
 						+ " Page  is Displayed", pageHeader 
 						+ " Page  is Not Displayed",true);
-				throw new Error(webElement+" is not displayed");
+				throw new Error(fieldName+" is not displayed");
 			}
 		
 

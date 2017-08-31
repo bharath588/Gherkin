@@ -60,10 +60,10 @@
                     </parameter>
                     </include>
 				
-					<!-- <include name="SF01_TC016_Verify_LeftNavigation_Tab_Request_A_Loan_link" >
+					 <include name="Verify_Request_A_Loan_Flow" >
 					<parameter name="ManualTCName" value="Request_Loan_Flow">
                     </parameter>
-                    </include> -->
+                    </include>
                     
                     	<include name="Balance_validations" >
 					<parameter name="ManualTCName" value="Balance_validations">
