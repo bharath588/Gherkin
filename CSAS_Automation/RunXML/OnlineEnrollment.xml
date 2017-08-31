@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite verbose="1" name="allSuites">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="OnlineEnrollment">
+		<classes>
+			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+				<methods>
+					<!-- 	
+					<include name="ValidateGrpIdField">
+						<parameter name="ManualTCName" value="ValidateGrpId " />
+					</include>
+					--><!-- 
+		 			<include name="ValidateIndicativeCity">
+						<parameter name="ManualTCName" value="ValidateCity" />
+					</include>	
+					<include name="ValidateIndicativePersonalEmail">
+						<parameter name="ManualTCName" value="ValidatePersonalEmail" />
+					</include>		
+					<include name="validateIndicativeMobilePhone">
+						<parameter name="ManualTCName" value="ValidateMobilePhone" />
+					</include> 
+					<include name="validateIndicativeHomePhone">
+						<parameter name="ManualTCName" value="ValidateHomePhone" />
+					</include>
+					<include name="validateIndicative_ValidationErrorMessage">
+						<parameter name="ManualTCName" value="ValidateErrorMessage" />
+					</include>		
+					<include name="validateIndicativeData_InlineValidation">
+						<parameter name="ManualTCName" value="InlineValidation" />
+					</include> -->
+					<include name="validateConfirmationPage">
+						<parameter name="ManualTCName" value="validateConfirmationPage" />
+					</include>	
+					<include name="validateIndicativeData_ClearButton">
+						<parameter name="ManualTCName" value="validateClearButton" />
+					</include>
+					<include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
+						<parameter name="ManualTCName" value="validateEmailPhoneErrorMessage" />
+					</include>		
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>					

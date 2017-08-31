@@ -1093,5 +1093,41 @@ ORDER BY wb.ga_id,
 				<parameter name = "INTERNATIONAL PHONE INVALID" value = "4+789654$y" />
 			</Iteration>
 		</TestCase>
+		<TestCase name = "validateConfirmationPage">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />				
+			</Iteration>
+		</TestCase>
+		<TestCase name = "validateClearButton">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name = "GrpId" value = "19439101" />
+				<parameter name = "PEC" value = "1234" />
+				<parameter name = "SSN" value = "123654789" />				
+				<parameter name = "FIRST NAME" value = "Albert" />
+				<parameter name = "LAST NAME" value = "Brown" />
+				<parameter name = "DOB" value = "05-Nov-1993" />
+				<parameter name = "ANNUAL INCOME" value = "12365" />
+				<parameter name = "DOH" value = "18-Aug-2017" />
+				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "CITY" value = "Florida" />
+				<parameter name = "ZIP CODE" value = "123654789" />
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />				
+			</Iteration>
+		</TestCase>
 	</Module>
 </TestData>

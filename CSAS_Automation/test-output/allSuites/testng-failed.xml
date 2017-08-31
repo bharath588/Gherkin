@@ -8,9 +8,12 @@
     <classes>
       <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
         <methods>
-          <include name="ValidateIndicativeCity">
-            <parameter name="ManualTCName" value="ValidateCity"/>
-          </include> <!-- ValidateIndicativeCity -->
+          <include name="validateConfirmationPage">
+            <parameter name="ManualTCName" value="validateConfirmationPage"/>
+          </include> <!-- validateConfirmationPage -->
+          <include name="validateIndicativeData_ClearButton">
+            <parameter name="ManualTCName" value="validateClearButton"/>
+          </include> <!-- validateIndicativeData_ClearButton -->
         </methods>
       </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
     </classes>
