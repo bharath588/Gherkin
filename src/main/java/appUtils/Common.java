@@ -8,6 +8,7 @@ import org.apache.bcel.generic.RETURN;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -39,8 +40,10 @@ public class Common {
 	//private static String lnkDismiss= "//button[text()[normalize-space()='Dismiss']]";
 	private static String userName = "";
 	static String userFromDatasheet = null;
+	private static String textField="//*[contains(text(),'webElementText')]";
+	private static String errorMessage="//*[text()='webElementText']";
 	public static ResultSet getParticipantInfoFromDB(String ssn) {
-
+	
 		// query to get the no of plans
 		String[] sqlQuery = null;
 		try {
@@ -505,4 +508,79 @@ public class Common {
   		return updatedGDRStatus;
   		
   	}
+  	
+  	public static boolean isTextFieldDisplayed(String fieldName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isTextDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
+					false);
+
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", true);
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
+	}
+  	/**
+	 * Method to verify Label is Displayed
+	 * @param labelName
+	 * @return
+	 */
+	public static boolean isLabelDisplayed(String labelName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", labelName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isTextDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Displayed",
+					false);
+
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Not Displayed", true);
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
+	}
+	/**
+	 * Method to verify Error Message is Displayed
+	 * @param errorMsg
+	 * @return
+	 */
+	public static boolean isErrorMessageDisplayed(String errorMsg) {
+		boolean isErrorMessageDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(errorMessage.replace("webElementText", errorMsg)));
+	
+		 isErrorMessageDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isErrorMessageDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify Error Message" + errorMsg
+					+ " is Displayed", "'"+errorMsg + "'Error Message is Displayed",
+					false);
+
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL,  "Verify Error Message" + errorMsg
+					+ " is Displayed", "'"+errorMsg + "'Error Message is not Displayed",
+					 true);
+			isErrorMessageDisplayed=false;
+		}
+	
+  return isErrorMessageDisplayed;
+	}
 }

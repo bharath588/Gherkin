@@ -118,6 +118,21 @@
 					<include name="Registration_MFA_OFF_2Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
                     </include>
+                    <include name="NPDI_001_validation_for_Ihaveaplanenrollment_code_page">
+					<parameter name="ManualTCName" value="SIT_NPDI_001_validation_for_Ihaveaplanenrollment_code_page"></parameter>
+                    </include>
+                    <include name="NPDI_003_Validation_for_Registration_Page_Employment_formation">
+					<parameter name="ManualTCName" value="SIT_NPDI_003_Validation_for_Registration_Page_Employment_formation"></parameter>
+                    </include>
+                     <include name="NPDI_004_Validation_for_Registration_Page_Mailing_Address">
+					<parameter name="ManualTCName" value="SIT_NPDI_004_Validation_for_Registration_Page_Mailing_Address"></parameter>
+                    </include>
+                    <include name="NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page">
+					<parameter name="ManualTCName" value="SIT_NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page"></parameter>
+                    </include>
+                    <include name="NPDI_006_Validation_For_Enhanced_Security_Pages">
+					<parameter name="ManualTCName" value="SIT_NPDI_006_Validation_For_Enhanced_Security_Pages"></parameter>
+                    </include>
 				</methods>
 			</class> 
 		

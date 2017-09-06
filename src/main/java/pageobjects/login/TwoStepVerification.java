@@ -18,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import appUtils.Common;
@@ -64,6 +65,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
+	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
 	/** Empty args constructor
 	 * 
 	 */
@@ -229,7 +231,12 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		if (fieldName.trim().equalsIgnoreCase("BUTTON CONTINUE TO NEXTGEN")) {
 			return this.btnViewNextGen;
 		}
-		
+		if (fieldName.trim().equalsIgnoreCase("Header Enhanced Security")) {
+			return this.hdrEnhancedSecurity;
+		}
+		if (fieldName.trim().equalsIgnoreCase("BUTTON SEND ME A CODE")) {
+			return this.btnSendMeACode;
+		}
 		return null;
 	}
 
@@ -453,6 +460,33 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 
 		return noofPlans;
+
+	}
+	/**
+	 * <pre>
+	 * Method to Verify All the 3 Options are available for Delivery Method
+	 * </pre>
+	 * 
+	 */
+	public void verifyDeliveryMethodAvailableOptions(String[] options) {
+		
+		int noOfOptions;
+		Select drpDown=new Select(lstDeliveryOption);
+		noOfOptions=drpDown.getOptions().size();
+		for(int i=0;i<noOfOptions;i++){
+			if(drpDown.getOptions().get(i).getText().trim().contentEquals(options[i])){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify '"+options[i]+"' Option' is displayed in Choose Delivery Method Drop Down ",
+						"'"+options[i]+"' Option' is displayed in Choose Delivery Method Drop Down ",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify '"+options[i]+"' Option' is displayed in Choose Delivery Method Drop Down ",
+						"'"+options[i]+"' Option' is not displayed in Choose Delivery Method Drop Down", true);
+			}
+		}
 
 	}
 }

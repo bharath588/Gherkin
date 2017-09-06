@@ -256,24 +256,26 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	
 	
 	public void verifyMedicareLink() throws InterruptedException{
-		  JavascriptExecutor executor = (JavascriptExecutor)Web.getDriver();
+		/*JavascriptExecutor executor = (JavascriptExecutor)Web.getDriver();
 		Web.clickOnElement(lblHelathCareCosts);
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		if(!Web.isWebElementDisplayed( lnkMedicare, true))
-		Web.clickOnElement(btnPersonalize);
+		Web.clickOnElement(btnPersonalize);*/
+		  Web.getDriver().switchTo().defaultContent();
 		if(Web.isWebElementDisplayed( lnkMedicare, true)){
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.PASS,"Verify 'Medicare' link is displayed","'Medicare' link is displayed", false);
-			 executor.executeScript("arguments[0].click();", lnkMedicare);
-			//Web.clickOnElement(lnkMedicare);
+			// executor.executeScript("arguments[0].click();", lnkMedicare);
+			Web.clickOnElement(lnkMedicare);
 			Web.waitForElement(txtEmpowerModal);
 				if(!Web.isWebElementDisplayed(txtEmpowerModal, true)){
-					executor.executeScript("arguments[0].click();", lnkMedicare);
+					//executor.executeScript("arguments[0].click();", lnkMedicare);
+					Web.clickOnElement(lnkMedicare);
 				}
 			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
 			Web.waitForElement(txtEmpowerModal);
-			Thread.sleep(10000);
+			Thread.sleep(2000);
 			if(Web.VerifyText("You are now leaving Empower Retirement", txtEmpowerModal.getText().trim(), true))
 				Reporter.logEvent(Status.PASS,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), false);
 			else

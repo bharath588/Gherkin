@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import lib.DB;
 import lib.Reporter;
@@ -13,6 +14,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterSuite;
@@ -40,7 +42,7 @@ public class registrationtestcases {
 	LoginPage login;
 	String tcName;
 	static String printTestData="";
-
+	
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
@@ -3026,6 +3028,688 @@ public class registrationtestcases {
 		}
 	}
 
+	@Test(dataProvider = "setData")
+	public void NPDI_001_validation_for_Ihaveaplanenrollment_code_page(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+		
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 - Account verification page should be displayed with 3 tabs
+			//1. I do not have a pin
+			//2. i have a pin
+			//3. I have a plan  enrollment code.
+			if(accLookup.isFieldDisplayed("I DO NOT HAVE A PIN")){
+				Reporter.logEvent(
+					Status.PASS,
+					"Verify 'I do not have a pin' tab is displayed",
+					"'I do not have a pin' tab is displayed",
+					true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'I do not have a pin' tab is displayed",
+					"'I do not have a pin' tab is not displayed", true);
+		} 
+			if(accLookup.isFieldDisplayed("I HAVE A PIN")){
+				Reporter.logEvent(
+					Status.PASS,
+					"Verify 'I HAVE A PIN' tab is displayed",
+					"'I HAVE A PIN' tab is displayed",
+					false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'I HAVE A PIN' tab is displayed",
+					"'I HAVE A PIN' tab is not displayed", false);
+		} 
+			if(accLookup.isFieldDisplayed("I HAVE A Plan Enrollment Code")){
+				Reporter.logEvent(
+					Status.PASS,
+					"Verify 'I HAVE A Plan Enrollment Code' tab is displayed",
+					"'I HAVE A Plan Enrollment Code' tab is displayed",
+					false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'I HAVE A Plan Enrollment Code' tab is displayed",
+					"'I HAVE A Plan Enrollment Code' tab is not displayed", false);
+		} 
+
+			
+			if (accLookup.getActiveTabName().trim()
+					.equalsIgnoreCase("I do not have a PIN")) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify user is on \" I do not have a PIN \" tab",
+						"User is on \" I do not have a PIN \" tab", false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify user is on \" I do not have a PIN \" tab",
+						"User is on \" I do not have a PIN \" tab", false);
+					
+			}
+			//Step 4
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.isLabelDisplayed("Group Id / Plan Number");
+			accLookup.isLabelDisplayed("Plan Enrollment Code");
+			if(Web.isWebElementDisplayed(accLookup, "Group Id/Plan Number")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Group Id/Plan Number' input Field is displayed",
+						"'Group Id/Plan Number' input Field is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Group Id/Plan Number' input Field is displayed",
+						"'Group Id/Plan Number' input Field is not displayed", true);
+			} 
+			
+			if(Web.isWebElementDisplayed(accLookup, "Plan Enrollment Code")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Plan Enrollment Code' input Field is displayed",
+						"'Plan Enrollment Code' input Field is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Plan Enrollment Code' input Field is displayed",
+						"'Plan Enrollment Code' input Field is not displayed", true);
+			} 
+			//Step 5
+			accLookup.clickOnFields("Group Id/Plan Number");
+			accLookup.clickOnFields("CONTINUE");
+			String actualErrMsg = accLookup.getFieldErrorMsg("Group Id/Plan Number");
+			String expectedErrMsg = "Group Id is required.";
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify error message '" + expectedErrMsg
+								+ "' is displayed",
+						"No error message displayed for Group Id/Plan Number",
+						false);
+			} else {
+				if (Web.VerifyText(actualErrMsg, expectedErrMsg, true)) {
+					Reporter.logEvent(Status.PASS, "Verify error message '"
+							+ expectedErrMsg + "' is displayed",
+							"Error message is displayed.", false);
+				} else {
+					Reporter.logEvent(Status.FAIL, "Verify error message '"
+							+ expectedErrMsg + "' is displayed",
+							"Error message displayed is not matching.\nActual message: "
+									+ actualErrMsg, false);
+				}
+			}
+			//step 6
+			accLookup.clickOnFields("Plan Enrollment Code");
+			accLookup.clickOnFields("CONTINUE");
+			actualErrMsg = accLookup.getFieldErrorMsg("Plan Enrollment Code");
+		    expectedErrMsg = "Plan Enrollment Code is required.";
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify error message '" + expectedErrMsg
+								+ "' is displayed",
+						"No error message displayed for Plan Enrollment Code",
+						false);
+			} else {
+				if (Web.VerifyText(actualErrMsg, expectedErrMsg, true)) {
+					Reporter.logEvent(Status.PASS, "Verify error message '"
+							+ expectedErrMsg + "' is displayed",
+							"Error message is displayed.", false);
+				} else {
+					Reporter.logEvent(Status.FAIL, "Verify error message '"
+							+ expectedErrMsg + "' is displayed",
+							"Error message displayed is not matching.\nActual message: "
+									+ actualErrMsg, false);
+				}
+			}
+			
+			//Step 7
+			accLookup.registerWithPlanEnrollmentCode("12345-01","3333");
+			actualErrMsg=accLookup.getMainErrorMsg();
+			expectedErrMsg="Please enter a valid Group ID / Plan Number and Plan Enrollment Code.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message after submitting invalid details",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message after submitting invalid details",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message after submitting invalid details",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+
+			//Step 8
+			
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void NPDI_004_Validation_for_Registration_Page_Mailing_Address(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			SSN=generateRandomSSN(9);
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			AccountSetup accSetup =new AccountSetup();
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+														Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+			
+			//Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			//Step 5
+			registration.verifyInLineValidationsForAddressLine1();
+			//Step 6
+			registration.verifyInLineValidationsForAddressLine2();
+			//Step 7
+			registration.verifyInLineValidationsForCityField();
+			//Step 8
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
+			//Step 9
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if(Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void NPDI_003_Validation_for_Registration_Page_Employment_formation(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+														Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+			
+			//Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			//Step 5
+			registration.isLabelDisplayed("Current Annual Income");
+			if(Web.VerifyText(registration.getWebElementText("LABEL DATE OF HIRE"),"DATE OF HIRE MM/DD/YYYY")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Label 'DATE OF HIRE MM/DD/YYYY' is displayed",
+						"Label 'DATE OF HIRE MM/DD/YYYY' is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label 'DATE OF HIRE MM/DD/YYYY' is displayed",
+						"Label 'DATE OF HIRE MM/DD/YYYY' is not displayed", true);
+			}
+			//Step 6
+			registration.validateCurrentAnnualIncomeField();
+			registration.validateDateOfHireField();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			SSN=generateRandomSSN(9);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			AccountSetup accSetup =new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+														Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+			
+			//Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			//Step 5 & 6
+			
+			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
+			
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if(Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			//Step 7
+			accSetup.validateProfileSettinsPage();
+			//Step 8
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup,
+					SSN+ "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+
+			Web.waitForElement(objAuth, "Header Enhanced Security");
+			if(Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is not displayed", true);
+			}
+
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_006_Validation_For_Enhanced_Security_Pages(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			SSN=generateRandomSSN(9);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			AccountSetup accSetup =new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+														Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+			
+			//Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			//Step 5
+			
+			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
+			
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if(Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			//Step 6
+			accSetup.validateProfileSettinsPage();
+			//Step 7
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup,
+					SSN+ "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+
+			Web.waitForElement(objAuth, "Header Enhanced Security");
+			if(Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is not displayed", true);
+			}
+			//Step 8
+			Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+					+ "phone number or email address listed for your account.");
+			//Step 9
+			Common.isLabelDisplayed("Where should we send your code?");
+			
+			if(Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is not displayed", true);
+			}
+			//Step 10
+			String[] deliveryMethodOptions={"Choose delivery method","Text me: ***-***-9999","Call me: ***-***-9999","Email: *******@gwl.com"};
+			objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+			//Step 11
+			Web.clickOnElement(objAuth,"BUTTON SEND ME A CODE");
+			Web.clickOnElement(objAuth,"BUTTON SEND ME A CODE");
+			Thread.sleep(4000);
+			Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+			//Step 12
+			objAuth.selectCodeDeliveryOption(Stock.GetParameterValue("codeDeliveryOption"),true);
+			String verificationCode="";
+				if (Stock.GetParameterValue("codeDeliveryOption").trim().equalsIgnoreCase("EMAIL")) {
+					verificationCode = objAuth.getVerificationCode(false);
+				} 
+			//Step 13
+			objAuth.submitVerificationCode(verificationCode, false, false);
+Web.clickOnElement(objAuth, "SIGN IN");
+
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	public void precondition() {
 		try {
 			String[] sqlQuery;
@@ -3043,5 +3727,14 @@ public class registrationtestcases {
 	public void cleanupSessions() {
 		lib.Web.getDriver().close();
 		lib.Web.getDriver().quit();
+	}
+	public String  generateRandomSSN(int length) {
+		Random random = new Random();
+	    char[] digits = new char[length];
+	    digits[0] = (char) (random.nextInt(9) + '1');
+	    for (int i = 1; i < length; i++) {
+	        digits[i] = (char) (random.nextInt(10) + '0');
+	    }
+	    return new String(digits);
 	}
 }

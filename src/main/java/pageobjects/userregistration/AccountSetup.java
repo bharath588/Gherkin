@@ -11,7 +11,9 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,6 +32,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	// Object Declarations
 	@FindBy(xpath = ".//*[text()[normalize-space()='We found you!']]/..")
 	private WebElement hrdSetUpYourAccount;
+	@FindBy(xpath = "//*[text()[normalize-space()='Profile settings']]/..")
+	private WebElement hdrProfileSetttings;
 	// @FindBy(xpath=".//*[text()[normalize-space()='Account setup']]/..")
 	// private WebElement hrdSetUpYourAccount;
 	@FindBy(xpath = ".//*[@id='registration-form']/h2[1]")
@@ -79,6 +83,8 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 	private WebElement lblCreateUsernameAndPassword;
 	@FindBy(xpath = "//*[text()[normalize-space()='Provide contact information']]")
 	private WebElement lblProvideContactInfo;
+	
+	private String textField="//*[contains(text(),'webElementText')]";
 
 	/**
 	 * Empty args constructor
@@ -219,6 +225,9 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 		// REGISTER
 		if (fieldName.trim().equalsIgnoreCase("REGISTER")) {
 			return this.btnRegister;
+		}
+		if (fieldName.trim().equalsIgnoreCase("HEADER PROFILE SETTINGS")) {
+			return this.hdrProfileSetttings;
 		}
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
@@ -991,5 +1000,120 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 
 		return getText;
 
+	}
+	
+	public void validateProfileSettinsPage() throws InterruptedException {
+		boolean isMatching = false;
+		
+			 // Verify "Contact Information" header is displayed
+				isMatching = Web.VerifyText("Provide contact information",
+						this.lblContactInformation.getText(), true);
+				if (isMatching) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Provide Contact Information' header is displayed",
+							"Header is displayed", false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Provide Contact Information' header is displayed",
+							"Header is not displayed", false);
+				}
+
+				
+				isLabelDisplayed("Personal email address");
+				// Verify 'Email Address' field is displayed
+				if (Web.isWebElementDisplayed(this.txtEmail)) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Email Address' text field is displayed",
+							"'Email Address' field is displayed", false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Email Address' text field is displayed",
+							"'Email Address' is not displayed", false);
+				}
+				isLabelDisplayed("Phone number");
+				// Verify 'Mobile Phone Number' field is displayed
+				if (Web.isWebElementDisplayed(this.txtPhone)) {
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Mobile Phone Number' text field is displayed",
+							"'Email Address' field is displayed", false);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Mobile Phone Number' text field is displayed",
+							"'Email Address' is not displayed", false);
+				}
+
+		// Verify "Username and Password" header is displayed
+		isMatching = Web.VerifyText("Create username and password",
+				this.lblUsernameAndPassword.getText().trim(), true);
+		if (isMatching) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Create Username and Password' header is displayed",
+					"Header is displayed", false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Create Username and Password' header is displayed",
+					"Header is not displayed", false);
+		}
+		isLabelDisplayed("Username");
+		// Verify 'Username' field is displayed
+		if (Web.isWebElementDisplayed(this.txtUserName)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Username' text field is displayed",
+					"'Username' field is displayed", false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Username' text field is displayed",
+					"'Username' is not displayed", false);
+		}
+		isLabelDisplayed("Password");
+		// Verify 'Password' field is displayed
+		if (Web.isWebElementDisplayed(this.txtPassword)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Password' text field is displayed",
+					"'Password' field is displayed", false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Password' text field is displayed",
+					"'Password' is not displayed", false);
+		}
+		isLabelDisplayed("Re-enter Password");
+		// Verify 'Re-Enter Password' field is displayed
+		if (Web.isWebElementDisplayed(this.txtConfirmPassword)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Re-Enter Password' text field is displayed",
+					"'Re-Enter Password' field is displayed", false);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Re-Enter Password' text field is displayed",
+					"'Re-Enter Password' is not displayed", false);
+		}
+
+		
+	}
+	/**
+	 * Method to verify Label is Displayed
+	 * @param fieldName
+	 * @return
+	 */
+	public boolean isLabelDisplayed(String labelName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", labelName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isTextDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Displayed",
+					false);
+
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Not Displayed", false);
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
 	}
 }

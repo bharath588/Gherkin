@@ -176,6 +176,8 @@ protected void isLoaded() throws Error {
 protected void load() {
 	this.parent.get();
 	//((LandingPage) this.parent).dismissPopUps(true,true);
+	Common.waitForProgressBar();
+	Web.waitForPageToLoad(Web.getDriver());
 	this.lnkHome.click();
 	Web.waitForElement(tabRetirementIncome);
 	Web.waitForElement(tabRetirementIncome);

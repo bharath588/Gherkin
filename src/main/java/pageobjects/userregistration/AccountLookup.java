@@ -8,6 +8,8 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -57,6 +59,9 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	private WebElement lblSponser;
 	@FindBy(xpath=".//*[@id='passwordInput' and @name='password']") private WebElement txtPassword;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include//ng-message[contains(text(),'Social Security number')]") private List<WebElement> lblSSNErrMsgs;
+	@FindBy(xpath="//label[contains(text(),'Group Id / Plan Number')]//following-sibling::ng-messages/ng-message/span") private WebElement lblGroupIdErrMsg;
+	@FindBy(xpath="//label[contains(text(),'Plan Enrollment Code')]//following-sibling::ng-messages/ng-message/span") private WebElement lblPlanEnrollmentCodeErrMsg;
+	private String textField="//*[contains(text(),'webElementText')]";
 	/** Empty args constructor
 	 * 
 	 */
@@ -194,6 +199,18 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		//ERR_PIN
 		if (fieldName.trim().equalsIgnoreCase("ERR_PIN")) {
 			return this.lblPINErrMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Group Id/Plan Number")) {
+			return this.inpPlanNumber;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Plan Enrollment Code")) {
+			return this.inpPlanEnrollmentCode;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ERR_Group Id/Plan Number")) {
+			return this.lblGroupIdErrMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ERR_Plan Enrollment Code")) {
+			return this.lblPlanEnrollmentCodeErrMsg;
 		}
 		
 		//Continue button
@@ -482,4 +499,31 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		
 		return errMsg;
 	} 
+	/**
+	 * Method to verify Label is Displayed
+	 * @param fieldName
+	 * @return
+	 */
+	public boolean isLabelDisplayed(String labelName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", labelName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isTextDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Displayed",
+					false);
+
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify " + labelName
+					+ "   Label is Displayed", "'"+labelName + "' Label is Not Displayed", false);
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
+	}
+	
 }

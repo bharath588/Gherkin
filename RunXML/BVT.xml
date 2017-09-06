@@ -7,13 +7,13 @@
     <test name="LOGIN">
         <classes>
           	    
-                <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+               <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
                 <methods>
-                 <include name="Verify_Health_care_costs_helpful_links" >
+              
+                    <include name="Verify_Health_care_costs_helpful_links" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
                     </parameter>
-                    </include> 
-                    
+                    </include>
 				</methods>
 			</class> 
 		
