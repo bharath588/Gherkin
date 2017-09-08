@@ -252,6 +252,18 @@
 				<parameter name="ExpectedWatrMarkTxt5" value="*Investment results shown do not reflect a sales charge. Additional fees or expenses may be imposed that will affect actual results."/>
 			</Iteration>
 		</TestCase>
+		<TestCase name="DDTC-2073_Complex_User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="NonComplexUserId" value="55W3S" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="login">
 		<TestCase

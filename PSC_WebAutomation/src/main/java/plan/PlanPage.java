@@ -35,6 +35,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
@@ -313,7 +314,10 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	WebElement watermarkText4;
 	@FindBy(xpath="(.//*[@id='unitShareValues']//p)[5]")
 	WebElement watermarkText5;
-	
+	@FindBy(id="saButton")
+	private WebElement searchUserGoBtn;
+	@FindBy(xpath=".//*[@id='searchListDataTable']//tbody//tr")
+	private WebElement searchResultRow;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -340,7 +344,7 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 		PageFactory.initElements(Web.getDriver(), this);
 	}
 
-
+	
 	@Override
 	protected void isLoaded() throws Error {	
 		Web.waitForElement(weGreeting);
@@ -406,7 +410,22 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 		}
 	}
 
-	
+	/** <pre> Method to return WebElement object corresponding to specified field name
+	 * Elements available for fields:
+	 *  </pre>
+	 * @param fieldName
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private WebElement getWebElement(String fieldName) {
+
+		if (fieldName.trim().equalsIgnoreCase("ASSIGNED_USERID")) {
+			return this.searchUserId;
+		}
+		
+		return null;
+	}
+
 
 /**
  * <pre>This method navigates to Plan--->Administration-->Plan messaging page</pre>
@@ -568,19 +587,6 @@ public void validateInvestmentOptionsColumns()
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /**
@@ -2100,13 +2106,72 @@ public void validateWatermarkText()
 }
 
 
+/**
+ * <pre>This method is used to search a user with specified filters.</pre>
+ * @author smykjn
+ * @return void
+ */
+public boolean searchUser(String[] values,WebElement... filters)
+{
+	boolean isUserRetrieved=false;
+	try{
+		CommonLib.switchToFrame(frameb);
+		if(filters.length==values.length){
+			for(int i=0;i<filters.length;i++){
+				Web.setTextToTextBox(filters[i], values[i]);
+			}
+			Web.clickOnElement(searchUserGoBtn);
+			do{
+				Thread.sleep(2000);
+				System.out.println("Waiting till go button get enabled.");
+			}while(!searchUserGoBtn.isEnabled());
+			isUserRetrieved =Web.isWebElementDisplayed(searchResultRow, true);
+		}else{
+			throw new Exception("Please provide value for each filter.");
+		}
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+	return isUserRetrieved;
+}
+
+/**
+ * <pre>This method validates that if a user can be edited through SAW page or not.</pre>
+ * @author smykjn
+ * @return boolean
+ */
+public boolean canBeEdited() throws Exception{
+	boolean isActionDropDownDisplayed=false;
+	String indicator = searchResultRow.findElements(By.tagName("td")).get(10).getText().trim();
+	if(indicator.equals("N/A"))
+		isActionDropDownDisplayed=false;
+	else
+		isActionDropDownDisplayed=true;
+	return isActionDropDownDisplayed;
+	
+}
 
 
-
-
-
-
-
+/**
+ * <pre>This method validates that if a user can be edited through SAW page or not.</pre>
+ * @author smykjn
+ * @return boolean
+ */
+public boolean validateActionDropDownOption(String expOption) throws Exception{
+	boolean isActionOptionDisplayed=false;
+	Select sel = new Select(searchResultRow.findElement(By.tagName("select")));
+	List<WebElement> actions = sel.getOptions();
+	for(WebElement option : actions){
+		if(option.getText().equals(expOption)){
+			isActionOptionDisplayed = true;break;
+		}else{
+			isActionOptionDisplayed=false;
+		}
+	}
+	return isActionOptionDisplayed;
+	
+}
 
 
 

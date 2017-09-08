@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -225,6 +227,101 @@ public class plantestcases {
 			}
 		}
 	}
+
 	
+	/**<pre>This test case aims to verify complex user cannot be edited/updated through SAW.</pre>
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC20_Complex_User(int itr, Map<String,String> testDat)
+	{
+		String complexUserAssignedId="";
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This test case aims to verify complex user cannot be edited/updated through SAW.",
+					false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			homePage = new HomePage();
+			if(homePage.navigateToProvidedPage("Plan","Administration","Username security management"))
+				Reporter.logEvent(Status.PASS,"Navigate to Plan-->Administration-->User security management page.", ""
+						+ "user is navigated to user security management page.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Navigate to Plan-->Administration-->User security management page.", ""
+						+ "user is not navigated to user security management page.", true);
+			queryResultSet = DB.executeQuery(Stock.getTestQuery("getComplexUser")[0],
+					Stock.getTestQuery("getComplexUser")[1]);
+			while(queryResultSet.next()){
+				complexUserAssignedId = queryResultSet.getString("LOGON_ID").replace("K_","").trim();
+				break;
+			}
+			if(planPage.searchUser(new String[]{complexUserAssignedId},
+					Web.returnElement(planPage,"ASSIGNED_USERID")))
+				Reporter.logEvent(Status.PASS,"Search for a complex user with assigned user id-"+complexUserAssignedId,""
+						+ "user is found.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Search for a complex user with assigned user id-"+complexUserAssignedId,""
+						+ "user is not found.", true);
+			
+			if(!planPage.canBeEdited())
+				Reporter.logEvent(Status.PASS,"Validate N/A is displayed for complex user against action column.",""
+						+ "N/A is displayed.",false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate N/A is displayed for complex user against action column.",""
+						+ "N/A is not displayed.",true);
+			
+			//code to remove complexity of user
+			if(planPage.searchUser(new String[]{Stock.GetParameterValue("NonComplexUserId")},
+					Web.returnElement(planPage,"ASSIGNED_USERID")))
+				Reporter.logEvent(Status.PASS,"Search for a non complex user with assigned user id-"+Stock.GetParameterValue("NonComplexUserId"),""
+						+ "user is found.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Search for a non complex user with assigned user id-"+Stock.GetParameterValue("NonComplexUserId"),""
+						+ "user is not found.", true);
+			
+			if(planPage.canBeEdited()){
+				if(planPage.validateActionDropDownOption("View / Edit"))
+					Reporter.logEvent(Status.PASS,"Validate non complex user can be updated through SAW.",""
+							+ "User can be updated through SAW.", false);
+				else
+					Reporter.logEvent(Status.FAIL,"Validate non complex user can be updated through SAW.",""
+							+ "User can not be updated through SAW.", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,"Validate non complex user can be updated through SAW.",""
+						+ "Action drop down is not displayed hence user can not be updated.", true);
+			}
+				
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of plan summary page",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	
 }

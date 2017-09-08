@@ -472,16 +472,16 @@
 					<include name="TC17_Add_PPT_And_SearchForPPT">
 						<parameter name="ManualTCName"
 							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
-					</include>-->
+					</include>
 					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
 						<parameter name="ManualTCName"
 							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
-					</include>
-					<!-- <include name="TC20_Complex_User">
+					</include>-->
+					<include name="TC20_Complex_User">
 						<parameter name="ManualTCName"
 							value="DDTC-2073_Complex_User" />
 					</include>
-					<include name="TC23_Find_Users_by_Name">
+					<!-- <include name="TC23_Find_Users_by_Name">
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
