@@ -234,6 +234,24 @@
 				<parameter name="ConfirmationMsg" value="Please take note of the reference number" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="planNumber" value="1260047-01" />
+				<parameter name="ExpectedUnitShareCol" value="Investment option,Symbol,Share value as of,Share value as of,Dividends/capital gains,Change"/>
+				<parameter name="ExpectedWatrMarkTxt1" value="*Please select dates between"/>
+				<parameter name="ExpectedWatrMarkTxt2" value="*If the dates selected are weekends or market holidays, values are shown as of the prior business day."/>
+				<parameter name="ExpectedWatrMarkTxt3" value="*If 'NOT AVAILABLE' appears for an investment option, the value is not available for the date you specified. The most recent fund information on file can be found by viewing the Plan's Investment Performance."/>
+				<parameter name="ExpectedWatrMarkTxt4" value="*Percent change in value reflects dividends, capital gains distributions, stock splits and stock market results for the period shown. It represents the total return over the specified period and is not annualized."/>
+				<parameter name="ExpectedWatrMarkTxt5" value="*Investment results shown do not reflect a sales charge. Additional fees or expenses may be imposed that will affect actual results."/>
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="login">
 		<TestCase

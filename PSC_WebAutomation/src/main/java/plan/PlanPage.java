@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import lib.DB;
 import lib.Reporter;
@@ -299,7 +301,18 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement accTypeSavings;
 	@FindBy(xpath="//input[@value='Continue']")
 	private WebElement continueButtonInput;
-	
+	@FindBy(xpath=".//div[@id='unitShareValues']//th[not(text()!='')]//span[1]")
+	List<WebElement> unitShareHeaders;
+	@FindBy(xpath=".//p[@class='footnote']/span")
+	List<WebElement> watermarkText1;
+	@FindBy(xpath="(.//*[@id='unitShareValues']//p)[2]")
+	WebElement watermarkText2;
+	@FindBy(xpath="(.//*[@id='unitShareValues']//p)[3]")
+	WebElement watermarkText3;
+	@FindBy(xpath="(.//*[@id='unitShareValues']//p)[4]")
+	WebElement watermarkText4;
+	@FindBy(xpath="(.//*[@id='unitShareValues']//p)[5]")
+	WebElement watermarkText5;
 	
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
@@ -1972,6 +1985,142 @@ public void updateBankDetails()
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}
 }
+
+
+
+/**
+ * <pre>This method validates the unit/Share values headers.</pre>
+ * @author smykjn
+ * @Date 08-Sept-2017
+ * @return boolean
+ */
+public boolean validateUnitShareValuesheaders()
+{
+	boolean isHeaderExist = false;
+	List<String> expUnitShareHeaders = Arrays.asList(Stock.GetParameterValue("ExpectedUnitShareCol").split(","));
+	List<String> actUnitShareHeaders = new ArrayList<String>();
+	try{
+		for(WebElement ele : unitShareHeaders)
+		{
+			actUnitShareHeaders.add(ele.getText().trim());
+		}
+		System.out.println("Headers are:"+actUnitShareHeaders);
+		
+		for(int i=0;i<expUnitShareHeaders.size();i++){
+			if(actUnitShareHeaders.get(i).contains(expUnitShareHeaders.get(i)))
+				{isHeaderExist=true;}
+			else
+				{isHeaderExist=false;
+				break;}
+		}
+		
+		if(isHeaderExist)
+			Reporter.logEvent(Status.PASS,"Validate the headers as below:\n"+expUnitShareHeaders,""
+					+ "below headers are displayed.\n"+actUnitShareHeaders,false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate the headers as below:\n"+expUnitShareHeaders,""
+					+ "below headers are displayed.\n"+actUnitShareHeaders,true);
+			
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+	return isHeaderExist;
+}
+
+
+/**
+ * <pre>This method validates the watermark text on unit/share values page.</pre>
+ * @author smykjn
+ * @Date 09-Sept-2017
+ * @return void
+ */
+public void validateWatermarkText()
+{
+	String expWatermarkText1 = Stock.GetParameterValue("ExpectedWatrMarkTxt1");
+	String expWatermarkText2 = Stock.GetParameterValue("ExpectedWatrMarkTxt2");
+	String expWatermarkText3 = Stock.GetParameterValue("ExpectedWatrMarkTxt3");
+	String expWatermarkText4 = Stock.GetParameterValue("ExpectedWatrMarkTxt4");
+	String expWatermarkText5 = Stock.GetParameterValue("ExpectedWatrMarkTxt5");
+	String regExp = "/^([A-Z])\\w+[ ]([0-4]){1,2}\\,[ ]+\\b[2-9][0-9]{3}\\b/";
+	System.out.println(regExp);
+	String actWatermarkText1_1 = watermarkText1.get(0).getText();
+	String actWatermarkText1_2 = watermarkText1.get(1).getText();
+	String actWatermarkText2 = watermarkText2.getText().trim();
+	String actWatermarkText3 = watermarkText3.getText().trim();
+	String actWatermarkText4 = watermarkText4.getText().trim();
+	String actWatermarkText5 = watermarkText5.getText().trim();
+	try{
+		if(actWatermarkText1_1.equals(expWatermarkText1))
+			Reporter.logEvent(Status.PASS,"Validate below water mark text.\n"+expWatermarkText1,
+					"below actual water mark text is displayed:\n"+actWatermarkText1_1, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below water mark text.\n"+expWatermarkText1,
+					"below actual water mark text is displayed:\n"+actWatermarkText1_1, true);
+		/*Pattern r = Pattern.compile(regExp);
+		 Matcher m = r.matcher(actWatermarkText1_2);
+		 m.matches();
+		if(actWatermarkText1_2.matches(regExp))
+			Reporter.logEvent(Status.PASS,"Validate below text format:\nMon dd, yyyy", "Text format is proper.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below text format:\nMon dd, yyyy", "Text format is not proper.\n"
+					+ "it is in below format:"+actWatermarkText1_2, true);*/
+		if(actWatermarkText2.equals(expWatermarkText2))
+			Reporter.logEvent(Status.PASS,"Validate below water mark text.\n"+expWatermarkText2,
+					"below actual water mark text is displayed:\n"+actWatermarkText2, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below water mark text.\n"+expWatermarkText2,
+					"below actual water mark text is displayed:\n"+actWatermarkText2, true);
+		if(actWatermarkText3.equals(expWatermarkText3))
+			Reporter.logEvent(Status.PASS,"Validate below water mark text.\n"+expWatermarkText3,
+					"below actual water mark text is displayed:\n"+actWatermarkText3, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below water mark text.\n"+expWatermarkText3,
+					"below actual water mark text is displayed:\n"+actWatermarkText3, true);
+		if(actWatermarkText4.equals(expWatermarkText4))
+			Reporter.logEvent(Status.PASS,"Validate below water mark text.\n"+expWatermarkText4,
+					"below actual water mark text is displayed:\n"+actWatermarkText4, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below water mark text.\n"+expWatermarkText4,
+					"below actual water mark text is displayed:\n"+actWatermarkText4, true);
+		if(actWatermarkText5.equals(expWatermarkText5))
+			Reporter.logEvent(Status.PASS,"Validate below water mark text.\n"+expWatermarkText5,
+					"below actual water mark text is displayed:\n"+actWatermarkText5, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below water mark text.\n"+expWatermarkText5,
+					"below actual water mark text is displayed:\n"+actWatermarkText5, true);
+			
+	}catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

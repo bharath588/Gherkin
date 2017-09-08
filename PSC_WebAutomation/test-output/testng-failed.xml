@@ -4,16 +4,16 @@
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression_Orange_Period_Exec1(failed)">
+  <test name="Regression_Orange_Period_Execution_1(failed)">
     <classes>
-      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+      <class name="app.psc.testcases.plan.plantestcases">
         <methods>
-          <include name="TC006_01_FAQ_DDTC_245">
-            <parameter name="ManualTCName" value="FAQ_DDTC_245"/>
-          </include> <!-- TC006_01_FAQ_DDTC_245 -->
-          <include name="InitTest"/>
+          <include name="ReportInit"/>
+          <include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
+            <parameter name="ManualTCName" value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page"/>
+          </include> <!-- TC18_SIT_PSC_Investment_UnitShare_values_page -->
         </methods>
-      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
+      </class> <!-- app.psc.testcases.plan.plantestcases -->
     </classes>
-  </test> <!-- Regression_Orange_Period_Exec1(failed) -->
+  </test> <!-- Regression_Orange_Period_Execution_1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

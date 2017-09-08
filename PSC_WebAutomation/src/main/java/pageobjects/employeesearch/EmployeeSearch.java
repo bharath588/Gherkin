@@ -974,7 +974,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath=".//input[@name='termDate']//following-sibling::span/i[@title='Click to open calendar']")
 	private WebElement termDateCalendar; 
 	
-	
+	public static String newEmpSSN="";
 	String qdroPart = null;
 	String normalPart = null;
 	String transferPart=null;
@@ -2375,7 +2375,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	
 	
 	
-	/*
+	/**
 	 * This method validates contact info labels on edit mode(Modal Window)
 	 */
 	public void contactInFoValidationModalWindow() throws Exception
@@ -2447,8 +2447,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	
 	
-	/*
-	 * This method validates DB fields with UI fields for employee information
+	/**
+	 * <pre>This method validates DB fields with UI fields for employee information</pre>
 	 */
 	public void validateContactInfoWithDB() throws Exception
 	{
@@ -7059,10 +7059,10 @@ public boolean fillSSNForAddNewEmp()
 		else
 			Reporter.logEvent(Status.FAIL,"Enter invalid SSN(like smith) and observe the error message.",""
 					+ "Error message displayed is not displayed.", true);
-		String ssn = generateUniqueNineDigitNumber();
-		Web.setTextToTextBox(enterSSN,ssn);
+		newEmpSSN = generateUniqueNineDigitNumber();
+		Web.setTextToTextBox(enterSSN,newEmpSSN);
 		Thread.sleep(2000);
-		Web.setTextToTextBox(reEnterSSN,ssn);
+		Web.setTextToTextBox(reEnterSSN,newEmpSSN);
 		Thread.sleep(2000);
 		Web.clickOnElement(continueAddEmp);
 		Web.waitForPageToLoad(Web.getDriver());
@@ -9527,6 +9527,45 @@ public void rehireEmp(String dateString,String ssn)
 				+ e.getMessage(), true);
 	}
 	
+}
+
+/**
+ * <pre>This method validates the first name and last name under contact information section 
+ * for a given ssn.</pre>
+ * @author smykjn
+ */
+public void validateContactFstNameLstName(String ssn) throws Exception{
+	String actfirstName="";
+	String actlastName="";
+	String expFirstName ="";
+	String expLastName = "";
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getSSNDetails")[0],
+			Stock.getTestQuery("getSSNDetails")[1],ssn);
+	if(DB.getRecordSetCount(queryResultSet)==1){
+		actfirstName = queryResultSet.getString("FIRST_NAME");
+		actlastName = queryResultSet.getString("LAST_NAME");
+	}
+	CommonLib.switchToFrame(employeeSearchFrame);
+	Web.waitForElement(contctEditLink);
+	Web.waitForPageToLoad(Web.getDriver());
+	Web.clickOnElement(contctEditLink);
+	Web.waitForPageToLoad(Web.getDriver());
+	CommonLib.waitForProgressBar();
+	Web.waitForElement(contctInfoEditFrame);
+	Web.getDriver().switchTo().frame(contctInfoEditFrame);
+	expFirstName = fName.getAttribute("value").trim();
+	expLastName = lName.getAttribute("value").trim();
+	if(expFirstName.equals(actfirstName) && expLastName.equals(actlastName))
+		Reporter.logEvent(Status.PASS,"Edit contact information section and "
+				+ "validate fisrt name :'"+expFirstName+"' and last name:'"+expLastName+" "
+						+ "is displayed properly.'","Fisrt name and last name is displayed properly.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Edit contact information section and "
+				+ "validate fisrt name :'"+expFirstName+"' and last name:'"+expLastName+" "
+						+ "is displayed properly.'","Fisrt name and last name is not displayed properly.", true);
+	CommonLib.switchToFrame(employeeSearchFrame);
+	Web.clickOnElement(closeEmpContactModalWindow);
+	CommonLib.waitForProgressBar();
 }
 
 

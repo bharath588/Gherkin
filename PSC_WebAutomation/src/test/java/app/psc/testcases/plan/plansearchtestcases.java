@@ -100,14 +100,8 @@ public class plansearchtestcases {
 	}
 
 
-	/**This test case aims to verify that user is redirected to plan summary page when plan is entered in the Search
-	 * plans text on home page.
-=======
-	
-	
 	/**This test case aims to verify that user is prompted with an error message when user hits
 	 *  search for plan with plan field blank.
->>>>>>> 742279f708fa8c86da87f93f3dc630b0096c0f0f
 	 * @param itr
 	 * @param testData
 	 */
