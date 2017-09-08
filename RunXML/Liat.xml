@@ -23,10 +23,10 @@
                     </parameter>
                     </include>
                 
-                    <!-- <include name="RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap">
+                    <include name="RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap">
                     </parameter>
-                    </include> -->
+                    </include>
                 
                     <include name="RIP_TC008_To_verify_Retirement_Income_tab_percent_of_my_goal_section">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
@@ -51,6 +51,7 @@
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC0012_To verify Retirement Income tab_Plan Savings">
                     </parameter>
                     </include>
+                    
                     </methods>
                     </class>
                     

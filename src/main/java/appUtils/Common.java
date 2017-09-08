@@ -3,6 +3,9 @@ package appUtils;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.apache.bcel.generic.RETURN;
 import org.openqa.selenium.Alert;
@@ -583,4 +586,26 @@ public class Common {
 	
   return isErrorMessageDisplayed;
 	}
+	
+	public static void updateEDeliveryMthodInDB() throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+		Calendar calendar = Calendar.getInstance();         
+		calendar.add(Calendar.DATE, -190);
+		String date=dateFormat.format(calendar.getTime());
+		System.out.println("DATE"+date);
+		
+		String ssn=Stock.GetParameterValue("SSN");
+		String userName=Stock.GetParameterValue("username");
+		//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+		String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
+		sqlQuery = Stock.getTestQuery("updateTerminationDate");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
+		sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
+	}
+	
 }

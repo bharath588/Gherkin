@@ -43,6 +43,7 @@ public class logintestcases {
 	static String printTestData="";
 	static String url = null;
 	static String accuCode = null;
+	String[] sqlQuery=null;
 	@BeforeClass
 	public void InitTest() throws Exception {
 		Reporter.initializeModule(this.getClass().getName());
@@ -876,19 +877,9 @@ public class logintestcases {
 					itr,
 					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.DATE, -181);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			
 			String verificationCode = "";
 			Boolean isMatching=false;
-			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,Stock.GetParameterValue("username").substring(0, 9));
-			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,Stock.GetParameterValue("SSN"));
+			Common.updateEDeliveryMthodInDB();
 			
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
@@ -1102,21 +1093,9 @@ public class logintestcases {
 					itr,
 					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.DATE, -190);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
 			String verificationCode = "";
 			Boolean isMatching=false;
-			String ssn=Stock.GetParameterValue("SSN");
-			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
-			sqlQuery = Stock.getTestQuery("updateTerminationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
-			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
+			Common.updateEDeliveryMthodInDB();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -1476,22 +1455,8 @@ public class logintestcases {
 			String verificationCode = "";
 			Boolean isMatching=false;
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			Common.updateEDeliveryMthodInDB();
 			
-			
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.DATE, -190);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			
-			String ssn=Stock.GetParameterValue("SSN");
-			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
-			sqlQuery = Stock.getTestQuery("updateTerminationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
-			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -1784,7 +1749,7 @@ public class logintestcases {
 			//Step 10 verify the part_comm_preferences table, where delivery method is displayed with 'ELECTRONIC'
 			
 			ResultSet participantID = null;
-			sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipantWithMutiplePlans");
+			String[] sqlQuery=Stock.getTestQuery("getDeliveryMethodForParticipantWithMutiplePlans");
 			participantID =DB.executeQuery(sqlQuery[0], sqlQuery[1], Stock.GetParameterValue("SSN"));
 			
 			List<String>deliveryMethodsList = new LinkedList<>();
@@ -1853,21 +1818,7 @@ public class logintestcases {
 			String verificationCode = "";
 			Boolean isMatching=false;
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-						
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.DATE, -190);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			
-			String ssn=Stock.GetParameterValue("SSN");
-			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
-			sqlQuery = Stock.getTestQuery("updateTerminationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
-			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
+			Common.updateEDeliveryMthodInDB();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();
@@ -2207,22 +2158,7 @@ public class logintestcases {
 			String verificationCode = "";
 			Boolean isMatching=false;
 			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			
-			
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar calendar = Calendar.getInstance();         
-			calendar.add(Calendar.DATE, -190);
-			String date=dateFormat.format(calendar.getTime());
-			System.out.println("DATE"+date);
-			
-			String ssn=Stock.GetParameterValue("SSN");
-			//prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
-			String[] sqlQuery = Stock.getTestQuery("UpdateContactVerificationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,ssn);
-			sqlQuery = Stock.getTestQuery("updateTerminationDate");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
-			sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
+			Common.updateEDeliveryMthodInDB();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					new LoginPage());
 			twoStepVerification.get();

@@ -107,7 +107,10 @@ private String modalHeader="//h3[text()[normalize-space()='webElementText']]";
 @FindBy(xpath = "//*[@id='investment-mix-slider']//span[@class='editable-text-trigger']") private WebElement lnkInvestmentParcentage;
 @FindBy(id = "investmentMix-text-edit") private WebElement inpInvestmentParcentage;
 @FindBy(xpath = "//*[@id='investment-mix-slider']//button[contains(text(),'Done')]") private WebElement btnDoneInvestments;
+@FindBy(xpath = "//a[./span[text()='Maximizer']]") private WebElement lnkMaximizer;
+@FindBy(linkText = "Change my contribution") private WebElement btnChangeMyContribution;
 
+@FindBy(xpath=".//h1[text()[normalize-space()='My Contributions']]") private WebElement lblMyContributions;
 
 String labelViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//div[contains(@class,'viewDetailsLabel')]";
 String valueViewDetail="//ul[contains(@class,'view-details-list')]//li[position]//span[contains(@class,'paycheck-item-val')]";
@@ -309,8 +312,13 @@ private WebElement getWebElement(String fieldName) {
 	}
 		if (fieldName.trim().equalsIgnoreCase("Review Changes")) {
 		return this.btnReviewChanges;
-	}
-		// Log out
+	}if (fieldName.trim().equalsIgnoreCase("Maximizer")) {
+		return this.lnkMaximizer;
+	}if (fieldName.trim().equalsIgnoreCase("Button Change My Contribution")) {
+		return this.btnChangeMyContribution;
+	}if (fieldName.trim().equalsIgnoreCase("My Contributions")) {
+		return this.lblMyContributions;
+	}	// Log out
 				if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 								|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
 							return this.lnkLogout;

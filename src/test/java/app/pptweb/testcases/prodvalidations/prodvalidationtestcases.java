@@ -2739,7 +2739,7 @@ public class prodvalidationtestcases {
 						true);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 			Globals.exception = e;
 			Throwable t = e.getCause();
 			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";

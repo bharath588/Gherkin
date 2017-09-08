@@ -8,6 +8,7 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+import appUtils.Common;
 
 import com.aventstack.extentreports.*;
 
@@ -456,7 +457,68 @@ public class liattestcases {
 		 RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(itr, testdata);
 	}
 		
+	@Test(dataProvider = "setData")
+	public void RIP_TC0015_To_Verify_RetirementIncomeTab_Maximizer(int itr, Map<String, String> testdata){
 		
+		try{
+			Reporter.initializeReportForTC(itr,Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			LoginPage login=new LoginPage();
+			TwoStepVerification twoStepVerification=new TwoStepVerification(login);
+			LandingPage landing= new LandingPage(twoStepVerification);			
+			RetirementIncome retirementIncome=new RetirementIncome(landing);
+			retirementIncome.get();		
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {				
+				
+			}
+			//Verify if Retirement Income Page is loaded
+			if(Web.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
+			{
+			Reporter.logEvent(Status.PASS, "Navigate to 'Retirement Income Page", 
+					"Navigation succeeded", true);	
+			Web.clickOnElement(retirementIncome, "Maximizer");
+
+			//Verify if Maximizer Page is loaded
+			if(Web.isWebElementDisplayed(retirementIncome, "Button Change My Contribution"))					
+					Reporter.logEvent(Status.PASS, "Verify if Maximizer Page is Loaded", "Maximizer page is loaded", true);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify if Maximizer Page is Loaded", "Maximizer page is not loaded", true);						
+			}else {
+				Reporter.logEvent(Status.FAIL, "Navigate to 'Retirement Income Page", 
+						"Retirement Page is not loaded", true);
+				
+			}	
+			Web.clickOnElement(retirementIncome, "Button Change My Contribution");
+			Common.waitForProgressBar();
+			if(Web.isWebElementDisplayed(retirementIncome, "My Contributions"))					
+				Reporter.logEvent(Status.PASS, "Verify My Contribution Page is Displayed", "My Contribution Page is Displayed", true);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify My Contribution Page is Displayed", "My Contribution Page is not Displayed", true);	
+			
+			
+			
+			
+		}
+		catch(Exception e)
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.", e.getCause().getMessage(), true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured","Assertion Failed!!" , true);                    
+                        
+        }
+		finally { 
+			try { Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+
 	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.getDriver().close();

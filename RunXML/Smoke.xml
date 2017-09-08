@@ -72,7 +72,7 @@
 				
                  
                    
-					<include name="Manage_My_Investment_Flow_New" >
+					<!-- <include name="Manage_My_Investment_Flow_New" >
 					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
                     </parameter>
                     </include>
@@ -87,7 +87,7 @@
 					<include name="FundToFundTransfer" >
 					<parameter name="ManualTCName" value="FundToFundTransfer">
                     </parameter>
-                    </include>
+                    </include> -->
 				
 					<include name="Statement_and_Documents_validations" >
 					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
