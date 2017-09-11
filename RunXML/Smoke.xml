@@ -147,10 +147,10 @@
                     </include>
 				 
                       
-                   <include name="Verify_Health_care_costs_helpful_links" >
+                  <!--  <include name="Verify_Health_care_costs_helpful_links" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
                     </parameter>
-                    </include> 
+                    </include>  -->
                     
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
