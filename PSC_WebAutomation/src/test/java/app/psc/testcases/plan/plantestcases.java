@@ -22,6 +22,7 @@ import plan.PlanPage;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+import framework.util.CommonLib;
 
 /**
  * @author smykjn
@@ -66,6 +67,19 @@ public class plantestcases {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			homePage = new HomePage();
+			String planNumber = Stock.GetParameterValue("planNumber");
+			String actMaxNumberPlanallowed="";
+			if(homePage.searchPlanWithIdOrName(planNumber))
+				Reporter.logEvent(Status.INFO,"Switch to plan-"+planNumber,
+						"User switches to plan-"+planNumber, false);
+			if(homePage.navigateToProvidedPage("Plan","Overview","Plan provisions"))
+				Reporter.logEvent(Status.PASS,"Naivgate to Plan provision page.",
+						"Plan provision page is displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Naivgate to Plan provision page.",
+						"Plan provision page is not displayed.", true);
+			planPage.validateGeneralInfoOnPlanProvision(planNumber);
+			planPage.validateLoaninformationSectionOnPlanProvision(planNumber);
 			
 			
 		}
@@ -107,7 +121,8 @@ public class plantestcases {
 		{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description", 
-					"This test case aims to verify plan provisions page against DB",
+					"This test case aims to verify search newly created PPT and validate first name and Last name "
+					+ "is displayed properly under contact information section",
 					false);
 			homePage = new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
@@ -323,5 +338,126 @@ public class plantestcases {
 			}
 		}
 	}
+	
+	
+	/**<pre>This test case aims to validate the search functionality of a user on SAW page.</pre>
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC23_Find_Users_by_Name(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This test case aims to validate the search functionality of a user on SAW page.",
+					false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			homePage = new HomePage();
+			String lastname=Stock.GetParameterValue("LastName");
+			String firstname=Stock.GetParameterValue("FirstName");
+			if(Stock.GetParameterValue("Flow").equals("Positive")){
+				homePage.navigateToProvidedPage("Plan","Administration","Username security management");
+				if(planPage.searchUser(new String[]{lastname},
+						Web.returnElement(planPage,"USER_LAST_NAME_INPUT")))
+					Reporter.logEvent(Status.PASS,"Search a user with filter last name-"+lastname,""
+							+ "User is found.",false);
+				else
+					Reporter.logEvent(Status.FAIL,"Search a user with filter last name-"+lastname,""
+							+ "User is not found.",true);
+				
+				if(planPage.searchUser(new String[]{lastname,firstname},
+						Web.returnElement(planPage,"USER_LAST_NAME_INPUT"),
+						Web.returnElement(planPage,"USER_FIRST_NAME_INPUT")))
+					Reporter.logEvent(Status.PASS,"Search a user with filter last name-"+lastname+" and first name-"+firstname,""
+							+ "User is found.",false);
+				else
+					Reporter.logEvent(Status.FAIL,"Search a user with filter last name-"+lastname+" and first name-"+firstname,""
+							+ "User is not found.",true);
+			}else{
+				homePage.navigateToProvidedPage("Plan","Administration","Username security management");
+				if(!planPage.searchUser(new String[]{lastname,firstname},
+						Web.returnElement(planPage,"USER_LAST_NAME_INPUT"),
+						Web.returnElement(planPage,"USER_FIRST_NAME_INPUT")))
+				{	
+					Reporter.logEvent(Status.PASS,
+							"Search a user with invalid filters\nlast name-"+lastname+" and first name-"+firstname,""
+							+ "User is not found.",false);
+					String actErrorMsg = 
+							Web.returnElement(planPage,"NO_SEARCH_RESULTS_TEXT_ELEMENT").getText().trim() ;
+					if(CommonLib.VerifyText(Stock.GetParameterValue("ExpectedErrorMessage"),
+							actErrorMsg, true))
+						Reporter.logEvent(Status.PASS,"Validate proper validation message is displayed.",
+								"Validation message is displayed properly as below.\n"+actErrorMsg, false);
+					else
+						Reporter.logEvent(Status.FAIL,"Validate if proper validation message is displayed.",
+								"Validation message is not displayed properly.Actual message is displayed as below-\n"+actErrorMsg, true);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,"Search a user with invalid filters as below\nlast name-"+lastname+" and first name-"+firstname,""
+							+ "User is found.",true);
+				}
+				
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of plan summary page",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

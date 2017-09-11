@@ -270,9 +270,9 @@
 							value="DDTC-29467_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4" />
 					</include>
 					<include
-						name="TC_61_SIT_PSC_Search_Employee_based_on_User_access_Automation">
+						name="TC_61_SIT_PSC_Search_Employee_based_on_User_access">
 						<parameter name="ManualTCName"
-							value="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access_Automation" />
+							value="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access" />
 					</include>
 				</methods>
 			</class>
@@ -460,11 +460,11 @@
 			</class> -->
 			<class name="app.psc.testcases.plan.plantestcases">
 				<methods>
-					<!-- <include name="TC16_Plan_Provisions_page">
+					<include name="TC16_Plan_Provisions_page">
 						<parameter name="ManualTCName"
 							value="DDTC-2150_Plan_Provisions_page" />
 					</include> 
-					<include name="TC17_Add_PPT_And_SearchForPPT">
+					<!-- <include name="TC17_Add_PPT_And_SearchForPPT">
 						<parameter name="ManualTCName"
 							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
 					</include>
@@ -475,12 +475,12 @@
 					<include name="TC20_Complex_User">
 						<parameter name="ManualTCName"
 							value="DDTC-2073_Complex_User" />
-					</include>-->
+					</include>
 					<include name="TC23_Find_Users_by_Name">
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
-					<!-- <include name="TC22_Added_to_USERS_table_via_SAW">
+					<include name="TC22_Added_to_USERS_table_via_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
 					</include> -->

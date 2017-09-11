@@ -102,7 +102,7 @@
                     <div class="method-list-content passed suite-testsuite">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.plan.plantestcases" hash-for-method="TC20_Complex_User(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, ...)">TC20_Complex_User(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, ...)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.plan.plantestcases" hash-for-method="TC16_Plan_Provisions_page(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)">TC16_Plan_Provisions_page(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-testsuite -->
@@ -125,10 +125,10 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="TC20_Complex_User(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, ...)">
-                  </a> <!-- TC20_Complex_User(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, ...) -->
-                  <span class="method-name">TC20_Complex_User</span>
-                  <span class="parameters">(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com})</span>
+                  <a name="TC16_Plan_Provisions_page(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)">
+                  </a> <!-- TC16_Plan_Provisions_page(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...) -->
+                  <span class="method-name">TC16_Plan_Provisions_page</span>
+                  <span class="parameters">(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com})</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -150,9 +150,9 @@
     &lt;classes&gt;
       &lt;class name=&quot;app.psc.testcases.plan.plantestcases&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;TC20_Complex_User&quot;&gt;
-            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;DDTC-2073_Complex_User&quot;/&gt;
-          &lt;/include&gt; &lt;!-- TC20_Complex_User --&gt;
+          &lt;include name=&quot;TC16_Plan_Provisions_page&quot;&gt;
+            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;DDTC-2150_Plan_Provisions_page&quot;/&gt;
+          &lt;/include&gt; &lt;!-- TC16_Plan_Provisions_page --&gt;
         &lt;/methods&gt;
       &lt;/class&gt; &lt;!-- app.psc.testcases.plan.plantestcases --&gt;
     &lt;/classes&gt;
@@ -196,9 +196,9 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'TC20_Complex_User')
+data.setCell(0, 1, 'TC16_Plan_Provisions_page')
 data.setCell(0, 2, 'app.psc.testcases.plan.plantestcases')
-data.setCell(0, 3, 76256);
+data.setCell(0, 3, 84572);
 window.suiteTableData['testsuite']= { tableData: data, tableDiv: 'times-div-testsuite'}
 return data;
 }
@@ -218,7 +218,7 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-testsuite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">3 ignored methods</span>
+            <span class="header-content">4 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
@@ -226,9 +226,11 @@ return data;
               <div class="ignored-methods-div">
                 <span class="ignored-method-name">TC17_Add_PPT_And_SearchForPPT</span>
                 <br/>
-                <span class="ignored-method-name">TC18_SIT_PSC_Investment_UnitShare_values_page</span>
+                <span class="ignored-method-name">TC23_Find_Users_by_Name</span>
                 <br/>
-                <span class="ignored-method-name">TC16_Plan_Provisions_page</span>
+                <span class="ignored-method-name">TC20_Complex_User</span>
+                <br/>
+                <span class="ignored-method-name">TC18_SIT_PSC_Investment_UnitShare_values_page</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -246,8 +248,8 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
-                <span class="method-name">TC20_Complex_User(1, {NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, ...)</span>
-                <span class="method-start">28053 ms</span>
+                <span class="method-name">TC16_Plan_Provisions_page(1, {PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)</span>
+                <span class="method-start">25109 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

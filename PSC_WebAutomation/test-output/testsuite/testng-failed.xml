@@ -9,9 +9,9 @@
       <class name="app.psc.testcases.plan.plantestcases">
         <methods>
           <include name="ReportInit"/>
-          <include name="TC20_Complex_User">
-            <parameter name="ManualTCName" value="DDTC-2073_Complex_User"/>
-          </include> <!-- TC20_Complex_User -->
+          <include name="TC16_Plan_Provisions_page">
+            <parameter name="ManualTCName" value="DDTC-2150_Plan_Provisions_page"/>
+          </include> <!-- TC16_Plan_Provisions_page -->
         </methods>
       </class> <!-- app.psc.testcases.plan.plantestcases -->
     </classes>

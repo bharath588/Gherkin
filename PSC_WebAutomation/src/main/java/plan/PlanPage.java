@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,8 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -316,8 +319,14 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	WebElement watermarkText5;
 	@FindBy(id="saButton")
 	private WebElement searchUserGoBtn;
+	@FindBy(partialLinkText="Loan information")
+	private WebElement lonainformationLink;
+	@FindBy(xpath=".//label[contains(text(),'General information')]/ancestor::tr/following-sibling::tr//span")
+	private List<WebElement> planProvisionGenInfoValues;
 	@FindBy(xpath=".//*[@id='searchListDataTable']//tbody//tr")
 	private WebElement searchResultRow;
+	@FindBy(xpath=".//*[@id='searchListDataTable']//tbody//tr//td")
+	private WebElement nosearchResultElement;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -347,6 +356,7 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	
 	@Override
 	protected void isLoaded() throws Error {	
+		Web.getDriver().switchTo().defaultContent();
 		Web.waitForElement(weGreeting);
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
 			//CommonLib.waitForProgressBar();
@@ -422,7 +432,15 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 		if (fieldName.trim().equalsIgnoreCase("ASSIGNED_USERID")) {
 			return this.searchUserId;
 		}
-		
+		if (fieldName.trim().equalsIgnoreCase("USER_LAST_NAME_INPUT")) {
+			return this.lastNameInput;
+		}
+		if (fieldName.trim().equalsIgnoreCase("USER_FIRST_NAME_INPUT")) {
+			return this.firstNameInput;
+		}
+		if(fieldName.trim().equalsIgnoreCase("NO_SEARCH_RESULTS_TEXT_ELEMENT")){
+			return this.nosearchResultElement;
+		}
 		return null;
 	}
 
@@ -2123,9 +2141,16 @@ public boolean searchUser(String[] values,WebElement... filters)
 			Web.clickOnElement(searchUserGoBtn);
 			do{
 				Thread.sleep(2000);
-				System.out.println("Waiting till go button get enabled.");
+				System.out.println("Waiting till go button gets enabled.");
 			}while(!searchUserGoBtn.isEnabled());
-			isUserRetrieved =Web.isWebElementDisplayed(searchResultRow, true);
+			if(Web.isWebElementDisplayed(searchResultRow, true))
+			{
+				List<WebElement> searchRowColumns = searchResultRow.findElements(By.tagName("td"));
+				if(searchRowColumns.size()>1)
+					isUserRetrieved=true;
+				else
+					isUserRetrieved=false;
+			}
 		}else{
 			throw new Exception("Please provide value for each filter.");
 		}
@@ -2174,10 +2199,83 @@ public boolean validateActionDropDownOption(String expOption) throws Exception{
 }
 
 
+/**
+ * <pre>This method validates General information section on plan provision page against DB.</pre>
+ * @author smykjn
+ * @return boolean
+ */
+public void validateGeneralInfoOnPlanProvision(String planNumber) throws Exception{
+	Map<String,String> generalInfoMapDB = new HashMap<String,String>();
+	Map<String,String> generalInfoMapUI = new HashMap<String,String>();
+	CommonLib.switchToFrame(frameb);
+	if(planProvisionGenInfoValues.size()==7){
+		generalInfoMapUI.put("Effective date", planProvisionGenInfoValues.get(1).getText());
+		String[] planyearend = planProvisionGenInfoValues.get(2).getText().split("/");
+		generalInfoMapUI.put("Plan year end", planyearend[1]+planyearend[0]);
+		generalInfoMapUI.put("Employee ID", planProvisionGenInfoValues.get(3).getText());
+		generalInfoMapUI.put("ERISA", planProvisionGenInfoValues.get(4).getText());
+		generalInfoMapUI.put("Safe Harbor plan", planProvisionGenInfoValues.get(5).getText());
+		generalInfoMapUI.put("Beneficiary Recordkeeping services", planProvisionGenInfoValues.get(6).getText());
+	}
+	queryResultSet=DB.executeQuery(Stock.getTestQuery("getPlanProvisionsDetails")[0],
+			Stock.getTestQuery("getPlanProvisionsDetails")[1], planNumber);
+	if(queryResultSet.next()){
+		generalInfoMapDB.put("Effective date",queryResultSet.getString("EFFDATE"));
+		generalInfoMapDB.put("Plan year end", queryResultSet.getString("ANNIV_DATE"));
+		generalInfoMapDB.put("Employee ID",queryResultSet.getString("TAX_ID"));
+		if(queryResultSet.getString("ERISA_COMPL_IND").equals("Y"))
+			generalInfoMapDB.put("ERISA","Yes");
+		else if(queryResultSet.getString("ERISA_COMPL_IND").equals("N"))
+			generalInfoMapDB.put("ERISA","No");
+		else
+			generalInfoMapDB.put("ERISA","");
+		if(queryResultSet.getString("SAFE_HARBOR_IND").equals("Y"))
+			generalInfoMapDB.put("Safe Harbor plan","Yes");
+		else if(queryResultSet.getString("SAFE_HARBOR_IND").equals("N"))
+			generalInfoMapDB.put("Safe Harbor plan","No");
+		else
+			generalInfoMapDB.put("Safe Harbor plan","");
+		generalInfoMapDB.put("Beneficiary Recordkeeping services",
+				StringUtils.capitalize(queryResultSet.getString("BENE_RECORDKEEPER_CODE").toLowerCase()));
+	}
+	System.out.println("UI map for general info:"+generalInfoMapUI);
+	System.out.println("DB map for general info:"+generalInfoMapDB);
+	if(generalInfoMapUI.equals(generalInfoMapDB))
+		Reporter.logEvent(Status.PASS,"Validate plan provision general information against DB.\ngeneral information "
+				+ "from plan provision page:"+generalInfoMapUI,""
+						+ "General information from DB is found as below\n"+generalInfoMapDB, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate plan provision general information against DB.\ngeneral information "
+				+ "from plan provision page:"+generalInfoMapUI,""
+						+ "General information from DB is found as below\n"+generalInfoMapDB, true);
+}
 
+@FindBy(xpath=".//h4[contains(text(),'Maximum number of loans allowed')]")
+private WebElement maxLoanAllowed;
 
-
-
+/**
+ * <pre>This method validates the Loan information section on Plan provision page.</pre>
+ * @author smykjn
+ * @Date 11th-Sept-2017
+ */
+public void validateLoaninformationSectionOnPlanProvision(String planNumber) throws Exception{
+	String maxNumberOfLoansAllowed="";
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("getMaxNumberOfLoanAllowed")[0],
+			Stock.getTestQuery("getMaxNumberOfLoanAllowed")[1], planNumber);
+	if(queryResultSet.next()){
+		maxNumberOfLoansAllowed = queryResultSet.getString("MAX_LOANS_ALLOWED");
+	}
+	Web.clickOnElement(lonainformationLink);
+	Web.waitForPageToLoad(Web.getDriver());
+	Web.waitForElement(maxLoanAllowed);
+	String maxNumberOfLoansAllowedUI = maxLoanAllowed.getText().split(":")[1].trim();
+	if(Web.VerifyText(maxNumberOfLoansAllowedUI, maxNumberOfLoansAllowedUI, false))
+		Reporter.logEvent(Status.PASS,"Validate max number of loans allowed.\nmax number of loans allowed:"+maxNumberOfLoansAllowedUI,
+				"Max number of loans allowed is same as found in DB-"+maxNumberOfLoansAllowed, false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate max number of loans allowed.\nmax number of loans allowed:"+maxNumberOfLoansAllowedUI,
+				"Max number of loans allowed is not same as found in DB:"+maxNumberOfLoansAllowed, true);
+}
 
 
 

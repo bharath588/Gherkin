@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="3" total="4" passed="1">
+<testng-results skipped="0" failed="0" ignored="4" total="5" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="104366" started-at="2017-09-08T13:43:54Z" finished-at="2017-09-08T13:45:38Z">
+  <suite name="testsuite" duration-ms="109719" started-at="2017-09-11T12:46:56Z" finished-at="2017-09-11T12:48:46Z">
     <groups>
     </groups>
-    <test name="Regression_Orange_Period_Execution_1" duration-ms="104366" started-at="2017-09-08T13:43:54Z" finished-at="2017-09-08T13:45:38Z">
+    <test name="Regression_Orange_Period_Execution_1" duration-ms="109719" started-at="2017-09-11T12:46:56Z" finished-at="2017-09-11T12:48:46Z">
       <class name="app.psc.testcases.plan.plantestcases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.plan.plantestcases@553f17c]" name="ReportInit" is-config="true" duration-ms="27865" started-at="2017-09-08T19:13:54Z" finished-at="2017-09-08T19:14:22Z">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.plan.plantestcases@271053e1]" name="ReportInit" is-config="true" duration-ms="24962" started-at="2017-09-11T18:16:56Z" finished-at="2017-09-11T18:17:21Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="TC20_Complex_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@553f17c]" name="TC20_Complex_User" duration-ms="76256" started-at="2017-09-08T19:14:22Z" data-provider="setData" finished-at="2017-09-08T19:15:38Z">
+        <test-method status="PASS" signature="TC16_Plan_Provisions_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@271053e1]" name="TC16_Plan_Provisions_page" duration-ms="84572" started-at="2017-09-11T18:17:22Z" data-provider="setData" finished-at="2017-09-11T18:18:46Z">
           <params>
             <param index="0">
               <value>
@@ -20,13 +20,13 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+                <![CDATA[{PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC20_Complex_User -->
+        </test-method> <!-- TC16_Plan_Provisions_page -->
       </class> <!-- app.psc.testcases.plan.plantestcases -->
     </test> <!-- Regression_Orange_Period_Execution_1 -->
   </suite> <!-- testsuite -->

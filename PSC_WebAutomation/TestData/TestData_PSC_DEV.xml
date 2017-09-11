@@ -264,6 +264,77 @@
 				<parameter name="NonComplexUserId" value="55W3S" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="DDTC-4_Find_Users_by_Name">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="Flow" value="Positive" />
+				<parameter name="FirstName" value="Ayshwar" />
+				<parameter name="LastName" value="amRIT" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="Flow" value="Negative" />
+				<parameter name="FirstName" value="AyshwarInvalid" />
+				<parameter name="LastName" value="amRIT" />
+				<parameter name="ExpectedErrorMessage" value="No records found"/>
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="Flow" value="Negative" />
+				<parameter name="FirstName" value="AyshwarInvalid" />
+				<parameter name="LastName" value="amRIT" />
+				<parameter name="ExpectedErrorMessage" value="No records found"/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2150_Plan_Provisions_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-24356_Add_PPT_And_SearchForPPT">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="FirstName" value="James" />
+				<parameter name="LastName" value="Ket" />
+				<parameter name="IneligibilityReasonCode" value="Excluded Class,Other" />
+				<parameter name="IncomeDataErrorMsg" value="Salary Amount is not a valid number." />
+				<parameter name="FrequencyOptions" value="ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52" />
+				<parameter name="expHireDateErrorMsg" value="Hire Date is mandatory." />
+				<parameter name="ExpectedManagedAccntLabels" value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
+				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100."/>
+				<parameter name="planNumber" value=""/>
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="login">
 		<TestCase
@@ -2990,5 +3061,41 @@ where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= 
  Query="select emp.ind_id,emp.emp_termDate from elective_deferral e inner join group_account ga on e.plan_id=ga.plan_id and ga.id=?
 inner join employment emp on emp.ind_id= e.ind_id and emp.emp_termdate is not null and e.amount=0 
 and to_char(emp.emp_termdate+?) = to_char(sysdate) order by emp.emp_termdate desc" />
+<parameter QueryName="queryToFindSSNforAplan" DB="ISISDB_DEV"
+Query="select ind.SSN from part_agrmt pa,individual ind
+where pa.ga_id = ?
+and pa.ind_id=ind.id"/>
+<parameter QueryName="getUsersDetails" DB="ISISDB_DEV"
+Query="select * from users where logon_id=?"/>
+<parameter QueryName="getPlanProvisionsDetails" DB="ISISDB_DEV"
+Query="select distinct to_char(p.effdate,'MM/dd/yyyy')effdate,p.anniv_date,gc.tax_id,p.erisa_compl_ind,nvl(p.safe_harbor_ind,' ')safe_harbor_ind,p.bene_recordkeeper_code,p.loan_admin_ind,
+p.loan_hardship_ind,nvl(p.loan_before_hardship_ind,' ')loan_before_hardship_ind,sr.normal_retire_age, sr.normal_retire_yrs_of_srv,sr.normal_retire_yrs_of_part,
+sr.early_retire_age, sr.early_retire_yrs_of_part,sr.early_retire_yrs_of_srv,p.vest_serv_level,p.hardship_rule,p.hardship_rule_sus_period,
+p.disb_spousal_consent_ind,pdr.ee_roth_max_cnt_amount,p.age_catch_up_method_code,pdr.ee_pretax_max_cnt_percent,pdr.ee_pretax_min_cnt_percent,
+p.qdia_agreement_ind,pvr.forf_reduce_er_contrib, pvr.forf_reduce_expenses, pvr.forf_alloc_to_parts, gdm.sdmt_code, gdm.seqnbr,gdm.descr,
+gdm.employer_directed_indic from group_client gc 
+inner join plan p on gc.id=p.gc_id 
+LEFT OUTER join group_account ga on  p.gc_id =ga.gc_id
+LEFT OUTER join service_rule sr on p.id = sr.plan_id 
+LEFT OUTER join plan_deferral_rule pdr on p.id = pdr.plan_id
+LEFT OUTER join plan_vesting_rule pvr on p.id = pvr.plan_id
+LEFT OUTER join grp_def_mnty gdm on gdm.ga_id=ga.id 
+where ga.id=?"/>
+<parameter QueryName="getSSNDetails" DB="ISISDB_DEV"
+Query="select * from individual where ssn=?"/>
+<parameter QueryName="getComplexUser" DB="ISISDB_DEV"
+Query="select * from users u inner join user#user_class uc on uc.user_logon_id= u.logon_id
+inner join user_txn_auth uta on uta.uscs_id= uc.uscs_id 
+inner join user_class usrc on usrc.id = uc.user_logon_id
+where u.user_category = 'PLAN EMPLOYEE' and uc.user_class_grouping is not null  and uta.txn_code='SAWINQ' and uc.uscs_id != 'EMPLOYER'
+and usrc.psc_category='ERROR'"/>
+<parameter QueryName="getMaxNumberOfLoanAllowed" DB="ISISDB_DEV"
+Query="select * from grp_loan_struc where ga_id=?"/>
+<parameter QueryName="queryToFindSSNHavingOnlySinglePlan" DB="ISISDB_DEV"
+Query="select ssn from individual where id in (SELECT ind_id
+FROM part_agrmt where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
+GROUP BY ind_id HAVING COUNT(ga_id)=1)"/>
 </Module>
 </TestData>

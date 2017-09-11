@@ -3531,7 +3531,7 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
  * @Date 31-July-2017
  */
 @Test(dataProvider = "setData")
-public void TC_61_SIT_PSC_Search_Employee_based_on_User_access_Automation(int itr,Map<String, String> testdata) {		
+public void TC_61_SIT_PSC_Search_Employee_based_on_User_access(int itr,Map<String, String> testdata) {		
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
@@ -3542,9 +3542,8 @@ public void TC_61_SIT_PSC_Search_Employee_based_on_User_access_Automation(int it
 		String ssn="";
 		String planNumber="";
 		System.out.println("Number of plans:"+numberOfPlans);
-		while(resultset.next()){
+		if(resultset.next()){
 			planNumber = resultset.getString("GA_ID");
-				break;
 			}
 		resultset = DB.executeQuery(Stock.getTestQuery("queryToFindSSNforAplan")[0],
 				Stock.getTestQuery("queryToFindSSNforAplan")[1],planNumber);
