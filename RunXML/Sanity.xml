@@ -80,7 +80,7 @@
              </methods>
          </class>
    
-			<!-- <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+			 <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 			
 				<methods>
 														
@@ -219,7 +219,7 @@
                     </parameter>
 				</include>
 				</methods>
-			</class> -->
+			</class> 
 		</classes>
 	</test> 
 	 
