@@ -525,5 +525,26 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	
   return isTextDisplayed;
 	}
-	
+	/** Check if specified field is displayed on the page
+	 * 
+	 * @param fieldName
+	 *
+	 */
+	public void isInputFieldDisplayed(String fieldName) {
+		try{
+		WebElement element = this.getWebElement(fieldName);
+		
+		if(Web.isWebElementDisplayed(element)){
+			lib.Reporter.logEvent(Status.PASS, "Verify Input Field" + fieldName
+					+ "  is Displayed", "'"+fieldName + "' Input Field is Displayed",
+					false);
+		}
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify Input Field " + fieldName
+					+ " is Displayed", "'"+fieldName + "' Input Field is Not Displayed", false);
+			
+		}
+	}
+
 }

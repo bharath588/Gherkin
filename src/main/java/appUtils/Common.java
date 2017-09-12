@@ -607,5 +607,12 @@ public class Common {
 		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
 	}
-	
+	public static String getFutureDate(String format) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		Calendar calendar = Calendar.getInstance();         
+		calendar.add(Calendar.DATE, 20);
+		String date=dateFormat.format(calendar.getTime());
+		System.out.println("DATE"+date);
+		return date;
+	}
 }

@@ -121,6 +121,11 @@
                     <include name="NPDI_001_validation_for_Ihaveaplanenrollment_code_page">
 					<parameter name="ManualTCName" value="SIT_NPDI_001_validation_for_Ihaveaplanenrollment_code_page"></parameter>
                     </include>
+                    
+                    <include name="NPDI_002_Validation_RegistrationPage_Provide_Personal_Information">
+					<parameter name="ManualTCName" value="SIT_NPDI_002_Validation_RegistrationPage_Provide_Personal_Information"></parameter>
+                    </include>
+                    
                     <include name="NPDI_003_Validation_for_Registration_Page_Employment_formation">
 					<parameter name="ManualTCName" value="SIT_NPDI_003_Validation_for_Registration_Page_Employment_formation"></parameter>
                     </include>

@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                     <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
+                     <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -60,7 +60,7 @@
                     </include>  
                     
                   
-                	   <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
+                	<!--   <include name="DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24360_Handling_Employer_directed_MTGs_Allocations_DIM"></parameter>
                     </include> 
                     
@@ -250,13 +250,13 @@
                 
                   <include name="DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds"></parameter>
-                    </include> -->
+                    </include> 
                     
                     <include name="DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer"></parameter>
                     </include>
                     
-                   	<!-- <include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
+                   	<include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction"></parameter>
                     </include>
                     

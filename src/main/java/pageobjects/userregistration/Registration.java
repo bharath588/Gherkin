@@ -61,12 +61,23 @@ public class Registration extends LoadableComponent<Registration> {
 	@FindBy(id="countryInput") private WebElement drpCountry;
 	@FindBy(xpath="//button[text()='CONTINUE']") private WebElement btnSubmit;
 	@FindBy(xpath="//label[@for='dateOfHire']") private WebElement lblDateOfHire;
+	@FindBy(xpath="//label[@for='dateOfBirth']") private WebElement lblDateOfBirth;
 	@FindBy(xpath="//header[./h2[contains(text(),'Provide mailing address')]]//following-sibling::div[@class='row']") private WebElement panelProvideMailAddr;
 	@FindBy(xpath="//label[contains(text(),'Current Annual Income')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_inpAnnualIncome;
 	@FindBy(xpath="//label[contains(text(),'Date Of Hire')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpDateOfHire;
 	@FindBy(xpath="//label[contains(text(),'Address Line 1')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpAddress1;
 	@FindBy(xpath="//label[contains(text(),'Address Line 2')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpAddress2;
 	@FindBy(xpath="//label[contains(text(),'City')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpCity;
+	@FindBy(xpath="//label[contains(text(),'First')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpFirstName;
+	@FindBy(xpath="//label[contains(text(),'Middle')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpMiddleName;
+	@FindBy(xpath="//label[contains(text(),'Last')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpLastName;
+	@FindBy(xpath="//label[contains(text(),'Date Of Birth')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpDateOfBirth;
+	@FindBy(xpath="//label[contains(text(),'Gender')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_drpGender;
+	@FindBy(xpath="//label[contains(text(),'Marital Status')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_drpMaritalStatus;
+	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message") private WebElement Err_inpSSN;
+	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message[1]") private WebElement Err_inpSSN1;
+	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message[2]") private WebElement Err_inpSSN2;
+
 	private String textField="//*[contains(text(),'webElementText')]";
 	
 	/** Empty args constructor
@@ -119,8 +130,30 @@ public class Registration extends LoadableComponent<Registration> {
 		else if(fieldName.trim().equalsIgnoreCase("LABEL DATE OF HIRE")) {
 			return this.lblDateOfHire;
 			}
-		
-		
+		else if(fieldName.trim().equalsIgnoreCase("LABEL DATE OF BIRTH")) {
+			return this.lblDateOfBirth;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("FIRST NAME")) {
+			return this.txtfirstName;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("MIDDLE NAME")) {
+			return this.txtMiddleName;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("LAST NAME")) {
+			return this.txtLastname;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("DATE OF BIRTH")) {
+			return this.txtDob;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("GENDER")) {
+			return this.selGender;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("SSN")) {
+			return this.txtSSN;
+			}
+		else if(fieldName.trim().equalsIgnoreCase("MARITAL STATUS")) {
+			return this.selMaritalStatus;
+			}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
 				"No WebElement mapped for this field\nPage: <b>" + this.getClass().getName() + "</b>", false);
 		return null;
@@ -636,4 +669,515 @@ public class Registration extends LoadableComponent<Registration> {
 				}
 			}
 		}
+	
+	/** Check if specified field is displayed on the page
+	 * 
+	 * @param fieldName
+	 *
+	 */
+	public void isInputFieldDisplayed(String fieldName) {
+		try{
+		WebElement element = this.getWebElement(fieldName);
+		
+		if(Web.isWebElementDisplayed(element)){
+			lib.Reporter.logEvent(Status.PASS, "Verify Input Field '" + fieldName
+					+ "'  is Displayed", "'"+fieldName + "' Input Field is Displayed",
+					false);
+		}
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify Input Field '" + fieldName
+					+ "' is Displayed", "'"+fieldName + "' Input Field is Not Displayed", false);
+			
+		}
+	}
+	/**
+	 * Method to verify inline validations for First Name Input Field
+	 * 
+	 */
+	public void verifyInLineValidationsForFirstName() {
+		
+	Web.setTextToTextBox(txtfirstName, "123ABC");
+	Web.clickOnElement(txtMiddleName);
+		
+	String actualErrMsg=Err_inpFirstName.getText().trim();
+	String expectedErrMsg="Name may not include special characters or numbers.";
+	
+	if (actualErrMsg.length() == 0) {
+		Reporter.logEvent(Status.FAIL,
+				"Verify error message is displayed after entering Alpha Numeric for First Name",
+				"No error message is displayed on the page", true);
+	} else {
+		if (Web.VerifyText(expectedErrMsg,
+				actualErrMsg, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed after entering Alpha Numeric for First Name",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg
+							+ "\nActual:" + actualErrMsg, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed after entering Alpha Numeric for First Name",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg, true);
+		}
+	}
+			
+			Web.setTextToTextBox(txtfirstName, "");
+			Web.clickOnElement(txtLastname);
+			actualErrMsg=Err_inpFirstName.getText().trim();
+			expectedErrMsg="First name is required.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed when First Name is empty",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed when First Name is empty",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed when First Name is empty",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			
+			Web.setTextToTextBox(txtfirstName, "asdfghjklasdfghjklasdfghjjj");
+			Web.clickOnElement(txtMiddleName);
+			if(txtfirstName.getAttribute("value").length()==20){
+		
+			Reporter.logEvent(Status.PASS, "Verify 'First Name' Field Accepts Only 20 Characters" , 
+					"'First Name' Field Accepts Only 20 Characters",
+					true);
+
+			}
+			else
+			{
+			Reporter.logEvent(Status.FAIL,"Verify 'First Name' Field Accepts Only 20 Characters" , 
+					"'First Name' Field Accepts Only 20 Characters \nFirst Name:"+txtfirstName.getAttribute("value"),
+					true);
+			
+			}
+	
+		}
+	/**
+	 * Method to verify inline validations for Middle Name Input Field
+	 * 
+	 */
+	public void verifyInLineValidationsForMiddleName() {
+		
+	Web.setTextToTextBox(txtMiddleName, "123ABC");
+	Web.clickOnElement(txtLastname);
+		
+	String actualErrMsg=Err_inpMiddleName.getText().trim();
+	String expectedErrMsg="Name may not include special characters or numbers.";
+	
+	if (actualErrMsg.length() == 0) {
+		Reporter.logEvent(Status.FAIL,
+				"Verify error message is displayed after entering Alpha Numeric for Middle Name",
+				"No error message is displayed on the page", true);
+	} else {
+		if (Web.VerifyText(expectedErrMsg,
+				actualErrMsg, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed after entering Alpha Numeric for Middle Name",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg
+							+ "\nActual:" + actualErrMsg, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed after entering Alpha Numeric for Middle Name",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg, true);
+		}
+	}
+			
+			Web.setTextToTextBox(txtMiddleName, "");
+			Web.clickOnElement(txtfirstName);
+			
+			if(!Web.isWebElementDisplayed(Err_inpMiddleName)){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Middle Name' Field is Not Mandatory",
+						"'Middle Name' Field is Not Mandatory", false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Middle Name' Field is Not Mandatory",
+						"'Middle Name' Field is Mandatory", true);
+			}
+			
+			
+		}
+	/**
+	 * Method to verify inline validations for Last Name Input Field
+	 * 
+	 */
+	public void verifyInLineValidationsForLastName() {
+		
+	Web.setTextToTextBox(txtLastname, "123ABC");
+	Web.clickOnElement(txtMiddleName);
+		
+	String actualErrMsg=Err_inpLastName.getText().trim();
+	String expectedErrMsg="Name may not include special characters or numbers.";
+	
+	if (actualErrMsg.length() == 0) {
+		Reporter.logEvent(Status.FAIL,
+				"Verify error message is displayed after entering Alpha Numeric for Last Name",
+				"No error message is displayed on the page", true);
+	} else {
+		if (Web.VerifyText(expectedErrMsg,
+				actualErrMsg, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed after entering Alpha Numeric for Last Name",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg
+							+ "\nActual:" + actualErrMsg, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed after entering Alpha Numeric for Last Name",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg, true);
+		}
+	}
+			
+			Web.setTextToTextBox(txtLastname, "");
+			Web.clickOnElement(txtMiddleName);
+			actualErrMsg=Err_inpLastName.getText().trim();
+			expectedErrMsg="Last Name is required.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed when Last Name is empty",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed when Last Name is empty",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed when Last Name is empty",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			
+			Web.setTextToTextBox(txtLastname, "asdfghjklasdfghjklasdfghjjj");
+			Web.clickOnElement(txtMiddleName);
+			if(txtLastname.getAttribute("value").length()==20){
+		
+			Reporter.logEvent(Status.PASS, "Verify 'Last Name' Field Accepts Only 20 Characters" , 
+					"'Last Name' Field Accepts Only 20 Characters",
+					true);
+
+			}
+			else
+			{
+			Reporter.logEvent(Status.FAIL,"Verify 'Last Name' Field Accepts Only 20 Characters" , 
+					"'Last Name' Field Accepts More Than 20 Characters \nLast Name:"+txtLastname.getAttribute("value"),
+					true);
+			
+			}
+	
+		}
+	
+	/**
+	 * Method to verify inline validations for Date Of Birth Input Field
+	 * @throws Exception 
+	 * 
+	 */
+	public void verifyInLineValidationsForDateOfBirthField() throws Exception {
+	Web.clickOnElement(txtDob);
+	Web.clickOnElement(txtLastname);
+	String actualErrMsg=Err_inpDateOfBirth.getText().trim();
+	String expectedErrMsg="Date of Birth is required in the following format MM/DD/YYYY.";
+	
+	if (actualErrMsg.length() == 0) {
+		Reporter.logEvent(Status.FAIL,
+				"Verify error message is displayed for Date Of Birth",
+				"No error message is displayed on the page", true);
+	} else {
+		if (Web.VerifyText(expectedErrMsg,
+				actualErrMsg, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed for Date Of Birth",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg
+							+ "\nActual:" + actualErrMsg, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed for Date Of Birth",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg, true);
+		}
+	}
+			Web.setTextToTextBox(txtDob, "13/12/1999");
+			if(Web.VerifyText("12/12/1999", txtDob.getAttribute("value"))){
+		
+			Reporter.logEvent(Status.PASS, "Verify 'Date Of Birth' Field Accepts Only MM/DD/YYYY Format" , 
+					"'Date Of Birth' Field Accepts Only MM/DD/YYYY Format",
+					true);
+
+			}
+			else
+			{
+			Reporter.logEvent(Status.FAIL,"Verify 'Date Of Birth' Field Accepts Only MM/DD/YYYY Format" , 
+					"'Date Of Birth' Field Accepts other Date Formats also"+txtDob.getAttribute("value"),
+					true);
+			
+			}
+			Web.setTextToTextBox(txtDob, "12/12/1849");
+			Web.clickOnElement(txtLastname);
+			actualErrMsg=Err_inpDateOfBirth.getText().trim();
+			 expectedErrMsg="Date of birth must be after 1/1/1850.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed When Date of Birth is entered before 1/1/1850",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed When Date of Birth is entered before 1/1/1850",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed When Date of Birth is entered before 1/1/1850",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			Web.setTextToTextBox(txtDob, Common.getFutureDate("MM/dd/yyyy"));
+			Web.clickOnElement(txtLastname);
+			actualErrMsg=Err_inpDateOfBirth.getText().trim();
+			 expectedErrMsg="Date of birth may not be in the future.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed When Date of Birth is entered as Future Date",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed When Date of Birth is entered as Future Date",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed When Date of Birth is entered as Future Date",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+	}
+			
+			
+			/**
+			 * Method to verify inline validations for Gender Field
+			 * @throws Exception 
+			 * 
+			 */
+			public void verifyInLineValidationsForGenderField() throws Exception {
+			Web.clickOnElement(selGender);
+			Web.clickOnElement(txtLastname);
+		
+			String actualErrMsg=Err_drpGender.getText().trim();
+			String expectedErrMsg="Gender is required.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed when Gender is empty",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed when Gender is empty",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed when Gender is empty",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			Web.verifyDropDownOptionExists(selGender, "Female", true);	
+			Web.verifyDropDownOptionExists(selGender, "Male", true);		
+										
+		}
+			/**
+			 * Method to verify inline validations for Marital Status Field
+			 * @throws Exception 
+			 * 
+			 */
+			public void verifyInLineValidationsForMaritalStatusField() throws Exception {
+			Web.clickOnElement(selMaritalStatus);
+			Web.clickOnElement(txtLastname);
+		
+			String actualErrMsg=Err_drpMaritalStatus.getText().trim();
+			String expectedErrMsg="Marital Status is required.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed when Marital Status is empty",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed when Marital Status is empty",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed when Marital Status is empty",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			Web.verifyDropDownOptionExists(selMaritalStatus, "Divorced", true);
+			Web.verifyDropDownOptionExists(selMaritalStatus, "Married", true);
+			Web.verifyDropDownOptionExists(selMaritalStatus, "Single", true);		
+			Web.verifyDropDownOptionExists(selMaritalStatus, "Widow/widower", true);		
+					
+		}
+			/**
+			 * Method to verify inline validations for SSN Input Field
+			 * 
+			 */
+		public void verifyInLineValidationsForSSN() {
+			
+				Web.setTextToTextBox(txtSSN, "");
+				Web.clickOnElement(txtLastname);
+				
+				String actualErrMsg=Err_inpSSN.getText().trim();
+				 String expectedErrMsg="Social Security number is required.";
+				
+				if (actualErrMsg.length() == 0) {
+					Reporter.logEvent(Status.FAIL,
+							"Verify error message is displayed when SSN is empty",
+							"No error message is displayed on the page", true);
+				} else {
+					if (Web.VerifyText(expectedErrMsg,
+							actualErrMsg, true)) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify error message is displayed when SSN is empty",
+								"Expected error message is displayed.\nExpected: "
+										+ expectedErrMsg
+										+ "\nActual:" + actualErrMsg, true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify error message is displayed when SSN is empty",
+								"Expected error message is not displayed.\nExpected: "
+										+expectedErrMsg
+										+ "\n" + actualErrMsg, true);
+					}
+				}
+				
+			Web.setTextToTextBox(txtSSN, "123ABC");
+			Web.clickOnElement(txtMiddleName);
+				
+			 actualErrMsg=Err_inpSSN1.getText().trim();
+			expectedErrMsg="Social Security number must be nine digits.";
+			
+			if (actualErrMsg.length() == 0) {
+				Reporter.logEvent(Status.FAIL,
+						"Verify error message is displayed after entering Alpha Numeric for SSN",
+						"No error message is displayed on the page", true);
+			} else {
+				if (Web.VerifyText(expectedErrMsg,
+						actualErrMsg, true)) {
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify error message is displayed after entering Alpha Numeric for SSN",
+							"Expected error message is displayed.\nExpected: "
+									+ expectedErrMsg
+									+ "\nActual:" + actualErrMsg, true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify error message is displayed after entering Alpha Numeric for SSN",
+							"Expected error message is not displayed.\nExpected: "
+									+expectedErrMsg
+									+ "\n" + actualErrMsg, true);
+				}
+			}
+			
+			 actualErrMsg=Err_inpSSN2.getText().trim();
+				expectedErrMsg="Social Security number must be numeric.";
+				
+				if (actualErrMsg.length() == 0) {
+					Reporter.logEvent(Status.FAIL,
+							"Verify error message is displayed after entering Alpha Numeric for SSN",
+							"No error message is displayed on the page", true);
+				} else {
+					if (Web.VerifyText(expectedErrMsg,
+							actualErrMsg, true)) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify error message is displayed after entering Alpha Numeric for SSN",
+								"Expected error message is displayed.\nExpected: "
+										+ expectedErrMsg
+										+ "\nActual:" + actualErrMsg, true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify error message is displayed after entering Alpha Numeric for SSN",
+								"Expected error message is not displayed.\nExpected: "
+										+expectedErrMsg
+										+ "\n" + actualErrMsg, true);
+					}
+				}
+							
+				}
 }

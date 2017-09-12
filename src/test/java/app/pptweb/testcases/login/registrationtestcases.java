@@ -3722,7 +3722,113 @@ Web.clickOnElement(objAuth, "SIGN IN");
 		}
 
 	}
+	@Test(dataProvider = "setData")
+	public void NPDI_002_Validation_RegistrationPage_Provide_Personal_Information(int itr,
+			Map<String, String> testdata) {
 
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
+					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			
+			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration =new Registration(accLookup);
+			
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on Register
+			// link
+			accLookup.get();
+			
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3 
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode( Stock.GetParameterValue("planNumber"),
+														Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if(Web.isWebElementDisplayed(registration, "Header Registration")){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+			
+			//Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			//Step 5
+			registration.isLabelDisplayed("First");
+			registration.isLabelDisplayed("Middle");
+			registration.isLabelDisplayed("Last");
+			if(Web.VerifyText(registration.getWebElementText("LABEL DATE OF BIRTH"),"DATE OF BIRTH MM/DD/YYYY")){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Label 'DATE OF BIRTH MM/DD/YYYY' is displayed",
+						"Label 'DATE OF BIRTH MM/DD/YYYY' is displayed",
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify Label 'DATE OF BIRTH MM/DD/YYYY' is displayed",
+						"Label 'DATE OF BIRTH MM/DD/YYYY' is not displayed", true);
+			}	
+			registration.isLabelDisplayed("Gender");
+			registration.isLabelDisplayed("Social Security Number");
+			registration.isLabelDisplayed("Marital Status");
+			registration.isInputFieldDisplayed("FIRST NAME");
+			registration.isInputFieldDisplayed("MIDDLE NAME");
+			registration.isInputFieldDisplayed("LAST NAME");
+			registration.isInputFieldDisplayed("DATE OF BIRTH");
+			registration.isInputFieldDisplayed("GENDER");
+			registration.isInputFieldDisplayed("SSN");
+			registration.isInputFieldDisplayed("MARITAL STATUS");
+			
+			//Step 6
+			registration.verifyInLineValidationsForFirstName();
+			//Step 7
+			registration.verifyInLineValidationsForMiddleName();
+			//Step 8
+			registration.verifyInLineValidationsForLastName();
+			//Step 9
+			registration.verifyInLineValidationsForDateOfBirthField();
+			//Step 10
+			registration.verifyInLineValidationsForGenderField();
+			//Step 11
+			registration.verifyInLineValidationsForSSN();
+			//Step 12
+			registration.verifyInLineValidationsForMaritalStatusField();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+			
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.getDriver().close();
