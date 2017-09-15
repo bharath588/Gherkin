@@ -1,6 +1,8 @@
 package lib;
 
+
 import gwgwebdriver.GwgWebDriver;
+import gwgwebdriver.NextGenWebDriver;
 
 import java.awt.Robot;
 import java.io.File;
@@ -51,6 +53,7 @@ import core.framework.TestListener;
 public class Web {
 	private static WebDriver webdriver = null;
 	public static GwgWebDriver gwgWebDriver = null;
+	public static NextGenWebDriver nextGenDriver = null;
 	public static Exception exception;
 	private static Select objSelect;
 	public static Robot robot;
@@ -1304,6 +1307,12 @@ public class Web {
 			}
 
 			return loaded;
+		}
+
+		public static void setTextToAngularTextBox(WebElement newEmailBox,
+				String randomEmailId) {
+			// TODO Auto-generated method stub
+			
 		}
 
 

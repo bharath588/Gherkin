@@ -315,7 +315,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			if (suiteInvCount == 0) {
 				if (testResult.getStatus() == testResult.FAILURE) {
-					Reporter.testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL,testResult.getThrowable());
+					//Reporter.testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL,testResult.getThrowable());
 					final String className = testResult.getTestClass()
 							.getName();
 					final String methodName = method.getTestMethod()

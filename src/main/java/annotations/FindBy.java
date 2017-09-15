@@ -1,4 +1,4 @@
-/*package annotations;
+package annotations;
 
 import gwgwebdriver.How;
 
@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-*//**
+/**
  * 
  * <p>
  * This annotation is intended to be used to specified the element locator
@@ -51,7 +51,7 @@ import java.lang.annotation.Target;
  * If the same locator can be used for both web and mobile channels, the "using"
  * clause can be used to simplify the annotation declaration.<br/>
  * </p>
- *//*
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.TYPE })
 public @interface FindBy {
@@ -66,11 +66,15 @@ public @interface FindBy {
 	String column() default "";
 
 	String text() default "";
+	
+	String angularAttribute() default "";
+	
+	String attributeValue() default "";
 
 	int row() default 0;
 
 	String usingWeb() default "";
 
 	String usingMobile() default "";
+
 }
-*/
