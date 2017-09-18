@@ -44,10 +44,10 @@
                     </parameter>
                     </include>
                     
-					 <include name="Edit_MyContribution" >
+					<!--  <include name="Edit_MyContribution" >
 					<parameter name="ManualTCName" value="Edit_MyContribution">
                     </parameter>
-                    </include> 
+                    </include>  -->
                     
                       <include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" >
 					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
