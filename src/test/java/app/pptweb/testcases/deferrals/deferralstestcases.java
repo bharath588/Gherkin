@@ -3473,6 +3473,9 @@ public class deferralstestcases {
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
+				String[] sqlQuery= Stock.getTestQuery("updateDate picker toCalender");
+				DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("ga_PlanId"));
+				Web.getDriver().navigate().refresh();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

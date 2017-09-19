@@ -62,7 +62,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			private WebElement lblAddAfterTaxContribution;
 			@FindBy(xpath=".//strong[text()[normalize-space()='Select another contribution rate']]") 
 			private WebElement radioSelectAnotherContributionRate;	
-			@FindBy(xpath=".//strong[contains(text(),'Maximize to the company')]")
+			@FindBy(xpath="//strong[contains(text(),'Maximize to the company') or contains(text(),'Maximize to the Apple')]")
 			private WebElement radioMaximizeToCompanyMatch;
 			//input[@id='contributionTypeMaximizerCompanyMatch']")
 			@FindBy(xpath=".//strong[contains(text(),'IRS limit')]")

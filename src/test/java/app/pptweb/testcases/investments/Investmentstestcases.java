@@ -351,7 +351,16 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
-		  
+			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
+						"'Current' Flag is displayed on DIM Choose Individual Funds button", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
+						"'Current' Flag is not displayed on DIM Choose Individual Funds button", true);
+			}
 		    //Step 18
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromStepTable", Stock.GetParameterValue("username"), confirmationNumber, "Step");
@@ -657,6 +666,16 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
+			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
+						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
+						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
+			}
 			leftmenu.clickNavigationLink("View/Manage my investments");
 		  
 		    //Step 15
@@ -808,7 +827,7 @@ public class Investmentstestcases {
 			
 			
 			//Step 14
-			/*leftmenu.clickNavigationLink("View/Manage my investments");
+			leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -824,7 +843,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 			leftmenu.clickNavigationLink("View/Manage my investments");
 		    //Step 15
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -1227,6 +1246,7 @@ public class Investmentstestcases {
 		}
 
 	}
+	//label[contains(text(),'Non-Roth')]
 	@Test(dataProvider = "setData")
 	public void DDTC_2534_MTG_Guidance_HMDI_Risk_based_Offer_all_mntype(int itr, Map<String, String> testdata) {
 
@@ -1336,7 +1356,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is displayed for HMDI on Risk Based Funds button", true);
@@ -1345,7 +1365,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is not displayed for HMDI on Risk Based Funds button", true);
-			}*/
+			}
 		  
 		    
 		    //Step 14
@@ -1530,7 +1550,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag Risk Based Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is displayed for HMDI on Risk Based Funds button", true);
@@ -1540,7 +1560,7 @@ public class Investmentstestcases {
 						"Verify 'Current' Flag is displayed for HMDI on Risk Based Funds button",
 						"'Current' Flag is not displayed for HMDI on Risk Based Funds button", true);
 			}
-		  */
+		  
 		    
 		    //Step 14
 		    
@@ -1721,7 +1741,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
@@ -1730,7 +1750,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 		  
 		    
 		    //Step 14
@@ -1906,7 +1926,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag Target Date Fund", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag displayed on Choose Target Date Fund button for HMDI ", true);
@@ -1915,7 +1935,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 		  
 		    
 		    //Step 14
@@ -2086,7 +2106,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is displayed on DIM Choose Individual Funds button", true);
@@ -2095,7 +2115,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is not displayed on DIM Choose Individual Funds button", true);
-			}*/
+			}
 		  
 		    
 		    //Step 14
@@ -2263,7 +2283,7 @@ public class Investmentstestcases {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
-			/*if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
+			if(Web.isWebElementDisplayed(investment, "Current Flag", true)){
 				Reporter.logEvent(Status.PASS,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is displayed on DIM Choose Individual Funds button", true);
@@ -2272,7 +2292,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on DIM Choose Individual Funds button",
 						"'Current' Flag is not displayed on DIM Choose Individual Funds button", true);
-			}*/
+			}
 		  
 		    
 		    //Step 14
@@ -2621,9 +2641,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -2790,9 +2810,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3127,9 +3147,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3296,9 +3316,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3433,9 +3453,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3569,9 +3589,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3731,9 +3751,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -3866,9 +3886,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4001,9 +4021,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4172,9 +4192,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4510,9 +4530,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4675,9 +4695,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4813,9 +4833,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -4949,9 +4969,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5113,9 +5133,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 		
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5251,9 +5271,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5409,9 +5429,9 @@ public class Investmentstestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5469,7 +5489,7 @@ public class Investmentstestcases {
 			
 			//Step 16
 			
-			/*leftmenu.clickNavigationLink("View/Manage my investments");
+			leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5485,7 +5505,7 @@ public class Investmentstestcases {
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			investment.verifyConfirmationNoUpdatedInDB("getConfirmationNoFromEventTable", Stock.GetParameterValue("username"), confirmationNumber, "Event");
@@ -5594,9 +5614,9 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5657,7 +5677,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			//Step 16
 			
-			/*leftmenu.clickNavigationLink("View/Manage my investments");
+			leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5673,7 +5693,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			
@@ -5777,9 +5797,9 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.waitForPageToLoad(Web.getDriver());
 			
 			
-			/*if(investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
+			if(investment.verifyMoneyTypeLabelIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				Web.clickOnElement(investment, "Continue Button");
-			}*/
+			}
 			
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
@@ -5840,7 +5860,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			//Step 16
 			
-			/*leftmenu.clickNavigationLink("View/Manage my investments");
+			leftmenu.clickNavigationLink("View/Manage my investments");
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Change Future Contribution");
 			Web.clickOnElement(investment, "Continue Button");
@@ -5856,7 +5876,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 				Reporter.logEvent(Status.FAIL,
 						"Verify 'Current' Flag displayed on Choose Target Date Fund button for HMDI ",
 						"'Current' Flag is not displayed on Choose Target Date Fund button for HMDI ", true);
-			}*/
+			}
 			leftmenu.clickNavigationLink("View/Manage my investments");
 			
 			

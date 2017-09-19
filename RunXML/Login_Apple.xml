@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite"  verbose="1">
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="LOGIN">
+        <classes>
+           <class name="app.pptweb.testcases.login.logintestcases">
+                <methods>
+                   
+                   <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter></include>
+                  	
+                  	<include name="Login_005_with_out_eDelivery_as_Electronic_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
+                    </include>
+                    
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
+                	
+                	 <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
+                    </include>
+                    
+                    <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device_Email">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC04_Verify_login_Successfully_into_unregistered_Device_EmailMeOption"></parameter>
+                    </include>
+                    
+                    <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
+                    </include>
+                    <include name="Login_CallCenter_timings">
+                    <parameter name="ManualTCName" value="Login_CallCenter_timings"></parameter>
+                    </include>
+                       
+                  	<include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
+                    </include>
+                    
+                    <include name="userName_Login_Sanity">
+                    <parameter name="ManualTCName" value="userName_Login_Sanity"></parameter>
+                    </include>
+                    
+                    <include name="Login_001_eDelivery_as_Electronic_Greater_than_180days">
+                    <parameter name="ManualTCName" value="SIT_Login_001_eDelivery_as_Electronic_Greater_than_180days"></parameter>
+                    </include> 
+                     <include name="Pre_Login_Page_footer_links_check">
+                    <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check"></parameter>
+                    </include>
+                 
+                    
+                </methods>
+            </class>  
+       
+           <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                  <include name="SF01_TC01_User_has_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
+                    </include>
+               
+                    <include name="SF01_TC02_User_does_not_have_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC002_UI_Validation_User_does_not_have_PIN"></parameter>
+                    </include>
+               
+                    <include name="SF01_TC03_NegativeFlow_WithPINTab">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC003_Functionality_With_PIN__Negative_flow"></parameter>
+                    </include>
+                
+                    <include name="SF01_TC03_NegativeFlow_WithoutPINTab">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC004_Functionality_Without_PIN__Negative_flow"></parameter>
+                    </include>
+                
+                    <include name="SF01_TC05_UserLock_WithOutPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC005_Functionality_Without_PIN_lock_User"></parameter>
+                    </include>
+               
+                    <include name="SF01_TC05_UserLock_WithPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC006_Functionality_With_PIN_lock_User"></parameter>
+                    </include>
+                
+                    <include name="AccountLookup_PositiveFlow_WithOutPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow"></parameter>
+                    </include>
+               
+                    <include name="AccountLookup_PositiveFlow_WithPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
+                    </include> 
+               
+                    <include name="AccountSetup_WithPin_Validate_ContactInfo">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
+                    </include>
+                
+                    <include name="AccountSetup_WithPin_Validate_UserNameInfo">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC003_UI_Validation_WithPin_Username_Password"></parameter>
+                    </include>
+               
+                    <include name="AccountSetup_WithOutPin_Validate_ContactInfo">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC002_UI_Validation_WithoutPin_Contact_information"></parameter>
+                    </include>
+                
+                    <include name="AccountSetup_WithOutPin_Validate_UserNameInfo">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC004_UI_Validation_WithOutPin_Username_Password"></parameter>
+                    </include> 
+                
+					<include name="Registration_MFA_ON_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Idonthavepin"></parameter>
+                    </include>
+				
+					<include name="Registration_MFA_ON_2Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_ON_TC01_5Point_registration_Ihavepin"></parameter>
+                    </include>
+				
+					<include name="Registration_MFA_OFF_5Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin"></parameter>
+                    </include> 
+				
+					<include name="Registration_MFA_OFF_2Point_registration">
+					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
+                    </include>
+                    <include name="NPDI_001_validation_for_Ihaveaplanenrollment_code_page">
+					<parameter name="ManualTCName" value="SIT_NPDI_001_validation_for_Ihaveaplanenrollment_code_page"></parameter>
+                    </include>
+                    <include name="NPDI_003_Validation_for_Registration_Page_Employment_formation">
+					<parameter name="ManualTCName" value="SIT_NPDI_003_Validation_for_Registration_Page_Employment_formation"></parameter>
+                    </include>
+                     <include name="NPDI_004_Validation_for_Registration_Page_Mailing_Address">
+					<parameter name="ManualTCName" value="SIT_NPDI_004_Validation_for_Registration_Page_Mailing_Address"></parameter>
+                    </include>
+                    <include name="NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page">
+					<parameter name="ManualTCName" value="SIT_NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page"></parameter>
+                    </include>
+                    <include name="NPDI_006_Validation_For_Enhanced_Security_Pages">
+					<parameter name="ManualTCName" value="SIT_NPDI_006_Validation_For_Enhanced_Security_Pages"></parameter>
+                    </include>
+				</methods>
+			</class> 
+		
+         <class name="app.pptweb.testcases.login.authenticationtestcases">
+                <methods>
+                    <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>
+                    </include>
+                
+                    <include name="ForgotPasswordFlow_SendActivationCode_Have_Activation_Code">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC01_already have an Activation Code"></parameter>
+                    </include>
+               
+                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Text">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text"></parameter>
+                    </include>
+                
+                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Voice">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC03_Send Activation Code by Voice"></parameter>
+                    </include>
+               
+                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Email">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email"></parameter>
+                    </include>
+               
+                    <include name="SF04_TC05_ForgotPassword_DidntReceiveActivationCode">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
+                    </include>
+                </methods>
+            </class>    
+        </classes>
+    </test> 
+</suite>

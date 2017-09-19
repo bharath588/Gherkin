@@ -305,7 +305,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	
 	@FindBy(xpath = "//button[@id='target-year-fund-link' or @id='targetDateFundsButton']") private WebElement btnChooseTargetDateFund;
 	
-	@FindBy(xpath = "//h1[text()[normalize-space()='Select a target date fund']]")
+	@FindBy(xpath = "//h1[text()[normalize-space()='Select a Target date fund'] or text()[normalize-space()='Select a target date fund']]")
 	private WebElement txtSelectTargetDateFund;
 	
 	@FindBy(xpath = "//tr[contains(@ng-if,'targetYearFund') or contains(@id,'fundRow')][./td[@class='allocation-fund-name-container'][not(span)]]//td//input")
@@ -387,7 +387,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String choice=null;
 	String smartRestrictionFutureFundAllocationPercentag="//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'originalFundsExist')]]//div[@id='new-fund-container']//table//tr[contains(.,'Investment Option')]//td[2]";
 	String smartRestrictionRebalanceFundAllocationPercentag="//div[@class='fund-tables-wrapper'][./div[contains(@ng-if,'RebalanceFundsExist')]]//div[@id='new-fund-container']//table//tr[contains(.,'Investment Option')]//td[3]";
-	
+	String lblMoneyTypeGrouping="//label[contains(text(),'Money Type Grouping')]";
 
 	/**
 	 * Empty args constructor
@@ -3293,4 +3293,31 @@ return isTextDisplayed;
 				}
 			
 		}	
+		
+		/**
+		 * <pre>
+		 * Method to Verify Money Type Label is Displayed in My Investments Page
+		 * Returns boolean
+		 * </pre>
+		 * 
+		 * @return boolean - isDisplayed
+		 */
+		public boolean verifyMoneyTypeLabelIsDisplayed(String moneyTypeGrouping) {
+		
+			boolean isDisplayed=false;
+			
+			try
+			{
+				WebElement textMoneyTypeGrouping = Web.getDriver().findElement(By		
+					.xpath(lblMoneyTypeGrouping.replace("Money Type Grouping",moneyTypeGrouping)));
+				if(textMoneyTypeGrouping.isDisplayed())
+					isDisplayed=true;
+			}
+	          catch(NoSuchElementException e){
+	        	  isDisplayed=false;
+	          }
+	  		
+	  		return isDisplayed;
+
+		}
 }
