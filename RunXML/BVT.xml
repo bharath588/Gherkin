@@ -6,12 +6,80 @@
     </listeners>
     <test name="LOGIN">
         <classes>
-          	<class name="app.pptweb.testcases.login.registrationtestcases">
+          	<class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                    <include name="NPDI_002_Validation_RegistrationPage_Provide_Personal_Information">
-					<parameter name="ManualTCName" value="SIT_NPDI_002_Validation_RegistrationPage_Provide_Personal_Information"></parameter>
+                  <include name="DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs"></parameter>
                     </include>
+                    
+                        <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
+                    </include>
+                   
+                    <include name="DDTC_25497_Custom_Enrollment_PPT_with_EmployerDirected_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25497_Custom_Enrollment_PPT_with_EmployerDirected_MTGs"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_25500_Custom_Enrollment_with_No_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25500_Custom_Enrollment_with_No_MTGs"></parameter>
+                    </include>
+                    
+                    <!-- <include name="DDTC_25496_Custom_Enrollment_PPT_with_PartLevel_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25496_Custom_Enrollment_PPT_with_PartLevel_MTGs"></parameter>
+                    </include> -->
+                    
+                     <include name="DDTC_25438_Auto_Enrollment_for_NonAllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25438_Auto_Enrollment_for_NonAllMTG"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                      
+                   
+                    
+                    <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund"></parameter>
+                    </include>
+                
+                  <include name="DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer"></parameter>
+                    </include>
+                    
+                   	<include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_29367_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_LeftNav">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29367_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_LeftNav"></parameter>
+                    </include>
+                    
+                    
+                    <include name="DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction"></parameter>
+                    </include>
+                     
                 </methods>
             </class>  
        	

@@ -173,7 +173,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p[3]") private WebElement lblAlertMsg;
 			@FindBy(xpath = "//div[contains(@class,'alert')]/p[5]") private WebElement lblAlertMsg1;
 			
-			@FindBy(xpath="//div[contains(text(),'Carryover my contribution')]") private WebElement lblChainingText;
+			@FindBy(xpath="//h1[contains(text(),'Carry over my contribution')]") private WebElement lblChainingText;
 			@FindBy(xpath=".//*[@id='buttonEditChaining' or @id='buttonAddChaining']") private WebElement btnAddChaining;
 			@FindBy(xpath="//h1[text()='Carry over my contribution?']") private WebElement hdrCarryoverContribution;
 			@FindBy(xpath="//div[contains(@class,'radio')]//label[text()[normalize-space()='Regular Pre-Tax Contribution to After Tax']]") private WebElement radPreTaxToAftTax;
