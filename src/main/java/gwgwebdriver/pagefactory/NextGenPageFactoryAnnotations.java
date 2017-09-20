@@ -81,6 +81,7 @@ public class NextGenPageFactoryAnnotations extends Annotations{
 		Integer row = getRowDefinition(findBy);
 		String angularAttribute = getAngularAttributeDefinition(findBy);
 		String attributeValue = getAttributeValueDefinition(findBy);
+		boolean exact = getExactDefinition(findBy);
 
 		if (using.isEmpty()) {
 			return null;
@@ -132,7 +133,7 @@ public class NextGenPageFactoryAnnotations extends Annotations{
 			return NextGenBy.options(using);
 
 		case REPEATER:
-			return NextGenBy.repeater(using);
+			return NextGenBy.repeater(using,exact);
 			
 		case REPEATER_SELECTED_OPTION:
 			return NextGenBy.selectedRepeaterOption(using);
@@ -161,6 +162,12 @@ public class NextGenPageFactoryAnnotations extends Annotations{
 			throw new IllegalArgumentException(
 					"Cannot determine how to locate element ");
 		}
+	}
+
+	private boolean getExactDefinition(FindBy findBy) {
+		// TODO Auto-generated method stub
+		boolean exact = findBy.exact();
+		return exact;
 	}
 
 	private String getAttributeValueDefinition(FindBy findBy) {

@@ -72,6 +72,8 @@ public @interface FindBy {
 	String attributeValue() default "";
 
 	int row() default 0;
+	
+	boolean exact() default false;
 
 	String usingWeb() default "";
 

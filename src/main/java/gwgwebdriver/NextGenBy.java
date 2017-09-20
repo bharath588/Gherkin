@@ -63,8 +63,8 @@ public final class NextGenBy {
 		return new JavaScriptBy(new FindPartialButtonText(), text);
 	}
 
-	public static By repeater(final String repeat) {
-		return new JavaScriptBy(new FindAllRepeaterRows(), repeat);
+	public static By repeater(final String repeat,boolean exact) {
+		return new JavaScriptBy(new FindAllRepeaterRows(), repeat,exact);
 	}
 
 	public static By repeaterColumn(final String repeat, String binding) {

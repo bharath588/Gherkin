@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
+
+import lib.Stock;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -121,6 +124,8 @@ public class JsonUtil {
 	 */
 	public static String formRequestURL(String baseURL, String...params)
 	{
+		String environmentUrl = Stock.getConfigParam(Stock.getConfigParam("TEST_ENV"));
+		baseURL = environmentUrl+baseURL;
 		String requestURL = baseURL;
 		try
 		{
@@ -132,6 +137,9 @@ public class JsonUtil {
 					{
 						if(requestURL.endsWith("/")){
 							requestURL = requestURL+param;}
+						else if(requestURL.endsWith("&")){
+							requestURL=requestURL+param;
+						}
 						else{
 							requestURL = requestURL+"/"+param;
 						}
