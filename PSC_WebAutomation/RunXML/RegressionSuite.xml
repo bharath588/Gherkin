@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="2">
+<suite name="testsuite"> <!-- parallel="classes" thread-count="2" -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Execution_1">
+	<test name="Plan module Test cases">
 	<classes>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
