@@ -461,7 +461,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement partDate;
 	@FindBy(xpath="//div[contains(text(),'Percent')]/preceding-sibling::div")
 	private WebElement benName;
-	@FindBy(xpath="//a/h4[contains(text(),'Investments')]/ancestor::*[5]/following-sibling::div[3]//span")
+	//@FindBy(xpath="//a/h4[contains(text(),'Investments')]/ancestor::*[5]/following-sibling::div[3]//span")
+	//a/h4[contains(text(),'Investments')]//ancestor::div[4]//following-sibling::div[contains(@class,'disclaimer')]
+	@FindBy(xpath="//a/h4[contains(text(),'Investments')]//ancestor::div[4]//following-sibling::div[contains(@class,'disclaimer')]//span")
 	private WebElement disclaimerText;
 	@FindBy(xpath="//a/h4[contains(text(),'Money Source')]/../../following-sibling::div//table[2]//td/a")
 	private List<WebElement> moneyTypeLinks;
@@ -1032,9 +1034,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Check if the user has landed on homepage",
 					"The user has landed on homepage", true);
-			Web.waitForPageToLoad(Web.getDriver());
+			//Web.waitForPageToLoad(Web.getDriver());
 			//CommonLib.waitForProgressBar();
-			Web.waitForElement(tabEmployees);
+			//Web.waitForElement(tabEmployees);
+			Web.isWebElementDisplayed(tabEmployees);
 			//Web.clickOnElement(tabEmployees);
 			//Web.waitForElement(drpdwnSearchEmployee);
 			actions = new Actions(Web.getDriver());
@@ -1185,7 +1188,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
 		select = new Select(drpdwnSearchEmployee);
-		select.selectByVisibleText("SSN - all plans");
+		if(Stock.getConfigParam("DataType").equals("NonApple")){
+			select.selectByVisibleText("SSN - all plans");
+		}else{
+			select.selectByVisibleText("SSN");
+		}
 		Web.waitForElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
@@ -1452,7 +1459,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
-		Web.waitForElement(tabEmployees);
+		//Web.waitForElement(tabEmployees);
+		Web.isWebElementDisplayed(tabEmployees, true);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(tabEmployees).click().build().perform();
 		Web.waitForPageToLoad(Web.getDriver());
@@ -1493,6 +1501,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		}
 		Web.getDriver().switchTo().defaultContent();
 	}
+	
 	/**
 	 * This method used to search the employee by Participant ID
 	 * @param pptID
@@ -1514,6 +1523,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Thread.sleep(2500);		
 		lib.Web.getDriver().switchTo().defaultContent();
 	}
+	
+	
+	
+	
 	/**
 	 * This method converts the List of WebElements to List of string
 	 * @param refList
@@ -1569,13 +1582,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public boolean compareDropdownOptions() {
 		List<String> actualOptionsList;
 		boolean areDropdownOptionsSame;
+		String[] actualOptions=null;
 		//For Non Apple plan
-		String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID", "Division"};//,"--------------------","Name - all plans","SSN - all plans"};
-		
-		//for Apple plan
-		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
-				"Participant ID","Division"};*/
+		if(Stock.getConfigParam("DataType").equalsIgnoreCase("NonApple")){
+			actualOptions= new String[] { "SSN", "Name", "Employee ID",
+				"Participant ID", "Division","--------------------","Name - all plans","SSN - all plans"};
+		}else{	
+		 actualOptions = new String[] { "SSN", "Name", "Employee ID",
+				"Participant ID","Division"};
+		}
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -2887,7 +2902,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	}
 	
 	
-	/*
+	/**
 	 * This method verifies paycheck contribution section
 	 */
 	public void verify_Paycheck_ContributionSection() throws Exception
@@ -3765,8 +3780,7 @@ public void editBasicInfoAndSave() throws Exception
 	String maritalStatus = basicInfoMapBeforeChanges.get("Marital status");
 	String gender_ = basicInfoMapBeforeChanges.get("Gender");
 	String language_ = basicInfoMapBeforeChanges.get("Language");
-	Web.getDriver().switchTo().defaultContent();
-	Web.getDriver().switchTo().frame(employeeSearchFrame);
+	CommonLib.switchToFrame(employeeSearchFrame);
 	Web.getDriver().switchTo().frame(basicInfoEditFrame);
 	Web.waitForElement(birthDate);
 	DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
@@ -4299,11 +4313,12 @@ public Map<String,String> enrollAndEligDataFromUI() throws Exception
 
 
 
-public boolean validateAccountBalanceScreen_0() throws Exception
+public boolean validateAccountBalanceScreen_0()
 {
 	String expecDisclaimer = Stock.GetParameterValue("ExpectedDisclaimer");
 	boolean isLink = false;
 	boolean isBalance = false;
+	try{
 	Web.getDriver().switchTo().frame(employeeSearchFrame);
 	for(WebElement balance : balanceList)
 	{
@@ -4410,6 +4425,8 @@ public boolean validateAccountBalanceScreen_0() throws Exception
 		{
 			isBalance = false;
 		}
+	}}catch(Exception e){
+		e.printStackTrace();
 	}
 	return isBalance;
 }
@@ -4482,7 +4499,7 @@ public void ChangeDateAndVerifyData() throws Exception
 		}
 	}
 	Calendar cal = Calendar.getInstance();
-	cal.add(Calendar.YEAR, -2);
+	cal.add(Calendar.YEAR, -1);
 	SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
 	String formatted = format1.format(cal.getTime());
 	Web.setTextToTextBox(asOfDateInput,formatted);
@@ -4539,7 +4556,7 @@ public boolean disablePAEURL() throws SQLException
 }
 
 
-/*
+/**
  * This method validates the data set up error message if PAE_URL is not set up properly
  */
 public void verifyDataSetErrorForDisabledPAEURL() throws InterruptedException,NoSuchWindowException
@@ -4602,7 +4619,8 @@ public void enablePAEURL() throws SQLException
  */
 public void deletePSCPAETxnCodeFromDB() throws SQLException
 {
-	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],Stock.getTestQuery("CheckPSCPAETxnCode")[1],
+	queryResultSet = DB.executeQuery(Stock.getTestQuery("CheckPSCPAETxnCode")[0],
+			Stock.getTestQuery("CheckPSCPAETxnCode")[1],
 			"K_"+Stock.GetParameterValue("username"));
 	if(DB.getRecordSetCount(queryResultSet)>0)
 	{
@@ -6823,12 +6841,21 @@ public void validateDefaultEmpSearchOption()
 		List<WebElement> defaultOption = drpdwn.getAllSelectedOptions();
 		for(WebElement option : defaultOption)
 		{
-			if(option.isSelected()&&option.getText().equals("Name"))
-				Reporter.logEvent(Status.PASS,"Validate default search option for Employee search drop down.It should be 'Name'.",""
-						+"Default search option is:"+option.getText(), false);
-			else
-				Reporter.logEvent(Status.FAIL,"Validate default search option for Employee search drop down.It should be 'Name'.",""
-						+"Default search option is:"+option.getText(), true);
+			if(Stock.GetParameterValue("DataType").equals("NonApple")){
+				if(option.isSelected()&&option.getText().equals("Name"))
+					Reporter.logEvent(Status.PASS,"Validate default search option for Employee search drop down.It should be 'Name'.",""
+							+"Default search option is:"+option.getText(), false);
+				else
+					Reporter.logEvent(Status.FAIL,"Validate default search option for Employee search drop down.It should be 'Name'.",""
+							+"Default search option is:"+option.getText(), true);
+			}else{
+				if(option.isSelected()&&option.getText().equals("Employee ID"))
+					Reporter.logEvent(Status.PASS,"Validate default search option for Employee search drop down.It should be 'Employee ID'.",""
+							+"Default search option is:"+option.getText(), false);
+				else
+					Reporter.logEvent(Status.FAIL,"Validate default search option for Employee search drop down.It should be 'Employee ID'.",""
+							+"Default search option is:"+option.getText(), true);
+			}
 		}
 		
 	}catch(Exception e)
@@ -6848,21 +6875,38 @@ public void validateDefaultEmpSearchOption()
  */
 public void validateRememberOfEmpSearchOption()
 {
+	Select setOption=null;
+	String dataType = Stock.GetParameterValue("DataType");
 	try{
-		Select setOption = new Select(drpdwnSearchEmployee);
-		setOption.selectByVisibleText("Employee ID");
+		if(dataType.equals("NonApple")){
+			setOption = new Select(drpdwnSearchEmployee);
+			setOption.selectByVisibleText("Name");
+		}
+		if(dataType.equals("Apple")){
+			setOption = new Select(drpdwnSearchEmployee);
+			setOption.selectByVisibleText("Employee ID");
+		}
 		Web.waitForElement(drpdwnSearchEmployee);
 		this.logoutFromApplication();
 		this.get();
 		this.navigateToEmployeeTab();
 		this.switchToFrame();
-		if(setOption.getAllSelectedOptions().get(0).getText().trim().equals("Employee ID"))
-			Reporter.logEvent(Status.PASS, "Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and navigate to Employee search page."
-					+ "and validate drop down is set to 'Employee ID'.", "Employee ID is found to be selected for employee search drop down.", false);
-		else
-			Reporter.logEvent(Status.FAIL, "Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and navigate to Employee search page."
-					+ "and validate drop down is set to 'Employee ID'.", "Employee ID is not found to be selected for employee search drop down.", true);
-	}catch(Exception e)
+		if(dataType.equals("NonApple")){
+			if(setOption.getAllSelectedOptions().get(0).getText().trim().equals("Name"))
+				Reporter.logEvent(Status.PASS, "Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
+						+ "and validate drop down is set to 'Employee ID'.", "Employee ID is found to be selected for employee search drop down.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
+						+ "and validate drop down is set to 'Employee ID'.", "Employee ID is not found to be selected for employee search drop down.", true);
+		}else{
+			if(setOption.getAllSelectedOptions().get(0).getText().trim().equals("Employee ID"))
+				Reporter.logEvent(Status.PASS, "Set search drop down to 'Name' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
+						+ "and validate drop down is set to 'Name'.", "Name is found to be selected for employee search drop down.", false);
+			else
+				Reporter.logEvent(Status.FAIL, "Set search drop down to 'Name' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
+						+ "and validate drop down is set to 'Name'.", "Name is not found to be selected for employee search drop down.", true);
+		}
+		}catch(Exception e)
 	{
 		e.printStackTrace();
 		Reporter.logEvent(Status.FAIL, "Exception occurred:", e.getMessage(), true);

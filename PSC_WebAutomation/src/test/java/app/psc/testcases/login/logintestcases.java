@@ -937,22 +937,12 @@ public class logintestcases {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify PL User Login with no Plan access", false);
-			/*HomePage home = new HomePage(new LoginPage(),false,new String[]{
-				Stock.GetParameterValue("username"),
-				Stock.GetParameterValue("password")
-			}).get();*/
-			/*LoginPage loginPage = new LoginPage().get();
-			loginPage.submitLoginCredentials(new String[]{
-<<<<<<< Upstream, based on origin/smykjn
-				Stock.GetParameterValue("username"),
-				Stock.GetParameterValue("password")
-			});*/
 			HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password") }).get();
 			Reporter.logEvent(Status.INFO, "Login Status", "Login is done", true);
 			Web.getDriver().switchTo().frame("framea");
-			home.isPlanListDisplayed();
+			homePage.isPlanListDisplayed();
 			Web.getDriver().switchTo().defaultContent();
 			homePage.logoutPSC();
 		} catch (Exception e) {
@@ -1045,7 +1035,7 @@ public class logintestcases {
 				jumpPage.ClickOnJumpPageURL();
 				homePage.validateOverviewAndPlanDashboardAfterDeletingTxnCodes();
 				login.insertPSOVPGandPSOVMNTxnCodes();
-				
+				homePage.logoutPSC();
 				
 			}else
 			{

@@ -224,6 +224,8 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement backArrowLink;
 	@FindBy(xpath="(.//div[@class='headcontainer']//h4)[1]")
 	private WebElement docStaticTitle;
+	@FindBy(xpath=".//table[@class='plantbl']")
+	private WebElement Investment_Charts_table;
 	@FindBy(xpath="(.//div[@class='headcontainer']//h4)[2]")
 	private WebElement docStaticHistoryTitle;
 	@FindBy(xpath=".//span[@class='large icon-stopwatch']")
@@ -263,12 +265,16 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private List<WebElement> planoverviewOptions;
 	@FindBy(xpath=".//*[@id='exportable']//th//span | .//*[@id='exportable']//th//a")
 	private List<WebElement> invOptColumnsList;
+	@FindBy(xpath=".//h4[contains(text(),'Maximum number of loans allowed')]")
+	private WebElement maxLoanAllowed;
 	@FindBy(xpath=".//div[@id='investmentOptions']//div[@ng-show='loading']")
 	private WebElement invOptLoader;
 	@FindBy(linkText="Investment performance detail")
 	private WebElement investmentAndPerfLink;
 	@FindBy(xpath=".//*[@id='investmentPerform']//a[.='Excel']")
 	private WebElement excellink;
+	@FindBy(xpath=".//div[@id='investmentGraphs']//a[.='Excel']")
+	private WebElement investment_Charts_Excel_Link;
 	@FindBy(xpath=".//*[@id='exportable']/preceding-sibling::div/div[1]/div")
 	private WebElement invoptHeaderTitle;
 	@FindBy(xpath="(.//*[@id='inv-Popover'])[1]")
@@ -327,6 +333,28 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement searchResultRow;
 	@FindBy(xpath=".//*[@id='searchListDataTable']//tbody//tr//td")
 	private WebElement nosearchResultElement;
+	@FindBy(xpath=".//*[@id='assetsBarChartContainer']/div[contains(@id,'highcharts')]//*[name()='svg']")
+	private WebElement dollarInvested_highChart;
+	@FindBy(xpath=".//*[@id='lifeCntBarChartContainer']/div[contains(@id,'highcharts')]//*[name()='svg']")
+	private WebElement noOfInvestors_highChart;
+	@FindBy(linkText="Charts")
+	private WebElement charts_Link;
+	@FindBy(xpath=".//div[@id='assetsBarChartContainer']//*[name()='svg']")
+	private WebElement charts_svg;
+	@FindBy(id="asOfDate")
+	private WebElement asOfDate_selectDrpDwn;
+	@FindBy(xpath=".//label[contains(text(),'As of date')]")
+	private WebElement asOfDate_label;
+	@FindBy(xpath=".//label[contains(text(),'View As')]")
+	private WebElement viewAs_label;
+	@FindBy(id="displayGraphs")
+	private WebElement displayGraphs_btn;
+	@FindBy(id="displayTable")
+	private WebElement displayTable_btn;
+	@FindBy(id="dollarsInvested")
+	private WebElement dollarInvested_Link;
+	@FindBy(id="noOfInvestor")
+	private WebElement noOfInvestor_Link;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -553,6 +581,7 @@ public void validateInvestmentAndPerformanceColumns()
 	try{
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frameb);
+		CommonLib.waitForLoader(planDocLoader);
 		Web.isWebElementDisplayed(asstAllocModels, true);
 		if(investmentOptions.isDisplayed()&&documents.isDisplayed()&&charts.isDisplayed()&&asstAllocModels.isDisplayed()
 				&&fxdInvstmntRates.isDisplayed()&&unitShareValues.isDisplayed())
@@ -2250,8 +2279,7 @@ public void validateGeneralInfoOnPlanProvision(String planNumber) throws Excepti
 						+ "General information from DB is found as below\n"+generalInfoMapDB, true);
 }
 
-@FindBy(xpath=".//h4[contains(text(),'Maximum number of loans allowed')]")
-private WebElement maxLoanAllowed;
+
 
 /**
  * <pre>This method validates the Loan information section on Plan provision page.</pre>
@@ -2278,6 +2306,93 @@ public void validateLoaninformationSectionOnPlanProvision(String planNumber) thr
 }
 
 
+
+/**
+ * <pre>This method Validates the charts page screen elements.</pre>
+ * @author smykjn
+ * @Date 26th-sept-2017
+ * @return void
+ */
+public void validateChartsPageScreenElements() 
+{
+	try{
+		CommonLib.switchToFrame(frameb);
+		Web.clickOnElement(charts_Link);
+		CommonLib.waitForLoader(planDocLoader);
+		if(Web.isWebElementDisplayed(charts_svg)){
+			if(asOfDate_selectDrpDwn.isDisplayed() && asOfDate_label.isDisplayed())
+				Reporter.logEvent(Status.PASS,"Validate 'As of Date' drop down and label is displayed.",
+						"As of Date drop down and label is displayed.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate 'As of Date' drop down and label is displayed.",
+						"As of Date drop down and label is not displayed.", true);
+			if(displayGraphs_btn.isDisplayed()&&displayTable_btn.isDisplayed()&&viewAs_label.isDisplayed())
+				Reporter.logEvent(Status.PASS,"validate View as Graph and Table buttons are displayed.",
+						"View as Graph and Table buttons are displayed.",false);
+			else
+				Reporter.logEvent(Status.FAIL,"validate View as Graph and Table buttons are displayed.",
+						"View as Graph and Table buttons are not displayed.",true);
+			if(investment_Charts_Excel_Link.isDisplayed())
+				Reporter.logEvent(Status.PASS,"Check if Excel link is displayed.",""
+						+ "Excel link is displayed.",false);
+			else
+				Reporter.logEvent(Status.FAIL,"Check if Excel link is displayed.",""
+					+ "Excel link is not displayed.",true);
+			if(dollarInvested_Link.isDisplayed() && noOfInvestor_Link.isDisplayed())
+				Reporter.logEvent(Status.PASS,"Validate below links are displayed.\n1.Dollar Invested"
+						+ "\n2.Number od Investors","Links are displayed properly.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate below links are displayed.\n1.Dollar Invested"
+						+ "\n2.Number of Investors","Links are not displayed properly.", true);
+		}
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+}
+
+/**
+ * <pre>This method.</pre>
+ * @author smykjn
+ * @Date 26th-sept-2017
+ * @return void
+ */
+public void validateChartsPageBasicFeatures() 
+{
+	try{
+		Web.clickOnElement(dollarInvested_Link);
+		if(Web.isWebElementDisplayed(dollarInvested_highChart,true))
+			Reporter.logEvent(Status.PASS,"Click on Dollar invested link and check if respective high chart is displayed.",""
+					+ "High chart, related to dollar invested is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Dollar invested link and check if respective high chart is displayed.",""
+					+ "High chart, related to dollar invested is not displayed.", true);
+		Web.clickOnElement(noOfInvestor_Link);
+		if(Web.isWebElementDisplayed(noOfInvestors_highChart,true))
+			Reporter.logEvent(Status.PASS,"Click on 'Number of Investors' link and check if respective high chart is displayed.",""
+					+ "High chart, related to 'Number of Investors' is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on 'Number of Investors' link and check if respective high chart is displayed.",""
+					+ "High chart, related to 'Number of Investors' is not displayed.", true);
+		Web.clickOnElement(displayTable_btn);
+		if(Web.isWebElementDisplayed(Investment_Charts_table,true))
+			Reporter.logEvent(Status.PASS,"Click on 'Table' button and check if data is displayed in table format.",""
+					+ "Data is displayed in table format.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on 'Table' button and check if data is displayed in table format.",""
+					+ "Data is not displayed in table format.", true);
+		Web.clickOnElement(investment_Charts_Excel_Link);
+		String fileExtension = 
+				CommonLib.getDownloadedDocumentName(Stock.getConfigParam("Download_Directory"),".xls");
+		if(fileExtension.contains(".xls"))
+			Reporter.logEvent(Status.PASS,"Validate excel download.",""
+					+ "Excel download is successful.below file is downloaded\n"+fileExtension,false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate excel download.","Excel download is not successful.",true);
+			
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+}
 
 
 

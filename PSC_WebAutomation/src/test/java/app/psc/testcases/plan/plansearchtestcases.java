@@ -326,8 +326,8 @@ public class plansearchtestcases {
 	 * @param itr
 	 * @param testDat
 	 */
-	//@Test(dataProvider="setData")
-	/*public void TC05_SIT_PSC_Plan_messaging_confirmation_page(int itr, Map<String,String> testDat)
+	@Test(dataProvider="setData")
+	public void TC05_SIT_PSC_Plan_messaging_confirmation_page(int itr, Map<String,String> testDat)
 	{
 		try
 		{
@@ -366,7 +366,7 @@ public class plansearchtestcases {
 				e1.printStackTrace();
 			}
 		}
-		}*/		
+		}	
 	
 	
 	/**<pre>This test case validates the Investment and Performance Tabs columns and Print functionality.
@@ -388,7 +388,9 @@ public class plansearchtestcases {
 				Stock.GetParameterValue("username"),
 				Stock.GetParameterValue("password")}).get();
 			HomePage homePage = new HomePage();
-			homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+			if(Stock.getConfigParam("DataType").equals("NonApple")){
+				homePage.searchPlanWithIdOrName(Stock.GetParameterValue("planNumber"));
+			}
 			planPage.navigateToInvestmentAndPerformance();
 			planPage.validateInvestmentAndPerformanceColumns();
 			planPage.validateColumnFixedInvstmntRatePage();

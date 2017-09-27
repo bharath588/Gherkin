@@ -855,7 +855,7 @@ public class employeesearchtestcases {
 	 * <pre>This testcase validates general employment informations</pre>
 	 * @param itr
 	 * @param testdata
-	 */
+	 *//*
 		@Test(dataProvider = "setData")
 		public void TC017_Employment_Info_Verification(int itr,
 				Map<String, String> testdata) {		
@@ -889,7 +889,7 @@ public class employeesearchtestcases {
 					e1.printStackTrace();
 				}
 			}
-		}
+		}*/
 	
 		
 		/**
@@ -1032,7 +1032,9 @@ public class employeesearchtestcases {
 										"This testcase updates the salary information of an employee.", false);
 								employeesearch = new EmployeeSearch().get();
 								homePage = new HomePage();
-								homePage.searchPlanWithIdOrName(employeesearch.getSSNAndGaIdForSalaryEmp()[0]);
+								String planId = employeesearch.getSSNAndGaIdForSalaryEmp()[0];
+								if(Stock.getConfigParam("DataType").equals("NonApple"))
+								homePage.searchPlanWithIdOrName(planId);
 								employeesearch.navigateToEmployeeTab();
 								employeesearch.searchEmployeeBySSN(employeesearch.individual[2]);
 								employeesearch.navigateToEmployeeOverViewPage();
@@ -1240,7 +1242,8 @@ public class employeesearchtestcases {
 
 
 /**
- * <pre>This test case verifies employee basic information on overview page and update few fields and verifies the changes.</pre>
+ * <pre>This test case verifies employee basic information on 
+ * overview page and update few fields and verifies the changes.</pre>
  * @param itr
  * @param testdata
  */
@@ -1250,7 +1253,8 @@ Map<String, String> testdata) {
 try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description",
-		"This testcase validates general employment informations", false);
+		"This test case verifies employee basic information on "
+		+ "overview page and update few fields and verifies the changes", false);
 		employeesearch = new EmployeeSearch().get();
 		employeesearch.getQNTTypeIndividuals();
 		Thread.sleep(3000);
@@ -1581,9 +1585,11 @@ Map<String, String> testdata) {
 try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description",
-		"The objective of this test case is to validate menu items 'Process Center and Compliance' must be Supressed for TRSFlex.", false);
+		"The objective of this test case is to validate menu items"
+		+ " 'Process Center and Compliance' must be Supressed for TRSFlex.", false);
 		employeesearch = new EmployeeSearch().get();
-		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), Stock.GetParameterValue("username"));
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), 
+				Stock.GetParameterValue("username"));
 		employeesearch.selectPlanFromResultset(resultset);
 		if(employeesearch.validateComplianceAndProCenterTabForTRSFlex())
 			Reporter.logEvent(Status.FAIL,"Search for TRS-Flex plan and navigate to plan page.Observe the"
@@ -1594,7 +1600,8 @@ try {
 					+ " Process center and compliance menu tabs are supressed.", "Process center and compliance menu tabs are"
 							+ " supressed.", false);
 		employeesearch.validationsForTRSFlexPlan();
-		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), Stock.GetParameterValue("username"));
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), 
+				Stock.GetParameterValue("username"));
 		employeesearch.selectPlanFromResultset(resultset);
 		if(employeesearch.validateComplianceAndProCenterTabForTRSFlex())
 			Reporter.logEvent(Status.PASS,"Search for Non TRS-Flex plan and navigate to plan page.Observe the"
@@ -1605,11 +1612,13 @@ try {
 					+ " Process center and compliance menu tabs are displayed.", "Process center and compliance menu tabs are"
 							+ " not displayed.", true);
 		employeesearch.validationsForNonTRSFlexPlan();
-		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"), Stock.GetParameterValue("username"));
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getTRXFlexPlan"),
+				Stock.GetParameterValue("username"));
 		employeesearch.selectPlanFromResultset(resultset);
 		employeesearch.searchEmployeeByName("");
 		employeesearch.navigateToEmployeeOverViewPage();//add TRS-Flex plan employee to recently viewed list 
-		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"), Stock.GetParameterValue("username"));
+		resultset = employeesearch.selectPlanForUser(Stock.getTestQuery("getNonTRXFlexPlan"),
+				Stock.GetParameterValue("username"));
 		employeesearch.selectPlanFromResultset(resultset);
 		employeesearch.searchEmployeeByName("");
 		employeesearch.navigateToEmployeeOverViewPage();//add non TRS-Flex plan employee to recently viewed list
@@ -2198,6 +2207,7 @@ try {
 		//employeesearch.navigateToEmployeeTab();
 		employeesearch.validateDefaultEmpSearchOption();
 		employeesearch.validateRememberOfEmpSearchOption();
+		if(Stock.GetParameterValue("DataType").equals("NonApple"))
 		employeesearch.validateRememberOfEmpSearchOptionWhenPlanSwitch();
 		employeesearch.logoutFromApplication();
 } catch (Exception e) {
@@ -2586,12 +2596,14 @@ try {
 		Reporter.logEvent(Status.INFO, "Testcase Description","The objective of this test case is to "
 				+ "validate asset allocation screen and total field.", false);
 		employeesearch = new EmployeeSearch().get();
-		/*resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithActiveAlloModel")[0],
-				Stock.getTestQuery("getPlanWithActiveAlloModel")[1],"K_"+Stock.GetParameterValue("username"));*/
-			homePage = new HomePage();
-			/*resultset = DB.executeQuery(Stock.getTestQuery("getSSNforActiveAllocation")[0],
-				Stock.getTestQuery("getSSNforActiveAllocation")[1],plan);*/
-			employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+		homePage = new HomePage();
+		resultset = DB.executeQuery(Stock.getTestQuery("getPlanWithActiveAlloModel")[0],
+			Stock.getTestQuery("getPlanWithActiveAlloModel")[1],"K_"+Stock.GetParameterValue("username"));
+			String plan = employeesearch.selectPlanFromResultset(resultset);
+			resultset = DB.executeQuery(Stock.getTestQuery("getSSNforActiveAllocation")[0],
+				Stock.getTestQuery("getSSNforActiveAllocation")[1],plan);
+			//employeesearch.searchEmployeeBySSNAllPlans(Stock.GetParameterValue("SSN"));
+			employeesearch.selectEmployeeFromResultSet(resultset);
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToAccountDetailPage();
 			if(employeesearch.navigateToInvestmentTab()){

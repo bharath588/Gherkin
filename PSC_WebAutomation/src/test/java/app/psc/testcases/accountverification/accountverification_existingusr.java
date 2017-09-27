@@ -240,14 +240,14 @@ public class accountverification_existingusr {
 			login = new LoginPage().get();
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password")});
-			if(Web.isWebElementDisplayed(userverification,"DEFAULT_PLAN_INPUT_FIELD",true)){
-			userverification.enterPlanWhenDefaultPlanIsNull();
-			}
 			userverification.performVerification(new String[] {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
 					Stock.GetParameterValue("UserSecondaryAns")});
+			if(Web.isWebElementDisplayed(userverification,"DEFAULT_PLAN_INPUT_FIELD",true)){
+				userverification.enterPlanWhenDefaultPlanIsNull();
+			}
 			if (PlanCount > 25) {
 
 				if ((Web.isWebElementDisplayed(accountverification,
@@ -507,7 +507,7 @@ public class accountverification_existingusr {
 			else if(Stock.GetParameterValue("infoType").equalsIgnoreCase("Availability"))
 			{
 				accountverification.addTransactionCode(Stock.getTestQuery("addTransactionCode"), Stock.GetParameterValue("TxnCode"), 
-						Stock.GetParameterValue("username"));
+						"K_"+Stock.GetParameterValue("username"));
 				HomePage homePage = new HomePage(new LoginPage(), false, new String[] {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") }).get();
@@ -525,7 +525,7 @@ public class accountverification_existingusr {
 				}
 
 				accountverification.deleteTransactionCode(Stock.getTestQuery("deleteTransactionCode"), Stock.GetParameterValue("TxnCode"), 
-						Stock.GetParameterValue("username"));
+						"K_"+Stock.GetParameterValue("username"));
 			}
 
 		}
@@ -721,7 +721,7 @@ public class accountverification_existingusr {
 					}
 					else
 					{
-						Reporter.logEvent(Status.PASS, "Verify switching to plan with compliance option availability",
+						Reporter.logEvent(Status.FAIL, "Verify switching to plan with compliance option availability",
 								"Plan is not switched", true);
 					}
 				}

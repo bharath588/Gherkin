@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" ><!-- parallel="classes" thread-count="2" > -->
+<suite name="testsuite" parallel="classes" thread-count="3">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Execution_1">
-
-		<classes>
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+	<test name="Regression_Yelow_Period_Execution_3">
+	<classes>
+		<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+				<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -63,7 +62,7 @@
 							value="DDTC-22058_Employee_Search_Regression_noduplicatename">
 						</parameter>
 					</include>
-					<include
+					 <include
 						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-21990_Employee_Search_Regression_noduplicateempid">
@@ -133,7 +132,7 @@
 					</include>
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName" value="DDTC-2194_Edit_Enrollment_And_Eligibility" />
-					</include>
+					</include> 
 					<include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
 					</include>
@@ -210,7 +209,7 @@
 					<include name="TC_54_Employee_Overview_With_Active_Models">
 						<parameter name="ManualTCName" value="DDTC-2139_Employee_Overview_With_Active_Models" />
 					</include>
-					<include name="TC_53_Participant_Investments_Tab">
+				 	<include name="TC_53_Participant_Investments_Tab">
 						<parameter name="ManualTCName" value="DDTC-1241_Participant_Investments_Tab" />
 					</include>
 					<include name="TC_55_Loan_Summary_Table_External_Loan">
@@ -264,13 +263,13 @@
 							value="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access" />
 					</include>
 				</methods> 
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					<include name="TC006_01_Verify_Force_Login">
+					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
-					</include>
+					</include> 
 					<include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1063_SIT_PSC_Login_01_TC017_Internal and External User">
@@ -298,7 +297,7 @@
 						name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
 							value="User_Account_Locking_For_max_Invalid_Attempts" />
-					</include>
+					</include> 
 					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
 						<parameter name="ManualTCName"
 							value="Display correct date and time of my last login" />
@@ -321,7 +320,7 @@
 					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
 						<parameter name="ManualTCName"
 							value="Verify_PLUser_Login_With_No_Plna_Access" />
-					</include>
+					</include> 
 					<include
 						name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
 						<parameter name="ManualTCName"
@@ -350,9 +349,9 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
-					<include
+					 <include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
@@ -361,7 +360,7 @@
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
-					</include>
+					</include> 
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
 						<parameter name="ManualTCName"
@@ -383,7 +382,7 @@
 					<include
 						name="TC02_Validate_error_message_when_plan_field_is_left_blank">
 						<parameter name="ManualTCName"
-							value="Plan_Validat_error_message_when_plan_filed_blank" />
+							value="DDTC-333_Plan_Validate_error_message_when_plan_filed_blank" />
 					</include>
 					<include name="TC03_Verify_planDetails_Populated">
 						<parameter name="ManualTCName"
@@ -392,7 +391,7 @@
 					<include
 						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
-							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
+							value="DDTC-333_Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
@@ -416,7 +415,7 @@
 					</include>
 					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
 						<parameter name="ManualTCName" value="DDTC-99_Order_Participant_QDIA_Notice_Listing" />
-					</include>
+					</include> 
 					<include
 						name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
 						<parameter name="ManualTCName"
@@ -442,7 +441,7 @@
 							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
 					</include>
 				</methods>
-			</class>  
+			</class> 
 			<class name="app.psc.testcases.plan.plantestcases">
 				<methods>
 					<include name="TC16_Plan_Provisions_page">
@@ -457,10 +456,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
 					</include>
-					<include name="TC20_Complex_User">
+					 <!-- <include name="TC20_Complex_User">
 						<parameter name="ManualTCName"
 							value="DDTC-2073_Complex_User" />
-					</include> 
+					</include>  -->
 					<include name="TC23_Find_Users_by_Name">
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
@@ -469,6 +468,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
 					</include> 
+					<!-- <include name="TC24_Investment_Charts_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22127_Investment_Charts_Page" />
+					</include> -->
 				</methods>
 			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
@@ -528,7 +531,7 @@
 						</parameter>
 					</include>
 				</methods>
-			</class>
+			</class> 
 			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
@@ -611,7 +614,7 @@
 						<parameter name="ManualTCName"
 							value="SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC009_01_Verify_Multifactoring">
 						<parameter name="ManualTCName" value="Multifactoring_Regr">
 						</parameter>
@@ -628,7 +631,7 @@
 					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
-					</include>
+					</include> 
 				</methods>
 			</class>
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
@@ -666,7 +669,7 @@
 						<parameter name="ManualTCName" value="FAQ_DDTC_245" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -363,16 +364,18 @@ public class CommonLib {
 	 */
 	public static void switchToDefaultPlan() throws SQLException,Exception
 	{
-		String defaultPlan = null;
-		homePage = new HomePage();
-		queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
-				"K_"+Stock.GetParameterValue("username"));
-		while(queryResultSet.next())
-		{
-			defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
+		if(!Stock.getConfigParam("DataType").equals("Apple")){
+			String defaultPlan = null;
+			homePage = new HomePage();
+			queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
+					"K_"+Stock.GetParameterValue("username"));
+			while(queryResultSet.next())
+			{
+				defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
+			}
+			Web.getDriver().switchTo().defaultContent();
+			homePage.searchPlanWithIdOrName(defaultPlan);
 		}
-		Web.getDriver().switchTo().defaultContent();
-		homePage.searchPlanWithIdOrName(defaultPlan);
 	}
 
 
@@ -634,7 +637,7 @@ public static String switchToWindow()
 public static void switchToFrame(WebElement frameIDorName)
 {
 	try{
-		Web.waitForPageToLoad(Web.getDriver());
+		//Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
 		Web.waitForElement(frameIDorName);
 		Web.getDriver().switchTo().frame(frameIDorName);
@@ -974,6 +977,7 @@ public static boolean validateEventID(String evenId) throws SQLException
 	return isRecordFound;
 	
 }
+
 
 
 

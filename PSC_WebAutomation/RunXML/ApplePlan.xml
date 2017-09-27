@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"><!--  parallel="classes" thread-count="2" > --> 
+<suite name="testsuite"  parallel="classes" thread-count="2" >  
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Exec2">
+	<test name="Regression_Yellow_Period_Exec2_Apple_Plan">
 		<classes>
-			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -19,10 +19,10 @@
 							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class>
+			</class> 
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC001_Search_Employee_For_Valid_SSN">
+					<!-- <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -96,44 +96,44 @@
 					</include>
 					<include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
-					</include>
+					</include> 
 					<include name="TC021_Salary_View_And_Update">
 						<parameter name="ManualTCName" value="DDTC-2245_Salary_View_And_Update" />
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
-					</include>
+					</include> -->
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
 					<include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
 					</include>
-					<include name="TC42_Paycheck_Contribution_History">
+					<!-- <include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="DDTC-2162_Paycheck_Contribution_History" />
 					</include>
 					<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="DDTC-1062_Disable_PAE_then_renable_PAE" />
-					</include>
+					</include> -->
 					<include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
 						<parameter name="ManualTCName" value="DDTC-218_SIT_PSC_Accountdetail_Allocations_Reg" />
 					</include>
-					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
+					<!-- <include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver" />
-					</include>
+					</include> -->
 					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
 						<parameter name="ManualTCName"
 							value="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations" />
 					</include>
-					<include name="TC_56_Info_Message_New_User">
+					<!-- <include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="DDTC-1332_Info_Message_New_User" />
 					</include>
 					<include name="TC_51_Add_New_Employee_View_Page">
 						<parameter name="ManualTCName" value="DDTC-1494_Add_New_Employee_View_Page" />
-					</include>
+					</include> -->
 				</methods>
 			</class> 
-			 <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					 <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
@@ -168,10 +168,10 @@
 						</parameter>
 					</include>
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-				 <include name="TC017_01_Internal_Employee_External_Client_Login">
+				 <!-- <include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC017_Internal and External User">
 						</parameter>
@@ -189,7 +189,7 @@
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC014_Footer links_Prelogin">
 						</parameter>
-					</include> 
+					</include>  -->
 					<include name="TC004_02_Verify_Header_and_Footer_Links_PostLogin">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC014_Footer links_Postlogin">
@@ -203,8 +203,8 @@
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
 					</include>
 				</methods>
-			</class>-->
-			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
+			</class>
+			<!-- <class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
 						<parameter name="ManualTCName"
@@ -220,7 +220,7 @@
 					</include>
 					<include name="TC003_01_SIT_PSC_Update_User_Name">
 						<parameter name="ManualTCName" value="SIT_PSC_Update_User_Name" />
-					</include>
+					</include> 
 					<include name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Update_My_profile_Security_Questions" />
@@ -230,9 +230,9 @@
 					</include> 
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="FAQ_DDTC_245" />
-					</include>
+					</include> 
 				</methods>
-			</class> 
+			</class>  --> 
 		</classes>
 	</test>
 </suite>

@@ -178,6 +178,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		Web.getDriver().switchTo().defaultContent();
 		try {
 			Web.waitForPageToLoad(Web.getDriver());
+			Web.ispageloaded("");
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			ThrowException.Report(TYPE.INTERRUPTED, "Exception occurred for thread sleep");

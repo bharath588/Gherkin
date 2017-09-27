@@ -2,10 +2,12 @@ package pageobjects.homepage;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import lib.DB;
 import lib.Stock;
 import lib.Web;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
@@ -213,7 +216,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 				loginObj.waitForSuccessfulLogin();
 				//Check if UserVerification Pages appears then performVerification
 				if(Web.isWebElementDisplayed(Web.returnElement(userVeriPg,"EMAIL ADDRESS"))){
-					/*userVeriData = new String[]{userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),Stock.GetParameterValue("username")),
+					/*userVeriData = new String[]{
+							userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
+									Stock.GetParameterValue("username")),
 					          getSecurityAnswer((Web.returnElement(userVeriPg, "SECURITYQUESTION")).getText().trim())};*/
 					userVeriData[0] = userVeriPg.getEmailAddressOfuser(Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"));
@@ -224,13 +229,14 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 				}
 			}
-			Web.waitForElement(urlJumpPage);
-			Web.clickOnElement(urlJumpPage);
+			if(Stock.getConfigParam("DataType").equals("NonApple")){
+			Web.isWebElementDisplayed(urlJumpPage,true);
+			Web.clickOnElement(urlJumpPage);}
 			//Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
 			Web.ispageloaded("framec");
-			Web.waitForElement(weGreeting);
-			Thread.sleep(5000);
+			Web.isWebElementDisplayed(weGreeting,true);
+			Thread.sleep(2000);
 			Reporter.logEvent(Status.INFO, "Check if Login is successfull","Login for PSC is successfull",false);
 		} catch (Exception e) {
 			try {
@@ -240,15 +246,6 @@ public class HomePage extends LoadableComponent<HomePage>{
 			}
 		}
 	}
-
-
-
-
-
-
-
-
-
 
 	/** <pre> Method to return WebElement object corresponding to specified field name
 	 * Elements available for fields:
@@ -1436,6 +1433,7 @@ public boolean navigateToHomePage() throws Exception{
 		}
 		return isNavigated;
 	}
+	
 	public boolean navigatedFromActionButton(String...actionButtonAndBreadCrumbs)
 	{
 		int counter = 0,navigated=0;
@@ -1561,5 +1559,35 @@ public boolean navigateToHomePage() throws Exception{
                        isPageDisplayed = false;
              return isPageDisplayed;
     }
+	
+	public static Map<String,String> securityQuestionsAndAnswers;
+	public static Map<String,Map<String,String>> userSecurityQuestion;
+	public static Map<String,Map<String,String>> restoreUserSecurityQuestion;
+/**
+ * @author smykjn
+ * <pre>Set user security answer.<pre>
+ */
+public void setUserSecurityAnswer() throws SQLException{
+	List<String> users = Arrays.asList(Stock.getConfigParam("UserIds").split("|"));
+	userSecurityQuestion = new HashMap<String,Map<String,String>>();
+	for(int i=0;i<users.size();i++){
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserSecurityQuestion")[0],
+				Stock.getTestQuery("getUserSecurityQuestion")[1],
+				"K_"+users.get(i));
+		securityQuestionsAndAnswers = new HashMap<String,String>();
+		while(queryResultSet.next()){
+			String secQuestion = queryResultSet.getString("SECURITY_QUESTION");
+			String encodedSecAnswer =  queryResultSet.getString("ENCRYPTED_SECURITY_ANSWER");
+			
+			securityQuestionsAndAnswers.put(secQuestion, encodedSecAnswer);
+		}
+		//userSecurityQuestion.put(users.get(i), securityQuestionsAndAnswers);
+	}
+	System.out.println(userSecurityQuestion);
+}
+
+	
+	
+	
 
 }

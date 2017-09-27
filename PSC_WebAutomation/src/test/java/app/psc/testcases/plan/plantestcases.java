@@ -432,7 +432,58 @@ public class plantestcases {
 	}
 	
 	
-	
+
+	/**<pre>This test case validates the basic screen elements of Charts page for Investment & Performance section.</pre>
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC24_Investment_Charts_Page(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This test case validates the basic screen elements of Charts page for Investment & Performance section.",
+					false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			homePage = new HomePage();
+			homePage.setUserSecurityAnswer();
+			/*employeesearch = new EmployeeSearch();
+			employeesearch.searchPlan(Stock.GetParameterValue("planNumber"));
+			homePage.navigateToProvidedPage("Plan","Investments & Performance","");
+			planPage.validateInvestmentAndPerformanceColumns();
+			planPage.validateChartsPageScreenElements();
+			planPage.validateChartsPageBasicFeatures();*/
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of plan summary page",
+					errorMsg, true);
+		}
+
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}	
 	
 	
 	

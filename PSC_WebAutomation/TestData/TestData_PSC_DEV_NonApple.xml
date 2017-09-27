@@ -2037,7 +2037,7 @@
 				<parameter name="PlanNumber" value="385003-01" />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Loan_Summary_Table_External_Loan">
+		<TestCase name="DDTC-1439_Loan_Summary_Table_External_Loan">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />

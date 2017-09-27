@@ -68,7 +68,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	protected void isLoaded() throws Error {
 		Web.getDriver().switchTo().defaultContent();
 		try {
-			Assert.assertTrue(Web.isWebElementDisplayed(txtUserVerificationEmail));
+			Assert.assertTrue(Web.isWebElementDisplayed(txtUserVerificationEmail,true));
 		} catch (Exception e) {			
 			e.printStackTrace();
 		}
@@ -161,25 +161,10 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		Thread.sleep(3000);
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
-			/*if(Web.isWebElementDisplayed(imgEmpowerPsc))
-			{
-				
-			}
-			else
-			{
-				Web.getDriver().navigate().refresh();
-				Web.waitForElement(txtUserVerificationEmail);
-				Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
-				Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
-				Web.clickOnElement(btnUserVerificationNext);
-				Web.waitForElement(imgEmpowerPsc);
-				
-			}*/
 		}		
-		//if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
 		if (!Web.isWebElementDisplayed(txtUserVerificationEmail)) {
 				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
 						"The user verification screen is not loaded", false);
@@ -275,7 +260,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		String securityAnswer = "";
 		try{
 			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
-				securityAnswer =    Stock.GetParameterValue("UserSecondaryAns");
+				securityAnswer =    Stock.GetParameterValue("dreamCar");
 			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
 				securityAnswer = Stock.GetParameterValue("favDrink");
 			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))
@@ -300,12 +285,16 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	public void enterPlanWhenDefaultPlanIsNull() throws Exception {
 		String planNumber = "";
 		resultset = DB.executeQuery(Stock.getTestQuery("getNumberOfplansQuery")[0],
-				Stock.getTestQuery("getNumberOfplansQuery")[0],"K_"+Stock.GetParameterValue("username"));
+				Stock.getTestQuery("getNumberOfplansQuery")[1],
+				"K_"+Stock.GetParameterValue("username"));
 		while(resultset.next()){
 			planNumber = resultset.getString("GA_ID");
 			break;
 		}
-		Web.waitForElement(planTextFieldDefaultPlanNull);
+		if(planNumber==null || planNumber.isEmpty()){
+			planNumber = Stock.GetParameterValue("planNumber");
+		}
+		Web.isWebElementDisplayed(planTextFieldDefaultPlanNull,true);
 		Web.setTextToTextBox(planTextFieldDefaultPlanNull, planNumber);
 		Web.clickOnElement(nextButton);
 		Web.waitForPageToLoad(Web.getDriver());
