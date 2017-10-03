@@ -256,11 +256,11 @@
 						<parameter name="ManualTCName"
 							value="DDTC-29467_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4" />
 					</include>
-					<include
+					<!-- <include
 						name="TC_61_SIT_PSC_Search_Employee_based_on_User_access">
 						<parameter name="ManualTCName"
 							value="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access" />
-					</include>
+					</include> -->
 				</methods> 
 			</class>
 			<class name="app.psc.testcases.login.logintestcases">
