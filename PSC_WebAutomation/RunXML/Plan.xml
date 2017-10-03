@@ -5,8 +5,7 @@
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	<test name="Plan module Test cases">
-
-		<classes>
+	<classes>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC01_search_plan_for_valid_plan">
@@ -16,7 +15,7 @@
 					<include
 						name="TC02_Validate_error_message_when_plan_field_is_left_blank">
 						<parameter name="ManualTCName"
-							value="Plan_Validat_error_message_when_plan_filed_blank" />
+							value="DDTC-333_Plan_Validate_error_message_when_plan_filed_blank" />
 					</include>
 					<include name="TC03_Verify_planDetails_Populated">
 						<parameter name="ManualTCName"
@@ -25,7 +24,7 @@
 					<include
 						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
-							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
+							value="DDTC-333_Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
@@ -33,50 +32,81 @@
 					</include>
 					<include name="TC05_SIT_PSC_Plan_messaging_confirmation_page">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Plan_messaging_confirmation_page" />
+							value="DDTC-11941_SIT_PSC_Plan_messaging_confirmation_page" />
 					</include>
 					<include name="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Investment_Fixed_Investment_Rates_Page" />
+							value="DDTC-22129_SIT_PSC_Investment_Fixed_Investment_Rates_Page" />
 					</include>
 					<include name="TC07_SIT_PSC_Investment_Asset_Allocations_page">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Investment_Asset_Allocations_page" />
+							value="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page" />
 					</include>
 					<include name="TC08_Disable_certain_user_edit_fields_for_SAW">
 						<parameter name="ManualTCName"
-							value="Disable_certain_user_edit_fields_for_SAW" />
+							value="DDTC-23517_Disable_certain_user_edit_fields_for_SAW" />
 					</include>
 					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
-						<parameter name="ManualTCName" value="Order_Participant_QDIA_Notice_Listing" />
-					</include>
+						<parameter name="ManualTCName" value="DDTC-99_Order_Participant_QDIA_Notice_Listing" />
+					</include> 
 					<include
 						name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
+							value="DDTC-2168_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
 					</include>
 					<include
 						name="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
+							value="DDTC-2256_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
 					</include>
 					<include name="TC12_3rd_Level_Links">
-						<parameter name="ManualTCName" value="3rd_Level_Links" />
+						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
 					</include>
 					<include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Investment_Fixed_Investment_FutureRates" />
+							value="DDTC-22077_SIT_PSC_Investment_Fixed_Investment_FutureRates" />
 					</include>
 					<include name="TC14_SIT_PSC_Investment_Options">
-						<parameter name="ManualTCName" value="SIT_PSC_Investment_Options" />
+						<parameter name="ManualTCName" value="DDTC-1232_SIT_PSC_Investment_Options" />
 					</include>
 					<include name="TC13_PLN_ADM_View_Change_Banking_Information_Regr">
 						<parameter name="ManualTCName"
-							value="PLN_ADM_View_Change_Banking_Information_Regr" />
+							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
 					</include>
 				</methods>
+			</class> 
+			<class name="app.psc.testcases.plan.plantestcases">
+				<methods>
+					<include name="TC16_Plan_Provisions_page">
+						<parameter name="ManualTCName"
+							value="DDTC-2150_Plan_Provisions_page" />
+					</include> 
+					<include name="TC17_Add_PPT_And_SearchForPPT">
+						<parameter name="ManualTCName"
+							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
+					</include>
+					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
+						<parameter name="ManualTCName"
+							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
+					</include>
+					<include name="TC20_Complex_User">
+						<parameter name="ManualTCName"
+							value="DDTC-2073_Complex_User" />
+					</include> 
+					<include name="TC23_Find_Users_by_Name">
+						<parameter name="ManualTCName"
+							value="DDTC-4_Find_Users_by_Name" />
+					</include>
+					<!-- <include name="TC22_Added_to_USERS_table_via_SAW">
+						<parameter name="ManualTCName"
+							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
+					</include> 
+					<include name="TC24_Investment_Charts_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22127_Investment_Charts_Page" />
+					</include>-->
+				</methods>
 			</class>
-
 		</classes>
 	</test>
 </suite>

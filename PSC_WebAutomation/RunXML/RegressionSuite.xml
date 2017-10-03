@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="3">
+<suite name="testsuite"><!--  parallel="classes" thread-count="3"> -->
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	<test name="Regression_Orange_Period_Execution_1">
 	<classes>
-		<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+		<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 				<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
@@ -256,11 +256,11 @@
 						<parameter name="ManualTCName"
 							value="DDTC-29467_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4" />
 					</include>
-					<!-- <include
+					<include
 						name="TC_61_SIT_PSC_Search_Employee_based_on_User_access">
 						<parameter name="ManualTCName"
 							value="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access" />
-					</include> -->
+					</include>
 				</methods> 
 			</class>
 			<class name="app.psc.testcases.login.logintestcases">
@@ -440,7 +440,7 @@
 							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
 					</include>
 				</methods>
-			</class> 
+			</class> --> 
 			<class name="app.psc.testcases.plan.plantestcases">
 				<methods>
 					<include name="TC16_Plan_Provisions_page">

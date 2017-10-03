@@ -8,10 +8,6 @@
 		<classes>
 			<class name="app.psc.testcases.plan.plantestcases">
 				<methods>
-					<!-- <include name="TC24_Investment_Charts_Page">
-						<parameter name="ManualTCName"
-							value="DDTC-22127_Investment_Charts_Page" />
-					</include> -->
 					<include name="TC25_Investment_Document_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22126_Investment_Document_Page" />
