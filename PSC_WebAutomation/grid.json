@@ -1,7 +1,7 @@
 [
 {
 
-        "Browser": "ff",
+        "Browser": "chrome",
 
         "Port": "http://10.4.61.208:5555/wd/hub",
 
@@ -10,7 +10,7 @@
 },
 {
 
-        "Browser": "chrome",
+        "Browser": "ff",
 
         "Port": "http://10.4.61.69:5556/wd/hub",
 
