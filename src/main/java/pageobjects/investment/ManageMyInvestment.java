@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -18,10 +17,7 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.Choose;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -33,16 +29,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
-import core.framework.Globals;
-import appUtils.Common;
-import pageobjects.balance.Balance;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
-import pageobjects.login.LoginPage;
-import pageobjects.login.TwoStepVerification;
-import sun.awt.ModalExclude;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 
