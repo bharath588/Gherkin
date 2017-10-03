@@ -61,7 +61,7 @@
                
                 <!-- SELECT OTHER CONTRIBUTION 10 -->
                 
-             	  <include name="SIT_PPTWEB_Deferral__AfterTax">
+             	 <!--  <include name="SIT_PPTWEB_Deferral__AfterTax">
                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
                     </parameter>
                     </include>
@@ -105,14 +105,14 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
                     </parameter>
                     </include>    
-                   
+                    -->
                                     
       
              
    				 <!--  BONUS 3 -->
     
   
-                      <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+                   <!--    <include name="Deferral_002_Bonus_Select_another_contribution_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
                     </parameter>
                     </include>
@@ -125,7 +125,7 @@
                      <include name="Bonus_SelectAnotherContribution_split">
                     <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
                     </parameter>
-                    </include>     
+                    </include>  -->    
                  
       
     
@@ -244,7 +244,7 @@
                    <!-- <include name="Deferral_027_Multiple_No_changes_in_the_rate">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
                     </parameter>
-                    </include> 
+                    </include> --> 
                    
                       <include name="Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
@@ -262,13 +262,13 @@
                      <include name="Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_031_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_GENERIC">
                     </parameter>
-                    </include>  --> 
+                    </include>  
                 
                       
    					<!-- MAXIMIZE ME ALWAYS 17 --> 
    
              
-                 <!--  <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
+                   <include name="Deferral_018_Regular_SPLIT_Maximize_to_the_IRS_limit">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018_Regular_SPLIT-Maximize to the IRS limit">
                     </parameter>
                     </include> 
@@ -358,7 +358,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_026_Regular_SPLIT_Maximizer_to_custom_with_same_contribution_rate">
                     </parameter>
                     </include>   
-                       -->
+                     
                     
                   
                     

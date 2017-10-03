@@ -9,16 +9,9 @@
           	<class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                 <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
-                    </include>
-                    <!-- <include name="DDTC_29172_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_29172_Rebal_And_Sync_Allocation_HMDI_Target_Date_DoesNotOffer_All_Mntype"></parameter>
+                 <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
                     </include> 
-                    
-                     <include name="DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_22708_Rebal_And_Sync_Allocation_HMDI_Target_Date_Offer_No_Mntype"></parameter>
-                    </include>  -->
                      
                 </methods>
             </class>  
