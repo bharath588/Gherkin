@@ -4,14 +4,17 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Exec1">
+	<test name="test_new_Development">
 		<classes>
-			<class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.plan.plantestcases">
 				<methods>
-					<include
-						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
+					<!-- <include name="TC24_Investment_Charts_Page">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC007_Login flow-Existing user_accessing_single_site_within_same_browser_session" />
+							value="DDTC-22127_Investment_Charts_Page" />
+					</include> -->
+					<include name="TC25_Investment_Document_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22126_Investment_Document_Page" />
 					</include>
 				</methods>
 			</class>

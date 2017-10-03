@@ -103,6 +103,21 @@ public class CommonLib {
 		}
 	}
 
+	/**
+	 * This method converts the List of WebElements to List of string
+	 * @param refList
+	 * @return
+	 */
+
+	public static List<String> getWebElementstoListofStrings(List<WebElement> refList) {
+		List<String> list = new ArrayList<String>();
+		for (WebElement refWebElement : refList) {
+			list.add(refWebElement.getText());
+		}
+		return list;
+	}
+	
+	
 	public static void fillForm(WebElement parentNode, String... coLNames) {
 		String tagName = "";
 		try {
@@ -407,6 +422,36 @@ public class CommonLib {
 
 		return sorted;
 	}
+	
+	
+	/**
+	 * @author smykjn
+	 * @Objective This method returns true if list is sorted based on sorting argument.
+	 * @return boolean
+	 * @param List,String
+	 */
+	/*public static boolean isSorted(List<String> list,String order)
+	{
+		boolean sorted = false; 
+		if(list.size()==1)
+		{
+			sorted = true;
+			Reporter.logEvent(Status.INFO,
+					"Only one record is found so sorting validation is not required.", "", true);
+		}
+		else{
+			for (int i = 1; i < list.size(); i++) {
+				if (list.get(i-1).compareTo(list.get(i)) > 0) {
+					sorted = true;}
+				else{
+					sorted = false;
+					break;
+				}
+			}
+		}
+
+		return sorted;
+	}*/
 
 
 	/**

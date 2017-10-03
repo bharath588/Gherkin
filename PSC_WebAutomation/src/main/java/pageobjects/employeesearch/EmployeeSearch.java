@@ -1459,14 +1459,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * @throws InterruptedException
 	 */
 	public void navigateToEmployeeTab() throws InterruptedException {
-		//Web.waitForElement(tabEmployees);
 		Web.isWebElementDisplayed(tabEmployees, true);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(tabEmployees).click().build().perform();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
-		/*actions.moveToElement(linkProfile);
-		actions.build().perform();*/
 		Thread.sleep(2000);
 		if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
 		{
@@ -1524,21 +1521,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		lib.Web.getDriver().switchTo().defaultContent();
 	}
 	
-	
-	
-	
 	/**
 	 * This method converts the List of WebElements to List of string
 	 * @param refList
 	 * @return
 	 */
 
-	public List<String> getWebElementstoListofStrings(List<WebElement> refList) {
+	public  List<String> getWebElementstoListofStrings(List<WebElement> refList) {
 		List<String> list = new ArrayList<String>();
 		for (WebElement refWebElement : refList) {
 			list.add(refWebElement.getText());
 		}
-
 		return list;
 	}
 	/**
@@ -6998,7 +6991,8 @@ public Map<String,String> getEnrollAndEligDataFromUI()
 {
 	Map<String,String> enrollAndEligDataUI = new HashMap<String,String>();
 	try{
-		this.switchToFrame();
+		//this.switchToFrame();
+		CommonLib.switchToFrame(employeeSearchFrame);
 		if(CommonLib.isElementExistByXpath(enrollAndEligSection))
 		{
 			if(eligCodeUI.getText().trim().equals("No")){

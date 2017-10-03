@@ -3570,7 +3570,7 @@ public void TC_61_SIT_PSC_Search_Employee_based_on_User_access(int itr,Map<Strin
 			employeesearch.searchPlan(planNumber);
 			employeesearch.searchEmployeeBySSN(ssn);
 		}
-		if(Web.returnElement(employeesearch, "EmpLastNameLink").isDisplayed())
+		if(Web.returnElements(employeesearch, "EmpLastNameLink").get(0).isDisplayed())
 			Reporter.logEvent(Status.PASS,"Login as PSC user with only 1 plan and search for an"
 					+ " employee within that plan.","Employee is found.", false);
 		else

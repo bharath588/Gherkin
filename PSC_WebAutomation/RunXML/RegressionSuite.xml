@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">
+<suite name="testsuite" parallel="classes" thread-count="3">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Yelow_Period_Execution_3">
+	<test name="Regression_Orange_Period_Execution_1">
 	<classes>
 		<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
@@ -55,7 +55,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22057_Employee_Search_Regression_noduplicatessn">
 						</parameter>
-					</include>
+					</include> 
 					<include
 						name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
@@ -113,14 +113,13 @@
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
 					</include>
-
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
 					</include>
 					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include>
+					</include> 
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
@@ -156,7 +155,7 @@
 						name="TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
 						<parameter name="ManualTCName"
 							value="DDTC-290_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed" />
-					</include>
+					</include> 
 					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver" />
 					</include>
@@ -211,7 +210,7 @@
 					</include>
 				 	<include name="TC_53_Participant_Investments_Tab">
 						<parameter name="ManualTCName" value="DDTC-1241_Participant_Investments_Tab" />
-					</include>
+					</include> 
 					<include name="TC_55_Loan_Summary_Table_External_Loan">
 						<parameter name="ManualTCName" value="DDTC-1439_Loan_Summary_Table_External_Loan" />
 					</include>
@@ -291,7 +290,7 @@
 						</parameter>
 					</include>
 					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
-						<parameter name="ManualTCName" value="SIT_PSC_Login_01_TC004_Terminate User" />
+						<parameter name="ManualTCName" value="DDTC-1007_SIT_PSC_Login_01_TC004_Terminate User" />
 					</include>
 					<include
 						name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
@@ -456,22 +455,22 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
 					</include>
-					 <!-- <include name="TC20_Complex_User">
+					<include name="TC20_Complex_User">
 						<parameter name="ManualTCName"
 							value="DDTC-2073_Complex_User" />
-					</include>  -->
+					</include> 
 					<include name="TC23_Find_Users_by_Name">
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
-					<include name="TC22_Added_to_USERS_table_via_SAW">
+					<!-- <include name="TC22_Added_to_USERS_table_via_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
 					</include> 
-					<!-- <include name="TC24_Investment_Charts_Page">
+					<include name="TC24_Investment_Charts_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22127_Investment_Charts_Page" />
-					</include> -->
+					</include>-->
 				</methods>
 			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">

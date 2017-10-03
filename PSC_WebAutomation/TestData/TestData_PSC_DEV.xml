@@ -177,9 +177,9 @@
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
-				<parameter name="dreamCar" value="test" />
-				<parameter name="favDrink" value="test" />
-				<parameter name="spouseMidName" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
 				<parameter name="ExpPlanOverviewOptions" value="Plan provisions,Vesting schedules,Participant web and VRU options" />
 			</Iteration>
 		</TestCase>
@@ -317,7 +317,7 @@
 		</TestCase>
 		<TestCase name="DDTC-24356_Add_PPT_And_SearchForPPT">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="1ISIS" />
+				<parameter name="username" value="1PNP" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
@@ -332,7 +332,32 @@
 				<parameter name="expHireDateErrorMsg" value="Hire Date is mandatory." />
 				<parameter name="ExpectedManagedAccntLabels" value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
 				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100."/>
-				<parameter name="planNumber" value=""/>
+				<parameter name="planNumber" value="93381-01"/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22127_Investment_Charts_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="384171-01"/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22126_Investment_Document_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="384171-01"/>
+				<parameter name="ExpHeaders" value="Name,Symbol,Category,Investment overview,Online prospectus"/>
 			</Iteration>
 		</TestCase>
 	</Module>

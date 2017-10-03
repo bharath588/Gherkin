@@ -337,8 +337,6 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement dollarInvested_highChart;
 	@FindBy(xpath=".//*[@id='lifeCntBarChartContainer']/div[contains(@id,'highcharts')]//*[name()='svg']")
 	private WebElement noOfInvestors_highChart;
-	@FindBy(linkText="Charts")
-	private WebElement charts_Link;
 	@FindBy(xpath=".//div[@id='assetsBarChartContainer']//*[name()='svg']")
 	private WebElement charts_svg;
 	@FindBy(id="asOfDate")
@@ -355,6 +353,8 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement dollarInvested_Link;
 	@FindBy(id="noOfInvestor")
 	private WebElement noOfInvestor_Link;
+	@FindBy(xpath=".//div[@id='documents']//th[a|span]")
+	List<WebElement> documentHeaders_th;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -2317,7 +2317,7 @@ public void validateChartsPageScreenElements()
 {
 	try{
 		CommonLib.switchToFrame(frameb);
-		Web.clickOnElement(charts_Link);
+		Web.clickOnElement(charts);
 		CommonLib.waitForLoader(planDocLoader);
 		if(Web.isWebElementDisplayed(charts_svg)){
 			if(asOfDate_selectDrpDwn.isDisplayed() && asOfDate_label.isDisplayed())
@@ -2393,8 +2393,75 @@ public void validateChartsPageBasicFeatures()
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}
 }
-
-
+@FindBy(xpath=".//div[@id='documents']//tbody//td[1]")
+private List<WebElement> documentTable_Name; 
+@FindBy(xpath=".//div[@id='documents']//tbody//td[2]")
+private List<WebElement> documentTable_Symbol;
+@FindBy(xpath=".//div[@id='documents']//tbody//td[3]")
+private List<WebElement> documentTable_Category;
+/**
+ * <pre>This method Validates the Document page screen elements under plan--->Investment & Performance.</pre>
+ * @author smykjn
+ * @Date 28th-sept-2017
+ * @return void
+ */
+public void validateDocumentPageScreenElements() 
+{
+	List<String> expHeaders = Arrays.asList(Stock.GetParameterValue("ExpHeaders").split(","));
+	try{
+		CommonLib.switchToFrame(frameb);
+		Web.clickOnElement(documents);
+		CommonLib.waitForLoader(planDocLoader);
+		if(CommonLib.isAllHeadersDisplayed(documentHeaders_th, expHeaders))
+			Reporter.logEvent(Status.PASS,"Check if below columns are displayed.\n"+expHeaders,""
+					+ "Specified columns are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check if below columns are displayed.\n"+expHeaders,""
+					+ "Specified columns are not displayed.", true);
+		Web.clickOnElement(documentHeaders_th.get(0).findElement(By.tagName("a")));
+		List<String> nameList =
+				CommonLib.getWebElementstoListofStrings(documentTable_Name);
+		System.out.println("Descending sorting order after clicking name:"+nameList);
+		List<String> listCopy = new ArrayList<String>(nameList);
+		Collections.sort(nameList);
+		Collections.reverse(nameList);
+		if(listCopy.equals(nameList))
+			Reporter.logEvent(Status.PASS,"Check sorting by name.", 
+					"Sorting by name is working as expected.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check sorting by name.", 
+					"Sorting by name is working as expected.", true);
+		listCopy.clear();
+		Web.clickOnElement(documentHeaders_th.get(1).findElement(By.tagName("a")));
+		List<String> symbolList =
+				CommonLib.getWebElementstoListofStrings(documentTable_Symbol);
+		System.out.println("Ascending sorting order after clicking symbol:"+symbolList);
+		listCopy = new ArrayList<String>(symbolList);
+		Collections.sort(symbolList);
+		if(listCopy.equals(symbolList))
+			Reporter.logEvent(Status.PASS,"Check sorting by Symbol.", 
+					"Sorting by symbol is working as expected.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check sorting by Symbol.", 
+					"Sorting by symbol is working as expected.", true);
+		listCopy.clear();
+		Web.clickOnElement(documentHeaders_th.get(2).findElement(By.tagName("a")));
+		List<String> categoryList =
+				CommonLib.getWebElementstoListofStrings(documentTable_Category);
+		System.out.println("Descending sorting order after clicking category:"+categoryList);
+		listCopy = new ArrayList<String>(categoryList);
+		Collections.sort(categoryList);
+		Collections.reverse(categoryList);
+		if(listCopy.equals(categoryList))
+			Reporter.logEvent(Status.PASS,"Check sorting by category.", 
+					"Sorting by category is working as expected.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check sorting by category.", 
+					"Sorting by category is working as expected.", true);
+	}catch(Exception e){
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+}
 
 
 
