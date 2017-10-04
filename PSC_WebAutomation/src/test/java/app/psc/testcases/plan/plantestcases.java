@@ -507,6 +507,7 @@ public class plantestcases {
 			homePage.navigateToProvidedPage("Plan","Investments & Performance","");
 			planPage.validateInvestmentAndPerformanceColumns();
 			planPage.validateDocumentPageScreenElements();
+			
 		}
 		catch(Exception e)
 		{

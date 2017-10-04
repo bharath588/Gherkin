@@ -10,18 +10,18 @@
 },
 {
 
-        "Browser": "ff",
+        "Browser": "IE",
 
-        "Port": "http://10.4.61.69:5556/wd/hub",
+        "Port": "http://10.4.61.54:5557/wd/hub",
 
         "Platform": "Windows.xp"
 
 },
 {
 
-        "Browser": "IE",
+        "Browser": "ff",
 
-        "Port": "http://10.4.61.54:5557/wd/hub",
+        "Port": "http://10.4.61.69:5556/wd/hub",
 
         "Platform": "Windows.xp"
 

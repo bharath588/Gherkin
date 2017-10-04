@@ -232,7 +232,6 @@ public class HomePage extends LoadableComponent<HomePage>{
 			if(Stock.getConfigParam("DataType").equals("NonApple")){
 			Web.isWebElementDisplayed(urlJumpPage,true);
 			Web.clickOnElement(urlJumpPage);}
-			//Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
 			Web.ispageloaded("framec");
 			Web.isWebElementDisplayed(weGreeting,true);
@@ -1553,6 +1552,7 @@ public boolean navigateToHomePage() throws Exception{
              }
              breadCrumb = Web.getDriver().findElement(By.tagName("i"));
              Web.isWebElementDisplayed(breadCrumb,true);
+             Thread.sleep(2000);
              if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
                        isPageDisplayed = true;
              else

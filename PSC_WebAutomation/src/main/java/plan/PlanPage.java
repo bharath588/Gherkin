@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -353,6 +354,12 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 	private WebElement dollarInvested_Link;
 	@FindBy(id="noOfInvestor")
 	private WebElement noOfInvestor_Link;
+	@FindBy(xpath=".//div[@id='documents']//tbody//td[1]")
+	private List<WebElement> documentTable_Name; 
+	@FindBy(xpath=".//div[@id='documents']//tbody//td[2]")
+	private List<WebElement> documentTable_Symbol;
+	@FindBy(xpath=".//div[@id='documents']//tbody//td[3]")
+	private List<WebElement> documentTable_Category;
 	@FindBy(xpath=".//div[@id='documents']//th[a|span]")
 	List<WebElement> documentHeaders_th;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
@@ -2393,12 +2400,12 @@ public void validateChartsPageBasicFeatures()
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}
 }
-@FindBy(xpath=".//div[@id='documents']//tbody//td[1]")
-private List<WebElement> documentTable_Name; 
-@FindBy(xpath=".//div[@id='documents']//tbody//td[2]")
-private List<WebElement> documentTable_Symbol;
-@FindBy(xpath=".//div[@id='documents']//tbody//td[3]")
-private List<WebElement> documentTable_Category;
+@FindBy(xpath=".//div[@id='documents']//tbody//td[4]//a")
+private List<WebElement> investment_overvw_View_Links;
+@FindBy(xpath=".//div[@id='documents']//tbody//td[5]//a")
+private List<WebElement> online_Prospectus_View_Links;
+@FindBy(xpath=".//div[@id='documents']//tbody//td[4]//span")
+private List<WebElement> investment_overvw_NA_text;
 /**
  * <pre>This method Validates the Document page screen elements under plan--->Investment & Performance.</pre>
  * @author smykjn
@@ -2458,6 +2465,29 @@ public void validateDocumentPageScreenElements()
 		else
 			Reporter.logEvent(Status.FAIL,"Check sorting by category.", 
 					"Sorting by category is working as expected.", true);
+		List<String> view_links = 
+				CommonLib.getWebElementstoListofStrings(investment_overvw_View_Links);
+		//view_links =CommonLib.getWebElementstoListofStrings(investment_overvw_NA_text);
+		Set<String> set_view = new TreeSet<>(view_links);
+		System.out.println("Set:"+set_view);
+		if(set_view.contains("View")||set_view.contains("N/A"))
+			Reporter.logEvent(Status.PASS, "Check view text is displayed for investment overview column.",""
+					+ "view text is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Check view text is displayed for investment overview column.",""
+					+ "view text is not displayed.", true);
+		set_view.clear();
+		view_links.clear();
+		view_links =  
+				CommonLib.getWebElementstoListofStrings(online_Prospectus_View_Links);
+		set_view = new TreeSet<>(view_links);
+		System.out.println("Set:"+set_view);
+		if(set_view.contains("View")||set_view.contains("N/A"))
+			Reporter.logEvent(Status.PASS, "Check view text is displayed for investment overview column.",""
+					+ "view text is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL, "Check view text is displayed for investment overview column.",""
+					+ "view text is not displayed.", true);
 	}catch(Exception e){
 		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
 	}

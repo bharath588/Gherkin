@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Execution_1">
 		<classes>
-			<class name="app.psc.testcases.login.logintestcases">
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -90,7 +90,7 @@
 						<parameter name="ManualTCName" value="SIT_PSC_HomePage_Transaction_Security" />
 					</include>
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					 <include
