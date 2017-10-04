@@ -16,15 +16,6 @@
 
         "Platform": "Windows.xp"
 
-},
-{
-
-        "Browser": "ff",
-
-        "Port": "http://10.4.61.69:5556/wd/hub",
-
-        "Platform": "Windows.xp"
-
 }
 ]
 
