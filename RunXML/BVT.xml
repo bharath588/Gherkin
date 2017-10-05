@@ -9,9 +9,9 @@
           	<class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                    
-                 <include name="DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_22691_Target_Date_Fund_Rebalance_Sync_Annually_withNONAllMTG"></parameter>
-                    </include> 
+               <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
+                    </include>
                      
                 </methods>
             </class>  

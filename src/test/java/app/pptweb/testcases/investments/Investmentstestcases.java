@@ -157,7 +157,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -319,7 +319,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -490,7 +490,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 15
@@ -636,7 +636,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -805,7 +805,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1077,7 +1077,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1209,7 +1209,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 				    
@@ -1330,7 +1330,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1525,7 +1525,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
 			//Step 12
@@ -1718,7 +1718,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -1903,7 +1903,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2078,7 +2078,7 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(25000);
+				Thread.sleep(50000);
 				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
 				investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2254,7 +2254,7 @@ public class Investmentstestcases {
 				Web.clickOnElement(investment, "Button Confirm");
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
-				Thread.sleep(25000);
+				Thread.sleep(50000);
 				investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 				
 				investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2414,7 +2414,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -2529,7 +2529,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -2696,7 +2696,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -2865,7 +2865,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			
@@ -3478,7 +3478,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			investment.VerifyAllocatedPecentageForHMDIFunds();
@@ -3641,7 +3641,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -3774,7 +3774,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -3912,7 +3912,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			investment.VerifyAllocatedPecentageForHMDIFunds();
@@ -4074,7 +4074,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4245,7 +4245,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4412,7 +4412,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
@@ -4584,7 +4584,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -4721,7 +4721,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -4859,7 +4859,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5021,7 +5021,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
@@ -5159,7 +5159,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5297,7 +5297,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -5481,7 +5481,7 @@ public class Investmentstestcases {
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -5666,7 +5666,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -5849,7 +5849,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
 			
@@ -6435,7 +6435,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			
 			investment.verifyRebalanceInvestmentConfirmationDetails(Stock.GetParameterValue("RebalFrequency").toLowerCase());
@@ -6556,7 +6556,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForModelPortfolio();    
 			String confirmationNumber=investment.getConfirmationNoChangeFutureFlow();
@@ -8473,7 +8473,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForSmartRestriction();
@@ -8631,7 +8631,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForSmartRestriction();
@@ -8768,7 +8768,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -8895,7 +8895,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -9022,7 +9022,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -9154,7 +9154,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();
@@ -9280,7 +9280,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.clickOnElement(investment, "Button Confirm");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Thread.sleep(25000);
+			Thread.sleep(50000);
 			Web.waitForElement(investment, "Header Confirmation");
 			investment.verifyPageHeaderIsDisplayed("Header Confirmation");
 			investment.verifyConfirmationMessageForChangeFutureFlow();

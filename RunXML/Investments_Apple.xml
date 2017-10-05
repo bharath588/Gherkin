@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                    <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
+                  <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -62,7 +62,7 @@
                     
                      <include name="DDTC_29166_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29166_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio"></parameter>
-                    </include> -->
+                    </include>  
                     <!-- <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
                     <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
                     </include>
@@ -75,7 +75,7 @@
                     
                     
                   
-                     <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
+                    <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund"></parameter>
                     </include>
                 
@@ -87,7 +87,7 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer"></parameter>
                     </include>
                     
-                   	<include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
+                   	 <include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction"></parameter>
                     </include>
                     
@@ -98,7 +98,7 @@
                     
                     <include name="DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction"></parameter>
-                    </include>
+                    </include>  
                     
 				</methods>
               
