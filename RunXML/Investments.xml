@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                      <!-- <include name="DDTC_2844_DIM_Choose_individual_funds">
+                      <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -50,7 +50,7 @@
                     <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
                     </include>   
-                    -->  
+                   
                     <!--  <include name="DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype"></parameter>
                     </include> 
@@ -269,9 +269,9 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction"></parameter>
                     </include> -->
                     
-                     <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+                     <!-- <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
                     <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
-                    </include>
+                    </include> -->
                      
 				</methods>
               
