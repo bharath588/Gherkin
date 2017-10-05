@@ -9,7 +9,7 @@
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
                   
-                      <include name="DDTC_2844_DIM_Choose_individual_funds">
+                     <!--  <include name="DDTC_2844_DIM_Choose_individual_funds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2844_DIM_Choose_individual_funds"></parameter>
                     </include>  
                     
@@ -49,7 +49,7 @@
                     
                     <include name="DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2616_MTG_Guidance_DIM_Doesnot_Offer_all_mntype"></parameter>
-                    </include>   
+                    </include>    -->
                    
                     <!--  <include name="DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_2367_MTG_Guidance_HMDI_Target_based_DoesNot_Offer_all_mntype"></parameter>
@@ -66,9 +66,9 @@
                     
                     <include name="DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24360_Employer_directed_MTGs_Allocations_DIM_When_Employer_Directed_Indic_Setto_N"></parameter>
-                    </include>   -->
+                    </include>  
                     
-                 <!--  <include name="DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI">
+                  <include name="DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24362_Handling_Employer_directed_MTGs_Allocations_HMDI"></parameter>
                     </include> 
                     
@@ -78,9 +78,9 @@
                     
                      <include name="DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM">
                     <parameter  name="ManualTCName" value="SIT_DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
-                    </include>  
-                     -->
-               <!--   <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
+                    </include>  --> 
+                     
+               <!-- <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
                     </include>
                     
@@ -179,7 +179,7 @@
                                          
                     <include name="DDTC_22678_FullRebal_ModelPortfolio">
                     <parameter  name="ManualTCName" value="SIT_DDTC_22678_FullRebal_ModelPortfolio"></parameter>
-                    </include>    -->
+                    </include>   -->
                       
                      <!-- <include name="DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
@@ -244,7 +244,7 @@
                       
                     -->
                     
-                  <!-- <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
+                 <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund"></parameter>
                     </include>
                 
@@ -267,7 +267,7 @@
                     
                     <include name="DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction"></parameter>
-                    </include> -->
+                    </include> 
                     
                      <!-- <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
                     <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
