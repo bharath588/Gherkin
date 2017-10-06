@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"  parallel="classes" thread-count="3" >  
+<suite name="testsuite">   
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	<test name="Regression_Orange_Period_Exec2_Apple_Plan">
-		<classes>
+		 <classes>
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
@@ -19,10 +19,10 @@
 							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class> 
+			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC001_Search_Employee_For_Valid_SSN">
+					 <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -90,7 +90,7 @@
 					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification" />
-					</include>
+					</include> 
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info" />
 					</include>
@@ -197,7 +197,7 @@
 					</include> 
 				</methods>
 			</class> 
-			<class name="app.psc.testcases.plan.plansearchtestcases">
+		<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC12_3rd_Level_Links">
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
