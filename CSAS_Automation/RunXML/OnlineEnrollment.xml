@@ -9,11 +9,7 @@
 		<classes>
 			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 				<methods>
-					<!-- 	
-					<include name="ValidateGrpIdField">
-						<parameter name="ManualTCName" value="ValidateGrpId " />
-					</include>
-					--><!-- 
+				
 		 			<include name="ValidateIndicativeCity">
 						<parameter name="ManualTCName" value="ValidateCity" />
 					</include>	
@@ -31,16 +27,34 @@
 					</include>		
 					<include name="validateIndicativeData_InlineValidation">
 						<parameter name="ManualTCName" value="InlineValidation" />
-					</include> -->
-					<include name="validateConfirmationPage">
-						<parameter name="ManualTCName" value="validateConfirmationPage" />
-					</include>	
+					</include>
 					<include name="validateIndicativeData_ClearButton">
 						<parameter name="ManualTCName" value="validateClearButton" />
-					</include>
+					</include> 
 					<include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
 						<parameter name="ManualTCName" value="validateEmailPhoneErrorMessage" />
+					</include>	
+					<include name="validateConfirmationPage">
+						<parameter name="ManualTCName" value="validateConfirmationPage" />
+					</include>
+					<include name="validateIndicativeData_State">
+						<parameter name="ManualTCName" value="validateIndicativeData_State" />
 					</include>		
+					<!-- <include name="validateIndicativeData_ZipCode">
+						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
+					</include>	-->
+					<include name="confirmationPageInformationalMessage">
+						<parameter name="ManualTCName" value="confirmationPageInformationalMessage" />
+					</include> 
+					<include name="confirmationPageBackButton">
+						<parameter name="ManualTCName" value="confirmationPageBackButton" />
+					</include>					
+					<include name="validateIndicativeData_Country">
+						<parameter name="ManualTCName" value="validateIndicativeData_Country" />
+					</include>	 	<!-- 
+					<include name="confirmationPageCreateNewAccount">
+						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
+					</include>	 -->
 				</methods>
 			</class>
 		</classes>

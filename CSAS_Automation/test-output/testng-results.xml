@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="2" passed="2">
+<testng-results skipped="0" failed="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="allSuites" duration-ms="115447" started-at="2017-08-31T12:36:35Z" finished-at="2017-08-31T12:38:30Z">
+  <suite name="allSuites" duration-ms="346274" started-at="2017-10-05T06:52:32Z" finished-at="2017-10-05T06:58:18Z">
     <groups>
     </groups>
-    <test name="OnlineEnrollment" duration-ms="115447" started-at="2017-08-31T12:36:35Z" finished-at="2017-08-31T12:38:30Z">
-      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@79698539]" name="ReportInit" is-config="true" duration-ms="32705" started-at="2017-08-31T18:06:35Z" finished-at="2017-08-31T18:07:08Z">
+    <test name="LoanRequest" duration-ms="346274" started-at="2017-10-05T06:52:32Z" finished-at="2017-10-05T06:58:18Z">
+      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c]" name="ReportInit" is-config="true" duration-ms="46078" started-at="2017-10-05T12:22:32Z" finished-at="2017-10-05T12:23:18Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="validateConfirmationPage(int, java.util.Map)[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@79698539]" name="validateConfirmationPage" duration-ms="41490" started-at="2017-08-31T18:07:08Z" data-provider="setData" finished-at="2017-08-31T18:07:49Z">
+        <test-method status="PASS" signature="CSAS_Paperless_Loan_TC06_DDTC_26083(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c]" name="CSAS_Paperless_Loan_TC06_DDTC_26083" duration-ms="112591" started-at="2017-10-05T12:23:18Z" data-provider="setData" finished-at="2017-10-05T12:25:11Z">
           <params>
             <param index="0">
               <value>
@@ -20,14 +20,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=baseball, LAST NAME=Brown, CITY=Florida, DOB=05-Nov-1993, USERNAME=cswa, ANNUAL INCOME=12365, ZIP CODE=123654789, DOH=18-Aug-2017, PERSONAL EMAIL=discard@gwl.com}]]>
+                <![CDATA[{PASSWORD=baseball, PPT_ID=1731515, USERNAME=cswa}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- validateConfirmationPage -->
-        <test-method status="PASS" signature="validateIndicativeData_ClearButton(int, java.util.Map)[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@79698539]" name="validateIndicativeData_ClearButton" duration-ms="41041" started-at="2017-08-31T18:07:49Z" data-provider="setData" finished-at="2017-08-31T18:08:30Z">
+        </test-method> <!-- CSAS_Paperless_Loan_TC06_DDTC_26083 -->
+        <test-method status="PASS" signature="CSAS_Paperless_Loan_TC04_DDTC_26942(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c]" name="CSAS_Paperless_Loan_TC04_DDTC_26942" duration-ms="55586" started-at="2017-10-05T12:25:11Z" data-provider="setData" finished-at="2017-10-05T12:26:06Z">
           <params>
             <param index="0">
               <value>
@@ -36,14 +36,46 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{ADDR LINE1=Baker Street, FIRST NAME=Albert, GRPID=19439101, PEC=1234, SSN=123654789, PASSWORD=baseball, LAST NAME=Brown, CITY=Florida, DOB=05-Nov-1993, USERNAME=cswa, ANNUAL INCOME=12365, ZIP CODE=123654789, DOH=18-Aug-2017, PERSONAL EMAIL=discard@gwl.com}]]>
+                <![CDATA[{PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=50.00, USERNAME=cswa, NEWADDRESS=Baker street}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- validateIndicativeData_ClearButton -->
-      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
-    </test> <!-- OnlineEnrollment -->
+        </test-method> <!-- CSAS_Paperless_Loan_TC04_DDTC_26942 -->
+        <test-method status="PASS" signature="CSAS_Paperless_Loan_TC08_DDTC_26084(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c]" name="CSAS_Paperless_Loan_TC08_DDTC_26084" duration-ms="51664" started-at="2017-10-05T12:26:06Z" data-provider="setData" finished-at="2017-10-05T12:26:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=50.00, USERNAME=cswa}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CSAS_Paperless_Loan_TC08_DDTC_26084 -->
+        <test-method status="FAIL" signature="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080(int, java.util.Map)[pri:0, instance:app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c]" name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080" duration-ms="79840" started-at="2017-10-05T12:26:58Z" data-provider="setData" finished-at="2017-10-05T12:28:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{MOBILEPHONENUMBER=8797947961, PASSWORD=baseball, PPT_ID=1731515, PERSONALEMAIL=discard@gwl.com, USERNAME=cswa, HOMEPHONENUMBER=8797947961}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080 -->
+      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
+    </test> <!-- LoanRequest -->
   </suite> <!-- allSuites -->
 </testng-results>

@@ -22,10 +22,7 @@ import core.framework.Globals;
 
 public class OnlineEnrollmentTestCases {
 
-	private LinkedHashMap<Integer, Map<String, String>> testData = null;
-	ParticipantHome participantHomeObj;
-	LoanRequest LoanRequestPage;
-	Statement_View_Update objStatement_View_Update;
+	private LinkedHashMap<Integer, Map<String, String>> testData = null;	
 	OnlineEnrollment onlineEnrollmentObj;
 	
 	boolean isPageDisplayed;
@@ -95,7 +92,8 @@ public class OnlineEnrollmentTestCases {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-				}finally{
+				}
+			  finally{
 					  try{
 						  Reporter.finalizeTCReport();
 					  }catch(Exception e){
@@ -442,6 +440,241 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj = new OnlineEnrollment();
 				  onlineEnrollmentObj.get();	 
 				  onlineEnrollmentObj.validateErrorMsgPersonalPhoneNumber();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Enter Indicative Data_Country
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 05-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void validateIndicativeData_Country(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.validateIndicativeData_Country();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Enter Indicative Data_State
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 08-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void validateIndicativeData_State(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.validateIndicativeData_State();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Enter Indicative Data_ZipCode
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 08-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void validateIndicativeData_ZipCode(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.validateIndicativeData_ZipCode();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Confirmation Page Informational Message
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 14-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void confirmationPageInformationalMessage(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.confirmationPage_InformationalMsg();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Confirmation Page Back Button
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 14-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void confirmationPageBackButton(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.confirmationPage_BackButton();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+				}
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TESTCASE: Confirmation Page Create New Account
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  BINDU   Date : 14-SEP-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+
+		
+		@Test(dataProvider="setData")
+		public void confirmationPageCreateNewAccount(int itr,Map<String,String> testdata) throws InterruptedException
+		{
+			  try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.confirmationPage_CreateNewAccount();
 				}
 				catch(Exception e)
 				{

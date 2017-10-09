@@ -1,0 +1,969 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://cdn.rawgit.com/anshooarora/extentreports-java/9fa70d0ed9c34a8ed445ceee3494d3d7de7f8918/dist/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>CSASReports</title>
+
+</head>
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo blue darken-3">Extent</a>
+
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' view='category-view' onclick="configureView(1)"><i class='material-icons'>label_outline</i></a></li>
+			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
+		</ul>
+
+		<!-- report name -->
+		<span class='report-name'>CSASReports</span>
+		
+		<!-- report headline -->
+		<span class='report-headline'></span>
+
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<a href='#!'>
+				<span class='label suite-start-time'>Aug 22, 2017 2:17:34 PM</span>
+			</a>
+			<a href='#!'>
+				<span class='label'>v3.0.1</span>
+			</a>
+		</ul>
+	</div>
+</nav>
+		<!-- container -->
+		<div class='container'>
+
+<div id='test-view' class='view'>
+				
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+
+			<!-- category toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button category-toggle' data-activates='category-toggle' data-constrainwidth='false' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>local_offer</i> Category
+				</a>
+				<ul id='category-toggle' class='dropdown-content'>
+					<li><a href='#'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</a></li>
+					<li><a href='#'>MachineDetails</a></li>
+					<li><a href='#'>TestCases</a></li>
+					<li class='divider'></li>
+					<li class='clear'><a href='#!' clear='true'>Clear Filters</a></li>
+				</ul>
+			</div>
+			<!-- category toggle -->
+
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+					<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+					<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+
+<div id='test-view-charts' class='subview-full'>
+	<div id='charts-row' class='row nm-v nm-h'>
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Tests</div>
+				<div class='chart-box'>
+					<canvas id='parent-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span><span class='strong'>6</span> test(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong'>0</span> test(s) failed, <span class='strong'>0</span> others
+				</div>
+			</div>
+		</div>
+		
+		<div class='col s12 m6 l6 np-h'>
+			<div class='card-panel nm-v'>
+				<div class='left panel-name'>Steps</div>
+				<div class='chart-box'>
+					<canvas id='child-analysis' width='100' height='80'></canvas>
+				</div>
+				<div class='block text-small'>
+					<span><span class='strong'>30</span> step(s) passed</span>
+				</div>
+				<div class='block text-small'>
+					<span class='strong'>0</span> step(s) failed, <span class='strong'>27</span> others
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Tests</h3>
+			<ul id='test-collection' class='test-collection'>
+				
+				
+				<li class='test displayed active has-leaf pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</span>
+						<span class='test-time'>Aug 22, 2017 2:17:35 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Aug 22, 2017 2:17:35 PM</span>
+	<span class='label end-time'>Aug 22, 2017 2:22:29 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 4m 53s+856ms</span>
+</div>
+	<div class='test-attributes'>
+			<div class='category-list'>
+				<span class='category label white-text'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</span>
+			</div>
+	</div>
+	<ul class='collapsible node-list' data-collapsible='accordion'>
+		
+				<li class='node level-1  pass' status='pass' test-id='2'>
+					<div class='collapsible-header'>
+						<div class='node-name'>XWJPMDD255</div>						
+						<span class='node-time'>Aug 22, 2017 2:17:35 PM</span>
+						<span class='node-duration'>0h 4m 53s+595ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<ul class='collapsible node-list' data-collapsible='accordion'>
+				<li class='node level-2 leaf pass' status='pass' test-id='3'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ValidateCity<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:17:35 PM</span>
+						<span class='node-duration'>0h 1m 8s+805ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:17:39 PM</td>
+													<td class='step-details'><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if the CSAS Log in page open</td> <td word-wrap:break:word>CSAS log in page launhced successfully</td></tr></table></pre></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:17:44 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_0.png' width='10%' src='' data-src='./\Screenshots\_Itr1_0.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:17:55 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if the user logged in to Participant/plan search page</td> <td word-wrap:break:word>User is successfully logged in to Participant/plan search page</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:17:58 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Online Enrollment page displayed or not</td> <td word-wrap:break:word>Online Enrollment page displyed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:18:03 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_1.png' width='10%' src='' data-src='./\Screenshots\_Itr1_1.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:18:32 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message "City is required" is displayed or not when no value enetred in city field </td> <td word-wrap:break:word>Error message displayed successfully with value: City is required.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:18:37 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_2.png' width='10%' src='' data-src='./\Screenshots\_Itr1_2.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:18:39 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message "City is required" is displayed or not when city field is left blank </td> <td word-wrap:break:word>Error message displayed successfully with value: City is required.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:18:44 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_3.png' width='10%' src='' data-src='./\Screenshots\_Itr1_3.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:18:44 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if max Limit data entry is 20 bytes</td> <td word-wrap:break:word>Max limit of Data entry is 20 bytes</td></tr></table></pre></font></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='4'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ValidatePersonalEmail<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:18:44 PM</span>
+						<span class='node-duration'>0h 0m 32s+874ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:18:58 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if max Limit data entry is 40 bytes</td> <td word-wrap:break:word>Max limit of Data entry is 40 bytes</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:18:59 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message is displayed or not when data entered is: discardgwl.com</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid personal email address.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:04 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_4.png' width='10%' src='' data-src='./\Screenshots\_Itr1_4.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:05 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message  is displayed or not when data entered is: discard@gwl</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid personal email address.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:10 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_5.png' width='10%' src='' data-src='./\Screenshots\_Itr1_5.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:12 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Pre-Confirmation Enroll page is displayed or not on valid personal email: discard@gwl.com</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:17 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_6.png' width='10%' src='' data-src='./\Screenshots\_Itr1_6.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='5'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ValidateMobilePhone<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:19:17 PM</span>
+						<span class='node-duration'>0h 0m 48s+194ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:19 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Online Enrollment page displayed or not</td> <td word-wrap:break:word>Online Enrollment page displyed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:24 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_7.png' width='10%' src='' data-src='./\Screenshots\_Itr1_7.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:42 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking mobile field is optional by checking if Pre-Confirmation Enroll page is displayed or not on not entering mobile phone details</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully: Mobile phone field is Optional</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:47 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_8.png' width='10%' src='' data-src='./\Screenshots\_Itr1_8.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:47 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if max Limit data entry is 10 numbers</td> <td word-wrap:break:word>Max limit of Data entry is 10 numbers</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:48 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message  is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid mobile phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:19:54 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_9.png' width='10%' src='' data-src='./\Screenshots\_Itr1_9.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:19:54 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if mobile phone number is in the format (###)###-####</td> <td word-wrap:break:word>Mobile phone number is in the format (###)###-#### with value: (789)654-1230</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:00 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_10.png' width='10%' src='' data-src='./\Screenshots\_Itr1_10.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:00 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking if Pre-Confirmation Enroll page is displayed or not on entering mobile phone details</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:05 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_11.png' width='10%' src='' data-src='./\Screenshots\_Itr1_11.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='6'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ValidateHomePhone<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:20:05 PM</span>
+						<span class='node-duration'>0h 0m 49s+87ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:07 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Online Enrollment page displayed or not</td> <td word-wrap:break:word>Online Enrollment page displyed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:12 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_12.png' width='10%' src='' data-src='./\Screenshots\_Itr1_12.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:31 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking mobile field is optional by checking if Pre-Confirmation Enroll page is displayed or not on not entering Home phone details</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully: Home phone field is Optional</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:36 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_13.png' width='10%' src='' data-src='./\Screenshots\_Itr1_13.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:36 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if max Limit data entry is 10 numbers</td> <td word-wrap:break:word>Max limit of Data entry is 10 numbers</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:37 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message  is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid home phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:43 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_14.png' width='10%' src='' data-src='./\Screenshots\_Itr1_14.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:44 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if home phone number is in the format (###)###-####</td> <td word-wrap:break:word>Mobile phone number is in the format (###)###-#### with value: (789)654-1230</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:49 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_15.png' width='10%' src='' data-src='./\Screenshots\_Itr1_15.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:49 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking if Pre-Confirmation Enroll page is displayed or not on entering home phone details</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:20:55 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_16.png' width='10%' src='' data-src='./\Screenshots\_Itr1_16.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='7'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ValidateErrorMessage<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:20:55 PM</span>
+						<span class='node-duration'>0h 0m 36s+14ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:20:57 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Online Enrollment page displayed or not</td> <td word-wrap:break:word>Online Enrollment page displyed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:21:02 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_17.png' width='10%' src='' data-src='./\Screenshots\_Itr1_17.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:21:06 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking if error message is displayed when user DO NOT enter any field in Personal Information field and clicked Continue To Create New Account button</td> <td word-wrap:break:word>Error message is displayed when user DO NOT enter any field in Personal Information field and clicked Continue To Create New Account button• First name is required.
+• Address line 1 is required.
+• Last name is required.
+• City is required.
+• Date of birth is required.
+• State is required.
+• Zip code is required.
+• Annual income is required.
+• Date of hire is required.
+• Gender is required.
+• Marital status is required.
+• Personal email address or a phone number is required.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:21:11 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_18.png' width='10%' src='' data-src='./\Screenshots\_Itr1_18.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:21:26 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking if Pre-Confirmation Enroll page is displayed or not on entering all the valid details</td> <td word-wrap:break:word>Pre-Confirmation Enroll page displayed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:21:31 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_19.png' width='10%' src='' data-src='./\Screenshots\_Itr1_19.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='8'>
+					<div class='collapsible-header'>
+						<div class='node-name'>InlineValidation<br>Iteration 1</div>						
+						<span class='node-time'>Aug 22, 2017 2:21:31 PM</span>
+						<span class='node-duration'>0h 0m 57s+734ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+									<div class='category-list right'>
+											<span class='category label white-text'>TestCases</span>
+									</div>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:21:33 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Online Enrollment page displayed or not</td> <td word-wrap:break:word>Online Enrollment page displyed successfully</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:21:38 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_20.png' width='10%' src='' data-src='./\Screenshots\_Itr1_20.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:21:56 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Checking Error messages when no phone details are entered</td> <td word-wrap:break:word>Error message is displayed successfully• Personal email address or a phone number is required.</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:22:02 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_21.png' width='10%' src='' data-src='./\Screenshots\_Itr1_21.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:22:03 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message  is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid mobile phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:22:08 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_22.png' width='10%' src='' data-src='./\Screenshots\_Itr1_22.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:22:09 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message  is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid home phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:22:15 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_23.png' width='10%' src='' data-src='./\Screenshots\_Itr1_23.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:22:16 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid work phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:22:21 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_24.png' width='10%' src='' data-src='./\Screenshots\_Itr1_24.png'></td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:22:23 PM</td>
+													<td class='step-details'><font size="3" color="green"><pre><table style border = "1px" ><tr> <th>Step</th><th>Details</th></tr><tr> <td  border = "1px">Check if Error message is displayed or not when data entered is: 4+789654$y</td> <td word-wrap:break:word>Error message displayed successfully with value: Enter a valid international phone number</td></tr></table></pre></font></td>
+												</tr>
+												<tr class='log' status='info'>
+													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+													<td class='timestamp'>2:22:29 PM</td>
+													<td class='step-details'>Screenshot Below :<img data-featherlight='./\Screenshots\_Itr1_25.png' width='10%' src='' data-src='./\Screenshots\_Itr1_25.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+						</ul>
+				</li>
+	</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='test-name'></h5>
+
+			<div id='step-filters' class="right">
+				<span class="blue-text" status="info" alt="info" title="info"><i class="material-icons">info_outline</i></span>
+				<span class="green-text" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></span>
+				<span class="red-text" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></span>
+				<span class="red-text text-darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></span>
+				<span class="pink-text text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></span>
+				<span class="orange-text" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></span>
+				<span class="teal-text" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></span>
+				<span status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></span>
+			</div>
+		</div>
+	</div>
+	<!-- subview right -->
+
+</div>
+<!-- test view --><div id='category-view' class='view hide'>
+
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+				
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Categories</h3>
+			<ul id='category-collection' class='category-collection'>
+				
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Aug 22, 2017 2:17:35 PM</td>
+										<td class='linked' test-id='1'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>MachineDetails</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Aug 22, 2017 2:17:35 PM</td>
+										<td class='linked' test-id='2'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>TestCases</span>
+						<span class='category-status right'>
+							<span class='label pass'>6</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 6</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Aug 22, 2017 2:17:35 PM</td>
+										<td class='linked' test-id='3'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.ValidateCity<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+									<tr>
+										<td>Aug 22, 2017 2:18:44 PM</td>
+										<td class='linked' test-id='4'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.ValidatePersonalEmail<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+									<tr>
+										<td>Aug 22, 2017 2:19:17 PM</td>
+										<td class='linked' test-id='5'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.ValidateMobilePhone<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+									<tr>
+										<td>Aug 22, 2017 2:20:05 PM</td>
+										<td class='linked' test-id='6'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.ValidateHomePhone<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+									<tr>
+										<td>Aug 22, 2017 2:20:55 PM</td>
+										<td class='linked' test-id='7'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.ValidateErrorMessage<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+									<tr>
+										<td>Aug 22, 2017 2:21:31 PM</td>
+										<td class='linked' test-id='8'>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases.XWJPMDD255.InlineValidation<br>Iteration 1</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='category-name'></h5>
+		</div>
+	</div>
+</div>
+<!-- category view --><!-- exception view --><div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>6</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>57</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>Aug 22, 2017 2:17:34 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>Aug 22, 2017 2:22:29 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>294,951ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>PLATFORM</td>
+								<td>Desktop</td>
+							</tr>
+							<tr>
+								<td>Environment</td>
+								<td>PROJ-2</td>
+							</tr>
+							<tr>
+								<td>Selenium Version</td>
+								<td>3.0.1</td>
+							</tr>
+							<tr>
+								<td>Type </td>
+								<td>no</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel'>
+					<span class='right label cyan white-text'>Categories</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Passed</th>
+							<th>Failed</th>
+							<th>Others</th>
+						</tr>
+						<tr>
+							<td>app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>MachineDetails</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+						<tr>
+							<td>TestCases</td>
+							<td>6</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view --><!-- testrunner-logs view -->
+		</div>
+		<!-- container -->
+
+		<script>
+			var statusGroup = {
+				passParent: 6,
+				failParent: 0,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 0,
+				
+				passChild: 30,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 27,
+				exceptionsChild: 0,
+				
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+
+		<script src='https://cdn.rawgit.com/anshooarora/extentreports-java/9fa70d0ed9c34a8ed445ceee3494d3d7de7f8918/dist/js/extent.js' type='text/javascript'></script>
+
+		
+	</body>
+	
+</html>

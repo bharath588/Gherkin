@@ -360,8 +360,8 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@FindBy(xpath=".//*[@id='activeLoans']//*[text()='Ineligible']")
 	private WebElement Ineligible_btn;
 	
-	@FindBy(xpath=".//*[@id='loanTerm-MORTGAGE']")
-//	@FindBy(xpath=".//*[@id='activeLoans']/div/div[5]/div[6]")
+//	@FindBy(xpath=".//*[@id='loanTerm-MORTGAGE']")
+	@FindBy(xpath=".//*[@id='activeLoans']/div/div[5]/div[6]")
 	private WebElement Refinance_LoanTerm;
 	
 	@FindBy(id="addButton-MORTGAGE")
@@ -429,8 +429,8 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 	@Override
 	protected void isLoaded() throws Error {
 	//	if(CommonLib.checkForPpt())
-	//		Assert.assertTrue(Web.isWebElementDisplayed(quick_qoutes_button));
-			Assert.assertTrue(Web.isWebElementDisplayed(loanRequest));
+			Assert.assertTrue(Web.isWebElementDisplayed(quick_qoutes_button));
+	//		Assert.assertTrue(Web.isWebElementDisplayed(loanRequest));
 		/*else{
 			Assert.assertTrue(false);
 		}*/
@@ -834,7 +834,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Reporter.logEvent(Status.PASS, "Verifying Edited Address Message is displayed or not", "Edited Address Message is displayed\n"+AddressEdited_message.getText(), false);
 				}
 			
-				String sExpText = "A recent address change has been detected. Processing can continue on "+DataUtility.getTimeForTimeZone("MM/dd/yy", 15)+" or first business day after unless form is returned with address change section completed and notarized.";
+				String sExpText = "A recent address change has been detected. Processing can continue on "+DataUtility.getTimeForTimeZone("MM/dd/yy", 16)+" or first business day after unless form is returned with address change section completed and notarized.";
 				
 			
 				if(Web.isWebElementDisplayed(addressChanged_Alert) && Web.isWebElementDisplayed(addressChanged_Alert_Img)){
@@ -878,7 +878,8 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Web.clickOnElement(addtn_amt_loan_quote);
 				Reporter.logEvent(Status.INFO,"Selecting a loan quote","One loan quote has been selected",false);			
 													
-	   
+			Web.clickOnElement(not_married_radio_button);
+			
 			if(Web.isWebElementDisplayed(continue_button)){
 				Web.clickOnElement(continue_button);		
 				Reporter.logEvent(Status.PASS,"Clicking Continue to Loan Review and Confirmation button","Continue to Loan Review and Confirmation is clicked", false);

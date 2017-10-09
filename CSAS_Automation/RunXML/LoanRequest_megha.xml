@@ -9,17 +9,13 @@
 		<classes>
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 				<methods>
-				<!-- 
-					<include name="statement_order_update_confirmation">
-						<parameter name="ManualTCName" value="csas_TC_16_Statement_Order_Update_Confirmation" />
-					</include>	
+					<!-- 				
 					<include name="validating_recalculate_functionality"> 
 						<parameter name="ManualTCName" value="csas_TC_23_Validating_Recalculate_Functionality" />
 					</include>	
 					 <include name="validating_mobile_phone_text_box">
 						<parameter name="ManualTCName" value="csas_TC_17_Validating_Mobile_Phone_Text_Box" />
-					</include>
-									
+					</include>									
 					<include name="validating_if_payment_method_noneditable">
 						<parameter name="ManualTCName" value="csas_TC_20_Validating_Payment_Method_Field_NonEditable"/>
 					</include>
@@ -28,7 +24,18 @@
 					</include>				
 					<include name="validating_green_tick_on_selection_of_loan_quote"> 
 						<parameter name="ManualTCName" value="csas_TC_25_Validating_Enable_Of_Select_Button"/>
-					</include>				
+					</include>		
+					<include name="validating_loan_number_link"> 
+					 	<parameter name="ManualTCName" value="csas_TC_18_Validating_Loan_Number_Link"/>
+					</include>
+					<include name="validating_refinance_with_adtn_loan_amnt_functionality"> 
+						<parameter name="ManualTCName" value="csas_TC_22_Validating_Refinance_With_Additional_Loan_Amount" />
+					</include> 
+					<include name="statement_order_update_confirmation">
+						<parameter name="ManualTCName" value="csas_TC_16_Statement_Order_Update_Confirmation" />
+					</include>	 -->
+					
+					 <!-- 		
 					<include name="validating_email_text_box">
 						 <parameter name="ManualTCName" value="csas_TC_27_Validating_Email_Text_Box" />
 					</include>
@@ -40,28 +47,13 @@
 					</include>
 					<include name="validating_amount_to_borrow_text_field"> 
 						<parameter name="ManualTCName" value="csas_TC_30_Validating_Amount_To_Borrow_Field" /> 
-					</include>
-					<include name="validating_loan_number_link"> 
-					 	<parameter name="ManualTCName" value="csas_TC_18_Validating_Loan_Number_Link"/>
-					</include>
-					<include name="validating_refinance_with_adtn_loan_amnt_functionality"> 
-						<parameter name="ManualTCName" value="csas_TC_22_Validating_Refinance_With_Additional_Loan_Amount" />
-					</include> 
-					  -->
+					</include> -->
+					
 					<!-- Test cases Bindu -->
-						<!--	  
+					 <!-- 	  
 					<include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm" />
-					</include>				
-					 <include name="CSAS_Paperless_Loan_HappyPath_TC16_DDTC_27971">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_LoanRequest"/>						
-					</include>	 				
-					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
-					</include>  			 
-					<include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>						
-					</include>														
+					</include>												
 					<include name="CSAS_Paperless_Loan_LoanRequest_Back_Hyperlink_TC20_DDTC_24665">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_Back_Hyperlink"/>						
 					 </include> 
@@ -70,43 +62,54 @@
 					</include> 
 					 <include name="CSAS_Paperless_Loan_LoanRequest_TC26_DDTC_26085">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanTerm_under_SelectedQuote"/>						
-					</include>						
-					<include name="CSAS_Paperless_Loan_TC04_DDTC_26942">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_EditAddress"/>						
-					</include> 
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC30_DDTC_24268">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureOverviewHyperlink"/>						
-					</include>																	
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC32_DDTC_24267">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyFullLoanStructureField"/>						
-					</include> 	-->
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC34_DDTC_24266">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureApprovalReqFields"/>						
-					</include>	<!-- 
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC36_DDTC_24264">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureNoOfLoans"/>						
-					</include>					 		 				
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC38_DDTC_24262">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureFees"/>						
-					</include> 				 			  													
+					</include>									 			  													
 					<include name="CSAS_Paperless_Loan_TC10_DDTC_26925">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_LoanTerm"/>						
-					</include>
+					</include>  
 				 	<include name="CSAS_Paperless_Loan_Exceptions_TC12_DDTC_26082">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Exceptions_Refinance"/>						
 					</include>		
 					<include name="CSAS_Paperless_Loan_LoanRequest_TC22_DDTC_26093">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyEligibleCheckBoxes"/>						
-					</include>						
-					<include name="CSAS_Paperless_Loan_TC08_DDTC_26084">
-						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MaxLoans"/>						
 					</include>	
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC30_DDTC_24268">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureOverviewHyperlink"/>						
+					</include>																	
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC32_DDTC_24267">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyFullLoanStructureField"/>						
+					</include> 	
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC34_DDTC_24266">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureApprovalReqFields"/>						
+					</include>	
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC36_DDTC_24264">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureNoOfLoans"/>						
+					</include>					 		 				
+					<include name="CSAS_Paperless_Loan_LoanRequest_TC38_DDTC_24262">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanStructureFees"/>						
+					</include> 
 					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
-					</include>														
+					</include>	 -->
+					<!-- 					 				
+					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
+					</include> 
+					 --><!-- 
+					<include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>						
+					</include>			 
+					<include name="CSAS_Paperless_Loan_TC04_DDTC_26942">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_EditAddress"/>						
+					</include> 			
+					<include name="CSAS_Paperless_Loan_TC08_DDTC_26084">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MaxLoans"/>						
+					</include>	 -->
+					 <include name="CSAS_Paperless_Loan_HappyPath_TC16_DDTC_27971">
+						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_LoanRequest"/>						
+					</include>																				
 					<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
-					</include> -->
+					</include>	
 				</methods>
 			</class>
 		</classes>

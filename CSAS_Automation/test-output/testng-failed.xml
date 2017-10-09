@@ -4,18 +4,24 @@
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="OnlineEnrollment">
+  <test name="LoanRequest">
     <classes>
-      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+      <class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
         <methods>
-          <include name="validateConfirmationPage">
-            <parameter name="ManualTCName" value="validateConfirmationPage"/>
-          </include> <!-- validateConfirmationPage -->
-          <include name="validateIndicativeData_ClearButton">
-            <parameter name="ManualTCName" value="validateClearButton"/>
-          </include> <!-- validateIndicativeData_ClearButton -->
+          <include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
+            <parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>
+          </include> <!-- CSAS_Paperless_Loan_TC06_DDTC_26083 -->
+          <include name="CSAS_Paperless_Loan_TC04_DDTC_26942">
+            <parameter name="ManualTCName" value="CSAS_Loan_Request_EditAddress"/>
+          </include> <!-- CSAS_Paperless_Loan_TC04_DDTC_26942 -->
+          <include name="CSAS_Paperless_Loan_TC08_DDTC_26084">
+            <parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MaxLoans"/>
+          </include> <!-- CSAS_Paperless_Loan_TC08_DDTC_26084 -->
+          <include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
+            <parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>
+          </include> <!-- CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080 -->
         </methods>
-      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
+      </class> <!-- app.csas.testcases.loanRequest.LoanRequestTestCases -->
     </classes>
-  </test> <!-- OnlineEnrollment -->
+  </test> <!-- LoanRequest -->
 </suite> <!-- Failed suite [allSuites] -->

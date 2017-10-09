@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>LoanRequest</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>1/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>4/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Aug 11 11:30:56 IST 2017</td>
+<td>Started on:</td><td>Thu Oct 05 12:22:32 IST 2017</td>
 </tr>
-<tr><td>Total time:</td><td>209 seconds (209921 ms)</td>
+<tr><td>Total time:</td><td>346 seconds (346274 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,6 +67,60 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='app.csas.testcases.loanRequest.LoanRequestTestCases.CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080()'><b>CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080</b><br>Test class: app.csas.testcases.loanRequest.LoanRequestTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at java.util.regex.Matcher.getTextLength(Matcher.java:1283)
+	at java.util.regex.Matcher.reset(Matcher.java:309)
+	at java.util.regex.Matcher.&lt;init&gt;(Matcher.java:229)
+	at java.util.regex.Pattern.matcher(Pattern.java:1093)
+	at com.aventstack.extentreports.utils.ExceptionUtil.getExceptionHeadline(ExceptionUtil.java:25)
+	at com.aventstack.extentreports.ExtentTest.log(ExtentTest.java:391)
+	at com.aventstack.extentreports.ExtentTest.log(ExtentTest.java:412)
+	at core.framework.TestListener.afterInvocation(TestListener.java:315)
+... Removed 22 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1920321355", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1920321355'><pre>java.lang.NullPointerException
+	at java.util.regex.Matcher.getTextLength(Matcher.java:1283)
+	at java.util.regex.Matcher.reset(Matcher.java:309)
+	at java.util.regex.Matcher.&lt;init&gt;(Matcher.java:229)
+	at java.util.regex.Pattern.matcher(Pattern.java:1093)
+	at com.aventstack.extentreports.utils.ExceptionUtil.getExceptionHeadline(ExceptionUtil.java:25)
+	at com.aventstack.extentreports.ExtentTest.log(ExtentTest.java:391)
+	at com.aventstack.extentreports.ExtentTest.log(ExtentTest.java:412)
+	at core.framework.TestListener.afterInvocation(TestListener.java:315)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:556)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:701)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:822)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1130)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:113)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:206)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:177)
+</pre></div></td>
+<td>79</td>
+<td>app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c</td></tr>
+</table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
@@ -75,9 +129,19 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='app.csas.testcases.loanRequest.LoanRequestTestCases.CSAS_Paperless_Loan_LoanRequest_TC34_DDTC_24266()'><b>CSAS_Paperless_Loan_LoanRequest_TC34_DDTC_24266</b><br>Test class: app.csas.testcases.loanRequest.LoanRequestTestCases<br>Parameters: 1, {PASSWORD=baseball, PPT_ID=1731515, USERNAME=cswa}</td>
+<td title='app.csas.testcases.loanRequest.LoanRequestTestCases.CSAS_Paperless_Loan_TC04_DDTC_26942()'><b>CSAS_Paperless_Loan_TC04_DDTC_26942</b><br>Test class: app.csas.testcases.loanRequest.LoanRequestTestCases<br>Parameters: 1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=50.00, USERNAME=cswa, NEWADDRESS=Baker street}</td>
 <td></td>
-<td>164</td>
+<td>55</td>
+<td>app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c</td></tr>
+<tr>
+<td title='app.csas.testcases.loanRequest.LoanRequestTestCases.CSAS_Paperless_Loan_TC06_DDTC_26083()'><b>CSAS_Paperless_Loan_TC06_DDTC_26083</b><br>Test class: app.csas.testcases.loanRequest.LoanRequestTestCases<br>Parameters: 1, {PASSWORD=baseball, PPT_ID=1731515, USERNAME=cswa}</td>
+<td></td>
+<td>112</td>
+<td>app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c</td></tr>
+<tr>
+<td title='app.csas.testcases.loanRequest.LoanRequestTestCases.CSAS_Paperless_Loan_TC08_DDTC_26084()'><b>CSAS_Paperless_Loan_TC08_DDTC_26084</b><br>Test class: app.csas.testcases.loanRequest.LoanRequestTestCases<br>Parameters: 1, {PASSWORD=baseball, PPT_ID=1731515, AMOUNT_TO_BORROW=50.00, USERNAME=cswa}</td>
+<td></td>
+<td>51</td>
 <td>app.csas.testcases.loanRequest.LoanRequestTestCases@327b636c</td></tr>
 </table><p>
 </body>
