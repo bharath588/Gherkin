@@ -27,7 +27,7 @@ import java.util.Properties;
 
 public class AppiumManager {
 	
-	 private CommandPrompt cp = new CommandPrompt();
+	// private CommandPrompt cp = new CommandPrompt();
 	    private AvailablePorts ap = new AvailablePorts();
 	    public static AppiumDriverLocalService appiumDriverLocalService;
 	    public Properties prop = new Properties();
@@ -101,10 +101,10 @@ public class AppiumManager {
 	    	 }
 	         if (!f.exists()) {
 	             System.out.println("creating directory: " + "Logs");
-	             boolean result = false;
+	          //   boolean result = false;
 	             try {
 	                 f.mkdir();
-	                 result = true;
+	              //   result = true;
 	             } catch (SecurityException se) {
 	                 se.printStackTrace();
 	             }
@@ -138,7 +138,7 @@ public class AppiumManager {
 					e.printStackTrace();
 				}
 	      
-	       new  AppiumParallelTest().freeDevice(new IOSDriverManager().deviceName);
+	      AppiumParallelTest.freeDevice( IOSDriverManager.deviceName);
 	    }
 	   
 	    

@@ -4,19 +4,14 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.SwipeElementDirection;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.ios.IOSElement;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import lib.Log;
-import lib.Log.Level;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -25,13 +20,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import com.aventstack.extentreports.Status;
 import com.github.lalyos.jfiglet.FigletFont;
@@ -54,28 +46,14 @@ public class Mobile {
 	public static boolean mobilePlatform = false;
 
 	public static AppiumDriver<?> getDriver() {
-		return  (AppiumDriver) Web.getDriver() ;
+		return  (AppiumDriver<?>) Web.getDriver() ;
 	}
 
-	public static MobileDriver getMobileDriver() {
-		return  (MobileDriver) Web.getDriver() ;
+	public static MobileDriver<?> getMobileDriver() {
+		return  (MobileDriver<?>) Web.getDriver() ;
 	}
 	
-	/**
-	 * Method to tap at element
-	 * @param locator
-	 */
-	public static void tapElement(String locator) {
-		IOSElement ele = findElement(locator);
-		if (ele != null) {
-			  TouchAction tap = new TouchAction(getDriver());
-		      tap.press(ele).waitAction(2000).release();
-			
-		} else {
-			System.out.println("Element not Present :" + locator);
-		}
-
-	}
+	
 
 	/**
 	 * Method to wait for given time in millsec
@@ -91,9 +69,9 @@ public class Mobile {
 		}
 	}
 /**
- * Method to set value 
- * @param locator
- * @param sTextValue
+ * Method to set value in given locator 
+ * @param locator  is element 
+ * @param sTextValue is input value
  */
 	
 	public static void setEdit(String locator, CharSequence... sTextValue) {
@@ -222,6 +200,7 @@ public class Mobile {
 			
 			} 
 			
+		Reporter.logEvent(Status.INFO," Value set in slider bar.",sText + " %",false);			
 		} catch (WebDriverException e) {
 			System.out.println(" Not able to slide the Value");
 		}
@@ -271,6 +250,26 @@ public class Mobile {
 	public static String getElementValue(By locator) {
 		String sValue = null;
 		IOSElement ele = findElementBy(locator);
+
+		if (ele != null) {
+			return ele.getAttribute("value");
+		
+		}
+		return sValue;
+
+	}
+	
+	
+	/**
+	 *  Method will get element value using By locator
+	 * @param locator
+	 * @return
+	 */
+		
+	public static String getElementValueByPredicate(String sLabel  ) {
+		String sValue = null;
+		IOSElement ele =       findElementWithPredicate(sLabel);
+	//	IOSElement ele = findElementBy(locator);
 
 		if (ele != null) {
 			return ele.getAttribute("value");
@@ -433,12 +432,12 @@ public class Mobile {
 				if(sActText.replaceAll("\\n", "").replaceAll(" ","").trim().toLowerCase().contains(sExpText.replaceAll(" ","").trim().toLowerCase()))
 					Reporter.logEvent(Status.PASS, sMsg,sActText, false);
 				else
-					Reporter.logEvent(Status.FAIL, "Expected was  to contain  :  "+sExpText ,"But Actual was :"+sActText, true);
+					Reporter.logEvent(Status.FAIL, sMsg,"Expected was  to contain  :  "+sExpText +"\n But Actual was :"+sActText, true);
 		    
 				
 			}
 		}else{
-			Reporter.logEvent(Status.FAIL, " Expected was   :"+sExpText ,"But actual was not found", true);
+			Reporter.logEvent(Status.FAIL, sMsg  ,"Expected was   :"+sExpText+" But actual was not found", true);
 		}
 	}
 	
@@ -504,7 +503,8 @@ public class Mobile {
 	
 	public static void  verifyText(MobileElement ele,String sExpText,Boolean exactMatch){		
 	//	IOSElement ele = findElement(locator);
-		if (ele != null) {
+		try{	
+			if(ele != null){
 			String sActText = ele.getText();
 			if(exactMatch){
 				if(sActText.equals(sExpText))
@@ -521,7 +521,8 @@ public class Mobile {
 		    
 				
 			}
-		}else{
+		}
+		}catch(NoSuchElementException e){
 			Reporter.logEvent(Status.FAIL, "Expected text to be :"+sExpText ,"But Actual element was not found", true);
 		}
 	}
@@ -538,12 +539,16 @@ public class Mobile {
 			
 		if(Mobile.isElementPresent(sObj)){
 			Reporter.logEvent(Status.PASS,sStep ,sMsg+ "  is Displayed " ,false);
-		}else{
+		}else{			
 		     Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
-		          
+					          
 		}
 		
 	}
+	
+
+	
+	
 	/**
 	 *  Method will verify element is present 
 	 * @param sStep
@@ -553,7 +558,7 @@ public class Mobile {
 	
 	
 	public  static void verifyElementPresent(String sStep,MobileElement sObj,String sMsg){			
-		
+		try{
 		if(sObj != null){
 			if(sObj.isDisplayed()){
 			Reporter.logEvent(Status.PASS,sStep ,sMsg+ "  is Displayed " ,false);
@@ -562,6 +567,9 @@ public class Mobile {
 		          
 		}
 		}else{
+			   Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
+		}
+		}catch(NoSuchElementException e){
 			   Reporter.logEvent(Status.FAIL,sStep,sMsg+"  is not Displayed",true);
 		}
 		
@@ -624,6 +632,24 @@ public class Mobile {
 		}
 		
 	}
+	
+	
+	public  static void verifyElementNotPresent(String sStep,MobileElement sObj,String sMsg){	
+		if(sObj != null)
+			try{
+		if(!sObj.isDisplayed()){
+			Reporter.logEvent(Status.PASS,sStep,"Not Displayed :  " +sMsg,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sStep ," Displayed : "+ sMsg,true);
+		}
+		}catch(NoSuchElementException ex){
+			Reporter.logEvent(Status.PASS,sStep,"Not Displayed :  " +sMsg,false);
+		}
+		
+	}
+	
+
+
 	public  static void verifyElement_Is_Not_Displayed(String sStep,By sObj,String sMsg){			
 		IOSElement ele =  findElementBy(sObj);
 		if(ele ==null || !ele.isDisplayed()){
@@ -733,9 +759,9 @@ public class Mobile {
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 		  if(ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, sMsg,"", false);
+			  Reporter.logEvent(Status.PASS, sMsg + " should be enabled.",sMsg +" is enabled", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, sMsg,"", true);
+			  Reporter.logEvent(Status.FAIL, sMsg+ " should be enabled.",sMsg +" is not enabled", true);
 		}  		
   	}
 	
@@ -763,9 +789,9 @@ public class Mobile {
 		IOSElement ele = findElement(locator);
 		if (ele != null) {
 		  if(!ele.isEnabled())
-			  Reporter.logEvent(Status.PASS, sMsg,ele.getText()+ " is disable", false);
+			  Reporter.logEvent(Status.PASS, sMsg +" should not be enabled.",sMsg+ " is disable", false);
 		  else
-			  Reporter.logEvent(Status.FAIL, sMsg,ele.getText()+ " is  not disable", true);
+			  Reporter.logEvent(Status.FAIL, sMsg +" should not be enabled.",sMsg+ " is  not disable", true);
 		}
 		  		
   	}
@@ -1063,10 +1089,12 @@ public class Mobile {
 
 			if (element != null) {
 				int j =0;
- 				while (!element.isDisplayed() && j<3) {	 
-
-              			Mobile.scroll_Down();
-         
+ 				while (!element.isDisplayed() && j<3) {	
+              		Mobile.scroll_Down();
+// 				//	scroll_ToVisible(element);
+// 					if(!element.isDisplayed()){
+// 						scroll_Down();
+// 					}         
               		if(j == 2 ){
               			Mobile.scroll_UP();
               			
@@ -1152,26 +1180,8 @@ public class Mobile {
 	}
 
 
-	/**
-	 *  Method will scroll  to find element 
-	 * @param link scroll till this locator
-	 */
 	
-	public static void scrollTillElementIsDisplay(By link){
-		
-		Dimension size = getDriver().manage().window().getSize();
-		int starty = (int) (size.height * 0.7);
-		int endy = (int) (size.height * 0.3);
-		int startx = size.width / 2;
-		
-		IOSElement ele = findElementBy(link);
-		if(ele != null){
-			if(!ele.isDisplayed())
-			getDriver().swipe(startx, starty, startx, endy, 2000);
-		}
-		
-		
-	}
+
 	/**
 	 * Method will scroll up to find element 
 	 */
@@ -1195,9 +1205,24 @@ public class Mobile {
 }
 	
 	/**
+	 *  Method will scroll down to find element 
+	 */
+		public static void scroll_ToVisible(MobileElement ele){
+		
+		JavascriptExecutor js = (JavascriptExecutor) getDriver();
+		HashMap<String, String> scrollObject = new HashMap<String, String>();
+		
+		scrollObject.put("element",ele.getId());
+		scrollObject.put("toVisible", "true");
+	//	scrollObject.put("name", "accessibilityId");		
+		js.executeScript("mobile: scroll", scrollObject);
+	}
+	
+	/**
 	 *  Method will scroll Right to find element 
 	 */
 	
+	@SuppressWarnings("deprecation")
 	public static void swipeRight() {
 		Dimension size = getDriver().manage().window().getSize();
 		int startx = (int) (size.width * 0.9);
@@ -1211,6 +1236,7 @@ public class Mobile {
 	 *  Method will scroll left to find element 
 	 */
 
+	@SuppressWarnings("deprecation")
 	public static void swipeLeft() {
 		Dimension size = getDriver().manage().window().getSize();
 		int startx = (int) (size.width * 0.8);
@@ -1233,6 +1259,8 @@ public class Mobile {
 			IOSElement eleRadioOption =	findElementWithPredicate(sLabel);
 		if(eleRadioOption != null){
 			eleRadioOption.click();
+			Reporter.logEvent(Status.INFO,"Selected Radio option for Label",sLabel,false);	
+			
 		}
 		}
 		catch(Exception e){
@@ -1247,14 +1275,21 @@ public class Mobile {
  */
 	
 	public static IOSElement findElementWithPredicate(String sLabel){
-		//IOSElement ele = (IOSElement) Mobile.getDriver().findElement(MobileBy.iOSNsPredicateString("label CONTAINS '"+sLabel+"'"));
-		IOSElement ele  =  (IOSElement) Mobile.getDriver().findElement(By.xpath(""));
+		
+		IOSElement ele  = null;
+		try{
+		 ele = (IOSElement) Mobile.getDriver().findElement(MobileBy.iOSNsPredicateString("label CONTAINS '"+sLabel+"'"));
+		//IOSElement ele  =  (IOSElement) Mobile.getDriver().findElement(By.xpath(""));
 		if(ele != null){
 			if(!ele.isDisplayed()){
 				Mobile.scroll_Down();
 			}
+		}}
+		catch(NoSuchElementException e){
+			
 		}
 		return ele;
+		
 	}
 	
 	/**
@@ -1281,11 +1316,34 @@ public class Mobile {
 	}
 	
 	/**
+	 * Method will set the flag for Switch Button
+	 * @param bValue true will set switch ON and false will switch OFF 
+	 */
+	public static void switchButton( MobileElement element ,Boolean bValue) {
+		try{
+				
+       if(element != null){
+		
+		String isSelected = element.getAttribute("value");;
+		if (Boolean.valueOf(isSelected) != bValue) {	
+				element.click();		}
+       }else{
+    	   System.out.println("Not able to Switch Button");
+		}
+       wait(1000);
+		}catch (NoSuchElementException ex){
+			 System.out.println("An element could not be located on the page");	
+		}
+
+	}
+	
+	/**
 	 * Find List of element with class
 	 * @param element element for which IOSElement is return
 	 * @return  list of IOSElement 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public static List<IOSElement> getListOfElements_By_Class(String element){
 	
      return (List<IOSElement>) Mobile.getDriver().findElementsByClassName(element);
@@ -1354,9 +1412,8 @@ public class Mobile {
 	 * @param sMonth
 	 * @param sYear
 	 */
-	
-	public static void setDateValue(String sDate,String sMonth,String sYear){
-		
+	@SuppressWarnings("unchecked")
+	public static void setDateValue(String sDate,String sMonth,String sYear){	
 		List<IOSElement> wheels =  (List<IOSElement>) Mobile.getDriver().findElements(By.className("XCUIElementTypePickerWheel"));
 		  wheels.get(0).setValue(sDate);
 	      wheels.get(1).setValue(sMonth);
@@ -1371,11 +1428,13 @@ public class Mobile {
 	 * This function will select value from Picker in increment order
 	 * 
 	 * @param sValue
-	 * @param sOrder
+	 * @param sOrder: Either next to select the value next to the current one from the 
+	 *                        target picker wheel or previous to select the previous one. Mandatory parameter
 	 */
 public static void selectPickerValue(String sValue,String sOrder){
 	
 	try{		
+		@SuppressWarnings("unchecked")
 		List<IOSElement> wheels =  (List<IOSElement>) Mobile.getDriver().findElements(By.className("XCUIElementTypePickerWheel"));
 			if(wheels.get(0) != null){			
 		    for(int i =0;i<20;i++){
@@ -1423,9 +1482,9 @@ public static void selectPickerValue(String sValue,String sOrder){
 	  */
 	 public static void cleanupSessions() {			 
 			System.out.println("After Suite in User base");
-	      
+			 System.out.println( "**************Closing Session****************");
 		 if(Mobile.getDriver() != null && i == 0){				
-				 System.out.println( "**************Closing Session****************");
+				 System.out.println( "**************Closing Mobile App ****************");
 			    	 Mobile.getDriver().closeApp();
 			    	 Mobile.getDriver().quit();					
 					i++;
@@ -1435,11 +1494,14 @@ public static void selectPickerValue(String sValue,String sOrder){
 					Mobile.figlet("Test Complete");
 				
 			 }
-//		 else {
-//					Web.getDriver().close();
-//					Web.getDriver().quit();
+		 else {
+			 System.out.println( "**************Killing Mobile Instance ****************");
+				//	Web.getDriver().close();
+			 Mobile.getDriver().quit();		
+				Mobile.figlet("Test Complete");
+				
 //				}
 		 }
 	
-	 
+	 }
 }
