@@ -21,6 +21,7 @@ import pageobjects.login.LoginPage;
 import lib.Reporter;
 
 import com.aventstack.extentreports.*;
+import com.mongodb.connection.QueryResult;
 
 import lib.DB;
 import lib.Stock;
@@ -3542,7 +3543,7 @@ public void TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario
  * @param testdata
  * @Date 31-July-2017
  */
-/*@Test(dataProvider = "setData")
+@Test(dataProvider = "setData")
 public void TC_61_SIT_PSC_Search_Employee_based_on_User_access(int itr,Map<String, String> testdata) {		
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -3595,9 +3596,87 @@ public void TC_61_SIT_PSC_Search_Employee_based_on_User_access(int itr,Map<Strin
 			e1.printStackTrace();
 		}
 	}
-}*/
+}
 
-
+/**
+ * <pre>To validate Stop all deferrals functionality</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 10-Oct-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
+				"is to validate Stop All deferrals page elements and functionality.", false);
+		String ssn="",fName="",lName="";
+		resultset = DB.executeQuery(Stock.getTestQuery("getPPTWithDeferrals")[0],
+				Stock.getTestQuery("getPPTWithDeferrals")[1],Stock.GetParameterValue("PlanNumber"));
+		if(resultset.next()){
+			ssn=resultset.getString("SSN");
+			fName=resultset.getString("FIRST_NAME");
+			lName=resultset.getString("LAST_NAME");
+		}
+		String name = fName+" "+lName;
+		homePage = new HomePage();
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(employeesearch.NavigateToDeferralPage()){
+			employeesearch.validateColumnsNameAndSSNOnDeferralPage(ssn,name);
+			if(employeesearch.validateDeferralRecordFromDBForAnSSN(ssn))
+				Reporter.logEvent(Status.PASS,"Validate deferral data from DB.",""
+						+ "Data is found in DB.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate deferral data from DB.",""
+						+ "Data is not found in DB.", true);
+			employeesearch.validateStopAllDeferralConfirmationScreen();
+			if(employeesearch.validateAmountAfterStopDeferral())
+				Reporter.logEvent(Status.PASS,"Validate deferral amount or percentage is $0 and 0% after stop deferral.",""
+						+ "Deferral amount is found to be $0 and deferral percent to be 0%.",false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate deferral amount or percentage is $0 and 0% after stop deferral.",""
+						+ "Deferral amount is found to be $0 and deferral percent to be 0%.", true);
+			
+		if(employeesearch.returnToEmployeeOverview(
+				Web.returnElement(employeesearch, "RETURN OVERVIEW PAGE")))
+			Reporter.logEvent(Status.PASS,"Click on Return to employee overview page"
+					+ " and validate Overview page is displayed.",""
+							+ "Overview page is displayed once user clicks on "
+							+ "Return to employee overview button", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Return to employee overview page"
+					+ " and validate Overview page is displayed.",""
+							+ "Overview page does not displayed once user clicks on "
+							+ "Return to employee overview button", true);
+		homePage.logoutPSC();
+		}else{
+			Reporter.logEvent(Status.FAIL,"Navigate to deferral page.","Deferral page is not displayed.", false);
+		}
+		
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
 

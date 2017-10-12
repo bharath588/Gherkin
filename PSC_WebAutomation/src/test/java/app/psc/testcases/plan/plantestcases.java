@@ -14,9 +14,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.homepage.HomePage;
 import pageobjects.login.LoginPage;
+import pageobjects.userverification.UserVerificationPage;
 import plan.PlanPage;
 
 import com.aventstack.extentreports.Status;
@@ -33,6 +35,7 @@ public class plantestcases {
 	PlanPage planPage;
 	ResultSet queryResultSet; 
 	EmployeeSearch employeesearch;
+	AccountVerificationPage accountverification;
 	@BeforeClass
 	public void ReportInit()
 	{
@@ -533,7 +536,84 @@ public class plantestcases {
 			}
 		}
 	}	
-	
+
+
+	/**<pre>This test case validates the basic screen elements of Charts page for Investment & Performance section.</pre>
+	 * @param itr
+	 * @param testDat
+	 */
+	@Test(dataProvider="setData")
+	public void TC26_Terminate_User_ID(int itr, Map<String,String> testDat)
+	{
+		try
+		{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(Status.INFO, "Testcase Description", 
+					"This test case validates the basic screen elements of"
+					+ " Document page under Investment & Performance.",
+					false);
+			planPage = new PlanPage(new LoginPage(), false, new String[] {
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
+			homePage = new HomePage();
+			employeesearch = new EmployeeSearch();
+			accountverification = new AccountVerificationPage();
+			homePage.navigateToProvidedPage("Plan","Administration","Username security management");
+			String mailID = Stock.GetParameterValue("Email ID");
+			String assignedUsername = Stock.GetParameterValue("Assigned User Name");
+			planPage.searchUser(new String[]{mailID,assignedUsername},
+					Web.returnElement(planPage,"Email Search Input"),
+					Web.returnElement(planPage,"ASSIGNED_USERID"));
+			planPage.terminateUserFromUserSecurityManagement();
+			if(Stock.GetParameterValue("Terminate").equalsIgnoreCase("Yes")){
+				try{
+					planPage.validateDBDetailsForTerminatedUser();
+					homePage.logoutPSC();
+					new LoginPage().submitLoginCredentials(new String[]{
+							Stock.GetParameterValue("Assigned User Name"),
+							Stock.GetParameterValue("password")});
+					String expError = Stock.GetParameterValue("ExpErrorMsg");
+					CommonLib.switchToFrame(Web.returnElement(new LoginPage(),"LOGIN FRAME"));
+					String actError = Web.returnElement(new LoginPage(),"PreLoginErrorMsg").getText();
+					if(Web.VerifyText(expError, actError, true))
+						Reporter.logEvent(Status.PASS,"Login with terminated user and validate below error message.\n"+expError,""
+								+ "Proper error message is displayed."+actError, false);
+					else
+						Reporter.logEvent(Status.FAIL,"Login with terminated user and validate below error message.\n"+expError,""
+								+ "Proper error message is not displayed."+actError, true);
+				}catch(Exception e){
+					e.printStackTrace();
+				}finally{
+					DB.executeUpdate(Stock.getTestQuery("updateTermDateToNull")[0],
+							Stock.getTestQuery("updateTermDateToNull")[1],
+							"K_"+Stock.GetParameterValue("Assigned User Name"));
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			Globals.exception = e;
+			String exceptionMessage = e.getMessage();
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					exceptionMessage, true);
+		}
+		catch(Error ae)
+		{
+			ae.printStackTrace();
+			Globals.error = ae;
+			String errorMsg = ae.getMessage();
+			Reporter.logEvent(Status.FAIL, "Assertion error occured during checking of plan summary page",
+					errorMsg, true);
+		}
+		finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}	
 	
 	
 	

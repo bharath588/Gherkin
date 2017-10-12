@@ -2240,7 +2240,7 @@ If you need to correct the existing termination date please contact website supp
 			</Iteration>
 		</TestCase>
 		<TestCase name="PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4">
-			<Iteration Execution="Yes" id="4">
+			<Iteration Execution="Yes" id="1">
 				<parameter name="Scenario" value="4"/>
 				<parameter name="username" value="1ISIS" />
 				<parameter name="password" value="testing1" />
@@ -2251,6 +2251,49 @@ If you need to correct the existing termination date please contact website supp
 				<parameter name="spouseMidName" value="teste" />
 				<parameter name="MsgWhenTerminated" value="This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.
 				If you need to correct the existing termination date please contact your service team."/>
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5MLPR" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="5ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-242_Stop_All_Deferrals">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="194037-01"/>
+				<parameter name="ExpectedDeferralHeaders" value="Status,Effective date,Deferral option,Deferral type,Deferral percent,Deferral amount,3 YR 457 Special Catch up Code,3 YR 457 Special Catch up End Date,3 YR 457 Special Catch up Amount,Change date/time" />
+				<parameter name="ExpLabelsOnConfirmationPage" value="Plan,Contribution rate,Confirmation number(s)" />
 			</Iteration>
 		</TestCase>
 	</Module>
@@ -3122,5 +3165,19 @@ FROM part_agrmt where ga_id in (select distinct acv1.ga_id from access_customiza
 on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower' and acv1.access_type_code='PSC_WEB'
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 GROUP BY ind_id HAVING COUNT(ga_id)=1)"/>
+<parameter QueryName="getPPTWithDeferrals" DB="INSTDB_DEV"
+Query="select * from individual where months_between(sysdate, birth_date)/12 &lt;= 49
+and id in (select id from individual i inner join part_agrmt pa on Pa.ind_id=i.id 
+and pa.ind_id in (select ind_id from elective_deferral where amount is not null) and pa.ga_id = ?)"/>
+<parameter QueryName="getPPTDeferralDetailsWhenPercentEmpty" DB="INSTDB_DEV"
+Query="select * from elective_deferral ed inner join deferral_type dt on dt.code=ed.stdt_code
+inner join isis_ref_values irv on irv.rv_low_value= ed.status_code
+where ed.ind_id in (select id from individual where ssn=?) 
+and ed.amount=? and dt.descr =? and irv.rv_high_value=? and to_char(ed.effdate,'mm/dd/yyyy')=?"/>
+<parameter QueryName="getPPTDeferralDetailsWhenAmountEmpty" DB="INSTDB_DEV"
+Query="select * from elective_deferral ed inner join deferral_type dt on dt.code=ed.stdt_code
+inner join isis_ref_values irv on irv.rv_low_value= ed.status_code
+where ed.ind_id in (select id from individual where ssn=?) 
+and ed.percentage=? and dt.descr =? and irv.rv_high_value=? and to_char(ed.effdate,'mm/dd/yyyy')=?"/>
 </Module>
 </TestData>

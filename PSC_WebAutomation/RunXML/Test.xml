@@ -6,11 +6,27 @@
 	</listeners>
 	<test name="test_new_Development">
 		<classes>
-			<class name="app.psc.testcases.plan.plantestcases">
+			<!-- <class name="app.psc.testcases.plan.plantestcases">
 				<methods>
 					<include name="TC25_Investment_Document_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22126_Investment_Document_Page" />
+					</include>
+					<include name="TC24_Investment_Charts_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22127_Investment_Charts_Page" />
+					</include>
+					<include name="TC26_Terminate_User_ID">
+						<parameter name="ManualTCName"
+							value="DDTC-1301_Terminate_User_ID" />
+					</include>
+				</methods>
+			</class> -->
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods>
+					<include name="TC_62_Stop_All_Deferrals">
+						<parameter name="ManualTCName"
+							value="DDTC-242_Stop_All_Deferrals" />
 					</include>
 				</methods>
 			</class>
