@@ -237,7 +237,8 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the pre-login error messages", false);
 			login = new LoginPage().get();
-			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), 
+					Stock.GetParameterValue("password")});
 			Thread.sleep(4000);
 			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {

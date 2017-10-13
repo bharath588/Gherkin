@@ -350,11 +350,11 @@
 			</class>
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
-					 <!-- <include
+					 <include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
-					</include> -->
+					</include>
 					<include
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
@@ -374,7 +374,7 @@
 			</class>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
-					<!-- <include name="TC01_search_plan_for_valid_plan">
+					<include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page" />
 					</include>
@@ -395,12 +395,12 @@
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
-					</include>-->
+					</include>
 					<include name="TC05_SIT_PSC_Plan_messaging_confirmation_page">
 						<parameter name="ManualTCName"
 							value="DDTC-11941_SIT_PSC_Plan_messaging_confirmation_page" />
 					</include>
-					<!-- <include name="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page">
+					<include name="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22129_SIT_PSC_Investment_Fixed_Investment_Rates_Page" />
 					</include>
@@ -411,34 +411,34 @@
 					<include name="TC08_Disable_certain_user_edit_fields_for_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-23517_Disable_certain_user_edit_fields_for_SAW" />
-					</include> -->
+					</include>
 					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
 						<parameter name="ManualTCName" value="DDTC-99_Order_Participant_QDIA_Notice_Listing" />
 					</include> 
-					<!-- <include
+					<include
 						name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
 						<parameter name="ManualTCName"
 							value="DDTC-2168_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
-					</include>-->
+					</include>
 					<include
 						name="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping">
 						<parameter name="ManualTCName"
 							value="DDTC-2256_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
 					</include>
-					<!-- <include name="TC12_3rd_Level_Links">
+					<include name="TC12_3rd_Level_Links">
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
-					</include>-->
+					</include>
 					<include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
 						<parameter name="ManualTCName"
 							value="DDTC-22077_SIT_PSC_Investment_Fixed_Investment_FutureRates" />
 					</include>
-					<!-- <include name="TC14_SIT_PSC_Investment_Options">
+					<include name="TC14_SIT_PSC_Investment_Options">
 						<parameter name="ManualTCName" value="DDTC-1232_SIT_PSC_Investment_Options" />
 					</include>
 					<include name="TC13_PLN_ADM_View_Change_Banking_Information_Regr">
 						<parameter name="ManualTCName"
 							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
-					</include> -->
+					</include>
 				</methods>
 			</class>  
 			<class name="app.psc.testcases.plan.plantestcases">
@@ -463,19 +463,11 @@
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
-					<!-- <include name="TC22_Added_to_USERS_table_via_SAW">
-						<parameter name="ManualTCName"
-							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
-					</include> 
-					<include name="TC24_Investment_Charts_Page">
-						<parameter name="ManualTCName"
-							value="DDTC-22127_Investment_Charts_Page" />
-					</include>-->
 				</methods>
 			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
-					<!-- <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
+					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
 							value="DDTC-21950_Employee_Search_Regression_screen_elements" />
 					</include>
@@ -508,7 +500,7 @@
 					</include>
 					<include name="TC025_Verify_search_results_for_ssn_with_extension">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_ssn_ext" />
-					</include>-->
+					</include>
 					<include
 						name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code">
 						<parameter name="ManualTCName"
@@ -519,12 +511,12 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21959_Employee_Search_Regression_termed_employee" />
 					</include>
-					<!-- <include
+					<include
 						name="TC028_Verify_search_results_are_displayed_for_termed_employees">
 						<parameter name="ManualTCName"
 							value="DDTC-21958_Employee_Search_Regression_valid_res_termed_emp">
 						</parameter>
-					</include> -->
+					</include> 
 					<include name="TC029_Verify_ssn_masking_for_external_users">
 						<parameter name="ManualTCName" value="DDTC-22055_Employee_Search_Regression_ssn_masking">
 						</parameter>
@@ -534,12 +526,12 @@
 			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
-					<!-- <include
+					<include
 						name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same">
 						<parameter name="ManualTCName"
 							value="DDTC-22063_SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
 						</parameter>
-					</include>-->
+					</include>
 					<include
 						name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User">
 						<parameter name="ManualTCName"
@@ -556,10 +548,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22065_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Negative" />
 					</include>
-				<!-- 	<include name="TC008_00_Verify_new_user_flow_positive">
+				 	<include name="TC008_00_Verify_new_user_flow_positive">
 						<parameter name="ManualTCName"
 							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
-					</include> -->
+					</include> 
 				</methods>
 			</class>
 			<class
@@ -582,11 +574,11 @@
 							value="DDTC-22071_SIT_PSC_Login_01_TC002_Expired Password_positive">
 						</parameter>
 					</include>
-					<!-- <include name="TC018_Security_Question_Validation_Existing_User">
+					<include name="TC018_Security_Question_Validation_Existing_User">
 						<parameter name="ManualTCName"
 							value="DDTC-22073_SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
 						</parameter>
-					</include>-->
+					</include>
 					<include
 						name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords">
 						<parameter name="ManualTCName"
@@ -608,7 +600,7 @@
 							value="SIT_PSC_HomePage_02_TC003_Compliance_Security">
 						</parameter>
 					</include>
-					<!-- <include
+					<include
 						name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
@@ -617,7 +609,7 @@
 					<include name="TC009_01_Verify_Multifactoring">
 						<parameter name="ManualTCName" value="Multifactoring_Regr">
 						</parameter>
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<class

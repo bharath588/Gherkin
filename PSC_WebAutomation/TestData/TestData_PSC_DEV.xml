@@ -2296,6 +2296,32 @@ If you need to correct the existing termination date please contact website supp
 				<parameter name="ExpLabelsOnConfirmationPage" value="Plan,Contribution rate,Confirmation number(s)" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="DDTC-204_Agecatchup">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="194037-01"/>
+				<parameter name="ExpectedDeferralTypes" value="AGEBEF,ROTH"/>
+				<parameter name="IsAgeGtrThnFifty" value="No"/>
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="194037-01"/>
+				<parameter name="ExpectedDeferralTypes" value="AGEBEF,ROTH"/>
+				<parameter name="IsAgeGtrThnFifty" value="Yes"/>
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="myprofile">
 		<TestCase name="SIT_PSC_Update_My_profile_Default_Plan">
@@ -3166,9 +3192,11 @@ on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanEmpower
 where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
 GROUP BY ind_id HAVING COUNT(ga_id)=1)"/>
 <parameter QueryName="getPPTWithDeferrals" DB="INSTDB_DEV"
-Query="select * from individual where months_between(sysdate, birth_date)/12 &lt;= 49
+Query="select * from individual i left join ind_eligibility ie ON ie.ind_id = i.id 
+where months_between(sysdate, birth_date)/12 &lt; 50
 and id in (select id from individual i inner join part_agrmt pa on Pa.ind_id=i.id 
-and pa.ind_id in (select ind_id from elective_deferral where amount is not null) and pa.ga_id = ?)"/>
+and pa.ind_id in (select ind_id from elective_deferral where amount is not null or
+percentage is not null) and pa.ga_id = ?) and ie.eligibility_ind='Y'"/>
 <parameter QueryName="getPPTDeferralDetailsWhenPercentEmpty" DB="INSTDB_DEV"
 Query="select * from elective_deferral ed inner join deferral_type dt on dt.code=ed.stdt_code
 inner join isis_ref_values irv on irv.rv_low_value= ed.status_code

@@ -2,9 +2,11 @@ package app.psc.testcases.employeesearch;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -3612,8 +3614,8 @@ public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {
 		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
 				"is to validate Stop All deferrals page elements and functionality.", false);
 		String ssn="",fName="",lName="";
-		resultset = DB.executeQuery(Stock.getTestQuery("getPPTWithDeferrals")[0],
-				Stock.getTestQuery("getPPTWithDeferrals")[1],Stock.GetParameterValue("PlanNumber"));
+		resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
+				Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],Stock.GetParameterValue("PlanNumber"));
 		if(resultset.next()){
 			ssn=resultset.getString("SSN");
 			fName=resultset.getString("FIRST_NAME");
@@ -3678,7 +3680,87 @@ public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {
 	}
 }
 
-
+/**
+ * <pre>To validate Stop all deferrals functionality</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 10-Oct-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
+				"is to validate Stop All deferrals page elements and functionality.", false);
+		String ssn="";
+		List<String> expDeferralType=
+				Arrays.asList(Stock.GetParameterValue("ExpectedDeferralTypes").split(","));
+		if(Stock.GetParameterValue("IsAgeGtrThnFifty").equalsIgnoreCase("No")){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
+					Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],
+					Stock.GetParameterValue("PlanNumber"));
+		}
+		if(Stock.GetParameterValue("IsAgeGtrThnFifty").equalsIgnoreCase("Yes")){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeGtrthnFiftyWithDeferrals")[0],
+					Stock.getTestQuery("getPPTAgeGtrthnFiftyWithDeferrals")[1],
+					Stock.GetParameterValue("PlanNumber"));
+		}
+		if(resultset.next()){
+			ssn=resultset.getString("SSN");
+		}
+		
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		if(employeesearch.NavigateToDeferralPage()){
+			if(Stock.GetParameterValue("IsAgeGtrThnFifty").equalsIgnoreCase("No")){
+				if(employeesearch.validateAgecatchUpRule(expDeferralType.get(0))&&
+						employeesearch.validateAgecatchUpRule(expDeferralType.get(1)))
+					Reporter.logEvent(Status.FAIL,"Validate AGEBEF and ROTH must "
+							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are"
+									+ " displayed.", true);
+				else
+					Reporter.logEvent(Status.PASS,"Validate AGEBEF and ROTH must "
+							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are not"
+									+ " displayed.", false);
+			}
+			if(Stock.GetParameterValue("IsAgeGtrThnFifty").equalsIgnoreCase("Yes")){
+				if(employeesearch.validateAgecatchUpRule(expDeferralType.get(0))&&
+						employeesearch.validateAgecatchUpRule(expDeferralType.get(1)))
+					Reporter.logEvent(Status.PASS,"Validate AGEBEF and ROTH must "
+							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are"
+									+ " displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL,"Validate AGEBEF and ROTH must "
+							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are not"
+									+ " displayed.", true);
+			}
+		}
+		employeesearch.returnToEmployeeOverview(
+				Web.returnElement(employeesearch, "RETURN OVERVIEW PAGE"));
+		//Code to validate agecatch up amount when it is combined
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
 

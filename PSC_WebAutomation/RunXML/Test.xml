@@ -28,6 +28,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-242_Stop_All_Deferrals" />
 					</include>
+					<include name="TC_63_Agecatchup">
+						<parameter name="ManualTCName"
+							value="DDTC-204_Agecatchup" />
+					</include>
 				</methods>
 			</class>
 		</classes>
