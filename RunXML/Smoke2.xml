@@ -8,11 +8,15 @@
 		<classes>
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-				 	     <include name="Verify_Request_A_Loan_Flow" >
-					<parameter name="ManualTCName" value="Request_Loan_Flow">
+				 	  <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice">
                     </parameter>
-                    </include> 
-				
+                    </include>
+                    
+                    <include name="DDTC_30104_FE_DIM_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice">
+                    </parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>

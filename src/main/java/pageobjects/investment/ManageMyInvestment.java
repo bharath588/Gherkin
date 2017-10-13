@@ -364,6 +364,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//p[contains(@ng-if,'rebalanceConfirmationNumber')]//span[2]") private WebElement smartestrictionConfirmationNos;
 	@FindBy(xpath = "//p[contains(@ng-if,'rebalanceConfirmationNumber')]//span[1]/Strong") private WebElement smartestrictionConfirmationdate;
 	@FindBy(xpath = "//button[@id='advice-link']") private WebElement btnAccessOnlineadvice;
+	@FindBy(xpath = "//button[@id='guidance-link']") private WebElement btnAccessOnlineGuidance;
+	@FindBy(xpath = "//button[contains(text(),'Refresh')]") private WebElement btnRefresh;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
@@ -625,6 +627,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Access Online Advice")) {
 			return this.btnAccessOnlineadvice;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Access Online Guidance")) {
+			return this.btnAccessOnlineGuidance;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Refresh")) {
+			return this.btnRefresh;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Header Select Target Date Fund")) {
 			return this.txtSelectTargetDateFund;
