@@ -275,6 +275,12 @@
                     <include name="DDTC_30104_FE_DIM_Access_Online_Advice">
                     <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice"></parameter>
                     </include>
+                    <include name="DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30107_FE_Guidance_DIM_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30107_FE_Guidance_DIM_Access_Online_Advice"></parameter>
+                    </include>
                      -->
                      
 				</methods>
