@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.rowset.FilteredRowSet;
+import javax.sql.rowset.RowSetProvider;
 
 import lib.Stock;
 
-import com.sun.rowset.FilteredRowSetImpl;
+
 
 import core.framework.Globals;
 
-@SuppressWarnings("restriction")
+
 public class QueryFilter{
 	List<String> filterParamList = new ArrayList<>();
 	FilteredRowSet frs = null;
@@ -26,7 +27,7 @@ public class QueryFilter{
 	
 	public void executeSubQuery(String subQuery,String dbUrl) throws SQLException
 	{
-		frs= new FilteredRowSetImpl();
+		frs= RowSetProvider.newFactory().createFilteredRowSet();
 		frs.setCommand(subQuery);
         frs.setUsername(userName);
         frs.setPassword(passWord);

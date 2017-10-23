@@ -84,8 +84,10 @@ public class CommandPrompt {
      * @throws IOException If i/O exception occur
      */
     
-    public BufferedReader getBufferedReaderTest(List<String> cmd2) throws IOException {
-        List commands = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+	public BufferedReader getBufferedReaderTest(List<String> cmd2) throws IOException {
+        @SuppressWarnings("rawtypes")
+		List commands = new ArrayList<>();
         commands.add("/usr/local/bin/"+cmd2.get(0));
      //   commands.add("-c");
         for(int i =1; i < cmd2.size();i++){

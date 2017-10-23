@@ -9,10 +9,10 @@ import java.text.SimpleDateFormat;
 import javax.sql.RowSet;
 import javax.sql.rowset.FilteredRowSet;
 import javax.sql.rowset.Predicate;
+//import javax.sql.rowset.RowSetProvider;
 
-import com.sun.rowset.FilteredRowSetImpl;
+//import com.sun.rowset.FilteredRowSetImpl;
 
-@SuppressWarnings("restriction")
 public class EqualsFilter implements Predicate,Cloneable{
 	private Object filterOnValue;//filterOnValue
 	private String fieldName = null;//fieldName
@@ -37,7 +37,8 @@ public class EqualsFilter implements Predicate,Cloneable{
 
 	@Override
 	public boolean evaluate(RowSet rs) {
-		FilteredRowSet frs = (FilteredRowSetImpl)rs;
+		FilteredRowSet frs =(FilteredRowSet) rs;
+	
 		boolean evaluation = false;
 
 		try {

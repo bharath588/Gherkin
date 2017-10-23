@@ -46,6 +46,7 @@ import com.github.lalyos.jfiglet.FigletFont;
  *
  */
 
+@SuppressWarnings("rawtypes")
 
 public class Mobile {
 	
@@ -53,6 +54,7 @@ public class Mobile {
 //	public static boolean reportStatus = false;
 	public static boolean mobilePlatform = false;
 
+	
 	public static AppiumDriver<?> getDriver() {
 		return  (AppiumDriver) Web.getDriver() ;
 	}
@@ -1286,6 +1288,8 @@ public class Mobile {
 	 * @return  list of IOSElement 
 	 */
 	
+	
+	@SuppressWarnings("unchecked")
 	public static List<IOSElement> getListOfElements_By_Class(String element){
 	
      return (List<IOSElement>) Mobile.getDriver().findElementsByClassName(element);
@@ -1355,6 +1359,7 @@ public class Mobile {
 	 * @param sYear
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public static void setDateValue(String sDate,String sMonth,String sYear){
 		
 		List<IOSElement> wheels =  (List<IOSElement>) Mobile.getDriver().findElements(By.className("XCUIElementTypePickerWheel"));
@@ -1373,6 +1378,7 @@ public class Mobile {
 	 * @param sValue
 	 * @param sOrder
 	 */
+@SuppressWarnings("unchecked")
 public static void selectPickerValue(String sValue,String sOrder){
 	
 	try{		
