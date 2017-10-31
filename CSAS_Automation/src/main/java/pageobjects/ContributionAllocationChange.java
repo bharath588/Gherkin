@@ -460,7 +460,7 @@ public class ContributionAllocationChange extends
 	 * @param currDepositeAllocList
 	 * @throws ParseException 
 	 */
-	public void transferInvestmentPercentage1(ArrayList<String> currDepositeAllocList) throws ParseException{
+	public void transferInvestmentPercentage(ArrayList<String> currDepositeAllocList) throws ParseException{
 		if (RAP_InvestmentOpts_Left.size() <= 0
 				&& RAP_InvestmentOpts_Right.size() <= 0) {
 			throw new AssertionError("Didn't display any Investment options.") ;
@@ -468,8 +468,10 @@ public class ContributionAllocationChange extends
 		for (int i = 0; i < RAP_InvestmentOpts_Left.size(); i++) {
 			if (RAP_InvestmentOpts_Left.get(i).getText().trim().equalsIgnoreCase(currDepositeAllocList.get(2))
 					&& Web.isWebElementDisplayed(RAP_InvestmentPer_Left.get(i))) {
-				String invstPer = Web.setTextToTextBox(RAP_InvestmentPer_Left.get(i), Stock.GetParameterValue("InvestmentPercentage")) ;
-				String invstOptionSelected = RAP_InvestmentOpts_Left.get(i).getText().trim();
+				
+				 String invstPer =Stock.GetParameterValue("InvestmentPercentage");
+				 Web.setTextToTextBox(RAP_InvestmentPer_Left.get(i),invstPer ) ;
+				 String invstOptionSelected = RAP_InvestmentOpts_Left.get(i).getText().trim();
 				Web.clickOnElement(RAP_PercentageTotal) ;
 				if (Web.isWebElementDisplayed(RAP_ConfirmAlloc_Btn)) {
 					Reporter.logEvent(
