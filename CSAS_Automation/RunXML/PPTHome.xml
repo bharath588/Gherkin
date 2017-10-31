@@ -4,16 +4,43 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<!-- <test name="Regression Suite" parallel="classes" thread-count="1"> -->
+	
 	<test name="Regression Suite">
-		<classes>	
-		<!-- 
+		<classes>		
 			<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
 					<include name="Validate_Employment_Status_As_Active">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"></parameter>
 					</include>
+				</methods>	
+			</class>			
+		</classes>
+	</test>
+	
+</suite>	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<!-- 
 					<include name="Validate_Employment_Status_As_Terminated">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt Home Page_Employment_Status_TERMINATED"></parameter>
@@ -102,7 +129,7 @@
 					</include>
 				</methods>
 			</class>
--->			
+			
  			<class	name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
 				<methods>				
 					<include name="Validate_Active_Allocation_Percentage">
@@ -200,9 +227,10 @@
 					<include name="Perform_and_validate_Rebalancer_Checkbox">
 						<parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
 					</include>
-				</methods>
-			</class>
+				</methods>-->
+				
+			<!-- </class>
 			
 		</classes>
 	</test>
-</suite>					
+</suite>	 -->				

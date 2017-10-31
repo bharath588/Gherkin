@@ -6,86 +6,13 @@
   </listeners>
   <test name="Regression Suite">
     <classes>
-      <class name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
+      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
         <methods>
-          <include name="Validate_Active_Allocation_Percentage">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Allocation_Percentage"/>
-          </include> <!-- Validate_Active_Allocation_Percentage -->
-          <include name="Validate_Variable_Investment_Money_Type_Link">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Variable_Investments_Money_Type_Link"/>
-          </include> <!-- Validate_Variable_Investment_Money_Type_Link -->
-          <include name="Verify_Variable_Invstment_Balance">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Variable_Investments_Balance"/>
-          </include> <!-- Verify_Variable_Invstment_Balance -->
-          <include name="Verify_Fixed_Invstment_Balance">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Acct_Balance_Mny_Type_Balance_Fixed_Investments_Balance"/>
-          </include> <!-- Verify_Fixed_Invstment_Balance -->
-          <include name="Verify_Money_Type_Totals">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals"/>
-          </include> <!-- Verify_Money_Type_Totals -->
+          <include name="Validate_Employment_Status_As_Active">
+            <parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"/>
+          </include> <!-- Validate_Employment_Status_As_Active -->
         </methods>
-      </class> <!-- app.csas.testcases.moneytypebalance.validate_moneytypebalance -->
-      <class name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
-        <methods>
-          <include name="Verify_DIH_PaymentHistory">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"/>
-          </include> <!-- Verify_DIH_PaymentHistory -->
-          <include name="Verify_DIH_Vesting">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"/>
-          </include> <!-- Verify_DIH_Vesting -->
-          <include name="Verify_DIH_ProcessingDetails">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"/>
-          </include> <!-- Verify_DIH_ProcessingDetails -->
-        </methods>
-      </class> <!-- app.csas.testcases.disbursementhistory.validate_disbursementhistory -->
-      <class name="app.csas.testcases.contributionallocationchange.validate_contributionallocationchange">
-        <methods>
-          <include name="Validate_Default_Investment_Option_Details">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Cont_Allc_Chg_Default_Invest_Option"/>
-          </include> <!-- Validate_Default_Investment_Option_Details -->
-          <include name="Validate_Current_Deposite_Allocation_Details">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Cont_Allc_Chg_Current_Deposit_Allc"/>
-          </include> <!-- Validate_Current_Deposite_Allocation_Details -->
-          <include name="Validate_ProcessAcc_Rebalancer_ChckBx_Details">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Cont_Allc_Chg_Rebalancer_Process_Checkbox"/>
-          </include> <!-- Validate_ProcessAcc_Rebalancer_ChckBx_Details -->
-        </methods>
-      </class> <!-- app.csas.testcases.contributionallocationchange.validate_contributionallocationchange -->
-      <class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
-        <methods>
-          <include name="Validate_Fund_to_Fund_Transfer">
-            <parameter name="ManualTCName" value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"/>
-          </include> <!-- Validate_Fund_to_Fund_Transfer -->
-          <include name="Validate_Fund_to_Fund_Basic_Transfer">
-            <parameter name="ManualTCName" value="Basic_Transfer"/>
-          </include> <!-- Validate_Fund_to_Fund_Basic_Transfer -->
-          <include name="Validate_Fund_to_Fund_Cancel_Transfer">
-            <parameter name="ManualTCName" value="Cancel_Transfer"/>
-          </include> <!-- Validate_Fund_to_Fund_Cancel_Transfer -->
-          <include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"/>
-          </include> <!-- Validate_Fund2Fund_Transfer_Restriction_Type_No -->
-          <include name="Validate_Fund2Fund_Transfer_Restriction_Type_Yes">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_NO_Fund_Restrictions_Message"/>
-          </include> <!-- Validate_Fund2Fund_Transfer_Restriction_Type_Yes -->
-          <include name="Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal">
-            <parameter name="ManualTCName" value="Trnf_with_Dollar_amt_greater_Prior_Day_balance"/>
-          </include> <!-- Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal -->
-          <include name="Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per">
-            <parameter name="ManualTCName" value="Trnf_with_gtr_100_pct"/>
-          </include> <!-- Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per -->
-        </methods>
-      </class> <!-- app.csas.testcases.fundtofund.validate_fundtofundtransfer -->
-      <class name="app.csas.testcases.rebalancer.validate_rebalancer">
-        <methods>
-          <include name="Perform_and_validate_Rebalancer_transferRestriction">
-            <parameter name="ManualTCName" value="CSAS_PPT Change_Custom Xfer &amp; Renewal_Rebalancer_Transfer Restrictions display"/>
-          </include> <!-- Perform_and_validate_Rebalancer_transferRestriction -->
-          <include name="Perform_and_validate_Rebalancer_Checkbox">
-            <parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"/>
-          </include> <!-- Perform_and_validate_Rebalancer_Checkbox -->
-        </methods>
-      </class> <!-- app.csas.testcases.rebalancer.validate_rebalancer -->
+      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
     </classes>
   </test> <!-- Regression Suite -->
 </suite> <!-- Failed suite [testsuite] -->

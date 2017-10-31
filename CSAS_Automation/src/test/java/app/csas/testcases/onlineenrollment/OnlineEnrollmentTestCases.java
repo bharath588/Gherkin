@@ -11,10 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.LoanRequest;
 import pageobjects.OnlineEnrollment;
-import pageobjects.ParticipantHome;
-import pageobjects.Statement_View_Update;
 
 import com.aventstack.extentreports.Status;
 
@@ -687,4 +684,204 @@ public class OnlineEnrollmentTestCases {
 					  }
 				}
 		}
+		
+		
+		/*
+		 * AUTHOR: VIRAJ
+		 */
+		
+		 @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
+	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN"));
+	                        onlineEnrollmentObj.Validate_invalid_ssn();                    
+	                        
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+	     
+	     @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
+	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
+	                        onlineEnrollmentObj.submit();
+	                        onlineEnrollmentObj.Validate_existing_ssn();                    
+	                        
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+	     
+	     
+	     
+	     @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28137_28140_invalid_Pec_Gaid(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
+	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
+	                        onlineEnrollmentObj.submit();
+	                        onlineEnrollmentObj.validate_ga_pec_Error();
+	                        
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+	     
+	     @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28139_validate_plan_num_field(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.air_click();
+	                      onlineEnrollmentObj.validate_invalid_PlanNum_Error();
+	                        
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+	     
+	     @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
+	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
+	                        onlineEnrollmentObj.submit();
+	                        onlineEnrollmentObj.last_Name_Field();
+	                        onlineEnrollmentObj.first_Name_Field();
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+	     
+	     @Test(dataProvider = "setData")
+	     public void CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn(
+	                   int itr, Map<String, String> testdata) {
+	            
+	            try {
+	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+	                   // Step1:Launch and logged into CSAS application..
+	                   if (itr == 1) {
+	                       // participantHomeObj = new ParticipantHome().get();
+	                        onlineEnrollmentObj= new OnlineEnrollment().get();
+	                        
+	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
+	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
+	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
+	                        onlineEnrollmentObj.submit();
+	                        onlineEnrollmentObj.validate_Address_Lines();
+	                        String ssn=onlineEnrollmentObj.Validate_Ssn_Enroll();
+	                        
+	                        if(ssn.equalsIgnoreCase(Stock.GetParameterValue("SSN")));
+	                        {
+	                        
+	                    			
+	                    			Reporter.logEvent(Status.PASS, "Verify ssn is Same as entered in search",
+	                    					"SSn is the same", true);
+	                    		}
+	                        
+	                   }
+	            } catch (Exception e) {
+	                   handleFailure(e);
+	            } catch (Error ae) {
+	           handleError(ae);
+	            } finally {
+	                   try {
+	                         Reporter.finalizeTCReport();
+	                   } catch (Exception e1) {
+	                         e1.printStackTrace();
+	                   }
+	            }
+	     }
+		
 }

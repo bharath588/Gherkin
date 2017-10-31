@@ -35,6 +35,51 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			PageFactory.initElements(Web.getDriver(), this);			
 		}
 
+				
+		@FindBy(xpath = ".//*[@id='oCMenu_318']")
+		private WebElement adtlResMenu;
+		
+		
+		@FindBy(xpath = ".//*[@id='oCMenu_342']")
+		private WebElement CrtAcctMenu;
+			
+		@FindBy(id = "	planNumberError")
+		private WebElement planNumberError;
+		
+		@FindBy(id = "ssnSearchedError")
+		private WebElement ssnSearchedError;
+		//*[@id='enrollmenterrorMessage']
+		
+		@FindBy(id = "ssn")
+		private WebElement ssnEnrollPage;
+
+		@FindBy(id = "enrollmenterrorMessage")
+		private WebElement EnrollErrorMessage;
+
+		@FindBy(xpath = ".//*[@id='enrollmenterrorMessage']//li")
+		private WebElement EnrollErrorMessageText;
+		
+		
+		/**
+		 * Elements for validating CITY field
+		 */
+				
+		@FindBy(id = "firstNameError")
+		private WebElement firstNameError;
+		
+		@FindBy(id = "lastNameError")
+		private WebElement lastNameError;		
+		
+		@FindBy(id = "addressLine1Error")
+		private WebElement addressLine1Err;
+		
+		@FindBy(id = "addressLine2Error")
+		private WebElement addressLine2Err;
+		
+		@FindBy(id = "addressLine2")
+		private WebElement addressLine2;
+		
+				
 		@FindBy(id = "oCMenu_318")
 		private WebElement menuAddtlResources;
 		
@@ -1337,4 +1382,253 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			}
 	}
 	
+	/*
+	 * Module: ONLINE ENROLLMENT
+	 * Author: VIRAJ
+	 */
+	
+	public void Enter_gaId(String Ga_id)
+	{
+		Web.setTextToTextBox(planNumberTextbox, Ga_id);
+		Reporter.logEvent(Status.INFO, "Plan number entered is :",
+				 Ga_id, true);
+				
+	}
+	
+	public void Enter_Pec(String pec)
+	{
+		Web.setTextToTextBox(planEnrollmentCodeTextbox, pec);
+		Reporter.logEvent(Status.INFO, "PEC value entered is :",
+				 pec, true);
+				
+	}
+	
+	public void Enter_ssn(String ssn)
+	{
+		Web.setTextToTextBox(ssnSearchedTextbox, ssn);
+		Reporter.logEvent(Status.INFO, "ssn value entered is :",
+				 ssn, true);
+				
+	}
+
+	public void Validate_invalid_ssn(){
+		Web.clickOnElement(ssnSearchedLabel);
+		
+		if(Web.isWebElementDisplayed(ssnSearchedError, true))
+		{Reporter.logEvent(Status.PASS, "Verify ssn error message for invalid ssn",
+				"error message displayed for ssn " + EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn error message for invalid ssn",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void submit()
+	{
+		Web.clickOnElement(submitBtn);
+		if(Web.isWebElementDisplayed(planFoundLabel, true))
+		{Reporter.logEvent(Status.PASS, "Verify navigation to Enrollment/info page",
+				"Page is loaded", true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify navigation to Enrollment/info page",
+					"Page NOT loaded due to invalid data", true);
+		}
+		
+		
+	}
+
+	public void Validate_existing_ssn(){
+				
+		if(Web.isWebElementDisplayed(EnrollErrorMessage, true))
+		{Reporter.logEvent(Status.PASS, "Verify ssn error message for existing ssn",
+				"error message displayed." +EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn error message forexisting  ssn",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void validate_ga_pec_Error()
+	{
+		if(Web.isWebElementDisplayed(EnrollErrorMessage, true))
+		{Reporter.logEvent(Status.PASS, "Verify consolidated GAID/PEC error message for invalid data",
+				"error message displayed." +EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify consolidated GAID/PEC error message for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void validate_invalid_PlanNum_Error()
+	{
+		if(Web.isWebElementDisplayed(planNumberError, true))
+		{Reporter.logEvent(Status.PASS, "Verify plan num error message displayed for invalid data",
+				"error message displayed." +planNumberError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify plan num error message displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	
+	public void air_click()
+	{
+		Web.clickOnElement(planNumberLabel);
+	}
+
+	
+	public void air_click_main()
+	{
+		Web.clickOnElement(planFoundLabel);
+	}
+	
+	public void last_Name_Field()
+	{
+		Web.clickOnElement(lastNameTextbox);
+		air_click_main();
+		if(Web.isWebElementDisplayed(lastNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify last name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify last name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+				
+		Web.setTextToTextBox(lastNameTextbox, "*1&%^$");
+		air_click_main();
+		
+		if(Web.isWebElementDisplayed(lastNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify last name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify last name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+	}
+	
+	
+	public void first_Name_Field()
+	{
+		Web.clickOnElement(firstNameTextbox);
+		air_click_main();
+		if(Web.isWebElementDisplayed(firstNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify first name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify first name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+				
+		Web.setTextToTextBox(firstNameTextbox, "*1&%^$");
+	
+		air_click_main();
+		
+		if(Web.isWebElementDisplayed(firstNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify first name error displayed for invalid data",
+				"error message displayed." +firstNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify first name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+	}
+	
+	
+	public void validate_Address_Lines()
+	{
+		Web.clickOnElement(addressLine1);
+		air_click_main();
+		if(Web.isWebElementDisplayed(addressLine1Err, true))
+		{Reporter.logEvent(Status.PASS, "Verify address line 1  error displayed for NULL data",
+				"error message displayed." +addressLine1Err.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify address line  error displayed for NULL data",
+					"error message NOT displayed", true);
+		}
+		
+		Web.clickOnElement(addressLine2);
+		air_click_main();
+		if(Web.isWebElementDisplayed(addressLine2Err, true))
+		{Reporter.logEvent(Status.PASS, "Verify address line 2  error displayed for same data as address 1",
+				"error message displayed." +addressLine2Err.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify address line  error displayed for same data as address 1",
+					"error message NOT displayed", true);
+		}
+	String length1=	addressLine1.getAttribute("maxlength");
+	String length2=addressLine2.getAttribute("maxlength");
+	
+	if(length1.equalsIgnoreCase("35") && length2.equalsIgnoreCase("35"))
+	{Reporter.logEvent(Status.PASS, "Verify max length address line 2 and  address 1",
+			"max length is 35.", true);
+		
+	}
+	
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify max length address line 2 and  address 1",
+				"length is not 35", true);
+	}
+	}
+
+	public String Validate_Ssn_Enroll()
+	{
+		String ssnReadOnly=ssnEnrollPage.getAttribute("readonly");
+		
+		if(ssnReadOnly. isEmpty())
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn is non editable",
+					"SSn is  editable field it should not be editable", true);
+		}
+		
+		else
+		{
+			Reporter.logEvent(Status.PASS, "Verify ssn is non editable",
+					"SSn is non editable field", true);
+		}
+		String ssn=ssnEnrollPage.getText();
+		return ssn;
+	}
 }
