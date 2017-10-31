@@ -176,8 +176,12 @@ public class validate_contributionallocationchange {
 				contrAllocChng_Obj
 						.validate_CurrDepositeAlloc_Dtls(currDepositeAllocList);
 				// Step7: Complete the Fund percentage transfer transaction..
-				contrAllocChng_Obj
-						.transferInvestmentPercentage(currDepositeAllocList);
+				
+				
+				//Need to uncomment  : siddartha 
+				
+//				contrAllocChng_Obj
+//						.transferInvestmentPercentage(currDepositeAllocList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

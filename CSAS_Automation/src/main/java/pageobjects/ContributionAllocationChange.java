@@ -460,7 +460,7 @@ public class ContributionAllocationChange extends
 	 * @param currDepositeAllocList
 	 * @throws ParseException 
 	 */
-	public void transferInvestmentPercentage(ArrayList<String> currDepositeAllocList) throws ParseException{
+	public void transferInvestmentPercentage1(ArrayList<String> currDepositeAllocList) throws ParseException{
 		if (RAP_InvestmentOpts_Left.size() <= 0
 				&& RAP_InvestmentOpts_Right.size() <= 0) {
 			throw new AssertionError("Didn't display any Investment options.") ;
