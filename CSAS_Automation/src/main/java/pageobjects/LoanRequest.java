@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lib.DataUtility;
+import framework.util.DataUtility;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
