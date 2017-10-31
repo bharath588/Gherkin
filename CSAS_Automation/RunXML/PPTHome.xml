@@ -13,6 +13,17 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"></parameter>
 					</include>
+					<include name="Validate_Employment_Status_As_Terminated">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt Home Page_Employment_Status_TERMINATED"></parameter>
+					</include>
+					<include name="Validate_PPT_HomePage_Instance">
+						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_Instance"></parameter>
+					</include>
+					<include name="Validate_Personal_Data_On_PPT_Home">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_info_Ppt_Home_Page_Personal_Data"></parameter>
+					</include> 
 				</methods>	
 			</class>			
 		</classes>
@@ -41,17 +52,7 @@
 				
 				
 				<!-- 
-					<include name="Validate_Employment_Status_As_Terminated">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_Info_Ppt Home Page_Employment_Status_TERMINATED"></parameter>
-					</include>
-					<include name="Validate_PPT_HomePage_Instance">
-						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_Instance"></parameter>
-					</include>
-					<include name="Validate_Personal_Data_On_PPT_Home">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_info_Ppt_Home_Page_Personal_Data"></parameter>
-					</include> 
+					
 					<include name="Validate_Registration_Status_On_PPT_Home_Page">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status"></parameter>
