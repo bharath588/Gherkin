@@ -1228,7 +1228,7 @@ public class Mobile {
 		int startx = (int) (size.width * 0.9);
 		int endx = (int) (size.width * 0.20);
 		int starty = size.height / 2;
-		getDriver().swipe(startx, starty, endx, starty, 2000);
+		//getDriver().swipe(startx, starty, endx, starty, 2000);
 	}
 
 
@@ -1242,7 +1242,7 @@ public class Mobile {
 		int startx = (int) (size.width * 0.8);
 		int endx = (int) (size.width * 0.20);
 		int starty = size.height / 2;
-		getDriver().swipe(startx, starty, endx, starty, 1000);
+		//getDriver().swipe(startx, starty, endx, starty, 1000);
 	}	
 
 
