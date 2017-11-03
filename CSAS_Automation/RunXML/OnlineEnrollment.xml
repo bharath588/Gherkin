@@ -12,6 +12,9 @@
 				<include name="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
 						<parameter name="ManualTCName" value="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
 						</include>
+						<include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
+						</include>
 				<!-- <include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
 						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
 						</include> -->
