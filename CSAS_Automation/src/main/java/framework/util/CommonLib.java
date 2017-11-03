@@ -7,7 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.openqa.selenium.WebElement;
+
+import com.aventstack.extentreports.Status;
+
+import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 
 public class CommonLib {
 
@@ -98,5 +104,68 @@ public class CommonLib {
 		
 		
 	}
-
-}
+	
+	/***
+	 * Method to check expected webelement present on a page or not.
+	 * @param webelment
+	 * @param sMsg
+	 * @param bFlag
+	 */
+	public static void verifyIfWebElementPresent(WebElement ele, String sMsg,Boolean bFlag){
+		// Check if webelement displayed on a page or not.
+		Boolean bStatus = Web.isWebElementDisplayed(ele);
+		
+		if(bStatus == bFlag){
+			Reporter.logEvent(Status.PASS,	sMsg,"Element is Present", false);
+		}else{
+			Reporter.logEvent(Status.FAIL,	sMsg,"Element is Not Present", true);
+		}
+		}
+	
+	/**
+	 * Method to check webelement text is as expected or not.
+	 * @param Webelement
+	 * @param expectedText
+	 */
+	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText){
+		// Check if webelement contains expected text or not
+		if(ele.getText().equalsIgnoreCase(expectedText)){
+			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",false);
+		}else{
+			Reporter.logEvent(Status.FAIL,expectedText,"Expectecd Text not present", true);
+		}
+		}
+	
+	/**
+	 * Method to check webelement text is as expected or not.
+	 * @param Webelement
+	 * @param expectedText
+	 */
+	public static void verifyFieldValue(WebElement ele, String expectedText){
+		
+		// Check if webelement contains expected text or not
+		if(ele.getAttribute("value").equalsIgnoreCase(expectedText)){
+			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",false);
+		}else{
+			Reporter.logEvent(Status.FAIL,expectedText,"Expectecd Text not present", true);
+		}
+		}
+	
+	/**
+	 * Method to check button enabled or not.
+	 * @param Webelement
+	 * @param boolean
+	 */
+	public static void verifyIsButtonEnabledOrNot(WebElement ele, boolean b){
+		
+		boolean isEnabled =ele.isEnabled();
+		
+		// Check if button enabled or not.
+		if(isEnabled==b){
+			Reporter.logEvent(Status.PASS,"Check if expected button enabled or not:"+ele+"" ,"Expectecd button enabled.",false);
+		}else{
+			Reporter.logEvent(Status.FAIL,"Check if expected button enabled or not:"+ele+"" ,"Expectecd button does not enabled.",true);
+		}
+		}
+	
+	}

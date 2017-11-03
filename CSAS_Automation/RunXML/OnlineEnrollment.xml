@@ -9,7 +9,28 @@
 		<classes>
 			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 				<methods>
+				<include name="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
+						</include>
+				<!-- <include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
+						</include> -->
+						
 				
+		 		<!-- 	
+		 		
+		 				<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
+						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
+						</include>
+						<include name="DDTC_28158_validIndicativeData_DateOfHire">
+						<parameter name="ManualTCName" value="DDTC_28158_validIndicativeData_DateOfHire" />
+						</include>
+						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18526_EndToEndTesting_Without_Alphanumeric" />
+						</include>
+						<include name="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN">
+						<parameter name="ManualTCName" value="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN" />
+					</include>
 		 			<include name="ValidateIndicativeCity">
 						<parameter name="ManualTCName" value="ValidateCity" />
 					</include>	
@@ -40,9 +61,9 @@
 					<include name="validateIndicativeData_State">
 						<parameter name="ManualTCName" value="validateIndicativeData_State" />
 					</include>		
-					<!-- <include name="validateIndicativeData_ZipCode">
+					<include name="validateIndicativeData_ZipCode">
 						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
-					</include>	-->
+					</include>	
 					<include name="confirmationPageInformationalMessage">
 						<parameter name="ManualTCName" value="confirmationPageInformationalMessage" />
 					</include> 
@@ -51,7 +72,7 @@
 					</include>					
 					<include name="validateIndicativeData_Country">
 						<parameter name="ManualTCName" value="validateIndicativeData_Country" />
-					</include>	 	<!-- 
+					</include>	 --> 	<!-- 
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
 					</include>	 -->

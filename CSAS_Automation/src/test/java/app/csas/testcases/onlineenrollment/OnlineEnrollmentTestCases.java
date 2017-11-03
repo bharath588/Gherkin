@@ -11,7 +11,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageobjects.LoanRequest;
 import pageobjects.OnlineEnrollment;
+import pageobjects.ParticipantHome;
+import pageobjects.Statement_View_Update;
 
 import com.aventstack.extentreports.Status;
 
@@ -19,7 +22,10 @@ import core.framework.Globals;
 
 public class OnlineEnrollmentTestCases {
 
-	private LinkedHashMap<Integer, Map<String, String>> testData = null;	
+	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	ParticipantHome participantHomeObj;
+	LoanRequest LoanRequestPage;
+	Statement_View_Update objStatement_View_Update;
 	OnlineEnrollment onlineEnrollmentObj;
 	
 	boolean isPageDisplayed;
@@ -89,8 +95,7 @@ public class OnlineEnrollmentTestCases {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-				}
-			  finally{
+				}finally{
 					  try{
 						  Reporter.finalizeTCReport();
 					  }catch(Exception e){
@@ -123,7 +128,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeCity();
 			  }
 				catch(Exception e)
@@ -163,6 +169,7 @@ public class OnlineEnrollmentTestCases {
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
 				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativePersonalEmail();
 				}
 				catch(Exception e)
@@ -201,7 +208,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeMobilePhone();
 				}
 				catch(Exception e)
@@ -240,7 +248,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeHomePhone();
 				}
 				catch(Exception e)
@@ -279,7 +288,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicative_ValidationErrorMessage();
 				}
 				catch(Exception e)
@@ -318,7 +328,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeData_InlineValidation();
 				}
 				catch(Exception e)
@@ -357,7 +368,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateConfirmationPage();
 				}
 				catch(Exception e)
@@ -396,7 +408,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateClearButton();
 				}
 				catch(Exception e)
@@ -435,7 +448,8 @@ public class OnlineEnrollmentTestCases {
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
+				  onlineEnrollmentObj.get();	
+				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateErrorMsgPersonalPhoneNumber();
 				}
 				catch(Exception e)
@@ -454,28 +468,28 @@ public class OnlineEnrollmentTestCases {
 		 * -------------------------------------------------------------------
 		 * 
 		 * <pre>
-		 * TESTCASE: Enter Indicative Data_Country
-		 * DESCRIPTION:	  
+		 * TestCase: DDTC-28159  CORE_14409_15279 _Enter Indicative data_Address Line 1 and Line 2
+		 * DESCRIPTION:	 Address line1 and Address Line 2 Error Message Validation.  
 		 * RETURNS:	VOID	
 		 * REVISION HISTORY: 
 		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 05-SEP-2017    
+		 * Author:  Saraswathi   Date : 12-Oct-2017    
 		 * --------------------------------------------------------------------
 		 * </pre>
-		 * @param <br>
-		 *        CSAS Credential</br>
+		 * @param  Test data for Automation 
 		 */
-
 		
 		@Test(dataProvider="setData")
-		public void validateIndicativeData_Country(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
+		public void  DDTC_28159_validIndicativeData_AddressLine1_Line2(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
-				  
+				  // Go to  onlineEnrollment page.
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.validateIndicativeData_Country();
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
+				  
+				  // Check Addressline1 and Addressline2 fields validation.
+				  onlineEnrollmentObj.validateErrorMsgAddressLine1AndAddressLine2();
 				}
 				catch(Exception e)
 				{
@@ -487,152 +501,37 @@ public class OnlineEnrollmentTestCases {
 						  e.printStackTrace();
 					  }
 				}
+			
+			
 		}
-		
-		/**
-		 * -------------------------------------------------------------------
-		 * 
-		 * <pre>
-		 * TESTCASE: Enter Indicative Data_State
-		 * DESCRIPTION:	  
-		 * RETURNS:	VOID	
-		 * REVISION HISTORY: 
-		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 08-SEP-2017    
-		 * --------------------------------------------------------------------
-		 * </pre>
-		 * @param <br>
-		 *        CSAS Credential</br>
-		 */
 
-		
-		@Test(dataProvider="setData")
-		public void validateIndicativeData_State(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
-				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
-				  
-				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.validateIndicativeData_State();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}finally{
-					  try{
-						  Reporter.finalizeTCReport();
-					  }catch(Exception e){
-						  e.printStackTrace();
-					  }
-				}
-		}
-		
-		/**
-		 * -------------------------------------------------------------------
-		 * 
-		 * <pre>
-		 * TESTCASE: Enter Indicative Data_ZipCode
-		 * DESCRIPTION:	  
-		 * RETURNS:	VOID	
-		 * REVISION HISTORY: 
-		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 08-SEP-2017    
-		 * --------------------------------------------------------------------
-		 * </pre>
-		 * @param <br>
-		 *        CSAS Credential</br>
-		 */
-
-		
-		@Test(dataProvider="setData")
-		public void validateIndicativeData_ZipCode(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
-				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
-				  
-				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.validateIndicativeData_ZipCode();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}finally{
-					  try{
-						  Reporter.finalizeTCReport();
-					  }catch(Exception e){
-						  e.printStackTrace();
-					  }
-				}
-		}
-		
-		/**
-		 * -------------------------------------------------------------------
-		 * 
-		 * <pre>
-		 * TESTCASE: Confirmation Page Informational Message
-		 * DESCRIPTION:	  
-		 * RETURNS:	VOID	
-		 * REVISION HISTORY: 
-		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 14-SEP-2017    
-		 * --------------------------------------------------------------------
-		 * </pre>
-		 * @param <br>
-		 *        CSAS Credential</br>
-		 */
-
-		
-		@Test(dataProvider="setData")
-		public void confirmationPageInformationalMessage(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
-				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
-				  
-				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.confirmationPage_InformationalMsg();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}finally{
-					  try{
-						  Reporter.finalizeTCReport();
-					  }catch(Exception e){
-						  e.printStackTrace();
-					  }
-				}
-		}
 		
 		
 		/**
 		 * -------------------------------------------------------------------
 		 * 
 		 * <pre>
-		 * TESTCASE: Confirmation Page Back Button
+		 * TestCase: Address line1 and Address Line 2 Error Message Validation.
 		 * DESCRIPTION:	  
 		 * RETURNS:	VOID	
 		 * REVISION HISTORY: 
 		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 14-SEP-2017    
+		 * Author:  Saraswathi   Date : 19-Oct-2017    
 		 * --------------------------------------------------------------------
 		 * </pre>
 		 * @param <br>
 		 *        CSAS Credential</br>
 		 */
-
 		
 		@Test(dataProvider="setData")
-		public void confirmationPageBackButton(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
+		public void  DDTC_28158_validIndicativeData_DateOfHire(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.confirmationPage_BackButton();
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
+				  onlineEnrollmentObj.validateErrorMsgDateOfHire();
 				}
 				catch(Exception e)
 				{
@@ -644,34 +543,36 @@ public class OnlineEnrollmentTestCases {
 						  e.printStackTrace();
 					  }
 				}
+			
+			
 		}
 		
 		/**
 		 * -------------------------------------------------------------------
 		 * 
 		 * <pre>
-		 * TESTCASE: Confirmation Page Create New Account
+		 * TestCase: GroupID,PlanEnrollmentCode and SSN fields validation.
 		 * DESCRIPTION:	  
 		 * RETURNS:	VOID	
 		 * REVISION HISTORY: 
 		 * --------------------------------------------------------------------
-		 * Author:  BINDU   Date : 14-SEP-2017    
+		 * Author:  Saraswathi   Date : 24-Oct-2017    
 		 * --------------------------------------------------------------------
 		 * </pre>
 		 * @param <br>
 		 *        CSAS Credential</br>
 		 */
-
 		
 		@Test(dataProvider="setData")
-		public void confirmationPageCreateNewAccount(int itr,Map<String,String> testdata) throws InterruptedException
-		{
-			  try{
+		public void  DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
-				  
+				  // Go to onlineEnrollment page.
 				  onlineEnrollmentObj = new OnlineEnrollment();
-				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.confirmationPage_CreateNewAccount();
+				  onlineEnrollmentObj.get();
+				  
+				  // Verify GroupID,PlanEnrollmentCode and SSN fields validation.
+				  onlineEnrollmentObj.verifyValidIndicativeDateFor_GrpId_PEC_SSN();
 				}
 				catch(Exception e)
 				{
@@ -682,206 +583,168 @@ public class OnlineEnrollmentTestCases {
 					  }catch(Exception e){
 						  e.printStackTrace();
 					  }
-				}
+					  }
 		}
 		
-		
-		/*
-		 * AUTHOR: VIRAJ
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TestCase: End to end testing for happy case scenario for successful enrollment.
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  Saraswathi   Date : 25-Oct-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
 		 */
 		
-		 @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN"));
-	                        onlineEnrollmentObj.Validate_invalid_ssn();                    
-	                        
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
-	     
-	     @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
-	                        onlineEnrollmentObj.submit();
-	                        onlineEnrollmentObj.Validate_existing_ssn();                    
-	                        
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
-	     
-	     
-	     
-	     @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28137_28140_invalid_Pec_Gaid(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
-	                        onlineEnrollmentObj.submit();
-	                        onlineEnrollmentObj.validate_ga_pec_Error();
-	                        
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
-	     
-	     @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28139_validate_plan_num_field(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.air_click();
-	                      onlineEnrollmentObj.validate_invalid_PlanNum_Error();
-	                        
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
-	     
-	     @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
-	                        onlineEnrollmentObj.submit();
-	                        onlineEnrollmentObj.last_Name_Field();
-	                        onlineEnrollmentObj.first_Name_Field();
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
-	     
-	     @Test(dataProvider = "setData")
-	     public void CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn(
-	                   int itr, Map<String, String> testdata) {
-	            
-	            try {
-	                   Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-	                   // Step1:Launch and logged into CSAS application..
-	                   if (itr == 1) {
-	                       // participantHomeObj = new ParticipantHome().get();
-	                        onlineEnrollmentObj= new OnlineEnrollment().get();
-	                        
-	                        onlineEnrollmentObj.Enter_gaId(Stock.GetParameterValue("PlanNumber"));
-	                        onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-	                        onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); //736012845
-	                        onlineEnrollmentObj.submit();
-	                        onlineEnrollmentObj.validate_Address_Lines();
-	                        String ssn=onlineEnrollmentObj.Validate_Ssn_Enroll();
-	                        
-	                        if(ssn.equalsIgnoreCase(Stock.GetParameterValue("SSN")));
-	                        {
-	                        
-	                    			
-	                    			Reporter.logEvent(Status.PASS, "Verify ssn is Same as entered in search",
-	                    					"SSn is the same", true);
-	                    		}
-	                        
-	                   }
-	            } catch (Exception e) {
-	                   handleFailure(e);
-	            } catch (Error ae) {
-	           handleError(ae);
-	            } finally {
-	                   try {
-	                         Reporter.finalizeTCReport();
-	                   } catch (Exception e1) {
-	                         e1.printStackTrace();
-	                   }
-	            }
-	     }
+		@Test(dataProvider="setData")
+		public void  CORE_18526_EndToEndTesting_Without_Alphanumeric(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  // Go to onlineEnrollment page.
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();
+				  
+				  // Verify Enrollment details in database after successful enrollment.
+				  onlineEnrollmentObj.verifyEndToEndTestingWithoutAlphaNumaricOfGId();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+					  }
+		}
 		
-}
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TestCase: End to end testing for happy case scenario for successful enrollment group id with numeric.
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  Saraswathi   Date : 26-Oct-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+		
+		@Test(dataProvider="setData")
+		public void  CORE_18527_EndToEndTesting_With_Alphanumeric(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  // Go to onlineEnrollment page.
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();
+				  
+				  // Verify Enrollment details in database after successful enrollment.
+				  onlineEnrollmentObj.verifyEndToEndTestingWithAlphaNumaricOfGId();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+					  }
+		}
+		
+
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TestCase: Division field Error Message Validations on online enrollment page.
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  Saraswathi   Date : 02-Nov-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+		
+		@Test(dataProvider="setData")
+		public void  CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  // Go to onlineEnrollment page.
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
+				  
+				  // Verify Division field Error Message Validations on online enrollment page.
+				  onlineEnrollmentObj.validateDivisionField();
+				  
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+					  }
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TestCase: Division field value validation on create account confirmation page.
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  Saraswathi   Date : 02-Nov-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+		
+		@Test(dataProvider="setData")
+		public void  CORE_18530_DivisionDisplayonConfirmationPage_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  // Go to onlineEnrollment page.
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
+				  
+				  // Verify division field value validation on create account confirmation page.
+				  onlineEnrollmentObj.verifyDivisionFieldValueOnConfirmationPage();
+				  
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+					  }
+		}
+		
+		}
