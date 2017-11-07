@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Exec1">
 		<classes>
-			<class name="app.psc.testcases.userverification.userverificationtestcases">
+			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -19,10 +19,10 @@
 							value="SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class> 
+			</class> -->
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC001_Search_Employee_For_Valid_SSN">
+					<!-- <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -54,14 +54,14 @@
 						name="TC09_Verify_employee_details_displayed_for_invalid_participant_id">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_invalid_ppt">
 						</parameter>
-					</include>
-					<include
+					</include> --> 
+					<!-- <include
 						name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatessn">
 						</parameter>
-					</include>
-					<include
+					</include> -->
+					<!-- <include
 						name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatename">
@@ -83,12 +83,32 @@
 						<parameter name="ManualTCName"
 							value="Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
+					</include> -->
+					<!-- <include name="TC42_Paycheck_Contribution_History">
+						<parameter name="ManualTCName" value="DDTC-2162_Paycheck_Contribution_History" />
+					</include> -->
+					<!-- <include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
+						<parameter name="ManualTCName"
+							value="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations" />
+					</include> --> 
+					<!-- <include name="TC_56_Info_Message_New_User">
+						<parameter name="ManualTCName" value="DDTC-1332_Info_Message_New_User" />
+					</include> -->
+					<!-- <include name="TC_51_Add_New_Employee_View_Page">
+						<parameter name="ManualTCName" value="DDTC-1494_Add_New_Employee_View_Page" />
+					</include> -->
+					<!-- <include name="TC_56_Info_Message_New_User">
+						<parameter name="ManualTCName" value="DDTC-1332_Info_Message_New_User" />
+					</include> -->
+					<include name="TC_53_Participant_Investments_Tab">
+						<parameter name="ManualTCName" value="DDTC-1241_Participant_Investments_Tab" />
 					</include> 
+					
 				</methods>
-			</class> 
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			</class>  
+			<!--  <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
-					 <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
+				    <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_screen_elements">
 						</parameter>
@@ -119,10 +139,10 @@
 					<include name="TC024_Verify_Filter_Functionality_Search_Results_Page">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_filter">
 						</parameter>
-					</include>
-				</methods>
-			</class>
-			<class name="app.psc.testcases.login.logintestcases">
+					</include>--> 
+				<!-- </methods>
+			</class> -->
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
 				 <include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
@@ -147,9 +167,10 @@
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
-					</include> 
+					</include>
+					
 				</methods>
-			</class>
+			</class>-->
 		</classes>
 	</test>
 </suite>

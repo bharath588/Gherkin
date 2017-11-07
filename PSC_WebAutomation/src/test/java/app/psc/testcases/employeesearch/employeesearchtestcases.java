@@ -23,6 +23,7 @@ import lib.Reporter;
 
 import com.aventstack.extentreports.*;
 import com.mongodb.connection.QueryResult;
+import com.oracle.jrockit.jfr.DataType;
 
 import lib.DB;
 import lib.Stock;
@@ -2455,7 +2456,8 @@ try {
 			break;
 		}
 		homePage = new HomePage();
-		homePage.searchPlanWithIdOrName(ga_id);
+		if(Stock.getConfigParam("DataType").equals("NonApple"))
+		{homePage.searchPlanWithIdOrName(ga_id);}
 		employeesearch.navigateToAddEmpPage();
 		employeesearch.validateEmpInfoLabelsWhileaddingNewEmp();
 		homePage.navigateToHomePage();

@@ -6,9 +6,9 @@
 	</listeners>
 	<test name="Regression_Yellow_Period_Execution_3">
 		<classes>
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
-				<methods>
-					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods> -->
+<!-- 					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -49,8 +49,8 @@
 						name="TC09_Verify_employee_details_displayed_for_invalid_participant_id">
 						<parameter name="ManualTCName" value="Employee_Search_Regression_invalid_ppt">
 						</parameter>
-					</include>
-					<include
+					</include> -->
+				<!-- 	<include
 						name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="Employee_Search_Regression_noduplicatessn">
@@ -222,13 +222,13 @@
 					</include> 
 					<include name="TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month" />
-					</include>-->
+					</include>
 					<include name="TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active">
 						<parameter name="ManualTCName" value="PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active" />
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.login.logintestcases" >
+			<class name="app.psc.testcases.login.logintestcases" >
 				<methods>
 					<include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -526,7 +526,116 @@
 						<parameter name="ManualTCName" value="TestPageObject" />
 					</include>
 				</methods>
-			</class> -->
+			</class> -->  
+			 <class name="app.psc.testcases.filesharing.filesharingtestcases">
+				<methods>
+					<!-- <include
+						name="TC001_SIT_PSC_FileSharing_04_TC028_Screen_element_refresh">
+						<parameter name="ManualTCName"
+							value="DDTC:286_TC001_SIT_PSC_FileSharing_04_TC028_Screen_element_refresh"/>
+					</include> -->
+					<!-- <include
+						name="TC002_SIT_PSC_FileSharing_TC044_Document_Search_capability">
+						<parameter name="ManualTCName"
+							value="DDTC:282_TC002_SIT_PSC_FileSharing_TC044_Document_Search_capability"/>
+					</include> -->
+					<include
+						name="TC003_SIT_PSC_FileSharing_06_TC052_Upload_UI_Updates_Upload_File_Page">
+						<parameter name="ManualTCName"
+							value="DDTC:396_TC003_SIT_PSC_FileSharing_06_TC052_Upload_UI_Updates_Upload_File_Page"/>
+					</include>
+					<!-- <include
+						name="TC004_SIT_TC001_Check_virus_in_files_during_upload">
+						<parameter name="ManualTCName"
+							value="DDTC:292_TC004_SIT_TC001_Check_virus_in_files_during_upload"/>
+					</include> -->
+					<!-- <include
+						name="TC005_SIT_PSC_FileSharing_06_TC049_UploadNew">
+						<parameter name="ManualTCName"
+							value="DDTC:392_TC005_SIT_PSC_FileSharing_06_TC049_UploadNew"/>
+					</include> -->
+					<!-- <include
+						name="TC006_SIT_PSC_FileSharing_06_TC002_UploadLargeFiles">
+						<parameter name="ManualTCName"
+							value="DDTC:346_TC006_SIT_PSC_FileSharing_06_TC002_UploadLargeFiles" />
+					</include> -->
+					<!-- <include
+						name="TC007_Screen_element_filter_and_more">
+						<parameter name="ManualTCName"
+							value="DDTC_315_TC007_Screen_element_filter_and_more"/>
+					</include> -->
+					<!-- <include
+						name="TC008_AccessCheck">
+						<parameter name="ManualTCName"
+							value="DDTC:387_TC008_AccessCheck" />
+					</include>-->
+					<!-- <include 
+						name="TC009_viewAndDeleteAccessCheck">
+						<parameter name="ManualTCName"
+							value="DDTC:239_TC009_viewAndDeleteAccessCheck" />
+					</include> -->
+					<!-- <include 
+						name="TC010_uploadAccessCheck">
+						<parameter name="ManualTCName"
+							value="DDTC:278_TC010_uploadAccessCheck" />
+					</include> -->
+					<!-- <include 
+						name="TC011_viewDocInfo">
+						<parameter name="ManualTCName"
+							value="DDTC:323_TC011_viewDocInfo" />
+					</include> -->
+					<!-- <include 
+						name="TC012_screenElementSortBy">
+						<parameter name="ManualTCName"
+							value="DDTC:382_TC012_screenElementSortBy" />
+					</include> -->
+					<!-- <include 
+						name="TC013_deleteDocWithDiffAccess">
+						<parameter name="ManualTCName"
+							value="DDTC:175_TC013_deleteDocWithDiffAccess" />
+					</include> -->
+					<!-- <include 
+						name="TC014_CheckFolderWithoutAccess">
+						<parameter name="ManualTCName"
+							value="DDTC:264_TC014_CheckFolderWithoutAccess"/>
+					</include> -->
+					<!-- <include 
+						name="TC015_uploadnewversionAccessCheck">
+						<parameter name="ManualTCName"
+							value="DDTC:6_TC015_uploadnewversionAccessCheck"/>
+					</include> -->
+					<!-- <include 
+						name="TC016_browserCompatibilityCheck">
+						<parameter name="ManualTCName"
+							value="DDTC:56_TC016_browserCompatibilityCheck"/>
+					</include> -->
+				<!-- 	<include 
+						name="TC017_pagination">
+						<parameter name="ManualTCName"
+							value="DDTC:29_TC017_pagination"/>
+					</include> -->
+					<!-- <include 
+						name="TC018_accessCheckForFileSharing">
+						<parameter name="ManualTCName"
+							value="DDTC:61_TC018_accessCheckForFileSharing"/>
+					</include> -->
+					<!-- <include 
+						name="TC019_deletionOfFile">
+						<parameter name="ManualTCName"
+							value="DDTC:394_TC019_deletionOfFile"/>
+					</include> -->
+					<!-- <include 
+						name="TC020_SIT_PSC_FileSharing_07_TC058_Check_Menu_Activity_User_File_Sharing_uploadDocumnet">
+						<parameter name="ManualTCName"
+							value="DDTC:214_TC020_SIT_PSC_FileSharing_07_TC058_Check_Menu_Activity_User_File_Sharing_uploadDocumnet"/>
+					</include> -->
+				<!-- 	<include 
+						name="TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date">
+						<parameter name="ManualTCName"
+							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
+					</include> -->
+					</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

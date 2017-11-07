@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -57,6 +58,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@FindBy(css = "a[id = 'profileLink']") private WebElement myProfileLink;
 	@FindBy(css = "a[id = 'jumpPageTable:0:j_idt48']")
 	private WebElement urlJumpPage;
+	@FindBy(id="greeting")
+	private WebElement usernameOnHomePage;
 	@FindBy(xpath="//div[@id='logo']/img")
 	private WebElement homePageLogo;
 	@FindBy(xpath=".//a[@id='logOutLink']") private WebElement logoutLink;
@@ -153,7 +156,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private String[] userVeriData;
 	
 	Map<String,String> securityAnsMap=null;
-	ResultSet queryResultSet;
+	static ResultSet queryResultSet;
 
 	// userVeriData is optional for HomePage constructor
 	public HomePage(LoadableComponent<?> parent,boolean performVerification,String... userData){
@@ -172,10 +175,10 @@ public class HomePage extends LoadableComponent<HomePage>{
 	@Override
 	protected void isLoaded() throws Error {	
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
-			//CommonLib.waitForProgressBar();
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
-			Reporter.logEvent(Status.PASS, "Check if Home page is loaded","Home page has loaded successfully",false);
+			Reporter.logEvent(Status.PASS, "Check if Home page is loaded",""
+					+ "Home page has loaded successfully",false);
 		}	
 	}
 
@@ -359,10 +362,12 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 	}
 
-	public void logoutPSC(){
+	public void logoutPSC() throws Exception{
 		Web.getDriver().switchTo().defaultContent();
 		if(Web.isWebElementDisplayed(logoutLink,true)){
 			logoutLink.click();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.isWebElementDisplayed(Web.returnElement(new LoginPage(),"USERNAME"),false);
 			Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
 		}else{
 			Reporter.logEvent(Status.FAIL,"Perform logout of PSC","Unable to log out of PSC application",true);
@@ -1101,6 +1106,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		}
 		else
 		{
+			Web.isWebElementDisplayed(menuElement(specifiedTab[0]), true);
 			Web.clickOnElement(menuElement(specifiedTab[0]));
 			Web.waitForPageToLoad(Web.getDriver());
 			bredCrumbValue=specifiedTab[0];
@@ -1384,28 +1390,56 @@ public boolean navigateToHomePage() throws Exception{
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+/**
+ * method to check for access to FileSharing.
+ */
+
+/**<pre>Method to check if a given transaction code already exists in user_auth_txn table<br> for any USCS ID of a given user</br></pre> 
+ * @param query to be used
+* @param userName given user
+* @param txnCode given transaction code
+* @return
+*/
+public static boolean isTxnCode(String[] query,String userName,String txnCode){
+      try{
+           queryResultSet = DB.executeQuery(query[0], query[1], "K_"+userName,txnCode);
+           int rowCount = 0;
+           while(queryResultSet.next()){
+                if(queryResultSet.last()){
+                      rowCount = queryResultSet.getRow();
+                      if(rowCount>0)
+                           return true;
+                }
+           }
+      }
+      catch(Exception e){
+           e.printStackTrace();
+      }
+      return false;
+}
+
+/**<pre> Method to insert the transaction code for a given USCS ID. Before inserting <br>it verifies if txn code exists for given user otherwise it inserts</br><pre>
+* @param query insert query to be used
+* @param userName User name 
+ * @param txnCode Transaction code to be inserted.
+* @param uscsId <pre>USCS id for which txn code need to be inserted.This can be <br>fetched from <b>user#user_class</b> table</br></pre>
+* @return
+*/
+public static boolean insertTxnCode(String[] query,String userName,String txnCode,String uscsId){
+      try{
+           if(isTxnCode(Stock.getTestQuery("getTransactionCodeAvailability"),userName,txnCode))
+                return true;
+           else{
+                int rowsUpdated = DB.executeUpdate(query[0], query[1], txnCode,uscsId,"0","N");
+                if(rowsUpdated>0)
+                      return true;
+           }
+      }
+      catch(Exception e){
+           e.printStackTrace();
+      }
+      return false;
+}
+
 	
 }

@@ -409,6 +409,8 @@ public static boolean isSortedByDescOrder(List<Double> list)
 
     return sorted;
 }
+
+
 	
 
 /**
@@ -934,6 +936,18 @@ public static boolean validateEventID(String evenId) throws SQLException
 		isRecordFound=false;
 	return isRecordFound;
 	
+}
+
+
+public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
+{
+       try{
+              Web.getDriver().switchTo().defaultContent();
+              Web.getDriver().switchTo().frame(frameFrom);
+              Web.getDriver().switchTo().frame(frameTo);
+       }catch(NoSuchFrameException e){
+              Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+       }
 }
 
 
