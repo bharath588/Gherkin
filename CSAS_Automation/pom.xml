@@ -10,8 +10,8 @@
 		<dependency>
 			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
-			<!-- <version>0.0.3-SNAPSHOT</version> -->
-			<version>3.0.2_CSAS-SNAPSHOT</version>
+			<!-- <version>0.0.3-SNAPSHOT </version> -->
+		<version>3.0.6-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -28,18 +28,34 @@
 						<reuseForks>false</reuseForks>
 						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<suiteXmlFiles>
-							<suiteXmlFile>RunXML/Sanity.xml</suiteXmlFile>
+							<suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile>
+
 						</suiteXmlFiles>
 						<systemProperties>
-							<!-- <property>
-								<name>env</name>
-								<value>${env}</value>
-							</property> -->
-							<property>
-								<name>testDataPath</name>
-								<value>${testDataPath}</value>
-							</property>
-						</systemProperties>
+                                         <property>
+                                                       <name>env</name>
+                                                       <value>${env}</value>
+                                                </property>
+                                         </systemProperties>
+                                         <systemProperties>
+                                                <property>
+                                                       <name>testDataPath</name>
+                                                       <value>${testDataPath}</value>
+                                                </property>
+                                                </systemProperties>
+                                         <systemProperties>
+                                                <property>
+                                                       <name>CAPTURESCREENSHOT</name>
+                                                       <value>${CAPTURESCREENSHOT}</value>
+                                                </property>
+                                         </systemProperties>
+                                         <systemProperties>
+                                                <property>
+                                                       <name>BROWSER</name>
+                                                       <value>${BROWSER}</value>
+                                                </property>
+                                         </systemProperties>
+
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
