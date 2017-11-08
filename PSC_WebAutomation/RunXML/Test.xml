@@ -24,14 +24,14 @@
 			</class> -->
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC_62_Stop_All_Deferrals">
+					<!-- <include name="TC_62_Stop_All_Deferrals">
 						<parameter name="ManualTCName"
 							value="DDTC-242_Stop_All_Deferrals" />
 					</include>
 					<include name="TC_63_Agecatchup">
 						<parameter name="ManualTCName"
 							value="DDTC-204_Agecatchup" />
-					</include>
+					</include> -->
 				</methods>
 			</class>
 		</classes>

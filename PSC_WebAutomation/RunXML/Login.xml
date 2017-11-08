@@ -6,9 +6,9 @@
 	</listeners>
 	<test name="Regression_Orange_Period_Execution_1">
 		<classes>
-			<!-- <class name="app.psc.testcases.login.logintestcases">
+			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					 <include name="TC006_01_Verify_Force_Login">
+					  <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include> 
@@ -38,11 +38,11 @@
 					<include
 						name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
-							value="User_Account_Locking_For_max_Invalid_Attempts" />
+							value="DDTC-1346_User_Account_Locking_For_max_Invalid_Attempts" />
 					</include> 
 					<include name="TC007_01_display_correct_date_and_time_of_my_last_login">
 						<parameter name="ManualTCName"
-							value="Display correct date and time of my last login" />
+							value="DDTC-13037_Display correct date and time of my last login" />
 					</include>
 					<include
 						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
@@ -54,10 +54,10 @@
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
 					</include>
 					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
-						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_Menutabs" />
+						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_Menutabs" />
 					</include>
 					<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
-						<parameter name="ManualTCName" value="SIT_PSC_Sitenavigation_SubMenutabs" />
+						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_SubMenutabs" />
 					</include>
 					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
 						<parameter name="ManualTCName"
@@ -79,18 +79,18 @@
 					<include
 						name="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages" />
+							value="DDTC-1247_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages" />
 					</include>
 					<include
 						name="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts" />
-					</include>
+							value="DDTC-31_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts" />
+					</include> 
 					<include name="TC01_SIT_PSC_HomePage_Transaction_Security">
-						<parameter name="ManualTCName" value="SIT_PSC_HomePage_Transaction_Security" />
+						<parameter name="ManualTCName" value="DDTC-1205_SIT_PSC_HomePage_Transaction_Security" />
 					</include>
 				</methods>
-			</class> -->
+			</class> 
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					 <include
@@ -139,15 +139,15 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22064_SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC008_00_Verify_new_user_flow_negative">
 						<parameter name="ManualTCName"
 							value="DDTC-22065_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Negative" />
 					</include>
-					<include name="TC008_00_Verify_new_user_flow_positive">
+				 	<include name="TC008_00_Verify_new_user_flow_positive">
 						<parameter name="ManualTCName"
 							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
-					</include>
+					</include> 
 				</methods>
 			</class>
 			<class
@@ -178,32 +178,32 @@
 					<include
 						name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
+							value="DDTC-2179_SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC006_01_Verify_Display_Of_Notification_On_HomePage">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_02_TC006_Notification Button">
+							value="DDTC-1204_SIT_PSC_HomePage_02_TC006_Notification Button">
 						</parameter>
 					</include>
 					<include name="TC006_01_Verify_Display_Of_Compliance_On_HomePage">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
+							value="DDTC-1370_SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
 						</parameter>
-					</include> 
+					</include>
 					<include name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_02_TC003_Compliance_Security">
+							value="DDTC-1121_SIT_PSC_HomePage_02_TC003_Compliance_Security">
 						</parameter>
 					</include>
 					<include
 						name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
+							value="DDTC-249_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
 						</parameter>
 					</include> 
 					<include name="TC009_01_Verify_Multifactoring">
-						<parameter name="ManualTCName" value="Multifactoring_Regr">
+						<parameter name="ManualTCName" value="DDTC-227_Multifactoring_Regr">
 						</parameter>
 					</include>
 				</methods>
@@ -213,12 +213,12 @@
 				<methods>
 					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid" />
+							value="DDTC-136_SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid" />
 					</include>
 					<include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input">
 						<parameter name="ManualTCName"
-							value="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
-					</include> 
+							value="DDTC-22069_SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
+					</include>  
 				</methods>
 			</class>
 		</classes>

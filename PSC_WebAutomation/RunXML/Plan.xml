@@ -97,14 +97,18 @@
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
-					<!-- <include name="TC22_Added_to_USERS_table_via_SAW">
+					<include name="TC25_Investment_Document_Page">
 						<parameter name="ManualTCName"
-							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
-					</include> 
+							value="DDTC-22126_Investment_Document_Page" />
+					</include>
 					<include name="TC24_Investment_Charts_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22127_Investment_Charts_Page" />
-					</include>-->
+					</include>
+					<include name="TC26_Terminate_User_ID">
+						<parameter name="ManualTCName"
+							value="DDTC-1301_Terminate_User_ID" />
+					</include>
 				</methods>
 			</class>
 		</classes>

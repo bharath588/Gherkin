@@ -703,6 +703,7 @@ public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement
 	try{
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frameFrom);
+		Web.waitForElement(frameTo);
 		Web.getDriver().switchTo().frame(frameTo);
 	}catch(NoSuchFrameException e){
 		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
@@ -1008,19 +1009,22 @@ public static String getDate(String dateformat,int offset)
 
 
 /**
- * <pre>This method validates that event table is having entry with specified event id(confirmation number in UI)</pre>
+ * <pre>This method validates that event table is having entry with 
+ * specified event id(confirmation number in UI)</pre>
  * @author smykjn
  */
 public static boolean validateEventID(String evenId) throws SQLException
 {
 	boolean isRecordFound = false;
-	queryResultSet = DB.executeQuery(Stock.getTestQuery("validateEventId")[0],Stock.getTestQuery("validateEventId")[1],evenId);
+	String dbName =  getUserDBName(Stock.GetParameterValue("username"))
+	+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	queryResultSet = DB.executeQuery(dbName,
+			Stock.getTestQuery("validateEventId")[1],evenId);
 	if(DB.getRecordSetCount(queryResultSet)>0)
 		isRecordFound=true;
 	else
 		isRecordFound=false;
 	return isRecordFound;
-	
 }
 
 

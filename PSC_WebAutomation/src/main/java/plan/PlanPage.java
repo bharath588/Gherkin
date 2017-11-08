@@ -476,6 +476,9 @@ public class PlanPage extends LoadableComponent<PlanPage>{
 		if(fieldName.trim().equalsIgnoreCase("NO_SEARCH_RESULTS_TEXT_ELEMENT")){
 			return this.nosearchResultElement;
 		}
+		if(fieldName.trim().equalsIgnoreCase("Email Search Input")){
+			return this.emailInput;
+		}
 		return null;
 	}
 
@@ -2494,7 +2497,94 @@ public void validateDocumentPageScreenElements()
 }
 
 
+/**
+* <pre>This method terminates the user from user security management page.</pre>
+*@author smykjn
+*@date 4th-Oct-2017
+* @return void
+*/
+public void terminateUserFromUserSecurityManagement()
+{
+	try{
+		Select action = new Select(searchedResultsColumns.get(10).findElement(By.tagName("select")));
+		action.selectByVisibleText("Terminate");
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.isWebElementDisplayed(confirmMsgBox,true);
+		String actMsgBeforeTermination = confirmMsgBox.getText();
+		if(actMsgBeforeTermination.contains(Stock.GetParameterValue("ExpMsgBeforeTermination")))
+			Reporter.logEvent(Status.PASS,"select 'Terminate' from drop down and validate "
+					+ "the below message is displayed.\n"+confirmMsgBox.getText(),
+					"Confirmation message is displayed with following message:"+confirmMsgBox.getText(), false);
+		else
+			Reporter.logEvent(Status.FAIL,"select 'Terminate' from drop down and validate "
+					+ "the message.\n"+confirmMsgBox.getText(),
+					"Confirmation message is displayed with following message:"+confirmMsgBox.getText(), true);
+		if(Stock.GetParameterValue("Terminate").equalsIgnoreCase("Yes")){
+			Web.clickOnElement(confirmMsgBox.findElement(By.xpath(".//button[text()='Yes']")));
+			Thread.sleep(3000);
+			Web.isWebElementDisplayed(confirmMsgBox.findElement(By.xpath(".//button[text()='Continue']")), true);
+			String actConfirmMsg = confirmMsgBox.getText();
+			String expConfirmMsg =Stock.GetParameterValue("Assigned User Name")+")"+" "
+					+Stock.GetParameterValue("ExpConfirmationMsg");
+			System.out.println("Confirmation text:"+expConfirmMsg);
+			if(actConfirmMsg.contains(expConfirmMsg))
+				Reporter.logEvent(Status.PASS,"Terminate user and validate confirmation message is displayed.",
+						"Confirmation message is displayed with following message:"+confirmMsgBox.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL,"Terminate user and validate confirmation message is displayed.",
+						"Confirmation message is not displayed with following message:"+confirmMsgBox.getText(), true);
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.clickOnElement(confirmMsgBox.findElement(By.xpath(".//button[text()='Continue']")));
+		}else{
+			Web.clickOnElement(confirmMsgBox.findElement(By.xpath(".//button[text()='Cancel']")));
+			if(Web.isWebElementDisplayed(emailInput,true))
+				Reporter.logEvent(Status.PASS,"Select Terminate from Action drop down and click cancel on"
+						+ " confirmation banner.user must be navigated back to user security management page.",
+						"User is navigated back to user security management page.",false);
+			else
+				Reporter.logEvent(Status.FAIL,"Select Terminate from Action drop down and click cancel on"
+						+ " confirmation banner.user must be navigated back to user security management page.",
+						"User is navigated back to user security management page.",true);
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+}
 
+/**
+* <pre>This method validates the DB details for terminated user.</pre>
+*@author smykjn
+*@date 4th-Oct-2017
+* @return void
+*/
+public void validateDBDetailsForTerminatedUser()
+{
+	Date termDate=null;
+	try{
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUsersDetails")[0],
+				Stock.getTestQuery("getUsersDetails")[1],
+				"K_"+Stock.GetParameterValue("Assigned User Name"));
+		if(queryResultSet.next()){
+			termDate = queryResultSet.getDate("TERMDATE");
+		}
+		Date todaysDate = 
+				CommonLib.getDateInDateFormatFromDateString("yyyy-MM-dd", CommonLib.getDate("yyyy-MM-dd",0));
+		if(termDate.equals(todaysDate))
+			Reporter.logEvent(Status.PASS,"Validate if termdate is updated with today's date."+todaysDate,
+					"Term date is updated in DB properly.\n"+termDate, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate if termdate is updated with today's date."+todaysDate,
+					"Term date is not updated in DB properly.\n"+termDate, true);
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occured.",e.getMessage(), true);
+	}
+}
 
 
 

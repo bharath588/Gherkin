@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="test_new_Development">
+		<classes>
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+				<methods>
+					<include name="TC001_Search_Employee_For_Valid_SSN">
+						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn"/>
+					</include>
+					<include name="TC003_Search_Employee_For_Valid_Name_Input">
+						<parameter name="ManualTCName" value="DDTC-21961_Employee_Search_Sanity_Suite_validname"/>
+					</include>
+					<include name="TC005_Search_Employee_For_Valid_EmployeeID_Input">
+						<parameter name="ManualTCName"
+							value="DDTC-21962_Employee_Search_Sanity_Suite_validempid"/>
+					</include>
+					<include
+						name="TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values">
+						<parameter name="ManualTCName"
+							value="DDTC-22012_Employee_Search_Regression_noduplicateppt" />
+					</include>
+					<include
+						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
+						<parameter name="ManualTCName"
+							value="DDTC-21990_Employee_Search_Regression_noduplicateempid"/>
+					</include>
+					<include
+						name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
+						<parameter name="ManualTCName"
+							value="DDTC-22057_Employee_Search_Regression_noduplicatessn"/>
+					</include> 
+					<include name="TC020_Recently_Viewed_Employee">
+						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
+					</include>
+					<include
+						name="TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-2235_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page" />
+					</include>
+					<include name="TC022_Paycheck_contribution_View">
+						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
+					</include>
+					<include name="TC017_Employment_Info_Verification">
+						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
+					</include>
+					<include name="TC026_Verify_Employee_Basic_Info">
+						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
+				<methods>
+					<include name="TC005_01_SIT_PSC_Update_My_profile_Password">
+						<parameter name="ManualTCName" value="DDTC-10186_SIT_PSC_Update_My_profile_Password" />
+					</include>
+					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
+						<parameter name="ManualTCName"
+							value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.login.logintestcases">
+				<methods>
+					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
+						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_Menutabs" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.plan.plansearchtestcases">
+				<methods>
+					<include name="TC05_SIT_PSC_Plan_messaging_confirmation_page">
+						<parameter name="ManualTCName"
+							value="DDTC-11941_SIT_PSC_Plan_messaging_confirmation_page" />
+					</include>
+					<include
+						name="TC02_Validate_error_message_when_plan_field_is_left_blank">
+						<parameter name="ManualTCName"
+							value="DDTC-333_Plan_Validate_error_message_when_plan_filed_blank" />
+					</include>
+					<include name="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22129_SIT_PSC_Investment_Fixed_Investment_Rates_Page" />
+					</include>
+					<include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
+						<parameter name="ManualTCName"
+							value="DDTC-22077_SIT_PSC_Investment_Fixed_Investment_FutureRates" />
+					</include>
+					<include name="TC07_SIT_PSC_Investment_Asset_Allocations_page">
+						<parameter name="ManualTCName"
+							value="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.plan.plantestcases">
+				<methods>
+					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
+						<parameter name="ManualTCName"
+							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
+					</include>
+					<include name="TC25_Investment_Document_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22126_Investment_Document_Page" />
+					</include>
+					<include name="TC24_Investment_Charts_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22127_Investment_Charts_Page" />
+					</include>
+					<include name="TC16_Plan_Provisions_page">
+						<parameter name="ManualTCName"
+							value="DDTC-2150_Plan_Provisions_page" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.accountverification.accountverification_existingusr">
+				<methods>
+					<include
+						name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages">
+						<parameter name="ManualTCName"
+							value="DDTC-249_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages"/>
+					</include> 
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

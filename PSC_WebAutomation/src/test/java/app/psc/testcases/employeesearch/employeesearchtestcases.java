@@ -3635,7 +3635,7 @@ public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {
 			else
 				Reporter.logEvent(Status.FAIL,"Validate deferral data from DB.",""
 						+ "Data is not found in DB.", true);
-			employeesearch.validateStopAllDeferralConfirmationScreen();
+			String confirmationNumber = employeesearch.validateStopAllDeferralConfirmationScreen();
 			if(employeesearch.validateAmountAfterStopDeferral())
 				Reporter.logEvent(Status.PASS,"Validate deferral amount or percentage is $0 and 0% after stop deferral.",""
 						+ "Deferral amount is found to be $0 and deferral percent to be 0%.",false);
@@ -3654,7 +3654,10 @@ public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {
 					+ " and validate Overview page is displayed.",""
 							+ "Overview page does not displayed once user clicks on "
 							+ "Return to employee overview button", true);
-		homePage.logoutPSC();
+		
+		DB.executeQuery(Stock.getTestQuery("DeleteEvIdFromElectiveDef")[0],
+				Stock.getTestQuery("DeleteEvIdFromElectiveDef")[1], confirmationNumber);
+		//homePage.logoutPSC();
 		}else{
 			Reporter.logEvent(Status.FAIL,"Navigate to deferral page.","Deferral page is not displayed.", false);
 		}
@@ -3681,7 +3684,7 @@ public void TC_62_Stop_All_Deferrals(int itr,Map<String, String> testdata) {
 }
 
 /**
- * <pre>To validate Stop all deferrals functionality</pre>
+ * <pre>To validate Agecatch up functionality</pre>
  * @author smykjn
  * @param itr
  * @param testdata
@@ -3692,7 +3695,7 @@ public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {
 	try {
 		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
-				"is to validate Stop All deferrals page elements and functionality.", false);
+				"is to validate Age catch up functionality.", false);
 		String ssn="";
 		List<String> expDeferralType=
 				Arrays.asList(Stock.GetParameterValue("ExpectedDeferralTypes").split(","));
@@ -3711,7 +3714,8 @@ public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {
 		}
 		
 		employeesearch = new EmployeeSearch().get();
-		employeesearch.searchEmployeeBySSNAllPlans(ssn);
+		employeesearch.searchPlan(Stock.GetParameterValue("PlanNumber"));
+		employeesearch.searchEmployeeBySSN(ssn);
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.navigateToEmpDetailPage();
 		if(employeesearch.NavigateToDeferralPage()){
@@ -3719,29 +3723,45 @@ public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {
 				if(employeesearch.validateAgecatchUpRule(expDeferralType.get(0))&&
 						employeesearch.validateAgecatchUpRule(expDeferralType.get(1)))
 					Reporter.logEvent(Status.FAIL,"Validate AGEBEF and ROTH must "
-							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are"
+							+ "not be displayed for PPT age<50.","AGEBEF and ROTH deferrals are"
 									+ " displayed.", true);
 				else
 					Reporter.logEvent(Status.PASS,"Validate AGEBEF and ROTH must "
-							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are not"
+							+ "not be displayed for PPT age<50.","AGEBEF and ROTH deferrals are not"
 									+ " displayed.", false);
 			}
 			if(Stock.GetParameterValue("IsAgeGtrThnFifty").equalsIgnoreCase("Yes")){
+				List<String> maxValues = Arrays.asList(Stock.GetParameterValue("MaxValue").split(","));
 				if(employeesearch.validateAgecatchUpRule(expDeferralType.get(0))&&
 						employeesearch.validateAgecatchUpRule(expDeferralType.get(1)))
 					Reporter.logEvent(Status.PASS,"Validate AGEBEF and ROTH must "
-							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are"
+							+ "be displayed for PPT age>=50.","AGEBEF and ROTH deferrals are"
 									+ " displayed.", false);
 				else
 					Reporter.logEvent(Status.FAIL,"Validate AGEBEF and ROTH must "
-							+ "not be displayed for PPT age<=50.","AGEBEF and ROTH deferrals are not"
+							+ "be displayed for PPT age>=50.","AGEBEF and ROTH deferrals are not"
 									+ " displayed.", true);
+				if(employeesearch.maxAmountPercentValidation(expDeferralType.get(0),"Dollar",
+						maxValues.get(0)))
+					Reporter.logEvent(Status.PASS,"Enter more than max limit for "+expDeferralType.get(0)+" deferral"
+							+ " and validate error message.","Proper validation message is displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL,"Enter more than max limit for "+expDeferralType.get(0)+" deferral"
+							+ " and validate error message.","Proper validation message is not displayed.", true);
+				
+				if(employeesearch.maxAmountPercentValidation(expDeferralType.get(1),"Dollar",maxValues.get(1)))
+					Reporter.logEvent(Status.PASS,"Enter more than max limit for "+expDeferralType.get(1)+" deferral"
+							+ " and validate error message.","Proper validation message is displayed.", false);
+				else
+					Reporter.logEvent(Status.FAIL,"Enter more than max limit for "+expDeferralType.get(1)+" deferral"
+							+ " and validate error message.","Proper validation message is not displayed.", true);
+				String confirmationNumber = employeesearch.validateAgeCatchUpCombinedLimit();
+				DB.executeQuery(Stock.getTestQuery("DeleteEvIdFromElectiveDef")[0],
+						Stock.getTestQuery("DeleteEvIdFromElectiveDef")[1], confirmationNumber);
 			}
 		}
 		employeesearch.returnToEmployeeOverview(
-				Web.returnElement(employeesearch, "RETURN OVERVIEW PAGE"));
-		//Code to validate agecatch up amount when it is combined
-		
+				Web.returnElement(employeesearch, "RETURN OVERVIEW PAGE"));		
 	} catch (Exception e) {
 		e.printStackTrace();
 		Globals.exception = e;
@@ -3762,7 +3782,52 @@ public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {
 	}
 }
 
-
+/**
+ * <pre>To validate Schedule Auto increase features</pre>
+ * @author smykjn
+ * @param itr
+ * @param testdata
+ * @Date 10-Oct-2017
+ */
+@Test(dataProvider = "setData")
+public void TC_64_Agecatchup(int itr,Map<String, String> testdata) {		
+	try {
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
+				"is to validate schedule automatic increase functionality.", false);
+		String ssn="";
+		String planNumber = Stock.GetParameterValue("PlanNumber");
+		resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
+				Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],planNumber);
+		if(resultset.next()){
+			ssn=resultset.getString("SSN");
+		}
+		employeesearch = new EmployeeSearch().get();
+		employeesearch.searchPlan(planNumber);
+		employeesearch.searchEmployeeBySSN(ssn);
+		employeesearch.navigateToEmployeeOverViewPage();
+		employeesearch.navigateToEmpDetailPage();
+		employeesearch.NavigateToDeferralPage();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		Globals.exception = e;
+		String exceptionMessage = e.getMessage();
+		Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+				exceptionMessage, true);
+	} catch (Error ae) {
+		ae.printStackTrace();
+		Globals.error = ae;
+		String errorMsg = ae.getMessage();
+		Reporter.logEvent(Status.FAIL, "Assertion Error Occured",errorMsg, true);
+	} finally {
+		try {
+			Reporter.finalizeTCReport();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+}
 
 
 

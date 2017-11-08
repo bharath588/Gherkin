@@ -120,7 +120,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		if (fieldName.trim().equalsIgnoreCase("USERNAME")) {
 			return this.txtUserName;
 		}
-
+		if(fieldName.trim().equalsIgnoreCase("PreLoginErrorMsg")){
+			return this.wePreLoginError;
+		}
 		if (fieldName.trim().equalsIgnoreCase("PASSWORD")) {
 			return this.txtPassword;
 		}

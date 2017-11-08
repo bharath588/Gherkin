@@ -210,7 +210,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	 */
 	public String getErrorMessageText() throws InterruptedException {
 		if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("IE"))
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		boolean isElementPresent = Web.isWebElementDisplayed(this.errorMsgBox,true);
 		if (isElementPresent)
 			return this.errorMsgBox.getText();
