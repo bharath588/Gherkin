@@ -130,7 +130,7 @@ public class CommonLib {
 	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText){
 		// Check if webelement contains expected text or not
 		if(ele.getText().equalsIgnoreCase(expectedText)){
-			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",false);
+			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",true);
 		}else{
 			Reporter.logEvent(Status.FAIL,expectedText,"Expectecd Text not present", true);
 		}

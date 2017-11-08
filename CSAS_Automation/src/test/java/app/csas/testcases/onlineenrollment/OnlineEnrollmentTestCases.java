@@ -91,7 +91,9 @@ public class OnlineEnrollmentTestCases {
 				  
 				  onlineEnrollmentObj = new OnlineEnrollment();
 				  onlineEnrollmentObj.get();	 
-				  onlineEnrollmentObj.EnterValidInputDetails();				}
+				  onlineEnrollmentObj.EnterValidInputDetails();		
+				  		  
+				  }
 				catch(Exception e)
 				{
 					e.printStackTrace();
@@ -131,6 +133,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeCity();
+				  		  
 			  }
 				catch(Exception e)
 				{
@@ -171,6 +174,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	 
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativePersonalEmail();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -211,6 +215,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeMobilePhone();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -251,6 +256,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeHomePhone();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -291,6 +297,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicative_ValidationErrorMessage();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -331,6 +338,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateIndicativeData_InlineValidation();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -371,6 +379,8 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateConfirmationPage();
+				  		  
+				  
 				}
 				catch(Exception e)
 				{
@@ -411,6 +421,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateClearButton();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -451,6 +462,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();	
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateErrorMsgPersonalPhoneNumber();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -490,6 +502,7 @@ public class OnlineEnrollmentTestCases {
 				  
 				  // Check Addressline1 and Addressline2 fields validation.
 				  onlineEnrollmentObj.validateErrorMsgAddressLine1AndAddressLine2();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -532,6 +545,7 @@ public class OnlineEnrollmentTestCases {
 				  onlineEnrollmentObj.get();
 				  onlineEnrollmentObj.EnterValidInputDetails();
 				  onlineEnrollmentObj.validateErrorMsgDateOfHire();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -573,6 +587,7 @@ public class OnlineEnrollmentTestCases {
 				  
 				  // Verify GroupID,PlanEnrollmentCode and SSN fields validation.
 				  onlineEnrollmentObj.verifyValidIndicativeDateFor_GrpId_PEC_SSN();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -612,6 +627,7 @@ public class OnlineEnrollmentTestCases {
 				  
 				  // Verify Enrollment details in database after successful enrollment.
 				  onlineEnrollmentObj.verifyEndToEndTestingWithoutAlphaNumaricOfGId();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -651,6 +667,7 @@ public class OnlineEnrollmentTestCases {
 				  
 				  // Verify Enrollment details in database after successful enrollment.
 				  onlineEnrollmentObj.verifyEndToEndTestingWithAlphaNumaricOfGId();
+				  		  
 				}
 				catch(Exception e)
 				{
@@ -682,7 +699,7 @@ public class OnlineEnrollmentTestCases {
 		 */
 		
 		@Test(dataProvider="setData")
-		public void  CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
+		public void  CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
 			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  // Go to onlineEnrollment page.

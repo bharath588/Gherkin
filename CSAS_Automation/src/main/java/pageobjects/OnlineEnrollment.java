@@ -17,6 +17,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.html5.AddLocationContext;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -284,6 +285,9 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	
 	@FindBy(id = "preDivision")
 	private WebElement preDivision;
+	
+	@FindBy(xpath="//a[contains(text(),'Log Out')]")
+	private WebElement logOut;
 
 	Actions action = new Actions(Web.getDriver());
 	
@@ -988,23 +992,10 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	
 		if(Web.isWebElementDisplayed(createAccountEnrollTable, true)){			
 		if(Web.isWebElementDisplayed(planFoundLabel, true)){
-			Web.setTextToTextBox(firstNameTextbox, Stock.GetParameterValue("FIRST NAME"));
-			Web.setTextToTextBox(lastNameTextbox, Stock.GetParameterValue("LAST NAME"));
-			Web.setTextToTextBox(DateOfBirthTextbox, Stock.GetParameterValue("DOB"));					
-			DateOfBirthTextbox.sendKeys(Keys.TAB);
-			List<WebElement> genderRadioBtns = Web.getDriver().findElements(By.id("gender"));
-			Thread.sleep(3000);
-			genderRadioBtns.get(1).click();
-			List<WebElement> maritalStatusRadioBtns = Web.getDriver().findElements(By.id("married"));
-			Thread.sleep(3000);
-			maritalStatusRadioBtns.get(1).click();					
-			Web.setTextToTextBox(annualIncomeTextBox, Stock.GetParameterValue("ANNUAl INCOME"));
-			Web.setTextToTextBox(dateOfHireTextBox, Stock.GetParameterValue("DOH"));
-			dateOfHireTextBox.sendKeys(Keys.TAB);
-			Web.setTextToTextBox(addressLine1, Stock.GetParameterValue("ADDR LINE1"));
-			Web.setTextToTextBox(cityTextbox, Stock.GetParameterValue("CITY"));
-			Web.selectDropnDownOptionAsIndex(stateTextbox, "2");
-			Web.setTextToTextBox(zipCodeTextBox, Stock.GetParameterValue("ZIP CODE"));
+			fillTheFieldesinOnlineEnrollmentForm();
+
+			// enter invalid data into personal email field and validate error message.
+			personalEmailTextBox.clear();
 			Web.setTextToTextBox(personalEmailTextBox, Stock.GetParameterValue("PERSONAL EMAIL INVALID1"));
 			personalEmailTextBox.sendKeys(Keys.TAB);
 			if(Web.isWebElementDisplayed(personalEmailError, true)){
@@ -1048,12 +1039,19 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				// Verify addressLine1 and addressLine2 values should not be match.
 				Web.setTextToTextBox(addressLine1,  Stock.GetParameterValue("ADDR LINE1 INVALID1"));
 				Web.setTextToTextBox(addressLine2,  Stock.GetParameterValue("ADDR LINE2 INVALID1"));
+				addressLine2.sendKeys(Keys.TAB);
+				CommonLib.verifyIfWebElementPresent(addressLine2Error,"check if Error message is displayed or not when same data entered is: "+Stock.GetParameterValue("ADDR LINE2 INVALID1"), true);
+				
+				// click on continuetocreate button.
+				addressLine2.clear();
+				Web.setTextToTextBox(addressLine2,  Stock.GetParameterValue("ADDR LINE2"));
+				addressLine2Error.click();
 				Web.clickOnElement(contToCreateNewAccountBtn);
-				CommonLib.verifyIfWebElementPresent(addressLine2Error,"check if Error message is displayed or not when data entered is: "+Stock.GetParameterValue("ADDR LINE2 INVALID1"), true);
+				
 				
 				// Verify AddressLine1 and AddressLine2 fields length should not be exceed more than 35Bytes.
-				CommonLib.verifyIfWebElementTextPresent(addressLine1,"check if expected text present in field or not: "+Stock.GetParameterValue("ADDR LINE1 EXPECTED"));
-				CommonLib.verifyIfWebElementTextPresent(addressLine2,"check if expected text present in field or not: "+Stock.GetParameterValue("ADDR LINE2 EXPECTED"));
+				CommonLib.verifyIfWebElementTextPresent(addressLine1,Stock.GetParameterValue("ADDR LINE1 EXPECTED"));
+				CommonLib.verifyIfWebElementTextPresent(addressLine2,Stock.GetParameterValue("ADDR LINE2 EXPECTED"));
 				}
 			else
 			{
@@ -1100,6 +1098,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				// verify future date verification for the field Date of hire.
 				Web.setTextToTextBox(dateOfHireTextBox, Stock.GetParameterValue("DOHFutureDate"));
 				Web.clickOnElement(doneButton);
+				dateOfHireError.clear();
 				CommonLib.verifyIfWebElementTextPresent(dateOfHireError, Stock.GetParameterValue("DOHFutureDateErrorMsg"));
 				}else
 				{
@@ -1327,12 +1326,13 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			//Enter Invalid data in PEC field verify error message and whether submit button is enabled or not.
 			Web.setTextToTextBox(planEnrollmentCodeTextbox, Stock.GetParameterValue("InvalidPEC"));
 			planEnrollmentCodeTextbox.sendKeys(Keys.TAB);
-			CommonLib.verifyIfWebElementTextPresent(planEnrollmentCodeError, Stock.GetParameterValue("PECErrorMsg"));
+			//CommonLib.verifyIfWebElementTextPresent(planEnrollmentCodeError, Stock.GetParameterValue("PECErrorMsg"));
 			CommonLib.verifyIsButtonEnabledOrNot(submitBtn, true);
 			
 			//Enter Invalid data in SSN field verify error message and whether submit button is enabled or not.
 			Web.setTextToTextBox(ssnSearchedTextbox, Stock.GetParameterValue("InvalidSSN"));
 			ssnSearchedTextbox.sendKeys(Keys.TAB);
+			ssnSearchedError.click();
 			CommonLib.verifyIfWebElementTextPresent(ssnSearchedError, Stock.GetParameterValue("SSNErrorMsg"));
 			CommonLib.verifyIsButtonEnabledOrNot(submitBtn, true);
 				
@@ -1393,6 +1393,9 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		planNumberTextbox.clear();
 		planEnrollmentCodeTextbox.clear();
 		ssnSearchedTextbox.clear();
+	}
+	public void logOut(){
+		Web.clickOnElement(logOut);
 	}
 		
 

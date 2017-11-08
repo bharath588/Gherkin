@@ -6,6 +6,33 @@
 	</listeners>
 	
 	<test name="Regression Suite">
+	<classes>
+	<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
+				<methods>
+					<!-- <include name="Validate_Fund_to_Fund_Transfer">
+						<parameter name="ManualTCName" value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"></parameter>
+					</include> -->
+					<include name="Validate_Fund_to_Fund_Basic_Transfer">
+						<parameter name="ManualTCName" value="Basic_Transfer"></parameter>
+					</include>
+					<!-- <include name="Validate_Fund_to_Fund_Cancel_Transfer">
+						<parameter name="ManualTCName" value="Cancel_Transfer"></parameter>
+					</include> -->
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_Yes">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_NO_Fund_Restrictions_Message"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal">
+						<parameter name="ManualTCName" value="Trnf_with_Dollar_amt_greater_Prior_Day_balance"></parameter>
+					</include>
+					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per">
+						<parameter name="ManualTCName" value="Trnf_with_gtr_100_pct"></parameter>
+					</include>
+		
+			
+		<!-- 			
 		<classes>		
 			<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
@@ -24,35 +51,6 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_info_Ppt_Home_Page_Personal_Data"></parameter>
 					</include> 
-				</methods>	
-			</class>			
-		</classes>
-	</test>
-	
-</suite>	
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<!-- 
-					
 					<include name="Validate_Registration_Status_On_PPT_Home_Page">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status"></parameter>
@@ -227,11 +225,12 @@
 					</include>
 					<include name="Perform_and_validate_Rebalancer_Checkbox">
 						<parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
-					</include>
-				</methods>-->
+					</include> -->
+				</methods>
 				
-			<!-- </class>
+			</class>
 			
 		</classes>
 	</test>
-</suite>	 -->				
+</suite>	
+									

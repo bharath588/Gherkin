@@ -14,7 +14,9 @@ import javax.sql.rowset.RowSetProvider;
 
 //import com.sun.rowset.FilteredRowSetImpl;
 
+
 import db.filters.EqualsFilter;
+//import db.filters.EqualsFilter;
 import lib.DB;
 import lib.Stock;
 

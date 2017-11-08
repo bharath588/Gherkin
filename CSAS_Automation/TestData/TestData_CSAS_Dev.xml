@@ -1149,10 +1149,13 @@ ORDER BY wb.ga_id,
 				<parameter name = "ANNUAL INCOME" value = "12365" />
 				<parameter name = "DOH" value = "18-Aug-2017" />
 				<parameter name = "ADDR LINE1" value = "Baker Street" />
+				<parameter name = "ADDR LINE2" value = "Baker Street state" />
 				<parameter name = "CITY" value = "Florida" />
 				<parameter name = "ZIP CODE" value = "123654789" />
-				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />	
-				<parameter name = "MOBILE PHONE" value = "7896541230" />			
+				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
+				<parameter name = "HOME PHONE" value = "7896541230" />	
+				<parameter name = "MOBILE PHONE" value = "7896541230" />
+				<parameter name = "PERSONAL EMAIL INVALID1" value = "discardgwl.com" />		
 			</Iteration>
 		</TestCase>
 		<TestCase name = "validateIndicativeData_Country">
@@ -1241,7 +1244,6 @@ ORDER BY wb.ga_id,
 				<parameter name = "ANNUAL INCOME" value = "12365" />
 				<parameter name = "DOH" value = "18-Aug-2017" />
 				<parameter name = "ADDR LINE1" value = "Baker Street" />
-				<parameter name = "ADDR LINE2" value = "Baker Street state" />
 				<parameter name = "CITY" value = "Florida" />
 				<parameter name = "ZIP CODE" value = "123654789" />
 				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
@@ -1249,8 +1251,9 @@ ORDER BY wb.ga_id,
 				<parameter name = "HOME PHONE" value = "7896541230" />
 				<parameter name = "ADDR LINE2 INVALID1" value = "1234567890ABCDEFGHIJKLMNOPQRSTWXYZabcdefghij" />
 				<parameter name = "ADDR LINE1 INVALID1" value = "1234567890ABCDEFGHIJKLMNOPQRSTWXYZabcdefghij" />	
+				<parameter name = "ADDR LINE2" value = "1122998890ABCDEFGHIJKLMNOPQRSTWXYZabcdhkk" />
 				<parameter name = "ADDR LINE1 EXPECTED" value = "1234567890ABCDEFGHIJKLMNOPQRST" />
-				<parameter name = "ADDR LINE2 EXPECTED" value = "1234567890ABCDEFGHIJKLMNOPQRST" />				
+				<parameter name = "ADDR LINE2 EXPECTED" value = "1122998890ABCDEFGHIJKLMNOPQRST" />
 			</Iteration>
 			
 		</TestCase>
@@ -1369,7 +1372,7 @@ ORDER BY wb.ga_id,
 		
 			</Iteration>	
 		</TestCase>
-			<TestCase name = "CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
+			<TestCase name = "CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />

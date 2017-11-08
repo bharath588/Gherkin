@@ -9,32 +9,41 @@
 		<classes>
 			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 				<methods>
-				<include name="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
-						<parameter name="ManualTCName" value="CORE_18528_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
+					 <include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
+						<parameter name="ManualTCName" value="validateEmailPhoneErrorMessage" />
+						</include>	 
+						
+						<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
+						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
+						</include>
+						<include name="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN">
+						<parameter name="ManualTCName" value="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN" />
+						</include>
+						
+				
+						<include name="DDTC_28158_validIndicativeData_DateOfHire">
+						<parameter name="ManualTCName" value="DDTC_28158_validIndicativeData_DateOfHire" />
+						</include>
+					
+						
+						<include name="validateConfirmationPage">
+						<parameter name="ManualTCName" value="validateConfirmationPage" />
+						</include>  
+						<include name="CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
 						</include>
 						<include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
 						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
 						</include>
-				<!-- <include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
-						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
-						</include> -->
-						
-				
-		 		<!-- 	
-		 		
-		 				<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
-						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
-						</include>
-						<include name="DDTC_28158_validIndicativeData_DateOfHire">
-						<parameter name="ManualTCName" value="DDTC_28158_validIndicativeData_DateOfHire" />
-						</include>
 						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
 						<parameter name="ManualTCName" value="CORE_18526_EndToEndTesting_Without_Alphanumeric" />
 						</include>
-						<include name="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN">
-						<parameter name="ManualTCName" value="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN" />
-					</include>
-		 			<include name="ValidateIndicativeCity">
+						
+						<include name="CORE_18527_EndToEndTesting_With_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18527_EndToEndTesting_With_Alphanumeric" />
+						</include>
+						
+		 				<include name="ValidateIndicativeCity">
 						<parameter name="ManualTCName" value="ValidateCity" />
 					</include>	
 					<include name="ValidateIndicativePersonalEmail">
@@ -55,12 +64,8 @@
 					<include name="validateIndicativeData_ClearButton">
 						<parameter name="ManualTCName" value="validateClearButton" />
 					</include> 
-					<include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
-						<parameter name="ManualTCName" value="validateEmailPhoneErrorMessage" />
-					</include>	
-					<include name="validateConfirmationPage">
-						<parameter name="ManualTCName" value="validateConfirmationPage" />
-					</include>
+					
+					
 					<include name="validateIndicativeData_State">
 						<parameter name="ManualTCName" value="validateIndicativeData_State" />
 					</include>		
@@ -75,10 +80,10 @@
 					</include>					
 					<include name="validateIndicativeData_Country">
 						<parameter name="ManualTCName" value="validateIndicativeData_Country" />
-					</include>	 --> 	<!-- 
+					</include>	 
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
-					</include>	 -->
+					</include>	  
 				</methods>
 			</class>
 		</classes>
