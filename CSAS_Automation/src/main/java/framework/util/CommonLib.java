@@ -142,7 +142,6 @@ public class CommonLib {
 	 * @param expectedText
 	 */
 	public static void verifyFieldValue(WebElement ele, String expectedText){
-		
 		// Check if webelement contains expected text or not
 		if(ele.getAttribute("value").equalsIgnoreCase(expectedText)){
 			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",false);

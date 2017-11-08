@@ -1249,11 +1249,10 @@ ORDER BY wb.ga_id,
 				<parameter name = "PERSONAL EMAIL" value = "discard@gwl.com" />
 				<parameter name = "MOBILE PHONE" value = "7896541230" />
 				<parameter name = "HOME PHONE" value = "7896541230" />
-				<parameter name = "ADDR LINE2 INVALID1" value = "1234567890ABCDEFGHIJKLMNOPQRSTWXYZabcdefghij" />
 				<parameter name = "ADDR LINE1 INVALID1" value = "1234567890ABCDEFGHIJKLMNOPQRSTWXYZabcdefghij" />	
 				<parameter name = "ADDR LINE2" value = "1122998890ABCDEFGHIJKLMNOPQRSTWXYZabcdhkk" />
-				<parameter name = "ADDR LINE1 EXPECTED" value = "1234567890ABCDEFGHIJKLMNOPQRST" />
-				<parameter name = "ADDR LINE2 EXPECTED" value = "1122998890ABCDEFGHIJKLMNOPQRST" />
+				<parameter name = "ADDR LINE1 EXPECTED" value = "1234567890ABCDEFGHIJKLMNOPQRSTWXYZa" />
+				<parameter name = "ADDR LINE2 EXPECTED" value = "1122998890ABCDEFGHIJKLMNOPQRSTWXYZa" />
 			</Iteration>
 			
 		</TestCase>

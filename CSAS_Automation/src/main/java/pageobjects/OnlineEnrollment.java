@@ -1034,24 +1034,27 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				// Verify addressLine1 is mandatory field.
 				addressLine1.clear();
 				addressLine1.sendKeys(Keys.TAB);
-				CommonLib.verifyIfWebElementPresent(addressLine1Error,"check if Error message is displayed or not when data entered is: "+Stock.GetParameterValue("ADDR LINE1 INVALID1"), true);
+				CommonLib.verifyIfWebElementPresent(addressLine1Error,"check if Error message is displayed or not when data not entered: ", true);
 				
 				// Verify addressLine1 and addressLine2 values should not be match.
-				Web.setTextToTextBox(addressLine1,  Stock.GetParameterValue("ADDR LINE1 INVALID1"));
-				Web.setTextToTextBox(addressLine2,  Stock.GetParameterValue("ADDR LINE2 INVALID1"));
+				String addressLine1andLine2 = Stock.GetParameterValue("ADDR LINE1 INVALID1");
+				String addressLine2Value = Stock.GetParameterValue("ADDR LINE2");
+				Web.setTextToTextBox(addressLine1, addressLine1andLine2 );
+				Web.setTextToTextBox(addressLine2,  addressLine1andLine2);
 				addressLine2.sendKeys(Keys.TAB);
-				CommonLib.verifyIfWebElementPresent(addressLine2Error,"check if Error message is displayed or not when same data entered is: "+Stock.GetParameterValue("ADDR LINE2 INVALID1"), true);
+				CommonLib.verifyIfWebElementPresent(addressLine2Error,"check if Error message is displayed or not when same data entered is: "+addressLine1andLine2, true);
 				
 				// click on continuetocreate button.
 				addressLine2.clear();
-				Web.setTextToTextBox(addressLine2,  Stock.GetParameterValue("ADDR LINE2"));
+				Web.setTextToTextBox(addressLine2, addressLine2Value );
+				addressLine2.sendKeys(Keys.TAB);
 				addressLine2Error.click();
 				Web.clickOnElement(contToCreateNewAccountBtn);
 				
 				
 				// Verify AddressLine1 and AddressLine2 fields length should not be exceed more than 35Bytes.
-				CommonLib.verifyIfWebElementTextPresent(addressLine1,Stock.GetParameterValue("ADDR LINE1 EXPECTED"));
-				CommonLib.verifyIfWebElementTextPresent(addressLine2,Stock.GetParameterValue("ADDR LINE2 EXPECTED"));
+				CommonLib.verifyIfWebElementTextPresent(preConfirmAddLineOne, Stock.GetParameterValue("ADDR LINE1 EXPECTED"));
+				CommonLib.verifyIfWebElementTextPresent(preConfirmAddLineTwo,Stock.GetParameterValue("ADDR LINE2 EXPECTED"));
 				}
 			else
 			{
