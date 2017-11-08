@@ -33,7 +33,6 @@ import lib.Web;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -993,6 +992,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		//CommonLib.switchToFrame(framecA);
 		return Web.getDriver().findElement(By.xpath(".//label[contains(text(),'"+expDeferralTypeText+"')]"));
 	}
+
 	
 	private String getPlanxpath = "./ancestor::tr[contains(@id,'overviewtable_row')]//a";
 	private String transHistory = ".//*[@id='transactions']";
@@ -1169,6 +1169,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.equalsIgnoreCase("FRAME_C_A")){
 			return framecA;
 		}
+
 		if(fieldName.trim().equalsIgnoreCase("EmpLastNameLink"))
 		{
 			return (WebElement) this.fNLNMILink;
@@ -1237,11 +1238,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
 		select = new Select(drpdwnSearchEmployee);
-		if(Stock.getConfigParam("DataType").equals("NonApple")){
+		if(Stock.getConfigParam("DataType").equals("NonApple"))
 			select.selectByVisibleText("SSN - all plans");
-		}else{
+		else
 			select.selectByVisibleText("SSN");
-		}
 		Web.waitForElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
@@ -1261,7 +1261,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.isWebElementDisplayed(drpdwnSearchEmployee,true);
 		select = new Select(drpdwnSearchEmployee);
+		if(Stock.getConfigParam("DataType").equals("NonApple"))
 		select.selectByVisibleText("SSN - all plans");
+		else
+			select.selectByVisibleText("SSN");
 		Web.waitForElement(txtSearchbox);
 		Web.setTextToTextBox(txtSearchbox, SSN);
 		if(Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
@@ -1633,6 +1636,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		 actualOptions = new String[] { "SSN", "Name", "Employee ID",
 				"Participant ID","Division"};
 		}
+
+		/*String[] actualOptions = new String[] { "SSN", "Name", "Employee ID",
+				"Participant ID", "Division"};//,"--------------------","Name - all plans","SSN - all plans"};
+*/		
 		actualOptionsList = Arrays.asList(actualOptions);
 		List<String> dropdownOptionlist = new ArrayList<String>();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
@@ -1872,7 +1879,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		queryResultSet = DB.executeQuery(planNumwithDivQuery[0],
 				planNumwithDivQuery[1], "K_"+username);
 		return queryResultSet;
-	}
+			}
 
 	/**
 	 * It verifies the filter functionality by taking a text as the filter criteria
@@ -4312,6 +4319,62 @@ public void editEnrollmentAndEligibilityAndSave() throws InterruptedException,Ex
 	
 	//return isEnrollmentSectionDisplayed;
 }
+
+/**
+ * <pre>This methiod collects data from Enrollment and Eligibility section.</pre>
+ * @return Map
+ * @throws Exception
+
+ *//*
+public Map<String,String> enrollAndEligDataFromUI() throws Exception
+{
+	Map<String,String> enrollAndElgMapUI = new HashMap<String,String>();
+	if(enrollmntAndElgLabels.size()==enrolmntAndElgValues.size()){
+		for(WebElement data : enrolmntAndElgValues){
+			String value = data.getText().trim();
+					for(WebElement label : enrollmntAndElgLabels){
+						String key = label.getText().trim();
+						enrollAndElgMapUI.put(key, value);
+					}
+		}
+		System.out.println("Map from UI:"+enrollAndElgMapUI);
+	}
+	return enrollAndElgMapUI;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * <pre>This methiod collects data from Enrollment and Eligibility section.</pre>
@@ -9525,47 +9588,6 @@ public String getDateWithReferenceToAnyDate(Date date,int offset,String dateform
 
 
 
-/**
- * <pre>This method terminates employee with current date.</pre>
- * @author smykjn
- * @Date 04-Aug-2017
- * @param String 
- */
-public void zeroDeferralValidationScenario_1() throws Exception{
-	CommonLib.switchToFrame(employeeSearchFrame);
-	Web.clickOnElement(employmntEditLink);
-	Web.getDriver().switchTo().defaultContent();
-	Web.ispageloaded("framecA");
-	CommonLib.switchToFrame(framecA);
-	if(Web.isWebElementsDisplayed(returnToEmployeePageButton, true))
-		Reporter.logEvent(Status.PASS,"Validate 'Return to employee page' button is displayed.","Return to"
-				+ " employee page button is displayed.", false);
-	else
-		Reporter.logEvent(Status.FAIL,"Validate 'Return to employee page' button is displayed.","Return to"
-				+ " employee page button is not displayed.", true);
-	if(rehireempBtn.isDisplayed())
-		Reporter.logEvent(Status.PASS,"validate 'Rehire employee' button is displayed.", "Rehire employee button is displayed.",false);
-	else
-		Reporter.logEvent(Status.FAIL,"validate 'Rehire employee' button is displayed.", "Rehire employee button is not displayed.",true);
-	
-		if(editTerminationDateBtn.isDisplayed())
-		Reporter.logEvent(Status.FAIL,"Validate if Edit termination date button is not displayed.","Edit termination date"
-				+ " button is displayed.",true);
-		else
-		Reporter.logEvent(Status.PASS,"Validate if Edit termination date button is not displayed.","Edit termination date"
-				+ " button is not displayed.",false);
-	
-	String actMsg = termonationMsg.getText().trim();
-	String expMsg = Stock.GetParameterValue("MsgWhenTerminated");
-	System.out.println("Message is :"+actMsg);
-	if(actMsg.equals(expMsg))
-		Reporter.logEvent(Status.PASS,"Validate below message on update Rehire information page.\n"+expMsg,""
-				+ "Below message is displayed\n"+actMsg,false);
-	else
-		Reporter.logEvent(Status.FAIL,"Validate below message on update Rehire information page.\n"+expMsg,""
-				+ "Below message is displayed\n"+actMsg,true);
-}
-
 
 /**
  * <pre>This method validates below title on Employment page.
@@ -10018,15 +10040,46 @@ public void clickOnButtonWhenButtonsSame(List<WebElement> ListOfSameButtons){
 
 
 
-
-
-
-
-
-
-
-
-
+/**
+ * <pre>This method terminates employee with current date.</pre>
+ * @author smykjn
+ * @Date 04-Aug-2017
+ * @param String 
+ */
+public void zeroDeferralValidationScenario_1() throws Exception{
+	CommonLib.switchToFrame(employeeSearchFrame);
+	Web.clickOnElement(employmntEditLink);
+	Web.getDriver().switchTo().defaultContent();
+	Web.ispageloaded("framecA");
+	CommonLib.switchToFrame(framecA);
+	if(Web.isWebElementsDisplayed(returnToEmployeePageButton, true))
+		Reporter.logEvent(Status.PASS,"Validate 'Return to employee page' button is displayed.","Return to"
+				+ " employee page button is displayed.", false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate 'Return to employee page' button is displayed.","Return to"
+				+ " employee page button is not displayed.", true);
+	if(rehireempBtn.isDisplayed())
+		Reporter.logEvent(Status.PASS,"validate 'Rehire employee' button is displayed.", "Rehire employee button is displayed.",false);
+	else
+		Reporter.logEvent(Status.FAIL,"validate 'Rehire employee' button is displayed.", "Rehire employee button is not displayed.",true);
+	
+		if(editTerminationDateBtn.isDisplayed())
+		Reporter.logEvent(Status.FAIL,"Validate if Edit termination date button is not displayed.","Edit termination date"
+				+ " button is displayed.",true);
+		else
+		Reporter.logEvent(Status.PASS,"Validate if Edit termination date button is not displayed.","Edit termination date"
+				+ " button is not displayed.",false);
+	
+	String actMsg = termonationMsg.getText().trim();
+	String expMsg = Stock.GetParameterValue("MsgWhenTerminated");
+	System.out.println("Message is :"+actMsg);
+	if(actMsg.equals(expMsg))
+		Reporter.logEvent(Status.PASS,"Validate below message on update Rehire information page.\n"+expMsg,""
+				+ "Below message is displayed\n"+actMsg,false);
+	else
+		Reporter.logEvent(Status.FAIL,"Validate below message on update Rehire information page.\n"+expMsg,""
+				+ "Below message is displayed\n"+actMsg,true);
+}
 
 }
 

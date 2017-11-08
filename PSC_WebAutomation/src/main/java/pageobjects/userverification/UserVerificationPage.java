@@ -162,6 +162,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
 			Web.setTextToTextBox(txtUserVerificationSecAns, this.getSecurityAnswer());
+			//Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			Web.clickOnElement(btnUserVerificationNext);
 			Web.waitForElement(imgEmpowerPsc);
 		}		
