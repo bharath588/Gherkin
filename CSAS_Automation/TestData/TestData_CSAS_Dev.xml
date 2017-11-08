@@ -1293,7 +1293,6 @@ ORDER BY wb.ga_id,
 				<parameter name = "InvalidPEC" value = "1111" />
 				<parameter name = "InvalidSSN" value = "12365478" />
 				<parameter name = "GrpIdErrorMsg" value = "Enter a valid Plan Number." />
-				<parameter name = "PECErrorMsg" value = "Enter a valid planEnrollmentCode." />
 				<parameter name = "SSNErrorMsg" value = "Enter a valid SSN." />
 				<parameter name = "SSNwithDashes" value = "123-654-789" />				
 		

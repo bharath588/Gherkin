@@ -1231,7 +1231,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	}
 	
 	/**
-	 * Method to verify Date of hire field validation.
+	 * Method to verifydivision field validation.
 	 * 
 	 * @throws InterruptedException
 	 */
@@ -1329,7 +1329,6 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			//Enter Invalid data in PEC field verify error message and whether submit button is enabled or not.
 			Web.setTextToTextBox(planEnrollmentCodeTextbox, Stock.GetParameterValue("InvalidPEC"));
 			planEnrollmentCodeTextbox.sendKeys(Keys.TAB);
-			//CommonLib.verifyIfWebElementTextPresent(planEnrollmentCodeError, Stock.GetParameterValue("PECErrorMsg"));
 			CommonLib.verifyIsButtonEnabledOrNot(submitBtn, true);
 			
 			//Enter Invalid data in SSN field verify error message and whether submit button is enabled or not.
@@ -1397,15 +1396,32 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		planEnrollmentCodeTextbox.clear();
 		ssnSearchedTextbox.clear();
 	}
-	public void logOut(){
-		Web.clickOnElement(logOut);
-	}
-		
+	
+	/**
+	 * Method to verifydivision field validation.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void verifyEndtoEndTestingWithDivisionOnDataBase() throws InterruptedException{
+		try{
+			// fill all the details and verify division value in confirmation page.
+			verifyDivisionFieldValueOnConfirmationPage();
+			
+			// 
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			}finally{
+				try{
+					Reporter.finalizeTCReport();
+					}catch(Exception e){
+						e.printStackTrace();
+						}
+				}
 
-		
+	}
+	
 		
 	}
 	
-	
-	
-

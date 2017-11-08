@@ -10,7 +10,7 @@
 			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 				<methods>
 						
-					<!-- 	<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
+						<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
 						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
 						</include>
 						 <include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
@@ -28,11 +28,11 @@
 						
 						<include name="validateConfirmationPage">
 						<parameter name="ManualTCName" value="validateConfirmationPage" />
-						</include>   -->
+						</include>  
 						<include name="CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
 						<parameter name="ManualTCName" value="CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
 						</include>
-						<!-- <include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
+					<include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
 						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
 						</include>
 						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
@@ -83,8 +83,8 @@
 					</include>	 
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
-					</include>	  -->
-				</methods>
+					</include>	
+					</methods> 
 			</class>
 		</classes>
 	</test>

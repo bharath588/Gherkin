@@ -699,7 +699,7 @@ public class OnlineEnrollmentTestCases {
 		 */
 		
 		@Test(dataProvider="setData")
-		public void  CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
+		public void  CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
 			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  // Go to onlineEnrollment page.
@@ -741,6 +741,47 @@ public class OnlineEnrollmentTestCases {
 		
 		@Test(dataProvider="setData")
 		public void  CORE_18530_DivisionDisplayonConfirmationPage_DivisionName(int itr,Map<String,String> testdata) throws InterruptedException{
+			try{
+				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
+				  // Go to onlineEnrollment page.
+				  onlineEnrollmentObj = new OnlineEnrollment();
+				  onlineEnrollmentObj.get();
+				  onlineEnrollmentObj.EnterValidInputDetails();
+				  
+				  // Verify division field value validation on create account confirmation page.
+				  onlineEnrollmentObj.verifyDivisionFieldValueOnConfirmationPage();
+				  
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}finally{
+					  try{
+						  Reporter.finalizeTCReport();
+					  }catch(Exception e){
+						  e.printStackTrace();
+					  }
+					  }
+		}
+		
+		/**
+		 * -------------------------------------------------------------------
+		 * 
+		 * <pre>
+		 * TestCase: End to end testing with division.
+		 * DESCRIPTION:	  
+		 * RETURNS:	VOID	
+		 * REVISION HISTORY: 
+		 * --------------------------------------------------------------------
+		 * Author:  Saraswathi   Date : 08-Nov-2017    
+		 * --------------------------------------------------------------------
+		 * </pre>
+		 * @param <br>
+		 *        CSAS Credential</br>
+		 */
+		
+		@Test(dataProvider="setData")
+		public void  CORE_18537_EndToEndTesting_WithDivision(int itr,Map<String,String> testdata) throws InterruptedException{
 			try{
 				  Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);			
 				  // Go to onlineEnrollment page.
