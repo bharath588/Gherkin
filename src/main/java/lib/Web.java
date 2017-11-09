@@ -1321,6 +1321,59 @@ public class Web {
 			}
 			
 		}
+		
+		/**
+         * Method to return List<WebElement> using Page Object as reference
+         * 
+          * @param webElememnt
+         * @throws Exception
+         */
+         public static List<WebElement> returnElements(Object pageClassObj,
+                            String webElementName) throws Exception {
+                  List<WebElement> presentElement = getPageObjectFieldsAsList(pageClassObj,
+                                     webElementName);
+                  return presentElement;
+         }
+
+
+
+/**
+         * <pre>
+         * Method to get declared List<WebElement> from a specified page.
+         * Returns corresponding <b>WebElement</b> from <b>getWebElement</b> method available in PageObject class.
+         * Returns null is case of no element found in the page
+         * </pre>
+         * 
+          * @param pageObjectClass
+         *            - Object of the Page class
+         * @param fieldName
+         *            - Name of the Element listed in getWebElement method
+         * @return <b>List<WebElement></b> - Corresponding WebElement mapped against the
+         *         fieldName
+         * @throws Exception
+         */
+         @SuppressWarnings("unchecked")
+		private static List<WebElement> getPageObjectFieldsAsList(Object pageObjectClass,
+                            String fieldName) {
+                  Method getWebElementMethod = null;
+                  List<WebElement> element = null;
+                  try {
+                            getWebElementMethod = pageObjectClass.getClass().getDeclaredMethod(
+                                               "getWebElementasList", String.class);
+                  } catch (NoSuchMethodException e) {
+                            throw new Error("getWebElement() method is not found in "
+                                               + pageObjectClass.getClass().toString());
+                  }
+                  getWebElementMethod.setAccessible(true);
+                  try {
+                            element = (List<WebElement>) getWebElementMethod.invoke(pageObjectClass,fieldName);
+                  } catch (Exception e) {
+                            throw new Error("Error getting page obejct fields : "
+                                               + e.getMessage());
+                  }
+                  return element;
+         }
+
 
 
 	}
