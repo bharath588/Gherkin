@@ -657,7 +657,7 @@ ORDER BY wb.ga_id,
 	</Module>
 	<Module name="rebalancer">
 		<TestCase
-			name="CSAS_PPT Change_Custom Xfer &amp; Renewal_Rebalancer_Transfer Restrictions display">
+			name="CSAS_PPT Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Transfer_Restrictions_display">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
@@ -1370,7 +1370,7 @@ ORDER BY wb.ga_id,
 		
 			</Iteration>	
 		</TestCase>
-			<TestCase name = "CORE_18528_CORE_18534_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
+			<TestCase name = "CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />

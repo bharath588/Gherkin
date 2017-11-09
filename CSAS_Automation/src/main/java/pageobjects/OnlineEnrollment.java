@@ -1,6 +1,7 @@
 package pageobjects;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,9 +28,11 @@ import org.testng.Assert;
 import com.aventstack.extentreports.Status;
 
 import framework.util.CommonLib;
+import generallib.General;
 
 public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	LoadableComponent<?> parent;
+	ResultSet queryResultSet;
 	
 	public OnlineEnrollment()
 	{
@@ -104,6 +107,9 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	
 	@FindBy(id = "state")
 	private WebElement stateTextbox;
+	
+	@FindBy(id = "stateError")
+	private WebElement stateError;
 	
 	@FindBy(id = "zipCode")
 	private WebElement zipCodeTextBox;
@@ -286,9 +292,28 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	@FindBy(id = "preDivision")
 	private WebElement preDivision;
 	
-	@FindBy(xpath="//a[contains(text(),'Log Out')]")
-	private WebElement logOut;
-
+	@FindBy(id = "countryError")
+	private WebElement countryError;
+	
+	@FindBy(xpath = ".//*[@id='reviewInfoSectionDiv']/div[2]/div")
+	private WebElement reviewInfoSectionMsg;
+	
+	@FindBy(id = "ssn")
+	private WebElement ssnEnrollPage;
+	
+	@FindBy(id = "enrollmenterrorMessage")
+	private WebElement EnrollErrorMessage;
+	
+	@FindBy(xpath = ".//*[@id='enrollmenterrorMessage']//li")
+	private WebElement EnrollErrorMessageText;
+	
+	@FindBy(id = "firstNameError")
+	private WebElement firstNameError;
+	
+	@FindBy(id = "lastNameError")
+	private WebElement lastNameError;		
+	
+	
 	Actions action = new Actions(Web.getDriver());
 	
 	
@@ -1422,6 +1447,598 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	}
 	
+public void validateIndicativeData_Country() throws SQLException{
+		
+		String rv_low_val = null;
+		String rv_meaning = null;
+		
+		Select sel = new Select(countryTextbox);
+		
+		if (countryTextbox.isDisplayed()) {
+			Reporter.logEvent(Status.PASS,"Check if Country element is Drop down", "Country element is a drop down", true);
+			if(sel.getFirstSelectedOption().getText().equalsIgnoreCase("US - United States")){
+				Reporter.logEvent(Status.PASS,"Check default value of country field", "Default value in drop down is: "+
+			"\nExpected: "+"US - United States"+"\nActual: "+sel.getFirstSelectedOption().getText(), true);
+			}else{
+				Reporter.logEvent(Status.FAIL,"Check default value of country field", "Default value in drop down is: "+
+						"\nExpected: "+"US - United States"+"\nActual: "+sel.getFirstSelectedOption().getText(), true);
+			}
+			
+			queryResultSet = DB.executeQuery(General.dbInstance, Stock.getTestQuery("queryForRV_DOMAIN")[1]);
+			if(DB.getRecordSetCount(queryResultSet)>0){
+				if(queryResultSet.next()){
+					rv_low_val = queryResultSet.getString("RV_LOW_VALUE");
+					rv_meaning = queryResultSet.getString("RV_MEANING");	
+					Reporter.logEvent(Status.PASS,"Getting RV_LOW_VALUE from Database: D_ISIS", "RV_LOW_VALUE: "+rv_low_val+
+							"\nRV_MEANING: "+rv_meaning, true);
+				}
+				
+				Web.selectDropDownOption(countryTextbox, rv_low_val+" - "+rv_meaning);
+				Reporter.logEvent(Status.INFO, "Entering RV_LOW_VALUE in Country text box", "Value entered is: "+ sel.getFirstSelectedOption().getText(), false);
+
+			}else{
+				Reporter.logEvent(Status.FAIL,"Getting RV_LOW_VALUE from Database","No records found in Database", false);
+			}			
+			
+			Web.selectDropnDownOptionAsIndex(countryTextbox, "0");
+			countryTextbox.sendKeys(Keys.TAB);
+			if(Web.isWebElementDisplayed(countryError, true)){
+				Reporter.logEvent(Status.PASS,"Checking if user deselects or leaves country Country error msg is displayed or not", 
+						"Error message is displayed when user doesn't enter any value in country field: "+countryError.getText(), true);
+			}else{
+				Reporter.logEvent(Status.FAIL,"Checking if user deselects or leaves country Country error msg is displayed or not", 
+						"Error message is not displayed when user doesn't enter any value in country field: "+countryError.getText(), true);
+			}
+		}else{
+			Reporter.logEvent(Status.FAIL,"Check if Country element is Drop down", "Country element is not a drop down", true);
+		}
+	}
+	
+	public void validateIndicativeData_State() throws SQLException{
+		
+		String rv_low_val = null;
+		String rv_meaning = null;
+				
+		Select sel = new Select(stateTextbox);
+		
+		if (stateTextbox.isDisplayed()) {
+			Reporter.logEvent(Status.PASS,"Check if State element is Drop down", "State element is a drop down", true);
+			if(sel.getFirstSelectedOption().getText().equalsIgnoreCase("")){
+				Reporter.logEvent(Status.PASS,"Check default value of State field", "Default value in State field is null: "+
+			"\nExpected: "+""+"\nActual: "+sel.getFirstSelectedOption().getText(), true);
+			}else{
+				Reporter.logEvent(Status.FAIL,"Check default value of State field", "Default value in State field is: "+
+						"\nExpected: "+""+"\nActual: "+sel.getFirstSelectedOption().getText(), true);
+			}
+			
+			queryResultSet = DB.executeQuery(General.dbInstance, Stock.getTestQuery("queryForRV_DOMAINState")[1]);
+			if(DB.getRecordSetCount(queryResultSet)>0){
+				if(queryResultSet.next()){
+					rv_low_val = queryResultSet.getString("RV_LOW_VALUE");
+					rv_meaning = queryResultSet.getString("RV_MEANING");	
+					Reporter.logEvent(Status.PASS,"Getting RV_LOW_VALUE from Database: D_ISIS", "RV_LOW_VALUE: "+rv_low_val+
+							"\nRV_MEANING: "+rv_meaning, true);
+				}
+				
+				Web.selectDropDownOption(stateTextbox, rv_low_val+" - "+rv_meaning);
+				Reporter.logEvent(Status.INFO, "Entering Value in State text box", "Value entered is: "+ sel.getFirstSelectedOption().getText(), false);
+
+			}else{
+				Reporter.logEvent(Status.FAIL,"Getting RV_LOW_VALUE from Database","No records found in Database", false);
+			}			
+			
+			Web.selectDropnDownOptionAsIndex(stateTextbox, "0");
+			stateTextbox.sendKeys(Keys.TAB);
+			if(Web.isWebElementDisplayed(stateError, true)){
+				Reporter.logEvent(Status.PASS,"Checking if State is not selected, error msg is displayed or not", 
+						"Error message is displayed when State is not selected: "+stateError.getText(), true);
+			}else{
+				Reporter.logEvent(Status.FAIL,"Checking if user deselects or leaves State, error msg is displayed or not", 
+						"Error message is not displayed when user doesn't enter any value in State field: "+stateError.getText(), true);
+			}
+		}else{
+			Reporter.logEvent(Status.FAIL,"Check if State element is Drop down", "State element is not a drop down", true);
+		}
+	}
+	
+	public void validateIndicativeData_ZipCode() throws SQLException{
 		
 	}
+	
+	public void confirmationPage_InformationalMsg() throws InterruptedException{
+		
+		if(Web.isWebElementDisplayed(createAccountEnrollTable, true)){
+			
+			if(Web.isWebElementDisplayed(planFoundLabel, true)){
+				Web.setTextToTextBox(firstNameTextbox, Stock.GetParameterValue("FIRST NAME"));
+				Web.setTextToTextBox(lastNameTextbox, Stock.GetParameterValue("LAST NAME"));
+				Web.setTextToTextBox(DateOfBirthTextbox, Stock.GetParameterValue("DOB"));					
+				DateOfBirthTextbox.sendKeys(Keys.TAB);
+				List<WebElement> genderRadioBtns = Web.getDriver().findElements(By.id("gender"));
+				Thread.sleep(3000);
+				genderRadioBtns.get(1).click();
+				List<WebElement> maritalStatusRadioBtns = Web.getDriver().findElements(By.id("married"));
+				Thread.sleep(3000);
+				maritalStatusRadioBtns.get(1).click();					
+				Web.setTextToTextBox(annualIncomeTextBox, Stock.GetParameterValue("ANNUAl INCOME"));
+				Web.setTextToTextBox(dateOfHireTextBox, Stock.GetParameterValue("DOH"));
+				dateOfHireTextBox.sendKeys(Keys.TAB);
+				Web.setTextToTextBox(addressLine1, Stock.GetParameterValue("ADDR LINE1"));
+				Web.setTextToTextBox(cityTextbox, Stock.GetParameterValue("CITY"));
+				Web.selectDropnDownOptionAsIndex(stateTextbox, "2");
+				Web.setTextToTextBox(zipCodeTextBox, Stock.GetParameterValue("ZIP CODE"));	
+				Web.setTextToTextBox(personalEmailTextBox, Stock.GetParameterValue("PERSONAL EMAIL"));
+				Reporter.logEvent(Status.INFO,
+						"Entering all the details in Personal Information section",
+						"All the details in Personal Information section are entered", true);
+				Web.clickOnElement(contToCreateNewAccountBtn);
+				if(Web.isWebElementDisplayed(preConfirmEnroll, true)){
+					Reporter.logEvent(Status.PASS,
+							"Checking if Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page displayed successfully with the details:"+
+							"\nFirst Name: "+preConfirmFirstName.getText()+
+							"\nLast Name: "+preConfirmLastName.getText()+
+							"\nDOB: "+preConfirmDOB.getText()+
+							"\nSSN: "+preConfirmSSN.getText()+
+							"\nGender: "+preConfirmGender.getText()+
+							"\nMarital Status: "+preConfirmMaritalStatus.getText()+
+							"\nAddress Line1: "+preConfirmAddrLine1.getText()+
+							"\nAddress Line2: "+preConfirmAddrLine2.getText()+
+							"\nCity: "+preConfirmCity.getText()+
+							"\nState: "+preConfirmState.getText()+
+							"\nZip Code: "+preConfirmZipCode.getText()+
+							"\nCountry: "+preConfirmCountry.getText()+
+							"\nPersonal Email: "+preConfirmPersonalEmail.getText()+
+							"\nMobile Phone: "+preConfirmMobile.getText()+
+							"\nHome Phone: "+preConfirmHome.getText()+
+							"\nWork Phone: "+preConfirmWork.getText()+
+							"\nInternational Phone: "+preConfirmIntlPhone.getText(), true);
+					
+					if(Web.isWebElementDisplayed(reviewInfoSectionMsg, true)){
+						Reporter.logEvent(Status.PASS, "Verifying the informational message at the top of the page",
+								"Informational message is displayed: \n"+reviewInfoSectionMsg.getText(), true);					
+					}else{
+						Reporter.logEvent(Status.FAIL, "Verifying the informational message at the top of the page",
+								"Informational message is not displayed", true);
+					}
+				}else{
+					Reporter.logEvent(Status.FAIL,
+							"Checking Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page not displayed successfully", true);
+				}
+			}else{
+					Reporter.logEvent(Status.FAIL,
+							"Check if Create Account page is displayed or not",
+							"create Account Enrollment didn't get displayed successfully", true);
+				}
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Check if Create Account page is displayed or not",
+						"Create Account page didn't get displayed successfully", true);
+			}
+	}
+	
+	public void confirmationPage_BackButton() throws InterruptedException{
+		
+		if(Web.isWebElementDisplayed(createAccountEnrollTable, true)){
+			
+			if(Web.isWebElementDisplayed(planFoundLabel, true)){
+				Web.setTextToTextBox(firstNameTextbox, Stock.GetParameterValue("FIRST NAME"));
+				Web.setTextToTextBox(lastNameTextbox, Stock.GetParameterValue("LAST NAME"));
+				Web.setTextToTextBox(DateOfBirthTextbox, Stock.GetParameterValue("DOB"));					
+				DateOfBirthTextbox.sendKeys(Keys.TAB);
+				List<WebElement> genderRadioBtns = Web.getDriver().findElements(By.id("gender"));
+				Thread.sleep(3000);
+				genderRadioBtns.get(1).click();
+				List<WebElement> maritalStatusRadioBtns = Web.getDriver().findElements(By.id("married"));
+				Thread.sleep(3000);
+				maritalStatusRadioBtns.get(1).click();					
+				Web.setTextToTextBox(annualIncomeTextBox, Stock.GetParameterValue("ANNUAl INCOME"));
+				Web.setTextToTextBox(dateOfHireTextBox, Stock.GetParameterValue("DOH"));
+				dateOfHireTextBox.sendKeys(Keys.TAB);
+				Web.setTextToTextBox(addressLine1, Stock.GetParameterValue("ADDR LINE1"));
+				Web.setTextToTextBox(cityTextbox, Stock.GetParameterValue("CITY"));
+				Web.selectDropnDownOptionAsIndex(stateTextbox, "2");
+				Web.setTextToTextBox(zipCodeTextBox, Stock.GetParameterValue("ZIP CODE"));	
+				Web.setTextToTextBox(personalEmailTextBox, Stock.GetParameterValue("PERSONAL EMAIL"));
+				Reporter.logEvent(Status.INFO,
+						"Entering all the details in Personal Information section",
+						"All the details in Personal Information section are entered", true);
+				Web.clickOnElement(contToCreateNewAccountBtn);
+				if(Web.isWebElementDisplayed(preConfirmEnroll, true)){
+					Reporter.logEvent(Status.PASS,
+							"Checking if Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page displayed successfully with the details:"+
+							"\nFirst Name: "+preConfirmFirstName.getText()+
+							"\nLast Name: "+preConfirmLastName.getText()+
+							"\nDOB: "+preConfirmDOB.getText()+
+							"\nSSN: "+preConfirmSSN.getText()+
+							"\nGender: "+preConfirmGender.getText()+
+							"\nMarital Status: "+preConfirmMaritalStatus.getText()+
+							"\nAddress Line1: "+preConfirmAddrLine1.getText()+
+							"\nAddress Line2: "+preConfirmAddrLine2.getText()+
+							"\nCity: "+preConfirmCity.getText()+
+							"\nState: "+preConfirmState.getText()+
+							"\nZip Code: "+preConfirmZipCode.getText()+
+							"\nCountry: "+preConfirmCountry.getText()+
+							"\nPersonal Email: "+preConfirmPersonalEmail.getText()+
+							"\nMobile Phone: "+preConfirmMobile.getText()+
+							"\nHome Phone: "+preConfirmHome.getText()+
+							"\nWork Phone: "+preConfirmWork.getText()+
+							"\nInternational Phone: "+preConfirmIntlPhone.getText(), true);
+					
+					if(Web.isWebElementDisplayed(backBtn, false)){
+						Reporter.logEvent(Status.PASS, "verifying Back button is displayed or not", "Back button is displayed and enabled", true);
+						Web.clickOnElement(backBtn);
+						Reporter.logEvent(Status.INFO, "Clicking on Back button", "Back button is clicked", false);
+					
+					if(Web.isWebElementDisplayed(createAccountEnrollTable, true)){
+						Reporter.logEvent(Status.PASS, "Cheking if control has returned the page to data entry ",
+								"Control has returned the page to data entry enabled", true);
+					}else{
+						Reporter.logEvent(Status.FAIL, "Cheking if control has returned the page to data entry ",
+								"Control has not returned the page to data entry enabled", true);
+					}
+					Web.setTextToTextBox(personalEmailTextBox, Stock.GetParameterValue("NEW EMAIL"));
+					Reporter.logEvent(Status.INFO, "Changing Data entered in the page", "Changing the personal email\n:"+
+								"New data entered is: "+Stock.GetParameterValue("NEW EMAIL"), true);
+					Web.clickOnElement(contToCreateNewAccountBtn);
+					
+					Reporter.logEvent(Status.PASS,
+							"Checking if Pre-Confirmation Enroll page is displayed with new changes made on previous page",
+							"Pre-Confirmation Enroll page is displayed with new changes made on previous page"+
+							"New Personal Email: "+preConfirmPersonalEmail.getText(), true);
+					}else{
+						Reporter.logEvent(Status.FAIL, "verifying Back button is displayed or not", "Back button is not displayed ", true);						
+					}
+				}else{
+					Reporter.logEvent(Status.FAIL,
+							"Checking Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page not displayed successfully", true);
+				}
+			}else{
+					Reporter.logEvent(Status.FAIL,
+							"Check if Create Account page is displayed or not",
+							"create Account Enrollment didn't get displayed successfully", true);
+				}
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Check if Create Account page is displayed or not",
+						"Create Account page didn't get displayed successfully", true);
+			}
+	}
+
+	public void confirmationPage_CreateNewAccount() throws SQLException, InterruptedException{
+		
+		if(Web.isWebElementDisplayed(createAccountEnrollTable, true)){
+			
+			if(Web.isWebElementDisplayed(planFoundLabel, true)){
+				Web.setTextToTextBox(firstNameTextbox, Stock.GetParameterValue("FIRST NAME"));
+				Web.setTextToTextBox(lastNameTextbox, Stock.GetParameterValue("LAST NAME"));
+				Web.setTextToTextBox(DateOfBirthTextbox, Stock.GetParameterValue("DOB"));					
+				DateOfBirthTextbox.sendKeys(Keys.TAB);
+				List<WebElement> genderRadioBtns = Web.getDriver().findElements(By.id("gender"));
+				Thread.sleep(3000);
+				genderRadioBtns.get(1).click();
+				List<WebElement> maritalStatusRadioBtns = Web.getDriver().findElements(By.id("married"));
+				Thread.sleep(3000);
+				maritalStatusRadioBtns.get(1).click();					
+				Web.setTextToTextBox(annualIncomeTextBox, Stock.GetParameterValue("ANNUAl INCOME"));
+				Web.setTextToTextBox(dateOfHireTextBox, Stock.GetParameterValue("DOH"));
+				dateOfHireTextBox.sendKeys(Keys.TAB);
+				Web.setTextToTextBox(addressLine1, Stock.GetParameterValue("ADDR LINE1"));
+				Web.setTextToTextBox(cityTextbox, Stock.GetParameterValue("CITY"));
+				Web.selectDropnDownOptionAsIndex(stateTextbox, "2");
+				Web.setTextToTextBox(zipCodeTextBox, Stock.GetParameterValue("ZIP CODE"));	
+				Web.setTextToTextBox(personalEmailTextBox, Stock.GetParameterValue("PERSONAL EMAIL"));
+				Reporter.logEvent(Status.INFO,
+						"Entering all the details in Personal Information section",
+						"All the details in Personal Information section are entered", true);
+				Web.clickOnElement(contToCreateNewAccountBtn);
+				if(Web.isWebElementDisplayed(preConfirmEnroll, true)){
+					Reporter.logEvent(Status.PASS,
+							"Checking if Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page displayed successfully with the details:"+
+							"\nFirst Name: "+preConfirmFirstName.getText()+
+							"\nLast Name: "+preConfirmLastName.getText()+
+							"\nDOB: "+preConfirmDOB.getText()+
+							"\nSSN: "+preConfirmSSN.getText()+
+							"\nGender: "+preConfirmGender.getText()+
+							"\nMarital Status: "+preConfirmMaritalStatus.getText()+
+							"\nAddress Line1: "+preConfirmAddrLine1.getText()+
+							"\nAddress Line2: "+preConfirmAddrLine2.getText()+
+							"\nCity: "+preConfirmCity.getText()+
+							"\nState: "+preConfirmState.getText()+
+							"\nZip Code: "+preConfirmZipCode.getText()+
+							"\nCountry: "+preConfirmCountry.getText()+
+							"\nPersonal Email: "+preConfirmPersonalEmail.getText()+
+							"\nMobile Phone: "+preConfirmMobile.getText()+
+							"\nHome Phone: "+preConfirmHome.getText()+
+							"\nWork Phone: "+preConfirmWork.getText()+
+							"\nInternational Phone: "+preConfirmIntlPhone.getText(), true);
+					
+					if(Web.isWebElementDisplayed(reviewInfoSectionMsg, true)){
+						Reporter.logEvent(Status.PASS, "Verifying the informational message at the top of the page",
+								"Informational message is displayed: \n"+reviewInfoSectionMsg.getText(), true);
+					
+						Web.clickOnElement(createAccount);						
+						Reporter.logEvent(Status.INFO, "Clicking on Create New Account Button", "Create New Account Button is clicked", false);
+						
+						/**
+						 * 
+						 */
+					}else{
+						Reporter.logEvent(Status.PASS, "Verifying the informational message at the top of the page",
+								"Informational message is not displayed", true);
+					}
+				}else{
+					Reporter.logEvent(Status.FAIL,
+							"Checking Pre-Confirmation Enroll page is displayed or not on entering all the valid details",
+							"Pre-Confirmation Enroll page not displayed successfully", true);
+				}
+			}else{
+					Reporter.logEvent(Status.FAIL,
+							"Check if Create Account page is displayed or not",
+							"create Account Enrollment didn't get displayed successfully", true);
+				}
+			}else{
+				Reporter.logEvent(Status.FAIL,
+						"Check if Create Account page is displayed or not",
+						"Create Account page didn't get displayed successfully", true);
+			}
+	}
+	 
+	/*
+	 * Module: ONLINE ENROLLMENT
+	 * Author: VIRAJ
+	 */
+	
+	public void Enter_gaId(String Ga_id)
+	{
+		Web.setTextToTextBox(planNumberTextbox, Ga_id);
+		Reporter.logEvent(Status.INFO, "Plan number entered is :",
+				 Ga_id, true);
+				
+	}
+	
+	public void Enter_Pec(String pec)
+	{
+		Web.setTextToTextBox(planEnrollmentCodeTextbox, pec);
+		Reporter.logEvent(Status.INFO, "PEC value entered is :",
+				 pec, true);
+				
+	}
+	
+	public void Enter_ssn(String ssn)
+	{
+		Web.setTextToTextBox(ssnSearchedTextbox, ssn);
+		Reporter.logEvent(Status.INFO, "ssn value entered is :",
+				 ssn, true);
+				
+	}
+
+	public void Validate_invalid_ssn(){
+		Web.clickOnElement(ssnSearchedLabel);
+		
+		if(Web.isWebElementDisplayed(ssnSearchedError, true))
+		{Reporter.logEvent(Status.PASS, "Verify ssn error message for invalid ssn",
+				"error message displayed for ssn " + EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn error message for invalid ssn",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void submit()
+	{
+		Web.clickOnElement(submitBtn);
+		if(Web.isWebElementDisplayed(planFoundLabel, true))
+		{Reporter.logEvent(Status.PASS, "Verify navigation to Enrollment/info page",
+				"Page is loaded", true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify navigation to Enrollment/info page",
+					"Page NOT loaded due to invalid data", true);
+		}
+		
+		
+	}
+
+	public void Validate_existing_ssn(){
+				
+		if(Web.isWebElementDisplayed(EnrollErrorMessage, true))
+		{Reporter.logEvent(Status.PASS, "Verify ssn error message for existing ssn",
+				"error message displayed." +EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn error message forexisting  ssn",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void validate_ga_pec_Error()
+	{
+		if(Web.isWebElementDisplayed(EnrollErrorMessage, true))
+		{Reporter.logEvent(Status.PASS, "Verify consolidated GAID/PEC error message for invalid data",
+				"error message displayed." +EnrollErrorMessageText.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify consolidated GAID/PEC error message for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	public void validate_invalid_PlanNum_Error()
+	{
+		if(Web.isWebElementDisplayed(planNumberError, true))
+		{Reporter.logEvent(Status.PASS, "Verify plan num error message displayed for invalid data",
+				"error message displayed." +planNumberError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify plan num error message displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+		
+	}
+	
+	
+	public void air_click()
+	{
+		Web.clickOnElement(planNumberLabel);
+	}
+
+	
+	public void air_click_main()
+	{
+		Web.clickOnElement(planFoundLabel);
+	}
+	
+	public void last_Name_Field()
+	{
+		Web.clickOnElement(lastNameTextbox);
+		air_click_main();
+		if(Web.isWebElementDisplayed(lastNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify last name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify last name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+				
+		Web.setTextToTextBox(lastNameTextbox, "*1&%^$");
+		air_click_main();
+		
+		if(Web.isWebElementDisplayed(lastNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify last name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify last name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+	}
+	
+	
+	public void first_Name_Field()
+	{
+		Web.clickOnElement(firstNameTextbox);
+		air_click_main();
+		if(Web.isWebElementDisplayed(firstNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify first name error displayed for invalid data",
+				"error message displayed." +lastNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify first name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+				
+		Web.setTextToTextBox(firstNameTextbox, "*1&%^$");
+	
+		air_click_main();
+		
+		if(Web.isWebElementDisplayed(firstNameError, true))
+		{Reporter.logEvent(Status.PASS, "Verify first name error displayed for invalid data",
+				"error message displayed." +firstNameError.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify first name error displayed for invalid data",
+					"error message NOT displayed", true);
+		}
+		
+	}
+	
+	
+	public void validate_Address_Lines()
+	{
+		Web.clickOnElement(addressLine1);
+		air_click_main();
+		if(Web.isWebElementDisplayed(addressLine1Error, true))
+		{Reporter.logEvent(Status.PASS, "Verify address line 1  error displayed for NULL data",
+				"error message displayed." +addressLine1Error.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify address line  error displayed for NULL data",
+					"error message NOT displayed", true);
+		}
+		
+		Web.clickOnElement(addressLine2);
+		air_click_main();
+		if(Web.isWebElementDisplayed(addressLine2Error, true))
+		{Reporter.logEvent(Status.PASS, "Verify address line 2  error displayed for same data as address 1",
+				"error message displayed." +addressLine2Error.getText(), true);
+		}
+		//
+		else
+		{
+			Reporter.logEvent(Status.FAIL, "Verify address line  error displayed for same data as address 1",
+					"error message NOT displayed", true);
+		}
+	String length1=	addressLine1.getAttribute("maxlength");
+	String length2=addressLine2.getAttribute("maxlength");
+	
+	if(length1.equalsIgnoreCase("35") && length2.equalsIgnoreCase("35"))
+	{Reporter.logEvent(Status.PASS, "Verify max length address line 2 and  address 1",
+			"max length is 35.", true);
+		
+	}
+	
+	else
+	{
+		Reporter.logEvent(Status.FAIL, "Verify max length address line 2 and  address 1",
+				"length is not 35", true);
+	}
+	}
+
+	public String Validate_Ssn_Enroll()
+	{
+		String ssnReadOnly=ssnEnrollPage.getAttribute("readonly");
+		
+		if(ssnReadOnly. isEmpty())
+		{
+			Reporter.logEvent(Status.FAIL, "Verify ssn is non editable",
+					"SSn is  editable field it should not be editable", true);
+		}
+		
+		else
+		{
+			Reporter.logEvent(Status.PASS, "Verify ssn is non editable",
+					"SSn is non editable field", true);
+		}
+		String ssn=ssnEnrollPage.getText();
+		return ssn;
+	}
+}
+	
+	
+		
 	

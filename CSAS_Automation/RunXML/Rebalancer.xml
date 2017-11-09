@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite verbose="1" name="allSuites">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="Rebalancer">
+		<classes>
+			<class name="app.csas.testcases.rebalancer.validate_rebalancer">
+				<methods>
+				 <include name="Perform_and_validate_Rebalancer_transferRestriction">
+						<parameter name="ManualTCName" value="CSAS_PPT Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Transfer_Restrictions_display"/>						
+					</include>																				
+					<include name="Perform_and_validate_Rebalancer_Checkbox">
+						<parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"/>						
+					</include>	
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+</suite>
+
+
+
+

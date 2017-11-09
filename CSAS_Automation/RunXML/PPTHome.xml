@@ -6,33 +6,7 @@
 	</listeners>
 	
 	<test name="Regression Suite">
-	<classes>
-	<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
-				<methods>
-					<!-- <include name="Validate_Fund_to_Fund_Transfer">
-						<parameter name="ManualTCName" value="CSAS_PPT Change_Fund To Fund Trnfr_Invest Options"></parameter>
-					</include> -->
-					<include name="Validate_Fund_to_Fund_Basic_Transfer">
-						<parameter name="ManualTCName" value="Basic_Transfer"></parameter>
-					</include>
-					<!-- <include name="Validate_Fund_to_Fund_Cancel_Transfer">
-						<parameter name="ManualTCName" value="Cancel_Transfer"></parameter>
-					</include> -->
-					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
-						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_Fund_Restrictions_Message"></parameter>
-					</include>
-					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_Yes">
-						<parameter name="ManualTCName" value="CSAS_PPT_Change_Fund_To_Fund_Trnfr_NO_Fund_Restrictions_Message"></parameter>
-					</include>
-					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal">
-						<parameter name="ManualTCName" value="Trnf_with_Dollar_amt_greater_Prior_Day_balance"></parameter>
-					</include>
-					<include name="Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per">
-						<parameter name="ManualTCName" value="Trnf_with_gtr_100_pct"></parameter>
-					</include>
 		
-			
-		<!-- 			
 		<classes>		
 			<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
@@ -221,13 +195,112 @@
 			<class name="app.csas.testcases.rebalancer.validate_rebalancer">
 				<methods>
 					<include name="Perform_and_validate_Rebalancer_transferRestriction">
-						<parameter name="ManualTCName" value="CSAS_PPT Change_Custom Xfer &amp; Renewal_Rebalancer_Transfer Restrictions display"></parameter>
+						<parameter name="ManualTCName" value="CSAS_PPT Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Transfer_Restrictions_display"></parameter>
 					</include>
 					<include name="Perform_and_validate_Rebalancer_Checkbox">
 						<parameter name="ManualTCName" value="CSAS_PPT_Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Redirect_Future_Contribution_Checkbox"></parameter>
-					</include> -->
+					</include>
 				</methods>
 				
+			</class>
+			
+			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+				<methods>
+						
+						<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
+						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
+						</include>
+						 <include name="validateIndicativeData_PersonalEmail_Phone_ErrorMsg">
+						<parameter name="ManualTCName" value="validateEmailPhoneErrorMessage" />
+						</include>	
+						<include name="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN">
+						<parameter name="ManualTCName" value="DDTC_28132_CORE_18525_ValidIndicativeDataFor_GrpId_PEC_SSN" />
+						</include>
+						
+				
+						<include name="DDTC_28158_validIndicativeData_DateOfHire">
+						<parameter name="ManualTCName" value="DDTC_28158_validIndicativeData_DateOfHire" />
+						</include>
+					
+						
+						<include name="validateConfirmationPage">
+						<parameter name="ManualTCName" value="validateConfirmationPage" />
+						</include>  
+						<include name="CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
+						</include>
+					<include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
+						</include>
+						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18526_EndToEndTesting_Without_Alphanumeric" />
+						</include>
+						
+						<include name="CORE_18527_EndToEndTesting_With_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18527_EndToEndTesting_With_Alphanumeric" />
+						</include>
+						
+		 				<include name="ValidateIndicativeCity">
+						<parameter name="ManualTCName" value="ValidateCity" />
+					</include>	
+					<include name="ValidateIndicativePersonalEmail">
+						<parameter name="ManualTCName" value="ValidatePersonalEmail" />
+					</include>		
+					<include name="validateIndicativeMobilePhone">
+						<parameter name="ManualTCName" value="ValidateMobilePhone" />
+					</include> 
+					<include name="validateIndicativeHomePhone">
+						<parameter name="ManualTCName" value="ValidateHomePhone" />
+					</include>
+					<include name="validateIndicative_ValidationErrorMessage">
+						<parameter name="ManualTCName" value="ValidateErrorMessage" />
+					</include>		
+					<include name="validateIndicativeData_InlineValidation">
+						<parameter name="ManualTCName" value="InlineValidation" />
+					</include>
+					<include name="validateIndicativeData_ClearButton">
+						<parameter name="ManualTCName" value="validateClearButton" />
+					</include> 
+					
+					
+					<include name="validateIndicativeData_State">
+						<parameter name="ManualTCName" value="validateIndicativeData_State" />
+					</include>		
+					<include name="validateIndicativeData_ZipCode">
+						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
+					</include>	
+					<include name="confirmationPageInformationalMessage">
+						<parameter name="ManualTCName" value="confirmationPageInformationalMessage" />
+					</include> 
+					<include name="confirmationPageBackButton">
+						<parameter name="ManualTCName" value="confirmationPageBackButton" />
+					</include>					
+					<include name="validateIndicativeData_Country">
+						<parameter name="ManualTCName" value="validateIndicativeData_Country" />
+					</include>	 
+					<include name="confirmationPageCreateNewAccount">
+						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
+					</include>	
+					<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn" />
+					</include>
+					 <include name="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn" />
+					</include>
+					<include name="CSAS_OnlineEnrollment_ddtc_28137_28140_invalid_Pec_Gaid">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28137_28140_invalid_Pec_Gaid" />
+					</include>
+					<include name="CSAS_OnlineEnrollment_ddtc_28139_validate_plan_num_field">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28139_validate_plan_num_field" />
+					</include>
+					<include name="CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field" />
+					</include>
+					<include name="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn" />
+					</include>
+					
+					</methods> 
 			</class>
 			
 		</classes>
