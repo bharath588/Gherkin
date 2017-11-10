@@ -526,7 +526,7 @@ public class Common {
 
 		}
 		catch(NoSuchElementException e){
-			lib.Reporter.logEvent(Status.FAIL, "VerifyTEXT Field " + fieldName
+			lib.Reporter.logEvent(Status.FAIL, "Verify TEXT Field " + fieldName
 					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", true);
 			isTextDisplayed=false;
 		}

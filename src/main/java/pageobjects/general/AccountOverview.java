@@ -22,7 +22,7 @@ import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
 
-public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
+public class AccountOverview extends LoadableComponent<AccountOverview> {
 
 	// Declarations
 	private LoadableComponent<?> parent;
@@ -30,8 +30,8 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	// @FindBy(xpath=".//h1[text()='My Accounts']") private WebElement
 	// hdrMyAccounts;
-	@FindBy(xpath = ".//h1[text()='My Accounts]")
-	private WebElement hdrMyAccounts;
+	@FindBy(xpath = ".//h1[text()='Account Overview']")
+	private WebElement hdrAccountOverview;
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private List<WebElement> lstLnkPlanName;
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
@@ -51,16 +51,17 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	@FindBy(xpath = "//div[@class='modal-body auto-increase']//div[@class='row'][1]//p") private WebElement txtYouEnrolled;
 	@FindBy(xpath = "//div[@class='modal-body auto-increase']//div[@class='row'][2]//p") private WebElement txtClickCancel;
 	@FindBy(xpath = "//button[./strong[text()[normalize-space()='Continue to enrollment']]]") private WebElement btnContinueToEnroll;
+	@FindBy(xpath = "//button[contains(text(),'Continue')]") private WebElement lnkEnrollNow;
+	private String textField="//*[contains(text(),'webElementText')]";
 	
 	
-	private String lnkEnrollNow="//span[./a[@id='ga_planid']]//a[./span[contains(text(),'Enrollment now open')]]";
 
 	/**
 	 * Empty args constructor
 	 * 
 	 */
-	public MyAccountsPage() {
-		this.parent = new LandingPage();
+	public AccountOverview() {
+		this.parent = new MyAccountsPage();
 		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
@@ -69,7 +70,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 * 
 	 * @param parent
 	 */
-	public MyAccountsPage(LoadableComponent<?> parent) {
+	public AccountOverview(LoadableComponent<?> parent) {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
@@ -78,33 +79,24 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
-			if(Common.verifyLoggedInUserIsSame()) {
+		if(Common.verifyLoggedInUserIsSame()) {
 			
-				Assert.assertTrue(Web.isWebElementDisplayed(hdrMyAccounts));
+				Assert.assertTrue(Web.isWebElementDisplayed(hdrAccountOverview));
 			} else {
 				this.lnkLogout.click();
-				System.out.println("Clicked Log Out on My Accoounts Page");
+				System.out.println("Clicked on Log Out My Accoounts Page");
 				Web.waitForElement(btnLogin);
 				Assert.assertTrue(false,"Login page is displayed");
 			}
 		
 	}
-		
-	
 
 	@Override
 	protected void load() {
-		LandingPage land = (LandingPage) this.parent;
+		MyAccountsPage account = (MyAccountsPage) this.parent;
 
 		this.parent.get();
-		((LandingPage) this.parent).dismissPopUps(true, true);
-		try {
-			 Web.clickOnElement(land, "MY ACCOUNTS");
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
+		
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -131,13 +123,25 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		}
 		// Account Overview
 		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
-			return this.hdrMyAccounts;
+			return this.hdrAccountOverview;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Graph")) {
 			return this.imgGraph;
 		}
 		if (fieldName.trim().equalsIgnoreCase("PLAN NAME")) {
 			return this.lnkPlanName;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LINK ENROLL NOW")) {
+			return this.lnkEnrollNow;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Continue")) {
+			return this.btnContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Cancel")) {
+			return this.btnCancel;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Continue To Enrollment")) {
+			return this.btnContinueToEnroll;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -146,63 +150,41 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 		return null;
 	}
 
+	
 	/**
-	 * method to click on Plan name link which corresponds to the specified
-	 * group account ID
-	 * 
-	 * @param groupAccountID
-	 *            - Example: 95301-01
-	 * @return boolean - <b>true</b> if successful in clicking specified link.
-	 *         <b>false</b> otherwise.
+	 * method to click on EnrollNow link 
 	 */
-	public boolean clickPlanNameByGAID(String... groupAccountID) {
-		boolean success = false;
-		int planCount = this.lstLnkPlanName.size();
-		String actualGAID = "";
-		WebElement currElement;
-
-		if (groupAccountID.length == 0) {
-			currElement = this.lstLnkPlanName.get(0);
-			currElement.click();
-			success = true;
-		} else {
-			for (int iCntr = 0; iCntr < planCount; iCntr++) {
-				currElement = this.lstLnkPlanName.get(iCntr);
-				actualGAID = currElement.getAttribute("id");
-
-				if (actualGAID.trim().equals("ga_" + groupAccountID[0].trim())) {
-					currElement.click();
-					success = true;
-					break;
-				}
-			}
-		}
-
-		return success;
-	}
-	/**
-	 * method to click on Enrollment Now Open  link which corresponds to the specified
-	 * group account ID
-	 * 
-	 * @param groupAccountID
-	 *            - Example: 95301-01
-	 * @return boolean - <b>true</b> if successful in clicking specified link.
-	 *         <b>false</b> otherwise.
-	 */
-	public void clickEnorollNowByGAID(String groupAccountID) {
+	public void clickOnEnrollNow() {
 		
 		try
 		{
-			WebElement lnkEnrollment = Web.getDriver().findElement(By		
-				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
-			if(lnkEnrollment.isDisplayed())
-				Web.clickOnElement(lnkEnrollment);
+			if(Web.isWebElementDisplayed(lnkEnrollNow, true))
+			Web.clickOnElement(lnkEnrollNow);
 		}
-          catch(NoSuchElementException e){
-        	  e.printStackTrace();
-          }
-  		
+		catch(NoSuchElementException e){
+			e.printStackTrace();
+		}
 		
 	}
+	public boolean isTextFieldDisplayed(String fieldName) {
+		boolean isTextDisplayed=false;
+		try{
+		 WebElement txtField= Web.getDriver().findElement(By.xpath(textField.replace("webElementText", fieldName)));
+	
+		isTextDisplayed = Web.isWebElementDisplayed(txtField, true);
+		
+		if (isTextDisplayed)
+			lib.Reporter.logEvent(Status.PASS, "Verify TEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Displayed",
+					false);
 
+		}
+		catch(NoSuchElementException e){
+			lib.Reporter.logEvent(Status.FAIL, "Verify TEXT Field " + fieldName
+					+ "  is Displayed", "TEXT Field '"+fieldName + "' is Not Displayed", false);
+			isTextDisplayed=false;
+		}
+	
+  return isTextDisplayed;
+	}
 }

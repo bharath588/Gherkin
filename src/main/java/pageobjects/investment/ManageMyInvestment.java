@@ -408,30 +408,6 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	protected void isLoaded() throws Error {
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
-		/*//Assert.assertTrue(Web.isWebElementDisplayed(this.lblUserName),"Manage My Investment Page is Not Loaded");
-		String ssn = Stock.GetParameterValue("userName");
-		String userFromDatasheet = null;
-		if (Globals.GC_EXECUTION_ENVIRONMENT.contains("PROD")) {
-			userFromDatasheet = Stock.GetParameterValue("lblUserName");
-		} else {
-			ResultSet strUserInfo=null;
-			try {
-				strUserInfo = Common.getParticipantInfoFromDataBase(ssn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			try {
-				userFromDatasheet = strUserInfo.getString("FIRST_NAME") + " "
-						+ strUserInfo.getString("LAST_NAME");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		String userLogedIn = this.lblUserName.getText();
-		*/
 		if(Common.verifyLoggedInUserIsSame()) {
 			
 			if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("NAVIGATEFROM")){

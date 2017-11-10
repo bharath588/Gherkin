@@ -877,6 +877,7 @@ public class logintestcases {
 					itr,
 					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
 							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			String verificationCode = "";
 			Boolean isMatching=false;
 			Common.updateEDeliveryMthodInDB();
@@ -1253,22 +1254,23 @@ public class logintestcases {
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
            //Step 6
-        isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
-           
+           Common.isTextFieldDisplayed("For mail delivery, uncheck the e-delivery option.");
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
+      
            if(isMatching){
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Not Displayed",true);
 			}
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "CHECKBOX PLAN NAME", true);
            
@@ -1614,22 +1616,23 @@ public class logintestcases {
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
            //Step 6
-        isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
-           
+           Common.isTextFieldDisplayed("For mail delivery, uncheck the e-delivery option.");
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
+      
            if(isMatching){
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Not Displayed",true);
 			}
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "CHECKBOX PLAN NAME", true);
            
@@ -1976,22 +1979,23 @@ public class logintestcases {
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
            //Step 6
-        isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
-           
+           Common.isTextFieldDisplayed("For mail delivery, uncheck the e-delivery option.");
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
+      
            if(isMatching){
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Not Displayed",true);
 			}
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "CHECKBOX PLAN NAME", true);
            
@@ -2316,22 +2320,23 @@ public class logintestcases {
 						"Change Communaction Preferences Page Is Not Displayed",true);
 			}
            //Step 6
-        isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
-           
+           Common.isTextFieldDisplayed("For mail delivery, uncheck the e-delivery option.");
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "TEXT I PREFER", true);
+      
            if(isMatching){
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"Yes, 'I prefer electronic delivery for all available documents.' Is Displayed",
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'Yes, I prefer electronic delivery for all available documents.' Is Displayed",
-						"'Yes, I prefer electronic delivery for all available documents.' Is Not Displayed",true);
+						"Verify 'E-delivery' Label Is Displayed",
+						"'E-delivery' Label Is Not Displayed",true);
 			}
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "CHECKBOX PLAN NAME", true);
            
