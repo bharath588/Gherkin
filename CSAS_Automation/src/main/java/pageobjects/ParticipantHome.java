@@ -223,7 +223,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'Managed Account Status')]")
 	private WebElement participantMngAccStsLabel;
 
-	@FindBy(css = "table[name = 'pptinfo'] tr:nth-of-type(12)>td.data")
+	@FindBy(id = "maMessageGeneral")
 	private WebElement participantMngAccSts;
 
 	@FindBy(xpath = "//table[@name = 'pptinfo']//td[contains(text(),'SecureFoundation Status')]")
@@ -1409,6 +1409,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 						"Validate Managed Account status label and managed account status on ppt homepage",
 						"Managed Account status label and managed account status on ppt homepage displayed successfully",
 						false);
+				System.out.println(participantMngAccSts.getText());
 
 				if (participantMngAccSts.getText().trim()
 						.contains(Stock.GetParameterValue("expected_msg"))) {
@@ -1606,6 +1607,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			if (resultset != null) {
 				while (resultset.next()) {
 					pptID = resultset.getString("IND_ID");
+					
 				}
 			}
 		}
@@ -1614,8 +1616,10 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					Stock.getTestQuery("getPPTIDforPDIStatusN")[0],
 					Stock.getTestQuery("getPPTIDforPDIStatusN")[1]);
 			if (resultset != null) {
+				
 				while (resultset.next()) {
 					pptID = resultset.getString("IND_ID");
+					System.out.println(pptID);
 				}
 			}
 		}

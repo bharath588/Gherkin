@@ -200,10 +200,17 @@ public class validate_participanthomepage {
 					if(Web.getDriver().getWindowHandles().size()==1){
 					//	sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.
 					//			      GetParameterValue("web_reg_status"),"ID","GA_ID");
-						sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("web_reg_status"),true,"ID","GA_ID");
+						String regStatus= Stock.GetParameterValue("web_reg_status");
+						if(regStatus.equalsIgnoreCase("Registered")){
+						sqlQueryRes = participantHomeObj.getSSN_or_pptID(regStatus,true,"ID","GA_ID");
 						participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 								                                              sqlQueryRes.get("ID"),
 								                                              sqlQueryRes.get("GA_ID"));
+						}
+						else{
+							participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+									Stock.GetParameterValue("ppt_id"),Stock.GetParameterValue("planID"));
+						}
 					}
 					// Step3: Verify Mail existing PIN and Order Temp PIN message
 					participantHomeObj.verifyPIN_ExistingOrTemp();
@@ -299,10 +306,22 @@ public class validate_participanthomepage {
 		// Step1:Launch and logged into CSAS application..
 		participantHomeObj = new ParticipantHome().get();
 		
-		// Step2:Search with PPT ID..		
-		sqlQueryRes = participantHomeObj.getSSN_or_pptID(Stock.GetParameterValue("reg_status"),"ID","GA_ID");
-		participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",sqlQueryRes.get("ID"),sqlQueryRes.get("GA_ID"));
+		// Go to participant home page.
+		String regStatus= Stock.GetParameterValue("reg_status");
+		if(regStatus.equalsIgnoreCase("Registered")){
+			// Step2:Search with PPT ID..	
+			sqlQueryRes = participantHomeObj.getSSN_or_pptID(regStatus,"ID","GA_ID");
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",sqlQueryRes.get("ID"),sqlQueryRes.get("GA_ID"));
 
+		}
+		else{
+			// Step2:Search with PPT ID..	
+			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
+					Stock.GetParameterValue("ppt_id"),Stock.GetParameterValue("planID"));
+		}
+		
+		
+	
 		// Step3: Verify Registration status
 		participantHomeObj.verify_Registration_Status(Stock
 				.GetParameterValue("reg_status"));

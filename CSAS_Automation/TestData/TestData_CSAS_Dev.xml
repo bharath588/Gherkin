@@ -40,8 +40,10 @@
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="cswa" />
+				<parameter name="ppt_id" value="6021452" />
+				<parameter name="planID" value="194037-01" />
 				<parameter name="password" value="baseball" />
-				<parameter name="reg_status" value="NonRegistered" />
+				<parameter name="reg_status" value="Not Registered" />
 			</Iteration>
 		</TestCase>
 		<TestCase
@@ -67,14 +69,16 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="6021452" />
 				<parameter name="managed_acc_status" value="Plan Not Offered" />
-				<parameter name="expected_msg" value="not offered by plan" />
+				<parameter name="expected_msg" value="not offered in the plan" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="CSAS_PPT_Info_Ppt_Home_Page_PDI_Status">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
+				<parameter name="ppt_id" value="6021452" />
 				<parameter name="pdi_status" value="No" />
 			</Iteration>
 		</TestCase>
@@ -83,14 +87,16 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="web_reg_status" value="NonRegistered" />
+				<parameter name="ppt_id" value="6021452" />
+				<parameter name="web_reg_status" value="Not Registered" />
 				<parameter name="btnName" value="Mail_Existing_PIN" />
 				<parameter name="planID" value="194037-01" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="web_reg_status" value="NonRegistered" />
+				<parameter name="ppt_id" value="6021452" />
+				<parameter name="web_reg_status" value="Not Registered" />
 				<parameter name="btnName" value="Order_Temp_PIN" />
 				<parameter name="planID" value="194037-01" />
 			</Iteration>
@@ -332,7 +338,7 @@ and effdate &gt;= sysdate-60" />
 		<parameter QueryName="getPPTIDforPDIStatusN" DB="INSTDB_DEV"
 			Query="select IND_ID from address where 
 validation_source_code != 'PDI'
-and effdate &gt;= sysdate-60" />
+and effdate &gt;= sysdate-4" />
 		<parameter QueryName="getPPTIDforLoanInfo" DB="ISISDB_DEV"
 			Query="select * from loan_acct where status_code='A'and TRF_loan_acct_ind='Y' and rownum &lt;= 1" />
 		<parameter QueryName="getActiveLegalNameList" DB="ISISDB_DEV"
@@ -560,7 +566,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="202752" />
+				<parameter name="PPT_ID" value="11528366" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="100" />
 				<parameter name="TransferToVal" value="100" />
@@ -572,7 +578,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="202752" />
+				<parameter name="PPT_ID" value="11528366" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="1" />
 				<parameter name="TransferToVal" value="100" />
@@ -584,7 +590,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="202752" />
+				<parameter name="PPT_ID" value="11528366" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="1" />
 				<parameter name="TransferToVal" value="100" />
@@ -661,7 +667,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="202752" />
+				<parameter name="PPT_ID" value="11528366" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -671,7 +677,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11550346" />
+				<parameter name="PPT_ID" value="11528366" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -878,7 +884,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />		<!-- 10824079, 11300720-->
+				<parameter name="PPT_ID" value="5322457" />		<!-- 10824079, 11300720-->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />	
@@ -931,7 +937,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="5322457" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
