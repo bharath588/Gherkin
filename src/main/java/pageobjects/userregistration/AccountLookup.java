@@ -44,6 +44,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 	//@FindBy(id="pinInput") private WebElement txtPINInput;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[@id='pinInput']") private WebElement txtPINInput;
 	@FindBy(xpath=".//*[@id='login-help-submit']") private WebElement btnContinueDoNotHavePin;
+	@FindBy(xpath="//button[./span[text()='CONTINUE']]") private WebElement btnContinuehavePlanEnrollCode;
 	//@FindBy(xpath=".//*[@id='submit']") private WebElement btnContinue;
 	@FindBy(xpath=".//*[@id='registrationContent']/.//*[normalize-space()='CONTINUE' and @id='submit']") private WebElement btnContinue;
 	@FindBy(id="groupIdInput") private WebElement inpPlanNumber;
@@ -217,7 +218,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE")) {
 			if (this.getActiveTabName().equalsIgnoreCase("I have a plan enrollment code")) {
 				//Continue on "I have a group account password" Tab
-				return this.btnContinue;
+				return this.btnContinuehavePlanEnrollCode;
 			}
 			else if(this.getActiveTabName().equalsIgnoreCase("I do not have a PIN")){
 				return this.btnContinueDoNotHavePin ;
