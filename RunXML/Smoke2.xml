@@ -17,7 +17,20 @@
 					<parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
                     </parameter>
                     </include>
-				 	
+				 	  <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
+                    </parameter>
+                    </include>
+               
+                    <include name="RIP_TC006_To_Verify_RetirementIncomeTab_Other_Assets">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC006_To verify Retirement Income tab_Other assets_Prod">
+                    </parameter>
+                    </include>
+                
+                    <include name="RIP_TC007_To_Verify_RetirementIncomeTab_Income_Gap">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC007_To verify Retirement Income tab_Income gap_Prod">
+                    </parameter>
+                    </include>
 				</methods>
 			</class>
 		</classes>
