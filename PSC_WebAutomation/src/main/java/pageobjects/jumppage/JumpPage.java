@@ -139,7 +139,9 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 			int siteAccessLinks = jumpPageSiteLinks.size();
 			WebElement searchBox = jumpPageSearchBox;
 			//String dBName = CommonLib.getParticipantDBName(Stock.GetParameterValue("username"))+"DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
-			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode")[0],Stock.getTestQuery("getAccuCode")[1],"K_"+Stock.GetParameterValue("username"));
+			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode")[0],
+					Stock.getTestQuery("getAccuCode")[1],
+					"K_"+Stock.GetParameterValue("username"));
 			int numberOfSiteAccess = DB.getRecordSetCount(resultset);
 			if(jumpageHeader.equalsIgnoreCase("Site selection") && siteAccessLinks==numberOfSiteAccess && Web.isWebElementDisplayed(searchBox, true))
 			{
@@ -163,18 +165,23 @@ public class JumpPage extends LoadableComponent<JumpPage> {
 	public void jumpPageSearchPlanBoxValidation() throws Exception
 	{
 		Set<String> planIDs = new LinkedHashSet<String>();
-			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode")[0],""
-					+Stock.getTestQuery("getAccuCode")[1],"K_"+Stock.GetParameterValue("username"));
+			resultset = DB.executeQuery(Stock.getTestQuery("getAccuCode1")[0],""
+					+Stock.getTestQuery("getAccuCode1")[1],"K_"+Stock.GetParameterValue("username"));
 			while(resultset.next())
 			{
 				planIDs.add(resultset.getString("GA_ID"));
 				System.out.println("Plan Id is:"+resultset.getString("GA_ID"));
+				break;
 			}
 			for(String str : planIDs){
 				Web.setTextToTextBox(jumpPageSearchBox, str);
-				WebElement option = Web.getDriver().findElement(By.xpath(jumpageList));
-				Web.waitForElement(option);
 				Thread.sleep(2000);
+				WebElement option = Web.getDriver().findElement(By.xpath(jumpageList));
+				try{
+					Web.isWebElementDisplayed(option, false);
+				}catch(Exception e){
+					option = Web.getDriver().findElement(By.xpath(jumpageList));
+				}
 				if(option.getText().contains(str))
 				{
 					Reporter.logEvent(Status.PASS,"Verify Search plan Box options when a valid plan number "+str+" is entered.","Plan '"+option.getText()+"' is displayed as user enters the valid plan number '"+str+"'.",false);

@@ -88,14 +88,20 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));			
-			actualErrorMessage = accountverification.getErrorMessageText();			
+			//actualErrorMessage = accountverification.getErrorMessageText();			
 
 			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {				
 				Web.clickOnElement(accountverification, "ERRORMSG");
 				Web.clickOnElement(accountverification, "DISMISS");
 			}
-			accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage, 
-					Stock.GetParameterValue("expectedErrorMessage"));
+			/*accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage, 
+					Stock.GetParameterValue("expectedErrorMessage"));*/
+			if(!Web.returnElement(accountverification, "BTNNEXT").isEnabled())
+				Reporter.logEvent(Status.PASS,"Enter invalid inputs.","Next button is disabled.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Enter invalid inputs.","Next button is not disabled.", true);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -441,16 +447,23 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));
+			
+			if(!Web.returnElement(accountverification, "BTNNEXT").isEnabled())
+				Reporter.logEvent(Status.PASS,"Enter any of the last 10 passwords.","Next button is disabled and"
+						+ " hence user can't use that password.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Enter any of the last 10 passwords.","Next button is not disabled and"
+						+ " user can use that password.", true);
 
 			accountverification.setOldPassword(
 					Stock.getTestQuery("deleteRecentPasswordRows"),
 					Stock.getTestQuery("queryTosetOldPassword"),
 					Stock.GetParameterValue("username"));
 
-			actualErrorMessage = accountverification.getErrorMessageText();
+			/*actualErrorMessage = accountverification.getErrorMessageText();
 			System.out.println(actualErrorMessage);
 			accountverification.actualErrorValidationRptNegativeFlow(actualErrorMessage,
-					Stock.GetParameterValue("expectedErrorMessage"));
+					Stock.GetParameterValue("expectedErrorMessage"));*/
 		}
 		catch(Exception e)
 		{

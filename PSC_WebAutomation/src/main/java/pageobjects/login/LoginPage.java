@@ -482,8 +482,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Reporter.logEvent(Status.INFO,"All txn codes are inserted back.","",false);
 		else
 			Reporter.logEvent(Status.WARNING,"All txn codes are not inserted back.","",false);
-		queryResultSet = DB.executeQuery(Stock.getTestQuery("insertTxnCodesESCVPE")[0],
-				Stock.getTestQuery("insertTxnCodesESCVPE")[1],"K_"+Stock.GetParameterValue("username"));
+		/*queryResultSet = DB.executeQuery(Stock.getTestQuery("insertTxnCodesESCVPE")[0],
+				Stock.getTestQuery("insertTxnCodesESCVPE")[1],"K_"+Stock.GetParameterValue("username"));*/
 		
 	}
 	
@@ -510,7 +510,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		queryResultSet = DB.executeQuery(Stock.getTestQuery("getUserClassesForAUser2")[0],
 				Stock.getTestQuery("getUserClassesForAUser2")[1],"K_"+Stock.GetParameterValue("username"));
 		if(DB.getRecordSetCount(queryResultSet)==0)
-			Reporter.logEvent(Status.PASS, "Delete following txn codes from DB from all user types assigned to a user."
+			Reporter.logEvent(Status.PASS, "Delete following txn codes from DB from all user types assigned to a user.\n"
 					+ "'PSOVPG','PSOVMN'","Txn codes are "
 							+ "deleted.", false);
 		else

@@ -285,13 +285,13 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	 */
 	public void enterPlanWhenDefaultPlanIsNull() throws Exception {
 		String planNumber = "";
-		resultset = DB.executeQuery(Stock.getTestQuery("getNumberOfplansQuery")[0],
+		/*resultset = DB.executeQuery(Stock.getTestQuery("getNumberOfplansQuery")[0],
 				Stock.getTestQuery("getNumberOfplansQuery")[1],
 				"K_"+Stock.GetParameterValue("username"));
 		while(resultset.next()){
 			planNumber = resultset.getString("GA_ID");
 			break;
-		}
+		}*/
 		if(planNumber==null || planNumber.isEmpty()){
 			planNumber = Stock.GetParameterValue("planNumber");
 		}

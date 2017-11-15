@@ -530,7 +530,7 @@ public class accountverificationtestcases {
 					Web.clickOnElement(accountverification, "BTNNEXT");
 				}
 			}
-			accountverification.registerUsername(Stock.GetParameterValue("regUserName"));
+			accountverification.registerUsername(Stock.GetParameterValue("regUsername"));
 			actualErrorMessage = accountverification.getErrorMessageText();
 			Web.clickOnElement(userverification, "ERRORMSG");
 			Web.clickOnElement(userverification, "DISMISS");

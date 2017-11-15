@@ -30,7 +30,8 @@ import pageobjects.login.*;
 public class AccountVerificationPage extends LoadableComponent<AccountVerificationPage> {
 
 	/* Object declarations for AccountVerificationPage */
-
+	@FindBy(id="passMustMatch")
+	private WebElement passMstMatch;
 	@FindBy(css = "input[id *= 'mpwrPlanBox']")
 	private WebElement txtPlanNumber;
 	@FindBy(css = "span[class *= 'growl-title']")
@@ -56,6 +57,8 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	@FindBy(xpath = "(//select[contains(@class,'securityQuestionListBox')])[3]")
 	private WebElement drpdownThirdSecurityQues;
 	@FindBy(css = "button[class *= 'btn-u next ui-button']")
+	private WebElement btnNext1;
+	@FindBy(xpath = ".//button[contains(@id,'changePasswordNext')]")
 	private WebElement btnNext;
 	@FindBy(css = "button[class *= 'btn-u btn-u-default swap']")
 	private WebElement btnCancelSecurityQues;
@@ -150,6 +153,9 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		if (fieldName.trim().equalsIgnoreCase("PLAN NUMBER")) {
 			return this.txtPlanNumber;
 		}
+		if(fieldName.trim().equalsIgnoreCase("PASSWORD_MUST_MATCH")){
+			return this.passMstMatch;
+		}
 		if (fieldName.trim().equalsIgnoreCase("CANCEL")) {
 			return this.btnCancel;
 		}
@@ -242,7 +248,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 		Web.setTextToTextBox(txtFirstDropdownBox, String.valueOf(ansFirstDropdown));
 		Web.setTextToTextBox(txtSecondDropdownBox, ansSecondDropdown);
 		Web.setTextToTextBox(txtThirdDropdownBox, ansThirdDropdown);
-		Web.clickOnElement(btnNext);
+		Web.clickOnElement(btnNext1);
 		Thread.sleep(2000);
 	}
 
@@ -258,7 +264,7 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public void registerUsername(String userName) {
 		Web.isWebElementDisplayed(txtUsernameReg, true);
 		Web.setTextToTextBox(txtUsernameReg, userName);
-		Web.clickOnElement(btnNext);
+		Web.clickOnElement(btnNext1);
 	}
 
 	/**

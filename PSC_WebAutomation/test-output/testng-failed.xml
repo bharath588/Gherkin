@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
+<suite thread-count="2" name="Failed suite [testsuite]" parallel="classes">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="test_new_Development(failed)">
+  <test name="Regression_Yellow_Period_Execution_1(failed)" parallel="classes">
     <classes>
-      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+      <class name="app.psc.testcases.userverification.userverificationtestcases">
         <methods>
+          <include name="DriverQuite"/>
           <include name="ReportInit"/>
-          <include name="TC_63_Agecatchup">
-            <parameter name="ManualTCName" value="DDTC-204_Agecatchup"/>
-          </include> <!-- TC_63_Agecatchup -->
-          <include name="cleanUpSession"/>
+          <include name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input"/>
         </methods>
-      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
+      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
     </classes>
-  </test> <!-- test_new_Development(failed) -->
+  </test> <!-- Regression_Yellow_Period_Execution_1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

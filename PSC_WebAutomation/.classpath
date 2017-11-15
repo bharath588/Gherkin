@@ -17,13 +17,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Framework"/>
 	<classpathentry kind="lib" path="H:/common/Automation-Selenium/Execution jar/ojdbc6-11.2.0.3.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="//its/its/Citrix/UserData/ind.smykjn/xd01p/Redirection/Desktop/Framework-3.0.6-SNAPSHOT.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Framework"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

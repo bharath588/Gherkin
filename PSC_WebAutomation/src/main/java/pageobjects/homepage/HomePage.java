@@ -53,6 +53,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 	@FindBy(css="div[id='footContainer'] ul[id='footBottomLinks'] li") private List<WebElement> wePostFooterLinkListLogin;
 	@FindBy(css="div[id='greeting'] span[class='label']") private WebElement weGreeting;
+	@FindBy(css="div[id='greeting']") private WebElement firstNameOnHomePage;
 	@FindBy(css="table[class='verificationTable']") private WebElement tabUserVerification;
 	@FindBy(css="input[class*='emailBox']") private WebElement txtUserVerificationEmail;
 	@FindBy(css="input[class*='answerBox']") private WebElement txtUserVerificationSecAns;
@@ -116,7 +117,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement planAnalytics;
 	@FindBy(xpath="(.//*[contains(@class,'planinfopanel')])[2]")
 	private WebElement planinfoAndStatus;
-	@FindBy(xpath="(//h2[text() = 'Funds'])[2]")
+	@FindBy(xpath="(//h2[text() = 'Funds'])[1]")
 	private WebElement funds;
 	@FindBy(xpath=".//*[@id='newMenu']/li[1]/a/following-sibling::ul//a[contains(text(),'Overview')]")
 	private WebElement PlanOverviewTab;
@@ -189,7 +190,8 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 
 	@Override
-	protected void isLoaded() throws Error {	
+	protected void isLoaded() throws Error {
+			
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
@@ -390,7 +392,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	public void logoutPSC() throws Exception{
 		Web.getDriver().switchTo().defaultContent();
 		if(Web.isWebElementDisplayed(logoutLink,true)){
-			logoutLink.click();
+			Web.clickOnElement(logoutLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.isWebElementDisplayed(Web.returnElement(new LoginPage(),"USERNAME"),false);
 			Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
@@ -485,6 +487,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			while(rs.next())
 			{
 				lastLoginDate = rs.getString("DPDATE");
+				System.out.println(lastLoginDate);
 			}
 			if(lastLoginDate!=null)
 			{
@@ -564,8 +567,9 @@ public class HomePage extends LoadableComponent<HomePage>{
 	{
 		boolean equalDate = false;
 		System.out.println(dateFromDatabase);
-		String dateFromDB1 = dateFromDatabase.trim().substring(0,16);
-		String dateFromDB2 = dateFromDatabase.trim().substring(16);
+		int endIndex = dateFromDatabase.length();
+		String dateFromDB1 = dateFromDatabase.trim().substring(0,endIndex);
+		String dateFromDB2 = dateFromDatabase.trim().substring(endIndex);
 		String dateFromDB = dateFromDB1+" "+dateFromDB2;
 		String dateFromWeb = getLastLoginDateFromWeb().trim().substring(11,30);
 		try
@@ -574,7 +578,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 			System.out.println("Date from Web is: "+dateFromWeb);
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aaa",Locale.US);
 			Date date = sdf.parse(dateFromWeb);
-			Date date1 = sdf.parse(dateFromDB);
+			Date date1 = sdf.parse(dateFromDB.trim());
 			Calendar cal =Calendar.getInstance();
 			cal.setTime(date1);
 			cal.add(Calendar.HOUR, 2);
@@ -1084,11 +1088,11 @@ public class HomePage extends LoadableComponent<HomePage>{
 	{
 		if(Web.isWebElementDisplayed(planListData, true))
 		{
-			Reporter.logEvent(Status.FAIL,"Verify Plan list data is not displayed on home page since user is not having any plan access.","Plan List is displayed.",true);
+			Reporter.logEvent(Status.PASS,"Verify Plan list data is displayed on home page for PL User.","Plan List is displayed.",false);
 		}
 		else
 		{
-			Reporter.logEvent(Status.PASS,"Verify Plan list data is not displayed on home page since user is not having any plan access.","Plan List is not displayed.",false);
+			Reporter.logEvent(Status.FAIL,"Verify Plan list data is displayed on home page for PL User.","Plan List is not displayed.",true);
 		}
 	}
 
@@ -1233,12 +1237,13 @@ public void validateOtherHomePageSecutiryTXNCodes()
 {
 	try{
 		Web.getDriver().switchTo().frame(iFramePlanB);
+		Web.isWebElementDisplayed(complianceTabToolTip, true);
 		if(toDoTab.isDisplayed()&&fileSharingTab.isDisplayed()&&complianceTabToolTip.isDisplayed())
 			Reporter.logEvent(Status.PASS,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
 					+ " tabs are displayed.", false);
 		else
-		Reporter.logEvent(Status.FAIL,"Check Todo,File sharing and compliance tabs are not displayed.","All mentioned"
-				+ " tabs are displayed.", true);
+		Reporter.logEvent(Status.FAIL,"Check Todo,File sharing and compliance tabs are displayed.","All mentioned"
+				+ " tabs are not displayed.", true);
 	 }
 	catch(Exception e)
 	{

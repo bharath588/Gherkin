@@ -235,6 +235,7 @@ public class CommonLib {
 		{
 			db="ISIS";
 		}
+		participantDB.close();
 		return db;
 	}
 

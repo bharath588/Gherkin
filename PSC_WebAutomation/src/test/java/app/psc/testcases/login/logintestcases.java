@@ -237,8 +237,8 @@ public class logintestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"Verify the pre-login error messages", false);
 			login = new LoginPage().get();
-			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), 
-					Stock.GetParameterValue("password")});
+			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username").trim(), 
+					Stock.GetParameterValue("password").trim()});
 			Thread.sleep(4000);
 			login.verifyErrorforRespectiveLogin(Stock.GetParameterValue("errorMessages"));			
 		} catch (Exception e) {
@@ -428,6 +428,7 @@ public class logintestcases {
 			Thread.sleep(3000);
 			accountverification.jumpPagedisplayed();	
 			home.verifyHomePageMenuTabs();
+			home.logoutPSC();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -477,7 +478,8 @@ public class logintestcases {
 			login = new LoginPage();
 			login.updateInvalidLogonAttempt(Stock.getTestQuery("queryToResetInvalidLoginCount"),
 					Stock.GetParameterValue("username"));
-			login.updateTermDateForUser(Stock.getTestQuery("queryToTerminateUser"), Stock.GetParameterValue("termDate"), Stock.GetParameterValue("username"));
+			login.updateTermDateForUser(Stock.getTestQuery("queryToTerminateUser"), 
+					Stock.GetParameterValue("termDate"), Stock.GetParameterValue("username"));
 			login.get();
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			if(itr==1)
@@ -660,7 +662,7 @@ public class logintestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
 			Reporter.logEvent(Status.INFO, "Testcase Description",
-					"verify if jump page is not after login when user has acess to plan only in single site.", false);
+					"verify if jump page is not displayed after login when user has acess to plan only in single site.", false);
 			login = new LoginPage().get();
 			login.submitLoginCredentials(new String[]{Stock.GetParameterValue("username"), Stock.GetParameterValue("password")});
 			home = new HomePage();
@@ -855,7 +857,6 @@ public class logintestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			jp.jumpPageUIValidation();
 			jp.jumpPageSearchPlanBoxValidation();
-			HomePage homepage = new HomePage();
 			jp.logoutPSCFromJumpage();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1117,8 +1118,14 @@ public class logintestcases {
 			}
 			else
 			{
-				Reporter.logEvent(Status.FAIL, "Verify user is able to login after 24 hours of locking out period", 
-						"user is unable to login after 24 hours of locking out period", true);
+				WebElement homeLogo = Web.returnElement(new HomePage(), "Home_Page_Logo");
+				if(Web.isWebElementDisplayed(homeLogo, true))
+					Reporter.logEvent(Status.PASS, "Verify user is able to login after 24 hours of locking out period", 
+							"user is able to login after 24 hours of locking out period", false);
+				else
+					Reporter.logEvent(Status.FAIL, "Verify user is able to login after 24 hours of locking out period", 
+							"user is unable to login after 24 hours of locking out period", true);
+					
 			}
 		}
 		catch (Exception e) {

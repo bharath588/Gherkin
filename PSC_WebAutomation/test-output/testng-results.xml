@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="64" total="65" passed="1">
+<testng-results skipped="0" failed="1" total="5" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="229531" started-at="2017-11-03T11:37:43Z" finished-at="2017-11-03T11:41:32Z">
+  <suite name="testsuite" duration-ms="113465" started-at="2017-11-15T07:28:30Z" finished-at="2017-11-15T07:30:24Z">
     <groups>
     </groups>
-    <test name="test_new_Development" duration-ms="229531" started-at="2017-11-03T11:37:43Z" finished-at="2017-11-03T11:41:32Z">
-      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@5f341870]" name="ReportInit" is-config="true" duration-ms="17068" started-at="2017-11-03T17:07:43Z" finished-at="2017-11-03T17:08:00Z">
+    <test name="Regression_Yellow_Period_Execution_1" duration-ms="113465" started-at="2017-11-15T07:28:30Z" finished-at="2017-11-15T07:30:24Z">
+      <class name="app.psc.testcases.userverification.userverificationtestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="ReportInit" is-config="true" duration-ms="22324" started-at="2017-11-15T12:58:30Z" finished-at="2017-11-15T12:58:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="TC_63_Agecatchup(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@5f341870]" name="TC_63_Agecatchup" duration-ms="137365" started-at="2017-11-03T17:08:01Z" data-provider="setData" finished-at="2017-11-03T17:10:18Z">
+        <test-method status="FAIL" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="64235" started-at="2017-11-15T12:58:53Z" data-provider="setData" finished-at="2017-11-15T12:59:57Z">
           <params>
             <param index="0">
               <value>
@@ -20,18 +20,87 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, ISAGEGTRTHNFIFTY=No, EXPECTEDDEFERRALTYPES=AGEBEF,AGERTH}]]>
+                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required
+
+Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC_63_Agecatchup -->
-        <test-method status="PASS" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@5f341870]" name="cleanUpSession" is-config="true" duration-ms="1326" started-at="2017-11-03T17:11:33Z" finished-at="2017-11-03T17:11:34Z">
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="8459" started-at="2017-11-15T12:59:57Z" data-provider="setData" finished-at="2017-11-15T13:00:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- cleanUpSession -->
-      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
-    </test> <!-- test_new_Development -->
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="5805" started-at="2017-11-15T13:00:05Z" data-provider="setData" finished-at="2017-11-15T13:00:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="6291" started-at="2017-11-15T13:00:11Z" data-provider="setData" finished-at="2017-11-15T13:00:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, EXPECTEDERRORMESSAGE=Email format is invalid, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="6210" started-at="2017-11-15T13:00:18Z" data-provider="setData" finished-at="2017-11-15T13:00:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[5]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVERIEMAIL=Invalid@gwl.com, EXPECTEDERRORMESSAGE=Email is invalid
+
+If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.
+, USERNAME=1ISIS, USERSECONDARYANS=invalid}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="DriverQuite()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@3f49dace]" name="DriverQuite" is-config="true" duration-ms="19188" started-at="2017-11-15T13:00:24Z" finished-at="2017-11-15T13:00:43Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DriverQuite -->
+      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
+    </test> <!-- Regression_Yellow_Period_Execution_1 -->
   </suite> <!-- testsuite -->
 </testng-results>

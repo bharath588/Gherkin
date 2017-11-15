@@ -2,7 +2,6 @@
 
 <html>
   <head>
-  <meta charset='utf-8'>
   <title>TestNG reports</title>
 
     <link type="text/css" href="testng-reports.css" rel="stylesheet" />  
@@ -24,7 +23,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +37,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-testsuite">
-              <span class="suite-name border-passed">testsuite</span>
+              <span class="suite-name border-failed">testsuite</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -49,7 +48,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-testsuite">
-                    <span>H:\git\PSCWebAutomation\PSC_WebAutomation\RunXML\Test.xml</span>
+                    <span>H:\git\PSCWebAutomation\PSC_WebAutomation\RunXML\Login.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +90,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">5 methods, 1 failed,   4 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-testsuite" class="hide-methods failed suite-testsuite"> (hide)</a> <!-- hide-methods failed suite-testsuite -->
+                      <a href="#" panel-name="suite-testsuite" class="show-methods failed suite-testsuite"> (show)</a> <!-- show-methods failed suite-testsuite -->
+                    </span>
+                    <div class="method-list-content failed suite-testsuite">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.userverification.userverificationtestcases" hash-for-method="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAG...)">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAG...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-testsuite -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -102,7 +115,22 @@
                     <div class="method-list-content passed suite-testsuite">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.employeesearch.employeesearchtestcases" hash-for-method="TC_63_Agecatchup(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)">TC_63_Agecatchup(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.userverification.userverificationtestcases" hash-for-method="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTE...)">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTE...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.userverification.userverificationtestcases" hash-for-method="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, E...)">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, E...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.userverification.userverificationtestcases" hash-for-method="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVE...)">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVE...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-testsuite" title="app.psc.testcases.userverification.userverificationtestcases" hash-for-method="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDE...)">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDE...)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-testsuite -->
@@ -117,18 +145,63 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-testsuite" class="panel testsuite">
-          <div class="suite-testsuite-class-passed">
+          <div class="suite-testsuite-class-failed">
             <div class="main-panel-header rounded-window-top">
-              <img src="passed.png"/>
-              <span class="class-name">app.psc.testcases.employeesearch.employeesearchtestcases</span>
+              <img src="failed.png"/>
+              <span class="class-name">app.psc.testcases.userverification.userverificationtestcases</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="TC_63_Agecatchup(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)">
-                  </a> <!-- TC_63_Agecatchup(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...) -->
-                  <span class="method-name">TC_63_Agecatchup</span>
-                  <span class="parameters">(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, ISAGEGTRTHNFIFTY=No, EXPECTEDDEFERRALTYPES=AGEBEF,AGERTH})</span>
+                  <a name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAG...)">
+                  </a> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAG...) -->
+                  <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input</span>
+                  <span class="parameters">(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required
+
+Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= })</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-testsuite-class-failed -->
+          <div class="suite-testsuite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">app.psc.testcases.userverification.userverificationtestcases</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTE...)">
+                  </a> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTE...) -->
+                  <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input</span>
+                  <span class="parameters">(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required, USERNAME=1ISIS, USERSECONDARYANS=test})</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, E...)">
+                  </a> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, E...) -->
+                  <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input</span>
+                  <span class="parameters">(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, EXPECTEDERRORMESSAGE=Email format is invalid, USERNAME=1ISIS, USERSECONDARYANS=test})</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVE...)">
+                  </a> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVE...) -->
+                  <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input</span>
+                  <span class="parameters">(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVERIEMAIL=Invalid@gwl.com, EXPECTEDERRORMESSAGE=Email is invalid
+
+If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.
+, USERNAME=1ISIS, USERSECONDARYANS=invalid})</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDE...)">
+                  </a> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDE...) -->
+                  <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input</span>
+                  <span class="parameters">(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= })</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -136,27 +209,27 @@
         </div> <!-- panel testsuite -->
         <div panel-name="test-xml-testsuite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">H:\git\PSCWebAutomation\PSC_WebAutomation\RunXML\Test.xml</span>
+            <span class="header-content">H:\git\PSCWebAutomation\PSC_WebAutomation\RunXML\Login.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;testsuite&quot;&gt;
+&lt;suite thread-count=&quot;2&quot; name=&quot;testsuite&quot; parallel=&quot;classes&quot;&gt;
   &lt;listeners&gt;
     &lt;listener class-name=&quot;core.framework.TestListener&quot;/&gt;
   &lt;/listeners&gt;
-  &lt;test name=&quot;test_new_Development&quot;&gt;
+  &lt;test name=&quot;Regression_Yellow_Period_Execution_1&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;app.psc.testcases.employeesearch.employeesearchtestcases&quot;&gt;
+      &lt;class name=&quot;app.psc.testcases.userverification.userverificationtestcases&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;TC_63_Agecatchup&quot;&gt;
-            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;DDTC-204_Agecatchup&quot;/&gt;
-          &lt;/include&gt; &lt;!-- TC_63_Agecatchup --&gt;
+          &lt;include name=&quot;TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input&quot;&gt;
+            &lt;parameter name=&quot;ManualTCName&quot; value=&quot;DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid&quot;/&gt;
+          &lt;/include&gt; &lt;!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input --&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- app.psc.testcases.employeesearch.employeesearchtestcases --&gt;
+      &lt;/class&gt; &lt;!-- app.psc.testcases.userverification.userverificationtestcases --&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- test_new_Development --&gt;
+  &lt;/test&gt; &lt;!-- Regression_Yellow_Period_Execution_1 --&gt;
 &lt;/suite&gt; &lt;!-- testsuite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -168,7 +241,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">test_new_Development (1 class)</span>
+                <span class="test-name">Regression_Yellow_Period_Execution_1 (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -194,16 +267,32 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(5);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'TC_63_Agecatchup')
-data.setCell(0, 2, 'app.psc.testcases.employeesearch.employeesearchtestcases')
-data.setCell(0, 3, 137365);
+data.setCell(0, 1, 'TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input')
+data.setCell(0, 2, 'app.psc.testcases.userverification.userverificationtestcases')
+data.setCell(0, 3, 64235);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input')
+data.setCell(1, 2, 'app.psc.testcases.userverification.userverificationtestcases')
+data.setCell(1, 3, 8459);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input')
+data.setCell(2, 2, 'app.psc.testcases.userverification.userverificationtestcases')
+data.setCell(2, 3, 6291);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input')
+data.setCell(3, 2, 'app.psc.testcases.userverification.userverificationtestcases')
+data.setCell(3, 3, 6210);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input')
+data.setCell(4, 2, 'app.psc.testcases.userverification.userverificationtestcases')
+data.setCell(4, 3, 5805);
 window.suiteTableData['testsuite']= { tableData: data, tableDiv: 'times-div-testsuite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-testsuite">
               </div> <!-- times-div-testsuite -->
             </div> <!-- times-div -->
@@ -218,139 +307,17 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-testsuite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">64 ignored methods</span>
+            <span class="header-content">3 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
-              <span class="ignored-class-name">app.psc.testcases.employeesearch.employeesearchtestcases</span>
+              <span class="ignored-class-name">app.psc.testcases.userverification.userverificationtestcases</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month</span>
+                <span class="ignored-method-name">Verify_TUDS_table_for_Magic_login</span>
                 <br/>
-                <span class="ignored-method-name">TC028_Recently_Viewed_Switch_Participant_Reg</span>
+                <span class="ignored-method-name">TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session</span>
                 <br/>
-                <span class="ignored-method-name">TC_47_Search_Emp_Locked_Plan</span>
-                <br/>
-                <span class="ignored-method-name">TC31_Disable_PAE_then_renable_PAE</span>
-                <br/>
-                <span class="ignored-method-name">TC_51_Add_New_Employee_View_Page</span>
-                <br/>
-                <span class="ignored-method-name">TC020_Recently_Viewed_Employee</span>
-                <br/>
-                <span class="ignored-method-name">TC_50_SSN_Multiple_Plan_PAE</span>
-                <br/>
-                <span class="ignored-method-name">TC_56_PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month</span>
-                <br/>
-                <span class="ignored-method-name">TC_61_SIT_PSC_Search_Employee_based_on_User_access</span>
-                <br/>
-                <span class="ignored-method-name">TC33_Suppress_Account_Detail_elements_TRS_NonTRS</span>
-                <br/>
-                <span class="ignored-method-name">TC002_Search_Employee_For_Invalid_SSN</span>
-                <br/>
-                <span class="ignored-method-name">TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed</span>
-                <br/>
-                <span class="ignored-method-name">TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values</span>
-                <br/>
-                <span class="ignored-method-name">TC_64_Agecatchup</span>
-                <br/>
-                <span class="ignored-method-name">TC43_SIT_PSC_User_Remember_Search_Employee_Selection</span>
-                <br/>
-                <span class="ignored-method-name">TC029_Edit_Enrollment_And_Eligibility</span>
-                <br/>
-                <span class="ignored-method-name">TC38_SIT_PSC_Accountdetail_Fees_Reg</span>
-                <br/>
-                <span class="ignored-method-name">TC32_Supress_Menu_Items_for_TRS_Flex</span>
-                <br/>
-                <span class="ignored-method-name">TC026_Verify_Employee_Basic_Info</span>
-                <br/>
-                <span class="ignored-method-name">TC_46_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page</span>
-                <br/>
-                <span class="ignored-method-name">TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page</span>
-                <br/>
-                <span class="ignored-method-name">TC37_SIT_PSC_Recentlyviewed_MouseOver</span>
-                <br/>
-                <span class="ignored-method-name">TC022_Paycheck_contribution_View</span>
-                <br/>
-                <span class="ignored-method-name">TC013_Verify_the_Search_results_for_pptID_doesnot_Contain_duplicate_Values</span>
-                <br/>
-                <span class="ignored-method-name">TC001_Search_Employee_For_Valid_SSN</span>
-                <br/>
-                <span class="ignored-method-name">TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1</span>
-                <br/>
-                <span class="ignored-method-name">TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2</span>
-                <br/>
-                <span class="ignored-method-name">TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3</span>
-                <br/>
-                <span class="ignored-method-name">TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4</span>
-                <br/>
-                <span class="ignored-method-name">TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values</span>
-                <br/>
-                <span class="ignored-method-name">TC_62_Stop_All_Deferrals</span>
-                <br/>
-                <span class="ignored-method-name">TC09_Verify_employee_details_displayed_for_invalid_participant_id</span>
-                <br/>
-                <span class="ignored-method-name">TC004_Search_Employee_For_Invalid_Name_Input</span>
-                <br/>
-                <span class="ignored-method-name">TC023_EnrolmmentAndEligibility</span>
-                <br/>
-                <span class="ignored-method-name">TC018_Employee_Contact_Info_Verification</span>
-                <br/>
-                <span class="ignored-method-name">TC34_SIT_PSC_Accountdetail_Allocations_Reg</span>
-                <br/>
-                <span class="ignored-method-name">TC40_SIT_PSC_Accountdetail_Loans_Reg</span>
-                <br/>
-                <span class="ignored-method-name">TC_60_PSC_Employee_Information_Active_ChageHireInfo</span>
-                <br/>
-                <span class="ignored-method-name">TC39_SIT_PSC_Accountdetail_Vesting_Reg</span>
-                <br/>
-                <span class="ignored-method-name">TC30_Account_balance_Tab</span>
-                <br/>
-                <span class="ignored-method-name">TC_54_Employee_Overview_With_Active_Models</span>
-                <br/>
-                <span class="ignored-method-name">TC021_Salary_View_And_Update</span>
-                <br/>
-                <span class="ignored-method-name">TC42_Paycheck_Contribution_History</span>
-                <br/>
-                <span class="ignored-method-name">TC_48_AccountDetail_Transacion_History_Reg</span>
-                <br/>
-                <span class="ignored-method-name">TC025_Verify_Employee_Overview_PlanList_Balance_Section</span>
-                <br/>
-                <span class="ignored-method-name">TC35_SIT_PSC_Statements_Tab</span>
-                <br/>
-                <span class="ignored-method-name">TC015_Check_For_Plans_With_one_division</span>
-                <br/>
-                <span class="ignored-method-name">TC027_Verify_Subset_History_Section</span>
-                <br/>
-                <span class="ignored-method-name">TC07_Verify_employee_details_displayed_for_plans_with_divisions</span>
-                <br/>
-                <span class="ignored-method-name">TC003_Search_Employee_For_Valid_Name_Input</span>
-                <br/>
-                <span class="ignored-method-name">TC019_Verify_Beneficiary_Info</span>
-                <br/>
-                <span class="ignored-method-name">TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active</span>
-                <br/>
-                <span class="ignored-method-name">TC005_Search_Employee_For_Valid_EmployeeID_Input</span>
-                <br/>
-                <span class="ignored-method-name">TC_53_Participant_Investments_Tab</span>
-                <br/>
-                <span class="ignored-method-name">TC_56_Info_Message_New_User</span>
-                <br/>
-                <span class="ignored-method-name">TC014_Verify_the_Search_results_for_Plans_with_Div_doesnot_Contain_duplicate_Values</span>
-                <br/>
-                <span class="ignored-method-name">TC_44_Enroll_And_Eligibility_Fields_Type_Validations</span>
-                <br/>
-                <span class="ignored-method-name">TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values</span>
-                <br/>
-                <span class="ignored-method-name">TC016_Check_For_Plans_With_multiple_divisions</span>
-                <br/>
-                <span class="ignored-method-name">TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD</span>
-                <br/>
-                <span class="ignored-method-name">TC006_Search_Employee_For_Invalid_EmployeeID_Input</span>
-                <br/>
-                <span class="ignored-method-name">TC_55_Loan_Summary_Table_External_Loan</span>
-                <br/>
-                <span class="ignored-method-name">TC08_Verify_employee_details_displayed_for_valid_participant_id</span>
-                <br/>
-                <span class="ignored-method-name">TC024_Verify_Employee_Overview_Screen_Elements</span>
+                <span class="ignored-method-name">TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -362,24 +329,36 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">app.psc.testcases.employeesearch.employeesearchtestcases</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">app.psc.testcases.userverification.userverificationtestcases</div> <!-- chronological-class-name -->
               <div class="configuration-class before">
                 <span class="method-name">ReportInit</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
-                <span class="method-name">TC_63_Agecatchup(1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, US...)</span>
-                <span class="method-start">17943 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
                 <img src="failed.png">
                 </img>
-                <span class="method-name">TC_63_Agecatchup(2, {USERVERIFICATIONANS=test, ISAGEGTRTHNFIFTY=Yes, AGEBEFMAX=6000, PLANNUMBER=194037-01, FAVDRINK=t...)</span>
-                <span class="method-start">155308 ms</span>
+                <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(1, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAG...)</span>
+                <span class="method-start">22434 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTE...)</span>
+                <span class="method-start">86669 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(3, {FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDE...)</span>
+                <span class="method-start">95128 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(4, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, E...)</span>
+                <span class="method-start">100933 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(5, {FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVE...)</span>
+                <span class="method-start">107224 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-suite after">
-                <span class="method-name">cleanUpSession</span>
-                <span class="method-start">229626 ms</span>
+                <span class="method-name">DriverQuite</span>
+                <span class="method-start">113559 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
