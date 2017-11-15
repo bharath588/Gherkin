@@ -3,6 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.sources>src/main/java</sonar.sources>
 	</properties>
 
 	 <parent>
@@ -24,6 +25,8 @@
 	</dependencies>
 
 	<build>
+	
+	
 		<pluginManagement>
 			<!-- Source directory configuration -->
 
@@ -58,7 +61,8 @@
 					<configuration>
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
-						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+						 <!--  <argLine>${jacoco.agent.argLine}</argLine>  -->
+						
 						<suiteXmlFiles>
 						<suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile> 
 						
@@ -87,6 +91,7 @@
 								<value>${BROWSER}</value>
 							</property>
 						</systemProperties>
+						
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
