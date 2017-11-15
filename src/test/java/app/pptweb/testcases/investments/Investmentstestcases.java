@@ -32,7 +32,7 @@ import appUtils.Common;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
-
+@SuppressWarnings("unused")
 public class Investmentstestcases {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	public Map<String, String> mapInvestmentOptionsReviewPage = new HashMap<String, String>();
@@ -3379,6 +3379,7 @@ public class Investmentstestcases {
 		}
 
 	}
+	
 	
 	@Test(dataProvider = "setData")
 	public void DDTC_22707_Rebal_Only_HMDI_Target_Date_Offer_No_Mntype(int itr, Map<String, String> testdata) {
