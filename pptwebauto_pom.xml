@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.sources>src/main/java</sonar.sources>
 	</properties>
 
 	 <parent>
@@ -13,20 +12,18 @@
 	</parent> 
 	<groupId>com.fascore.qa.ParticipantWebAuto</groupId>
 	<artifactId>pptwebAuto</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-PPTWebSNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.fascore.qa.AutomationFramework</groupId>
 			<artifactId>Framework</artifactId>
-			<version>3.0.0-SNAPSHOT</version>
+			<version>3.0.7-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-	
-	
 		<pluginManagement>
 			<!-- Source directory configuration -->
 
@@ -61,11 +58,9 @@
 					<configuration>
 						<threadCount>1</threadCount>
 						<reuseForks>false</reuseForks>
-						 <!--  <argLine>${jacoco.agent.argLine}</argLine>  -->
-						
+						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
 						<suiteXmlFiles>
 						<suiteXmlFile>RunXML/${suiteFile}.xml</suiteXmlFile> 
-						
 						</suiteXmlFiles> 
 						<systemProperties>
 							<property>
@@ -84,14 +79,25 @@
 								<name>CAPTURESCREENSHOT</name>
 								<value>${CAPTURESCREENSHOT}</value>
 							</property>
-						</systemProperties>
+						</systemProperties>	
 						<systemProperties>
 							<property>
-								<name>BROWSER</name>
-								<value>${BROWSER}</value>
+								<name>USERID</name>
+								<value>${USERID}</value>
 							</property>
 						</systemProperties>
-						
+							<systemProperties>
+							<property>
+								<name>SYS_PASSWORD</name>
+								<value>${SYS_PASSWORD}</value>
+							</property>
+						</systemProperties>
+							<systemProperties>
+							<property>
+								<name>DB_PASSWORD</name>
+								<value>${DB_PASSWORD}</value>
+							</property>
+						</systemProperties>					
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
