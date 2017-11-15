@@ -44,7 +44,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import pageobjects.accountverification.AccountVerificationPage;
 import pageobjects.homepage.HomePage;
+import pageobjects.reports.ReportsPage;
 
 import com.aventstack.extentreports.Status;
 
@@ -56,11 +58,13 @@ public class CommonLib {
 	static ResultSet queryResultSet;
 	static HomePage homePage;
 	public static String browserName;
+	static AccountVerificationPage accountVerPage;
+	static ReportsPage reportsPage;
 	//private static String progressBar =".//*[@id='pscSpinnerId']";
 	public CommonLib(){
 		PageFactory.initElements(Web.getDriver(), this);
 	}
-	
+
 	public static void HighlightElement(WebElement ele, WebDriver driver) {
 		for (int i = 0; i < 3; i++) {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -72,7 +76,7 @@ public class CommonLib {
 					"");
 		}
 	}
-	
+
 	private static WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -342,9 +346,9 @@ public class CommonLib {
 		}
 		else{
 			xpathExist=false;
-	}
-	return xpathExist;
-}	
+		}
+		return xpathExist;
+	}	
 	private static String progressBar =".//*[@id='pscSpinnerId']";    
 	public static void waitForProgressBar(){
 		int iTimeInSecond=100;
@@ -591,45 +595,67 @@ public class CommonLib {
 		return false;
 	}
 
-/**
- * <pre>This method Takes you to the specified menu or submenu page.</pre>
- * @author smykjn
- */
-public static boolean navigateToProvidedPage(String...specifiedTab) throws Exception
-{
-	String bredCrumbValue= "";
-	WebElement breadCrumb;
-	boolean isPageDisplayed = false;
-	Actions act = new Actions(Web.getDriver());
-	String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
-	String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
-	String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
-	String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
-	if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
-		act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
-		//Web.clickOnElement(menuElement(specifiedTab[0]));
-		act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
-		Web.waitForPageToLoad(Web.getDriver());
-		if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
-		{
-			//Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
-			act.click(Web.getDriver().findElement(By.xpath(xpath3))).build().perform();
-			Web.waitForElements(Web.getDriver().findElements(By.xpath(xpath4)));
-			if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
-			Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
-			act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+	/**
+	 * <pre>This method Takes you to the specified menu or submenu page.</pre>
+	 * @author smykjn
+	 */
+	public static boolean navigateToProvidedPage(String...specifiedTab) throws Exception
+	{
+		String bredCrumbValue= "";
+		WebElement breadCrumb;
+		boolean isPageDisplayed = false;
+		Actions act = new Actions(Web.getDriver());
+		String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
+		String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
+		String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
+		String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
+		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
+			act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
+			//Web.clickOnElement(menuElement(specifiedTab[0]));
+			act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
-			bredCrumbValue=specifiedTab[2];}
+			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
+			{
+				//Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				act.click(Web.getDriver().findElement(By.xpath(xpath3))).build().perform();
+				Web.waitForElements(Web.getDriver().findElements(By.xpath(xpath4)));
+				if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
+					Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
+					act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+					Web.waitForPageToLoad(Web.getDriver());
+					bredCrumbValue=specifiedTab[2];}
+			}
+			else
+			{
+				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				Web.waitForPageToLoad(Web.getDriver());
+				bredCrumbValue=specifiedTab[1];
+			}
 		}
 		else
 		{
-			Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+			Web.clickOnElement(menuElement(specifiedTab[0]));
 			Web.waitForPageToLoad(Web.getDriver());
-			bredCrumbValue=specifiedTab[1];
+			bredCrumbValue=specifiedTab[0];
 		}
+		breadCrumb = Web.getDriver().findElement(By.tagName("i"));
+		Web.waitForElement(breadCrumb);
+		if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
+			isPageDisplayed = true;
+		else
+			isPageDisplayed = false;
+		return isPageDisplayed;
 	}
-	else
+
+
+/*	*//**
+	 * <pre>This method is used to switch to child window in case there is only two window.</pre>
+	 * @author smykjn
+	 * @return parentWindowID
+	 *//*
+	public static String switchToWindow()
 	{
+
 		Web.clickOnElement(menuElement(specifiedTab[0]));
 		Web.waitForPageToLoad(Web.getDriver());
 		bredCrumbValue=specifiedTab[0];
@@ -641,7 +667,7 @@ public static boolean navigateToProvidedPage(String...specifiedTab) throws Excep
 	else
 		isPageDisplayed = false;
 	return isPageDisplayed;
-}
+}*/
 
 
 /**
@@ -680,7 +706,7 @@ public static String switchToWindow()
  * @author smykjn
  * @return void
  */
-public static void switchToFrame(WebElement frameIDorName)
+/*public static void switchToFrame(WebElement frameIDorName)
 {
 	try{
 		//Web.waitForPageToLoad(Web.getDriver());
@@ -689,17 +715,53 @@ public static void switchToFrame(WebElement frameIDorName)
 		Web.getDriver().switchTo().frame(frameIDorName);
 	}catch(NoSuchFrameException e){
 		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+		int count=0;
+		String parentWindow="";
+		try{
+			parentWindow = Web.getDriver().getWindowHandle();
+			while(Web.getDriver().getWindowHandles().size()==1)
+			{
+				if(count==10) break;
+				Thread.sleep(500);
+				count++;
+				System.out.println("Counter : "+count);
+			}
+			System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
+			Set<String> chiledWindows = Web.getDriver().getWindowHandles();
+			for(String activeWindow : chiledWindows){
+				if(!activeWindow.equals(parentWindow)){
+					Web.getDriver().switchTo().window(activeWindow);break;}
+			}
+			return parentWindow;
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+			return parentWindow="";
+		}
+	}*/
+
+	/**
+	 * <pre>This method is used to switch to specified frame.</pre>
+	 * @author smykjn
+	 * @return void
+	 */
+	public static void switchToFrame(WebElement frameIDorName)
+	{
+		try{
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+			Web.waitForElement(frameIDorName);
+			Web.getDriver().switchTo().frame(frameIDorName);
+		}catch(NoSuchFrameException e){
+			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+		}
 	}
-}
-
-
 
 /**
  * <pre>This method is used to switch to specified frame from another frame.</pre>
  * @author smykjn
  * @return void
  */
-public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
+/*public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
 {
 	try{
 		Web.getDriver().switchTo().defaultContent();
@@ -709,41 +771,41 @@ public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement
 	}catch(NoSuchFrameException e){
 		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
 	}
-}
+}*/
 
 /**
  * This method returns the broser name and version in runtime execution
  * @author smykjn
  * @return
  */
-public static String getBrowserName(){
+/*public static String getBrowserName(){
 	Capabilities caps = ((RemoteWebDriver) Web.getDriver()).getCapabilities();
 	String browserName = caps.getBrowserName();
 	String browserVersion = caps.getVersion();
 	System.out.println("Browser name:"+browserName);
 	System.out.println("Browser version:"+browserVersion);
 	return browserName;
-}
+}*/
 
 /**
  * <pre>This method returns the browser name and version in runtime execution</pre>
  * @author smykjn
  * @return
  */
-public static void waitForLoader(WebElement loader) throws Exception{
+/*public static void waitForLoader(WebElement loader) throws Exception{
 	Web.waitForElement(loader);
 	do{
 		Thread.sleep(1000);
 		System.out.println("Loading......................");
 	}while(loader.isDisplayed());
-}
+}*/
 
 /**
  * <pre>This method sorts list<INTEGER> in descending order.</pre>
  * @author smykjn
  * @return
  */
-public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
+/*public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
 	boolean isSorted = false;
 	List<Double> copyList = new ArrayList<Double>(expSortedList);
 	System.out.println("List copied:"+copyList);
@@ -757,7 +819,7 @@ public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exc
 	else
 		isSorted = false;
 	return isSorted;
-}
+}*/
 
 
 /**
@@ -766,7 +828,7 @@ public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exc
  * @param fileExtension
  * @return downloaded file name
  */
-public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
+/*public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
 {	
 	String downloadedFileName = null;
 	boolean valid = true;
@@ -792,155 +854,310 @@ public static String getDownloadedDocumentName(String downloadDir, String fileEx
 			}
 			
 			for (WatchEvent event : watchKey.pollEvents())
+		}*/
+
+	/**
+	 * <pre>This method is used to switch to specified frame from another frame.</pre>
+	 * @author smykjn
+	 * @return void
+	 */
+	public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
+	{
+		try{
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(frameFrom);
+			Web.getDriver().switchTo().frame(frameTo);
+		}catch(NoSuchFrameException e){
+			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+		}
+	}
+
+	/**
+	 * This method returns the broser name and version in runtime execution
+	 * @author smykjn
+	 * @return
+	 */
+	public static String getBrowserName(){
+		Capabilities caps = ((RemoteWebDriver) Web.getDriver()).getCapabilities();
+		String browserName = caps.getBrowserName();
+		String browserVersion = caps.getVersion();
+		System.out.println("Browser name:"+browserName);
+		System.out.println("Browser version:"+browserVersion);
+		return browserName;
+	}
+
+	/**
+	 * <pre>This method returns the browser name and version in runtime execution</pre>
+	 * @author smykjn
+	 * @return
+	 */
+	public static void waitForLoader(WebElement loader) throws Exception{
+		Web.waitForElement(loader);
+		do{
+			Thread.sleep(1000);
+			System.out.println("Loading......................");
+		}while(loader.isDisplayed());
+	}
+
+	/**
+	 * <pre>This method sorts list<INTEGER> in descending order.</pre>
+	 * @author smykjn
+	 * @return
+	 */
+	public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
+		boolean isSorted = false;
+		List<Double> copyList = new ArrayList<Double>(expSortedList);
+		System.out.println("List copied:"+copyList);
+		Collections.sort(copyList);
+		System.out.println("copied List in ascending order:"+copyList);
+		Collections.reverse(copyList);
+		System.out.println("copied List in descending order:"+copyList);
+		System.out.println("Original List:"+expSortedList);
+		if(expSortedList.equals(copyList))
+			isSorted = true;
+		else
+			isSorted = false;
+		return isSorted;
+	}
+
+
+	/**
+	 * @author smykjn
+	 * @param downloadDir
+	 * @param fileExtension
+	 * @return downloaded file name
+	 */
+	public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
+	{	
+		String downloadedFileName = null;
+		boolean valid = true;
+		boolean found = false;
+
+		//default timeout in seconds
+		long timeOut = 20; 
+		try 
+		{					
+			Path downloadFolderPath = Paths.get(downloadDir);
+			WatchService watchService = FileSystems.getDefault().newWatchService();
+			downloadFolderPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+			long startTime = System.currentTimeMillis();
+			do 
 			{
-				 WatchEvent.Kind kind = event.kind();
-				if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) 
-				{
-					String fileName = event.context().toString();
-					System.out.println("New File Created:" + fileName);
-					if(fileName.endsWith(fileExtension))
-					{
-						downloadedFileName = fileName;
-						System.out.println("Downloaded file found with extension " + fileExtension + ". File name is " + fileName);
-						Thread.sleep(500);
-						found = true;
-						break;
-					}
-				}
-			}
-			if(found)
-			{
-				return downloadedFileName;
-			}
-			else
-			{
-				currentTime = (System.currentTimeMillis()-startTime)/1000;
+				WatchKey watchKey;
+				watchKey = watchService.poll(timeOut,TimeUnit.SECONDS);
+				long currentTime = (System.currentTimeMillis()-startTime)/1000;
 				if(currentTime>timeOut)
 				{
-					System.out.println("Failed to download expected file");
+					System.out.println("Download operation timed out.. Expected file was not downloaded");
 					return downloadedFileName;
 				}
-				valid = watchKey.reset();
+
+				for (WatchEvent event : watchKey.pollEvents())
+				{
+					WatchEvent.Kind kind = event.kind();
+					if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) 
+					{
+						String fileName = event.context().toString();
+						System.out.println("New File Created:" + fileName);
+						if(fileName.endsWith(fileExtension))
+						{
+							downloadedFileName = fileName;
+							System.out.println("Downloaded file found with extension " + fileExtension + ". File name is " + fileName);
+							Thread.sleep(500);
+							found = true;
+							break;
+						}
+					}
+				}
+				if(found)
+				{
+					return downloadedFileName;
+				}
+				else
+				{
+					currentTime = (System.currentTimeMillis()-startTime)/1000;
+					if(currentTime>timeOut)
+					{
+						System.out.println("Failed to download expected file");
+						return downloadedFileName;
+					}
+					valid = watchKey.reset();
+				}
+			} while (valid);
+		} 
+
+		catch (InterruptedException e) 
+		{
+			System.out.println("Interrupted error - " + e.getMessage());
+			e.printStackTrace();
+		}
+		catch (NullPointerException e) 
+		{
+			System.out.println("Download operation timed out.. Expected file was not downloaded");
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error occured - " + e.getMessage());
+			e.printStackTrace();
+		}
+		return downloadedFileName;
+	}
+
+	/**
+	 * <pre>This method is to validate if user is assigned with particular transaction code/codes.</pre>
+	 * @author smykjn 
+	 * @param Resultset which should return distinct transaction codes
+	 * @param String[] of expected transaction codes
+	 */
+	public static boolean isTxnCodesPresent(ResultSet resultSet,String...expTxnCodes) throws SQLException
+	{
+		boolean isPresent = false;
+		List<String> expTxnCodesList = Arrays.asList(expTxnCodes);
+		List<String> acttxncodes = new ArrayList<String>();
+
+		while(resultSet.next()){
+			acttxncodes.add(resultSet.getString("TXN_CODE"));
+		}
+		System.out.println("ActTxn codes:"+acttxncodes);
+		System.out.println("ExpTxn codes:"+expTxnCodes);
+		if(acttxncodes.size()>0){
+			if(expTxnCodesList.equals(acttxncodes))
+				isPresent=true;
+			else
+				isPresent=false;
+		}
+		return isPresent;
+	}
+
+
+
+	/**
+	 * <pre>This method is to insert a Txn code for a specified uscs id.</pre>
+	 * @author smykjn 
+	 * @param txncode
+	 * @param uscsId
+	 */
+	public static void insertTxnCode(String txncode,String uscsId) throws SQLException
+	{
+		DB.executeQuery(Stock.getTestQuery("insertSpecifiedTxnCode")[0],
+				Stock.getTestQuery("insertSpecifiedTxnCode")[1],txncode,uscsId);
+
+	}
+
+
+	/**
+	 * <pre>This method is to know the list of Uscs ids to which specific txn codes are assigned with.</pre>
+	 * @author smykjn 
+	 * @param resultSet
+	 * @return : list of Uscs ids
+	 */
+	public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLException
+	{
+		ArrayList<String> uscsId = new ArrayList<String>();
+		while(resultSet.next()){
+			uscsId.add(resultSet.getString("USCS_ID"));
+		}
+		System.out.println("Assigned uscs ids for txn codes :"+uscsId);
+		return uscsId;
+	}
+
+
+	/**
+	 * <pre>Return date in specific time zone.</pre>
+	 * @author smykjn
+	 */
+	public static Date getSysDateWithTimeZone(String timezone){
+		Date date=null;
+		Calendar present;
+		try{
+			SimpleDateFormat isoFormat = new SimpleDateFormat();
+			isoFormat.setTimeZone(TimeZone.getTimeZone(timezone));
+			present= Calendar.getInstance();
+			present.setTime(present.getTime());
+			date = present.getTime();
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		}
+		return date;
+	}
+
+	/**
+	 * @author smykjn
+	 */
+	public static String getDateStringInDateFormat(String dateformat,Date date){
+		String dateString="";
+		try{
+			DateFormat df = new SimpleDateFormat(dateformat);
+			dateString= df.format(date);
+
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		}
+		return dateString;
+	}
+
+	/**
+	 * @author smykjn
+	 */
+	public static Date getDateInDateFormatFromDateString(String dateformat,String dateString){
+		Date date=null;
+		try{
+			DateFormat df = new SimpleDateFormat(dateformat);
+			date= df.parse(dateString);
+
+		}catch(Exception e){
+			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+
+
+	/**
+	 * <pre>This method let user select a random date between two specified dates</pre>
+	 * @author smykjn
+	 */
+/*	public static Date getRandomDateBetweenTwoDates(Date startRange,Date endRange) throws Exception{
+		List<Date> listDate = new ArrayList<Date>();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(startRange);
+		int count=0;
+		while (calendar.getTime().before(endRange))
+		{
+			calendar.add(Calendar.DATE, 1);
+			Date result = calendar.getTime();
+			if(calendar.getTime().before(endRange)){
+				count++;
+				listDate.add(result);
 			}
-		} while (valid);
-	} 
-	
-	catch (InterruptedException e) 
-	{
-		System.out.println("Interrupted error - " + e.getMessage());
-		e.printStackTrace();
-	}
-	catch (NullPointerException e) 
-	{
-		System.out.println("Download operation timed out.. Expected file was not downloaded");
-	}
-	catch (Exception e)
-	{
-		System.out.println("Error occured - " + e.getMessage());
-		e.printStackTrace();
-	}
-	return downloadedFileName;
-}
+		}
+		System.out.println("Number of days:"+count);
+		System.out.println("Dates:"+listDate);
+		int randomNumber =  CommonLib.getRandomNumber(listDate.size());
 
-/**
- * <pre>This method is to validate if user is assigned with particular transaction code/codes.</pre>
- * @author smykjn 
- * @param Resultset which should return distinct transaction codes
- * @param String[] of expected transaction codes
- */
-public static boolean isTxnCodesPresent(ResultSet resultSet,String...expTxnCodes) throws SQLException
-{
-	boolean isPresent = false;
-	List<String> expTxnCodesList = Arrays.asList(expTxnCodes);
-	List<String> acttxncodes = new ArrayList<String>();
-	
-	while(resultSet.next()){
-		acttxncodes.add(resultSet.getString("TXN_CODE"));
+		return listDate.get(randomNumber);
+
 	}
-	System.out.println("ActTxn codes:"+acttxncodes);
-	System.out.println("ExpTxn codes:"+expTxnCodes);
-	if(acttxncodes.size()>0){
-		if(expTxnCodesList.equals(acttxncodes))
-			isPresent=true;
+
+
+	public static Date calculateDay(int offset)
+	{
+		final Calendar cal = Calendar.getInstance();
+		if(offset!=0){
+			cal.add(Calendar.DATE, offset);
+			return cal.getTime();}
 		else
-			isPresent=false;
-	}
-	return isPresent;
-}
+		{
+			return cal.getTime();
+		}
+	}*/
 
-
-
-/**
- * <pre>This method is to insert a Txn code for a specified uscs id.</pre>
- * @author smykjn 
- * @param txncode
- * @param uscsId
- */
-public static void insertTxnCode(String txncode,String uscsId) throws SQLException
-{
-	DB.executeQuery(Stock.getTestQuery("insertSpecifiedTxnCode")[0],
-			Stock.getTestQuery("insertSpecifiedTxnCode")[1],txncode,uscsId);
+/*	public static String getDate(String dateformat,int offset){
 	
-}
-
-
-/**
- * <pre>This method is to know the list of Uscs ids to which specific txn codes are assigned with.</pre>
- * @author smykjn 
- * @param resultSet
- * @return : list of Uscs ids
- */
-public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLException
-{
-	ArrayList<String> uscsId = new ArrayList<String>();
-	while(resultSet.next()){
-		uscsId.add(resultSet.getString("USCS_ID"));
-	}
-	System.out.println("Assigned uscs ids for txn codes :"+uscsId);
-	return uscsId;
-}
-
-
-/**
- * <pre>Return date in specific time zone.</pre>
- * @author smykjn
- */
-public static Date getSysDateWithTimeZone(String timezone){
-	Date date=null;
-	Calendar present;
-	try{
-		SimpleDateFormat isoFormat = new SimpleDateFormat();
-		isoFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-		present= Calendar.getInstance();
-	    present.setTime(present.getTime());
-	    date = present.getTime();
-	}catch(Exception e){
-		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
-	}
-	return date;
-}
-
-/**
- * @author smykjn
- */
-public static String getDateStringInDateFormat(String dateformat,Date date){
-	String dateString="";
-	try{
-		DateFormat df = new SimpleDateFormat(dateformat);
-		dateString= df.format(date);
-		
-	}catch(Exception e){
-		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
-	}
-	return dateString;
-}
-
-/**
- * @author smykjn
- */
-public static Date getDateInDateFormatFromDateString(String dateformat,String dateString){
-	Date date=null;
-	try{
+		String date=null;
+		try
+		{
 		DateFormat df = new SimpleDateFormat(dateformat);
 		date= df.parse(dateString);
 		
@@ -949,7 +1166,7 @@ public static Date getDateInDateFormatFromDateString(String dateformat,String da
 		e.printStackTrace();
 	}
 	return date;
-}
+}*/
 
 
 
@@ -1014,7 +1231,7 @@ public static String getDate(String dateformat,int offset)
  * specified event id(confirmation number in UI)</pre>
  * @author smykjn
  */
-public static boolean validateEventID(String evenId) throws SQLException
+/*public static boolean validateEventID(String evenId) throws SQLException
 {
 	boolean isRecordFound = false;
 	String dbName =  getUserDBName(Stock.GetParameterValue("username"))
@@ -1027,8 +1244,133 @@ public static boolean validateEventID(String evenId) throws SQLException
 		isRecordFound=false;
 	return isRecordFound;
 }
+		df.setLenient(false);
+		try{
+			date = df.format(calculateDay(offset));
+		}
+		catch(Exception e)
+		{
+			System.out.println (e.getMessage()) ;
+		}
+		System.out.println("Formatted date is:"+date);
+		return date;
+	}*/
 
 
+	/**
+	 * <pre>This method validates that event table is having entry with specified event id(confirmation number in UI)</pre>
+	 * @author smykjn
+	 */
+	public static boolean validateEventID(String evenId) throws SQLException
+	{
+		boolean isRecordFound = false;
+		queryResultSet = DB.executeQuery(Stock.getTestQuery("validateEventId")[0],Stock.getTestQuery("validateEventId")[1],evenId);
+		if(DB.getRecordSetCount(queryResultSet)>0)
+			isRecordFound=true;
+		else
+			isRecordFound=false;
+		return isRecordFound;
+
+	}
+
+	public static String getUserRole(String[] getUserRoleQuery,String userName){
+		String userRole = null;
+		try{
+			queryResultSet = DB.executeQuery(getUserRoleQuery[0], getUserRoleQuery[1], "K_"+userName);
+			while(queryResultSet.next()){
+				userRole = queryResultSet.getString("ROLE");
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return userRole;
+	}
+
+	public static void switchToDefaultPlanPartnerLinkUserAndNumberOfPlansLessThan25() throws Exception{
+		accountVerPage = new AccountVerificationPage();
+		reportsPage = new ReportsPage();
+		String userRole = getUserRole(Stock.getTestQuery("getUserRoleQuery"), Stock.GetParameterValue("username"));
+		int numberOfPlans = accountVerPage.getNumberOfplans
+				(Stock.getTestQuery("getNumberOfplansQuery"),
+						"K_" + Stock.GetParameterValue("username"));
+		if(userRole.contains("PL")&& numberOfPlans>=1&&numberOfPlans<=25){
+			if(Web.isWebElementDisplayed(new HomePage(), "Plan Drop Down", false)){
+				Web.clickOnElement(new HomePage(),"Plan Drop Down Go Button");
+			}
+		}
+		else
+			throw new Exception("User is not PL user or user has more than 25 plans");
+
+
+
+}
+	
+
+	/**<pre>Method to check if a given transaction code already exists in user_auth_txn table<br> for any USCS ID of a given user</br></pre> 
+	 * @param query to be used
+	 * @param userName given user
+	 * @param txnCode given transaction code
+	 * @return
+	 */
+	public static boolean isTxnCode(String[] query,String userName,String txnCode){
+		try{
+			queryResultSet = DB.executeQuery(query[0], query[1], "K_"+userName,txnCode);
+			int rowCount = 0;
+			while(queryResultSet.next()){
+				if(queryResultSet.last()){
+					rowCount = queryResultSet.getRow();
+					if(rowCount>0)
+						return true;
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**<pre> Method to insert the transaction code for a given USCS ID. Before inserting <br>it verifies if txn code exists for given user otherwise it inserts</br><pre>
+	 * @param query insert query to be used
+	 * @param userName User name 
+	 * @param txnCode Transaction code to be inserted.
+	 * @param uscsId <pre>USCS id for which txn code need to be inserted.This can be <br>fetched from <b>user#user_class</b> table</br></pre>
+	 * @return
+	 */
+	public static boolean insertTxnCode(String[] query,String userName,String txnCode,String uscsId){
+		try{
+			if(isTxnCode(Stock.getTestQuery("getTransactionCodeAvailability"),userName,txnCode))
+				return true;
+			else{
+				int rowsUpdated = DB.executeUpdate(query[0], query[1], txnCode,uscsId,"0","N");
+				if(rowsUpdated>0)
+					return true;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static String getIterationDataAsString(Map<String, String> testdata){
+		String result = "";
+		for(Map.Entry<String,String> td : testdata.entrySet()){
+			result = result+(td.getKey()+" : "+td.getValue())+" | ";
+		}
+		return result.substring(0,result.lastIndexOf("|"));
+	}
+	
+	public static void FrameSwitchONandOFF(boolean switchFrame,WebElement... frm){
+		if(Web.isWebElementDisplayed(frm[0],false) && switchFrame){
+		   Web.getDriver().switchTo().frame(frm[0]);
+		}
+		
+		if(!switchFrame){
+		   Web.getDriver().switchTo().defaultContent();
+		}		
+	}
 
 
 
@@ -1036,11 +1378,3 @@ public static boolean validateEventID(String evenId) throws SQLException
 
 
 }
-
-
-
-
-
-
-
-
