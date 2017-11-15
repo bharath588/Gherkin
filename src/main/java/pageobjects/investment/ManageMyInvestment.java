@@ -370,7 +370,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
 	String inputAllocationPercentageFuture="//*[@id='allocation-current-funds-table' or @id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')] or .//td//span[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
-	String txtFutureFundAllocationPercentage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')]]//td[2]";
+	String txtFutureFundAllocationPercentage="//tr[contains(@ng-repeat,'fund in currentFunds' ) or contains(@ng-repeat,'fund in rebalanceCurrentFunds')][./td//a[contains(text(),'Investment Option')] or .//td[contains(text(),'Investment Option')]]//td[2]";
 	String slider="//input[contains(@aria-label,'Investment Option')]";
 	String btnChangeInvestments="//div[./h2[contains(text(),'Money Type Grouping')]]//button[contains(text(),'Change My Investments')]";
 	String txtMoneyTypeGrouping="//div[./h2[contains(text(),'Money Type Grouping')]]";
