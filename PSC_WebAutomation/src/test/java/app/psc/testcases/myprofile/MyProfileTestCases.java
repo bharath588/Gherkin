@@ -283,13 +283,10 @@ public class MyProfileTestCases {
 	public void TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password(int itr, 
 			Map<String, String> testData){
 		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME, "This test case "
-					+ "verifies that user is logged out after 3 invalid password attempts "
-					+ "DDTC-10188");
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,"DDTC-10188");
 			Reporter.logEvent(Status.INFO, "Testcase description", "User should be logged out after"
 					+ " entering wrong pwd for 3 times.", false);
 			UserVerificationPage userVer = new UserVerificationPage();
-
 			String prevEmailAddress = userVer.getEmailAddressOfuser(Stock.getTestQuery
 					("getEmailaddressQuery"),Stock.GetParameterValue("username"));
 			MyProfilePage myProfPage = new MyProfilePage().get();

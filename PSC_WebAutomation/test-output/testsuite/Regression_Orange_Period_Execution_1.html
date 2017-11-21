@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Regression_Orange_Period_Execution_1</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>14/50/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/9/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Nov 14 19:07:20 IST 2017</td>
+<td>Started on:</td><td>Fri Nov 17 15:27:02 IST 2017</td>
 </tr>
-<tr><td>Total time:</td><td>48685 seconds (48685007 ms)</td>
+<tr><td>Total time:</td><td>1 seconds (1843 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,74 +75,21 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.cleanUpSession()'><b>cleanUpSession</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db</td>
-<td><div><pre>org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=60.0.3112.101)
-  (Driver info: chromedriver=2.28.455520 (cc17746adff54984afff480136733114c6b3704b),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 211 milliseconds
-Build info: version: &apos;3.0.1&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:48:19 -0700&apos;
-System info: host: &apos;VMEXTWEBTEST5&apos;, ip: &apos;10.4.61.74&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_111&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.28.455520 (cc17746adff54984afff480136733114c6b3704b), userDataDir=C:\Users\SERVIC~1\AppData\Local\Temp\scoped_dir9092_19252}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=60.0.3112.101, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: e72046aa66b754d18cb4abb6753801aa
-Command duration or timeout: 966 milliseconds
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:694)
-	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:523)
-	at app.psc.testcases.employeesearch.employeesearchtestcases_db.cleanUpSession(employeesearchtestcases_db.java:747)
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.InitTest()'><b>InitTest</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.IllegalArgumentException: nodeName cannot be null or empty
+	at com.aventstack.extentreports.ExtentTest.createNode(ExtentTest.java:159)
+	at com.aventstack.extentreports.ExtentTest.createNode(ExtentTest.java:268)
+	at lib.Reporter.initializeModule(Reporter.java:134)
+	at app.psc.testcases.myprofile.MyProfileTestCases.InitTest(MyProfileTestCases.java:42)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.openqa.selenium.remote.ScreenshotException: Screen shot has been taken
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:141)
-	... 17 more
-Caused by: org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=60.0.3112.101)
-  (Driver info: chromedriver=2.28.455520 (cc17746adff54984afff480136733114c6b3704b),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 211 milliseconds
-Build info: version: &apos;3.0.1&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:48:19 -0700&apos;
-System info: host: &apos;VMEXTWEBTEST5&apos;, ip: &apos;10.4.61.74&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_111&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.28.455520 (cc17746adff54984afff480136733114c6b3704b), userDataDir=C:\Users\SERVIC~1\AppData\Local\Temp\scoped_dir9092_19252}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=60.0.3112.101, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: e72046aa66b754d18cb4abb6753801aa
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;XWJPMDD177&apos;, ip: &apos;143.199.166.161&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
-Driver info: driver.version: EventFiringWebDriver
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
-	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:487)
-	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:103)
-	at com.sun.proxy.$Proxy7.close(Unknown Source)
-	at org.openqa.selenium.support.events.EventFiringWebDriver.close(EventFiringWebDriver.java:197)
-	at org.openqa.selenium.remote.server.handler.CloseWindow.call(CloseWindow.java:33)
-	at org.openqa.selenium.remote.server.handler.CloseWindow.call(CloseWindow.java:24)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:176)
-	... 3 more
-... Removed 20 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1902842409", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1902842409'><pre>org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=60.0.3112.101)
-  (Driver info: chromedriver=2.28.455520 (cc17746adff54984afff480136733114c6b3704b),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 211 milliseconds
-Build info: version: &apos;3.0.1&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:48:19 -0700&apos;
-System info: host: &apos;VMEXTWEBTEST5&apos;, ip: &apos;10.4.61.74&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_111&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.28.455520 (cc17746adff54984afff480136733114c6b3704b), userDataDir=C:\Users\SERVIC~1\AppData\Local\Temp\scoped_dir9092_19252}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=60.0.3112.101, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: e72046aa66b754d18cb4abb6753801aa
-Command duration or timeout: 966 milliseconds
-	at sun.reflect.GeneratedConstructorAccessor28.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:694)
-	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:523)
-	at app.psc.testcases.employeesearch.employeesearchtestcases_db.cleanUpSession(employeesearchtestcases_db.java:747)
+... Removed 10 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace760233030", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace760233030'><pre>java.lang.IllegalArgumentException: nodeName cannot be null or empty
+	at com.aventstack.extentreports.ExtentTest.createNode(ExtentTest.java:159)
+	at com.aventstack.extentreports.ExtentTest.createNode(ExtentTest.java:268)
+	at lib.Reporter.initializeModule(Reporter.java:134)
+	at app.psc.testcases.myprofile.MyProfileTestCases.InitTest(MyProfileTestCases.java:42)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -151,49 +98,14 @@ Command duration or timeout: 966 milliseconds
 	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)
 	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
 	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)
-	at org.testng.internal.TestMethodWorker.invokeAfterClassMethods(TestMethodWorker.java:225)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:114)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:175)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:107)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.openqa.selenium.remote.ScreenshotException: Screen shot has been taken
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:141)
-	... 17 more
-Caused by: org.openqa.selenium.WebDriverException: chrome not reachable
-  (Session info: chrome=60.0.3112.101)
-  (Driver info: chromedriver=2.28.455520 (cc17746adff54984afff480136733114c6b3704b),platform=Windows NT 6.1.7601 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 211 milliseconds
-Build info: version: &apos;3.0.1&apos;, revision: &apos;1969d75&apos;, time: &apos;2016-10-18 09:48:19 -0700&apos;
-System info: host: &apos;VMEXTWEBTEST5&apos;, ip: &apos;10.4.61.74&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_111&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.28.455520 (cc17746adff54984afff480136733114c6b3704b), userDataDir=C:\Users\SERVIC~1\AppData\Local\Temp\scoped_dir9092_19252}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=60.0.3112.101, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: e72046aa66b754d18cb4abb6753801aa
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;XWJPMDD177&apos;, ip: &apos;143.199.166.161&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_121&apos;
-Driver info: driver.version: EventFiringWebDriver
-	at sun.reflect.GeneratedConstructorAccessor42.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:658)
-	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:487)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:103)
-	at com.sun.proxy.$Proxy7.close(Unknown Source)
-	at org.openqa.selenium.support.events.EventFiringWebDriver.close(EventFiringWebDriver.java:197)
-	at org.openqa.selenium.remote.server.handler.CloseWindow.call(CloseWindow.java:33)
-	at org.openqa.selenium.remote.server.handler.CloseWindow.call(CloseWindow.java:24)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:176)
-	... 3 more
 </pre></div></td>
 <td>0</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-failed'>
 <tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
@@ -203,108 +115,21 @@ Driver info: driver.version: EventFiringWebDriver
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC017_Verify_the_dropdown_options_And_Screen_elements()'><b>TC017_Verify_the_dropdown_options_And_Screen_elements</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>48453</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC018_Verify_the_sorting_in_search_results()'><b>TC018_Verify_the_sorting_in_search_results</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC019_Verify_Beneficiary_Info()'><b>TC019_Verify_Beneficiary_Info</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>86</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC019_Verify_the_Pagination_on_search_results_page()'><b>TC019_Verify_the_Pagination_on_search_results_page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=002143838}</td>
-<td></td>
-<td>22</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC020_Verify_the_Order_of_search_results()'><b>TC020_Verify_the_Order_of_search_results</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC021_Salary_View_And_Update()'><b>TC021_Salary_View_And_Update</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, SALARYSECTIONTITLE=Compensation, EXPSALARYSECTIONHEADER=Effective date,Salary,Frequency}</td>
-<td></td>
-<td>87</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC021_Verify_Search_results_are_displayed_as_Hyperlinks()'><b>TC021_Verify_Search_results_are_displayed_as_Hyperlinks</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {PASSWORD=testing1, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>22</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page()'><b>TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>22</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC023_EnrolmmentAndEligibility()'><b>TC023_EnrolmmentAndEligibility</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>176</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC023_Verify_the_limit_of_search_results_on_searchpage()'><b>TC023_Verify_the_limit_of_search_results_on_searchpage</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>22</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC024_Verify_Employee_Overview_Screen_Elements()'><b>TC024_Verify_Employee_Overview_Screen_Elements</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>149</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC024_Verify_Filter_Functionality_Search_Results_Page()'><b>TC024_Verify_Filter_Functionality_Search_Results_Page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC025_Verify_Employee_Overview_PlanList_Balance_Section()'><b>TC025_Verify_Employee_Overview_PlanList_Balance_Section</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=7JOK2, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>125</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC025_Verify_search_results_for_ssn_with_extension()'><b>TC025_Verify_search_results_for_ssn_with_extension</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>8</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC026_Verify_Employee_Basic_Info()'><b>TC026_Verify_Employee_Basic_Info</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, EXPECTEDLABELS=Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>110</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code()'><b>TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC027_Verify_Subset_History_Section()'><b>TC027_Verify_Subset_History_Section</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDHEADERS=Client division code,Division,Division name,Effective date,Termination date, PASSWORD=testing1, DREAMCAR=testr, EXPECTEDHEADERSHISTORY=Client Division Code,Division,Division Name,Effective Date,Term Date, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>136</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC027_Verify_termed_employeedetails_are_displayed()'><b>TC027_Verify_termed_employeedetails_are_displayed</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC001_01_SIT_PSC_Update_My_profile_Default_Plan()'><b>TC001_01_SIT_PSC_Update_My_profile_Default_Plan</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
 <td><div><pre>java.lang.NullPointerException
-	at lib.Reporter.logEvent(Reporter.java:253)
-	at app.psc.testcases.employeesearch.employeesearchtestcases_db.TC027_Verify_termed_employeedetails_are_displayed(employeesearchtestcases_db.java:597)
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-... Removed 10 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace645825797", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace645825797'><pre>java.lang.NullPointerException
-	at lib.Reporter.logEvent(Reporter.java:253)
-	at app.psc.testcases.employeesearch.employeesearchtestcases_db.TC027_Verify_termed_employeedetails_are_displayed(employeesearchtestcases_db.java:597)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace108141918", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace108141918'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
 	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
 	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
 	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
@@ -314,135 +139,23 @@ Driver info: driver.version: EventFiringWebDriver
 	at java.lang.Thread.run(Thread.java:745)
 </pre></div></td>
 <td>0</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC028_Verify_search_results_are_displayed_for_termed_employees()'><b>TC028_Verify_search_results_are_displayed_for_termed_employees</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC029_Edit_Enrollment_And_Eligibility()'><b>TC029_Edit_Enrollment_And_Eligibility</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>52</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases_db.TC029_Verify_ssn_masking_for_external_users()'><b>TC029_Verify_ssn_masking_for_external_users</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases_db<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=2ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>8</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases_db@13805618</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC30_Account_balance_Tab()'><b>TC30_Account_balance_Tab</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPECTEDDISCLAIMER=* All dates and times are in Mountain Time unless otherwise noted., USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>205</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC31_Disable_PAE_then_renable_PAE()'><b>TC31_Disable_PAE_then_renable_PAE</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, EXPECTEDERRORMESSAGE=Data Setup Error. Please contact Plan Technical Support, option Website Support., USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>97</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC32_Supress_Menu_Items_for_TRS_Flex()'><b>TC32_Supress_Menu_Items_for_TRS_Flex</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1IN02, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>18</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC33_Suppress_Account_Detail_elements_TRS_NonTRS()'><b>TC33_Suppress_Account_Detail_elements_TRS_NonTRS</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1IN02, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>23</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC34_SIT_PSC_Accountdetail_Allocations_Reg()'><b>TC34_SIT_PSC_Accountdetail_Allocations_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDHEADERS=Investment option,Fund short name,Deposit period,Default ind,Percent, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDMESSAGE=Employee currently has no allocations.}</td>
-<td></td>
-<td>184</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC38_SIT_PSC_Accountdetail_Fees_Reg()'><b>TC38_SIT_PSC_Accountdetail_Fees_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDHEADERS=Fee type,Process date,Effective date,Deposit type,Amount, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, EXPECTEDMODALWINHEADER=Fee Type,Process Date,Effective Date,Deposit Type,Amount, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=664734809, EXPECTEDMESSAGE=There have been no fees in the past 3 months.}</td>
-<td></td>
-<td>101</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC39_SIT_PSC_Accountdetail_Vesting_Reg()'><b>TC39_SIT_PSC_Accountdetail_Vesting_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDHEADERS=Period begin date,Period end date,YTD credited hours,YTD credited hours excluded,Service years,Effective date,Process date,Total compensation,Plan compensation,Pre entry compensation, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPECTEDELEMENTS=Period begin date,Period end date,YTD credited hours,YTD credited hours excluded,Service years,Effective date,Process date,Total compensation,Plan compensation,Pre entry compensation, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=665413319}</td>
-<td></td>
-<td>112</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC40_SIT_PSC_Accountdetail_Loans_Reg()'><b>TC40_SIT_PSC_Accountdetail_Loans_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, EXPLOANACCOUNTDETAILCOLUMN=Effective date,First due date,Maturity date,Interest rate,Loan term,Current outstanding balance,Repay frequency,Original loan amount,Payments remaining,Status,Paid off date,Days late,Default indicator,Default date, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPECTEDELEMENTS=Active loans,Max loans allowed,Minimum amount,Maximum amount, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDLOANDETAILHEADERS=Loan number,Effective date,Loan amount,Status,Repay amount,Principal balance,Principal due,Interest due,Total due}</td>
-<td></td>
-<td>128</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD()'><b>TC41_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDYTDHEADER=Type,YTD Contributions, EXPECTEDHEADERS=Confirmation Number,Effective Date,Transaction Type,Amount, PASSWORD=testing1, DREAMCAR=testr, PLANID=1260130-01, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=266237760, EXPECTEDMESSAGE=No year to date contributions are available.}</td>
-<td></td>
-<td>311</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_44_Enroll_And_Eligibility_Fields_Type_Validations()'><b>TC_44_Enroll_And_Eligibility_Fields_Type_Validations</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>68</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page()'><b>TC_45_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {USERVERIFICATIONANS=test, FREQUENCYOPTIONS=ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52, FIRSTNAME=Samy, INELIGIBILITYREASONCODE=Excluded Class,Other, PLANNUMBER=937878-01, INCOMEDATAERRORMSG=Salary Amount is not a valid number., FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=Jain, SPOUSEMIDNAME=teste, ELIGIBILITYERRORMSG=Eligibility Information is required.,Some fields contain errors. Please correct errors and continue., ALLOCATIONVALIDATIONMSG=Percentage do not add up to 100., USERNAME=1ISIS, EXPECTEDMANAGEDACCNTLABELS=Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary, USERVERIFICATIONEMAIL=discard@gwl.com, EXPHIREDATEERRORMSG=Hire Date is mandatory.}</td>
-<td></td>
-<td>166</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_46_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page()'><b>TC_46_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {USERVERIFICATIONANS=test, FREQUENCYOPTIONS=ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52, FIRSTNAME=Samy, INELIGIBILITYREASONCODE=Excluded Class,Other, PLANNUMBER=937878-01, INCOMEDATAERRORMSG=Salary Amount is not a valid number., FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=Jain, SPOUSEMIDNAME=teste, ELIGIBILITYERRORMSG=Eligibility Information is required.,Some fields contain errors. Please correct errors and continue., ALLOCATIONVALIDATIONMSG=Percentage do not add up to 100., USERNAME=1ISIS, EXPECTEDMANAGEDACCNTLABELS=Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary, USERVERIFICATIONEMAIL=discard@gwl.com, EXPHIREDATEERRORMSG=Hire Date is mandatory.}</td>
-<td></td>
-<td>115</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_48_AccountDetail_Transacion_History_Reg()'><b>TC_48_AccountDetail_Transacion_History_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPMSG_NOPASTTHREEMONTH=There have been no transactions in the past 3 months. Click here to access the Transactions search page., EXPPASTTHREEMONTHSTXNMSG=*Shows up to 5 transactions over the past 3 months., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, TXNHISTMODALHEADERS=Confirmation Number,Effective Date,Transaction Type,Amount, SSN_NOPASTTHREEMONTH=688239811, SSN=891697231}</td>
-<td></td>
-<td>163</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_50_SSN_Multiple_Plan_PAE()'><b>TC_50_SSN_Multiple_Plan_PAE</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=156187932}</td>
-<td></td>
-<td>213</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_53_Participant_Investments_Tab()'><b>TC_53_Participant_Investments_Tab</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {PLANNUMBER=385003-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, USCSID=K_4OBB5, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=4OBB5, TXN_CODE=ESCPAL, USERVERIFICATIONEMAIL=jsamyak55@gmail.com, TXN_CODE_1=ESCCPA,ESCCSD}</td>
-<td></td>
-<td>278</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_54_Employee_Overview_With_Active_Models()'><b>TC_54_Employee_Overview_With_Active_Models</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {EXPECTEDTITLE2=Choose One of the Asset Allocation Models:, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, EXPECTEDTITLE=Employee Allocation Information as of:, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=027263531, EXPECTEDNEWALLOCTITLE=Enter New allocations for future contributions:}</td>
-<td></td>
-<td>114</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_56_PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month()'><b>TC_56_PSC_Employee_Information_NonZeroDeferral_Terminated_GreaterThan_18Month</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {EXPEMPHISTORYDETAILSFIELDS=Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date, EXPECTEDREHIREMSG1=Hire date must be greater than a prior termination date., USERVERIFICATIONANS=test, EXPREHIREFIELDS=Rehire date,Term date,Term reason,Employee ID,Insider,Officer,Super officer,Highly compensated,Ownership percentage,Trade monitoring indicator,FT/PT employee,Overseas employee,Overseas date, EXPEMPHISTORYTOPFIELDS=Employee ID,Hire date,Term date,Term date change date,Term reason, EXPREASONVALIDATIONMSG=Termination reason cannot be added without a termination date., FAVDRINK=testk, HIREDATEINFUTUREMSG=Hire date cannot be in the future., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDREHIREMSG2=Termination date cannot be earlier than hire date.}</td>
-<td></td>
-<td>283</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month()'><b>TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {EXPEMPHISTORYDETAILSFIELDS=Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date, EXPECTEDREHIREMSG1=Hire date must be greater than a prior termination date., USERVERIFICATIONANS=test, EXPREHIREFIELDS=Rehire date,Term date,Term reason,Employee ID,Insider,Officer,Super officer,Highly compensated,Ownership percentage,Trade monitoring indicator,FT/PT employee,Overseas employee,Overseas date, EXPEMPHISTORYTOPFIELDS=Employee ID,Hire date,Term date,Term date change date,Term reason, EXPREASONVALIDATIONMSG=Termination reason cannot be added without a termination date., FAVDRINK=testk, HIREDATEINFUTUREMSG=Hire date cannot be in the future., PASSWORD=testing1, DREAMCAR=testr, MSGWHENTERMLESSTHAN18MON=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date. If you need to correct the existing termination date please contact website support., SPOUSEMIDNAME=teste, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDREHIREMSG2=Termination date cannot be earlier than hire date.}</td>
-<td></td>
-<td>137</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month()'><b>TC_57_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, EMPLOYEEID=1456RTO, MSGWHENTERMLESSTHAN18MON=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date. If you need to correct the existing termination date please contact website support., SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPOVERSEASVALIDATION=Overseas date cannot be added without overseas indicator selected as true.}</td>
-<td></td>
-<td>133</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active()'><b>TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {EXPEMPHISTORYDETAILSFIELDS=Union,Insider,Officer,Super officer,Highly compensated employee,Job description,Employment type,Ownership percentage,Trade monitoring Indicator,Employer classification code,Full time/Part time,Overseas employee,Overseas date, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, EMPLOYEEID=1456RTO, MSGWHENTERMLESSTHAN18MON=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date. If you need to correct the existing termination date please contact website support., SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPOVERSEASVALIDATION=Overseas date cannot be added without overseas indicator selected as true., EXPEMPHISTORYTOPFIELDS=Employee ID,Hire date,Term date,Term date change date,Term reason}</td>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC001_02_SIT_PSC_Update_My_profile_Default_Plan()'><b>TC001_02_SIT_PSC_Update_My_profile_Default_Plan</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
 <td><div><pre>java.lang.NullPointerException
-	at lib.Reporter.logEvent(Reporter.java:253)
-	at app.psc.testcases.employeesearch.employeesearchtestcases.TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active(employeesearchtestcases.java:3127)
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
-... Removed 10 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1692298820", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1692298820'><pre>java.lang.NullPointerException
-	at lib.Reporter.logEvent(Reporter.java:253)
-	at app.psc.testcases.employeesearch.employeesearchtestcases.TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active(employeesearchtestcases.java:3127)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1577567598", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1577567598'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
 	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
 	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
 	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
@@ -451,131 +164,190 @@ Driver info: driver.version: EventFiringWebDriver
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at java.lang.Thread.run(Thread.java:745)
 </pre></div></td>
-<td>112</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1()'><b>TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, MSGWHENTERMINATED=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.     If you need to correct the existing termination date please contact your service team., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, SCENARIO=1, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>188</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow()'><b>TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace41964597", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace41964597'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2()'><b>TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, MSGWHENTERMINATED=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.     If you need to correct the existing termination date please contact your service team., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, GA_ID=332260-01, USERVERIFICATIONANS=test, USERNAME=1ISIS, SCENARIO=2, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>118</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow()'><b>TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace147216070", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace147216070'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3()'><b>TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario3</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, MSGWHENTERMINATED=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.     If you need to correct the existing termination date please contact your service team., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, SCENARIO=3, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>181</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password()'><b>TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace29982295", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace29982295'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4()'><b>TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario4</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, MSGWHENTERMINATED=This employee is currently terminated. Click Rehire employee to start a new employment record and provide the new hire date.     If you need to correct the existing termination date please contact your service team., PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, SCENARIO=4, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>177</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC003_01_SIT_PSC_Update_User_Name()'><b>TC003_01_SIT_PSC_Update_User_Name</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2140776677", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2140776677'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_60_PSC_Employee_Information_Active_ChageHireInfo()'><b>TC_60_PSC_Employee_Information_Active_ChageHireInfo</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, EMPLOYEEID=1456R, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPOVERSEASVALIDATION=Overseas date cannot be added without overseas indicator selected as true.}</td>
-<td></td>
-<td>208</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC004_01_SIT_PSC_Update_My_profile_Security_Questions()'><b>TC004_01_SIT_PSC_Update_My_profile_Security_Questions</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1959186919", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1959186919'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_61_SIT_PSC_Search_Employee_based_on_User_access()'><b>TC_61_SIT_PSC_Search_Employee_based_on_User_access</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5MLPR, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>125</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC005_01_SIT_PSC_Update_My_profile_Password()'><b>TC005_01_SIT_PSC_Update_My_profile_Password</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1983227967", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1983227967'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 <tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_61_SIT_PSC_Search_Employee_based_on_User_access()'><b>TC_61_SIT_PSC_Search_Employee_based_on_User_access</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 2, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>68</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_61_SIT_PSC_Search_Employee_based_on_User_access()'><b>TC_61_SIT_PSC_Search_Employee_based_on_User_access</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 3, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>38</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_62_Stop_All_Deferrals()'><b>TC_62_Stop_All_Deferrals</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {PLANNUMBER=194037-01, FAVDRINK=testk, EXPLABELSONCONFIRMATIONPAGE=Plan,Contribution rate,Confirmation number(s), PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDDEFERRALHEADERS=Status,Effective date,Deferral option,Deferral type,Deferral percent,Deferral amount,3 YR 457 Special Catch up Code,3 YR 457 Special Catch up End Date,3 YR 457 Special Catch up Amount,Change date/time}</td>
-<td></td>
-<td>79</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-</table><p>
-<table width='100%' border='1' class='invocation-passed'>
-<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
-<tr><td><b>Test method</b></td>
-<td width="30%"><b>Exception</b></td>
-<td width="10%"><b>Time (seconds)</b></td>
-<td><b>Instance</b></td>
-</tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC018_Employee_Contact_Info_Verification()'><b>TC018_Employee_Contact_Info_Verification</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPCONTACTINFOLABELS=Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method, USERVERIFICATIONEMAIL=discard@gwl.com, EXPCONTACTSELECTLABELSWINDOW=Marital Status,Gender,Language Preference,State,Country, EXPCONTACTINPUTLABELSWINDOW=Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email}</td>
-<td></td>
-<td>176</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC020_Recently_Viewed_Employee()'><b>TC020_Recently_Viewed_Employee</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>91</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC022_Paycheck_contribution_View()'><b>TC022_Paycheck_contribution_View</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>85</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC028_Recently_Viewed_Switch_Participant_Reg()'><b>TC028_Recently_Viewed_Switch_Participant_Reg</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>223</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC35_SIT_PSC_Statements_Tab()'><b>TC35_SIT_PSC_Statements_Tab</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, EXPECTEDHEADER=DATE,CATEGORY,DESCRIPTION, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, EMPSSN=607477261, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>190</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed()'><b>TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=4NCCK, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>181</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC37_SIT_PSC_Recentlyviewed_MouseOver()'><b>TC37_SIT_PSC_Recentlyviewed_MouseOver</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>84</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC42_Paycheck_Contribution_History()'><b>TC42_Paycheck_Contribution_History</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>78</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_47_Search_Emp_Locked_Plan()'><b>TC_47_Search_Emp_Locked_Plan</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {PLANNUMBER=456783-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=313776868, EXPECTEDMESSAGE=One or more of the employees returned by your search belong to Plan %s, which is locked. These employees will not be displayed since searching is not allowed on locked plans.}</td>
-<td></td>
-<td>43</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_51_Add_New_Employee_View_Page()'><b>TC_51_Add_New_Employee_View_Page</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=Jain, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}</td>
-<td></td>
-<td>85</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_55_Loan_Summary_Table_External_Loan()'><b>TC_55_Loan_Summary_Table_External_Loan</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {PPTID_NO_LOAN_AMT=4641986, EXPNOEXTLOANDATAMSG=Loan amount not available, click "More" to see repayments., FROMDATE=7/12/2013, GA_ID=930126-01, USERVERIFICATIONANS=test, SSN=544936093, FAVDRINK=testk, PPTID_NOLOANREPAYMENTS=1640201, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERNAME=1ISIS, TODATE=7/13/2013, NODATAWITHINDATERANGE=There are no loans for the date criteria selected. Please modify the dates., EXPECTEDINVDDATEERROR=Invalid Date., USERVERIFICATIONEMAIL=discard@gwl.com, PPTID_NO_LOAN=12270176, EXPHEADERSONLOANDETAIL=Effective date,Payroll date,Loan amount,Effective date,Loan amount, EXPECTEDDATERANGEERROR=To date cannot be before From date., NOLOANREPAYMSG=There are no loan repayments available. See loan information above., EXPNOEXTLOANDATAMSGONDETLPAGE=There is no loans data available, see repayments data below., EXPEXTLOANHEADER=Effective Date,Loan Amount}</td>
-<td></td>
-<td>293</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_56_Info_Message_New_User()'><b>TC_56_Info_Message_New_User</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=4OBB5, USERVERIFICATIONEMAIL=jsamyak55@gmail.com, EXPECTEDMESSAGE=As you search for and view employees, your most recently viewed names will display here for easy access.}</td>
-<td></td>
-<td>51</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_63_Agecatchup()'><b>TC_63_Agecatchup</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 1, {PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1INST, USERVERIFICATIONEMAIL=discard@gwl.com, ISAGEGTRTHNFIFTY=No, EXPECTEDDEFERRALTYPES=AGEBEF,AGERTH}</td>
-<td></td>
-<td>105</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
-<tr>
-<td title='app.psc.testcases.employeesearch.employeesearchtestcases.TC_63_Agecatchup()'><b>TC_63_Agecatchup</b><br>Test class: app.psc.testcases.employeesearch.employeesearchtestcases<br>Parameters: 2, {USERVERIFICATIONANS=test, ISAGEGTRTHNFIFTY=Yes, AGEBEFMAX=6000, PLANNUMBER=194037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, EXPECTEDERRORMESSAGE=Your deferral contribution election has exceeded the maximum limit., USERNAME=1INST, MAXVALUE=6001,6001, USERVERIFICATIONEMAIL=discard@gwl.com, ROTHMAX=18000, BEFORETAXMAX=5000, EXPECTEDDEFERRALTYPES=AGEBEF,AGERTH}</td>
-<td></td>
-<td>102</td>
-<td>app.psc.testcases.employeesearch.employeesearchtestcases@5bcab519</td></tr>
+<td title='app.psc.testcases.myprofile.MyProfileTestCases.TC006_01_FAQ_DDTC_245()'><b>TC006_01_FAQ_DDTC_245</b><br>Test class: app.psc.testcases.myprofile.MyProfileTestCases</td>
+<td><div><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+... Removed 8 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1290996041", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1290996041'><pre>java.lang.NullPointerException
+	at core.framework.TestListener.isFinalTestStatus(TestListener.java:78)
+	at core.framework.TestListener.afterInvocation(TestListener.java:332)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker$InvokeAfterInvocationWithoutContextStrategy.callMethod(InvokedMethodListenerInvoker.java:100)
+	at org.testng.internal.invokers.InvokedMethodListenerInvoker.invokeListener(InvokedMethodListenerInvoker.java:62)
+	at org.testng.internal.Invoker.runInvokedMethodListeners(Invoker.java:619)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:777)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+</pre></div></td>
+<td>0</td>
+<td>app.psc.testcases.myprofile.MyProfileTestCases@7085bdee</td></tr>
 </table><p>
 </body>
 </html>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="2">
+<suite name="testsuite" parallel="classes" thread-count="1">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	<test name="Regression_Orange_Period_Execution_1">
 	<classes>
-		 <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+		 <!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
@@ -268,8 +268,8 @@
 							value="DDTC-204_Agecatchup" />
 					</include>
 				</methods> 
-			</class> 
-			<!--  <class name="app.psc.testcases.login.logintestcases">
+			</class> --> 
+			<!-- <class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -377,7 +377,7 @@
 							value="DDTC-20239_SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_multiple_site_within_same_browser_session" />
 					</include>
 				</methods>
-			</class> -->
+			</class> 
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC01_search_plan_for_valid_plan">
@@ -541,7 +541,7 @@
 					</include>
 				</methods>
 			</class>
-		 	<!-- <class
+		 	<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
 					<include
@@ -642,7 +642,7 @@
 							value="DDTC-22069_SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
 					</include> 
 				</methods>
-			</class>
+			</class>-->
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
@@ -659,7 +659,7 @@
 					<include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Negative_Flow" />
-					</include>
+					</include> 
 					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
 						<parameter name="ManualTCName"
 							value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password" />
@@ -678,7 +678,7 @@
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
 					</include>
 				</methods>
-			</class>  -->
+			</class>
 			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
 				<methods>
 					<include name="TC001_Verify_Contributiontotal_for_Invalid_User_input">

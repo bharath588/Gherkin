@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" name="Failed suite [testsuite]" parallel="classes">
+<suite thread-count="1" name="Failed suite [testsuite]" parallel="classes">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression_Yellow_Period_Execution_1(failed)" parallel="classes">
+  <test name="Regression_Orange_Period_Execution_1(failed)" parallel="classes">
     <classes>
-      <class name="app.psc.testcases.userverification.userverificationtestcases">
+      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
         <methods>
-          <include name="DriverQuite"/>
-          <include name="ReportInit"/>
-          <include name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input"/>
+          <include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan"/>
+          <include name="TC003_01_SIT_PSC_Update_User_Name"/>
+          <include name="TC006_01_FAQ_DDTC_245"/>
+          <include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow"/>
+          <include name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions"/>
+          <include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan"/>
+          <include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password"/>
+          <include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow"/>
+          <include name="InitTest"/>
+          <include name="TC005_01_SIT_PSC_Update_My_profile_Password"/>
         </methods>
-      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
+      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
     </classes>
-  </test> <!-- Regression_Yellow_Period_Execution_1(failed) -->
+  </test> <!-- Regression_Orange_Period_Execution_1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

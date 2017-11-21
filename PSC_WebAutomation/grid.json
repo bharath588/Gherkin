@@ -1,18 +1,9 @@
 [
 {
 
-        "Browser": "IE",
-
-        "Port": "http://10.4.61.76:5557/wd/hub",
-
-        "Platform": "Windows.xp"
-
-},
-{
-
         "Browser": "chrome",
 
-        "Port": "http://10.4.61.74:5556/wd/hub",
+        "Port": "http://10.120.43.171/wd/hub",
 
         "Platform": "Windows.xp"
 

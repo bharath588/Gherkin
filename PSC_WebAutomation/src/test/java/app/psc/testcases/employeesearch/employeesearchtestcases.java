@@ -3784,32 +3784,65 @@ public void TC_63_Agecatchup(int itr,Map<String, String> testdata) {
 	}
 }
 
+
 /**
- * <pre>To validate Schedule Auto increase features</pre>
+ * <pre>To validate Ongoing deferral changes - UI elements</pre>
  * @author smykjn
  * @param itr
  * @param testdata
- * @Date 10-Oct-2017
+ * @Date 17-Nov-2017
  */
 @Test(dataProvider = "setData")
-public void TC_64_Agecatchup(int itr,Map<String, String> testdata) {		
+public void TC_64_OngoingDeferralUIValidation(int itr,Map<String, String> testdata) {		
 	try {
-		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+		Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME,"DDTC-298");
 		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
-				"is to validate schedule automatic increase functionality.", false);
+				"is to validate ongoing deferral changes - UI elements.", false);
 		String ssn="";
+		String expDeferralTypeCode=Stock.GetParameterValue("DeferralTypeCode");
 		String planNumber = Stock.GetParameterValue("PlanNumber");
 		resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
-				Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],planNumber);
-		if(resultset.next()){
+					Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],
+					Stock.GetParameterValue("PlanNumber"));
+		while(resultset.next()){
 			ssn=resultset.getString("SSN");
+			break;
 		}
 		employeesearch = new EmployeeSearch().get();
 		employeesearch.searchPlan(planNumber);
 		employeesearch.searchEmployeeBySSN(ssn);
 		employeesearch.navigateToEmployeeOverViewPage();
 		employeesearch.navigateToEmpDetailPage();
+		employeesearch.navigateToEmpDetailPage();
 		employeesearch.NavigateToDeferralPage();
+		if(employeesearch.validateDeferralRecordFromDBForAnSSN(ssn))
+			Reporter.logEvent(Status.PASS,"Validate ongoing deferral from DB.",""
+					+ "Data is found in DB.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate ongoing deferral from DB.",""
+					+ "Data is not found in DB.", true);
+		if(employeesearch.NavigateToDeferralPage("Ongoing")){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPCT_AMT_Indicator")[0],
+					Stock.getTestQuery("getPCT_AMT_Indicator")[1],planNumber,expDeferralTypeCode);
+			employeesearch.amt_pct_buttonValidation(resultset);
+			resultset.close();
+			resultset = DB.executeQuery(Stock.getTestQuery("getDeferralInfoForAPlan")[0],
+					Stock.getTestQuery("getDeferralInfoForAPlan")[1],planNumber);
+			employeesearch.validate_Ongoing_Screen_Elements_1(resultset);
+			if(!Web.returnElement(employeesearch,"ON_GOING_CONTINUE_BTN").isEnabled())
+				Reporter.logEvent(Status.PASS,"Validate Continue button remains disabled untill"
+						+ " user enters deferrals.","Continue button is disabled.", false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate Continue button remains disabled untill"
+						+ " user enters deferrals.","Continue button is enabled.", true);
+			
+			
+		}else{
+			Reporter.logEvent(Status.FAIL,"Navigate to Ongoing deferral page.",""
+					+ "Ongoing deferral page is not displayed.", false);
+		}
+		
+		
 		
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -3830,8 +3863,6 @@ public void TC_64_Agecatchup(int itr,Map<String, String> testdata) {
 		}
 	}
 }
-
-
 
 
 

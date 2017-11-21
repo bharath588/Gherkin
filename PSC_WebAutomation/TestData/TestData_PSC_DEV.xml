@@ -2419,6 +2419,7 @@ If you need to correct the existing termination date please contact website supp
 				<parameter name="BeforeTaxMax" value="5000"/>
 				<parameter name="AGEBEFMax" value="6000"/>
 				<parameter name="RothMax" value="18000"/>
+				<parameter name="AGERTHMax" value="6000" />
 			</Iteration>
 		</TestCase>
 	</Module>
