@@ -4,11 +4,11 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Execution_1">
+	<test name="Plan module Test cases">
 	<classes>
-		 <!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+		<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+				<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -118,6 +118,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
 					</include> 
+
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
@@ -154,6 +155,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-290_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed" />
 					</include> 
+
 					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver" />
 					</include>
@@ -205,6 +207,9 @@
 					</include>
 					<include name="TC_54_Employee_Overview_With_Active_Models">
 						<parameter name="ManualTCName" value="DDTC-2139_Employee_Overview_With_Active_Models" />
+					</include>
+				 	<include name="TC_53_Participant_Investments_Tab">
+						<parameter name="ManualTCName" value="DDTC-1241_Participant_Investments_Tab" />
 					</include>
 				 	<include name="TC_53_Participant_Investments_Tab">
 						<parameter name="ManualTCName" value="DDTC-1241_Participant_Investments_Tab" />
@@ -268,8 +273,8 @@
 							value="DDTC-204_Agecatchup" />
 					</include>
 				</methods> 
-			</class> --> 
-			<!-- <class name="app.psc.testcases.login.logintestcases">
+			</class>
+			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
@@ -353,7 +358,7 @@
 						<parameter name="ManualTCName" value="DDTC-1205_SIT_PSC_HomePage_Transaction_Security" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					 <include
@@ -377,7 +382,7 @@
 							value="DDTC-20239_SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_multiple_site_within_same_browser_session" />
 					</include>
 				</methods>
-			</class> 
+			</class>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC01_search_plan_for_valid_plan">
@@ -444,6 +449,38 @@
 					<include name="TC13_PLN_ADM_View_Change_Banking_Information_Regr">
 						<parameter name="ManualTCName"
 							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
+					</include>
+				</methods>
+			</class>
+			<class name="app.psc.testcases.plan.plantestcases">
+				<methods>
+					<include name="TC16_Plan_Provisions_page">
+						<parameter name="ManualTCName"
+							value="DDTC-2150_Plan_Provisions_page" />
+					</include> 
+					<include name="TC17_Add_PPT_And_SearchForPPT">
+						<parameter name="ManualTCName"
+							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
+					</include>
+					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
+						<parameter name="ManualTCName"
+							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
+					</include>
+					 <include name="TC20_Complex_User">
+						<parameter name="ManualTCName"
+							value="DDTC-2073_Complex_User" />
+					</include> 
+					<include name="TC23_Find_Users_by_Name">
+						<parameter name="ManualTCName"
+							value="DDTC-4_Find_Users_by_Name" />
+					</include>
+					<include name="TC22_Added_to_USERS_table_via_SAW">
+						<parameter name="ManualTCName"
+							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
+					</include>
+					<include name="TC24_Investment_Charts_Page">
+						<parameter name="ManualTCName"
+							value="DDTC-22127_Investment_Charts_Page" />
 					</include>
 				</methods>
 			</class>  
@@ -570,6 +607,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
 					</include> 
+					<include name="TC008_00_Verify_new_user_flow_positive">
+						<parameter name="ManualTCName"
+							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
+					</include>
 				</methods>
 			</class>
 			<class
@@ -612,7 +653,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1370_SIT_PSC_HomePage_02_TC002_Compliance Hyperlink">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security">
 						<parameter name="ManualTCName"
 							value="DDTC-1121_SIT_PSC_HomePage_02_TC003_Compliance_Security">
@@ -626,6 +667,10 @@
 					</include> 
 					<include name="TC009_01_Verify_Multifactoring">
 						<parameter name="ManualTCName" value="DDTC-227_Multifactoring_Regr">
+						</parameter>
+					</include> 
+					<include name="TC009_01_Verify_Multifactoring">
+						<parameter name="ManualTCName" value="Multifactoring_Regr">
 						</parameter>
 					</include>
 				</methods>
@@ -642,7 +687,7 @@
 							value="DDTC-22069_SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
 					</include> 
 				</methods>
-			</class>-->
+			</class>
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
 					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
@@ -679,7 +724,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
+			<class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
 				<methods>
 					<include name="TC001_Verify_Contributiontotal_for_Invalid_User_input">
 						<parameter name="ManualTCName" value="DDTC-160_Gpp Sanity_01"/>
@@ -825,7 +870,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include>
 				</methods>
-			</class>-->
+			</class>
 		</classes>
 	</test>
 </suite>

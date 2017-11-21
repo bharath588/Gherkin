@@ -143,6 +143,14 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private WebElement fileSharingMenu;
 	@FindBy(xpath="//*[@id='newMenu']/li[5]/a")
 	private WebElement complianceMenu;
+	@FindBy(xpath="//*[@id='newMenu']//li/a[text()='Reports']")
+	private WebElement reportsMenu;
+	@FindBy(xpath="//*[@id='newMenu']//li/ul//li/a[text()='Standard reports']")
+	private WebElement standardReportsSubMenu;
+	@FindBy(id="planDropDown")
+	private WebElement planDropDown;
+	@FindBy(id="planSearchDropdownButton")
+	private WebElement planSearchDropdownButton;
 	private WebElement menuElement(String menuName)
 	{
 		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
@@ -313,6 +321,22 @@ public class HomePage extends LoadableComponent<HomePage>{
 			Web.getDriver().switchTo().defaultContent();
 			return this.complianceMenu;
 		}
+		if(fieldName.trim().equalsIgnoreCase("Reports Menu")){
+			Web.getDriver().switchTo().defaultContent();
+			return this.reportsMenu;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Standard Reports")){
+			return this.standardReportsSubMenu;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Plan Drop Down")){
+			Web.getDriver().switchTo().defaultContent();
+			return this.planDropDown;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Plan Drop Down Go Button")){
+			Web.getDriver().switchTo().defaultContent();
+			return this.planSearchDropdownButton;
+		}
+			
 		return null;
 	}
 
@@ -1569,6 +1593,7 @@ public boolean navigateToHomePage() throws Exception{
              return isPageDisplayed;
     }
 	
+
 	public static Map<String,String> securityQuestionsAndAnswers;
 	public static Map<String,Map<String,String>> userSecurityQuestion;
 	public static Map<String,Map<String,String>> restoreUserSecurityQuestion;
@@ -1594,6 +1619,21 @@ public void setUserSecurityAnswer() throws SQLException{
 	}
 	System.out.println(userSecurityQuestion);
 }
+
+	public void logoutPSC(boolean differentUser) throws Exception{
+		if(differentUser)
+			logoutPSC();
+			
+	}
+	
+	public boolean isDifferentUser(){
+		Web.getDriver().switchTo().defaultContent();
+		if(Web.isWebElementDisplayed(weGreeting, false))
+		 if(!this.weGreeting.getText().contains(Stock.GetParameterValue("username")))
+			return true;
+		return false;
+	}
+
 
 /**
  * method to check for access to FileSharing.

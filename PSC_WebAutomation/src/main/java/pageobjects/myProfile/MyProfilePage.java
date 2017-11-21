@@ -19,13 +19,9 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-//import annotations.FindBy;
-
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
@@ -52,6 +48,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 	private WebElement faqIframe;
 	@FindBy(xpath = "/html/body/table/tbody/tr[2]/td/div[3]/div[1]/a/span")
 	private WebElement closeFaq;
+	
 	ByAngularAttribute changeDefaultPlanButton = new ByAngularAttribute(rootSelector,
 			"click","changeDefaultPlan()");
 	ByAngularAttribute changeEmailButton = new ByAngularAttribute(rootSelector, 
@@ -208,10 +205,6 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		Web.gwgWebDriver.waitForAngularRequestsToFinish();
 		return Web.getDriver().findElements(securityQuestionDropDowns);
 	}
-	/*private List<WebElement> securityAnswerTextBox(){
-		Web.gwgWebDriver.waitForAngularRequestsToFinish();
-		return Web.getDriver().findElements(securityAnswerTextBox);
-	}*/
 	private WebElement updateSecurityQuestnButton(){
 		Web.gwgWebDriver.waitForAngularRequestsToFinish();
 		return Web.getDriver().findElement(updateSecurityQuestnButton);

@@ -2,17 +2,19 @@ package pageobjects.login;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
+import lib.DB;
+import lib.Reporter;
+import lib.Stock;
+import lib.Web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -21,13 +23,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import lib.Reporter;
+import com.aventstack.extentreports.Status;
 
-import com.aventstack.extentreports.*;
-
-import lib.DB;
-import lib.Stock;
-import lib.Web;
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
 
@@ -338,9 +335,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	{
 		if(Web.isWebElementDisplayed(frmLogin))
 		{
+			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(frmLogin);
 			do
 			{
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(frmLogin);
 				Thread.sleep(3000);	
 			}while(Web.isWebElementDisplayed(loginSpinner));
 		}
