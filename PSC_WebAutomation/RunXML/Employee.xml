@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="2">
+<suite name="testsuite" parallel="classes" thread-count="3">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -8,7 +8,7 @@
 	<classes>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-				<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -92,7 +92,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include> -->
+					</include>
 					<include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
 					</include>

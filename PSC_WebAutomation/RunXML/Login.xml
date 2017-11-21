@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="2" >
+<suite name="testsuite" parallel="classes" thread-count="3" >
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -13,7 +13,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
 					</include>
-					<!-- <include
+					<include
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
@@ -31,10 +31,10 @@
 					<include name="Verify_TUDS_table_for_Magic_login">
 						<parameter name="ManualTCName"
 							value="SIT_PSC_Login_01_TC0016_Verify TUDS table for Magic login" />
-					</include> -->
+					</include>
 				</methods>
 			</class>
-			<!-- <class
+			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
 					<include
@@ -220,7 +220,7 @@
 						<parameter name="ManualTCName" value="DDTC-1205_SIT_PSC_HomePage_Transaction_Security" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>
