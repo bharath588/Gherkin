@@ -3,9 +3,16 @@
 
         "Browser": "IE",
 
-        "Port": "http://10.4.61.76:5557/wd/hub",
+        "Port": "http://10.4.61.74:5556/wd/hub",
 
-        "Port": "http://10.4.61.69:5558/wd/hub",
+        "Platform": "Windows.xp"
+
+},
+{
+
+        "Browser": "chrome",
+
+        "Port": "http://10.4.61.76:5557/wd/hub",
 
         "Platform": "Windows.xp"
 
@@ -14,22 +21,7 @@
 
         "Browser": "ff",
 
-        "Port": "http://143.199.167.18:5556/wd/hub",
-
-        "Platform": "Windows.xp"
-
-},
-{
-
->>>>>>> branch 'SamyakJain' of http://gitlab.retirementpartner.com/Automation/PSCWebAutomation.git
-        "Browser": "chrome",
-
-<<<<<<< HEAD
-        "Port": "http://10.120.43.171/wd/hub",
-=======
-        "Port": "http://10.4.61.74:5556/wd/hub",
-        "Port": "http://143.199.167.18:5557/wd/hub",
->>>>>>> branch 'SamyakJain' of http://gitlab.retirementpartner.com/Automation/PSCWebAutomation.git
+        "Port": "http://10.4.61.69:5558/wd/hub",
 
         "Platform": "Windows.xp"
 
