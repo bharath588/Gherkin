@@ -45,7 +45,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[contains(@class,'title')]//p") private WebElement txtPriorContribution;
 	@FindBy(xpath="//label[./input[@id='radioPreviousContributionYes']]/span") private WebElement inpPriorPlanYes;
 	@FindBy(xpath="//label[./input[@id='radioPreviousContributionNo']]/span") private WebElement inpPriorPlanNo;
-	@FindBy(xpath="//button[.='Continue']") private WebElement btnContinue;
+	@FindBy(xpath="//button[contains(text(),'Continue')]") private WebElement btnContinue;
 	@FindBy(id="skipButton") private WebElement btnSkip;
 	@FindBy(xpath="//button[text()[normalize-space()='Back']]") private WebElement btnBack;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
@@ -67,6 +67,10 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[contains(@ng-if,'investmentOptions')]//h4") private WebElement txtInvestmentOption;
 	
 	private String textField="//*[contains(text(),'webElementText')]";
+	private String strMethodTerminationOrRetirement="//input[contains(@id,'method_Termination')][following-sibling::div//span[contains(text(),'webElementText')]]";
+	private String strMethodDeath="//input[contains(@id,'method_Death')][following-sibling::div//span[contains(text(),'webElementText')]]";
+	private String strTerminationOrRetirementMethod="//div[./span[contains(text(),'webElementText')]]//preceding-sibling::input";
+	
 
 	/** Empty args constructor
      * 
@@ -585,4 +589,106 @@ return isTextDisplayed;
 					false);
 		 return contributionPecent;
 	}
+	 
+	 
+	 /**
+		 * <pre>
+		 * Method to select Distribution Election Reason for Death
+		 * </pre>
+		 * @param distributionElectionType
+		 *
+		 */
+
+	    public void selectDistributionElectionTypeForDeath(String distributionElectionType) {
+			boolean isTextDisplayed=false;
+			try{
+			 WebElement inpMethodDeath= Web.getDriver().findElement(By.xpath(strMethodDeath.replace("webElementText", distributionElectionType)));
+		
+			isTextDisplayed = Web.isWebElementDisplayed(inpMethodDeath, true);
+			
+			if (isTextDisplayed)
+				Web.clickOnElement(inpMethodDeath);
+
+			}
+			catch(NoSuchElementException e){
+				e.printStackTrace();
+			}
+		
+	  
+		}
+	    
+	    /**
+		 * <pre>
+		 * Method to select Termination Or Retirement Type for Distribution Election Reason 
+		 * </pre>
+		 * @param distributionElectionType
+		 *
+		 */
+
+	    public void selectDistributionElectionTypeForTermination(String distributionElectionType) {
+			boolean isTextDisplayed=false;
+			try{
+			 WebElement inpTerminationOrRetirementType= Web.getDriver().findElement(By.xpath(strMethodTerminationOrRetirement.replace("webElementText", distributionElectionType)));
+		
+			isTextDisplayed = Web.isWebElementDisplayed(inpTerminationOrRetirementType, true);
+			
+			if (isTextDisplayed)
+				Web.clickOnElement(inpTerminationOrRetirementType);
+
+			}
+			catch(NoSuchElementException e){
+				e.printStackTrace();
+			}
+		
+	  
+		}
+	    
+	    /**
+		 * <pre>
+		 * Method to select Distribution Election Method for under Death/Termination
+		 * </pre>
+		 * @param distributionElectionType
+		 *
+		 */
+
+	    public void selectDistributionElectionMethod(String distributionElectionMethod) {
+			boolean isTextDisplayed=false;
+			try{
+			 WebElement inpMethod= Web.getDriver().findElement(By.xpath(strTerminationOrRetirementMethod.replace("webElementText", distributionElectionMethod)));
+		
+			isTextDisplayed = Web.isWebElementDisplayed(inpMethod, true);
+			
+			if (isTextDisplayed)
+				Web.clickOnElement(inpMethod);
+
+			}
+			catch(NoSuchElementException e){
+				e.printStackTrace();
+			}
+		
+	  
+		}
+	    /**
+		 * <pre>
+		 * Method to Click On Continue Button
+		 * </pre>
+		 *
+		 */
+
+	    public void clickContinue() {
+			boolean isTextDisplayed=false;
+			try{
+				
+			isTextDisplayed = Web.isWebElementDisplayed(btnContinue, true);
+			
+			if (isTextDisplayed)
+				Web.clickOnElement(btnContinue);
+
+			}
+			catch(NoSuchElementException e){
+				e.printStackTrace();
+			}
+		
+	  
+		}
 }

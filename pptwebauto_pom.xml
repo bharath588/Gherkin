@@ -97,7 +97,14 @@
 								<name>DB_PASSWORD</name>
 								<value>${DB_PASSWORD}</value>
 							</property>
-						</systemProperties>					
+						</systemProperties>	
+						<systemProperties>
+							<property>
+								<name>executionMode</name>
+								<value>${executionMode}</value>
+							</property>
+						</systemProperties>	
+										
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be usedfor compiling 
