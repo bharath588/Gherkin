@@ -18,8 +18,8 @@ import core.framework.Globals;
 
 public class Rebalancer extends LoadableComponent<Rebalancer> {
 
-	@FindBy(xpath = ".//table[@class='contentTableColumn']//span[contains(text(),'Current Participant Default Investment Option')]")
-	WebElement txtRebalancerHeader;
+	@FindBy(xpath = ".//div[@class='titleText']//span[contains(text(),'Current Participant Default Investment Option')]")
+	private WebElement txtRebalancerHeader;
 
 	@FindBy(xpath = "//*[@id='oCMenu_316'][contains(text(),'Participant Changes')]")
 	private WebElement menuPPTChanges;
@@ -115,6 +115,7 @@ public class Rebalancer extends LoadableComponent<Rebalancer> {
 		Web.mouseHover(menuRenewalUpdateLink);
 		if (Web.isWebElementDisplayed(menuRebalancer, true)) {
 			Web.clickOnElement(menuRebalancer);
+			boolean b= Web.isWebElementDisplayed(txtRebalancerHeader);
 			if (Web.isWebElementDisplayed(txtRebalancerHeader, true)) {
 				navigateToRebalancerPage() ;
 			}else if(Web.isWebElementDisplayed(RebalErr)

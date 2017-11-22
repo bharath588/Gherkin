@@ -281,6 +281,7 @@ public class DisbursementInfoOrHistory extends
 			int webEle_Indx = 0 ;
 			boolean isPaymentHisDtls = false ;
 			for (int i = 0; i < PHDate.size(); i++) {
+				System.out.println(paymentHistDtls.get(2));
 					if (CommonLib.compareDB_Date_With_Web_Date(
 							paymentHistDtls.get(2), PHDate.get(i).getText())
 							/*

@@ -102,7 +102,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 
 	@FindBy(css = "table#table_loanHistorySummary tr td:nth-of-type(12)")
 	private List<WebElement> Default_Indicator_List;
-
+	
 	// Loan info Loan History
 	@FindBy(id = "table_paymentHistory")
 	private WebElement PaymentHistoryTab;
@@ -115,6 +115,9 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 	
 	@FindBy(css = "table#table_paymentHistory tr>td:nth-of-type(9)")
 	private List<WebElement> PaymentDueDate;
+	
+	@FindBy(xpath= ".//*[@id='table_loanHistorySummary']/tbody/tr[2]/td[8]")
+	private WebElement loanAmount;
 
 	LoadableComponent<?> parent;
 
@@ -237,6 +240,8 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 				loanInfo_List.add(resultset.getString("IND_ID"));
 				loanInfo_List.add(resultset.getString("GA_ID"));
 				loanInfo_List.add(resultset.getString(expecteddata_loaninfo));
+				/*System.out.println(resultset.getNString(0));
+				loanInfo_List.add(resultset.getString("TotalOutstandingBalance"));*/
 
 			}
 		}
@@ -259,6 +264,7 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 		boolean isLoanStsEqual = false;
 		String loanSts_Val_On_Web;
 		List<WebElement> loanStsWE = getWebElement(webelement.toUpperCase());
+		System.out.println("loan details :"+loanStsWE);
 		if (Web.isWebElementDisplayed(LoanStatus_Tab, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Check if Loan Status table displayed or not",
@@ -268,19 +274,17 @@ public class LoanInfo extends LoadableComponent<LoanInfo> {
 			}
 			for (int i = 0; i < Loan_Status_List.size(); i++) {
 				if (Loan_Status_List.get(i).getText().equalsIgnoreCase("Active")) {
-					isLoanStatusEleDisplayed = Web.isWebElementDisplayed(loanStsWE
-							.get(i));
+					isLoanStatusEleDisplayed = Web.isWebElementDisplayed(loanStsWE.get(i));
 
 					if (isLoanStatusEleDisplayed) {
 						loanSts_Val_On_Web = loanStsWE.get(i).getText();
+						
 						switch (loanSts_var) {
 						case "LOAN_AMT":
-							// if (loanSts_Val_On_Web.contains(loanStsVal_From_DB))
-							// {
-							Number number = null;
-							number = NumberFormat.getCurrencyInstance(Locale.US)
-									.parse(loanSts_Val_On_Web);
-							if (number != null) {
+							loanSts_Val_On_Web = loanAmount.getText();
+							String loanAmount= loanSts_Val_On_Web.replace(",","");
+							if (loanAmount.contains(loanStsVal_From_DB)) {
+							
 								isLoanStsEqual = true;
 							}
 							break;

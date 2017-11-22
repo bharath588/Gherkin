@@ -9,7 +9,7 @@
 		<classes>
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 				<methods>
-					<!-- 				
+				
 					<include name="validating_recalculate_functionality"> 
 						<parameter name="ManualTCName" value="csas_TC_23_Validating_Recalculate_Functionality" />
 					</include>	
@@ -33,9 +33,7 @@
 					</include> 
 					<include name="statement_order_update_confirmation">
 						<parameter name="ManualTCName" value="csas_TC_16_Statement_Order_Update_Confirmation" />
-					</include>	 -->
-					
-					 <!-- 		
+					</include>	 		
 					<include name="validating_email_text_box">
 						 <parameter name="ManualTCName" value="csas_TC_27_Validating_Email_Text_Box" />
 					</include>
@@ -47,10 +45,10 @@
 					</include>
 					<include name="validating_amount_to_borrow_text_field"> 
 						<parameter name="ManualTCName" value="csas_TC_30_Validating_Amount_To_Borrow_Field" /> 
-					</include> -->
+					</include>
 					
 					<!-- Test cases Bindu -->
-					 <!-- 	  
+						  
 					<include name="CSAS_Paperless_Loan_TC02_DDTC_26947">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_DeliverForm" />
 					</include>												
@@ -89,12 +87,12 @@
 					</include> 
 					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
-					</include>	 -->
-					<!-- 					 				
+					</include>	
+								 				
 					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
 					</include> 
-					 --><!-- 
+					
 					<include name="CSAS_Paperless_Loan_TC06_DDTC_26083">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MultipleLoans"/>						
 					</include>			 
@@ -103,11 +101,11 @@
 					</include> 			
 					<include name="CSAS_Paperless_Loan_TC08_DDTC_26084">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_Refinance_MaxLoans"/>						
-					</include>	 -->
+					</include>	
 					 <include name="CSAS_Paperless_Loan_HappyPath_TC16_DDTC_27971">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_LoanRequest"/>						
 					</include>																				
-					<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
+				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
 					</include>	
 				</methods>

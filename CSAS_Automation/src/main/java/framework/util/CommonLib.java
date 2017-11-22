@@ -166,5 +166,19 @@ public class CommonLib {
 			Reporter.logEvent(Status.FAIL,"Check if expected button enabled or not:"+ele+"" ,"Expectecd button does not enabled.",true);
 		}
 		}
+	/**
+	 * Method to check button enabled or not.
+	 * @param Webelement
+	 * @param boolean
+	 */
+	public static void verifyExpectedAndActualEual(String expected, String actual){
+		
+		// Check if button enabled or not.
+		if(expected.equalsIgnoreCase(actual)){
+			Reporter.logEvent(Status.PASS,"Expected value should  match with actual value " ,expected,false);
+		}else{
+			Reporter.logEvent(Status.FAIL,"Expected value should  match with actual value " ,"Expected was :"+expected + " \\n Actual was :"+ actual,true);
+		}
+		}
 	
 	}

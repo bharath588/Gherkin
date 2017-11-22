@@ -9,6 +9,33 @@
 		<classes>
 			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 				<methods>
+					<include name="CORE_18537_EndToEndTesting_WithDivision">
+						<parameter name="ManualTCName" value="CORE_18537_EndToEndTesting_WithDivision" />
+						</include>
+						
+				 <include name="CORE_18539_Enable_Selection_Of_Division">
+						<parameter name="ManualTCName" value="CORE_18539_Enable_Selection_Of_Division" />
+						</include> 
+					 
+				
+						<include name="CORE_18527_EndToEndTesting_With_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18527_EndToEndTesting_With_Alphanumeric" />
+						</include>
+						
+						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
+						<parameter name="ManualTCName" value="CORE_18526_EndToEndTesting_Without_Alphanumeric" />
+						</include> 
+						
+						<include name="CORE_18542_DivisionShouldNotDisplayOnConfirmationPage_When_NODivision">
+						<parameter name="ManualTCName" value="CORE_18542_DivisionShouldNotDisplayOnConfirmationPage_When_NODivision" />
+						</include>
+						
+						<include name="CORE_18555_Enable_Division_Field_More_ThanOne_DivisionName">
+						<parameter name="ManualTCName" value="CORE_18555_Enable_Division_Field_More_ThanOne_DivisionName" />
+						</include> 
+						 
+				
+					
 						
 						<include name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
 						<parameter name="ManualTCName" value="DDTC_28159_validIndicativeData_AddressLine1_Line2" />
@@ -29,19 +56,6 @@
 						<include name="validateConfirmationPage">
 						<parameter name="ManualTCName" value="validateConfirmationPage" />
 						</include>  
-						<include name="CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName">
-						<parameter name="ManualTCName" value="CORE_18528_CORE_18534_CORE_18547_EnableDivision_DivisionField_HasMoreThanOne_DivisionName" />
-						</include>
-					<include name="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName">
-						<parameter name="ManualTCName" value="CORE_18530_DivisionDisplayonConfirmationPage_DivisionName" />
-						</include>
-						<include name="CORE_18526_EndToEndTesting_Without_Alphanumeric">
-						<parameter name="ManualTCName" value="CORE_18526_EndToEndTesting_Without_Alphanumeric" />
-						</include>
-						
-						<include name="CORE_18527_EndToEndTesting_With_Alphanumeric">
-						<parameter name="ManualTCName" value="CORE_18527_EndToEndTesting_With_Alphanumeric" />
-						</include>
 						
 		 				<include name="ValidateIndicativeCity">
 						<parameter name="ManualTCName" value="ValidateCity" />
@@ -83,7 +97,9 @@
 					</include>	 
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
-					</include>	
+					</include>	 
+					
+					
 					<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn" />
 					</include>
@@ -103,7 +119,7 @@
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn" />
 					</include>
 					
-					
+				
 					
 					
 					</methods> 

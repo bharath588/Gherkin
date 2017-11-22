@@ -8,7 +8,6 @@
 	<test name="Regression Suite">
 	<classes>
 		
-		
 		<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
 				
@@ -65,11 +64,9 @@
 							
 								</methods>
 			</class> 
-					
 			 
-			
 			 
-			<!-- <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+		 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
 				<methods>
 					 <include name="Validate_LoanStatus_TotalOutstandingBal">
 						<parameter name="ManualTCName"
@@ -97,9 +94,9 @@
 							value="CSAS_PPT_Info_Loan_Info_Loan_History_paid"></parameter>
 					</include> 
 				</methods>
-			</class>  -->
+			</class> 
 			
-			<!-- 
+			 
 			<class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
 				<methods>
 					<include
@@ -111,9 +108,9 @@
 						<parameter name="ManualTCName" value="Validate_Selected_Loan_Type_Details"></parameter>
 					</include>
 				</methods>
-			</class> -->
+			</class> 
 			
- 			<!-- <class	name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
+ 		<class	name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
 				<methods>				
 					<include name="Validate_Active_Allocation_Percentage">
 						<parameter name="ManualTCName"
@@ -136,9 +133,9 @@
 							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Money_Type_Totals"></parameter>
 					</include> 
 				</methods>
-			 </class>   -->
+			 </class>  
 			 
-		<!-- 	
+		
 			<class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
 					<include name="Verify_DIH_PaymentHistory">
@@ -154,10 +151,10 @@
 							value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"></parameter>
 					</include> 
 				</methods>
-			</class>  -->
+			</class>  
 				
 			
-		<!-- 	<class	name="app.csas.testcases.contributionallocationchange.validate_contributionallocationchange">
+	<class	name="app.csas.testcases.contributionallocationchange.validate_contributionallocationchange">
 				<methods>
 					<include name="Validate_Default_Investment_Option_Details">
 						<parameter name="ManualTCName"
@@ -170,9 +167,7 @@
 					
 				</methods>
 			</class> 
-			 -->
 			
-		 	<!--  
 			<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
 				<methods>
 				<include name="Validate_Fund2Fund_Transfer_Restriction_Type_No">
@@ -200,9 +195,7 @@
 					
 				</methods>
 			</class>
-			  -->
-						
-			<!-- <class name="app.csas.testcases.rebalancer.validate_rebalancer">
+		<class name="app.csas.testcases.rebalancer.validate_rebalancer">
 				<methods>
 					<include name="Perform_and_validate_Rebalancer_transferRestriction">
 						<parameter name="ManualTCName" value="CSAS_PPT Change_Custom_Xfer_&amp;_Renewal_Rebalancer_Transfer_Restrictions_display"></parameter>
@@ -295,7 +288,7 @@
 					</include>	
 						
 					</methods> 
-					</class> -->
+					</class> 
 			
 			
 		</classes>
