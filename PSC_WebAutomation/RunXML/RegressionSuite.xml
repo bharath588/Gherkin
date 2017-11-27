@@ -8,11 +8,11 @@
 	<classes>
 	<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
-					 <!-- <include
+					 <include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
-					</include> -->
+					</include>
 					<include
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
@@ -45,7 +45,7 @@
 							value="DDTC-22062_SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
 						</parameter>
 					</include>
-					<!-- <include
+					<include
 						name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-22064_SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
@@ -62,24 +62,24 @@
 					<include name="TC008_00_Verify_new_user_flow_positive">
 						<parameter name="ManualTCName"
 							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<class
 				name="app.psc.testcases.accountverification.accountverification_existingusr">
 				<methods>
-					<!-- <include name="TC019_Verify_Default_Plan_Prompting">
+					<include name="TC019_Verify_Default_Plan_Prompting">
 						<parameter name="ManualTCName"
 							value="DDTC-22072_SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
 						</parameter>
-					</include> -->
+					</include>
 					<include
 						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
 						<parameter name="ManualTCName"
 							value="DDTC-22070_SIT_PSC_Login_01_TC002_Expired Password_negative">
 						</parameter>
 					</include>
-					<!-- <include
+					<include
 						name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-22071_SIT_PSC_Login_01_TC002_Expired Password_positive">
@@ -95,7 +95,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-2179_SIT_PSC_Login_01_TC015_PSC users to be unable to re-use their last 10 passwords">
 						</parameter>
-					</include> --> 
+					</include> 
 					<include name="TC006_01_Verify_Display_Of_Notification_On_HomePage">
 						<parameter name="ManualTCName"
 							value="DDTC-1204_SIT_PSC_HomePage_02_TC006_Notification Button">
@@ -127,7 +127,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class
+			<class
 				name="app.psc.testcases.accountverification.accountverificationtest_plan">
 				<methods>
 					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
@@ -139,7 +139,7 @@
 							value="DDTC-22069_SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid" />
 					</include> 
 				</methods>
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 					 <include name="TC006_01_Verify_Force_Login">
@@ -151,7 +151,7 @@
 							value="DDTC-1063_SIT_PSC_Login_01_TC017_Internal and External User">
 						</parameter>
 					</include>
-					<!-- <include name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin">
+					<include name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin">
 						<parameter name="ManualTCName"
 							value="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 						</parameter>
@@ -160,7 +160,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1379_SIT_PSC_Login_01_TC014_Footer links_Prelogin">
 						</parameter>
-					</include> -->
+					</include>
 					<include name="TC004_02_Verify_Header_and_Footer_Links_PostLogin">
 						<parameter name="ManualTCName"
 							value="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
@@ -231,7 +231,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
-					<!-- <include name="TC001_Search_Employee_For_Valid_SSN">
+					<include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include>
@@ -272,14 +272,14 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22057_Employee_Search_Regression_noduplicatessn">
 						</parameter>
-					</include> --> 
+					</include> 
 					<include
 						name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-22058_Employee_Search_Regression_noduplicatename">
 						</parameter>
 					</include>
-					<!--  <include
+					<include
 						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-21990_Employee_Search_Regression_noduplicateempid">
@@ -317,11 +317,11 @@
 					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification" />
-					</include> -->
+					</include>
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info" />
 					</include>
-					<!-- <include name="TC020_Recently_Viewed_Employee">
+					<include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
 					</include>
 					<include name="TC021_Salary_View_And_Update">
@@ -329,33 +329,32 @@
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
-					</include> -->
+					</include>
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
 					</include>
-					<!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include>  -->
-
+					</include>
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
 					<include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName" value="DDTC-1022_Verify_Subset_History_Section" />
 					</include>
-					<!-- <include name="TC028_Recently_Viewed_Switch_Participant_Reg">
+					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName" value="DDTC-1440_Recently_Viewed_Switch_Participant_Reg" />
-					</include> -->
+					</include>
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName" value="DDTC-2194_Edit_Enrollment_And_Eligibility" />
 					</include> 
-					<!-- <include name="TC30_Account_balance_Tab">
+					<include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
 					</include>
 					<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="DDTC-1062_Disable_PAE_then_renable_PAE" />
-					</include> -->
+					</include>
 					<include name="TC32_Supress_Menu_Items_for_TRS_Flex">
 						<parameter name="ManualTCName" value="DDTC-1421_Supress_Menu_Items_for_TRS_Flex" />
 					</include>
@@ -366,14 +365,14 @@
 					<include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
 						<parameter name="ManualTCName" value="DDTC-218_SIT_PSC_Accountdetail_Allocations_Reg" />
 					</include>
-					<!-- <include name="TC35_SIT_PSC_Statements_Tab">
+					<include name="TC35_SIT_PSC_Statements_Tab">
 						<parameter name="ManualTCName" value="DDTC-1008_SIT_PSC_Statements_Tab" />
 					</include>
 					<include
 						name="TC36_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed">
 						<parameter name="ManualTCName"
 							value="DDTC-290_SIT_PSC_Employee_Overview_DB_plans_Enrollment_Elligibility_Not_displayed" />
-					</include>  -->
+					</include>
 
 					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver" />
@@ -391,9 +390,9 @@
 						<parameter name="ManualTCName"
 							value="DDTC-25806_SIT_PSC_Accountdetail_Paycheck_Contribution_YTD" />
 					</include>
-					<!-- <include name="TC42_Paycheck_Contribution_History">
+					<include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="DDTC-2162_Paycheck_Contribution_History" />
-					</include> -->
+					</include>
 					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
 						<parameter name="ManualTCName"
 							value="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations" />
@@ -408,22 +407,22 @@
 						<parameter name="ManualTCName"
 							value="DDTC-2235_SIT_PSC_Add_Employee_Autosite_Plan_Display_Angular_Page" />
 					</include>
-					<!-- <include name="TC024_Verify_Employee_Overview_Screen_Elements">
+					<include name="TC024_Verify_Employee_Overview_Screen_Elements">
 						<parameter name="ManualTCName"
 							value="DDTC-1267_Verify_Employee_Overview_Screen_Elements" />
-					</include> -->
+					</include>
 					<include name="TC_47_Search_Emp_Locked_Plan">
 						<parameter name="ManualTCName" value="DDTC-1065_Search_Emp_Locked_Plan" />
 					</include>
-					<!-- <include name="TC_51_Add_New_Employee_View_Page">
+					<include name="TC_51_Add_New_Employee_View_Page">
 						<parameter name="ManualTCName" value="DDTC-1494_Add_New_Employee_View_Page" />
-					</include> -->
+					</include>
 					<include name="TC_50_SSN_Multiple_Plan_PAE">
 						<parameter name="ManualTCName" value="DDTC-1509_SSN_Multiple_Plan_PAE" />
 					</include>
-					<!-- <include name="TC_56_Info_Message_New_User">
+					<include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="DDTC-1332_Info_Message_New_User" />
-					</include> -->
+					</include>
 					<include name="TC_54_Employee_Overview_With_Active_Models">
 						<parameter name="ManualTCName" value="DDTC-2139_Employee_Overview_With_Active_Models" />
 					</include>
@@ -449,20 +448,20 @@
 						<parameter name="ManualTCName"
 							value="DDTC-28597_PSC_Employee_Information_NonZeroDeferral_TerminatedLessThen_18Month" />
 					</include>
-					<!-- <include
+					<include
 						name="TC_58_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active">
 						<parameter name="ManualTCName"
 							value="DDTC-28596_PSC_Employee_Information_RehireTerminate_NonZeroDeferral_Active" />
-					</include> -->
+					</include>
 					<include name="TC_60_PSC_Employee_Information_Active_ChageHireInfo">
 						<parameter name="ManualTCName"
 							value="DDTC-28486_PSC_Employee-Information_Active_ChageHireInfo" />
 					</include>
-					<!-- <include
+					<include
 						name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1">
 						<parameter name="ManualTCName"
 							value="DDTC-29464_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario1" />
-					</include> -->
+					</include>
 					<include
 						name="TC_59_PSC_Employee_Information_RehireTerminate_ZeroDeferral_Scenario2">
 						<parameter name="ManualTCName"
@@ -487,9 +486,13 @@
 						<parameter name="ManualTCName"
 							value="DDTC-242_Stop_All_Deferrals" />
 					</include>
-					<!-- <include name="TC_63_Agecatchup">
+					<include name="TC_63_Agecatchup">
 						<parameter name="ManualTCName"
 							value="DDTC-204_Agecatchup" />
+					</include>
+					<!-- <include name="TC_64_OngoingDeferralUIValidation">
+						<parameter name="ManualTCName"
+							value="DDTC-298_OngoingDeferral_UI_Validation" />
 					</include> -->
 				</methods> 
 			</class>
@@ -699,19 +702,19 @@
 						<parameter name="ManualTCName"
 							value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan_Negative" />
 					</include>
-					<!-- <include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
+					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Positive_Flow" />
 					</include> 
 					<include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Negative_Flow" />
-					</include>--> 
+					</include>
 					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
 						<parameter name="ManualTCName"
 							value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password" />
 					</include>
-					<!-- <include name="TC003_01_SIT_PSC_Update_User_Name">
+					<include name="TC003_01_SIT_PSC_Update_User_Name">
 						<parameter name="ManualTCName" value="DDTC-1534_SIT_PSC_Update_User_Name" />
 					</include>
 					<include name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions">
@@ -723,7 +726,7 @@
 					</include>
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
@@ -763,8 +766,8 @@
 						<parameter name="ManualTCName" value="DDTC-22542_Gpp_regression_process_confirm"/>
 					</include>
 				</methods>
-			</class>  -->
-			<!--  <class name="app.psc.testcases.filesharing.filesharingtestcases">
+			</class>
+			<class name="app.psc.testcases.filesharing.filesharingtestcases">
 				<methods>
 					<include
 						name="TC001_SIT_PSC_FileSharing_04_TC028_Screen_element_refresh">
@@ -872,7 +875,21 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class>-->
+			</class> -->
+			<class name="app.psc.testcases.reports.ReportsTestCases">
+				<methods>
+					<include
+						name="TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters">
+						<parameter name="ManualTCName"
+							value="DDTC_2264_SIT_PSC_Reports_02_TC017_ViewReport_Parameters"/>
+					</include>
+					<include
+						name="TC02_01_PSCNextGen_Reports_Plan_review_PDF_PPTX">
+						<parameter name="ManualTCName"
+							value="DDTC_8283_PSCNextGen-Reports-Plan_review_PDF_PPTX"/>
+					</include>
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>
