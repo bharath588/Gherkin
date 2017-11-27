@@ -8,7 +8,7 @@
 	<classes>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -95,14 +95,14 @@
 					</include>
 					<include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
-					</include>
+					</include> -->
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification" />
 					</include>
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info" />
 					</include>
-					<include name="TC020_Recently_Viewed_Employee">
+					<!-- <include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
 					</include>
 					<include name="TC021_Salary_View_And_Update">
@@ -110,14 +110,14 @@
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
-					</include>
+					</include> -->
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
 					</include>
-					<include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+					<!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include> 
+					</include> --> 
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
@@ -267,11 +267,15 @@
 						<parameter name="ManualTCName"
 							value="DDTC-204_Agecatchup" />
 					</include>
+					<!-- <include name="TC_64_OngoingDeferralUIValidation">
+						<parameter name="ManualTCName"
+							value="DDTC-298_OngoingDeferral_UI_Validation" />
+					</include> -->
 				</methods> 
 			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
-					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
+					<!-- <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
 							value="DDTC-21950_Employee_Search_Regression_screen_elements" />
 					</include>
@@ -298,20 +302,20 @@
 					<include name="TC023_Verify_the_limit_of_search_results_on_searchpage">
 						<parameter name="ManualTCName" value="DDTC-21956_Employee_Search_Regression_limit">
 						</parameter>
-					</include>
+					</include> -->
 					<include name="TC024_Verify_Filter_Functionality_Search_Results_Page">
 						<parameter name="ManualTCName" value="DDTC-21957_Employee_Search_Regression_filter" />
 					</include>
-					<include name="TC025_Verify_search_results_for_ssn_with_extension">
+					<!-- <include name="TC025_Verify_search_results_for_ssn_with_extension">
 						<parameter name="ManualTCName" value="DDTC-1095_Employee_Search_Regression_ssn_ext" />
-					</include>
+					</include> -->
 					<include
 						name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code">
 						<parameter name="ManualTCName"
 							value="DDTC-22056_Employee_Search_Regression_emp_err_code">
 						</parameter>
 					</include>
-					<include name="TC027_Verify_termed_employeedetails_are_displayed">
+					<!-- <include name="TC027_Verify_termed_employeedetails_are_displayed">
 						<parameter name="ManualTCName"
 							value="DDTC-21959_Employee_Search_Regression_termed_employee" />
 					</include>
@@ -320,7 +324,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21958_Employee_Search_Regression_valid_res_termed_emp">
 						</parameter>
-					</include> 
+					</include> --> 
 					<include name="TC029_Verify_ssn_masking_for_external_users">
 						<parameter name="ManualTCName" value="DDTC-22055_Employee_Search_Regression_ssn_masking">
 						</parameter>
