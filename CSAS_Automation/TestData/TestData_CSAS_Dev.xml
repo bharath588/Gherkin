@@ -78,7 +78,7 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="6021452" />
+				<parameter name="ppt_id" value="11551139" />
 				<parameter name="pdi_status" value="No" />
 			</Iteration>
 		</TestCase>
@@ -465,17 +465,17 @@ ORDER BY wb.ga_id,
 			Query="Select * from ISIS_REF_VALUES where Rv_Domain='STATE' ORDER BY dbms_random.value" />
 
 		<parameter QueryName="getParticipantPersonelDetails" DB="INSTDB_DEV"
-			Query="Select * From Individual Where SSN='123101000'" />
+			Query="Select * From Individual Where SSN = ?" />
 		<parameter QueryName="getParticipantAddressDetails" DB="INSTDB_DEV"
-			Query="Select * from Address where Ind_id='14708873'" />
+			Query="Select * from Address where Ind_id= ?" />
 		<parameter QueryName="getEventDetails" DB="INSTDB_DEV"
-			Query="Select * from event where id ='1040510658'" />
+			Query="Select * from event where id = ?" />
 		<parameter QueryName="getEmailDetails" DB="INSTDB_DEV"
-			Query="Select * From Ind_Email Where Ind_Id='14708873'" />
+			Query="Select * From Ind_Email Where Ind_Id= ?" />
 		<parameter QueryName="getEmploymentDetails" DB="INSTDB_DEV"
-			Query="select * From employment  where Ind_id='14708873'" />
+			Query="select * From employment  where Ind_id= ?" />
 		<parameter QueryName="getDivisionDetails" DB="INSTDB_DEV"
-			Query="Select * From Part_Subset Where Ind_Id='14708873'" />
+			Query="Select * From Part_Subset Where Ind_Id= ?" />
 		<parameter QueryName="getEnabledDivisionDetails" DB="INSTDB_DEV"
 			Query="Select Basis,Name, Value From Gc_Subset Where Gc_Id= 194391 And Basis= 'D'" />
 
@@ -583,7 +583,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11528366" />
+				<parameter name="PPT_ID" value="11551139" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="100" />
 				<parameter name="TransferToVal" value="100" />
@@ -595,7 +595,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11528366" />
+				<parameter name="PPT_ID" value="11551139" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="1" />
 				<parameter name="TransferToVal" value="100" />
@@ -684,7 +684,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11528366" />
+				<parameter name="PPT_ID" value="11552571" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -694,7 +694,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11528366" />
+				<parameter name="PPT_ID" value="11552571" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -1328,10 +1328,8 @@ ORDER BY wb.ga_id,
 				<parameter name="password" value="baseball" />
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123654789" />
-				<parameter name="ANNUAL INCOME" value="12365" />
-				<parameter name="FIRST NAME" value="HARSHA" />
-				<parameter name="LAST NAME" value="AUTOMATION" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="01-Nov-2016" />
@@ -1341,6 +1339,7 @@ ORDER BY wb.ga_id,
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
+
 			</Iteration>
 
 		</TestCase>
@@ -1349,14 +1348,12 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="GrpId" value="19439101" />
+				<parameter name="DB" value="ISISDB_DEV" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123888999" />
 				<parameter name="SSNwithDashes" value="123654789" />
 				<parameter name="GrpIdWithAlphaNumaric" value="92149-NQ" />
-				<parameter name="FIRST NAME" value="HARSHA" />
-				<parameter name="LAST NAME" value="AUTOMATION" />
-				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="01-Nov-2016" />
@@ -1366,6 +1363,7 @@ ORDER BY wb.ga_id,
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
+
 				
 
 
@@ -1420,7 +1418,6 @@ ORDER BY wb.ga_id,
 				<parameter name="password" value="baseball" />
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123654444" />
 				<parameter name="FIRST NAME" value="saru" />
 				<parameter name="LAST NAME" value="reddy" />
 				<parameter name="DOB" value="09-Nov-1988" />
@@ -1489,10 +1486,74 @@ ORDER BY wb.ga_id,
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
 				<parameter name="HOME PHONE" value="7896541230" />
-				<parameter name="ERROR MESSAGE" value="Gender is required." />
+				<parameter name="ERROR MESSAGE" value="• Gender is required." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="CORE_19816_EnterIndicativedata_Current_annualincome">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="GrpId" value="19439101" />
+				<parameter name="PEC" value="1234" />
+				<parameter name="AlphaNumaricAnnualIncome" value="s1dd34" />
+				<parameter name="DefaultErrorMessage" value="Annual income is required." />
+				<parameter name="InvalidDataErrorMessage" value="Enter a valid annual income." />
+			</Iteration>
+		</TestCase>
+			<TestCase name="CORE_19819_EnterIndicativedata_Current_MaritalStatus">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="GrpId" value="19439101" />
+				<parameter name="PEC" value="1234" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="DOB" value="09-Nov-1988" />
+				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="DOH" value="01-Nov-2016" />
+				<parameter name="ADDR LINE1" value="12" />
+				<parameter name="ADDR LINE2" value="B123" />
+				<parameter name="CITY" value="Denver" />
+				<parameter name="ZIP CODE" value="80111" />
+				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
+				<parameter name="MOBILE PHONE" value="9591588128" />
+				<parameter name="MaritalStatusErrorMessage" value="• Marital status is required." />
 
 			</Iteration>
+		</TestCase>
+		
+			<TestCase name="CORE_19792_confirmationpage_CreateNewAccount_ConfirmationNumber">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="GrpId" value="19439101" />
+				<parameter name="PEC" value="1234" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="DOB" value="09-Nov-1988" />
+				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="DOH" value="01-Nov-2016" />
+				<parameter name="ADDR LINE1" value="12" />
+				<parameter name="ADDR LINE2" value="B123" />
+				<parameter name="CITY" value="Denver" />
+				<parameter name="ZIP CODE" value="80111" />
+				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
+				<parameter name="MOBILE PHONE" value="9591588128" />
+				<parameter name="AccountYetToCreated" value="Account has not yet been created." />
+				<parameter name="CONFIRMATION TEXT" value="Your account has been created. Your confirmation number is " />
 
+			</Iteration>
+		</TestCase>
+		<TestCase name="CORE_19833_EnterIndicativedata_Current_Dateofbirth">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="GrpId" value="19439101" />
+				<parameter name="PEC" value="1234" />
+				<parameter name="DOBInvalid1" value="Aug-18-2017" />
+				<parameter name="DOBFutureDate" value="28-Nov-2018" />
+				<parameter name="DOBFutureDateErrorMsg" value="Date of birth cannot be future dated." />
+			</Iteration>
 		</TestCase>
 		<TestCase name="Man_CSAS_Online_Enrollment_ddtc_28131_invalid_ssn">
 			<Iteration Execution="Yes" id="1">

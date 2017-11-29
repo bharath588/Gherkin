@@ -36,6 +36,9 @@ import generallib.General;
 public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	LoadableComponent<?> parent;
 	ResultSet queryResultSet;
+	public static String SSN = "";
+	public static String MobileNumber = "";
+	public static String DBName = "";
 
 	public OnlineEnrollment() {
 		PageFactory.initElements(Web.getDriver(), this);
@@ -258,6 +261,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	@FindBy(id = "dateOfHireError")
 	private WebElement dateOfHireError;
 
+	@FindBy(id = "annualIncomeError")
+	private WebElement annualIncomeError;
+
+	@FindBy(id = "datOfBirthError")
+	private WebElement datOfBirthError;
+
 	@FindBy(id = "createNewAccount")
 	private WebElement createAccount;
 
@@ -325,7 +334,10 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	private WebElement optionOne;
 
 	@FindBy(xpath = ".//input[@id='gender']/parent::*/following-sibling::div[1]")
-	private WebElement gender;
+	private List<WebElement> gender;
+	
+	@FindBy(xpath = ".//div[@id='reviewInfoSectionDiv']/child::div[2]")
+	private WebElement accountNotCreatedMsg;
 
 	Actions action = new Actions(Web.getDriver());
 
@@ -348,14 +360,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 				if (Web.isWebElementDisplayed(onlineEnrollment, true)) {
 					Reporter.logEvent(Status.PASS,
-							"Check if Online Enrollment page displayed or not",
-							"Online Enrollment page displyed successfully",
-							true);
+							"Check if Create Account page displayed or not",
+							"Create Account page displyed successfully", true);
 				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Check if Online Enrollment page displayed or not",
-							"Online Enrollment didn't get displayed successfully",
+					Reporter.logEvent(Status.FAIL,
+							"Check if Create Account page displayed or not",
+							"Create Account didn't get displayed successfully",
 							true);
 				}
 			} else {
@@ -380,9 +390,22 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				Stock.GetParameterValue("GrpId"));
 		Web.setTextToTextBox(planEnrollmentCodeTextbox,
 				Stock.GetParameterValue("PEC"));
-		Web.setTextToTextBox(ssnSearchedTextbox, Stock.GetParameterValue("SSN"));
+		long randomNumber = CommonLib.getRandomNumber(9);
+		SSN = Long.toString(randomNumber);
+		Web.setTextToTextBox(ssnSearchedTextbox, SSN);
 		ssnSearchedTextbox.sendKeys(Keys.TAB);
 		Web.clickOnElement(submitBtn);
+		Web.waitForElement(onlineEnrollment);
+
+		if (Web.isWebElementDisplayed(onlineEnrollment, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Check if Online Enrollment page displayed or not",
+					"Online Enrollment page displyed successfully", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check if Online Enrollment page displayed or not",
+					"Online Enrollment didn't get displayed successfully", true);
+		}
 	}
 
 	private String getDropDownElement(WebElement dropDownElement) {
@@ -1295,7 +1318,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-				fillTheFieldesinOnlineEnrollmentForm(true);
+				fillTheFieldesinOnlineEnrollmentForm(true, true);
 
 				// enter invalid data into personal email field and validate
 				// error message.
@@ -1343,7 +1366,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 				if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-					fillTheFieldesinOnlineEnrollmentForm(true);
+					fillTheFieldesinOnlineEnrollmentForm(true, true);
 
 					// Verify addressLine1 is mandatory field.
 					addressLine1.clear();
@@ -1378,10 +1401,10 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					// not be exceed more than 35Bytes.
 					CommonLib.verifyIfWebElementTextPresent(
 							preConfirmAddLineOne,
-							Stock.GetParameterValue("ADDR LINE1 EXPECTED"));
+							Stock.GetParameterValue("ADDR LINE1 EXPECTED"),"ADDR LINE1 field value should match with expected text length.");
 					CommonLib.verifyIfWebElementTextPresent(
 							preConfirmAddLineTwo,
-							Stock.GetParameterValue("ADDR LINE2 EXPECTED"));
+							Stock.GetParameterValue("ADDR LINE2 EXPECTED"),"ADDR LINE2 field value should match with expected text length.");
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
@@ -1417,7 +1440,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 				if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-					fillTheFieldesinOnlineEnrollmentForm(true);
+					fillTheFieldesinOnlineEnrollmentForm(true, true);
 
 					// Verify Date of hire is mandatory field.
 					dateOfHireTextBox.clear();
@@ -1444,7 +1467,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Web.clickOnElement(doneButton);
 					dateOfHireError.clear();
 					CommonLib.verifyIfWebElementTextPresent(dateOfHireError,
-							Stock.GetParameterValue("DOHFutureDateErrorMsg"));
+							Stock.GetParameterValue("DOHFutureDateErrorMsg"),"DateOfHire field error should display on UI.");
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
@@ -1478,13 +1501,13 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 */
 	public void verifyEndToEndTestingWithoutAlphaNumaricOfGId()
 			throws InterruptedException, SQLException {
-		// Fill all the details in online enrollment form and enroll a
-		// participant.
-		fillTheFieldesinOnlineEnrollmentForm(true);
+		fillTheFieldesinOnlineEnrollmentForm(true, true);
 		Web.clickOnElement(contToCreateNewAccountBtn);
+		MobileNumber = preConfirmMobile.getText();
 		Web.waitForElement(createAccount);
 		Web.clickOnElement(createAccount);
-		
+
+		// Connect to the respective data base get enrollment details.
 		Web.waitForElement(confirmationNumber);
 		String confirmationNumberText = confirmationNumber.getText();
 		String confirmationNumber = confirmationNumberText.substring(59);
@@ -1496,23 +1519,25 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					"Enrollment not success " + confirmationNumber, true);
 		}
 
-		/*// Connect to the respective data base get enrollment details.
-		// HashMap<String, String> personelDetails = getPersonelDetails();
-		HashMap<String, String> addressList = getAddressDetails();
-		HashMap<String, String> contactAndAddressList = getContactAndEmploymentDetails();
-		String confirmationNumberFromDB = getConfirmationNumber();
+		HashMap<String, String> personelDetails = getPersonelDetails(SSN, null);
+		String IndID = personelDetails.get("IndId");
+		HashMap<String, String> addressList = getAddressDetails(IndID, null);
 
-		// Verify UI enrollment confirmation number with database populated
-		// value.
-		CommonLib.verifyExpectedAndActualEual(confirmationNumber.getText(),
-				confirmationNumberFromDB);
+		HashMap<String, String> contactAndAddressList = getContactAndEmploymentDetails(
+				IndID, true, null);
+		String confirmationNumberFromDB = getConfirmationNumber(
+				confirmationNumber, null);
+
+		// Verify UI enrollment confirmation number with database value.
+		CommonLib.verifyExpectedAndActualEual(confirmationNumber,
+				confirmationNumberFromDB,
+				"Expected EvenID should be exist on database");
 
 		// Verify data base populated enrolled participant personal,address
-		// and employment details.
-		// verifyPersonelDetails(personelDetails);
+		// employment details.
+		verifyPersonelDetails(personelDetails);
 		verifyAddressDetails(addressList);
-		verifyAddressDetails(contactAndAddressList);
-*/
+		verifyEmailAndEmploymentDetails(contactAndAddressList, true);
 	}
 
 	/**
@@ -1527,7 +1552,14 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		// Enter GrpId with AlphaNumaric value.
 		fillTheDataInGrpIdAndPECAndSSN(
 				Stock.GetParameterValue("GrpIdWithAlphaNumaric"),
-				Stock.GetParameterValue("PEC"), Stock.GetParameterValue("SSN"));
+				Stock.GetParameterValue("PEC"));
+
+		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		Web.clickOnElement(contToCreateNewAccountBtn);
+		MobileNumber = preConfirmMobile.getText();
+		Web.waitForElement(createAccount);
+		Web.clickOnElement(createAccount);
+
 		// Connect to the respective data base get enrollment details.
 		Web.waitForElement(confirmationNumber);
 		String confirmationNumberText = confirmationNumber.getText();
@@ -1539,29 +1571,27 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Reporter.logEvent(Status.FAIL, "Enrollment should be successful",
 					"Enrollment not success " + confirmationNumber, true);
 		}
-		/*
-		 * // Fill all the details in form and enroll a participant.
-		 * fillTheFieldesinOnlineEnrollmentForm();
-		 * Web.clickOnElement(contToCreateNewAccountBtn);
-		 * Web.waitForElement(createAccount); Web.clickOnElement(createAccount);
-		 * 
-		 * // Connect to the respective data base get enrollment details. //
-		 * HashMap<String, String> personelDetails = getPersonelDetails();
-		 * HashMap<String, String> addressList = getAddressDetails();
-		 * HashMap<String, String> contactAndAddressList =
-		 * getContactAndEmploymentDetails(); String confirmationNumberFromDB =
-		 * getConfirmationNumber();
-		 * 
-		 * // Verify UI enrollment confirmation number with database populated
-		 * value.
-		 * CommonLib.verifyExpectedAndActualEual(confirmationNumber.getText(),
-		 * confirmationNumberFromDB);
-		 * 
-		 * // Verify data base populated enrolled participant personal,address
-		 * and // employment details. //verifyPersonelDetails(personelDetails);
-		 * verifyAddressDetails(addressList);
-		 * verifyEmailAndEmploymentDetails(contactAndAddressList);
-		 */
+		String DB = Stock.GetParameterValue("DB");
+		HashMap<String, String> personelDetails = getPersonelDetails(SSN, DB);
+		String IndID = personelDetails.get("IndId");
+		System.out.println("personel details: " + personelDetails);
+		HashMap<String, String> addressList = getAddressDetails(IndID, DB);
+
+		HashMap<String, String> contactAndAddressList = getContactAndEmploymentDetails(
+				IndID, false, DB);
+		String confirmationNumberFromDB = getConfirmationNumber(
+				confirmationNumber, DB);
+
+		// Verify UI enrollment confirmation number with database value.
+		CommonLib.verifyExpectedAndActualEual(confirmationNumber,
+				confirmationNumberFromDB,
+				"Expected EvenID should be exist on database");
+
+		// Verify data base populated enrolled participant personal,address
+		// employment details.
+		verifyPersonelDetails(personelDetails);
+		verifyAddressDetails(addressList);
+		verifyEmailAndEmploymentDetails(contactAndAddressList, false);
 
 	}
 
@@ -1584,7 +1614,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				Web.clickOnElement(divisionDropDown);
 				addressLine1.click();
 				CommonLib.verifyIfWebElementTextPresent(divisionError,
-						Stock.GetParameterValue("DivisionError"));
+						Stock.GetParameterValue("DivisionError"),"Division Field Error Should Display On UI.");
 
 			} else {
 				Reporter.logEvent(
@@ -1608,12 +1638,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 */
 	public void verifyDivisionFieldValueOnConfirmationPage()
 			throws InterruptedException {
-		fillTheFieldesinOnlineEnrollmentForm(true);
+		fillTheFieldesinOnlineEnrollmentForm(true, true);
 		Web.clickOnElement(contToCreateNewAccountBtn);
 
 		// Verify division field value on confirmation page.
 		CommonLib.verifyIfWebElementTextPresent(preDivision,
-				Stock.GetParameterValue("DivisionValue"));
+				Stock.GetParameterValue("DivisionValue"),"Expected pre division value should displayed on UI.");
 
 	}
 
@@ -1697,7 +1727,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Status.PASS,
 					"Division field should not displayed in online enrollment.",
 					"division field not displayed: " + divisionDropDown, false);
-			fillTheFieldesinOnlineEnrollmentForm(true);
+			fillTheFieldesinOnlineEnrollmentForm(true, true);
 		}
 	}
 
@@ -1728,8 +1758,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				// Enter GrpId with AlphaNumaric value.
 				fillTheDataInGrpIdAndPECAndSSN(
 						Stock.GetParameterValue("GrpIdWithDivision"),
-						Stock.GetParameterValue("PEC"),
-						Stock.GetParameterValue("SSN"));
+						Stock.GetParameterValue("PEC"));
 
 				// Verify division field displayed on online enrollment page.
 				isDivisionExist = divisionDropDown.isDisplayed();
@@ -1750,13 +1779,26 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		}
 	}
 
-	public void fillTheDataInGrpIdAndPECAndSSN(String grpID, String PEC,
-			String SSN) {
+	public void fillTheDataInGrpIdAndPECAndSSN(String grpID, String PEC) {
 		Web.setTextToTextBox(planNumberTextbox, grpID);
 		Web.setTextToTextBox(planEnrollmentCodeTextbox, PEC);
+		long randomNumber = CommonLib.getRandomNumber(9);
+		SSN = Long.toString(randomNumber);
 		Web.setTextToTextBox(ssnSearchedTextbox, SSN);
 		ssnSearchedTextbox.sendKeys(Keys.TAB);
 		Web.clickOnElement(submitBtn);
+		Web.waitForElement(planNumberLabel);
+		Web.waitForElement(onlineEnrollment);
+
+		if (Web.isWebElementDisplayed(onlineEnrollment, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Check if Online Enrollment page displayed or not",
+					"Online Enrollment page displyed successfully", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check if Online Enrollment page displayed or not",
+					"Online Enrollment didn't get displayed successfully", true);
+		}
 
 	}
 
@@ -1827,16 +1869,90 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	public void verifyGenderButton() throws InterruptedException {
 		// fill the all the data except gender and click on continue button.
-		fillTheFieldesinOnlineEnrollmentForm(false);
+		fillTheFieldesinOnlineEnrollmentForm(false, true);
 		Web.clickOnElement(contToCreateNewAccountBtn);
-		Web.waitForElement(createAccount);
-		Web.clickOnElement(createAccount);
+		/*
+		 * Web.waitForElement(createAccount); Web.clickOnElement(createAccount);
+		 */
 
 		// Verify error message is displayed.
 		CommonLib.verifyExpectedAndActualEual(
-				Stock.GetParameterValue("ERROR MESSAGE"), errorMsg.getText());
+				Stock.GetParameterValue("ERROR MESSAGE"), errorMsg.getText(),
+				"Expected gender error messge should be displayed in UI");
 
 		// Verify displayed Female/Male on a page.
+		boolean isEmpty = gender.isEmpty();
+		if (isEmpty == false) {
+			for (int i = 0; i < gender.size(); i++) {
+				if (i == 0) {
+					CommonLib.verifyExpectedAndActualEual("Female",
+							gender.get(0).getText(),
+							"Expected gendershould be displayed in UI");
+
+				} else if (i == 1) {
+					CommonLib.verifyExpectedAndActualEual("Male", gender.get(1)
+							.getText(),
+							"Expected gendershould be displayed in UI");
+
+				}
+			}
+		}
+
+	}
+
+	public void verifyAnnualIncomeField() throws InterruptedException {
+		// Click on annual income field and should not enter data verify error
+		// message.
+		// annualIncomeTextBox.clear();
+		annualIncomeTextBox.sendKeys(Keys.TAB);
+		annualIncomeError.click();
+
+		// Verify error message is displayed.
+		CommonLib
+				.verifyExpectedAndActualEual(
+						Stock.GetParameterValue("DefaultErrorMessage"),
+						annualIncomeError.getText(),
+						"Expected annual income field error messge should be displayed in UI");
+
+		// Verify if you enter alpha numeric it will display error message.
+		// Verify error message is displayed.
+		Web.setTextToTextBox(annualIncomeTextBox,
+				Stock.GetParameterValue("AlphaNumaricAnnualIncome"));
+		annualIncomeTextBox.sendKeys(Keys.TAB);
+		annualIncomeError.click();
+		CommonLib
+				.verifyExpectedAndActualEual(
+						Stock.GetParameterValue("InvalidDataErrorMessage"),
+						annualIncomeError.getText(),
+						"Expected annual income field error messge should be displayed in UI");
+
+		// Verify if you enter 100 to text box it will add decimal.
+		annualIncomeTextBox.clear();
+		annualIncomeTextBox.sendKeys("100");
+		annualIncomeTextBox.sendKeys(Keys.TAB);
+		CommonLib
+				.verifyFieldValue(annualIncomeTextBox, "$100.00",
+						"Actual Annual income field value should be match with expected.");
+
+		// Verify if you enter 100 to text box it will add decimal.
+		annualIncomeTextBox.clear();
+		annualIncomeTextBox.sendKeys("1000");
+		annualIncomeTextBox.sendKeys(Keys.TAB);
+		CommonLib
+				.verifyFieldValue(annualIncomeTextBox, "$1,000.00",
+						"Actual Annual income field value should be match with expected.");
+	}
+
+	public void verifyMaritalStatusField() throws InterruptedException {
+		fillTheFieldesinOnlineEnrollmentForm(true, false);
+		Web.clickOnElement(contToCreateNewAccountBtn);
+
+		// Verify error message is displayed.
+		CommonLib
+				.verifyExpectedAndActualEual(
+						Stock.GetParameterValue("MaritalStatusErrorMessage"),
+						errorMsg.getText(),
+						"Expected marital status error messge should be displayed in UI");
 
 	}
 
@@ -1851,8 +1967,9 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		// Fill all the details in online enrollment form and enroll a
 		// participant.
 
-		fillTheFieldesinOnlineEnrollmentForm(true);
+		fillTheFieldesinOnlineEnrollmentForm(true, true);
 		Web.clickOnElement(contToCreateNewAccountBtn);
+		MobileNumber = preConfirmMobile.getText();
 		Web.waitForElement(createAccount);
 		Web.clickOnElement(createAccount);
 
@@ -1867,34 +1984,38 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Reporter.logEvent(Status.FAIL, "Enrollment should be successful",
 					"Enrollment not success " + confirmationNumber, true);
 		}
-		/*
-		 * HashMap<String, String> personelDetails = getPersonelDetails(str2);
-		 * HashMap<String, String> addressList = getAddressDetails();
-		 * HashMap<String, String> contactAndAddressList =
-		 * getContactAndEmploymentDetails(); String confirmationNumberFromDB =
-		 * getConfirmationNumber();
-		 * 
-		 * 
-		 * // Verify UI enrollment confirmation number with database populated
-		 * // value. //
-		 * CommonLib.verifyExpectedAndActualEual(confirmationNumber.getText(),
-		 * // confirmationNumberFromDB);
-		 * 
-		 * // Verify data base populated enrolled participant personal,address
-		 * and // employment details. verifyPersonelDetails(personelDetails);
-		 * verifyAddressDetails(addressList);
-		 * verifyEmailAndEmploymentDetails(contactAndAddressList);
-		 */
 
+		HashMap<String, String> personelDetails = getPersonelDetails(SSN, null);
+		String IndID = personelDetails.get("IndId");
+		System.out.println("personel details: " + personelDetails);
+		HashMap<String, String> addressList = getAddressDetails(IndID, null);
+
+		HashMap<String, String> contactAndAddressList = getContactAndEmploymentDetails(
+				IndID, true, null);
+		String confirmationNumberFromDB = getConfirmationNumber(
+				confirmationNumber, null);
+
+		// Verify UI enrollment confirmation number with database value.
+		CommonLib.verifyExpectedAndActualEual(confirmationNumber,
+				confirmationNumberFromDB,
+				"Expected EvenID should be exist on database");
+
+		// Verify data base populated enrolled participant personal,address
+		// employment details.
+		verifyPersonelDetails(personelDetails);
+		verifyAddressDetails(addressList);
+		verifyEmailAndEmploymentDetails(contactAndAddressList, true);
 	}
 
 	public void verifyPersonelDetails(HashMap<String, String> hm) {
 		try {
 			// Verify personelDetail
 			CommonLib.verifyExpectedAndActualEual(
-					Stock.GetParameterValue("FIRST NAME"), hm.get("FirstName"));
+					Stock.GetParameterValue("FIRST NAME"), hm.get("FirstName"),
+					"Expected FirstName should exist on data base.");
 			CommonLib.verifyExpectedAndActualEual(
-					Stock.GetParameterValue("LAST NAME"), hm.get("LastName"));
+					Stock.GetParameterValue("LAST NAME"), hm.get("LastName"),
+					"Expected LastName should exist on data base.");
 
 			// Verify enrolled participant date with database populated value.
 			Boolean b = CommonLib.compareDB_Date_With_Web_Date(
@@ -1910,21 +2031,21 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 								+ hm.get("BirthDate"), true);
 			}
 
-			CommonLib.verifyExpectedAndActualEual("M", hm.get("SEX"));
-			CommonLib.verifyExpectedAndActualEual("M", hm.get("MaritalStatus"));
-			String expectedMobileNumber = Stock
-					.GetParameterValue("MOBILE PHONE");
+			CommonLib.verifyExpectedAndActualEual("M", hm.get("SEX"),
+					"Expected Gender should exist on data base.");
+			CommonLib.verifyExpectedAndActualEual("S", hm.get("MaritalStatus"),
+					"Expected MaritalStatus should exist on data base.");
 			String actualMobilenumber = hm.get("MobileNumber");
-			if (expectedMobileNumber.contains(actualMobilenumber)) {
+			if (MobileNumber.contains(actualMobilenumber)) {
 				Reporter.logEvent(Status.PASS,
 						"Registred mobile number should exist on data base",
 						"Registred mobile number matched with data base populated number: "
-								+ expectedMobileNumber, false);
+								+ MobileNumber, false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Registred mobile number should exist on data base",
 						"Registred mobile number does not matched with data base populated number:"
-								+ expectedMobileNumber, true);
+								+ MobileNumber, true);
 
 			}
 		} catch (Exception e) {
@@ -1935,34 +2056,51 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	public void verifyAddressDetails(HashMap<String, String> hm) {
 		// Verify Address Details
 		CommonLib.verifyExpectedAndActualEual(
-				Stock.GetParameterValue("ADDR LINE1"), hm.get("FirstLine"));
+				Stock.GetParameterValue("ADDR LINE1"), hm.get("FirstLine"),
+				"Expected Address should exist on data base.");
 		CommonLib.verifyExpectedAndActualEual(Stock.GetParameterValue("CITY"),
-				hm.get("City"));
+				hm.get("City"), "Expected City should exist on data base.");
 		CommonLib.verifyExpectedAndActualEual(
-				Stock.GetParameterValue("ZIP CODE"), hm.get("ZipCode"));
-		CommonLib.verifyExpectedAndActualEual("CO", hm.get("State"));
-		CommonLib.verifyExpectedAndActualEual("US", hm.get("Country"));
+				Stock.GetParameterValue("ZIP CODE"), hm.get("ZipCode"),
+				"Expected ZipCode should exist on data base.");
+		CommonLib.verifyExpectedAndActualEual("CO", hm.get("State"),
+				"Expected State should exist on data base.");
+		CommonLib.verifyExpectedAndActualEual("US", hm.get("Country"),
+				"Expected Country should exist on data base.");
 	}
 
-	public void verifyEmailAndEmploymentDetails(HashMap<String, String> hm) {
+	public void verifyEmailAndEmploymentDetails(HashMap<String, String> hm,
+			boolean isDivision) {
 		try {
 			CommonLib.verifyExpectedAndActualEual(
 					Stock.GetParameterValue("PERSONAL EMAIL"),
-					hm.get("EmailAddress"));
+					hm.get("EmailAddress"),
+					"Expected Email Address should exist on data base.");
 			CommonLib.compareDB_Date_With_Web_Date(hm.get("HireDate"),
 					Stock.GetParameterValue("DOH"));
-			CommonLib.verifyExpectedAndActualEual("D", hm.get("DivisionCode"));
-			CommonLib.verifyExpectedAndActualEual("5", hm.get("DivisionValue"));
+			if (isDivision) {
+				CommonLib.verifyExpectedAndActualEual("D",
+						hm.get("DivisionCode"),
+						"Expected Division Code should exist on data base.");
+				CommonLib.verifyExpectedAndActualEual("1",
+						hm.get("DivisionValue"),
+						"Expected Division Value should exist on data base.");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public String getConfirmationNumber() throws SQLException {
-		ResultSet res = DB.executeQuery(
-				Stock.getTestQuery("getEventDetails")[0],
-				Stock.getTestQuery("getEventDetails")[1]);
+	public String getConfirmationNumber(String EventId, String isDatabaseName)
+			throws SQLException {
+		if (isDatabaseName == null) {
+			DBName = Stock.getTestQuery("getEventDetails")[0];
+		} else {
+			DBName = isDatabaseName;
+		}
+		ResultSet res = DB.executeQuery(DBName,
+				Stock.getTestQuery("getEventDetails")[1], EventId);
 		String confirmationNumber = "";
 		if (res != null) {
 			while (res.next()) {
@@ -1975,18 +2113,25 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	}
 
-	public HashMap<String, String> getPersonelDetails(String confirmationNumber)
+	public HashMap<String, String> getPersonelDetails(
+			String confirmationNumber, String isDatabaseName)
 			throws SQLException {
 		HashMap<String, String> personelList = new HashMap<String, String>();
+		if (isDatabaseName == null) {
+			DBName = Stock.getTestQuery("getParticipantPersonelDetails")[0];
+		} else {
+			DBName = isDatabaseName;
+		}
 
-		ResultSet res = DB.executeQuery(
-				Stock.getTestQuery("getParticipantPersonelDetails")[0],
+		ResultSet res = DB.executeQuery(DBName,
 				Stock.getTestQuery("getParticipantPersonelDetails")[1],
 				confirmationNumber);
 
 		if (res != null) {
 
 			while (res.next()) {
+				String Ind_ID = res.getString("ID");
+				personelList.put("IndId", Ind_ID);
 				String firstName = res.getString("FIRST_NAME");
 				personelList.put("FirstName", firstName);
 				String lastName = res.getString("LAST_NAME");
@@ -2005,11 +2150,17 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	}
 
-	public HashMap<String, String> getAddressDetails() throws SQLException {
+	public HashMap<String, String> getAddressDetails(String IndId,
+			String isDatabaseName) throws SQLException {
 		HashMap<String, String> addressList = new HashMap<String, String>();
-		ResultSet res = DB.executeQuery(
-				Stock.getTestQuery("getParticipantAddressDetails")[0],
-				Stock.getTestQuery("getParticipantAddressDetails")[1]);
+		if (isDatabaseName == null) {
+			DBName = Stock.getTestQuery("getParticipantAddressDetails")[0];
+		} else {
+			DBName = isDatabaseName;
+		}
+
+		ResultSet res = DB.executeQuery(DBName,
+				Stock.getTestQuery("getParticipantAddressDetails")[1], IndId);
 
 		if (res != null) {
 			while (res.next()) {
@@ -2030,13 +2181,18 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	}
 
-	public HashMap<String, String> getContactAndEmploymentDetails()
+	public HashMap<String, String> getContactAndEmploymentDetails(String IndId,
+			boolean isDivisionRequired, String isDatabaseName)
 			throws SQLException {
 		HashMap<String, String> contactAndEmploymentList = new HashMap<String, String>();
+		if (isDatabaseName == null) {
+			DBName = Stock.getTestQuery("getEmailDetails")[0];
+		} else {
+			DBName = isDatabaseName;
+		}
 		ResultSet emailDetails = null;
-		emailDetails = DB.executeQuery(
-				Stock.getTestQuery("getEmailDetails")[0],
-				Stock.getTestQuery("getEmailDetails")[1]);
+		emailDetails = DB.executeQuery(DBName,
+				Stock.getTestQuery("getEmailDetails")[1], IndId);
 
 		if (emailDetails != null) {
 			while (emailDetails.next()) {
@@ -2044,22 +2200,26 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				contactAndEmploymentList.put("EmailAddress", emailAddress);
 			}
 		}
-		ResultSet divisionDetails = DB.executeQuery(
-				Stock.getTestQuery("getDivisionDetails")[0],
-				Stock.getTestQuery("getDivisionDetails")[1]);
+		if (isDivisionRequired) {
+			ResultSet divisionDetails = DB.executeQuery(
+					Stock.getTestQuery("getDivisionDetails")[0],
+					Stock.getTestQuery("getDivisionDetails")[1], IndId);
 
-		if (divisionDetails != null) {
-			while (divisionDetails.next()) {
-				String divisionCode = divisionDetails.getString("GCS_BASIS");
-				contactAndEmploymentList.put("DivisionCode", divisionCode);
-				String divisionValue = divisionDetails.getString("GCS_VALUE");
-				contactAndEmploymentList.put("DivisionValue", divisionValue);
+			if (divisionDetails != null) {
+				while (divisionDetails.next()) {
+					String divisionCode = divisionDetails
+							.getString("GCS_BASIS");
+					contactAndEmploymentList.put("DivisionCode", divisionCode);
+					String divisionValue = divisionDetails
+							.getString("GCS_VALUE");
+					contactAndEmploymentList
+							.put("DivisionValue", divisionValue);
+				}
 			}
 		}
 
-		ResultSet res = DB.executeQuery(
-				Stock.getTestQuery("getEmploymentDetails")[0],
-				Stock.getTestQuery("getEmploymentDetails")[1]);
+		ResultSet res = DB.executeQuery(DBName,
+				Stock.getTestQuery("getEmploymentDetails")[1], IndId);
 
 		if (res != null) {
 			while (res.next()) {
@@ -2076,8 +2236,8 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 * 
 	 * @throws InterruptedException
 	 */
-	private void fillTheFieldesinOnlineEnrollmentForm(boolean isGenderRequired)
-			throws InterruptedException {
+	private void fillTheFieldesinOnlineEnrollmentForm(boolean isGenderRequired,
+			boolean isMaritalStatus) throws InterruptedException {
 
 		try {
 			// Fill personal information fields
@@ -2094,10 +2254,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				Thread.sleep(3000);
 				genderRadioBtns.get(1).click();
 			}
-			List<WebElement> maritalStatusRadioBtns = Web.getDriver()
-					.findElements(By.id("married"));
-			Thread.sleep(3000);
-			maritalStatusRadioBtns.get(1).click();
+			if (isMaritalStatus == true) {
+				List<WebElement> maritalStatusRadioBtns = Web.getDriver()
+						.findElements(By.id("married"));
+				Thread.sleep(3000);
+				maritalStatusRadioBtns.get(1).click();
+			}
 
 			// Fill employment information
 			Web.setTextToTextBox(annualIncomeTextBox,
@@ -2107,7 +2269,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Web.clickOnElement(doneButton);
 
 			// Check if division field displayed are not.
-			Boolean isexist = divisionDropDown.isDisplayed();
+			Boolean isexist = Web.isWebElementDisplayed(divisionDropDown, true);
 
 			if (isexist) {
 				// Select division from division drop down.
@@ -2164,7 +2326,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Stock.GetParameterValue("InvalidGrpId"));
 			planNumberTextbox.sendKeys(Keys.TAB);
 			CommonLib.verifyIfWebElementTextPresent(planNumberError,
-					Stock.GetParameterValue("GrpIdErrorMsg"));
+					Stock.GetParameterValue("GrpIdErrorMsg"),"Plan Number field error message should displayed in UI.");
 			CommonLib.verifyIsButtonEnabledOrNot(submitBtn, true);
 
 			// Enter Invalid data in PEC field verify error message and whether
@@ -2181,7 +2343,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			ssnSearchedTextbox.sendKeys(Keys.TAB);
 			ssnSearchedError.click();
 			CommonLib.verifyIfWebElementTextPresent(ssnSearchedError,
-					Stock.GetParameterValue("SSNErrorMsg"));
+					Stock.GetParameterValue("SSNErrorMsg"),"SSN Field Error should display on  UI");
 			CommonLib.verifyIsButtonEnabledOrNot(submitBtn, true);
 
 			// Enter the value in EnrollmentCode and SSN Fields and validate
@@ -2243,10 +2405,13 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 			// Verify GrpId,PEC,SSN values in online enrollment page under
 			// Create Account session.
-			CommonLib.verifyFieldValue(planNumberTextbox, "194391-01");
+			CommonLib.verifyFieldValue(planNumberTextbox, "194391-01",
+					"Actual GrpId should match with expected value.");
 			CommonLib.verifyFieldValue(planEnrollmentCodeTextbox,
-					PlanEnrollCode);
-			CommonLib.verifyFieldValue(ssnSearchedTextbox, SSN);
+					PlanEnrollCode,
+					"Actual PEC should match with expected value.");
+			CommonLib.verifyFieldValue(ssnSearchedTextbox, SSN,
+					"Actual SSN should match with expected");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -3011,4 +3176,58 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		String ssn = ssnEnrollPage.getText();
 		return ssn;
 	}
+
+	/**
+	 * Method to verify Date of birth field validation.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void validateErrorMsgDateOfBirth() throws InterruptedException {
+		// Verify Date of hire is mandatory field.
+		DateOfBirthTextbox.clear();
+		Web.clickOnElement(doneButton);
+		CommonLib.verifyIfWebElementPresent(datOfBirthError,
+		"check if Error message is displayed or not when data not entered to the field: ",true);
+
+		// Verify invalid date format for the field Date of hire
+		Web.setTextToTextBox(DateOfBirthTextbox,
+				Stock.GetParameterValue("DOBInvalid1"));
+		Web.clickOnElement(doneButton);
+		CommonLib.verifyIfWebElementPresent(datOfBirthError,
+				"check if Error message is displayed or not when invalid data entered is: "
+						+ Stock.GetParameterValue("DOBInvalid1"), true);
+
+		// verify future date verification for the field Date of
+		// hire.
+		Web.setTextToTextBox(DateOfBirthTextbox,
+				Stock.GetParameterValue("DOBFutureDate"));
+		Web.clickOnElement(doneButton);
+		datOfBirthError.clear();
+		CommonLib.verifyIfWebElementTextPresent(datOfBirthError,
+				Stock.GetParameterValue("DOBFutureDateErrorMsg"),"DateOfBirth Field error message should present on UI.");
+
+	}
+	/**
+	 * Verify create new account functionality
+	 * @throws InterruptedException 
+	 */
+	public void verifyCreateAccountFunctionality() throws InterruptedException{
+		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		
+		// Click on continuetoCreate account button and verify account not created messgae.
+		Web.clickOnElement(contToCreateNewAccountBtn);
+		CommonLib.verifyIfWebElementTextPresent(accountNotCreatedMsg, Stock.GetParameterValue("AccountYetToCreated"), "Confirmation page account notcreated message should display.");
+		
+		// Click on createAccount button and verify Confirmation message.
+		Web.clickOnElement(createNewAcct);
+		String expectedConfirmationMsg = Stock.GetParameterValue("CONFIRMATION TEXT");
+		String actualConfirmationMsg = confirmationNumber.getText();
+		if(actualConfirmationMsg.contains(expectedConfirmationMsg)){
+			Reporter.logEvent(Status.PASS, "Confirmation number should displayed on UI.",expectedConfirmationMsg , false);
+		}else{
+			Reporter.logEvent(Status.FAIL,"Confirmation number should displayed on UI." ,"Expected was :"+expectedConfirmationMsg + " \\n Actual was :"+ actualConfirmationMsg,true);
+		}
+		
+		 
+	 }
 }

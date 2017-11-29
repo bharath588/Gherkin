@@ -6,9 +6,9 @@
 	</listeners>
 	
 	<test name="Regression Suite">
+
 	<classes>
-		
-		<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+	<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
 				
 			<include name="Validate_Managed_Account_Status_On_PPT_Home_Page_AsNotOfferedByPlan">
@@ -66,7 +66,7 @@
 			</class> 
 			 
 			 
-		 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+	 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
 				<methods>
 					 <include name="Validate_LoanStatus_TotalOutstandingBal">
 						<parameter name="ManualTCName"
@@ -112,8 +112,8 @@
 			
  		<class	name="app.csas.testcases.moneytypebalance.validate_moneytypebalance">
 				<methods>				
-					<include name="Validate_Active_Allocation_Percentage">
-						<parameter name="ManualTCName"
+						 <include name="Validate_Active_Allocation_Percentage">
+					<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Acct_Balance_Money_Type_Balance_Allocation_Percentage"></parameter>
 					</include>
 					<include name="Validate_Variable_Investment_Money_Type_Link">
@@ -166,7 +166,7 @@
 					</include> 
 					
 				</methods>
-			</class> 
+			</class>  
 			
 			<class name="app.csas.testcases.fundtofund.validate_fundtofundtransfer">
 				<methods>
@@ -290,8 +290,8 @@
 					</methods> 
 					</class> 
 			
-			
-		</classes>
+		</classes>	
+		
 	</test>
 </suite>	
 									

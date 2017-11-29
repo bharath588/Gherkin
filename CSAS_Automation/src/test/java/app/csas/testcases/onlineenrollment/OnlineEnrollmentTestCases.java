@@ -1336,10 +1336,9 @@ public class OnlineEnrollmentTestCases {
 	/*
 	 * -------------------------------------------------------------------
 	 * 
-	 * <pre> TestCase: Test to verify division field enabled depends on the
-	 * plan. DESCRIPTION: RETURNS: VOID REVISION HISTORY:
+	 * <pre> TestCase: Test to verify Gender field functionality.
 	 * --------------------------------------------------------------------
-	 * Author: Saraswathi Date : 15-Nov-2017
+	 * Author: Saraswathi Date : 23-Nov-2017
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * 
@@ -1347,7 +1346,7 @@ public class OnlineEnrollmentTestCases {
 	 */
 
 	@Test(dataProvider = "setData")
-	public void CORE_19805_EnterIndicativedata_Gender_RadioButton(int itr,
+	public void CORE_19805_EnterIndicativedata_GenderRadioButton(int itr,
 			Map<String, String> testdata) throws InterruptedException {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -1358,7 +1357,152 @@ public class OnlineEnrollmentTestCases {
 
 			// Verify division field displayed depends the plan we are
 			// selecting.
-			onlineEnrollmentObj.verifyEnableSelectionOfDivision();
+			onlineEnrollmentObj.verifyGenderButton();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/*
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * --------------------------------------------------------------------
+	 * Author: Saraswathi Date : 23-Nov-2017
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br> CSAS Credential</br>
+	 */
+
+	@Test(dataProvider = "setData")
+	public void CORE_19816_EnterIndicativedata_Current_annualincome(int itr,
+			Map<String, String> testdata) throws InterruptedException {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Go to onlineEnrollment page.
+			onlineEnrollmentObj = new OnlineEnrollment();
+			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
+
+			// Verify division field displayed depends the plan we are
+			// selecting.
+			onlineEnrollmentObj.verifyAnnualIncomeField();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	/*
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * --------------------------------------------------------------------
+	 * Author: Saraswathi Date : 23-Nov-2017
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br> CSAS Credential</br>
+	 */
+
+	@Test(dataProvider = "setData")
+	public void CORE_19819_EnterIndicativedata_Current_MaritalStatus(int itr,
+			Map<String, String> testdata) throws InterruptedException {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Go to onlineEnrollment page.
+			onlineEnrollmentObj = new OnlineEnrollment();
+			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
+
+			// Verify division field displayed depends the plan we are
+			// selecting.
+			onlineEnrollmentObj.verifyMaritalStatusField();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	/*
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * --------------------------------------------------------------------
+	 * Author: Saraswathi Date : 23-Nov-2017
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br> CSAS Credential</br>
+	 */
+
+	@Test(dataProvider = "setData")
+	public void CORE_19833_EnterIndicativedata_Current_Dateofbirth(int itr,
+			Map<String, String> testdata) throws InterruptedException {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Go to onlineEnrollment page.
+			onlineEnrollmentObj = new OnlineEnrollment();
+			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
+
+			// Verify division field displayed depends the plan we are
+			// selecting.
+			onlineEnrollmentObj.validateErrorMsgDateOfBirth();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	/*
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * --------------------------------------------------------------------
+	 * Author: Saraswathi Date : 23-Nov-2017
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br> CSAS Credential</br>
+	 */
+
+	@Test(dataProvider = "setData")
+	public void CORE_19792_confirmationpage_CreateNewAccount_ConfirmationNumber(int itr,
+			Map<String, String> testdata) throws InterruptedException {
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			// Go to onlineEnrollment page.
+			onlineEnrollmentObj = new OnlineEnrollment();
+			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
+
+			// Verify division field displayed depends the plan we are
+			// selecting.
+			onlineEnrollmentObj.verifyCreateAccountFunctionality();
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import org.openqa.selenium.WebElement;
 
@@ -127,12 +128,12 @@ public class CommonLib {
 	 * @param Webelement
 	 * @param expectedText
 	 */
-	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText){
+	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText,String sMsg){
 		// Check if webelement contains expected text or not
 		if(ele.getText().equalsIgnoreCase(expectedText)){
-			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",true);
+			Reporter.logEvent(Status.PASS,sMsg ,expectedText,true);
 		}else{
-			Reporter.logEvent(Status.FAIL,expectedText,"Expectecd Text not present", true);
+			Reporter.logEvent(Status.FAIL,sMsg,expectedText, true);
 		}
 		}
 	
@@ -141,12 +142,13 @@ public class CommonLib {
 	 * @param Webelement
 	 * @param expectedText
 	 */
-	public static void verifyFieldValue(WebElement ele, String expectedText){
+	public static void verifyFieldValue(WebElement ele, String expectedFieldValue,String sMsg){
+		String actualFieldValue =ele.getAttribute("value");
 		// Check if webelement contains expected text or not
-		if(ele.getAttribute("value").equalsIgnoreCase(expectedText)){
-			Reporter.logEvent(Status.PASS,expectedText ,"Expectecd Text present",false);
+		if(actualFieldValue.equalsIgnoreCase(expectedFieldValue)){
+			Reporter.logEvent(Status.PASS,sMsg ,expectedFieldValue,false);
 		}else{
-			Reporter.logEvent(Status.FAIL,expectedText,"Expectecd Text not present", true);
+			Reporter.logEvent(Status.FAIL,sMsg ,"Expected was :"+expectedFieldValue + " \\n Actual was :"+ actualFieldValue,true);
 		}
 		}
 	
@@ -170,15 +172,44 @@ public class CommonLib {
 	 * Method to check button enabled or not.
 	 * @param Webelement
 	 * @param boolean
-	 */
+	 *//*
 	public static void verifyExpectedAndActualEual(String expected, String actual){
 		
 		// Check if button enabled or not.
 		if(expected.equalsIgnoreCase(actual)){
-			Reporter.logEvent(Status.PASS,"Expected value should  match with actual value " ,expected,false);
+			Reporter.logEvent(Status.PASS,"Expected value should  match with actual value: " ,expected,false);
 		}else{
 			Reporter.logEvent(Status.FAIL,"Expected value should  match with actual value " ,"Expected was :"+expected + " \\n Actual was :"+ actual,true);
 		}
+		}*/
+	/**
+	 * Method to check button enabled or not.
+	 * @param Webelement
+	 * @param boolean
+	 */
+	public static void verifyExpectedAndActualEual(String expected, String actual,String sMsg){
+		
+		// Check if button enabled or not.
+		if(expected.equalsIgnoreCase(actual)){
+			Reporter.logEvent(Status.PASS,sMsg ,expected,false);
+		}else{
+			Reporter.logEvent(Status.FAIL,sMsg ,"Expected was :"+expected + " \\n Actual was :"+ actual,true);
 		}
+		}
+	/**
+	 * Method to get random number
+	 * @param length
+	 * @return
+	 */
+	public static long getRandomNumber(int length) {
+	    Random random = new Random();
+	    char[] digits = new char[length];
+	    digits[0] = (char) (random.nextInt(9) + '1');
+	    for (int i = 1; i < length; i++) {
+	        digits[i] = (char) (random.nextInt(10) + '0');
+	    }
+	    return Long.parseLong(new String(digits));
+	}
+
 	
 	}
