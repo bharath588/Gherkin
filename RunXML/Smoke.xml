@@ -44,11 +44,11 @@
                     </parameter>
                     </include>
                     
-					  <include name="Edit_MyContribution" >
+					  <!-- <include name="Edit_MyContribution" >
 					<parameter name="ManualTCName" value="Edit_MyContribution">
                     </parameter>
                     </include>  
-                    
+                     -->
                       <include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" >
 					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
                     </parameter>
@@ -147,10 +147,10 @@
                     </include>
 				 
                       
-                  <include name="Verify_Health_care_costs_helpful_links" >
+                 <!--  <include name="Verify_Health_care_costs_helpful_links" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
                     </parameter>
-                    </include>  
+                    </include>  --> 
                     
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
