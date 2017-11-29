@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite">   
+<suite name="testsuite" parallel="classes" thread-count="3">   
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	<test name="Regression_Orange_Period_Exec2_Apple_Plan">
 		 <classes>
-			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -19,8 +19,8 @@
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class> -->
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			</class>
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					 <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
@@ -168,8 +168,8 @@
 						</parameter>
 					</include>
 				</methods>
-			</class>-->
-			<!-- <class name="app.psc.testcases.login.logintestcases">
+			</class>
+			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
 				 <include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
@@ -196,29 +196,29 @@
 						</parameter>
 					</include> 
 				</methods>
-			</class>  -->
-			<!-- <class name="app.psc.testcases.plan.plansearchtestcases">
+			</class>
+			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC12_3rd_Level_Links">
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
-					<!-- <include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
+					<include name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Positive_Flow" />
 					</include> 
 					<include name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow">
 						<parameter name="ManualTCName"
 							value="DDTC-1276_SIT_PSC_Update_Email_Address_Negative_Flow" />
-					</include> -->
+					</include>
 					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
 						<parameter name="ManualTCName"
 							value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password" />
 					</include>
-					<!-- <include name="TC003_01_SIT_PSC_Update_User_Name">
+					<include name="TC003_01_SIT_PSC_Update_User_Name">
 						<parameter name="ManualTCName" value="DDTC-1534_SIT_PSC_Update_User_Name" />
 					</include> 
 					<include name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions">
@@ -230,7 +230,7 @@
 					</include> 
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
-					</include>  -->
+					</include>
 				</methods>
 			</class> 
 		</classes>
