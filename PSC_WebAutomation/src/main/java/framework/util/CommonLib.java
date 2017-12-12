@@ -1264,7 +1264,9 @@ public static String getDate(String dateformat,int offset)
 	public static boolean validateEventID(String evenId) throws SQLException
 	{
 		boolean isRecordFound = false;
-		queryResultSet = DB.executeQuery(Stock.getTestQuery("validateEventId")[0],Stock.getTestQuery("validateEventId")[1],evenId);
+		queryResultSet = DB.executeQuery(CommonLib.getUserDBName(Stock.GetParameterValue("username"))
+				+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV")),
+				Stock.getTestQuery("validateEventId")[1],evenId);
 		if(DB.getRecordSetCount(queryResultSet)>0)
 			isRecordFound=true;
 		else

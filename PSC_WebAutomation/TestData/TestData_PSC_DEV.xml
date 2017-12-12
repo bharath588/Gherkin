@@ -2422,6 +2422,35 @@ If you need to correct the existing termination date please contact website supp
 				<parameter name="AGERTHMax" value="6000" />
 			</Iteration>
 		</TestCase>
+		<TestCase name="DDTC-298_OngoingDeferral_UI_Validation">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="194037-01"/>
+				<parameter name="DeferralTypeCode" value="BEFORE"/>
+				<parameter name="DeferralTypeDisplayName" value="Before Tax"/>
+				<parameter name="PlaceHolderAmount" value="Enter deferral amount"/>
+				<parameter name="PlaceHolderPercent" value="Enter deferral percent"/>
+				<parameter name="ExpLabelsOnConfirmationPage" value="Plan,Contribution rate,Confirmation number(s)"/>
+				<parameter name="DeferralValue" value="2000" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1INST" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="PlanNumber" value="194037-01"/>
+				<parameter name="NoDeferralMsg" value="Employee does not have any current deferrals."/>
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="myprofile">
 		<TestCase name="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan">
@@ -3376,5 +3405,44 @@ Query="Update users set termdate = ? where logon_id=?" />
 Query="update isis_password set invalid_login_dpdate=? where user_logon_id=?"/>
 <parameter QueryName="queryToNumberOfrows" DB="CommonDB_DEV"
 Query="select * from isis_password where user_logon_id = ?"/>
+<parameter QueryName="getPCT_AMT_Indicator" DB="INSTDB_DEV"
+Query="select ere.ga_id, erch.ev_id, erch.active_datetime, 
+adr.defrl_code, adr.pct_amt_code,adr.display_name,adr.DEFRL_AVAIL_CODE, dlr.*
+FROM deferral_limit_rule dlr 
+INNER JOIN enrollment_rl_config_rule ercr ON (ercr.rule_id = dlr.id)
+INNER JOIN enrollment_rule_config ercon ON (ercon.id = ercr.enrl_config_id)
+INNER JOIN enrollment_rule_change erch ON (erch.ev_id = ercon.enrl_change_ev_id)
+INNER JOIN enrollment_rule_entity ere ON (ere.id = erch.enrl_entity_id)
+INNER JOIN allowed_deferral_rule adr ON  (adr.id = ercon.rule_id)
+WHERE ercr.rule_table = 'DEFERRAL_LIMIT_RULE'
+AND ercon.rule_table = 'ALLOWED_DEFERRAL_RULE'
+AND erch.active_datetime = 
+(SELECT MAX(active_datetime) FROM enrollment_rule_change erch
+INNER JOIN enrollment_rule_entity ere2 ON (ere2.id = erch.enrl_entity_id)
+WHERE ere2.ga_id = ere.ga_id and ere.ga_id=?) and adr.defrl_code=?
+ORDER BY erch.active_datetime, ercon.id, ercon.rule_code"/>
+<parameter QueryName="getDeferralInfoForAPlan" DB="INSTDB_DEV"
+Query="select ere.ga_id, erch.ev_id, erch.active_datetime, 
+adr.defrl_code, adr.pct_amt_code,adr.display_name,adr.DEFRL_AVAIL_CODE, dlr.*
+FROM deferral_limit_rule dlr 
+INNER JOIN enrollment_rl_config_rule ercr ON (ercr.rule_id = dlr.id)
+INNER JOIN enrollment_rule_config ercon ON (ercon.id = ercr.enrl_config_id)
+INNER JOIN enrollment_rule_change erch ON (erch.ev_id = ercon.enrl_change_ev_id)
+INNER JOIN enrollment_rule_entity ere ON (ere.id = erch.enrl_entity_id)
+INNER JOIN allowed_deferral_rule adr ON  (adr.id = ercon.rule_id)
+WHERE ercr.rule_table = 'DEFERRAL_LIMIT_RULE'
+AND ercon.rule_table = 'ALLOWED_DEFERRAL_RULE'
+AND erch.active_datetime = 
+(SELECT MAX(active_datetime) FROM enrollment_rule_change erch
+INNER JOIN enrollment_rule_entity ere2 ON (ere2.id = erch.enrl_entity_id)
+WHERE ere2.ga_id = ere.ga_id and ere.ga_id=?) 
+ORDER BY erch.active_datetime, ercon.id, ercon.rule_code"/>
+<parameter QueryName="PPTWithNoDeferrals" DB="INSTDB_DEV"
+Query="select * from individual i left join ind_eligibility ie ON ie.ind_id = i.id 
+inner join employment e on e.ind_id=i.id
+where months_between(sysdate, birth_date)/12 &lt; 50
+and id in (select id from individual i inner join part_agrmt pa on Pa.ind_id=i.id 
+and pa.ind_id not in (select ind_id from elective_deferral) and pa.ga_id =?) 
+and ie.eligibility_ind='Y' and e.emp_termdate is null" />
 </Module>
 </TestData>

@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,8 +49,12 @@ import pageobjects.userverification.UserVerificationPage;
 
 import com.aventstack.extentreports.Status;
 
+import db.filters.QueryFilter;
 import framework.util.CommonLib;
 import gwgwebdriver.GwgWebDriver;
+import gwgwebdriver.How;
+import gwgwebdriver.NextGenWebDriver;
+import gwgwebdriver.pagefactory.NextGenPageFactory;
 
 public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
@@ -898,6 +903,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement pastThreeTxnMessage;
 	@FindBy(xpath=".//button[contains(text(),'Return to employee page')]")
 	private List<WebElement> returnToEmployeePageButton;
+	@FindBy(xpath=".//button[contains(text(),'Return to employee overview')]")
+	private List<WebElement> returnToEmployeeOvwButton;
 	@FindBy(xpath=".//button[contains(text(),'Return to employee page')]")
 	private WebElement returnToEmployeePageButtonsingleBtn;
 	@FindBy(xpath=".//button[contains(text(),'Rehire employee')]")
@@ -940,9 +947,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath=".//h4[contains(text(),'Confirmation page')]")
 	private WebElement confirmation_deferral_h4;
 	@FindBy(xpath=".//b[contains(text(),'Confirmation number')]/../following-sibling::td")
-	private WebElement confirmationNumber_stopAllDeferralPage;
+	private WebElement confirmationNumber_DeferralPage;
 	@FindBy(xpath=".//b[contains(text(),'Plan')]/../following-sibling::td")
-	private WebElement planNumber_stopAllDeferralPage;
+	private WebElement planNumber_confirmationDeferralPage;
 	@FindBy(xpath=".//div[@class='breadcrumb']")
 	private List<WebElement> breadCrumb;
 	@FindBy(linkText="Print")
@@ -992,6 +999,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement ongoingHeader;
 	@FindBy(xpath=".//button[text()='Back']")
 	private List<WebElement> backBtn;
+	@FindBy(xpath=".//th[text()='Select the type of change to make']")
+	private WebElement deferral_main_Page;
+	@FindBy(xpath=".//b[contains(text(),'Contribution rate')]/../following-sibling::td/div/div[2]")
+	private WebElement confirmationDeflPage_contributionRateValue;
+	@FindBy(xpath=".//table[@id='plantable']//h5")
+	private WebElement noDeferralMessage;
 	private WebElement deferralHeaderSection(String expDeferralTypeText){
 		//CommonLib.switchToFrame(framecA);
 		return Web.getDriver().findElement(By.xpath(".//label[contains(text(),'"+expDeferralTypeText+"')]"));
@@ -1030,6 +1043,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	@FindBy(xpath=".//h4[.='Current and Pending Deferrals']/"
 			+ "ancestor::div[1]//following-sibling::*[1]//tbody//tr[1]//td[not(position()>10)]")
 	private List<WebElement> deferrals_columns_firstRecord_Values; 
+	@annotations.FindBy(how =How.REPEATER, using="aedr in editEmployeeDeferralRule",exact=false)
+	private List<WebElement> reviewDefChangesRow;
+	/*@FindBy(xpath=".//tr[@ng-repeat='aedr in editEmployeeDeferralRule.allowableDeferrals']//td")
+	private List<WebElement> reviewDefChangesRow;*/
 	
 	public static String newEmpSSN="";
 	String qdroPart = null;
@@ -1067,6 +1084,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	Map<String,String> employmentDataUI;
 
 	public EmployeeSearch() {
+		Web.getDriver().manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver() );
+		NextGenPageFactory.initWebElements(Web.getDriver(),this);
 		PageFactory.initElements(Web.getDriver(), this);
 		
 	}
@@ -1098,7 +1118,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			actions = new Actions(Web.getDriver());
 			actions.moveToElement(tabEmployees).click().build().perform();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
+			if(!Web.isWebElementDisplayed(employeeSearchFrame, false))
 			{
 				actions.moveToElement(tabEmployees).click().build().perform();
 				actions.click(searchEmployeeOptionLink).perform();
@@ -1186,6 +1206,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if(fieldName.trim().equalsIgnoreCase("ON_GOING_CONTINUE_BTN")){
 			return this.ongoingContBtn;
 		}
+		if(fieldName.trim().equalsIgnoreCase("NO_DEFERRAL_MESSAGE")){
+			return this.noDeferralMessage;
+		}
 		return null;
 	}
 
@@ -1226,7 +1249,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public void searchEmployeeBySSN(String SSN) throws InterruptedException {
 		CommonLib.switchToFrame(employeeSearchFrame);
 		//Web.getDriver().switchTo().frame(employeeSearchFrame);
-		Web.waitForElement(drpdwnSearchEmployee);
+		//Web.waitForElement(drpdwnSearchEmployee);
+		Web.isWebElementDisplayed(drpdwnSearchEmployee, false);
 		select = new Select(drpdwnSearchEmployee);
 		select.selectByVisibleText("SSN");
 		Web.isWebElementDisplayed(txtSearchbox,true);
@@ -1463,7 +1487,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} 
 		if (Web.isWebElementDisplayed(txtPlanNumberField)) {
 			planNumber = enterFromtextBox(planNumber);
-			Thread.sleep(3000);
+			//Thread.sleep(3000);
 			navigateToEmployeeTab();
 		}
 		return planNumber;
@@ -1526,9 +1550,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.isWebElementDisplayed(tabEmployees, true);
 		actions = new Actions(Web.getDriver());
 		actions.moveToElement(tabEmployees).click().build().perform();
-		Web.waitForPageToLoad(Web.getDriver());
+		//Web.waitForPageToLoad(Web.getDriver());
 		Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
-		Thread.sleep(2000);
 		if(!Web.isWebElementDisplayed(employeeSearchFrame, true))
 		{
 			actions.moveToElement(tabEmployees).click().build().perform();
@@ -9871,8 +9894,7 @@ public String validateStopAllDeferralConfirmationScreen(){
 		Web.clickOnElement(continue_Button);
 		Web.isWebElementDisplayed(confirmation_deferral_h4, true);
 		List<WebElement> bTagLabels = Web.getDriver().findElements(By.tagName("b"));
-		conf_number = confirmationNumber_stopAllDeferralPage.getText().trim();
-		//String plan_number = planNumber_stopAllDeferralPage.getText().trim();
+		conf_number = confirmationNumber_DeferralPage.getText().trim();
 		if(CommonLib.isAllHeadersDisplayed(bTagLabels, expLabelsOnConfirmationPage))
 			Reporter.logEvent(Status.PASS,"Validate below information is displayed on "
 					+ "confirmation page with confirmation number:"
@@ -9883,13 +9905,6 @@ public String validateStopAllDeferralConfirmationScreen(){
 					+ " confirmation page with confirmation number:"
 					+ "\n"+expLabelsOnConfirmationPage,"Information is not properly displayed on "
 							+ "confirmation page.", false);
-		/*if(planNumber.equals(plan_number))
-			Reporter.logEvent(Status.PASS,"Validate plan number on confirmation page.\nPlan="+planNumber,""
-					+ "Plan number displayed is "+plan_number, false);
-		else
-			Reporter.logEvent(Status.FAIL,"Validate plan number on confirmation page.\nPlan="+planNumber,""
-					+ "Plan number displayed is "+plan_number, true);*/
-		
 		if(CommonLib.validateEventID(conf_number))
 				Reporter.logEvent(Status.PASS,"Validate confirmation number in event table." ,""
 						+ "event with id "+conf_number+" is found in DB.", false);
@@ -10045,13 +10060,13 @@ public String validateAgeCatchUpCombinedLimit() throws Exception{
 	Web.clickOnElement(ongoingContBtn);
 	Web.isWebElementDisplayed(review_Deferral_changes_h4, true);
 	this.clickOnButtonWhenButtonsSame(continue_Button_List);
-	if(Web.isWebElementDisplayed(confirmationNumber_stopAllDeferralPage, true))
+	if(Web.isWebElementDisplayed(confirmationNumber_DeferralPage, true))
 		Reporter.logEvent(Status.PASS,"Validate Roth max amount when combined with AGEBEF.",""
 				+ "below combined limit rule is working properly.\nRoth max = Roth max+AGEBEF max", false);
 	else
 		Reporter.logEvent(Status.FAIL,"Validate roth max amount when combined with AGEBEF.",""
 				+ "below combined limit rule is not working properly.\nRoth max = roth max+AGEBEF max", true);
-	String confirmationNum = confirmationNumber_stopAllDeferralPage.getText().trim();
+	String confirmationNum = confirmationNumber_DeferralPage.getText().trim();
 	return confirmationNum;
 }
 
@@ -10140,11 +10155,14 @@ public void zeroDeferralValidationScenario_1() throws Exception{
 public void amt_pct_buttonValidation(ResultSet resultSet){
 	String pct_amt_indicator=null;
 	Boolean isCorrectBtnDisplayed=false;
-	String deferralType =null;
+	String deferralType =Stock.GetParameterValue("DeferralTypeDisplayName");
+	String actErrorMsg = "";
+	String regExp= "^\\$\\d{0,5}\\sto\\s\\$\\d{0,5}\\sin\\s\\$\\d{0,5}\\sincrements.";
+	String actPlaceHolder;
+	String expPlaceHolder="";
 	try{
 		while(resultSet.next()){
 			pct_amt_indicator = resultSet.getString("PCT_AMT_CODE");
-			deferralType = resultSet.getString("DISPLAY_NAME");
 			break;
 		}
 		List<WebElement> buttons = deferralHeaderSection(deferralType).
@@ -10154,20 +10172,33 @@ public void amt_pct_buttonValidation(ResultSet resultSet){
 			buttonsName.add(ele.getText().trim());
 		}
 		if(pct_amt_indicator.equals("AMT_PCT")){
-			if(buttonsName.contains("Percent")&&buttonsName.contains("Dollar"))
+			if(buttonsName.contains("Percent")&&buttonsName.contains("Dollar")){
 				isCorrectBtnDisplayed=true;
-			else
+				Web.clickOnElement(buttons.get(1));
+				expPlaceHolder = Stock.GetParameterValue("PlaceHolderAmount");
+			}
+			else{
 				isCorrectBtnDisplayed=false;
+			}
 		}else if(pct_amt_indicator.equals("AMT")){
-			if(buttonsName.contains("Dollar")&&buttonsName.size()==1)
+			if(buttonsName.contains("Dollar")&&buttonsName.size()==1){
 				isCorrectBtnDisplayed=true;
-			else
+				Web.clickOnElement(buttons.get(0));
+				expPlaceHolder = Stock.GetParameterValue("PlaceHolderAmount");
+			}
+			else{
 				isCorrectBtnDisplayed=false;
+			}
 		}else{
-			if(buttonsName.contains("Percent")&&buttonsName.size()==1)
+			if(buttonsName.contains("Percent")&&buttonsName.size()==1){
 				isCorrectBtnDisplayed=true;
-			else
+				Web.clickOnElement(buttons.get(0));
+				regExp = "^\\d{0,5}%\\sto\\s\\d{0,5}%\\sin\\s\\d{0,5}%\\sincrements.$";
+				expPlaceHolder = Stock.GetParameterValue("PlaceHolderPercent");
+			}
+			else{
 				isCorrectBtnDisplayed=false;
+			}
 		}
 		if(isCorrectBtnDisplayed)
 			Reporter.logEvent(Status.PASS,"Validate Percent/Dollar buttons on ongoing deferral page"
@@ -10177,10 +10208,26 @@ public void amt_pct_buttonValidation(ResultSet resultSet){
 			Reporter.logEvent(Status.FAIL,"Validate Percent/Dollar buttons on ongoing deferral page"
 					+ " is displayed as per plan set up.", "Percent/Dollar buttons are not displayed as per plan set up for"
 							+ " deferral types.please check CSAS for plan setup.", true);
+		actErrorMsg = dynamicMinMaxValidationTxt.getText().replace(",","").trim();
+		if(Pattern.matches(regExp, actErrorMsg))
+			Reporter.logEvent(Status.PASS,"Validate dynamic text as $[Min] to $[Max] in $[Granularity] increments.",""
+					+ "Dynamic text is displayed as expected.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate dynamic text as $[Min] to $[Max] in $[Granularity] increments.",""
+					+ "Dynamic text is not displayed as expected.", true);
+		WebElement input = deferralHeaderSection(deferralType).
+				findElement(By.xpath("./ancestor::header//following-sibling::div//input"));
+		actPlaceHolder = input.getAttribute("placeholder").trim();
+		if(expPlaceHolder.equals(actPlaceHolder))
+			Reporter.logEvent(Status.PASS,"Validate appropriate place holder is displayed.",""
+					+ " Appropriate placeholder is displayed.\nExpected:"+expPlaceHolder+"\nActual:"+actPlaceHolder, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate appropriate place holder is displayed.",""
+					+ " Appropriate placeholder is not displayed.\nExpected:"+expPlaceHolder+"\nActual:"+actPlaceHolder, true);
 		
 	}catch(Exception e){
-		Reporter.logEvent(Status.FAIL,"Validate Percent/Dollar buttons are displayed based on Deferral type setting"
-				+ " in CSAS.","Buttons are not displayed as per deferral type set up in CSAS.", false);
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), false);
+		e.printStackTrace();
 	}
 }
 
@@ -10190,7 +10237,7 @@ public void amt_pct_buttonValidation(ResultSet resultSet){
  * @author smykjn
  * <pre>This method validates the UI elements on ongoing deferral change page.</pre>
  */
-public void validate_Ongoing_Screen_Elements_1(ResultSet resultset){
+public void validate_Ongoing_Screen_Elements_And_PageNavigation(ResultSet resultset){
 	List<String> allowedDeferralsGUI;
 	List<String> allowedDeferrals = new ArrayList<String>();
 	Set<String> setAllowedDeferralDB;
@@ -10205,7 +10252,7 @@ public void validate_Ongoing_Screen_Elements_1(ResultSet resultset){
 		System.out.println("AllowedDeferrals DB:"+setAllowedDeferralDB);
 		allowedDeferrals.clear();
 		for(int iCount=0;iCount<allowedDeferralsGUI.size();iCount++){
-				allowedDeferrals.add(allowedDeferralsGUI.get(iCount).substring(0,25).trim());
+				allowedDeferrals.add(allowedDeferralsGUI.get(iCount).substring(25).trim());
 		}
 		System.out.println("AllowedDeferrals UI:"+allowedDeferrals);
 		for(int j=0;j<allowedDeferrals.size();j++){
@@ -10222,26 +10269,168 @@ public void validate_Ongoing_Screen_Elements_1(ResultSet resultset){
 		else
 			Reporter.logEvent(Status.FAIL,"Validate all deferral types are displayed "
 					+ "based on plan setup.","All deferral types are not displayed.\n"+allowedDeferrals, true);
-		WebElement btn = 
-				deferralHeaderSection(Stock.GetParameterValue("DeferralTypeDisplayName")).
-				findElement(By.xpath("./ancestor::header//following-sibling::div//button[text()='Dollar']"));
-		Web.clickOnElement(btn);
-		String actErrorMsg = dynamicMinMaxValidationTxt.getText().replace(",","").trim();
-		String regExp = "^\\$\\d{0,5}\\s\bto\b\\s\\$\\d{0,5}\\s\bin\b\\s\\$\\d{0,5}\\s\\bincrements\b.$";
-		if(Pattern.matches(regExp, actErrorMsg))
-			Reporter.logEvent(Status.PASS,"Validate dynamic text as $[Min] to $[Max] in $[Granularity] increments.",""
-					+ "Dynamic text is displayed as expected.", false);
+
+		String classAttribute = ongoingContBtn.getAttribute("class");
+		System.out.println("Class attribute : "+classAttribute);
+		if(classAttribute.contains("disabled"))
+			Reporter.logEvent(Status.PASS,"Validate Continue button remains disabled untill"
+					+ " user enters deferrals.","Continue button is found to be disabled.", false);
 		else
-			Reporter.logEvent(Status.FAIL,"Validate dynamic text as $[Min] to $[Max] in $[Granularity] increments.",""
-					+ "Dynamic text is not displayed as expected.", true);
-		
+			Reporter.logEvent(Status.FAIL,"Validate Continue button remains disabled untill"
+					+ " user enters deferrals.","Continue button is not found to be disabled.", true);
+		Web.clickOnElement(backBtn.get(0));
+		if(Web.isWebElementDisplayed(deferral_main_Page, true))
+			Reporter.logEvent(Status.PASS,"Click on Back button and check current and pending"
+					+ " deferrals page is displayed.","Current and Pending deferrals page is displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Back button and check current and pending"
+					+ " deferrals page is displayed.","Current and Pending deferrals page is not displayed.",true);
+		Web.clickOnElement(returnToEmpOvw_Btn);
+		CommonLib.switchToFrame(employeeSearchFrame);
+		CommonLib.waitForProgressBar();
+		if(Web.isWebElementDisplayed(overwLabel,true))
+			Reporter.logEvent(Status.PASS,"Click on Return to overview button.",""
+					+ "Employee detail page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on Return to overview button.",""
+					+ "Employee detail page is not displayed.", true);
+											
 	}catch(Exception e){
 		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
 	}
 }
 
+/**
+ * <pre>This method validates deferral confirmation screen and deletes the record from 
+ * DB against confirmation number generated on confirmation page.<code> 
+ * @author smykjn
+ * @param <code>String deferralType : <pre>Type of deferral that are being changed like 'Before Tax'</pre>
+ * String deferralValue : <pre>Amout of deferral</pre>
+ * String planNumber : <pre>plan against which deferral is being changed.</pre></code>
+ */
+public String validate_deferral_Confirmation_screen(String deferralType,String deferralValue,String planNumber){
+	String contributionRateString  = "";
+	String conf_number="";
+	try{
+		List<String> expLabelsOnConfirmationPage = Arrays.asList(
+				Stock.GetParameterValue("ExpLabelsOnConfirmationPage").split(","));
+		conf_number = confirmationNumber_DeferralPage.getText().trim();
+		List<WebElement> bTagLabels = Web.getDriver().findElements(By.tagName("b"));
+		String plan_number = planNumber_confirmationDeferralPage.getText().trim();
+		if(CommonLib.isAllHeadersDisplayed(bTagLabels, expLabelsOnConfirmationPage))
+			Reporter.logEvent(Status.PASS,"Validate below information is displayed on "
+					+ "confirmation page with confirmation number:"
+					+ "\n"+expLabelsOnConfirmationPage,"Information is displayed on "
+							+ "confirmation page with confirmation number="+conf_number, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate below information is displayed on"
+					+ " confirmation page with confirmation number:"
+					+ "\n"+expLabelsOnConfirmationPage,"Information is not properly displayed on "
+							+ "confirmation page.", false);
+		if(planNumber.equals(plan_number))
+			Reporter.logEvent(Status.PASS,"Validate plan number on confirmation page.\nPlan="+planNumber,""
+					+ "Plan number displayed is "+plan_number, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate plan number on confirmation page.\nPlan="+planNumber,""
+					+ "Plan number displayed is "+plan_number, true);
+		contributionRateString = confirmationDeflPage_contributionRateValue.getText().replace(",","").trim();
+		if(contributionRateString.contains(deferralType)
+				&&contributionRateString.contains(deferralValue))
+			Reporter.logEvent(Status.PASS,"Validate contrinution rate on deferral page.\n"
+					+ "deferral type="+deferralType+"\ndeferral value="+deferralValue,"Contribution rate is found as below:\n"
+							+ "Contribution rate: "+contributionRateString, false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate contrinution rate on deferral page.\n"
+					+ "deferral type="+deferralType+"\ndeferral value="+deferralValue,"Contribution rate is found as below:\n"
+							+ "Contribution rate: "+contributionRateString, true);
+		if(CommonLib.validateEventID(conf_number))
+			Reporter.logEvent(Status.PASS,"Validate confirmation number in event table." ,""
+					+ "event with id "+conf_number+" is found in DB.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Validate confirmation number in event table." ,""
+					+ "event with id "+conf_number+" is not found in DB.", true);
+		boolean isRetOvwBtnDisplayed = Web.isWebElementDisplayed(returnToEmpOvw_Btn, false);
+		boolean isDoneBtnDisplayed = Web.isWebElementDisplayed(done_Button_byText, false);
+		if(isRetOvwBtnDisplayed && isDoneBtnDisplayed)
+			Reporter.logEvent(Status.PASS,"Check below buttons on confirmation page.\n"
+					+ "1.Return to employee overview\n2.Done","Expected buttons are displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check below buttons on confirmation page.\n"
+					+ "1.Return to employee overview\n2.Done","Expected buttons are not displayed.", true);
+		Web.clickOnElement(done_Button_byText);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.isWebElementDisplayed(deferrals_Header, true);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	return conf_number;
+}
 
 
+/**
+ * @author smykjn
+ * <pre>This method validates the UI elements on ongoing deferral change page.</pre>
+ */
+public void validate_OngoingDeferral_Pages_Positive(){
+	try{
+		String planNumber = Stock.GetParameterValue("PlanNumber");
+		String deferralValue =Stock.GetParameterValue("DeferralValue");
+		String deferralType = Stock.GetParameterValue("DeferralTypeDisplayName");
+		this.NavigateToDeferralPage();
+		this.NavigateToDeferralPage("Ongoing");
+		this.enterdeferrals(deferralType,"Dollar",deferralValue);
+		Web.clickOnElement(continue_Button);
+		if(Web.isWebElementDisplayed(review_Deferral_changes_h4, true))
+			Reporter.logEvent(Status.PASS,"Enter deferrals and click on continue button and check"
+					+ " Review your deferral changes page is displayed.","Review your deferral page is displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Enter deferrals and click on continue button and check"
+					+ " Review your deferral changes page is displayed.","Review your deferral page is not displayed.",true);
+		String reviewDeferralType = null;
+		String reviewDeferralValue = null;
+		for(WebElement ele : reviewDefChangesRow){
+			List<WebElement> eles=null ;
+			if(!ele.getText().isEmpty() && ele.isDisplayed()){
+				eles = ele.findElements(By.tagName("td"));
+				reviewDeferralType = eles.get(3).getText();
+				reviewDeferralValue = eles.get(5).getText().replace(",","").replace("$","").trim();
+				System.out.println("Size:"+eles.size());
+				System.out.println("Deferral type-"+reviewDeferralType);
+				System.out.println("Deferral value-"+reviewDeferralValue);
+			}
+		}
+		if(reviewDeferralType.equals(deferralType)&&
+				reviewDeferralValue.contains(deferralValue))
+			Reporter.logEvent(Status.PASS,"Newly added deferrals is displayed under 'Review your deferral changes' section.",""
+					+ "newly added deferrals are displayed under Review section.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Newly added deferrals is displayed under 'Review your deferral changes' section.",""
+					+ "newly added deferrals are not displayed under Review section.", true);
+		boolean isRetOvwBtnDisplayed = Web.isWebElementDisplayed(returnToEmployeeOvwButton.get(1), false);
+		boolean backBtnDisplayed = Web.isWebElementDisplayed(backBtn.get(1), false);
+		boolean isContinueBtnDisplayed = Web.isWebElementDisplayed(continue_Button_List.get(1), false);
+		if(isRetOvwBtnDisplayed && backBtnDisplayed && isContinueBtnDisplayed)
+			Reporter.logEvent(Status.PASS,"Check if below buttons are displayed on Review deferral page."
+					+ "\n1.Retrun to employee overview\n2.Back\n3.Continue","Expected button are displayed.",false);
+		else
+			Reporter.logEvent(Status.FAIL,"Check if below buttons are displayed on Review deferral page."
+					+ "\n1.Retrun to employee overview\n2.Back\n3.Continue","Expected button are not displayed.",true);
+		Web.clickOnElement(continue_Button_List.get(1));
+		Web.nextGenDriver.waitForAngular();
+		if(Web.isWebElementDisplayed(confirmation_deferral_h4, false))
+			Reporter.logEvent(Status.PASS,"Click on continue button and check if confirmation"
+					+ " page is displayed.", "Confirmation page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,"Click on continue button and check if confirmation"
+					+ " page is displayed.", "Confirmation page is not displayed.", true);
+		String confNumber = validate_deferral_Confirmation_screen(deferralType,deferralValue,planNumber);
+		DB.executeQuery(Stock.getTestQuery("DeleteEvIdFromElectiveDef")[0],
+				Stock.getTestQuery("DeleteEvIdFromElectiveDef")[1], confNumber);
+	}catch(Exception e){
+		e.printStackTrace();
+		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+	}
+}
 
 
 

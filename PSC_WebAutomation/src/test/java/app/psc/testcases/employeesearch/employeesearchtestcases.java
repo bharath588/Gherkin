@@ -3799,11 +3799,18 @@ public void TC_64_OngoingDeferralUIValidation(int itr,Map<String, String> testda
 		Reporter.logEvent(Status.INFO, "Testcase Description","The purpose of this test case"+
 				"is to validate ongoing deferral changes - UI elements.", false);
 		String ssn="";
-		String expDeferralTypeCode=Stock.GetParameterValue("DeferralTypeCode");
 		String planNumber = Stock.GetParameterValue("PlanNumber");
-		resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
+		String expDeferralTypeCode=null;
+		if(itr==1){
+			resultset = DB.executeQuery(Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[0],
 					Stock.getTestQuery("getPPTAgeLessthnFiftyWithDeferrals")[1],
 					Stock.GetParameterValue("PlanNumber"));
+		}
+		if(itr==2){
+			resultset = DB.executeQuery(Stock.getTestQuery("PPTWithNoDeferrals")[0],
+					Stock.getTestQuery("PPTWithNoDeferrals")[1],
+					Stock.GetParameterValue("PlanNumber"));
+		}
 		while(resultset.next()){
 			ssn=resultset.getString("SSN");
 			break;
@@ -3815,33 +3822,38 @@ public void TC_64_OngoingDeferralUIValidation(int itr,Map<String, String> testda
 		employeesearch.navigateToEmpDetailPage();
 		employeesearch.navigateToEmpDetailPage();
 		employeesearch.NavigateToDeferralPage();
-		if(employeesearch.validateDeferralRecordFromDBForAnSSN(ssn))
-			Reporter.logEvent(Status.PASS,"Validate ongoing deferral from DB.",""
-					+ "Data is found in DB.", false);
-		else
-			Reporter.logEvent(Status.FAIL,"Validate ongoing deferral from DB.",""
-					+ "Data is not found in DB.", true);
-		if(employeesearch.NavigateToDeferralPage("Ongoing")){
-			resultset = DB.executeQuery(Stock.getTestQuery("getPCT_AMT_Indicator")[0],
-					Stock.getTestQuery("getPCT_AMT_Indicator")[1],planNumber,expDeferralTypeCode);
-			employeesearch.amt_pct_buttonValidation(resultset);
-			resultset.close();
-			resultset = DB.executeQuery(Stock.getTestQuery("getDeferralInfoForAPlan")[0],
-					Stock.getTestQuery("getDeferralInfoForAPlan")[1],planNumber);
-			employeesearch.validate_Ongoing_Screen_Elements_1(resultset);
-			if(!Web.returnElement(employeesearch,"ON_GOING_CONTINUE_BTN").isEnabled())
-				Reporter.logEvent(Status.PASS,"Validate Continue button remains disabled untill"
-						+ " user enters deferrals.","Continue button is disabled.", false);
+		if(itr==1){
+			expDeferralTypeCode = Stock.GetParameterValue("DeferralTypeCode");
+			if(employeesearch.validateDeferralRecordFromDBForAnSSN(ssn))
+				Reporter.logEvent(Status.PASS,"Validate ongoing deferral from DB.",""
+						+ "Data is found in DB.", false);
 			else
-				Reporter.logEvent(Status.FAIL,"Validate Continue button remains disabled untill"
-						+ " user enters deferrals.","Continue button is enabled.", true);
-			
-			
-		}else{
-			Reporter.logEvent(Status.FAIL,"Navigate to Ongoing deferral page.",""
-					+ "Ongoing deferral page is not displayed.", false);
+				Reporter.logEvent(Status.FAIL,"Validate ongoing deferral from DB.",""
+						+ "Data is not found in DB.", true);
+			if(employeesearch.NavigateToDeferralPage("Ongoing")){
+				resultset = DB.executeQuery(Stock.getTestQuery("getPCT_AMT_Indicator")[0],
+						Stock.getTestQuery("getPCT_AMT_Indicator")[1],planNumber,expDeferralTypeCode);
+				employeesearch.amt_pct_buttonValidation(resultset);
+				resultset.close();
+				resultset = DB.executeQuery(Stock.getTestQuery("getDeferralInfoForAPlan")[0],
+						Stock.getTestQuery("getDeferralInfoForAPlan")[1],planNumber);
+				employeesearch.validate_Ongoing_Screen_Elements_And_PageNavigation(resultset);
+				employeesearch.validate_OngoingDeferral_Pages_Positive();
+			}else{
+				Reporter.logEvent(Status.FAIL,"Navigate to Ongoing deferral page.",""
+						+ "Ongoing deferral page is not displayed.", false);
+			}
 		}
-		
+		if(itr==2){
+			String expMessage = Stock.GetParameterValue("NoDeferralMsg");
+			String actMessage = Web.returnElement(employeesearch,"NO_DEFERRAL_MESSAGE").getText().trim();
+			if(Web.VerifyText(expMessage, actMessage, true))
+				Reporter.logEvent(Status.PASS,"Validate message when employee doesn't have any deferrals.",""
+						+ " Proper message is displayed.\nExpected:"+expMessage+"\nActual:"+actMessage, false);
+			else
+				Reporter.logEvent(Status.FAIL,"Validate message when employee doesn't have any deferrals.",""
+						+ " Proper message is not displayed.\nExpected:"+expMessage+"\nActual:"+actMessage, true);
+		}
 		
 		
 	} catch (Exception e) {
