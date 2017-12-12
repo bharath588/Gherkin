@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes" thread-count="3">
+<suite name="testsuite" parallel="classes" thread-count="2">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -331,6 +331,7 @@
 					</include>
 				</methods>
 			</class> 
+
 		</classes>
 	</test>
 </suite>
