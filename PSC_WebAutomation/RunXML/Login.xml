@@ -123,7 +123,7 @@
 					</include>
 				</methods>
 			</class>
-			<class
+			 <class
 				name="app.psc.testcases.accountverification.accountverificationtest_plan">
 				<methods>
 					<include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input">
