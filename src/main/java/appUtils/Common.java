@@ -5,7 +5,10 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.apache.bcel.generic.RETURN;
 import org.openqa.selenium.Alert;
@@ -36,6 +39,9 @@ public class Common {
 	 */
 	// For Sponsor
 	public static final String GC_DEFAULT_SPONSER = "Empower";
+	static List<String> lstDisbursmentReason = new ArrayList<String>();
+	static List<String> lstDistributionMethod = new ArrayList<String>();
+	static List<String> lstDistributionMethodTimings = new ArrayList<String>();
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	public static WebElement lblUserName;
 	@FindBy(name="legacyFeatureIframe") public static WebElement iframeLegacyFeature;
@@ -614,5 +620,161 @@ public class Common {
 		String date=dateFormat.format(calendar.getTime());
 		System.out.println("DATE"+date);
 		return date;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public static List<String> getDisbursmentReason(String ga_Id) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet DisbursmentReason = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("getdisbursmentreason");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DisbursmentReason = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+
+		if (DB.getRecordSetCount(DisbursmentReason) > 0) {
+			
+  			while(DisbursmentReason.next())
+  			{try{
+  				lstDisbursmentReason.add(DisbursmentReason.getString("custom_description"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			}
+		}
+		
+			
+		return lstDisbursmentReason;
+	}
+	
+	public static List<String> getMethodForDisbursmentReason(String ga_Id,String disbursmentReason) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet DisbursmentMethod = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("getMethodsfordisbursmentreason");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DisbursmentMethod = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id,disbursmentReason);
+
+		if (DB.getRecordSetCount(DisbursmentMethod) > 0) {
+			
+  			while(DisbursmentMethod.next())
+  			{
+  				try{
+  			
+  				lstDistributionMethod.add(DisbursmentMethod.getString("custom_description"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			}
+  			
+		}
+		
+			
+		return lstDistributionMethod;
+	}
+
+	public static List<String> getTimingForDisbursmentMethod(String ga_Id,String disbursmentMethod) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet DisbursmentTiming = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("gettimingsforMethod");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DisbursmentTiming = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id,disbursmentMethod);
+
+		if (DB.getRecordSetCount(DisbursmentTiming) > 0) {
+			
+  			while(DisbursmentTiming.next())
+  			{
+  				try{
+  			
+  					lstDistributionMethodTimings.add(DisbursmentTiming.getString("custom_description"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			
+		}
+		}
+		
+			
+		return lstDistributionMethodTimings;
+	}
+	
+	/**
+	 * Method to get the Available Deferrals for Current Enrollment Period
+	 * @param ga_Id
+	 * @param enrollEndDate
+	 * @return lstDeferralTypes
+	 * @throws SQLException
+	 */
+	public static List<String> getAvailableDeferralsforPlan(String ga_Id,String enrollEndDate) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet DeferralType= null;
+		List<String> lstDeferralTypes= new ArrayList<String>();
+
+		try {
+			sqlQuery = Stock.getTestQuery("getAvailableDeferralTypes");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DeferralType = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+
+		if (DB.getRecordSetCount(DeferralType) > 0) {
+			
+  			while(DeferralType.next())
+  			{try{
+  				String deferralType=DeferralType.getString("deferral_type_code");
+  				if(deferralType.equalsIgnoreCase("EEDEF1")){
+  					deferralType="Employee deferral";
+  				}
+  				lstDeferralTypes.add(deferralType);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			}
+		}
+		
+			
+		return lstDeferralTypes;
 	}
 }

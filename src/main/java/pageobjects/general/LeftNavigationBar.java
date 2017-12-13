@@ -188,8 +188,10 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "Request a withdrawal";
 		} else if (linkName.trim().equalsIgnoreCase("STATEMENTS AND DOCUMENTS")) {
 			strLinkText = lnkStatementDocument;
-
-		} else {
+		} else if (linkName.trim().equalsIgnoreCase("MY DISTRIBUTIONS")) {
+				strLinkText = "My distributions";
+				
+			}else {
 			strLinkText = linkName.trim();
 		}
 		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){

@@ -30,7 +30,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	// @FindBy(xpath=".//h1[text()='My Accounts']") private WebElement
 	// hdrMyAccounts;
-	@FindBy(xpath = ".//h1[text()='My Accounts]")
+	@FindBy(xpath = ".//h1[text()='My Accounts']")
 	private WebElement hdrMyAccounts;
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private List<WebElement> lstLnkPlanName;
@@ -186,8 +186,6 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 * 
 	 * @param groupAccountID
 	 *            - Example: 95301-01
-	 * @return boolean - <b>true</b> if successful in clicking specified link.
-	 *         <b>false</b> otherwise.
 	 */
 	public void clickEnorollNowByGAID(String groupAccountID) {
 		
@@ -204,5 +202,35 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
   		
 		
 	}
-
+	/**
+	 * method to Verify Enrollment Now Open link displayed for corresponding
+	 * group account ID
+	 * 
+	 * @param groupAccountID
+	 *            - Example: 95301-01
+	 */
+	public void VerifyEnorollNowLinkDisplayedForPlan(String planID) {
+		
+		try
+		{
+			WebElement lnkEnrollment = Web.getDriver().findElement(By		
+				.xpath(lnkEnrollNow.replace("planid",planID)));
+			if(lnkEnrollment.isDisplayed()){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Enrollment Now Open Link is Displayed for Specified Plan",
+						"Enrollment Now Open Link is Displayed for Specified Plan "+planID,
+						true);
+			} 
+		}
+          catch(NoSuchElementException e){
+        	  Reporter.logEvent(
+						Status.FAIL,
+						"Verify Enrollment Now Open Link is Displayed for Specified Plan",
+						"Enrollment Now Open Link is Not Displayed for Specified Plan "+planID,
+						true);
+          }
+  		
+		
+	}
 }

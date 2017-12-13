@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1" >
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="LOGIN">
+    <classes>
+        <class name="app.pptweb.testcases.enrollment.EnrollmentTestCases">
+                <methods>
+                
+                  <include name="DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User"></parameter>
+                    </include>
+                    
+				</methods>
+			</class> 
+		</classes>
+	</test> 
+                    	  
+</suite>

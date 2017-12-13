@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -213,6 +214,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			@FindBy(xpath="//div[@class='error-block']/p") private WebElement lableErrorMsg;
 			@FindBy(xpath="//a[contains(@uib-popover-template,'maxPopoverTemplate')]") private WebElement lnkAnnualCompensation;
 			@FindBy(xpath="//button[./span[contains(text(),'Update')]]") private WebElement btnUpdate;
+			@FindBy(id="contributionRateSlider:EEDEF1-text-edit") private WebElement inpcontributionRateSlider;
+			@FindBy(className="contribution-heading") private List<WebElement> txtDeferralTypes;
+			@FindBy(xpath="//p[contains(@ng-if,'newContributionRateType')]") private WebElement txtMinimumAndMaximum;
+			@FindBy(xpath="//div[@class='rightblock']//div[@class='things-to-know-container']") private WebElement thingstoKnowContainer;
+
+			
 			String txtAgeCatchupRoth="//tr[./td[contains(text(),'webElement')]]/td[1]//span";
 			String pendingDeferral=".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td/.//a[contains(text(),'Pending')]";
 			String txtpendingDeferral="//div[contains(@class,'modal-body')]//div[contains(text(),'DeferralType')]";
@@ -489,6 +496,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			if(fieldName.trim().equalsIgnoreCase("Button Confirm And Continue")) {
 				return this.btnConfirmAndContinue;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Text Min/Max Rule")) {
+				return this.txtMinimumAndMaximum;
+			}
+			if(fieldName.trim().equalsIgnoreCase("Things To Know Container")) {
+				return this.thingstoKnowContainer;
 			}
 			return null;
 			}		
@@ -2379,7 +2392,69 @@ return expectedCompanyMatch;
 				
 		}
 		
+		/**<pre> Method to select contribution rate for Enrollment flow.
+		 *.</pre>
+		 * 
+		 * @return - boolean
+		 * @throws InterruptedException 
+		 */
+		public void selectContributionWhileEnroll() throws InterruptedException
+		{	
+			Actions keyBoard = new Actions(Web.getDriver());
+			
+			Web.waitForElement(lnkContributionRate);
+			
+			if(Web.isWebElementDisplayed(lnkPercent))
+				this.lnkPercent.click();
+			else if(Web.isWebElementDisplayed(lnkDollar))
+					this.lnkDollar.click();
+			
+			this.lnkContributionRate.click();
+			
+			Web.waitForElement(inpcontributionRateSlider);
+			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
+				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+			}
+			else
+				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
+			
+			Web.setTextToTextBox(inpcontributionRateSlider, contrbution_rate);
+			//keyBoard.sendKeys(Keys.TAB).perform();
+			Web.clickOnElement(btnDone);
+			if(btnDone.isDisplayed())
+			{
+				//keyBoard.sendKeys(Keys.ENTER).perform();
+				Web.clickOnElement(btnDone);
+			}
+			Thread.sleep(5000);
+			Reporter.logEvent(Status.INFO, "Add Contribution rate", "Contribution rate is changed to "+contrbution_rate+"%", true);
+			
+		}
 		
+	/**
+	 * <pre>
+	 * Method to get Available deferrals from Deferral Election Page
+	 * </pre>
+	 * @return availableDeferralTypes
+	 * @throws Exception
+	 * 
+	 * 
+	 */
+	public List<String> getAvailableDeferrals() throws Exception {
+		List<String> availableDeferralTypes = new ArrayList<String>();
+		Web.waitForElements(txtDeferralTypes);
+		for (int i = 0; i < txtDeferralTypes.size(); i++) {
+			String deferralType=txtDeferralTypes.get(i).getText().replaceAll("FROM", "").trim();
+			availableDeferralTypes
+					.add(deferralType);
+		}
+
+		return availableDeferralTypes;
+
+	}
+	
+	
+
 }
 	
 

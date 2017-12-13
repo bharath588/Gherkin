@@ -1,4 +1,4 @@
-package pageobjects.general;
+package pageobjects.mydistributions;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,9 +20,11 @@ import org.testng.Assert;
 
 import core.framework.Globals;
 import appUtils.Common;
+import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 
-public class AccountOverview extends LoadableComponent<AccountOverview> {
+public class MyDistributions extends LoadableComponent<MyDistributions> {
 
 	// Declarations
 	private LoadableComponent<?> parent;
@@ -30,8 +32,8 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 
 	// @FindBy(xpath=".//h1[text()='My Accounts']") private WebElement
 	// hdrMyAccounts;
-	@FindBy(xpath = ".//h1[text()='Account Overview']")
-	private WebElement hdrAccountOverview;
+	@FindBy(xpath = ".//h1[text()='My Distributions']")
+	private WebElement hdrMyDistributions;
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private List<WebElement> lstLnkPlanName;
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
@@ -60,8 +62,8 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 	 * Empty args constructor
 	 * 
 	 */
-	public AccountOverview() {
-		this.parent = new MyAccountsPage();
+	public MyDistributions() {
+		this.parent = new LeftNavigationBar();
 		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
 
@@ -70,7 +72,7 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 	 * 
 	 * @param parent
 	 */
-	public AccountOverview(LoadableComponent<?> parent) {
+	public MyDistributions(LoadableComponent<?> parent) {
 		this.parent = parent;
 		PageFactory.initElements(lib.Web.getDriver(), this);
 	}
@@ -81,7 +83,7 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 
 		if(Common.verifyLoggedInUserIsSame()) {
 			
-				Assert.assertTrue(Web.isWebElementDisplayed(hdrAccountOverview));
+				Assert.assertTrue(Web.isWebElementDisplayed(hdrMyDistributions));
 			} else {
 				this.lnkLogout.click();
 				System.out.println("Clicked on Log Out My Accoounts Page");
@@ -93,16 +95,12 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 
 	@Override
 	protected void load() {
-		MyAccountsPage account = (MyAccountsPage) this.parent;
-
-		this.parent.get();
+		this.parent.get();	
 		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		((LeftNavigationBar) this.parent).clickNavigationLink("MY DISTRIBUTIONS");
+		Common.waitForProgressBar();
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.isWebElementDisplayed(hdrMyDistributions,true);
 	}
 
 	/**
@@ -122,8 +120,8 @@ public class AccountOverview extends LoadableComponent<AccountOverview> {
 			return this.lnkLogout;
 		}
 		// Account Overview
-		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
-			return this.hdrAccountOverview;
+		if (fieldName.trim().equalsIgnoreCase("My Distributions")) {
+			return this.hdrMyDistributions;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Graph")) {
 			return this.imgGraph;
