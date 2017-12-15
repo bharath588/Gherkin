@@ -1,11 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1">
+<suite name="testsuite" verbose="1" thread-count="2">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	 <test 	name="PROD SMOKE SUITE">
 		<classes>
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+				<methods>
+				 	    <include name="SF01_TC01_Verify_Custom_site_prelogin_data" >329
+					<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
+                    </parameter>
+                    </include> 				
+					
+					 <include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data" >329
+					<parameter name="ManualTCName" value="Verify_Custom_site_prelogin_postlogin_data">
+                    </parameter>
+                    </include> 
+                    
+					<include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">329
+					<parameter name="ManualTCName" value="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+                    </parameter>
+                    </include>  
+				
+				   <include name="SF01_TC018_Verify_ROR_link" >329
+					<parameter name="ManualTCName" value="RateOfReturn_Validations">
+                    </parameter>
+                    </include> 
+				
+					
+					<include name="Transaction_History_validations" >329
+					<parameter name="ManualTCName" value="Transaction_History_validations">
+                    </parameter>
+                    </include>
+				
+					<include name="Edit_Beneficiary" >329
+					<parameter name="ManualTCName" value="Edit_Beneficiary">
+                    </parameter>
+                    </include>
+				
+					<include name="Investment_lineup_validations" >329
+					<parameter name="ManualTCName" value="Investment_lineup_validations">
+                    </parameter>
+                    </include>
+                    
+					  <!-- <include name="Edit_MyContribution" >329
+					<parameter name="ManualTCName" value="Edit_MyContribution">
+                    </parameter>
+                    </include>  
+                     -->
+                      <include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar" >329
+					<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+                    </parameter>
+                    </include>
+				
+					
+                    <include name="Brokerage_validations" >329
+					<parameter name="ManualTCName" value="Brokerage_validations">
+                    </parameter>
+                    </include>
+				
+					 <include name="Verify_Request_A_Loan_Flow" >329
+					<parameter name="ManualTCName" value="Request_Loan_Flow">
+                    </parameter>
+                    </include>
+                    
+                    	<include name="Balance_validations" >329
+					<parameter name="ManualTCName" value="Balance_validations">
+                    </parameter>
+                    </include>
+				
+                 
+                   
+					 <include name="Manage_My_Investment_Flow_New" >329
+					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+				
+					
+					<include name="Dollar_Cost_Average_Flow" >328
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+                    </parameter>
+                    </include>
+				
+					
+					<include name="FundToFundTransfer" >328
+					<parameter name="ManualTCName" value="FundToFundTransfer">
+                    </parameter>
+                    </include> 
+				
+					<include name="Statement_and_Documents_validations" >328
+					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+                    </parameter>
+                    </include>
+
+                    
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >329
+					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
+                    </parameter>
+             	  </include>
+             	  
+					<include name="SF01_TC19_Verify_Legacy_Home_Page" >
+					<parameter name="ManualTCName" value="Legacy_Home_Page_From_Magic_URL">
+                    </parameter>
+                    </include>
+				
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow" >329
+					<parameter name="ManualTCName" value="SendActivationCode_ForgotPasswordFlow">
+                    </parameter>
+                    </include> 
+                    
+               		  
+				
+				
+				</methods>
+			</class>
 			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
 				<methods>
 				 	   <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">326
