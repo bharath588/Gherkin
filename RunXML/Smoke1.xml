@@ -72,27 +72,7 @@
 				
                  
                    
-					 <include name="Manage_My_Investment_Flow_New" >
-					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
-                    </parameter>
-                    </include>
-				
-					
-					<include name="Dollar_Cost_Average_Flow" >
-					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
-                    </parameter>
-                    </include>
-				
-					
-					<include name="FundToFundTransfer" >
-					<parameter name="ManualTCName" value="FundToFundTransfer">
-                    </parameter>
-                    </include> 
-				
-					<include name="Statement_and_Documents_validations" >
-					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
-                    </parameter>
-                    </include>
+					 
 
                     
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
@@ -114,6 +94,28 @@
 			</class>
 			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
 				<methods>
+				
+				<include name="Manage_My_Investment_Flow_New" >
+					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+                    </parameter>
+                    </include>
+				
+					
+					<include name="Dollar_Cost_Average_Flow" >
+					<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+                    </parameter>
+                    </include>
+				
+					
+					<include name="FundToFundTransfer" >
+					<parameter name="ManualTCName" value="FundToFundTransfer">
+                    </parameter>
+                    </include> 
+				
+					<include name="Statement_and_Documents_validations" >
+					<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+                    </parameter>
+                    </include>
 				 	   <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
                     </parameter>
