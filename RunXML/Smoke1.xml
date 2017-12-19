@@ -34,10 +34,7 @@
                     </parameter>
                     </include>
 				
-					<include name="Edit_Beneficiary" >
-					<parameter name="ManualTCName" value="Edit_Beneficiary">
-                    </parameter>
-                    </include>
+					
 				
 					<include name="Investment_lineup_validations" >
 					<parameter name="ManualTCName" value="Investment_lineup_validations">
@@ -70,16 +67,14 @@
                     </parameter>
                     </include>
 				
-                 
-                   
-					 
-
-                    
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data" >
 					<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
                     </parameter>
              	  </include>
-             	  
+             	  <include name="Edit_Beneficiary" >
+					<parameter name="ManualTCName" value="Edit_Beneficiary">
+                    </parameter>
+                    </include>
 					<include name="SF01_TC19_Verify_Legacy_Home_Page" >
 					<parameter name="ManualTCName" value="Legacy_Home_Page_From_Magic_URL">
                     </parameter>
