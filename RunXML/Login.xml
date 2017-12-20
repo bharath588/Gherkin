@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite"  verbose="1">
+<suite name="testsuite"  verbose="1" thread-count="2" parallel="classes">
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
