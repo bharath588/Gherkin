@@ -52,7 +52,7 @@ import pageobjects.withdrawals.RequestWithdrawal;
 import appUtils.Common;
 import core.framework.Globals;
 
-public class ProdvalidationTestCases_Liat {
+public class ProdvalidationTestCases_LeftNav {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
