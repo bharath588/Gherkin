@@ -62,7 +62,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
 	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
-	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
+	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')] OR ./span[contains(text(),'Save')]]") private WebElement btnContinue1;
 	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;

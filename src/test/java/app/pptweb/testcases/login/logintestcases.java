@@ -1329,16 +1329,16 @@ public class logintestcases {
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"CONTINUE Button' Is Displayed",
+						"Verify 'SAVE Button' Is Displayed",
+						"SAVE Button' Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"'CONTINUE Button' Is Not Displayed",true);
+						"Verify 'SAVE Button' Is Displayed",
+						"'SAVE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
@@ -1691,16 +1691,16 @@ public class logintestcases {
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"CONTINUE Button' Is Displayed",
+						"Verify 'SAVE Button' Is Displayed",
+						"SAVE Button' Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"'CONTINUE Button' Is Not Displayed",true);
+						"Verify 'SAVE Button' Is Displayed",
+						"'SAVE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
@@ -2054,16 +2054,16 @@ public class logintestcases {
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"CONTINUE Button' Is Displayed",
+						"Verify 'SAVE Button' Is Displayed",
+						"SAVE Button' Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"'CONTINUE Button' Is Not Displayed",true);
+						"Verify 'SAVE Button' Is Displayed",
+						"'SAVE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
@@ -2395,16 +2395,16 @@ public class logintestcases {
 				lib.Reporter
 				.logEvent(
 						Status.PASS,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"CONTINUE Button' Is Displayed",
+						"Verify 'SAVE Button' Is Displayed",
+						"SAVE Button' Is Displayed",
 						false);
 			}
 			else{
 				lib.Reporter
 				.logEvent(
 						Status.FAIL,
-						"Verify 'CONTINUE Button' Is Displayed",
-						"'CONTINUE Button' Is Not Displayed",true);
+						"Verify 'SAVE Button' Is Displayed",
+						"'SAVE Button' Is Not Displayed",true);
 			}
            	// Step 7
            
