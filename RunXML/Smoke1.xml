@@ -96,7 +96,7 @@
                  
 				</methods>
 			</class>
-			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 				
 					<include name="SF01_TC01_Verify_Custom_site_prelogin_data" >
