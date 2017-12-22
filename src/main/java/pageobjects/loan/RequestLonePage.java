@@ -43,7 +43,7 @@ public class RequestLonePage extends LoadableComponent<RequestLonePage> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
-	@FindBy(id = "loanQuoteAmount0")
+	@FindBy(id = "loanQuoteAmount")
 	private WebElement inputLoanAmount;
 	@FindBy(xpath = ".//input[@name='loan_term']")
 	private WebElement inputLoanTerm;
