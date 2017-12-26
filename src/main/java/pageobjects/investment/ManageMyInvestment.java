@@ -1096,6 +1096,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
+			Web.clickOnElement(txtTransferFromPercent.get(1));
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			fromInvestmentOption = lnkTransferFromInvestmentOption.getText();
@@ -1104,10 +1105,17 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"Verify 'Transfer Fund From' Table is displayed",
 					"Table is not displayed", true);
 
-		if (Web.isWebElementDisplayed(tblTransferFundTo)) {
+		if (Web.isWebElementDisplayed(tblTransferFundTo,true)) {
 			Reporter.logEvent(Status.INFO,
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is displayed", true);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(tblTransferFundTo.isEnabled())
 			Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
 			toInvestmentOption = lnkTransferToInvestmentOption.get(1).getText();
 		} else

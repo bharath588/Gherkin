@@ -51,6 +51,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(id="beneficiaryLastName") private WebElement txtLastName;
 	@FindBy(id="beneficiarySuffix") private WebElement txtSuffix;
 	@FindBy(id="dateOfBirth") private WebElement txtDateOfBirth;
+	@FindBy(id="dateOfBirthMasked") private WebElement txtDateOfBirthMasked;
 	@FindBy(id="socialSecurityNumber") private WebElement txtSSN;
 	@FindBy(id="phoneNumber") private WebElement txtPhoneNumber;
 	@FindBy(id="useAddressOnFile") private WebElement chkUseMyAddressForBen;
@@ -592,6 +593,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtMiddleName,Stock.GetParameterValue("MiddleName"));
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
+		txtDateOfBirthMasked.click();
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
 		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("BenificiarySSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
