@@ -166,6 +166,10 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
 		if (fieldName.trim().equalsIgnoreCase("HOME")) {
 			return this.lnkHome;
 		}
+		//HOME
+				if (fieldName.trim().equalsIgnoreCase("Button Close")) {
+					return this.btnClose;
+				}
 		
 		//My Accounts
 		if (fieldName.trim().equalsIgnoreCase("MY ACCOUNT")) {

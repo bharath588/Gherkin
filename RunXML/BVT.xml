@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1" >
-    <listeners>
-        <listener class-name="core.framework.TestListener"/>
-    </listeners>
-    <test name="LOGIN">
-        <classes>
-          	    
-                <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
-                <methods>
-                 <include name="Edit_Beneficiary" >
-					<parameter name="ManualTCName" value="Edit_Beneficiary">
-                    </parameter>
-                    </include>
-                    
-				</methods>
-			</class> 
-		<!-- <class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="LOGIN">
+		<classes>
+
+			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-				
-				<include name="Manage_My_Investment_Flow_New" >
-					<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
-                    </parameter>
-                    </include>
+					<include name="Statement_and_Documents_validations">
+						<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+						</parameter>
+					</include>
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
+						<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
+						</parameter>
+					</include>
+					<include name="Edit_Beneficiary">
+						<parameter name="ManualTCName" value="Edit_Beneficiary">
+						</parameter>
+					</include>
+						<include name="Manage_My_Investment_Flow_New">
+						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+						</parameter>
+					</include>
 				</methods>
-				</class> -->
+			</class>
+			<!-- <class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat"> 
+				<methods> <include name="Manage_My_Investment_Flow_New" > <parameter name="ManualTCName" 
+				value="Manage_My_Investment_Flow"> </parameter> </include> </methods> </class> -->
 		</classes>
-	</test> 
-                    	  
+	</test>
+
 </suite>

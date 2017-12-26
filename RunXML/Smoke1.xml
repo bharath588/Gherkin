@@ -22,8 +22,6 @@
 						</parameter>
 					</include>
 
-
-
 					<include name="Investment_lineup_validations">
 						<parameter name="ManualTCName" value="Investment_lineup_validations">
 						</parameter>
@@ -31,13 +29,14 @@
 
 					<!-- <include name="Edit_MyContribution" > <parameter name="ManualTCName" 
 						value="Edit_MyContribution"> </parameter> </include> -->
+						
 					<include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar">
 						<parameter name="ManualTCName"
 							value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
 						</parameter>
 					</include>
 
-
+					
 					<include name="Brokerage_validations">
 						<parameter name="ManualTCName" value="Brokerage_validations">
 						</parameter>
@@ -62,21 +61,19 @@
 						<parameter name="ManualTCName" value="Statement_and_Documents_validations">
 						</parameter>
 					</include>
-					<include name="Edit_Beneficiary">
-						<parameter name="ManualTCName" value="Edit_Beneficiary">
-						</parameter>
-					</include>
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
 						<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
 						</parameter>
 					</include>
-
+					<include name="Edit_Beneficiary">
+						<parameter name="ManualTCName" value="Edit_Beneficiary">
+						</parameter>
+					</include>
+					
 					<include name="Manage_My_Investment_Flow_New">
 						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
 						</parameter>
 					</include>
-
-
 					<include name="Dollar_Cost_Average_Flow">
 						<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
 						</parameter>
@@ -176,16 +173,16 @@
 						</parameter>
 					</include>
 
-
-					<!-- <include name="Verify_Health_care_costs_helpful_links" > <parameter 
-						name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links"> 
-						</parameter> </include> -->
-
-					<include name="HCC_TC009_To_verify_Health_care_costs">
+ 						<include name="HCC_TC009_To_verify_Health_care_costs">
 						<parameter name="ManualTCName"
 							value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
 						</parameter>
 					</include>
+					
+					
+					 <include name="Verify_Health_care_costs_helpful_links" > <parameter 
+						name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links"> 
+						</parameter> </include>
 
 					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
 						<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">

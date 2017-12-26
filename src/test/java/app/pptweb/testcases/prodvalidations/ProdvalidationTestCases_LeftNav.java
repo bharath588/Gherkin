@@ -937,6 +937,10 @@ public class ProdvalidationTestCases_LeftNav {
 			//Thread.sleep(6000);
 			/*Web.getDriver().navigate().refresh();
 			Thread.sleep(6000);*/
+			if(Web.isWebElementDisplayed(homePage, "Button Close", true)){
+				Web.clickOnElement(homePage, "Button Close");
+			}
+			
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
 			if (lblDisplayed) {
