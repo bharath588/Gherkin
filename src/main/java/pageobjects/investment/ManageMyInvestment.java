@@ -1096,7 +1096,6 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
-			Web.clickOnElement(txtTransferFromPercent.get(1));
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			fromInvestmentOption = lnkTransferFromInvestmentOption.getText();

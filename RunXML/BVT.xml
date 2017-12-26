@@ -15,9 +15,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat"> 
-				<methods> <include name="Manage_My_Investment_Flow_New" > <parameter name="ManualTCName" 
-				value="Manage_My_Investment_Flow"> </parameter> </include> </methods> </class> -->
+			
 		</classes>
 	</test>
 
