@@ -9,20 +9,8 @@
 
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="Statement_and_Documents_validations">
-						<parameter name="ManualTCName" value="Statement_and_Documents_validations">
-						</parameter>
-					</include>
-					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
-						<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
-						</parameter>
-					</include>
-					<include name="Edit_Beneficiary">
-						<parameter name="ManualTCName" value="Edit_Beneficiary">
-						</parameter>
-					</include>
-						<include name="Manage_My_Investment_Flow_New">
-						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+					<include name="FundToFundTransfer">
+						<parameter name="ManualTCName" value="FundToFundTransfer">
 						</parameter>
 					</include>
 				</methods>

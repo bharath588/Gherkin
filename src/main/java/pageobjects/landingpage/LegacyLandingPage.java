@@ -43,7 +43,7 @@ public class LegacyLandingPage extends LoadableComponent<LegacyLandingPage> {
     @FindBy(id="name") private WebElement lblUserName;
     @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-    @FindBy(xpath= "//*[@id='fancybox-close']")
+    @FindBy(xpath= "//a[@id='fancybox-close']")
 	private WebElement btnClose;
     @FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 
