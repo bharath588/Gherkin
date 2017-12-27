@@ -225,6 +225,160 @@ public class EnrollmentTestCases {
 	}
 	
 	/**
+	 * This Test Case is to Verify Summary page when a
+	 *  User is Logged in as Returning user via LIAT Page
+	 * @param itr
+	 * @param testdata
+	 */
+
+	@Test(dataProvider = "setData")
+	public void DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			disbMethod= new ArrayList<String>();
+			disbReason = new ArrayList<String>();
+			 DisbTiming = new ArrayList<String>();
+
+			// Step 1 to 3
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage myAccount = new MyAccountsPage(homePage);
+			myAccount.get();
+			NQEnrollment nqEnroll = new NQEnrollment();
+			myAccount.clickEnorollNowByGAID(Stock.GetParameterValue("ga_id"));
+
+			// Step 4
+			AccountOverview accountOverview = new AccountOverview();
+			
+			Web.waitForElement(accountOverview, "LINK ENROLL NOW");
+			accountOverview.isTextFieldDisplayed("Enrollment is now open.");
+
+			if (Web.isWebElementDisplayed(accountOverview, "LINK ENROLL NOW")) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Enroll Now' Link is Displayed in Account Overview Page",
+						"'Enroll Now' Link is Displayed in Account Overview Page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Enroll Now' Link is Displayed in Account Overview Page",
+						"'Enroll Now' Link is Not Displayed in Account Overview Page",
+						true);
+			}
+			// Step 6
+			accountOverview.clickOnEnrollNow();
+			if (Web.isWebElementDisplayed(accountOverview, "Button Continue",
+					true)) {
+				Web.clickOnElement(accountOverview, "Button Continue");
+			}
+			if(Web.isWebElementDisplayed(nqEnroll, "BUTTON EDIT MY OPTIONS", true)){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Enrollment Summary Page is Displayed",
+						"Enrollment Summary Page is Displayed",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Enrollment Summary Page is Displayed",
+						"Enrollment Summary Page is Not Displayed",
+						true);
+			}
+			String contributionRate=nqEnroll.getDeferralAmount();
+			// Step 7
+			
+			nqEnroll.clickOnAddElectionsButton();
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			//Step 8
+		
+			disbReason = Common.getDisbursmentReason(Stock
+					.GetParameterValue("ga_id"));
+			if (disbReason.size() > 0) {
+				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod = Common
+							.getMethodForDisbursmentReason(
+									Stock.GetParameterValue("ga_id"),
+									disbReason.get(i));
+					nqEnroll.selectDisbursementMethod(disbReason.get(i),
+							disbMethod.get(i));
+					DisbTiming = Common.getTimingForDisbursmentMethod(
+							Stock.GetParameterValue("ga_id"), disbMethod.get(i));
+					nqEnroll.selectTimingForDistributionElectionMethod(DisbTiming.get(i));
+					mapDistributionElections.put(disbReason.get(i), disbMethod.get(i)+" - "+DisbTiming.get(i));
+				}
+				nqEnroll.clickContinue();
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Verify Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is Opted for Distribution Elections",
+						"Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is not Opted for Distribution Elections",
+						true);
+			}
+			nqEnroll.verifyPageHeaderIsDisplayed("DEFERRAL ELECTION");
+			//Step 9
+			
+			nqEnroll.VerifyDeferralElectionPageAsReturningUser(contributionRate);
+			//Step10
+			nqEnroll.clickOnBackButton();
+			if(Web.isWebElementDisplayed(nqEnroll, "BUTTON EDIT MY OPTIONS", true)){
+				
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Enrollment Summary Page is Displayed",
+						"Enrollment Summary Page is Displayed",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Enrollment Summary Page is Displayed",
+						"Enrollment Summary Page is Not Displayed",
+						true);
+			}
+			
+		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	/**
 	 * This Test Case is to Verify Deferral Elections page 
 	 * for New users during NQ Enrollment for a Single Election plan via LIAT.
 	 * @param itr

@@ -46,6 +46,8 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	private WebElement btnEditMyOptions;
 	@FindBy(xpath = "//button[contains(text(),'Continue')]")
 	private WebElement btnContinue;
+	@FindBy(xpath = "//button[contains(text(),'Cancel')]")
+	private WebElement btnCancel;
 	@FindBy(xpath="//button[contains(text(),'Yes')]") private WebElement btnYes;
 	@FindBy(xpath="//button[contains(text(),'No')]") private WebElement btnNo;
 	@FindBy(xpath="//p[contains(text(),'Carry over my contribution if I reach the plan or IRS limit?')]") private WebElement hdrCarryoverContribution;
@@ -585,5 +587,113 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 
 	}
 	
+	/**
+	 * <pre>
+	 * Method to Verify Modal Pop Up for Returning User
+	 * </pre>
+	 * 	
+	 */
+
+	public void VerifyModalPopupForReturningUser() {
+				
+		try {
+			Web.waitForElement(btnContinue);
+			
+			if(Web.isWebElementDisplayed(btnContinue)){
+				Reporter.logEvent(Status.PASS, "Verify Modal Pop Up Displayed When Returning User Clicks on Enroll Now Link", 
+						" Modal Pop Up Displayed When Returning User Clicks on Enroll Now Link", true);
+				Common.isTextFieldDisplayed("Make changes to your elections?");
+						}
+			else
+				Reporter.logEvent(Status.FAIL,"Verify Modal Pop Up Displayed When Returning User Clicks on Enroll Now Link", 
+						" Modal Pop Up is Not Displayed When Returning User Clicks on Enroll Now Link", true);
+			
+			
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * <pre>
+	 * Method to get the Effective Date for DIstributions
+	 *
+	 * </pre>
+	 * @param ga_id, ssn
+	 * @return effectiveDate
+	 * 
+	 *
+	 */
+	public String getEffectiveDate(String ga_id, String ssn) {
+		String effectiveDate="";	
 	
+		String[] sqlQuery = null;
+		ResultSet DisbursmentEffectiveDate = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("getDistribtionEffectiveDate");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DisbursmentEffectiveDate = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_id,ssn);
+
+		if (DB.getRecordSetCount(DisbursmentEffectiveDate) > 0) {
+			
+			try{
+				DisbursmentEffectiveDate.last();
+			effectiveDate=DisbursmentEffectiveDate.getString("effdate");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			
+		}
+		return effectiveDate;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get the Enrollment End  Date 
+	 * </pre>
+	 * @param ga_id
+	 * @return endDate
+	 * 
+	 *
+	 */
+	public String getEnrollmentEndDate(String ga_id) {
+		String endDate="";	
+	
+		String[] sqlQuery = null;
+		ResultSet EnrollmentEndDate = null;
+
+		try {
+			sqlQuery = Stock.getTestQuery("GetEnrollmentEndDate");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		EnrollmentEndDate = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_id);
+
+		if (DB.getRecordSetCount(EnrollmentEndDate) > 0) {
+			
+			try{
+				EnrollmentEndDate.last();
+				endDate=EnrollmentEndDate.getString("end_of_enrl_processing_date");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query Disbursment Reason:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			
+		}
+		return endDate;
+	}
 }
