@@ -9,10 +9,8 @@
 
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
-					<include name="FundToFundTransfer">
-						<parameter name="ManualTCName" value="FundToFundTransfer">
-						</parameter>
-					</include>
+					<include name="Edit_MyContribution" > <parameter name="ManualTCName" 
+						value="Edit_MyContribution"> </parameter> </include> 
 				</methods>
 			</class>
 			

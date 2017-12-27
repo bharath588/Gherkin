@@ -29,14 +29,7 @@
 
 					<!-- <include name="Edit_MyContribution" > <parameter name="ManualTCName" 
 						value="Edit_MyContribution"> </parameter> </include> -->
-						
-					<include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar">
-						<parameter name="ManualTCName"
-							value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
-						</parameter>
-					</include>
-
-					
+				
 					<include name="Brokerage_validations">
 						<parameter name="ManualTCName" value="Brokerage_validations">
 						</parameter>
@@ -152,7 +145,11 @@
 						<parameter name="ManualTCName" value="Liat_Verify_PayCheckView_Displayed">
 						</parameter>
 					</include>
-
+						<include name="LIAT_To_verify_PayCheckView_Displayed_With_ColorBar">
+						<parameter name="ManualTCName"
+							value="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
+						</parameter>
+					</include>
 
 					<include name="LIAT_To_verify_HowDoICompare_Labels_Circles">
 						<parameter name="ManualTCName"
