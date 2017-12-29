@@ -187,7 +187,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	 * @param groupAccountID
 	 *            - Example: 95301-01
 	 */
-	public void clickEnorollNowByGAID(String groupAccountID) {
+	public void clickEnrollNowByGAID(String groupAccountID) {
 		
 		try
 		{

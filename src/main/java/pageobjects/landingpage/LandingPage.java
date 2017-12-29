@@ -10,7 +10,9 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -64,6 +66,10 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 	@FindBy(linkText="Guidance")
 	private WebElement lnkGuidance;
+	@FindBy(xpath="//button[contains(text(),'Close without enrolling')]") private WebElement btnCloseWithOutEnrolling;
+	
+	
+	private String lnkEnrollNow="//li[./a[contains(@ng-href,'planid')]]//a[./span[contains(text(),'Enrollment now open')]]";
 
 	/**
 	 * Empty args constructor
@@ -260,6 +266,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (fieldName.trim().equalsIgnoreCase("GUIDANCE")) {
 			return this.lnkGuidance;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Button Close WithOut Enrolling")) {
+			return this.btnCloseWithOutEnrolling;
+		}
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -375,5 +384,62 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		Web.waitForElement(lnkGuidance);
 		if ( Web.isWebElementDisplayed(lnkGuidance))
 			Web.clickOnElement(lnkGuidance);
+	}
+	
+	/**
+	 * method to click on Enrollment Now Open  link which corresponds to the specified
+	 * group account ID
+	 * 
+	 * @param groupAccountID
+	 *            - Example: 95301-01
+	 */
+	public void clickEnrollNowByGAID(String groupAccountID) {
+		
+		try
+		{
+			WebElement lnkEnrollment = Web.getDriver().findElement(By		
+				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
+			if(lnkEnrollment.isDisplayed())
+				Web.clickOnElement(lnkEnrollment);
+		}
+          catch(NoSuchElementException e){
+        	  e.printStackTrace();
+          }
+  		
+		
+	}
+	
+	/**
+	 * method to Verify on Enrollment Now Open  link which corresponds to the specified
+	 * group account ID
+	 * 
+	 * @param groupAccountID
+	 *            - Example: 95301-01
+	 */
+	public void verifyEnrollmentOpenNowLinkIsDisplayed(String groupAccountID) {
+		
+		try
+		{
+			WebElement lnkEnrollment = Web.getDriver().findElement(By		
+				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
+			if(Web.isWebElementDisplayed(lnkEnrollment, true)){
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Enrollment Now Open' Link is Displayed in LIAT Page",
+						"'Enrollment Now Open' Link is Displayed in LIAT Page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Enrollment Now Open' Link is Displayed in LIAT Page",
+						"'Enrollment Now Open' Link is Not Displayed in LIAT Page",
+						true);
+			}
+		}
+          catch(NoSuchElementException e){
+        	  e.printStackTrace();
+          }
+  		
+		
 	}
 }

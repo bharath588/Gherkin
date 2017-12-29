@@ -1,5 +1,5 @@
 <TestData Application="PPTWEB" environment="PROD">
-	<DateTime value="12/26/2017 9:54:50 AM"></DateTime>
+	<DateTime value="12/29/2017 2:18:03 PM"></DateTime>
 	<Module name="Program"></Module>
 	<Module name="prodvalidations">
 		<TestCase name="Balance_validations">
@@ -125,7 +125,7 @@
 				<parameter name="userName" value="321444329ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="ExpectedCustomerSupportInfo_Pre_Login"
-					value="To speak with a Participant Services Representative, please contact us between 7:00 AM and 6:00 PM MT, Monday through Friday." />
+					value="To speak with a Participant Services Representative, please contact us between 6:00 AM and 8:00 PM MT, Monday through Friday." />
 				<parameter name="ExpectedContactNo_Pre_login" value="1-855-756-4738" />
 				<parameter name="ExpectedCustomerSupportInfo_Post_Login"
 					value="To speak with a Participant Services Representative, please contact us between 8:00 AM and 10:00 PM EST, Monday through Friday." />
@@ -277,9 +277,9 @@
 		</TestCase>
 		<TestCase name="Liat_Verify_PayCheckView_Displayed_With_Colorbar">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444326ABC" />
-				<parameter name="password" value="Test@12345" />
-				<parameter name="lblUserName" value="WEB TESTING" />
+				<parameter name="userName" value="321444329ABC" />
+				<parameter name="password" value="Test@1234" />
+				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Liat_Verify_HowDoICompareTab_Labels_Circles">

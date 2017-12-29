@@ -61,7 +61,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	@FindBy(xpath="//div[@class='sliderThumbValue']") private WebElement inpSliderThumb;
 	@FindBy(xpath="//button[contains(text(),'Back')]") private WebElement btnBack;
 	@FindBy(xpath = "//button[./strong[text()[normalize-space()='Continue to enrollment']]]") private WebElement btnContinueToEnroll;
-	
+	@FindBy(xpath="//div[@class='modal-body auto-increase']//div/p") private List<WebElement> txtMadalContent;
 	
 	private String textField = "//*[contains(text(),'webElementText')]";
 	private String strMethodTerminationOrRetirement = "//input[contains(@id,'method_Termination')][following-sibling::div//span[contains(text(),'webElementText')]]";
@@ -146,6 +146,12 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Button Continue To Enrollment")) {
 			return this.btnContinueToEnroll;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Continue")) {
+			return this.btnContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Cancel")) {
+			return this.btnCancel;
 		}
 		return null;
 	}
@@ -594,9 +600,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	 * 	
 	 */
 
-	public void VerifyModalPopupForReturningUser() {
+	public void VerifyModalPopupForReturningUser(String ga_id,String ssn) {
 				
 		try {
+			String expectedText="";
+			String actualText="";
 			Web.waitForElement(btnContinue);
 			
 			if(Web.isWebElementDisplayed(btnContinue)){
@@ -607,11 +615,58 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			else
 				Reporter.logEvent(Status.FAIL,"Verify Modal Pop Up Displayed When Returning User Clicks on Enroll Now Link", 
 						" Modal Pop Up is Not Displayed When Returning User Clicks on Enroll Now Link", true);
-			
+			expectedText="You enrolled in the plan on "+getEffectiveDate(ga_id, ssn)+", however, you may make changes until "+getEnrollmentEndDate(ga_id)+".";
+			actualText=txtMadalContent.get(0).getText().trim().toString();
+			if(expectedText.equalsIgnoreCase(actualText)){
+				Reporter.logEvent(Status.PASS, "Verify Modal Popup is displaying the Enrollment Effective Date and Enrollment Last Date", 
+						"Modal Popup is displaying the Enrollment Effective Date and Enrollment Last Date\nExpected:"+expectedText+"\nActualText:"+actualText, true);
+			}
+			else{
+				Reporter.logEvent(Status.PASS, "Verify Modal Popup is displaying the Enrollment Effective Date and Enrollment Last Date", 
+						"Modal Popup is Not displaying the Enrollment Effective Date and Enrollment Last Date\nExpected:"+expectedText+"\nActualText:"+actualText, true);
+			}
+			expectedText="Click \"Cancel\" to return to the previous page, or \"Continue\" to make changes.";
+			actualText=txtMadalContent.get(1).getText().trim().toString();
+			if(expectedText.equalsIgnoreCase(actualText)){
+				Reporter.logEvent(Status.PASS, "Verify Continue and Cancel Text in Modal Popup", 
+						" Continue and Cancel Text is Displayed in Modal Popup\nExpected:"+expectedText+"\nActualText:"+actualText, true);
+			}
+			else{
+				Reporter.logEvent(Status.PASS, "Verify Continue and Cancel Text in Modal Popup", 
+						" Continue and Cancel Text is Displayed in Modal Popup\nExpected:"+expectedText+"\nActualText:"+actualText, true);
+			}
+			verifyWebElementDisplayed("Button Continue");
+			verifyWebElementDisplayed("Button Cancel");
 			
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 		}
+
+	}
+	/**
+   	 * <pre>
+   	 * Method to Verify Webelement is Displayed
+   	 * 
+   	 * </pre>
+   	*/
+    public boolean verifyWebElementDisplayed(String fieldName) {
+
+		boolean isDisplayed = Web.isWebElementDisplayed(
+				this.getWebElement(fieldName), true);
+
+		if (isDisplayed) {
+
+			Reporter.logEvent(Status.PASS, "Verify \'"+fieldName+"\' is displayed",
+					"\'"+fieldName+"\' is displayed", false);
+			isDisplayed = true;
+
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Verify\'"+fieldName+"\' is displayed",
+					"\'"+fieldName+"\' is not displayed", false);
+		}
+
+		return isDisplayed;
 
 	}
 	/**
@@ -653,6 +708,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
   			
 		}
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		
+		effectiveDate=dateFormat.format(effectiveDate);
+		System.out.println("DATE"+effectiveDate);
+		
 		return effectiveDate;
 	}
 	
@@ -694,6 +754,12 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
   			
 		}
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		
+		endDate=dateFormat.format(endDate);
+		
+		System.out.println("DATE"+endDate);
+		
 		return endDate;
 	}
 }
