@@ -1185,7 +1185,7 @@ public class OnlineEnrollmentTestCases {
 	 */
 
 	@Test(dataProvider = "setData")
-	public void CORE_18537_EndToEndTesting_WithDivision(int itr,
+	public void CORE_18537_CORE_19807_EndToEndTesting_WithDivision(int itr,
 			Map<String, String> testdata) throws InterruptedException {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
@@ -1355,8 +1355,7 @@ public class OnlineEnrollmentTestCases {
 			onlineEnrollmentObj.get();
 			onlineEnrollmentObj.enterValidInputDetails();
 
-			// Verify division field displayed depends the plan we are
-			// selecting.
+			// Gender is mandatory field and has only two "male" and female".
 			onlineEnrollmentObj.verifyGenderButton();
 
 		} catch (Exception e) {
@@ -1373,9 +1372,9 @@ public class OnlineEnrollmentTestCases {
 	/*
 	 * -------------------------------------------------------------------
 	 * 
-	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * <pre> TestCase: Test to verify AnnualIncome field functionality.
 	 * --------------------------------------------------------------------
-	 * Author: Saraswathi Date : 23-Nov-2017
+	 * Author: Saraswathi Date : 27-Nov-2017
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * 
@@ -1409,9 +1408,9 @@ public class OnlineEnrollmentTestCases {
 	/*
 	 * -------------------------------------------------------------------
 	 * 
-	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * <pre> TestCase: Test to verify MaritialStatus field functionality.
 	 * --------------------------------------------------------------------
-	 * Author: Saraswathi Date : 23-Nov-2017
+	 * Author: Saraswathi Date : 27-Nov-2017
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * 
@@ -1428,8 +1427,7 @@ public class OnlineEnrollmentTestCases {
 			onlineEnrollmentObj.get();
 			onlineEnrollmentObj.enterValidInputDetails();
 
-			// Verify division field displayed depends the plan we are
-			// selecting.
+			// Verify MaritialStatus field is mandatory it has two options "single" and "married".
 			onlineEnrollmentObj.verifyMaritalStatusField();
 
 		} catch (Exception e) {
@@ -1445,9 +1443,9 @@ public class OnlineEnrollmentTestCases {
 	/*
 	 * -------------------------------------------------------------------
 	 * 
-	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * <pre> TestCase: Test to verify DateOfBirth field functionality.
 	 * --------------------------------------------------------------------
-	 * Author: Saraswathi Date : 23-Nov-2017
+	 * Author: Saraswathi Date : 28-Nov-2017
 	 * --------------------------------------------------------------------
 	 * </pre>
 	 * 
@@ -1481,7 +1479,7 @@ public class OnlineEnrollmentTestCases {
 	/*
 	 * -------------------------------------------------------------------
 	 * 
-	 * <pre> TestCase: Test to verify Gender field functionality.
+	 * <pre> TestCase: Test to verify ConfirmationPage validation functionality.
 	 * --------------------------------------------------------------------
 	 * Author: Saraswathi Date : 23-Nov-2017
 	 * --------------------------------------------------------------------
@@ -1500,8 +1498,6 @@ public class OnlineEnrollmentTestCases {
 			onlineEnrollmentObj.get();
 			onlineEnrollmentObj.enterValidInputDetails();
 
-			// Verify division field displayed depends the plan we are
-			// selecting.
 			onlineEnrollmentObj.verifyCreateAccountFunctionality();
 
 		} catch (Exception e) {

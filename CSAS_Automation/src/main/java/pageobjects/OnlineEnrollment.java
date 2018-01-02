@@ -15,9 +15,11 @@ import lib.Web;
 
 import org.apache.commons.beanutils.ResultSetIterator;
 import org.apache.poi.hssf.record.CountryRecord;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -39,6 +41,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	public static String SSN = "";
 	public static String MobileNumber = "";
 	public static String DBName = "";
+	ParticipantHome participantHomeObj;
 
 	public OnlineEnrollment() {
 		PageFactory.initElements(Web.getDriver(), this);
@@ -112,6 +115,9 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	@FindBy(id = "state")
 	private WebElement stateTextbox;
+	
+	@FindBy(xpath =".//select[@id='state']")
+	private WebElement stateDropDown;
 
 	@FindBy(id = "stateError")
 	private WebElement stateError;
@@ -327,7 +333,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	@FindBy(xpath = "//div[@class='option']")
 	private List<WebElement> options;
 
-	@FindBy(xpath = ".//div[@class='panel-heading']/following-sibling::div[1]/child::div[1]/child::div[2]/child::*/child::span[1]")
+	@FindBy(xpath = ".//div[@class='panel panel-primary']//span[contains(text(),'Your account has been created')]")
 	private WebElement confirmationNumber;
 
 	@FindBy(xpath = ".//div[contains(text(),'Corporate')]")
@@ -338,7 +344,10 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	
 	@FindBy(xpath = ".//div[@id='reviewInfoSectionDiv']/child::div[2]")
 	private WebElement accountNotCreatedMsg;
-
+	
+	@FindBy(css = "div#oCMenu_319")
+	private WebElement menuSearch;
+	
 	Actions action = new Actions(Web.getDriver());
 
 	@Override
@@ -399,12 +408,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		if (Web.isWebElementDisplayed(onlineEnrollment, true)) {
 			Reporter.logEvent(Status.PASS,
-					"Check if Online Enrollment page displayed or not",
-					"Online Enrollment page displyed successfully", true);
+					"Online Enrollment page should be display",
+					"Online Enrollment page is displyed successfully", true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
-					"Check if Online Enrollment page displayed or not",
-					"Online Enrollment didn't get displayed successfully", true);
+					"Online Enrollment page should be display",
+					"Online Enrollment page didn't get displayed successfully", true);
 		}
 	}
 
@@ -1318,7 +1327,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-				fillTheFieldesinOnlineEnrollmentForm(true, true);
+				fillTheFieldesinOnlineEnrollmentForm();
 
 				// enter invalid data into personal email field and validate
 				// error message.
@@ -1366,7 +1375,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 				if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-					fillTheFieldesinOnlineEnrollmentForm(true, true);
+					fillTheFieldesinOnlineEnrollmentForm();
 
 					// Verify addressLine1 is mandatory field.
 					addressLine1.clear();
@@ -1440,7 +1449,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 				if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-					fillTheFieldesinOnlineEnrollmentForm(true, true);
+					fillTheFieldesinOnlineEnrollmentForm();
 
 					// Verify Date of hire is mandatory field.
 					dateOfHireTextBox.clear();
@@ -1465,7 +1474,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Web.setTextToTextBox(dateOfHireTextBox,
 							Stock.GetParameterValue("DOHFutureDate"));
 					Web.clickOnElement(doneButton);
-					dateOfHireError.clear();
+					dateOfHireError.click();
 					CommonLib.verifyIfWebElementTextPresent(dateOfHireError,
 							Stock.GetParameterValue("DOHFutureDateErrorMsg"),"DateOfHire field error should display on UI.");
 				} else {
@@ -1501,7 +1510,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 */
 	public void verifyEndToEndTestingWithoutAlphaNumaricOfGId()
 			throws InterruptedException, SQLException {
-		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		fillTheFieldesinOnlineEnrollmentForm();
 		Web.clickOnElement(contToCreateNewAccountBtn);
 		MobileNumber = preConfirmMobile.getText();
 		Web.waitForElement(createAccount);
@@ -1554,7 +1563,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				Stock.GetParameterValue("GrpIdWithAlphaNumaric"),
 				Stock.GetParameterValue("PEC"));
 
-		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		fillTheFieldesinOnlineEnrollmentForm();
 		Web.clickOnElement(contToCreateNewAccountBtn);
 		MobileNumber = preConfirmMobile.getText();
 		Web.waitForElement(createAccount);
@@ -1638,7 +1647,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 */
 	public void verifyDivisionFieldValueOnConfirmationPage()
 			throws InterruptedException {
-		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		fillTheFieldesinOnlineEnrollmentForm();
 		Web.clickOnElement(contToCreateNewAccountBtn);
 
 		// Verify division field value on confirmation page.
@@ -1727,7 +1736,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Status.PASS,
 					"Division field should not displayed in online enrollment.",
 					"division field not displayed: " + divisionDropDown, false);
-			fillTheFieldesinOnlineEnrollmentForm(true, true);
+			fillTheFieldesinOnlineEnrollmentForm();
 		}
 	}
 
@@ -1869,32 +1878,23 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	public void verifyGenderButton() throws InterruptedException {
 		// fill the all the data except gender and click on continue button.
-		fillTheFieldesinOnlineEnrollmentForm(false, true);
+		fillTheFieldesinOnlineEnrollmentForm();;
 		Web.clickOnElement(contToCreateNewAccountBtn);
-		/*
-		 * Web.waitForElement(createAccount); Web.clickOnElement(createAccount);
-		 */
-
-		// Verify error message is displayed.
+		
+		// Verify Gender field is mandatory field.
 		CommonLib.verifyExpectedAndActualEual(
 				Stock.GetParameterValue("ERROR MESSAGE"), errorMsg.getText(),
 				"Expected gender error messge should be displayed in UI");
 
 		// Verify displayed Female/Male on a page.
-		boolean isEmpty = gender.isEmpty();
-		if (isEmpty == false) {
 			for (int i = 0; i < gender.size(); i++) {
 				if (i == 0) {
-					CommonLib.verifyExpectedAndActualEual("Female",
-							gender.get(0).getText(),
-							"Expected gendershould be displayed in UI");
+					CommonLib.verifyExpectedAndActualEual("Female",Web.getWebElementText(gender.get(0)),"Expected gendershould be displayed in UI");
 
 				} else if (i == 1) {
-					CommonLib.verifyExpectedAndActualEual("Male", gender.get(1)
-							.getText(),
+					CommonLib.verifyExpectedAndActualEual("Male", Web.getWebElementText(gender.get(1)),
 							"Expected gendershould be displayed in UI");
 
-				}
 			}
 		}
 
@@ -1903,55 +1903,51 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	public void verifyAnnualIncomeField() throws InterruptedException {
 		// Click on annual income field and should not enter data verify error
 		// message.
-		// annualIncomeTextBox.clear();
-		annualIncomeTextBox.sendKeys(Keys.TAB);
-		annualIncomeError.click();
+		Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
+		Web.clickOnElement(annualIncomeError);
 
 		// Verify error message is displayed.
 		CommonLib
 				.verifyExpectedAndActualEual(
-						Stock.GetParameterValue("DefaultErrorMessage"),
-						annualIncomeError.getText(),
+						Stock.GetParameterValue("DefaultErrorMessage"),Web.getWebElementText(annualIncomeError),
 						"Expected annual income field error messge should be displayed in UI");
 
 		// Verify if you enter alpha numeric it will display error message.
 		// Verify error message is displayed.
 		Web.setTextToTextBox(annualIncomeTextBox,
 				Stock.GetParameterValue("AlphaNumaricAnnualIncome"));
-		annualIncomeTextBox.sendKeys(Keys.TAB);
-		annualIncomeError.click();
+		//Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
+		Web.clickOnElement(annualIncomeError);
 		CommonLib
 				.verifyExpectedAndActualEual(
 						Stock.GetParameterValue("InvalidDataErrorMessage"),
-						annualIncomeError.getText(),
+						Web.getWebElementText(annualIncomeError),
 						"Expected annual income field error messge should be displayed in UI");
 
 		// Verify if you enter 100 to text box it will add decimal.
-		annualIncomeTextBox.clear();
-		annualIncomeTextBox.sendKeys("100");
-		annualIncomeTextBox.sendKeys(Keys.TAB);
+		Web.setTextToTextBox(annualIncomeTextBox,"100");
+		//Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
 		CommonLib
 				.verifyFieldValue(annualIncomeTextBox, "$100.00",
 						"Actual Annual income field value should be match with expected.");
 
 		// Verify if you enter 100 to text box it will add decimal.
 		annualIncomeTextBox.clear();
-		annualIncomeTextBox.sendKeys("1000");
-		annualIncomeTextBox.sendKeys(Keys.TAB);
+		Web.setTextToTextBox(annualIncomeTextBox,"1000");
+		//Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
 		CommonLib
 				.verifyFieldValue(annualIncomeTextBox, "$1,000.00",
 						"Actual Annual income field value should be match with expected.");
 	}
 
 	public void verifyMaritalStatusField() throws InterruptedException {
-		fillTheFieldesinOnlineEnrollmentForm(true, false);
+		fillTheFieldesinOnlineEnrollmentForm();
 		Web.clickOnElement(contToCreateNewAccountBtn);
 
 		// Verify error message is displayed.
 		CommonLib
 				.verifyExpectedAndActualEual(
-						Stock.GetParameterValue("MaritalStatusErrorMessage"),
-						errorMsg.getText(),
+						Stock.GetParameterValue("MaritalStatusErrorMessage"),Web.getWebElementText(errorMsg),
 						"Expected marital status error messge should be displayed in UI");
 
 	}
@@ -1967,7 +1963,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		// Fill all the details in online enrollment form and enroll a
 		// participant.
 
-		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		fillTheFieldesinOnlineEnrollmentForm();
 		Web.clickOnElement(contToCreateNewAccountBtn);
 		MobileNumber = preConfirmMobile.getText();
 		Web.waitForElement(createAccount);
@@ -2005,8 +2001,15 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		verifyPersonelDetails(personelDetails);
 		verifyAddressDetails(addressList);
 		verifyEmailAndEmploymentDetails(contactAndAddressList, true);
-	}
+		
+		// Go to search page and verify enrolled participant details.
 
+		menuSearch.click();
+		participantHomeObj = new ParticipantHome().get();
+		participantHomeObj.verifyEnrolledParticipantDetails(IndID,SSN);
+		
+		
+	}
 	public void verifyPersonelDetails(HashMap<String, String> hm) {
 		try {
 			// Verify personelDetail
@@ -2236,8 +2239,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 * 
 	 * @throws InterruptedException
 	 */
-	private void fillTheFieldesinOnlineEnrollmentForm(boolean isGenderRequired,
-			boolean isMaritalStatus) throws InterruptedException {
+	private void fillTheFieldesinOnlineEnrollmentForm() throws InterruptedException {
 
 		try {
 			// Fill personal information fields
@@ -2248,16 +2250,29 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Web.setTextToTextBox(DateOfBirthTextbox,
 					Stock.GetParameterValue("DOB"));
 			DateOfBirthTextbox.sendKeys(Keys.TAB);
-			if (isGenderRequired == true) {
+			String gender = Stock.GetParameterValue("Gender");
+			if (gender.equalsIgnoreCase("M")) {
 				List<WebElement> genderRadioBtns = Web.getDriver()
 						.findElements(By.id("gender"));
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 				genderRadioBtns.get(1).click();
+			}else if (gender.equalsIgnoreCase("F")) {
+				List<WebElement> genderRadioBtns = Web.getDriver()
+						.findElements(By.id("gender"));
+				Thread.sleep(2000);
+				genderRadioBtns.get(0).click();
 			}
-			if (isMaritalStatus == true) {
+			String maritialStatus = Stock.GetParameterValue("MaritialStatus");
+			if (maritialStatus.equalsIgnoreCase("M")) {
 				List<WebElement> maritalStatusRadioBtns = Web.getDriver()
 						.findElements(By.id("married"));
-				Thread.sleep(3000);
+				Thread.sleep(2000);
+				maritalStatusRadioBtns.get(0).click();
+			}
+			else if (maritialStatus.equalsIgnoreCase("S")) {
+				List<WebElement> maritalStatusRadioBtns = Web.getDriver()
+						.findElements(By.id("married"));
+				Thread.sleep(2000);
 				maritalStatusRadioBtns.get(1).click();
 			}
 
@@ -2284,7 +2299,8 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Web.setTextToTextBox(addressLine2,
 					Stock.GetParameterValue("ADDR LINE2"));
 			Web.setTextToTextBox(cityTextbox, Stock.GetParameterValue("CITY"));
-			Web.selectDropnDownOptionAsIndex(stateTextbox, "13");
+			String state= Stock.GetParameterValue("STATE");
+			Web.selectDropDownOption(stateDropDown,state, true);
 			Web.setTextToTextBox(zipCodeTextBox,
 					Stock.GetParameterValue("ZIP CODE"));
 
@@ -2293,10 +2309,6 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Stock.GetParameterValue("PERSONAL EMAIL"));
 			Web.setTextToTextBox(mobilePhoneTextBox,
 					Stock.GetParameterValue("MOBILE PHONE"));
-			/*
-			 * Web.setTextToTextBox(homePhoneTextBox,
-			 * Stock.GetParameterValue("HOME PHONE"));
-			 */
 		}
 
 		catch (Exception e) {
@@ -3184,44 +3196,55 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	 */
 	public void validateErrorMsgDateOfBirth() throws InterruptedException {
 		// Verify Date of hire is mandatory field.
-		DateOfBirthTextbox.clear();
-		Web.clickOnElement(doneButton);
-		CommonLib.verifyIfWebElementPresent(datOfBirthError,
-		"check if Error message is displayed or not when data not entered to the field: ",true);
+		Web.setTextToTextBox(DateOfBirthTextbox, Keys.TAB);
+		Web.clickOnElement(datOfBirthError);
+		CommonLib.verifyIfWebElementPresent(datOfBirthError,"DateOfBirth field error message should displayed on UI.",true);
 
 		// Verify invalid date format for the field Date of hire
 		Web.setTextToTextBox(DateOfBirthTextbox,
 				Stock.GetParameterValue("DOBInvalid1"));
-		Web.clickOnElement(doneButton);
 		CommonLib.verifyIfWebElementPresent(datOfBirthError,
-				"check if Error message is displayed or not when invalid data entered is: "
-						+ Stock.GetParameterValue("DOBInvalid1"), true);
+				"DateOfBirth field error message should displayed on UI for entering of invalid date of birth.", true);
 
 		// verify future date verification for the field Date of
 		// hire.
-		Web.setTextToTextBox(DateOfBirthTextbox,
-				Stock.GetParameterValue("DOBFutureDate"));
+		Web.setTextToTextBox(DateOfBirthTextbox,Stock.GetParameterValue("DOBFutureDate"));
 		Web.clickOnElement(doneButton);
-		datOfBirthError.clear();
-		CommonLib.verifyIfWebElementTextPresent(datOfBirthError,
-				Stock.GetParameterValue("DOBFutureDateErrorMsg"),"DateOfBirth Field error message should present on UI.");
+		boolean b = isAlertPresent();
+		if(b){
+		Web.getDriver().switchTo().alert().accept();
+		}
+		Web.clickOnElement(datOfBirthError);
+		CommonLib.verifyIfWebElementTextPresent(datOfBirthError,Stock.GetParameterValue("DOBFutureDateErrorMsg"),"DateOfBirth Field error message should present on UI.");
 
 	}
+	public boolean isAlertPresent() 
+	{ 
+	    try 
+	    { 
+	        Web.getDriver().switchTo().alert(); 
+	        return true; 
+	    }   // try 
+	    catch (NoAlertPresentException Ex) 
+	    { 
+	        return false; 
+	    }   // catch 
+	}   // 
 	/**
 	 * Verify create new account functionality
 	 * @throws InterruptedException 
 	 */
 	public void verifyCreateAccountFunctionality() throws InterruptedException{
-		fillTheFieldesinOnlineEnrollmentForm(true, true);
+		fillTheFieldesinOnlineEnrollmentForm();
 		
 		// Click on continuetoCreate account button and verify account not created messgae.
 		Web.clickOnElement(contToCreateNewAccountBtn);
 		CommonLib.verifyIfWebElementTextPresent(accountNotCreatedMsg, Stock.GetParameterValue("AccountYetToCreated"), "Confirmation page account notcreated message should display.");
 		
 		// Click on createAccount button and verify Confirmation message.
-		Web.clickOnElement(createNewAcct);
+		Web.clickOnElement(createAccount);
 		String expectedConfirmationMsg = Stock.GetParameterValue("CONFIRMATION TEXT");
-		String actualConfirmationMsg = confirmationNumber.getText();
+		String actualConfirmationMsg = Web.getWebElementText(confirmationNumber);
 		if(actualConfirmationMsg.contains(expectedConfirmationMsg)){
 			Reporter.logEvent(Status.PASS, "Confirmation number should displayed on UI.",expectedConfirmationMsg , false);
 		}else{

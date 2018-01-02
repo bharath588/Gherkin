@@ -37,6 +37,7 @@
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="reg_status" value="Registered" />
+				<parameter name="ppt_id" value="202752" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="cswa" />
@@ -583,7 +584,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11551139" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="100" />
 				<parameter name="TransferToVal" value="100" />
@@ -595,7 +596,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11551139" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="1" />
 				<parameter name="TransferToVal" value="100" />
@@ -684,7 +685,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11552571" />
+				<parameter name="PPT_ID" value="14710273" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -694,7 +695,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="11552571" />
+				<parameter name="PPT_ID" value="14710273" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -993,6 +994,135 @@ ORDER BY wb.ga_id,
 				<parameter name="PPT_ID" value="1731515" />
 			</Iteration>
 		</TestCase>
+		<!-- Test cases Saraswathi -->
+		<TestCase name="DDTC_25950_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="ExceptionMessage" value="Participant has Pending Loan WR_487" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC_25952_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="16345507" />
+				<parameter name="ParticipantID" value="6341317" />
+				<parameter name="ExceptionMessage1" value="Cannot grant loan to Participant whose Employment is terminated. BR_485" />
+				<parameter name="ExceptionMessage2" value="This participant is currently non active. BR_481" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC_25954_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="5470329" />
+				<parameter name="ExceptionMessage" value="This participant's ownership_ind reflects a takeover BR_479" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC_24263_PaperlessLoan_LoanStructureOverviewSection_4">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="ParticipantGrouping" value="N/A" />
+			</Iteration>
+		</TestCase>
+			<TestCase name="DDTC_25968_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="13013508" />
+				<parameter name="ExceptionMessage" value="This participant's group has a Disb hold. BR_467" />
+			</Iteration>
+		</TestCase>
+			<TestCase name="DDTC_25970_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="1374559" />
+				<parameter name="ExceptionMessage" value="Participant has Pending Transfer WR_477" />
+			</Iteration> 
+		</TestCase>
+		<TestCase name="DDTC_25965_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="11756310" />
+				<parameter name="ExceptionMessage" value="Participant has exceeded Plan Maximum Number of Loans allowed. BR_470" />
+				<parameter name="ExceptionMessage1" value="Participant has exceeded Maximum Number of Loans allowed per period. BR_469" />
+				
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC_25966_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="14221001" />
+				<parameter name="ExceptionMessage" value="This participant's group is Terminated. BR_511" />
+				
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC_26931_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="13585062" />
+				<parameter name="ExceptionMessage" value="Unable to locate an account balance for 2017-12-07 453361-01 13585062" />
+				
+			</Iteration>
+		</TestCase>
+			<TestCase name="DDTC_26089_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="ExceptionMessage" value="Individual has an outstanding Promissory Note WR_489" />
+				
+			</Iteration>
+		</TestCase>	
+			<TestCase name="DDTC_26926_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="IntrestRate" value="4.250% fixed" />
+				<parameter name="LoanType" value="Account Reduction" />
+				<parameter name="LoanCategories" value="GENERAL, MORTGAGE" />
+				<parameter name="GeneralPurposeLoanTerm" value="12 - 60 Months" />
+				<parameter name="MotorGageLoanTerm" value="61 - 120 Months" />
+			</Iteration>
+		</TestCase>	
+			<TestCase name="DDTC_25963_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="loanHistoryPageURL" value="loanInfoPORTAL" />
+			</Iteration>
+		</TestCase>	
+		<TestCase name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="3818031" />
+				<parameter name="MobilePhoneNumber" value="8797947961" />
+				<parameter name="Loan Terms" value="12" />
+				<parameter name="PaymentMethod" value="Payroll" />
+				<parameter name="PaymentFrequency" value="BI-WEEKLY" />
+				<parameter name="PaymentFrequencyChangedMsg" value="Change to the payment frequency requires a form to be sent to and returned by the participant." />
+			</Iteration>
+		</TestCase>	
+	
+		<TestCase name="DDTC_25959_Paperless_Loan_Exceptions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="6542447" />
+				<parameter name="ExceptionMessage" value="Avail Amount is less than Plan Min AS_208" />
+			</Iteration>
+		</TestCase>	
 	</Module>
 	<Module name="onlineenrollment">
 		<TestCase name="ValidateGrpId">
@@ -1262,11 +1392,14 @@ ORDER BY wb.ga_id,
 				<parameter name="FIRST NAME" value="Albert" />
 				<parameter name="LAST NAME" value="Brown" />
 				<parameter name="DOB" value="05-Nov-1993" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="18-Aug-2017" />
 				<parameter name="ADDR LINE1" value="Baker Street" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
 				<parameter name="HOME PHONE" value="7896541230" />
@@ -1294,8 +1427,11 @@ ORDER BY wb.ga_id,
 				<parameter name="DOH" value="18-Aug-2017" />
 				<parameter name="ADDR LINE1" value="Baker Street" />
 				<parameter name="ADDR LINE2" value="Baker Street state" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
 				<parameter name="HOME PHONE" value="7896541230" />
@@ -1330,12 +1466,15 @@ ORDER BY wb.ga_id,
 				<parameter name="PEC" value="1234" />
 				<parameter name="FIRST NAME" value="saru" />
 				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="01-Nov-2016" />
 				<parameter name="ADDR LINE1" value="12" />
 				<parameter name="ADDR LINE2" value="B123" />
-				<parameter name="CITY" value="Denver" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
@@ -1356,10 +1495,13 @@ ORDER BY wb.ga_id,
 				<parameter name="LAST NAME" value="reddy" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="DOH" value="01-Nov-2016" />
 				<parameter name="ADDR LINE1" value="12" />
 				<parameter name="ADDR LINE2" value="B123" />
-				<parameter name="CITY" value="Denver" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
@@ -1391,11 +1533,14 @@ ORDER BY wb.ga_id,
 				<parameter name="LAST NAME" value="Brown" />
 				<parameter name="DOB" value="05-Nov-1993" />
 				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="DOH" value="18-Aug-2017" />
 				<parameter name="ADDR LINE1" value="Baker Street" />
 				<parameter name="ADDR LINE2" value="Baker Street state" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
 				<parameter name="HOME PHONE" value="7896541230" />
@@ -1412,7 +1557,7 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>
 
-		<TestCase name="CORE_18537_EndToEndTesting_WithDivision">
+		<TestCase name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
@@ -1423,9 +1568,12 @@ ORDER BY wb.ga_id,
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="01-Nov-2016" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="ADDR LINE1" value="12" />
 				<parameter name="ADDR LINE2" value="B123" />
 				<parameter name="CITY" value="Denver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
@@ -1447,8 +1595,11 @@ ORDER BY wb.ga_id,
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="18-Aug-2016" />
 				<parameter name="ADDR LINE1" value="12" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="ADDR LINE2" value="Baker Street state" />
-				<parameter name="CITY" value="Colorado" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
@@ -1473,16 +1624,19 @@ ORDER BY wb.ga_id,
 				<parameter name="password" value="baseball" />
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123654789" />
+				<parameter name="SSN" value="NEWSSN" />
 				<parameter name="FIRST NAME" value="Albert" />
 				<parameter name="LAST NAME" value="Brown" />
 				<parameter name="DOB" value="05-Nov-1993" />
+				<parameter name="GENDER" value="Nothing" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="18-Aug-2017" />
 				<parameter name="ADDR LINE1" value="Baker Street" />
 				<parameter name="ADDR LINE2" value="Baker Street state" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="7896541230" />
 				<parameter name="HOME PHONE" value="7896541230" />
@@ -1510,10 +1664,13 @@ ORDER BY wb.ga_id,
 				<parameter name="LAST NAME" value="reddy" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="Nothing" />
 				<parameter name="DOH" value="01-Nov-2016" />
 				<parameter name="ADDR LINE1" value="12" />
 				<parameter name="ADDR LINE2" value="B123" />
-				<parameter name="CITY" value="Denver" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
@@ -1530,16 +1687,19 @@ ORDER BY wb.ga_id,
 				<parameter name="PEC" value="1234" />
 				<parameter name="FIRST NAME" value="saru" />
 				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
 				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
 				<parameter name="DOH" value="01-Nov-2016" />
 				<parameter name="ADDR LINE1" value="12" />
 				<parameter name="ADDR LINE2" value="B123" />
-				<parameter name="CITY" value="Denver" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
-				<parameter name="AccountYetToCreated" value="Account has not yet been created." />
+				<parameter name="AccountYetToCreated" value="Account has not yet been created. Review the following with the participant." />
 				<parameter name="CONFIRMATION TEXT" value="Your account has been created. Your confirmation number is " />
 
 			</Iteration>

@@ -33,6 +33,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	private ArrayList<String> hireTermDateList;
 	ArrayList<String> personalDataDB;
 	ArrayList<String> plan_And_Participant_List;
+	LoanRequest LoanRequestPage;
 
 	// CSAS Login..
 
@@ -336,6 +337,16 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 
 	@FindBy(xpath = "//td[contains(text(),'384171-09')]//..//form//input[@type = 'radio'][@checked ='checked']")
 	private WebElement SelectedPlan;
+	
+	@FindBy(xpath =".//table[@class='compactDataTable']/tbody/tr[3]/td[2]")
+	private WebElement Name;
+	
+	@FindBy(xpath =".//table[@class='compactDataTable']/tbody/tr[7]/td[2]")
+	private WebElement Address;
+	
+	@FindBy(xpath =".//table[@class='compactDataTable']/tbody/tr[4]/td[2]")
+	private WebElement SSN;
+	
 	
 	
 	
@@ -1903,5 +1914,30 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (Web.isWebElementDisplayed(SelectedPlan)) {
 			Reporter.logEvent(Status.INFO,"Select specific plan","Specific plan selected",true);
 		} 
+	}
+	
+	public void verifyEnrolledParticipantDetails(String ParticipantID,String ssn){
+		Web.setTextToTextBox(PPTIdfield, ParticipantID);
+		Web.waitForElement(SubmitPPTIdBtn);
+		Web.clickOnElement(SubmitPPTIdBtn);
+		String actualName = Name.getText();
+		String expectedName = Stock.GetParameterValue("FIRST NAME")+" "+Stock.GetParameterValue("LAST NAME");
+		CommonLib.verifyExpectedAndActualEual(expectedName, actualName, "First Name should be displayed in a participant page.");
+		String actualAddress = Address.getText();
+		if(actualAddress.contains(Stock.GetParameterValue("ADDR LINE1"))&&actualAddress.contains(Stock.GetParameterValue("ADDR LINE2"))&&actualAddress.contains(Stock.GetParameterValue("CITY")+" CO "+Stock.GetParameterValue("ZIP CODE"))){
+		Reporter.logEvent(Status.PASS, "Address should be displayed in participant home page : "+actualAddress, actualAddress, false);	
+		}else{
+			Reporter.logEvent(Status.FAIL, "Address should be displayed in participant home page : "+actualAddress, actualAddress, false);	
+		}
+		String actualSSN = SSN.getText();
+		String expectedSSN = ssn.substring(0, 3)+"-"+ ssn.substring(3, 5)+"-"+(ssn.substring(5, 9));
+		CommonLib.verifyExpectedAndActualEual(expectedSSN, actualSSN, "SSN value should displayed on participant page.");
+		
+	}
+	
+	public void gotoParticipantPageAndSearchParticipant(){
+		Web.setTextToTextBox(PPTIdfield, Stock.GetParameterValue("ParticipantID"));
+		Web.waitForElement(SubmitPPTIdBtn);
+		Web.clickOnElement(SubmitPPTIdBtn);
 	}
 }

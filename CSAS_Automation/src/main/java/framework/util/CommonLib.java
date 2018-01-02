@@ -112,14 +112,14 @@ public class CommonLib {
 	 * @param sMsg
 	 * @param bFlag
 	 */
-	public static void verifyIfWebElementPresent(WebElement ele, String sMsg,Boolean bFlag){
+	public static void verifyIfWebElementPresent(WebElement ele, String sMsg,boolean bFlag){
 		// Check if webelement displayed on a page or not.
 		Boolean bStatus = Web.isWebElementDisplayed(ele);
-		
+		System.out.println(bStatus);
 		if(bStatus == bFlag){
-			Reporter.logEvent(Status.PASS,	sMsg,"Element is Present", false);
+			Reporter.logEvent(Status.PASS,	sMsg,"Expected web element present "+ele, false);
 		}else{
-			Reporter.logEvent(Status.FAIL,	sMsg,"Element is Not Present", true);
+			Reporter.logEvent(Status.FAIL,	sMsg,"Expected was :"+ele+" \\n Actual was :"+ele, true);
 		}
 		}
 	
@@ -130,6 +130,7 @@ public class CommonLib {
 	 */
 	public static void verifyIfWebElementTextPresent(WebElement ele, String expectedText,String sMsg){
 		// Check if webelement contains expected text or not
+		String actual = ele.getText();
 		if(ele.getText().equalsIgnoreCase(expectedText)){
 			Reporter.logEvent(Status.PASS,sMsg ,expectedText,true);
 		}else{
