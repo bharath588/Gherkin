@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="3" name="Failed suite [testsuite]" parallel="classes">
+<suite name="Failed suite [testsuite]">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression_Orange_Period_Execution_1(failed)" parallel="classes">
+  <test name="Regression_Yellow_Period_Execution_1(failed)">
     <classes>
-      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+      <class name="app.psc.testcases.login.logintestcases">
+        <methods>
+          <include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs" invocation-numbers="0"/>
+          <include name="TC006_01_Verify_Error_Message_For_Terminated_User" invocation-numbers="1"/>
+          <include name="TC003_UI_Validations_On_JumpPage" invocation-numbers="0"/>
+          <include name="TC004_Verify_PLUser_Login_With_No_Plna_Access"/>
+          <include name="InitTest"/>
+          <include name="TC01_SIT_PSC_HomePage_Transaction_Security"/>
+        </methods>
+      </class> <!-- app.psc.testcases.login.logintestcases -->
+      <class name="app.psc.testcases.userverification.userverificationtestcases">
         <methods>
           <include name="ReportInit"/>
-          <include name="TC026_Verify_Employee_Basic_Info"/>
+          <include name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input"/>
+        </methods>
+      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
+      <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+        <methods>
+          <include name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input"/>
+          <include name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User"/>
+          <include name="DriverQuite"/>
+          <include name="ReportInit"/>
+          <include name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same"/>
+        </methods>
+      </class> <!-- app.psc.testcases.accountverification.accountverificationtestcases -->
+      <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+        <methods>
+          <include name="TC006_01_Verify_Display_Of_Notification_On_HomePage"/>
+          <include name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords" invocation-numbers="0"/>
+          <include name="DriverQuite"/>
+          <include name="TC019_Verify_Default_Plan_Prompting"/>
+          <include name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security"/>
+          <include name="TC009_01_Verify_Multifactoring" invocation-numbers="0"/>
+          <include name="InitTest"/>
+          <include name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" invocation-numbers="0 1"/>
+          <include name="TC018_Security_Question_Validation_Existing_User"/>
+          <include name="TC006_01_Verify_Display_Of_Compliance_On_HomePage"/>
+          <include name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages"/>
+        </methods>
+      </class> <!-- app.psc.testcases.accountverification.accountverification_existingusr -->
+      <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+        <methods>
+          <include name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input"/>
+          <include name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input"/>
+          <include name="ReportInit"/>
           <include name="cleanUpSession"/>
         </methods>
-      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
+      </class> <!-- app.psc.testcases.accountverification.accountverificationtest_plan -->
     </classes>
-  </test> <!-- Regression_Orange_Period_Execution_1(failed) -->
+  </test> <!-- Regression_Yellow_Period_Execution_1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

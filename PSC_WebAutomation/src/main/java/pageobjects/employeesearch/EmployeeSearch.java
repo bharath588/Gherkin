@@ -1034,6 +1034,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement getDateFromCalendar(String dateField,String datestring){
 		return Web.getDriver().findElement(By.xpath("//input[@name='"+dateField+"']//following-sibling::div//div[@aria-label='"+datestring+"']"));
 	}
+	@FindBy(xpath=".//*[@id='allocations']")
+	private WebElement invetment;
 	@FindBy(xpath=".//div[@class='headcontainer']//following-sibling::div[1]//th[not(position()=11)]")
 	private List<WebElement> deferral_Columns_ths;
 	@FindBy(xpath=".//input[@name='hireDate']//following-sibling::span/i[@title='Click to open calendar']")
@@ -5131,7 +5133,8 @@ public boolean validateInvestmentsSectionElements()
   try{
 	  	this.navigateToAccountDetailPage();
 	  	Web.getDriver().switchTo().frame(employeeSearchFrame);
-	  	if(CommonLib.isElementExistByXpath(investments))
+	  	Thread.sleep(3000);
+	  	if(Web.isWebElementDisplayed(invetment, true))
 	  	{
 	  		proceed = true;
 	  		Reporter.logEvent(Status.PASS, "Validate Investment section is displayed under Account detail.","Investment section is"

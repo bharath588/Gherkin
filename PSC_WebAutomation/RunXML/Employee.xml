@@ -92,10 +92,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
-					</include> 
+					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification" />
 					</include>
@@ -302,7 +302,7 @@
 					<include name="TC023_Verify_the_limit_of_search_results_on_searchpage">
 						<parameter name="ManualTCName" value="DDTC-21956_Employee_Search_Regression_limit">
 						</parameter>
-					</include>
+					</include> 
 					<include name="TC024_Verify_Filter_Functionality_Search_Results_Page">
 						<parameter name="ManualTCName" value="DDTC-21957_Employee_Search_Regression_filter" />
 					</include>
@@ -318,7 +318,7 @@
 					<include name="TC027_Verify_termed_employeedetails_are_displayed">
 						<parameter name="ManualTCName"
 							value="DDTC-21959_Employee_Search_Regression_termed_employee" />
-					</include>
+					</include> 
 					<include
 						name="TC028_Verify_search_results_are_displayed_for_termed_employees">
 						<parameter name="ManualTCName"
@@ -328,10 +328,9 @@
 					<include name="TC029_Verify_ssn_masking_for_external_users">
 						<parameter name="ManualTCName" value="DDTC-22055_Employee_Search_Regression_ssn_masking">
 						</parameter>
-					</include>
+					</include> 
 				</methods>
 			</class> 
-
-		</classes>
+	</classes>
 	</test>
 </suite>

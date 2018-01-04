@@ -199,7 +199,6 @@ public class HomePage extends LoadableComponent<HomePage>{
 
 	@Override
 	protected void isLoaded() throws Error {
-			
 		if(!Web.isWebElementDisplayed(weGreeting,false)){
 			throw new AssertionError("Plan service center landing page not loaded.");
 		}else{
