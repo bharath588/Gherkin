@@ -116,7 +116,7 @@
 				<parameter name="password" value="Test@1234" />
 				<parameter name="logoName" value="" />
 				<parameter name="copyright info"
-					value="©2017 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
+					value="©2018 Great-West Life &amp; Annuity Insurance Company. All rights reserved." />
 				<parameter name="lblUserName" value="FIVE TESTING" />
 			</Iteration>
 		</TestCase>
