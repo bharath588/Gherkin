@@ -379,7 +379,9 @@ public class EnrollmentTestCases {
 						"Enrollment Summary Page is Not Displayed",
 						true);
 			}
-		//Step 8		
+		//Step 8	
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
