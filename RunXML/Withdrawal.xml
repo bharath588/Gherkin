@@ -1,131 +1,383 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
 <suite name="testsuite" verbose="1">
-    <listeners>
-        <listener class-name="core.framework.TestListener"/>
-    </listeners>  
-     <!--   
-    <test name="DDTC_22570_AGE591/2_PWD_Payment To Self_Multiple_Money_Sources">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_TC01_In_Service_Age59_And_Half_Payment_To_Self"/>
-               </methods>
-            </class>
-        </classes>
-    </test> 
-     <test name="DDTC_TC_03_In_Service_Roll_Qual">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_TC03_In_Service_Age59_And_Half_Roll_Qual"/>
-               </methods>
-            </class>
-        </classes>
-    </test>  
-   <test name="DDTC_TC_04_In_Service_Roll_Over_To_Traditional_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_TC04_In_Service_Age59_And_Half_Roll_Over_To_Traditional_IRA"/>
-               </methods>
-            </class>
-        </classes>
-    </test>
- 
- 
-      <test name="DDTC_TC_05_In_Service_Roll_Over_To_External_Roth_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_TC05_In_Service_Age59_And_Half_Roll_Over_To_External_Roth_IRA"/>
-               </methods>
-            </class>
-        </classes>
-    </test>  
-      -->
-    <test name="DDTC-22574_withDrawal_SepService_PWD_Roll_Over_To_Traditional_IRA">
-       <classes>
-           <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-               <methods>
-                   <include name="WithDrawals_TC02_SepService_PWD_Roll_Over_To_Traditional_IRA"/>
-               </methods>
-           </class>
-       </classes>
-   </test>  
-      <test name="DDTC-TC06_withDrawal_SepService_PWD_Payment_To_Self">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="WithDrawals_TC06_SepService_PWD_Payment_to_Self"/>
-               </methods>
-            </class>
-        </classes>
-    </test> 
-  <test name="DDTC-TC07_withDrawal_SepService_PWD_Roll_Over_To_External_Roth_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="WithDrawals_TC07_SepService_PWD_Roll_Over_To_External_Roth_IRA"/>
-               </methods>
-            </class>
-        </classes>
-    </test>   
-     <test name="DDTC-TC08_withDrawal_SepService_PWD_Roll_Qual">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="WithDrawals_TC08_SepService_PWD_Roll_Qual"/>
-               </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="DDTC-TC08_withDrawal_SepService_FWD_Payment_To_Self">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="WithDrawals_TC09_SepService_FWD_Payment_To_Self"/>
-               </methods>
-            </class>
-        </classes>
-    </test> 
-    <test name="SepService_FWD_RollOver_Roll_Qual">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_Sep_Service_FWD_RollOver_Roll_Qual"/>
-               </methods>
-            </class>
-        </classes>
-    </test>
-    <test name="SepService_FWD_RollOver_Roll_Over_To_Traditional_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_SepService_RollOver_Roll_Over_To_Traditional_IRA"/>
-               </methods>
-            </class>
-        </classes>
-    </test>
-   <test name="SepService_PWD_Max_Amount_PTS">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_SepService_PWD_Max_Amount_PTS"/>
-               </methods>
-            </class>
-        </classes>
-    </test>
-    <!-- 
-     <test name="DDTC-23672_SepService_FWD Combo_PTS_And_Roll_IRA">
-        <classes>
-            <class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
-                <methods>
-                    <include name="Withdrawals_SepService_Combo_PTS_And_Roll_IRA"/>
-               </methods>
-            </class>
-        </classes>
-    </test>    
-       
-      -->
-       </suite>
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="WITHDRAWAL REGRESSION SUITE">
+		<classes>
+			<class name="app.pptweb.testcases.withdrawals.withdrawalstestcases">
+				<methods>
+					<!-- Spousal Consent -->
+
+					<include name="Withdrawal_SpousalConsent_Above_5K_Threshold_Single">
+						<parameter name="ManualTCName"
+							value="DDTC_26874_Spousal Consent above $5K_Threshold_Marital Status_Single">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_SpousalConsent_Below_5K_Threshold_SepService">
+						<parameter name="ManualTCName"
+							value="DDTC_26072_Spousal Consent Below $5K_Threshold_SepService">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_SpousalConsent_Above_5K_Threshold_SepService">
+						<parameter name="ManualTCName"
+							value="DDTC_13144_Spousal Consent above $5K_Threshold_SepService">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_SpousalConsent_Above_5K_Threshold_InService">
+						<parameter name="ManualTCName"
+							value="DDTC_23673_Spousal Consent above $5KThreshold_InService">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_SpousalConsent_Below_5K_Threshold_InService">
+						<parameter name="ManualTCName"
+							value="DDTC_13145_Spousal Consent Below $5KThreshold_InService">
+						</parameter>
+					</include>
+
+					<!-- In service & AGE 59 1/2 -->
+
+					<include name="Withdrawals_Age59_And_Half_WithdrawalMethods">
+						<parameter name="ManualTCName"
+							value="DDTC_26051_26053_22570_26056_AGE591/2_All_Withdrawal_Methods">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_InService_Age59_And_Half_Max_Amount">
+						<parameter name="ManualTCName"
+							value="DDTC_26058_26059_Withdrawals_InService_AGE591/2_Max_Amount">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_In_Service_WithdrawalMethods">
+						<parameter name="ManualTCName"
+							value="DDTC_26050_26052_26054_26057_In_Service_All_Withdrawal_Methods">
+						</parameter>
+					</include>
+
+
+					<!-- Sep Service - Part Withdrawal -->
+
+					<include name="Withdrawals_SepService_PWD_Max_Amount_PTS">
+						<parameter name="ManualTCName"
+							value="DDTC_26073_SepService_PWD_Max_Amount_PTS">
+						</parameter>
+					</include>
+
+					<include name="WithDrawals_SepService_PWD_WithdrawalMethods">
+						<parameter name="ManualTCName"
+							value="DDTC_22574_26066_26067_23681_withDrawal_SepService_PWD_WithdrawalMethods">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_SepService_Multiple_Money_Sources">
+						<parameter name="ManualTCName"
+							value="DDTC_8824_PPTWEB_Withdrawal_Sep service Part WD with Multiple money sources">
+						</parameter>
+					</include>
+
+					<include
+						name="Withdrawal_MaxAvail_SepService_PartialWithdrawal_Single_Money_Source">
+						<parameter name="ManualTCName"
+							value="DDTC-8547_PPTWEB_Withdrawal_Max avail_Sep service partial withdrawal with single money source">
+						</parameter>
+					</include>
+
+
+					<!-- Sep Service Full withdrawal -->
+
+					<include name="Withdrawals_SepService_Combo_PTS_With_RollQual_RollIRA">
+						<parameter name="ManualTCName"
+							value="DDTC_26071_23672_SepService_FWD Combo_PTS_With_Roll_Qual_And_Roll_IRA">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Sep_Service_FWD_RollOver">
+						<parameter name="ManualTCName"
+							value="DDTC_26069_26070_SepService_FWD_RollOver">
+						</parameter>
+					</include>
+
+
+					<include name="WithDrawals_SepService_FWD_Payment_To_Self">
+						<parameter name="ManualTCName"
+							value="DDTC-26068_withDrawal_SepService_FWD_Payment_To_Self">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Combos_Single_Money_Source">
+						<parameter name="ManualTCName"
+							value="DDTC_12572_SIT_PPTWEB_Withdrawal_Combos_Combo option single source">
+						</parameter>
+					</include>
+
+					<!-- Source Hierarchy -->
+					<include
+						name="Withdrawal_InService_AGE_59_And_Half_Source_Hierarchy_Remove_Max_Available">
+						<parameter name="ManualTCName"
+							value="DDTC_21780_12282_12279_PPTWEB_Withdrawal_In Service-Remove Max-Available for plans with Source Hierarchy">
+						</parameter>
+					</include>
+
+					<!-- Customize Message and Email Form -->
+
+					<include name="Withdrawals_SepService_Messaging">
+						<parameter name="ManualTCName"
+							value="DDTC-8546 SIT_PPTWEB_Withdrawal_TC024_Sep service messaging">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_InService_CitizenShip_Validation_Non_US">
+						<parameter name="ManualTCName"
+							value="DDTC_26474_26486_Withdrawal CitizenShip SSN Validation - Select No_InService">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_SepService_CitizenShip_Validation_Non_US">
+						<parameter name="ManualTCName"
+							value="DDTC_26488 Withdrawal CitizenShip SSN Validation - Select No_SepService">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_Participant_With_ForeignAddress">
+						<parameter name="ManualTCName"
+							value="DDTC-7991_SIT_PPTWEB_Withdrawal_TC002_Withdrawal for participant with foreign address">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_Participant_With_SDB_Account">
+						<parameter name="ManualTCName"
+							value="DDTC_7969_SIT_PPTWEB_Withdrawal_Prefilled_Form_Sent_ParticipantHolding SDB account">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_Participant_With_Default_DOB">
+						<parameter name="ManualTCName"
+							value="DDTC-7946_PPTWEB_Withdrawal_Participant_With_Default_DOB">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_Ppt_With_TakeOver_Account">
+						<parameter name="ManualTCName"
+							value="DDTC_7938_SIT_PPTWEB_Withdrawal_TC003_Witdrawal_Ppt_TakeOver_Account">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_Ppt_With_File_Restrictions">
+						<parameter name="ManualTCName"
+							value="DDTC_7955_SIT_PPTWEB_Withdrawal_TC004_Withdrawal_Ppt_With_File Restrictions">
+						</parameter>
+					</include>
+
+
+
+					<!-- Retirement Reason -->
+
+					<include name="Withdrawals_RetirementReason_SepService_PWD">
+						<parameter name="ManualTCName"
+							value="DDTC_12242_Withdrawal_RetirementReason_PartWD_SepService flow">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_RetirementReason_SepService_FWD">
+						<parameter name="ManualTCName"
+							value="DDTC_12005_Withdrawal_RetirementReason_FullWD_SepService flow">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_RetirementReason_SepService_Combo_FWD">
+						<parameter name="ManualTCName"
+							value="DDTC_12602_SIT_PPTWEB_Withdrawal_Combos_Combo option Retirement reason">
+						</parameter>
+					</include>
+
+					<!-- GDR Scenarios -->
+
+					<include name="Withdrawals_SepService_MaxAmount_GDR">
+						<parameter name="ManualTCName" value="DDTC_26074_SepService_MaxAmount_GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_InService_MaxAmount_GDR">
+						<parameter name="ManualTCName"
+							value="DDTC_26065_In Service_MaxAmount ROLL QUAL_GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Age59_And_Half_RollQual_GDR">
+						<parameter name="ManualTCName" value="DDTC_23680_AGE591/2_PWD_RollQual_GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawal_SepService_PWD_Multiple_Money_Sources_GDR">
+						<parameter name="ManualTCName"
+							value="DDTC_9095_PPTWEB_Withdrawal_SepService_PWD_Multiple money sources with GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Age59_And_Half_Roll_IRA_GDR">
+						<parameter name="ManualTCName" value="DDTC_8869_AGE591/2_PWD_Roll_IRA_GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Age_59AndHalf_Roll_IRA_With_GDR">
+						<parameter name="ManualTCName"
+							value="DDTC_12594_PPTWEB_Withdrawals_AGE591/2_ROLL IRA_with_GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_PartWD_RollQUAL_withGDR_Pretax">
+						<parameter name="ManualTCName"
+							value="DDTC_12607_PPTWEB_Withdrawal_Sep Service_PartWD_RollQUAL_withGDR_Pretax">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_SepService_Pwd_Roll_IRA_No_GDR">
+						<parameter name="ManualTCName"
+							value="DDTC_12597 PPTWEB_
+							Withdrawals_Sep Service_Part WD_RollIRA_No GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_SepService_PWD_Roll_IRA_With_GDR">
+						<parameter name="ManualTCName"
+							value="DDTC_12604_PPTWEB_Withdrawal_Sep Service_Part WD_Roll IRA_withGDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_PartWD_PTS_With_GDR_Pretax">
+						<parameter name="ManualTCName"
+							value="DDTC_12605_PPTWEB_Withdrawal_Sep Service_PWD_PTS_withGDR_PretaxOrBeore tax">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_PartWD_PTS_With_GDR_Pretax_BTK1">
+						<parameter name="ManualTCName"
+							value="DDTC_12606_PPTWEB_Withdrawal_Sep Service_Part WD_PTS_with GDR_Pretax_BTK1">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_FWD_GDR_On_BTK">
+						<parameter name="ManualTCName"
+							value="DDTC_12603_PPTWEB_Withdrawals_SepService_FWD_GDR applied on money type_BTK">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Age59AndHalf_PTS_No_GDR_Roth">
+						<parameter name="ManualTCName"
+							value="DDTC_12600_PPTWEB_Withdrawals_Age59 1/2_PTS_No GDR">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_InService_PTS_withGDR">
+						<parameter name="ManualTCName"
+							value="DDTC_12598_PPTWEB_Withdrawals_InService_PTS_withGDR">
+						</parameter>
+					</include>
+
+					<!-- Caching Scenarios -->
+
+					<include
+						name="Withdrawals_Caching_Age_59AndHalf_MaxAmount_To_Age59AndHalf_Withdrawal">
+						<parameter name="ManualTCName"
+							value="DDTC_26891 SIT_PPTWEB_Withdrawal_Caching Age 59 1/2 withdrawal max amount to Age 59 1/2 withdrawal">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_Fwd_Combo_To_Pwd_RollOver">
+						<parameter name="ManualTCName"
+							value="DDTC_26892 SIT_PPTWEB_Withdrawal_Caching Full withdrawal combo to part withdrawal rollover">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_Fwd_RollOver_To_Pwd_RollOver">
+						<parameter name="ManualTCName"
+							value="DDTC_26893 SIT_PPTWEB_Withdrawal_Caching Full withdrawal rollover to part withdrawal rollover">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_Age59AndHalf_To_Pwd">
+						<parameter name="ManualTCName"
+							value="DDTC_26894_SIT_PPTWEB_Withdrawal_Caching Age 591/2 withdrawal to part withdrawal">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_InService_To_Fwd">
+						<parameter name="ManualTCName"
+							value="DDTC_26895_SIT_PPTWEB_Withdrawal_Caching In service withdrawal to full withdrawal">
+						</parameter>
+					</include>
+
+					<include
+						name="Withdrawals_Caching_Age59AndHalf_To_Age59AndHalf_WithChange">
+						<parameter name="ManualTCName"
+							value="DDTC_26890_SIT_PPTWEB_Withdrawal_Caching Age 59 1/2 withdrawal to Age 59 1/2 withdrawal with change">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_InService_To_InService_WithoutChange">
+						<parameter name="ManualTCName"
+							value="DDTC_26889 SIT_PPTWEB_Withdrawal_Caching In service withdrawal to in service withdrawal no change">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_PWD_RollOver_To_FWD_RollOver">
+						<parameter name="ManualTCName"
+							value="DDTC_26888 SIT_PPTWEB_Withdrawal_Caching Part withdrawal Rollover to full withdrawal rollover">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_PWD_PTS_To_FWD_Combo">
+						<parameter name="ManualTCName"
+							value="DDTC_26887 SIT_PPTWEB_Withdrawal_Caching Part withdrawal PTS to full withdrawal combo">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_PWD_MaxAmount_To_PWD">
+						<parameter name="ManualTCName"
+							value="DDTC_26875_SIT_PPTWEB_Withdrawal_Caching_Part withdrawal max amount to part withdrawal">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_PWD_To_PWD_WithChange">
+						<parameter name="ManualTCName"
+							value="DDTC_26819 SIT_PPTWEB_Withdrawal_Caching Part withdrawal to part withdrawal with change">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_PWD_To_PWD_With_No_Change">
+						<parameter name="ManualTCName"
+							value="DDTC_26818 SIT_PPTWEB_Withdrawal_Caching Part withdrawal to part withdrawal no change">
+						</parameter>
+					</include>
+
+					<include name="Withdrawals_Caching_Multiple_Plans">
+						<parameter name="ManualTCName"
+							value="DDTC_27852 SIT_PPTWEB_Withdrawal_Caching Multiple plan withdrawals">
+						</parameter>
+					</include>
+
+					<!-- Miscellanous Test Cases -->
+					<include
+						name="Withdrawals_InServ_PWD_FWD_CurrentBalance_Less_Than_Plan_Minimum">
+						<parameter name="ManualTCName"
+							value="DDTC_26063_26064_27855_PPTWEB_Withdrawal_InService_PART_FULL_Withdrawal_with_current_balance_less_than_plan_minimum">
+						</parameter>
+					</include>
+					<include
+						name="DDTC_26778_SECUREFOUNDATIONS_PPTWEB_Withdrawal_Set_FundType_To_G_SFI">
+						<parameter name="ManualTCName"
+							value="DDTC_26778_SECUREFOUNDATIONS_PPTWEB_Withdrawal_FUND_TYPE_SET_TO_'G'_SFI">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

@@ -1,10 +1,7 @@
 package pageobjects.withdrawals;
 
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.List;
 
 import lib.DB;
@@ -12,10 +9,6 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.impl.client.AIMDBackoffManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -31,14 +24,19 @@ import org.testng.Assert;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	// Declarations
 	private LoadableComponent<?> parent;
+	RequestWithdrawal_AF requestWithdrawal_AF;
 	private static boolean waitforLoad = false;
-	
+	@FindBy(id="accounts")
+	private WebElement drpDwnMultiplePlans;
 	@FindBy(xpath = ".//h1[text()[normalize-space()='Request a withdrawal']]")
 	private WebElement lblRequestAWithdrawal;
 	@FindBy(xpath=".//*[@id='account-details-container']/div/div/div[2]/div[1]/label")
@@ -48,13 +46,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
     @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	 @FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-	@FindBy(linkText = "Log out")
+	@FindBy(xpath=".//a[contains(@translate,'Logout')]")
+	 //@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	@FindBy(xpath=".//button[contains(text(),'Back')]")
 	private WebElement btnBack;
 	@FindBy(xpath = ".//input[contains(@ng-click,'maxAmountCheck')]")
 	private WebElement inptMaxAmount;
-	@FindBy(xpath = ".//button[contains(text(),'Continue')]")
+	@FindBy(xpath = ".//button[ ./span[contains(text(),'Continue')] or contains(text(),'Continue') ]")
 	private WebElement btnContinue;
 	@FindBy(xpath= ".//label[./input[@value='true']]")
 	private WebElement inpYes;
@@ -82,8 +81,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	//@FindBy(xpath=".//select[contains(@class,'ng-pristine')]")
 	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalReason')]")
 	private WebElement drpFullWithdrawalType;
-	@FindBy(xpath = ".//button[ ./span[contains(text(),'Continue')] or contains(text(),'Continue') ]")
+	//@FindBy(xpath = ".//*[@id='btn-confirm submit']")
 	//@FindBy(xpath = ".//*[@id='btn-confirm']")
+	@FindBy(xpath=".//button[ ./span[contains(text(),'Continue')] or contains(text(),'Continue') ]")
 	private WebElement btnContinueWithdrawal;
 	@FindBy(id="btn-confirm")
 	private WebElement btnIAgreeAndSubmit; 
@@ -134,9 +134,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement partWithDrawal;
 	@FindBy(xpath=".//label[contains(text(),'part of my vested balance')]")
 	private WebElement lblPartWithdrawal;
-	@FindBy(xpath="//div[@ng-if='wtCtrl.showBothAccountNumberFields()']//input[contains(@ng-model,'accountNumber')]")
+	@FindBy(xpath="//input[contains(@ng-model,'accountNumber')]")
 	private WebElement inpAccountNumber;	
-	@FindBy(xpath="//div[@ng-if='wtCtrl.showBothAccountNumberFields()']//input[contains(@ng-model,'rothAccountNumber')]")
+	@FindBy(xpath="//input[contains(@ng-model,'rothAccountNumber')]")
 	private WebElement inpRothAccountNumber;
 	@FindBy(xpath=".//label[contains(text(),'Roth IRA Account Number')]")
 	private WebElement lblRothAccountNumber;
@@ -188,22 +188,36 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement txtSepServiceMessaging;
 	@FindBy(xpath=".//div/i[contains(text(),'This email address will')]")
 	private WebElement SDBEmailContent;
-	@FindBy(xpath="//div[contains(@ng-repeat,'partialWithdrawalData')]//input[@id='partialWithdrawalCheckbox']")
+	@FindBy(id="partialWithdrawalCheckbox")
 	private List<WebElement> pwdMaxAmtChkbox;
-	@FindBy(xpath="//div[contains(@ng-repeat,'dm.partialWithdrawalData')]")
+	@FindBy(xpath="//div[contains(@ng-repeat,'withdrawalMoneySources')]")
 	private List<WebElement> pwdMoneyTypeSection;
-	@FindBy(xpath="//*[contains(text(),Payment 1')]")
+	@FindBy(xpath="//*[contains(text(),'Payment 1')]")
 	private WebElement fwdWithdrawalSummaryPayment1;
-	@FindBy(xpath="//*[contains(text(),Payment 2')]")
+	@FindBy(xpath="//*[contains(text(),'Payment 2')]")
 	private WebElement fwdWithdrawalSummaryPayment2;
-	@FindBy(xpath="//*[contains(text(),Payment 3')]")
+	@FindBy(xpath="//*[contains(text(),'Payment 3')]")
 	private WebElement fwdWithdrawalSummaryPayment3;
-	@FindBy(xpath="//*[contains(text(),Payment 4')]")
+	@FindBy(xpath="//*[contains(text(),'Payment 4')]")
 	private WebElement fwdWithdrawalSummaryPayment4;
+	@FindBy(xpath="//a[contains(@uib-popover,'Restrictions may apply')]")
+	private WebElement gDRIcon;
+	@FindBy(xpath=".//div[@class='secure-fund-container']") private WebElement txtSecureFoundationFunds;
+	@FindBy(linkText="product documentation") private WebElement lnkProductDocumentation;
+	@FindBy(xpath="'//label[@for='confirmInformation']")private WebElement labelDeliveryInformationForMailOrExpeditedDelivery;
+	@FindBy(xpath=".//label[contains(@ng-class,'afterCostBasisModel')]//span[text()='Yes']") private WebElement btnAfterTaxYes;
+	private String txt_SepService_PlanMinimum=
+			".//div[contains(@ng-if,'hasSufficientBalance') and contains(@ng-if,'WithdrawalType')]";
+	private String txt_InService_PlanMinimum=
+			"//div[@id='test_id'][./input[@value='WithdrawalType']]/following-sibling::div[contains(@ng-if,'hasSufficientBalance')]";
+	
 	private String textField="//*[contains(text(),'webElementText')]";
 	
 	private String inputWithdrawalType ="//div[@id='test_id']/input[@value='Withdrawal Type']"; 
 			//"//div[@id='test_id'][.//span[contains(text(),'Withdrawal Type')]]//input";	
+	
+	private String chkBoxInServiceMoneySourceType="//div[contains(@class,'selected-row-body')][.//input[contains(@value,'Withdrawal Type')]]//div[contains(@class,'source-row')][.//label[text()[normalize-space()='Money Source Type']]]//input[contains(@value,'Source Type')]";
+	private String chkBoxSepServiceMoneySourceType="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//input[@name='partialSources']";
 	private String 
 	moneyTypeAmtTxt ="//div[contains(@class,'selected-row-body')][.//input[contains(@value,'Withdrawal Type')]]//div[contains(@class,'source-row')][.//label[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
 	
@@ -226,24 +240,23 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	
 	private String sourceHierarchyEnterMoney=
 			"//div[contains(@class,'selected-row-body')][.//label[text()[normalize-space()='Withdrawal Type']]]//input[@type='text']";
-	
-	
+		
 	private String lblTotalWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]//span";
-	private String inpAmtPWMoneyType="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
+	private String inpAmtPWMoneyType="//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
-	private String maxAmtPWMoneyType="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//div[contains(@ng-if,'isGenericDisbRuleForSepService')]";
-	private String pwdImgGDRIcon="//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//a";
+	private String maxAmtPWMoneyType="//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//div[contains(@ng-if,'isGenericDisbRuleForSepService')]";
+	private String pwdImgGDRIcon="//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//a";
 	private String inpMaxAmountPWChkBox=
-			"//div[contains(@ng-repeat,'partialWithdrawalData')][.//div[text()[normalize-space()='Money Source Type']]]//input[@id='partialWithdrawalCheckbox']";
-
+			"//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//input[@id='partialWithdrawalCheckbox']";
 	private static int enteredRothWithdrawalAmt = 0;
-	private static int enteredPreTaxWithdrawalAmt = 0;
+	private static int enteredNonRothWithdrawalAmt = 0;	
 	private static int enteredTotalWithdrawalAmt = 0;
 	private static int finalWithdrawalAmount=0;
 	private static int fwdPartialPTSAmount=0;
 	private String deliveryMthd=null;
 	public static boolean isMaxGDR=false;
-	private static boolean isSourceHierarchy=false;
+	public static boolean isAmericanFunds=false;
+	public static boolean isSourceHierarchy=false;
 	
 	
 	/**
@@ -324,6 +337,15 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		   
 
 	}
+	
+	public static void resetTotalValues()
+	{
+		enteredRothWithdrawalAmt = 0;
+		enteredNonRothWithdrawalAmt = 0;	
+		enteredTotalWithdrawalAmt = 0;
+		finalWithdrawalAmount=0;
+		fwdPartialPTSAmount=0;
+	}
 
 	/**
 	 * <pre>
@@ -381,6 +403,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		if (fieldName.trim().equalsIgnoreCase("WITHDRAWAL METHOD")) {
 			return this.drpWithdrawalType;
 		}
+		if (fieldName.trim().equalsIgnoreCase("WITHDRAWAL METHOD FWD")) {
+			return this.drpFullWithdrawalType;
+		}
 		if (fieldName.trim().equalsIgnoreCase("PLAN WITHDRAWAL WARNING")) {
 			return this.planWithdrawalWarningPage;
 		}		
@@ -388,7 +413,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			return this.btnContinueWithdrawal;
 		}
 		if (fieldName.trim().equalsIgnoreCase("I AGREE AND SUBMIT")) {
-			return this.btnIAgreeAndSubmit;
+			return this.btnContinueWithdrawal;
 		}
 		if (fieldName.trim().equalsIgnoreCase("TEXT CONFIRMATION")) {
 			return this.txtConfirmation;
@@ -449,7 +474,21 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("GDR CONTENT")) {
 			return this.txtGDRRestrictionsMayApplyText;
-		}	
+		}		
+		if (fieldName.trim().equalsIgnoreCase("MULTIPLE PLANS DROPDOWN")) {
+			return this.drpDwnMultiplePlans;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CONFIRMATION NUM")) {
+			return this.txtConfirmationNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("SECURE FOUNDATIONS CONTENT")) {
+			return this.txtSecureFoundationFunds;
+		}
+		if (fieldName.trim().equalsIgnoreCase("PRODUCT DOCUMENTATION LINK")) {
+			return this.lnkProductDocumentation;
+		}
+		
+		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -459,8 +498,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	}
 	
 	/**
-	 * Method to Select WithDrawal Type 
-	 * @param withdrawalType
+	 * Method to Select WithDrawal Type for In Service Withdrawal 
+	 * @param withdrawalType (In Service ; Age 59 1/2)
 	 * 
 	 */
 	public boolean selectWithdrawalType(String withdrawalType) {
@@ -479,8 +518,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		Thread.sleep(5000);
 		
 		WebElement inptWithdrawalType = Web.getDriver().findElement(By
-				.xpath(inputWithdrawalType.replace("Withdrawal Type",
-						withdrawalType)));		
+				.xpath(inputWithdrawalType.replace("Withdrawal Type",withdrawalType)));	
+		if(Web.isWebElementDisplayed(radioProcesAfterHold))
+			Web.clickOnElement(radioProcesAfterHold);
 		if(Web.isWebElementDisplayed(inptWithdrawalType))
 		{
 			Web.clickOnElement(inptWithdrawalType);		
@@ -504,96 +544,109 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		return isSelected;
 	}
-	/*
-	 This method is to select withdrawal type for In Service Withdrawal and Enter Money for Money Type Sources
+	
+	
+	
+	
+	/**
+	 * This method is to enter Amount For In Service Withdrawal for One or Multiple Money Type Sources
+	 * @param withdrawalType - InService ; Age 59 1/2
+	 * @param rothSection - Roth ; No
+	 * @param nonRothSection - Pre-tax;Non-Roth;After-tax;No
+	 * @param verifyGDR - Yes; No
 	 */
-	public void enterWithdrawalAmountForInService(String withdrawalType,String rothSection,String preTaxSection
+	public void enterWithdrawalAmountForInService(String withdrawalType,String rothSection,String nonRothSection
 			,boolean... verifyGDR)
 	{
-		try {
+		try {		
 		//Enter Amount For Roth Money Section
-		if(rothSection.equalsIgnoreCase("Yes"))
-		{
+		if(rothSection.equalsIgnoreCase("Roth"))		
+		{ 			
 			WebElement rothMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection.trim())));
 			if(Web.isWebElementDisplayed(rothMoneyTypeSourceAvailable))
 			{
 				int maxAmount=0;			
-				enteredRothWithdrawalAmt = 0;
+				enteredRothWithdrawalAmt = 0; 
 					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Roth")));
+									withdrawalType).replaceAll("Money Source Type",rothSection)));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
-					maxAmount=maxAmount/2;	
-					System.out.println("Roth Amount :"+ maxAmount);
-					enteredRothWithdrawalAmt=maxAmount;		
+					
 					WebElement txtAmount = Web.getDriver().findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Roth")));			
-					
+									withdrawalType).replaceAll("Money Source Type",rothSection)));			
+					if(txtAmount.getAttribute("value").isEmpty()||txtAmount.getAttribute("value")==null)
+						maxAmount=maxAmount/2;						
+					else						
+						maxAmount=(maxAmount/2)+5;						
+					enteredRothWithdrawalAmt=maxAmount;					
 					Web.setTextToTextBox(txtAmount, Integer.toString(enteredRothWithdrawalAmt));
 					Reporter.logEvent(
 							Status.PASS,
-							"Verify if User entered withdrawal amount for Roth Money Type",
+							"Verify if User entered withdrawal amount for "+rothSection+" Money Type",
 							"The user have entered " + enteredRothWithdrawalAmt
-									+ " to be withdrawn from roth Money Type",
-							false);
+									+ " to be withdrawn from "+rothSection+" Money Type",false);
 					if(verifyGDR.length>0)					
-						verifyGDRRestrictionIcon(withdrawalType,"Roth");
+						verifyGDRRestrictionIcon(withdrawalType,rothSection);
 				
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User entered withdrawal amount for Roth Money Type",
-							"Roth Money Type section is NOT Displayed", false);
-					throw new Error("Roth Money Type Section is NOT displayed");
+							"Verify if User entered withdrawal amount for "+rothSection+" Money Type",
+							rothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(rothSection+" Money Type Section is NOT displayed");
 				}
 		}
 		else			
 				enteredRothWithdrawalAmt = 0;
 		
-		//enter Amount for Pre-tax Amount Section
-		if(preTaxSection.equalsIgnoreCase("Yes"))
+		//enter Amount for Non-roth Amount Section
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||nonRothSection.equalsIgnoreCase("Non-Roth")||nonRothSection.equalsIgnoreCase("After-tax"))
 		{
-			WebElement preTaxMoneyTypeSourceAvailable=Web.getDriver().findElement
+			WebElement nonRothMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-			if(Web.isWebElementDisplayed(preTaxMoneyTypeSourceAvailable))
+							withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+			if(Web.isWebElementDisplayed(nonRothMoneyTypeSourceAvailable))
 			{
 				int maxAmount=0;			
-				enteredPreTaxWithdrawalAmt = 0;
+				enteredNonRothWithdrawalAmt = 0;
 					WebElement txtMaxAmount = Web.getDriver().findElement(By
 							.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
-					maxAmount=maxAmount/2;
+					/*maxAmount=maxAmount/2;
 					System.out.println("PreTax Amount :"+ maxAmount);
-					enteredPreTaxWithdrawalAmt=maxAmount;		
+					enteredPreTaxWithdrawalAmt=maxAmount;	*/	
 					WebElement txtAmount = Web.getDriver().findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-				
-					Web.setTextToTextBox(txtAmount, Integer.toString(enteredPreTaxWithdrawalAmt));
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+					if(txtAmount.getAttribute("value").isEmpty()||txtAmount.getAttribute("value")==null)
+						maxAmount=maxAmount/2;						
+					else						
+						maxAmount=(maxAmount/2)+1;						
+					enteredNonRothWithdrawalAmt=maxAmount;
+					Web.setTextToTextBox(txtAmount, Integer.toString(enteredNonRothWithdrawalAmt));
 					Reporter.logEvent(
 							Status.PASS,
-							"Verify if User entered withdrawal amount for Pre Tax Money Type",
-							"The user have entered " + enteredPreTaxWithdrawalAmt
-									+ " to be withdrawn from Pre Tax Money Type",
+							"Verify if User entered withdrawal amount for "+nonRothSection+" Money Type",
+							"The user have entered " + enteredNonRothWithdrawalAmt
+									+ " to be withdrawn from "+nonRothSection+" Money Type",
 							false);
 					if(verifyGDR.length>0)
-						verifyGDRRestrictionIcon(withdrawalType,"Pre-tax");
+						verifyGDRRestrictionIcon(withdrawalType,nonRothSection);
 					
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User entered withdrawal amount for Pre Tax Money Type",
-							"Pre Tax Money Type section is NOT Displayed", false);
-					throw new Error("Pre Tax Money Type Section is NOT displayed");
+							"Verify if User entered withdrawal amount for "+nonRothSection+" Money Type",
+							nonRothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(nonRothSection+" Money Type Section is NOT displayed");
 				}
 		}
 		else			
-			enteredPreTaxWithdrawalAmt = 0;		
+			enteredNonRothWithdrawalAmt = 0;		
 		}
 		catch(NoSuchElementException e)		
 		{ 
@@ -617,10 +670,52 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 	}
 	
+	/**
+	 * This method is to verify the GDR Icon for Full Withdrawal
+	 * @param withdrawalType - Full Withdrawal
+	 */
+	public void verifyGDRRestrictionIconForFWD(String withdrawalType)
+	{
+		try {			
+				if(gDRIcon.isEnabled())
+				{
+					if(Web.VerifyText("Restrictions may apply", gDRIcon.getAttribute("uib-popover"))){
+						
+						Reporter.logEvent(Status.PASS, "Verify if Restrictions may apply, Information icon is displayed",
+								"Restrictions may apply Information icon is displayed next to full Withdrawal Amount", false);
+
+					}
+					else{				
+					Reporter.logEvent(Status.FAIL, "Verify if Restrictions may apply, Information icon is displayed",
+							"Restrictions may apply Information icon is NOT displayed next to full Withdrawal Amount", false);
+					}
+				}			
+		}
+		catch(NoSuchElementException e)		
+		{ 
+		Globals.exception = e;
+		Throwable t = e.getCause();
+		String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+		if (null != t) {
+			msg = t.getMessage();
+		}
+		Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+				msg, true); 
+	}
+	catch(Exception e)
+	{e.printStackTrace();}
+		
+	}
+
+
+	/**
+	 *  This method is to verify the GDR Icon for In Service and Part Withdrawal
+	 * @param withdrawalType - In Service ; Age 59 1/2 ; Part Withdrawal
+	 * @param moneySourceType - Non-Roth & Roth Money source Types
+	 */
 	public void verifyGDRRestrictionIcon(String withdrawalType, String moneySourceType)
 	{
-	try {
-		
+	try {		
 		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
 		if(!withdrawalType.equalsIgnoreCase("pwd"))
@@ -678,6 +773,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 	}
 	
+	/**
+	 * Select Source Hierarchy Withdrawals for In Service ; Age 59 1/2		
+	 * @param withdrawalType In Service ; Age 59 1/2	
+	 */
 	public void selectSourceHierarchyForInService(String withdrawalType)
 	{		
 	Actions keyBoard = new Actions(Web.getDriver());
@@ -741,15 +840,20 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				msg, true);}	
 	}
 	
-	
-	public void selectMaxAmountCheckBoxForInService(String withdrawalType,String rothSection,String preTaxSection)
+	/**
+	 * Select Max Amount Check Box Option for In Service withdrawal Type
+	 * @param withdrawalType - In Service ; Age 59 1/2
+	 * @param rothSection
+	 * @param nonRothSection
+	 */	
+	public void selectMaxAmountCheckBoxForInService(String withdrawalType,String rothSection,String nonRothSection)
 	{
 		try {
-		//Select MaxAmount checkbox for Pre-Tax or Roth
-		if (rothSection.equalsIgnoreCase("Yes")){			
+		
+		if (rothSection.equalsIgnoreCase("Roth")){			
 			WebElement rothMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection)));
 			if(Web.isWebElementDisplayed(rothMaxAmountChkBox))				
 			{
 				Web.clickOnElement(rothMaxAmountChkBox);
@@ -757,10 +861,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				enteredRothWithdrawalAmt=0;
 				WebElement txtMaxAmount = Web.getDriver().findElement(By
 						.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
-								withdrawalType).replaceAll("Money Source Type", "Roth")));
+								withdrawalType).replaceAll("Money Source Type", rothSection)));
 				enteredRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));							
-				Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type",
-						 "Max Amount Been Selected For Roth: " + enteredRothWithdrawalAmt, false);
+				Reporter.logEvent(Status.PASS, "Select Max Amount For "+rothSection+" Money Type",
+						 "Max Amount Been Selected For "+rothSection+": " + enteredRothWithdrawalAmt, false);
 				//Need to be implemented
 //				if(lstMaxCheckBox.size()==1)
 //					Reporter.logEvent(Status.PASS, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
@@ -771,30 +875,29 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
-						"Verify if User entered withdrawal amount for Roth Money Type",
-						"Roth Money Type section is NOT Displayed", false);
-				throw new Error("Roth Money Type Section is NOT displayed");
+						"Verify if User entered withdrawal amount for "+rothSection+" Money Type",
+						rothSection+" Money Type section is NOT Displayed", false);
+				throw new Error(rothSection+" Money Type Section is NOT displayed");
 			}
 	}
 	else			
 		enteredRothWithdrawalAmt = 0;
-		
-		//Select MaxAmount checkbox for Pre-Tax or Roth
-				if (preTaxSection.equalsIgnoreCase("Yes")){	
-					WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||nonRothSection.equalsIgnoreCase("Non-Roth")||nonRothSection.equalsIgnoreCase("After-tax"))
+		{	
+					WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
 							(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-					if(Web.isWebElementDisplayed(preTaxMaxAmountChkBox))				
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+					if(Web.isWebElementDisplayed(nonRothMaxAmountChkBox))				
 					{
-						Web.clickOnElement(preTaxMaxAmountChkBox);
+						Web.clickOnElement(nonRothMaxAmountChkBox);
 						Web.waitForPageToLoad(Web.getDriver());				
-						enteredPreTaxWithdrawalAmt=0;
+						enteredNonRothWithdrawalAmt=0;
 						WebElement txtMaxAmount = Web.getDriver().findElement(By
 								.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
-										withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-						enteredPreTaxWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));							
-						Reporter.logEvent(Status.PASS, "Select Max Amount For Pre-Tax Money Type",
-								 "Max Amount Been Selected For Pre-Tax: " + enteredPreTaxWithdrawalAmt, false);
+										withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+						enteredNonRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));							
+						Reporter.logEvent(Status.PASS, "Select Max Amount For "+nonRothSection+" Money Type",
+								 "Max Amount Been Selected For "+nonRothSection+": " + enteredNonRothWithdrawalAmt, false);
 						//Need to be implemented
 //						if(lstMaxCheckBox.size()==1)
 //							Reporter.logEvent(Status.PASS, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
@@ -805,13 +908,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
-								"Verify if User entered withdrawal amount for Pre-Tax Money Type",
-								"Pre-tax Money Type section is NOT Displayed", false);
-						throw new Error("Pre-tax Money Type Section is NOT displayed");
+								"Verify if User entered withdrawal amount for "+nonRothSection+" Money Type",
+								nonRothSection+" Money Type section is NOT Displayed", false);
+						throw new Error(nonRothSection+" Money Type Section is NOT displayed");
 					}
 			}
 			else			
-				enteredPreTaxWithdrawalAmt = 0;	
+				enteredNonRothWithdrawalAmt = 0;	
 		}
 		catch(NoSuchElementException e)		
 		{ 
@@ -836,73 +939,73 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	}
 	
 	
-	/*
-	This method to select Max Amount check box For Sep Service 
+	
+	/**
+	 * Selects Max Amount check box Option for Sep Service withdrawal
+	 * @param rothSection
+	 * @param nonRothSection
 	 */
-	public void selectMaxAmountCheckBoxForSepService(String rothSection,String preTaxSection)
-	{
-		Actions keyBoard = new Actions(Web.getDriver());
-		try {
-			//Select MaxAmount checkbox for Pre-Tax or Roth
-			if (rothSection.equalsIgnoreCase("Yes")){	
+	public void selectMaxAmountCheckBoxForSepService(String rothSection,String nonRothSection)
+	{		
+		try {	
+			if (rothSection.equalsIgnoreCase("Roth")){	
 				WebElement rothMaxAmountChkBox=Web.getDriver().findElement
-						(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Roth")));
+						(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", rothSection)));
 				if(Web.isWebElementDisplayed(rothMaxAmountChkBox))				
 				{
 					Web.clickOnElement(rothMaxAmountChkBox);
 					Web.waitForPageToLoad(Web.getDriver());				
 					enteredRothWithdrawalAmt=0;
 					WebElement txtMaxAmount = Web.getDriver().findElement(By
-							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
+							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));
 					enteredRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
-					Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type",
-							 "Max Amount Been Selected For Pre-Tax: " + enteredRothWithdrawalAmt, false);
+					Reporter.logEvent(Status.PASS, "Select Max Amount For "+rothSection+" Money Type",
+							 "Max Amount Been Selected For "+rothSection+": " + enteredRothWithdrawalAmt, false);
 					if(lstMaxCheckBox.size()==1)
-						Reporter.logEvent(Status.PASS, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
-								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is NOT Displayed", true);
+						Reporter.logEvent(Status.PASS, "Verify if "+nonRothSection+" Max Amount Check box is NOT displayed",
+								 "After Selecting "+rothSection+" Max Amount Check Box, Non-Roth Max Amount Check box is NOT Displayed", true);
 					else
-						Reporter.logEvent(Status.FAIL, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
-								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is Displayed", false);
+						Reporter.logEvent(Status.FAIL, "Verify if "+nonRothSection+" Max Amount Check box is NOT displayed",
+								 "After Selecting "+rothSection+" Max Amount Check Box, Non-Roth Max Amount Check box is Displayed", false);
 				} else {
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify if User entered withdrawal amount for Roth Money Type",
-							"Roth Money Type section is NOT Displayed", false);
-					throw new Error("Roth Money Type Section is NOT displayed");
+					Reporter.logEvent(Status.FAIL,"Verify if User entered withdrawal amount for "+rothSection+" Money Type",
+							rothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(rothSection+" Money Type Section is NOT displayed");
 				}
-		}
-		else			
-			enteredRothWithdrawalAmt = 0;
+			}
+			else			
+				enteredRothWithdrawalAmt = 0;
 			
-		if (preTaxSection.equalsIgnoreCase("Yes")){		
-			WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
-					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Pre-tax")));
-		if(Web.isWebElementDisplayed(preTaxMaxAmountChkBox))
-		{
-					Web.clickOnElement(preTaxMaxAmountChkBox);
+			if(nonRothSection.equalsIgnoreCase("Pre-tax")||nonRothSection.equalsIgnoreCase("Non-Roth")||nonRothSection.equalsIgnoreCase("After-tax"))
+			{		
+			WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", nonRothSection)));
+			if(Web.isWebElementDisplayed(nonRothMaxAmountChkBox))
+			{
+					Web.clickOnElement(nonRothMaxAmountChkBox);
 					Thread.sleep(1000);					
-					enteredPreTaxWithdrawalAmt=0;
+					enteredNonRothWithdrawalAmt=0;
 					WebElement txtMaxAmount = Web.getDriver().findElement(By
-							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
-					enteredPreTaxWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
-					Reporter.logEvent(Status.INFO, "Select Max Amount For Pre-Tax Money Type",
-							 "Max Amount Been Selected For Pre-Tax: " + enteredPreTaxWithdrawalAmt, false);
+							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", nonRothSection)));
+					enteredNonRothWithdrawalAmt=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));					
+					Reporter.logEvent(Status.INFO, "Select Max Amount For "+nonRothSection+" Money Type",
+							 "Max Amount Been Selected For "+nonRothSection+": " + enteredNonRothWithdrawalAmt, false);
 					if(lstMaxCheckBox.size()==1)
 						Reporter.logEvent(Status.PASS, "Verify if Roth Max Amount Check box is NOT displayed",
-								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is NOT Displayed", true);
+								 "After Selecting "+nonRothSection+" Max Amount Check Box, Roth Max Amount Check box is NOT Displayed", true);
 					else
 						Reporter.logEvent(Status.FAIL, "Verify if Roth Max Amount Check box is NOT displayed",
-								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is Displayed", false);
+								 "After Selecting "+nonRothSection+" Max Amount Check Box, Roth Max Amount Check box is Displayed", false);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User entered withdrawal amount for Pre-Tax Money Type",
-							"Pre-Tax Money Type section is NOT Displayed", false);
-					throw new Error("Pre-Tax Money Type Section is NOT displayed");
-				}
+							"Verify if User entered withdrawal amount for "+nonRothSection+" Money Type",
+							nonRothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(nonRothSection+" Money Type Section is NOT displayed");
+					}
 		}
 		else			
-			enteredPreTaxWithdrawalAmt = 0;
+			enteredNonRothWithdrawalAmt = 0;
 		}
 		catch(NoSuchElementException e)		
 		{ 
@@ -926,8 +1029,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	}
 	
 	
-	/*
-	This method to select withdrawal type for Sep Service and enter money for Money Type Source
+	
+	/**
+	 * Select Part or Full Withdrawal Type
+	 * @param withdrawalType
+	 * @return
 	 */
 	public boolean selectWithdrawalTypeForSepService(String withdrawalType)
 	{
@@ -944,17 +1050,19 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		Web.waitForPageToLoad(Web.getDriver());
 		Common.waitForProgressBar();
 		Thread.sleep(5000);
+		if(Web.isWebElementDisplayed(radioProcesAfterHold))
+			Web.clickOnElement(radioProcesAfterHold);
 		if(Web.isWebElementDisplayed(partWithDrawal) && withdrawalType.equalsIgnoreCase("pwd"))
 		{
 			Reporter.logEvent(Status.PASS,
 					"Verify Vested Part Withdrawal section is Displayed",
-					"Vested Part Withdrawal section is displayed", false);
+					"Vested Part Withdrawal section is displayed", true);
 			Web.clickOnElement(partWithDrawal);
 			Web.waitForPageToLoad(Web.getDriver());
 			iswithdrawalSelected=true;
 		}
 		else if(Web.isWebElementDisplayed(fullWithDrawal)&& withdrawalType.equalsIgnoreCase("fwd"))
-		{
+		{			
 			Reporter.logEvent(Status.PASS,
 					"Verify Vested Full Withdrawal section is Displayed",
 					"Vested Full withdrawal section is displayed", false);
@@ -998,75 +1106,87 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 		}
 	
-		public void enterWithdrawlAmountForSepService(String withdrawalType,String rothSection,String preTaxSection,boolean... verifyGDR)
+	
+	/**
+	 * This method is to enter Amount For Sep Service Withdrawal for One or Multiple Money Type Sources
+	 * @param withdrawalType - Part Withdrawal
+	 * @param rothSection - Roth ; No
+	 * @param nonRothSection - Pre-tax;Non-Roth;After-tax;No
+	 * @param verifyGDR - Yes; No
+	 */
+		public void enterWithdrawlAmountForSepService(String withdrawalType,String rothSection,String nonRothSection,boolean... verifyGDR)
 		{
 			try {
-			if (rothSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd")) {
-				WebElement partWithdrawalMoneySourceAvailable=Web.getDriver().findElement
-						(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Roth")));
-				if(Web.isWebElementDisplayed(partWithdrawalMoneySourceAvailable))
+			
+			if (rothSection.equalsIgnoreCase("Roth") && withdrawalType.equalsIgnoreCase("pwd")) {
+				WebElement partWithdrawalMoneySource=Web.getDriver().findElement
+						(By.xpath(inpAmtPWMoneyType.replace("Money Source Type",rothSection)));
+				if(Web.isWebElementDisplayed(partWithdrawalMoneySource))
 				{
 					int maxAmount=0;
 					enteredRothWithdrawalAmt=0;
 					WebElement txtMaxAmount = Web.getDriver().findElement(By
-							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
+							.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
-					maxAmount=maxAmount/2;
+					/*maxAmount=maxAmount/2;
 					//enteredRothWithdrawalAmt=5000;
 						enteredRothWithdrawalAmt=maxAmount;
 					
 					WebElement txtAmount = Web.getDriver().findElement(By
-							.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
-					Web.setTextToTextBox(txtAmount, Integer.toString(enteredRothWithdrawalAmt));
-					
-					Reporter.logEvent(Status.INFO, "Entering WithDrawal Amount For Roth Money Type",
-							 "Entered WithDrawal Amount For Roth: " + enteredRothWithdrawalAmt, false);
+							.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));*/
+					if(partWithdrawalMoneySource.getAttribute("value").isEmpty()||partWithdrawalMoneySource.getAttribute("value")==null)
+						maxAmount=maxAmount/2;						
+					else						
+						maxAmount=(maxAmount/2)+5;						
+					enteredRothWithdrawalAmt=maxAmount;
+					Web.setTextToTextBox(partWithdrawalMoneySource, Integer.toString(enteredRothWithdrawalAmt));					
+					Reporter.logEvent(Status.INFO, "Entering WithDrawal Amount For "+rothSection+" Money Type",
+							 "Entered WithDrawal Amount For "+rothSection+": " + enteredRothWithdrawalAmt, false);
 					
 					if(verifyGDR.length>0)					
-						verifyGDRRestrictionIcon(withdrawalType,"Roth");
+						verifyGDRRestrictionIcon(withdrawalType,rothSection);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User entered withdrawal amount for Roth Money Type",
-							"Roth Money Type section is NOT Displayed", false);
-					throw new Error("Roth Money Type Section is NOT displayed");
+							"Verify if User entered withdrawal amount for "+rothSection+" Money Type",
+							rothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(rothSection+" Money Type Section is NOT displayed");
 				}
-		}
-		else			
+			}else			
 			enteredRothWithdrawalAmt = 0;
-			if(preTaxSection.equalsIgnoreCase("Yes") && withdrawalType.equalsIgnoreCase("pwd"))
+			if((nonRothSection.equalsIgnoreCase("Pre-tax") && withdrawalType.equalsIgnoreCase("pwd")) ||
+					(nonRothSection.equalsIgnoreCase("Non-Roth") && withdrawalType.equalsIgnoreCase("pwd")) ||
+					(nonRothSection.equalsIgnoreCase("After-tax") && withdrawalType.equalsIgnoreCase("pwd")) )
 			{
-					WebElement partWithdrawalMoneySourceAvailable=Web.getDriver().findElement
-							(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", "Pre-tax")));
-					if(Web.isWebElementDisplayed(partWithdrawalMoneySourceAvailable))
+					WebElement partWithdrawalMoneySource=Web.getDriver().findElement
+							(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", nonRothSection)));
+					if(Web.isWebElementDisplayed(partWithdrawalMoneySource))
 					{
 						int maxAmount=0;
-						enteredPreTaxWithdrawalAmt=0;
+						enteredNonRothWithdrawalAmt=0;
 						WebElement txtMaxAmount = Web.getDriver().findElement(By
-								.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
-						maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));
-						maxAmount=maxAmount/2;
-						enteredPreTaxWithdrawalAmt=maxAmount;
+								.xpath(maxAmtPWMoneyType.replaceAll("Money Source Type", nonRothSection)));
+						maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText()));									
+						if(partWithdrawalMoneySource.getAttribute("value").isEmpty()||partWithdrawalMoneySource.getAttribute("value")==null)
+							maxAmount=maxAmount/2;						
+						else						
+							maxAmount=(maxAmount/2)+5;						
+						enteredNonRothWithdrawalAmt=maxAmount;
+						Web.setTextToTextBox(partWithdrawalMoneySource, Integer.toString(enteredNonRothWithdrawalAmt));
 						
-						WebElement txtAmount = Web.getDriver().findElement(By
-								.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
-						Web.setTextToTextBox(txtAmount, Integer.toString(enteredPreTaxWithdrawalAmt));
-						
-						Reporter.logEvent(Status.INFO, "Entering WithDrawal Amount For Pre-Tax Money Type",
-								 "Entered WithDrawal Amount For Pre-Tax: " + enteredPreTaxWithdrawalAmt, false);
+						Reporter.logEvent(Status.INFO, "Entering WithDrawal Amount For "+nonRothSection+" Money Type",
+								 "Entered WithDrawal Amount For "+nonRothSection+": " + enteredNonRothWithdrawalAmt, false);
 						
 						if(verifyGDR.length>0)					
-							verifyGDRRestrictionIcon(withdrawalType,"Pre-tax");
+							verifyGDRRestrictionIcon(withdrawalType,nonRothSection);
 					} else {
-						Reporter.logEvent(
-								Status.FAIL,
-								"Verify if User entered withdrawal amount for Pre Tax Money Type",
-								"Pre Tax Money Type section is NOT Displayed", false);
-						throw new Error("Pre Tax Money Type Section is NOT displayed");
+						Reporter.logEvent(Status.FAIL,"Verify if User entered withdrawal amount for "+nonRothSection+" Money Type",
+								nonRothSection+" Money Type section is NOT Displayed", false);
+						throw new Error(nonRothSection+" Money Type Section is NOT displayed");
 					}
 			}
 			else			
-			enteredPreTaxWithdrawalAmt = 0;		
+			enteredNonRothWithdrawalAmt = 0;		
 		}
 		catch(NoSuchElementException e)		
 		{ 
@@ -1089,7 +1209,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				msg, true);}
 		
 	}
-				
+		
+		/**
+		 * citizenship Validation Page - User to Enter SSN
+		 * @param SSN
+		 */
 	public void citizenShipValidation(String SSN)
 	{
 		try {	
@@ -1098,13 +1222,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				Web.clickOnElement(btnContinue);
 				Reporter.logEvent(
 						Status.PASS,
-						"Enter withdrawal amount for single / multiple  money type sources and click Continue",
-						"User enters the withdrawal amount for  single / multiple money types source and clicked on continue button",
+						"Enter withdrawal amount for multiple / single  money type sources and click Continue",
+						"User enters the withdrawal amount for multiple money types source and clicked on continue button",
 						false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
-						"Enter withdrawal amount for single / multiple money type sources and Click Continue",
+						"Enter withdrawal amount for both Roth and Pre-tax  money type sources and Click Continue",
 						"Continue button is not displayed in Request a Withdrawal Page",
 						true);
 				throw new Error("'Continue' is not displayed");
@@ -1112,7 +1236,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Thread.sleep(2000);		
 		//US Citizenship and SSN Validation
 		if(isTextFieldDisplayed("Plan withdrawal"))
-			isTextFieldDisplayed("Are you a U.S. citizen or resident?");	
+			isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+		Web.waitForElement(inpYes);
+		Thread.sleep(2000);
 		Web.clickOnElement(inpYes);		
 		Thread.sleep(2000);
 		if (isTextFieldDisplayed("Please enter your Social Security number.")) {
@@ -1157,71 +1283,53 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				msg, true);}	
 	}
 	
-	public void verifyWithdrawalMethodPage(String withdrawalType,String withdrawalMethodType,String emailAddress,String... rollingOverAccount)
+	/**
+	 * Verify Withdrawal Method for In Service and Sep Service
+	 * @param withdrawalType 
+	 * @param withdrawalMethodType
+	 * @param emailAddress
+	 * @param rollingOverAccount
+	 */
+	public void verifyWithdrawalMethodPage(String withdrawalType,String withdrawalMethodType,String emailAddress,
+			String... rollingOverAccount)
 	{
 		try {
 		Thread.sleep(1000);
 		if (isTextFieldDisplayed("Withdrawal method"))
 		{
 		isTextFieldDisplayed("How would you like your withdrawal distributed?");
+		
 		if(withdrawalType.equalsIgnoreCase("fwd"))
-		{		
-			if (Web.selectDropDownOption(drpFullWithdrawalType,withdrawalMethodType,true))
-			Reporter.logEvent(Status.PASS,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
-							"User selects "+withdrawalMethodType+" withdrawal distribution option",true);
-			else
-			Reporter.logEvent(Status.FAIL,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
-							"User did NOT select "+withdrawalMethodType+" withdrawal distribution option",true);
-		}
-		else{		
-		if (Web.selectDropDownOption(drpWithdrawalType,withdrawalMethodType,true))
-		Reporter.logEvent(Status.PASS,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
-						"User selects "+withdrawalMethodType+" withdrawal distribution option",true);
-		else
-		Reporter.logEvent(Status.FAIL,"Verify if User selects "+withdrawalMethodType+" withdrawal distribution option",
-						"User did NOT select "+withdrawalMethodType+" withdrawal distribution option",true);
-		}		 
-		Thread.sleep(1000);
-		if(withdrawalMethodType.equalsIgnoreCase("ROLLOVER"))			
 		{
-		if(Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount[0],true))
-			Reporter.logEvent(Status.PASS,"Verify if User selects "+rollingOverAccount[0]+" rolling over account",
-					"User selects "+rollingOverAccount[0]+" withdrawal distribution option",true);
-		else
-			Reporter.logEvent(Status.FAIL,"Verify if User selects "+rollingOverAccount[0]+" rolling over account",
-					"User did NOT select "+rollingOverAccount[0]+" rolling over account",true);
+			Web.selectDropDownOption(drpFullWithdrawalType,withdrawalMethodType,true);
+			
+			if(withdrawalMethodType.equalsIgnoreCase("ROLLOVER"))
+				Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount[0],true);
+			
+			else if(withdrawalMethodType.equalsIgnoreCase("PARTIAL PAYMENT TO SELF AND ROLLOVER REMAINING BALANCE"))
+			{
+				System.out.println("FWD to be entered for Payment to Self: " +enteredTotalWithdrawalAmt);	
+				fwdPartialPTSAmount=enteredTotalWithdrawalAmt/3;				
+				System.out.println("FWD Partial PTS amount: "+fwdPartialPTSAmount);
+				String amountPaytToSel=Integer.toString(fwdPartialPTSAmount);				
+				Web.setTextToTextBox(inpPayToSelfAmt, amountPaytToSel);
+				Reporter.logEvent(Status.INFO, "Enter the amount to be taken as part of Payment to Self",
+						"The amount "+fwdPartialPTSAmount+" has been entered as part of PTS",true);
+				Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount[0],true);
+			}
+		}
+		else	
+			Web.selectDropDownOption(drpWithdrawalType,withdrawalMethodType,true);		
+		if(Web.isWebElementDisplayed(btnAfterTaxYes))
+			Web.clickOnElement(btnAfterTaxYes);
 		
-		Thread.sleep(1000);	
-			
+		selectRollOverCompany(withdrawalMethodType,emailAddress);
+		if (Web.isWebElementDisplayed(btnContinueWithdrawal)) {
+				Web.clickOnElement(btnContinueWithdrawal);
+				Web.waitForPageToLoad(Web.getDriver());
+				
 		}
-		else if (withdrawalMethodType.equalsIgnoreCase("PARTIAL PAYMENT TO SELF AND ROLLOVER REMAINING BALANCE"))
-		{
-			
-			System.out.println("FWD to be entered for Payment to Self: " +enteredTotalWithdrawalAmt);	
-			fwdPartialPTSAmount=enteredTotalWithdrawalAmt/2;
-			System.out.println("FWD Partial PTS amount: "+fwdPartialPTSAmount);
-			String amountPaytToSel=Integer.toString(fwdPartialPTSAmount);
-			
-			Web.setTextToTextBox(inpPayToSelfAmt, amountPaytToSel);
-			if(Web.selectDropDownOption(drpWithdrawalType, rollingOverAccount[0],true))
-				Reporter.logEvent(Status.PASS,"Verify if User selects "+rollingOverAccount[0]+" rolling over account",
-						"User selects "+rollingOverAccount[0]+" withdrawal distribution option",true);
-			else
-				Reporter.logEvent(Status.FAIL,"Verify if User selects "+rollingOverAccount[0]+" rolling over account",
-						"User did NOT select "+rollingOverAccount[0]+" rolling over account",true);
-			
 		}
-		enterAddressDetailsForRollOverCompany(withdrawalMethodType, emailAddress);	
-		}
-		
-		if(Web.isWebElementDisplayed(btnContinueWithdrawal))
-		{
-		Web.clickOnElement(btnContinueWithdrawal);
-		Web.waitForPageToLoad(Web.getDriver());
-		Thread.sleep(4000);
-		}
-		else
-			throw new Error("Continue withdrawal is not Displayed");
 		}	
 		catch(NoSuchElementException e)		
 		{ 
@@ -1244,46 +1352,38 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				msg, true);}
 	}
 	
+	/**
+	 * Verify Withdrawal Summary Quote Page - After selecting the delivery Type
+	 * @param mailDeliverytype ; First-class mail;Express mail
+	 * @param isFWDTotalVerification
+	 */
 	public void verifyWithdrawalSummary(String mailDeliverytype,boolean... isFWDTotalVerification)
 	{
-		try
-		{
-			if (isTextFieldDisplayed("delivery method"))
-			{				
-				selectMailDeliveryType(mailDeliverytype);				
-				if(isTextFieldDisplayed("Withdrawal summary"))
-				{					
-					if(isFWDTotalVerification[0] || isFWDTotalVerification.length==0)
+		try {
+			if (isTextFieldDisplayed("delivery method")) {
+				selectMailDeliveryType(mailDeliverytype);
+				if (isTextFieldDisplayed("Withdrawal summary")) {
+					if (isFWDTotalVerification[0]|| isFWDTotalVerification.length == 0) 
 					{
-					if(!isSourceHierarchy)	{				
-					enteredTotalWithdrawalAmt = 0;
-					enteredTotalWithdrawalAmt = enteredPreTaxWithdrawalAmt
-							+ enteredRothWithdrawalAmt;
-					}					
-					WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
-							.xpath(lblTotalWithdrawalAmount.replace("Money Source Type",
-									"Total withdrawal amount")));
-					finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
-					if (enteredTotalWithdrawalAmt == finalWithdrawalAmount) {
- 						Reporter.logEvent(Status.PASS,
-								"Verify Withdrawal Amount is Displayed for  Withdrawal",
-								"Withdrawal Amount is Displayed and Matching \nExpected:$"
-										+ enteredTotalWithdrawalAmt + "\nActual:$"
-										+ finalWithdrawalAmount, false);
-					} else {
-						Reporter.logEvent(Status.FAIL,
-								"Verify Withdrawal Amount is Displayed",
-								"Withdrawal Amount is NOT Matching\nExpected:$"
-										+ enteredTotalWithdrawalAmt + "\nActual:$"
-										+ finalWithdrawalAmount, true);
+						if (!isSourceHierarchy) 
+						{
+							enteredTotalWithdrawalAmt = 0;
+							enteredTotalWithdrawalAmt = enteredNonRothWithdrawalAmt+ enteredRothWithdrawalAmt;									
+						}
+						WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(
+										By.xpath(lblTotalWithdrawalAmount.replace("Money Source Type","Total withdrawal amount")));
+						finalWithdrawalAmount = (int) Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
+						if (enteredTotalWithdrawalAmt == finalWithdrawalAmount) 
+							Reporter.logEvent(
+									Status.PASS,"Verify Withdrawal Amount is Displayed for  Withdrawal",
+									"Withdrawal Amount is Displayed and Matching \nExpected:$"+ enteredTotalWithdrawalAmt+ "\nActual:$"+ finalWithdrawalAmount, false);
+						else 
+							Reporter.logEvent(Status.FAIL,"Verify Withdrawal Amount is Displayed","Withdrawal Amount is NOT Matching\nExpected:$"
+											+ enteredTotalWithdrawalAmt+ "\nActual:$"+ finalWithdrawalAmount, true);						
 					}
-					}
-				}
-				else
+				} else
 					throw new Error("Withdrawal Summary is NOT displayed");
 			}
-			
-			
 		}
 		catch(NoSuchElementException e)		
 		{ 
@@ -1307,30 +1407,32 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	}
 	
 	
-	
+	/**
+	 * Select Mail Delivery type in Delivery Method Page
+	 * @param mailDeliveryType - First class Mail ; Express mail; Wireless Transfer (AF)
+	 */
 	public void selectMailDeliveryType(String mailDeliveryType)
 	{
 		try	
 		{							
-		if(mailDeliveryType.equalsIgnoreCase("firstClass"))
-				{
-					deliveryMthd=inpFirstClassMail.getAttribute("value");
-					Web.clickOnElement(inpFirstClassMail);					
-					Common.waitForProgressBar();
-					Thread.sleep(5000);
-					Web.waitForPageToLoad(Web.getDriver());
-					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
-							+ mailDeliveryType, "Selected Delivery Method: " + inpFirstClassMail.getAttribute("value"), false);
-				}
-				else if(mailDeliveryType.equalsIgnoreCase("expressMail"))
-				{
-					Web.clickOnElement(inpExpressMail);
-					deliveryMthd=inpExpressMail.getAttribute("value");				
-					Common.waitForProgressBar();
-					Web.waitForPageToLoad(Web.getDriver());
-					Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
-							+ mailDeliveryType, "Selected Delivery Method: " + inpExpressMail.getAttribute("value"), false);
-				}			
+			if (mailDeliveryType.equalsIgnoreCase("firstClass")
+					|| mailDeliveryType.equalsIgnoreCase("wire Transfer To AF")) {
+				deliveryMthd = inpFirstClassMail.getAttribute("value");
+				Web.clickOnElement(inpFirstClassMail);
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
+						+ mailDeliveryType, "Selected Delivery Method: "
+						+ inpFirstClassMail.getAttribute("value"), false);
+			} else if (mailDeliveryType.equalsIgnoreCase("expressMail")) {
+				Web.clickOnElement(inpExpressMail);
+				deliveryMthd = inpExpressMail.getAttribute("value");
+				Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
+				Reporter.logEvent(Status.INFO, "Selecting Delivery Method "
+						+ mailDeliveryType, "Selected Delivery Method: "
+						+ inpExpressMail.getAttribute("value"), false);
+			}			
 		}
 		catch(Exception e)		
 		{ 
@@ -1344,44 +1446,56 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 					msg, true); }
 	}
 	
+	/**
+	 * Verify Quote Page for GDR Participants
+	 * @param mailDeliverytype - first class mail,express mail
+	 */
 	public void verifyWithdrawalSummaryforGDRPpts(String mailDeliverytype)
 	{
-		try	
-			{			
-				if (isTextFieldDisplayed("delivery method"))
-				{				
-					selectMailDeliveryType(mailDeliverytype);
-					//Thread.sleep(1000);
-					((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
-		
-					Common.waitForProgressBar();
-					if(isTextFieldDisplayed("Withdrawal summary"))
-					{
-						if(Web.isWebElementDisplayed(txtGDRRestrictionsMayApplyText))
-						{
+		try {
+			if (isTextFieldDisplayed("delivery method")) {
+				selectMailDeliveryType(mailDeliverytype);
+				// Thread.sleep(1000);
+				((JavascriptExecutor) Web.getDriver()).executeScript(
+						"window.scrollBy(0,250)", "");
+
+				Common.waitForProgressBar();
+				if (isTextFieldDisplayed("Withdrawal summary")) {
+					if (Web.isWebElementDisplayed(txtGDRRestrictionsMayApplyText)) {
+						if (!(Stock.GetParameterValue("withdrawalType")
+								.equalsIgnoreCase("fwd"))) {
 							enteredTotalWithdrawalAmt = 0;
-							enteredTotalWithdrawalAmt = enteredPreTaxWithdrawalAmt
+							enteredTotalWithdrawalAmt = enteredNonRothWithdrawalAmt
 									+ enteredRothWithdrawalAmt;
-							Reporter.logEvent(Status.PASS, "Verify if GDR Section content is being displayed", 
-									"GDR Section Content is Displayed",false);
-							if(Web.isWebElementDisplayed(lnkGDRSpecialTaxNotice))
-								Reporter.logEvent(Status.PASS, "Verify if Special Tax Notice Link is being displayed in the GDR Section", 
-										"Special TaxNotice Link is being displayed in the GDR Section",false);
-							else
-								Reporter.logEvent(Status.PASS, "Verify if Special Tax Notice Link is being displayed in the GDR Section", 
-										"Special TaxNotice Link is NOT displayed in the GDR Section",true);
 						}
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify if GDR Section content is being displayed",
+								"GDR Section Content is Displayed", false);
+						if (Web.isWebElementDisplayed(lnkGDRSpecialTaxNotice))
+							Reporter.logEvent(
+									Status.PASS,
+									"Verify if Special Tax Notice Link is being displayed in the GDR Section",
+									"Special TaxNotice Link is being displayed in the GDR Section",
+									false);
 						else
-						{
-							Reporter.logEvent(Status.FAIL, "Verify if GDR Section content is being displayed", 
-									"GDR Section Content is NOT Displayed",true);
-							throw new Error("GDR Section Content is not Displayed");
-						}
-						
+							Reporter.logEvent(
+									Status.PASS,
+									"Verify if Special Tax Notice Link is being displayed in the GDR Section",
+									"Special TaxNotice Link is NOT displayed in the GDR Section",
+									true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify if GDR Section content is being displayed",
+								"GDR Section Content is NOT Displayed", true);
+						throw new Error("GDR Section Content is not Displayed");
 					}
-					
+
 				}
+
 			}
+		}
 		catch(NoSuchElementException e)		
 	{ 
 		Globals.exception = e;
@@ -1406,7 +1520,11 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 
 	
 	
-	
+	/**
+	 * Verify Withdrawal Confirmation PAge for Spousal Consent Participants 
+	 * @param withdrawalType
+	 * @param indId
+	 */
 	public void verifyWithdrawalConfForSpousalConsentPpts(String withdrawalType,String indId)
 	{
 		int spousalconsentDetails=0;
@@ -1435,6 +1553,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				
 				// verify form has been generated in DB
 				String[] sqlQuery=Stock.getTestQuery("verifySpousalConsentDetails");
+				sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 				ResultSet spousalConsentFormRs=DB.executeQuery(sqlQuery[0], sqlQuery[1], indId);
 				
 				spousalconsentDetails = DB.getRecordSetCount(spousalConsentFormRs);
@@ -1466,6 +1585,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		
 	}
 	
+	/**
+	 * Verify Withdrawal Confirmation for All Participant and Validate All the Fields in the Confirmation Page
+	 * @param withdrawalType
+	 * @param IndId
+	 * @param deliveryType
+	 * @param mailDeliveryType
+	 */
 	public void verifyWithdrawalConfirmation(String withdrawalType,
 			String IndId,String deliveryType,String mailDeliveryType)
 	{
@@ -1474,6 +1600,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		String pptFirstName=null;
 		int count=0;
 		String[] sqlQuery = Stock.getTestQuery("getParticipantFullName");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet getPptFullName=DB.executeQuery(sqlQuery[0], sqlQuery[1], IndId);	
 		 count=DB.getRecordSetCount(getPptFullName);
 		if(getPptFullName!=null)
@@ -1498,12 +1625,12 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 						
 		if(isTextFieldDisplayed("Request submitted!"))
 		{
-		Web.waitForElement(txtConfirmationNo);
+			Web.waitForElement(txtConfirmationNo);
 		if (Web.isWebElementDisplayed(txtConfirmationNo)) {
 			confirmationNo=txtConfirmationNo.getText().trim();		
 			Reporter.logEvent(
 					Status.INFO,"Verify Request Confirmation is Displayed on UI",
-					"Request Confirmation is Displayed\n Confirmation No: "+confirmationNo ,false);
+					"Request Confirmation is Displayed\n Confirmation No: "+confirmationNo ,true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify Request Confirmation Number is Displayed",
@@ -1539,11 +1666,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							+ "Expected Delivery Type: "+ deliveryType +"\n"
 							+ "Actual Delivery type: "+confirmationPageDeliveryType.getText(), false);
 		
-		//Verify Payable To		
+		//Verify Payable To	
+				
 				if(confirmationPagePayableTo.getText().toString().trim().contains(pptFirstName.toString().trim()))
 					Reporter.logEvent(Status.PASS, "Verify the Payable To in the Confirmation Page", 
 							"The Payable To Field is displayed as:\n"
-							+ "Payable To: "+confirmationPagePayableTo.getText(), false);
+							+ "Expected : "+pptFirstName +"\n"
+							+ "Actual Payable To: "+confirmationPagePayableTo.getText(), false);
 				else	
 					Reporter.logEvent(Status.FAIL, "Verify the Payable To in the Confirmation Page", 
 							"The Payable To Field is displayed as:\n"
@@ -1551,6 +1680,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							+ "Actual: "+confirmationPagePayableTo.getText(), false);
 				
 				//deliveryMthd=deliveryMthd.contains("-")? deliveryMethod.replace("-", " ") : deliveryMethod;
+				if(isAmericanFunds==false)
+				{
 				if(confirmationPageDeliveryMethod.getText().contains(deliveryMthd))
 					Reporter.logEvent(Status.PASS, "Verify the Delivery Method in the Confirmation Page", 
 							"The Delivery Method is displayed as:\n"
@@ -1561,12 +1692,12 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							"The Delivery Method is displayed as:\n"
 							+ "Expected Delivery Method: "+ deliveryMthd +"\n"
 							+ "Actual Delivery Method: "+confirmationPageDeliveryMethod.getText(), false);
-				
-				
+				}			
 				//Verify Address
 				Reporter.logEvent(Status.INFO, "Verify the Sent To Address in the Confirmation Page", 
 						"The Address is displayed as:\n"+
 					"Address: "+confirmationPageSentToAddress.getText().trim(), false);
+			
 			}
 
 		} catch (SQLException e) {
@@ -1595,117 +1726,95 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 	}
 	
-		public boolean isConfirmationNumDisplayed(String individualId)
-		{
+	public boolean isConfirmationNumDisplayed(String individualId)
+	{
 		boolean isConfirmationNoDisplayed=false;
 		String confirmationNo=null;		
 		int isConfirmationNumDisplayed=0;
 		String dc01=null;
 		String dc02=null;
 		try {	
-		confirmationNo=txtConfirmationNo.getText();
-		String[] sqlQuery = Stock.getTestQuery("getWithDrawalConfirmationNo");
-		ResultSet getWithdrawalConfRs=DB.executeQuery(sqlQuery[0],sqlQuery[1],confirmationNo, individualId);		
-		
-		isConfirmationNumDisplayed = DB.getRecordSetCount(getWithdrawalConfRs);
-	if (isConfirmationNumDisplayed > 0) {
-		Reporter.logEvent(
-				Status.PASS,
-				"Verify Request Confirmation Number is Populated in the DataBase",
-				"Request Confirmation is Populated in the DataBase And \n Confirmation Number is:"+confirmationNo,false);
-		while(getWithdrawalConfRs.next())
-		{
-			dc01=getWithdrawalConfRs.getString("dc01");
-			dc02=getWithdrawalConfRs.getString("dc02");
-			Reporter.logEvent(
-					Status.PASS,
-					"Verify document ID value has been generated for the participant",
-					"The document ID value has been generated for the participant and the values are displayed as: \n"+
-					"DC01: "+dc01+"\n"+
-					"DC02: "+dc02,true);
-			break;
-		}
-		isConfirmationNoDisplayed=true;
-		if(dc02==null)
-			verifyWithdrawalDisbursementRecords();
-			
-	} else if(isConfirmationNumDisplayed==0) {
-		String verifyStatusCode=verifyWithdrawalDisbursementRecords();
-		if(verifyStatusCode.equalsIgnoreCase("INPEND")||verifyStatusCode.equalsIgnoreCase("FUTURE"))
-			Reporter.logEvent(Status.PASS,"Verify the withdrawal disbursement records status code", 
-					"The Withdrawal disburement records status code are verified",false);
-		else		
-		Reporter.logEvent(
-				Status.FAIL,
-				"Verify Request Confirmation Number is Populated in the DataBase",
-				"Request Confirmation Number is NOT Populated in the DataBase",
-				true);
-		isConfirmationNoDisplayed=false;
-	}
+			confirmationNo=txtConfirmationNo.getText();
+			String[] sqlQuery = Stock.getTestQuery("getWithDrawalConfirmationNo");
+			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+
+			//sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			ResultSet getWithdrawalConfRs=DB.executeQuery(sqlQuery[0],sqlQuery[1],confirmationNo, individualId);
+			isConfirmationNumDisplayed = DB.getRecordSetCount(getWithdrawalConfRs);
+			if (isConfirmationNumDisplayed > 0) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Request Confirmation Number is Populated in the DataBase",
+						"Request Confirmation is Populated in the DataBase And \n Confirmation Number is:"+confirmationNo,false);
+				System.out.println("Confirmation Number: "+confirmationNo);
+				while(getWithdrawalConfRs.next())
+				{
+					dc01=getWithdrawalConfRs.getString("dc01");
+					dc02=getWithdrawalConfRs.getString("dc02");
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify document ID value has been generated for the participant",
+							"The document ID value has been generated for the participant and the values are displayed as: \n"+
+									"DC01: "+dc01+"\n"+
+									"DC02: "+dc02,false);
+					break;
+				}
+				isConfirmationNoDisplayed=true;
+				if(dc02==null)
+					verifyWithdrawalDisbursementRecords();
+
+			} else if(isConfirmationNumDisplayed==0) {
+				String verifyStatusCode=verifyWithdrawalDisbursementRecords();
+				if(verifyStatusCode.equalsIgnoreCase("INPEND")||verifyStatusCode.equalsIgnoreCase("FUTURE"))
+					Reporter.logEvent(Status.PASS,"Verify the withdrawal disbursement records status code", 
+							"The Withdrawal disburement records status code are verified",false);
+				else		
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify Request Confirmation Number is Populated in the DataBase",
+							"Request Confirmation Number is NOT Populated in the DataBase",
+							true);
+				isConfirmationNoDisplayed=false;
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-	return isConfirmationNoDisplayed;
-	
+		return isConfirmationNoDisplayed;
+
 	}
-	
-	
+
+
 	
 	/**
-	 * This method is to enter Address details of the Roll Over Company for Withdrawal
-	 * @param address1
-	 * @param city
-	 * @param stateCode
-	 * @param zipCode
+	 * This method is to select Roll Over Company for Withdrawal
+	 
 	 */
-	public void enterAddressDetailsForRollOverCompany(String withdrawalMethodType,String emailAddress)
+	public void selectRollOverCompany(String withdrawalMethodType,String emailAddress)
 	{
 		try {
-			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self"))
+			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self") && !(withdrawalMethodType.equalsIgnoreCase("INSERVICE")))
 			{
-			String mailingAddressLine1=null;
-			String state=null;
-			String city=null;
-			String postalCode1=null;		
-			String postalCode2=null;
-			Web.isWebElementDisplayed(drpRollOverCompany, true);
-			Web.selectDropnDownOptionAsIndex(drpRollOverCompany, "5");		
-			Thread.sleep(1000);
-			mailingAddressLine1=txtInpAddress1.getText();
-			state=txtState.getText();
-			city=txtInpCity.getText();
-			//12345-1234
-			postalCode1 = txtPostalCode.getText();
-			
-			if(postalCode1.contains("-"))			
-			postalCode1 = postalCode1.split("-")[0] + postalCode1.split("-")[1];
-				
-			//Setting text box
-			Web.waitForElement(inpAccountNumber);
-			Web.setTextToTextBox(inpAccountNumber, "123456");
-			Reporter.logEvent(Status.PASS, "Verify if IRA Account Number has been displayed", 
-						"IRA Account Number Field Has been Displayed", true);
-			if(withdrawalMethodType.equalsIgnoreCase("ROLLOVER OF NON-ROTH TO TRADITIONAL IRA"))
-			{
-				Web.setTextToTextBox(inpRothAccountNumber, "1111111");
-				Reporter.logEvent(Status.PASS, "Verify if Roth IRA Account Number has been displayed", 
-						"Roth IRA Account Number Field Has been Displayed", false);
-			}
-			Web.setTextToTextBox(txtAddressLine1, mailingAddressLine1);
-			Web.setTextToTextBox(txtCity, city);
-			Web.selectDropDownOption(drpStateCode, state);
-			Web.setTextToTextBox(txtZIPCode, postalCode1);	
-			}
-			
-		// Verify if Confirm your contact information section is displayed
-		isTextFieldDisplayed("Confirm your contact information");
+				Web.selectDropnDownOptionAsIndex(drpRollOverCompany, "5");
+				isTextFieldDisplayed("Your rollover check will be sent to the address of record on the account");
+				Thread.sleep(1000);
+				isTextFieldDisplayed("Please enter rollover information");
+				Web.setTextToTextBox(inpAccountNumber, "123456");
+				Reporter.logEvent(Status.PASS,"Verify if IRA Account Number has been displayed",
+						"IRA Account Number Field Has been Displayed and entered",true);
+				if (Web.isWebElementDisplayed(inpRothAccountNumber)) {
+					Web.setTextToTextBox(inpRothAccountNumber, "1111111");
+					Reporter.logEvent(Status.PASS,"Verify if Roth IRA Account Number has been displayed",
+							"Roth IRA Account Number Field Has been Displayed and entered",false);
+				}
+			}			
+		
+		isTextFieldDisplayed("Delivery information for mail or expedited delivery");
 		Thread.sleep(1000);
+		
 		// Enter participant email address and click on continue
 		Web.setTextToTextBox(txtEmailAddress,emailAddress);
-		txtEmailAddress.sendKeys(Keys.ENTER);
-		//Web.getDriver().switchTo().defaultContent();
-		
+		txtEmailAddress.sendKeys(Keys.ENTER);	
 		
 		}
 		catch(Exception e)
@@ -1762,20 +1871,13 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		return isTextDisplayed;
 	}
 
-	public void enterSSN(String ssn) {
-		
-		try {
+	public void enterSSN(String ssn) {		
+	try {
 			Actions keyBoardEvent=new Actions(Web.getDriver());
 			if(Web.isWebElementDisplayed(this.inputSSN, true))
 			{
 				//Robot robot=new Robot();				
-				Web.setTextToTextBox(inputSSN, ssn);
-				//robot.keyPress(KeyEvent.VK_TAB);;
-				//robot.keyRelease(KeyEvent.VK_TAB);;				
-				//keyBoardEvent.click().build().perform();
-				//robot.mouseMove(200,70);
-				//keyBoardEvent.click().build().perform();
-				
+				Web.setTextToTextBox(inputSSN, ssn);			
 				keyBoardEvent.sendKeys(Keys.TAB).build().perform();
 				Thread.sleep(1000);
 				//Web.clickOnElement(btnConfirmContinue);
@@ -1793,6 +1895,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		String statusCode=null;
 		try {				
 		String[] sqlQuery = Stock.getTestQuery("getWithdrawalDisbursementRecords");
+		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet getWithdrawalsRecords=DB.executeQuery(sqlQuery[0], sqlQuery[1], txtConfirmationNo.getText());			
 		if(getWithdrawalsRecords!=null)
 		{			
@@ -1831,71 +1934,57 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		}
 		return statusCode;
 	}
-	/**
-	 * This method is to enter amount for Full withdrawal payment to self 
-	 * @param amount
-	 */
-	public void enterFullWithDrawalPaymentToSelfAmount(String amount) {
-		
-	try
-	{
-		
-		Web.setTextToTextBox(inpPayToSelfAmt, amount);
-	}
+
 	
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
 	
-		
-	}
-	
-	public void selectMaxAmountCheckBoxForInServiceGDR(String withdrawalType,String rothSection,String preTaxSection)
+	public void selectMaxAmountCheckBoxForInServiceGDR(String withdrawalType,String rothSection,String nonRothSection)
 	{
 		try {
 		isMaxGDR=true;		
 			//Select MaxAmount checkbox for Pre-Tax or Roth
-		if (rothSection.equalsIgnoreCase("Yes")){	
+		if (rothSection.equalsIgnoreCase("Roth")){	
 			WebElement rothMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection)));
 			WebElement txtAmount = Web.getDriver().findElement(By
 					.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection)));
 			if(Web.isWebElementDisplayed(rothMaxAmountChkBox, true))				
 			{
 				Web.clickOnElement(rothMaxAmountChkBox);
 				Web.waitForPageToLoad(Web.getDriver());
-				Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type",
-						 "Max Amount Been Selected For Roth Money Type and "+txtAmount.getAttribute("value")+" has been displayed", false);	
+				Reporter.logEvent(Status.PASS, "Select Max Amount For "+rothSection+" Money Type",
+						 "Max Amount Been Selected For "+rothSection+" Money Type and "+txtAmount.getAttribute("value")+" has been displayed", false);	
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
-						"Verify if User selected Max Amount Checkbox for Roth Money Type",
-						"Roth Money Type section is NOT Displayed", false);
-				throw new Error("Roth Money Type Section is NOT displayed");
+						"Verify if User selected Max Amount Checkbox for "+rothSection+" Money Type",
+						rothSection+" Money Type section is NOT Displayed", false);
+				throw new Error(rothSection+" Money Type Section is NOT displayed");
 			}
 		}	
-		if (preTaxSection.equalsIgnoreCase("Yes")){	
-					WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||
+				nonRothSection.equalsIgnoreCase("Non-Roth")||
+				nonRothSection.equalsIgnoreCase("After-tax"))
+		{
+					WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
 							(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 					WebElement txtAmount = Web.getDriver().findElement(By
 							.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-					if(Web.isWebElementDisplayed(preTaxMaxAmountChkBox, true))				
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+					if(Web.isWebElementDisplayed(nonRothMaxAmountChkBox, true))				
 					{
-						Web.clickOnElement(preTaxMaxAmountChkBox);						
+						Web.clickOnElement(nonRothMaxAmountChkBox);						
 						Web.waitForPageToLoad(Web.getDriver());									
-						Reporter.logEvent(Status.PASS, "Select Max Amount For Pre-Tax Money Type and Verify Withdrwal Amount Input field",
-								 "Max Amount Been Selected For Pre-Tax Money Type and "+txtAmount.getAttribute("value")+" has been displayed", false);						
+						Reporter.logEvent(Status.PASS, "Select Max Amount For "+nonRothSection+" Money Type and Verify Withdrwal Amount Input field",
+								 "Max Amount Been Selected For "+nonRothSection+" Money Type and "+txtAmount.getAttribute("value")+" has been displayed", false);						
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
-								"Verify if User selected Max Amount Checkbox for Pre-Tax Money Type",
-								"Pre-tax Money Type section is NOT Displayed", false);
-						throw new Error("Pre-tax Money Type Section is NOT displayed");
+								"Verify if User selected Max Amount Checkbox for "+nonRothSection+" Money Type",
+								nonRothSection+" Money Type section is NOT Displayed", false);
+						throw new Error(nonRothSection+" Money Type Section is NOT displayed");
 					}
 			}
 			}
@@ -1921,7 +2010,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			}
 		
 	
-	public void selectMaxAmountCheckBoxForSepServiceGDR(String rothSection,String preTaxSection)
+	public void selectMaxAmountCheckBoxForSepServiceGDR(String rothSection,String nonRothSection)
 	{
 		Actions keyBoard = new Actions(Web.getDriver());
 		try {
@@ -1952,55 +2041,56 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			}
 		
 			//Select MaxAmount checkbox for Pre-Tax or Roth
-			if (rothSection.equalsIgnoreCase("Yes")){	
+			if (rothSection.equalsIgnoreCase("Roth")){	
 				WebElement rothMaxAmountChkBox=Web.getDriver().findElement
-						(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Roth")));
+						(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", rothSection)));
 				WebElement txtMaxAmount = Web.getDriver().findElement(By
-						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Roth")));
+						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));
 				if(Web.isWebElementDisplayed(rothMaxAmountChkBox, true))				
 				{
 					Web.clickOnElement(rothMaxAmountChkBox);
 					Web.waitForPageToLoad(Web.getDriver());
-					Reporter.logEvent(Status.PASS, "Select Max Amount For Roth Money Type and verify Withdrawal Amount Text field",
-							 "Max Amount Been Selected For Roth and in the the Withdrawal Amount  Text Field "+txtMaxAmount.getAttribute("value")+" has been Displayed", false);
+					Reporter.logEvent(Status.PASS, "Select Max Amount For "+rothSection+" Money Type and verify Withdrawal Amount Text field",
+							 "Max Amount Been Selected For "+rothSection+" and in the the Withdrawal Amount  Text Field "+txtMaxAmount.getAttribute("value")+" has been Displayed", false);
 					if(lstMaxCheckBox.size()==1)
-						Reporter.logEvent(Status.PASS, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
-								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is NOT Displayed", true);
+						Reporter.logEvent(Status.PASS, "Verify if nonRothSection Max Amount Check box is NOT displayed",
+								 "After Selecting "+rothSection+" Max Amount Check Box, Non-Roth Max Amount Check box is NOT Displayed", true);
 					else
-						Reporter.logEvent(Status.FAIL, "Verify if Pre-Tax Max Amount Check box is NOT displayed",
-								 "After Selecting Roth Max Amount Check Box, Pre-tax Max Amount Check box is Displayed", false);
+						Reporter.logEvent(Status.FAIL, "Verify if Non-roth Max Amount Check box is NOT displayed",
+								 "After Selecting "+rothSection+" Max Amount Check Box, Non-Roth Max Amount Check box is Displayed", false);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User has Selected Max Amount Check for Roth Money Type",
-							"Roth Money Type section is NOT Displayed", false);
-					throw new Error("Roth Money Type Section is NOT displayed");
+							"Verify if User has Selected Max Amount Check for "+rothSection+" Money Type",
+							rothSection+" Money Type section is NOT Displayed", false);
+					throw new Error(rothSection+" Money Type Section is NOT displayed");
 				}
 		}		
 			
-		if (preTaxSection.equalsIgnoreCase("Yes")){		
-			WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
-					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", "Pre-tax")));
+			if(nonRothSection.equalsIgnoreCase("Pre-tax")||nonRothSection.equalsIgnoreCase("Non-Roth")||nonRothSection.equalsIgnoreCase("After-tax"))
+			{
+			WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", nonRothSection)));
 			WebElement txtMaxAmount = Web.getDriver().findElement(By
-					.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", "Pre-tax")));
-		if(Web.isWebElementDisplayed(preTaxMaxAmountChkBox, true))
+					.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", nonRothSection)));
+		if(Web.isWebElementDisplayed(nonRothMaxAmountChkBox, true))
 		{
-					Web.clickOnElement(preTaxMaxAmountChkBox);
+					Web.clickOnElement(nonRothMaxAmountChkBox);
 					Thread.sleep(1000);	
-					Reporter.logEvent(Status.PASS, "Select Max Amount For Pre-Tax Money Type and verify Withdrawal Amount Text field",
-							 "Max Amount Been Selected For Pre-Tax and in the the Withdrawal Amount  Text Field "+txtMaxAmount.getAttribute("value")+" has been Displayed", false);
+					Reporter.logEvent(Status.PASS, "Select Max Amount For "+nonRothSection+" Money Type and verify Withdrawal Amount Text field",
+							 "Max Amount Been Selected For "+nonRothSection+" and in the the Withdrawal Amount  Text Field "+txtMaxAmount.getAttribute("value")+" has been Displayed", false);
 					if(lstMaxCheckBox.size()==1)
 						Reporter.logEvent(Status.PASS, "Verify if Roth Max Amount Check box is NOT displayed",
-								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is NOT Displayed", true);
+								 "After Selecting "+nonRothSection+" Max Amount Check Box, Roth Max Amount Check box is NOT Displayed", true);
 					else
 						Reporter.logEvent(Status.FAIL, "Verify if Roth Max Amount Check box is NOT displayed",
-								 "After Selecting Pre-Tax Max Amount Check Box, Roth Max Amount Check box is Displayed", false);
+								 "After Selecting "+nonRothSection+" Max Amount Check Box, Roth Max Amount Check box is Displayed", true);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
-							"Verify if User has Selected Max Amount Check for Pre-Tax Money Type",
-							"Pre-Tax Money Type section is NOT Displayed", false);
-					throw new Error("Pre-Tax Money Type Section is NOT displayed");
+							"Verify if User has Selected Max Amount Check for "+nonRothSection+" Money Type",
+							nonRothSection+" Money Type section is NOT Displayed", true);
+					throw new Error(nonRothSection+" Money Type Section is NOT displayed");
 				}
 		}
 		
@@ -2114,6 +2204,7 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 	String pptFirstName=null;
 	int count=0;
 	String[] sqlQuery = Stock.getTestQuery("getParticipantFullName");
+	sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	ResultSet getPptFullName=DB.executeQuery(sqlQuery[0], sqlQuery[1], IndId);	
 	 count=DB.getRecordSetCount(getPptFullName);
 	if(getPptFullName!=null)
@@ -2156,8 +2247,8 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 	
 	//Verify other fields in confirmation Page
 	
-	Reporter.logEvent(Status.INFO, "Verify Partial Payment to Self Confiramtion Details", 
-			"Full Withdrawal PArtial Payment ot Self Confirmation details", false);
+	Reporter.logEvent(Status.INFO, "Verify Partial Payment to Self Confirmation Details", 
+			"Full Withdrawal Partial Payment ot Self Confirmation details", false);
 	int ptsConfirmationPageAmount=(int)Math.round(Web.getIntegerCurrency(lstConfirmationPageRollOverAmount.get(0).getText()));
 	if(ptsConfirmationPageAmount==fwdPartialPTSAmount)
 		Reporter.logEvent(Status.PASS, "Verify the Entered Partial Payment to Self Amount in the Confirmation Page", 
@@ -2267,19 +2358,13 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 								+ "Expected Delivery Method: "+ rollOverDeliveryMthd +"\n"
 								+ "Actual Delivery Method: "+rollOverMailDelivery, false);*/
 					
-					
 					//Verify Address
 					Reporter.logEvent(Status.INFO, "Verify the Sent To Address in the Confirmation Page", 
 							"The Address is displayed as:\n"+
 						"Address: "+lstConfirmationPageSentToAddress.get(1).getText().trim(), false);
-					
-			
 		}
 
-	}catch (SQLException e) {
-				
-				e.printStackTrace();
-			}	
+	}catch (SQLException e) {e.printStackTrace();}
 
 	catch(NoSuchElementException e)		
 	{ 
@@ -2319,7 +2404,7 @@ public void verifyMaxAmount_SingleMoneySource_Pwd()
 			"Max Amount check has been displayed for Single Money Source  in the Part Withdrawal Section", false);
 }
 
-public void verifyMsgIfMaxAmountEntered_BothMoneySourceType()
+/*public void verifyMsgIfMaxAmountEntered_BothMoneySourceType()
 {
 	NumberFormat format = NumberFormat.getCurrencyInstance();
 try {
@@ -2402,7 +2487,7 @@ Reporter.logEvent(Status.FAIL, "A run time exception occured.",
 		msg, true);}
 
 
-}
+}*/
 
 public void clickOnBackButton()
 {
@@ -2417,7 +2502,7 @@ public void clickOnBackButton()
 	else
 	{
 		Reporter.logEvent(Status.PASS, "Verify if Back button is displayed and click on the button",
-				"Back Button is Not clicked and not navigated to Previous Page", false);
+				"Back Button is Not clicked and not navigated to Previous Page", true);
 		throw new Error("Back Button is not displayed and Clicked");
 	}
 }
@@ -2431,18 +2516,14 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 					String selectedOption = new Select(drpFullWithdrawalType)
 							.getFirstSelectedOption().getText();
 					if (selectedOption.equalsIgnoreCase(withdrawalMethod))
-						Reporter.logEvent(
-								Status.PASS,
-								"Verify that on clicking back button, in the Withdrawal Method Page, previously selected option is displayed by default",
+						Reporter.logEvent(Status.PASS,"Verify that on clicking back button, in the Withdrawal Method Page, previously selected option is displayed by default",
 								"On clicking the back button, system displays the previous selected option by default \n"
 										+ "Previous Selected Option: "
 										+ withdrawalMethod
 										+ "\n Current Displayed Option: "
 										+ selectedOption, true);
 					else
-						Reporter.logEvent(
-								Status.FAIL,
-								"Verify that on clicking back button, in the Withdrawal Method Page, previously selected option is displayed by default",
+						Reporter.logEvent(Status.FAIL,"Verify that on clicking back button, in the Withdrawal Method Page, previously selected option is displayed by default",
 								"On clicking the back button, system does NOT display the previous selected option by default \n"
 										+ "Previous Selected Option: "
 										+ withdrawalMethod
@@ -2490,7 +2571,6 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 						"Verify citizenship verification page is displayed without entering SSN details field",
 						"System displays citizenship verification page with SSN details",
 						true);
-
 		}
 	}
 	
@@ -2516,32 +2596,7 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 		}
 	}
 	
-	public void verifyRequestAWithdrawalCachingHomePage(String withdrawalType,String isRothAvail,String isPreTaxAvail) {
-		if (Web.isWebElementDisplayed(lblRequestAWithdrawal)) 
-		{
-					
-			if(Web.isWebElementDisplayed(inpCurrentEmployerYes))			
-				verifyCachingForEmployerQuestionPage(withdrawalType);
-			else 
-			{
-				if(withdrawalType.equalsIgnoreCase("pwd") || withdrawalType.equalsIgnoreCase("fwd"))
-				{
-					
-				}
-				else
-				{
-					verifyEmpQueIsDisplayedOrInServiceSelected(withdrawalType);
-					verifyEnteredInServiceAmount(withdrawalType,isRothAvail,isPreTaxAvail);
-				}						
-			}			
-		}
-		else
-		{
-			Reporter.logEvent(Status.FAIL,"Verify After clicking button, system displays Request a Withdrawal Home Page",
-					"Request a Withdrawal Home PAge is Not Displayed", false);
-			throw new Error ("Request a Withdrawal Page is Not Displayed");
-		}
-	}
+	
 	
 	public boolean verifyEmpQueIsDisplayedOrInServiceSelected(String withdrawalType)
 	{	
@@ -2568,110 +2623,115 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 	}
 	else
 		{
-			Reporter.logEvent(Status.FAIL,"Verify After clicking button, system displays Request a Withdrawal Home Page",
-					"Request a Withdrawal Home PAge is Not Displayed", false);
+			Reporter.logEvent(Status.FAIL,"Verify After clicking Back button, system displays Request a Withdrawal Home Page",
+					"Request a Withdrawal Home Page is Not Displayed", true);
 			throw new Error ("Request a Withdrawal Page is Not Displayed");
 		}
 			return isEmpQueDisplayed;
 	}
 	
-	public void verifyEnteredInServiceAmount(String withdrawalType,String isPreTaxAvail,String isRothAvail)
-	{
-		if(isRothAvail.equalsIgnoreCase("Yes"))
+	public void verifyEnteredInServiceAmount(String withdrawalType,String rothSection,String nonRothSection)
+	{		
+		if(rothSection.equalsIgnoreCase("Roth"))
 		{
 			int displayedRothAmount=0;
 			WebElement rothMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection)));
 			if(Web.isWebElementDisplayed(rothMoneyTypeSourceAvailable))
 			{
 			WebElement txtAmount = Web.getDriver().findElement(By
-					.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",withdrawalType).replaceAll("Money Source Type", "Roth")));
+					.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",withdrawalType).replaceAll("Money Source Type", rothSection)));
 			displayedRothAmount=Math.round(Float.parseFloat(txtAmount.getAttribute("value")));
 			if(enteredRothWithdrawalAmt==displayedRothAmount)
-					Reporter.logEvent(Status.PASS, "Verify the entered Roth Amount for "+withdrawalType+" is displayed",
-							"The entred Roth Amount is been displayed in the Request a Withdrawal Page: \n"+
-					"Entered Roth Amount: "+enteredRothWithdrawalAmt 
-					+"\n Dispayed Roth Amount: "+displayedRothAmount, false);
+					Reporter.logEvent(Status.PASS, "Verify the entered "+rothSection+" Amount for "+withdrawalType+" is displayed",
+							"The entered "+rothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Entered "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed "+rothSection+" Amount: "+displayedRothAmount, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify the entered Roth Amount for "+withdrawalType+" is displayed",
-						"The entred Roth Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
-				"Entered Roth Amount: "+enteredRothWithdrawalAmt 
-				+"\n Dispayed Roth Amount: "+displayedRothAmount, false);
+				Reporter.logEvent(Status.FAIL, "Verify the entered "+rothSection+" Amount for "+withdrawalType+" is displayed",
+						"The entered "+rothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Entered "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+				+"\n Dispayed "+rothSection+" Amount: "+displayedRothAmount, false);
+			
 			}
 		}
-		if(isPreTaxAvail.equalsIgnoreCase("Yes"))
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||
+				nonRothSection.equalsIgnoreCase("Non-Roth")||
+				nonRothSection.equalsIgnoreCase("After-tax"))
 		{
 			int displayedPreTaxAmount=0;
 			WebElement preTaxMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
+							withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 			if(Web.isWebElementDisplayed(preTaxMoneyTypeSourceAvailable))
 			{
 				WebElement txtAmount = Web.getDriver().findElement(By
 						.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 				displayedPreTaxAmount=Math.round(Float.parseFloat(txtAmount.getAttribute("value")));
-				if(enteredPreTaxWithdrawalAmt==displayedPreTaxAmount)
-					Reporter.logEvent(Status.PASS, "Verify the entered Pre-Tax Amount for "+withdrawalType+" is displayed",
-							"The entred Pre-Tax Amount is been displayed in the Request a Withdrawal Page: \n"+
-					"Entered Roth Amount: "+enteredPreTaxWithdrawalAmt 
-					+"\n Dispayed Roth Amount: "+displayedPreTaxAmount, false);
+				if(enteredNonRothWithdrawalAmt==displayedPreTaxAmount)
+					Reporter.logEvent(Status.PASS, "Verify the entered "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+							"The entered "+nonRothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Entered "+nonRothSection+" Amount: "+enteredNonRothWithdrawalAmt 
+					+"\n Dispayed "+nonRothSection+" Amount: "+displayedPreTaxAmount, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify the entered Pre-Tax Amount for "+withdrawalType+" is displayed",
-						"The entred Pre-Tax Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
-				"Entered Roth Amount: "+enteredPreTaxWithdrawalAmt 
-				+"\n Dispayed Roth Amount: "+displayedPreTaxAmount, false);
+				Reporter.logEvent(Status.FAIL, "Verify the entered "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+						"The entered "+nonRothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Entered "+nonRothSection+" Amount: "+enteredNonRothWithdrawalAmt 
+				+"\n Dispayed "+nonRothSection+" Amount: "+displayedPreTaxAmount, false);
 			}
 		}
 	}
 	
-	public void verifyEnteredInServiceAmount_MaxAmount(String withdrawalType,String isRothAvail,String isPreTaxAvail)
+	public void verifyEnteredInServiceAmount_MaxAmount(String withdrawalType,String rothSection,String nonRothSection)
 	{
-		if(isRothAvail.equalsIgnoreCase("Yes"))
+		if(rothSection.equalsIgnoreCase("Roth"))
 		{
 			WebElement rothMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Roth")));
+							withdrawalType).replaceAll("Money Source Type", rothSection)));
 			if(rothMaxAmountChkBox.getAttribute("checked").contains("true"))		
 			{				
 			WebElement txtAmount = Web.getDriver().findElement(By
-					.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",withdrawalType).replaceAll("Money Source Type", "Roth")));	
+					.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",withdrawalType).replaceAll("Money Source Type", rothSection)));	
 			if(enteredRothWithdrawalAmt==Math.round(Float.parseFloat(txtAmount.getAttribute("value"))))
-					Reporter.logEvent(Status.PASS, "Verify the selected Max Roth Amount for "+withdrawalType+" is displayed",
-							"The selected Max Roth Amount is been displayed in the Request a Withdrawal Page: \n"+
-					"Selected Max Roth Amount: "+enteredRothWithdrawalAmt 
-					+"\n Dispayed Max Roth Amount: "+txtAmount.getAttribute("value"), false);
+					Reporter.logEvent(Status.PASS, "Verify the selected Max "+rothSection+" Amount for "+withdrawalType+" is displayed",
+							"The selected Max "+rothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Selected Max "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed Max "+rothSection+" Amount: "+txtAmount.getAttribute("value"), false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify the selected Max Roth Amount for "+withdrawalType+" is displayed",
-						"The selected Max Roth Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
-				"Selected Max Roth Amount: "+enteredRothWithdrawalAmt 
-				+"\n Dispayed Max Roth Amount: "+txtAmount.getAttribute("value"), false);
+				Reporter.logEvent(Status.FAIL, "Verify the selected Max "+rothSection+" Amount for "+withdrawalType+" is displayed",
+						"The selected Max "+rothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Selected Max "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+				+"\n Dispayed Max "+rothSection+" Amount: "+txtAmount.getAttribute("value"), false);	
 			Web.clickOnElement(rothMaxAmountChkBox);
 			}
 		}
-		if(isPreTaxAvail.equalsIgnoreCase("Yes"))
-		{
-			WebElement preTaxMaxAmountChkBox=Web.getDriver().findElement
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||
+				nonRothSection.equalsIgnoreCase("Non-Roth")||
+				nonRothSection.equalsIgnoreCase("After-tax"))
+		{		
+			WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
 					(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
-							withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
-			if(preTaxMaxAmountChkBox.getAttribute("checked").contains("true"))
+							withdrawalType).replaceAll("Money Source Type", nonRothSection)));
+			if(nonRothMaxAmountChkBox.getAttribute("checked").contains("true"))
 			{
 				WebElement txtAmount = Web.getDriver().findElement(By
 						.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
-									withdrawalType).replaceAll("Money Source Type", "Pre-tax")));
+									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 				System.out.println(txtAmount.getAttribute("value"));
-				if(enteredPreTaxWithdrawalAmt==Math.round(Float.parseFloat(txtAmount.getAttribute("value"))))
-					Reporter.logEvent(Status.PASS, "Verify the selected Max Pre-tax Amount for "+withdrawalType+" is displayed",
-							"The selected Max Pre-tax Amount is been displayed in the Request a Withdrawal Page: \n"+
-					"Selected Max Pre-tax Amount: "+enteredRothWithdrawalAmt 
-					+"\n Dispayed Max Pre-tax Amount: "+txtAmount.getText(), false);
+				if(enteredNonRothWithdrawalAmt==Math.round(Float.parseFloat(txtAmount.getAttribute("value"))))
+					Reporter.logEvent(Status.PASS, "Verify the selected Max "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+							"The selected Max "+nonRothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Selected Max "+nonRothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed Max "+nonRothSection+" Amount: "+txtAmount.getText(), false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify the selected Max Pre-tax Amount for "+withdrawalType+" is displayed",
-						"The selected Max Pre-tax Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
-				"Selected Max Pre-tax Amount: "+enteredRothWithdrawalAmt 
-				+"\n Dispayed Max Pre-tax Amount: "+txtAmount.getText(), false);
-				Web.clickOnElement(preTaxMaxAmountChkBox);
+				Reporter.logEvent(Status.FAIL, "Verify the selected Max "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+						"The selected Max "+nonRothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Selected Max "+nonRothSection+" Amount: "+enteredRothWithdrawalAmt 
+				+"\n Dispayed Max "+nonRothSection+" Amount: "+txtAmount.getText(), false);	
+				Web.clickOnElement(nonRothMaxAmountChkBox);
 			}
 		}
 	}
@@ -2709,10 +2769,213 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 		else
 		{
 			Reporter.logEvent(Status.FAIL,"Verify After clicking button, system displays Request a Withdrawal Home Page",
-					"Request a Withdrawal Home PAge is Not Displayed", false);
+					"Request a Withdrawal Home Page is Not Displayed", false);
 			throw new Error ("Request a Withdrawal Page is Not Displayed");
 		}
 			return isEmpQueDisplayedOrFWD;
 
 	}
+	
+	
+	
+	public void verifyEnteredSepServiceAmount(String withdrawalType,String rothSection,String nonRothSection)
+	{
+		if(rothSection.equalsIgnoreCase("Roth"))
+		{
+			int displayedRothAmount=0;
+			WebElement rothMoneyTypeSourceAvailable=Web.getDriver().findElement
+					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", rothSection)));
+			if(Web.isWebElementDisplayed(rothMoneyTypeSourceAvailable))
+			{
+				WebElement txtAmount = Web.getDriver().findElement(By
+						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));
+				
+				displayedRothAmount=Math.round(Float.parseFloat(txtAmount.getAttribute("value")));
+				if(enteredRothWithdrawalAmt==displayedRothAmount)
+					Reporter.logEvent(Status.PASS, "Verify the entered "+rothSection+" Amount for "+withdrawalType+" is displayed",
+							"The entred "+rothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Entered "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed "+rothSection+" Amount: "+displayedRothAmount, false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify the entered "+rothSection+" Amount for "+withdrawalType+" is displayed",
+						"The entred "+rothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Entered "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+				+"\n Dispayed "+rothSection+" Amount: "+displayedRothAmount, false);
+			}
+		}	
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||
+				nonRothSection.equalsIgnoreCase("Non-Roth")||
+				nonRothSection.equalsIgnoreCase("After-tax"))
+		{
+			int displayedPreTaxAmount=0;
+			WebElement nonRothMoneyTypeSourceAvailable=Web.getDriver().findElement
+					(By.xpath(inpAmtPWMoneyType.replace("Money Source Type", nonRothSection)));
+			if(Web.isWebElementDisplayed(nonRothMoneyTypeSourceAvailable))
+			{
+				WebElement txtAmount = Web.getDriver().findElement(By
+						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type",  nonRothSection)));				
+				displayedPreTaxAmount=Math.round(Float.parseFloat(txtAmount.getAttribute("value")));
+				if(enteredNonRothWithdrawalAmt==displayedPreTaxAmount)
+					Reporter.logEvent(Status.PASS, "Verify the entered "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+							"The entred "+nonRothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Entered "+nonRothSection+" Amount: "+enteredNonRothWithdrawalAmt 
+					+"\n Dispayed "+nonRothSection+" Amount: "+displayedPreTaxAmount, false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify the entered "+nonRothSection+" Amount for "+withdrawalType+" is displayed",
+						"The entred "+nonRothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Entered "+nonRothSection+" Amount: "+enteredNonRothWithdrawalAmt 
+				+"\n Dispayed "+nonRothSection+" Amount: "+displayedPreTaxAmount, false);
+			}
+		}
+	}
+	
+	public void verifyEnteredSepServicePWD_MaxAmount(String rothSection,String nonRothSection)
+	{
+		if(rothSection.equalsIgnoreCase("Roth"))
+		{
+			WebElement rothMaxAmountChkBox=Web.getDriver().findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", rothSection)));		
+			if(rothMaxAmountChkBox.getAttribute("checked").contains("true"))		
+			{				
+				WebElement txtAmount = Web.getDriver().findElement(By
+						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type", rothSection)));	
+			if(enteredRothWithdrawalAmt==Math.round(Float.parseFloat(txtAmount.getAttribute("value"))))
+					Reporter.logEvent(Status.PASS, "Verify the selected Max "+rothSection+" Amount for Part Withdrawal is displayed",
+							"The selected Max "+rothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Selected Max "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed Max "+rothSection+" Amount: "+txtAmount.getAttribute("value"), false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify the selected Max "+rothSection+" Amount for Part Withdrawal is displayed",
+						"The selected Max "+rothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Selected Max "+rothSection+" Amount: "+enteredRothWithdrawalAmt 
+			+"\n Dispayed Max "+rothSection+" Amount: "+txtAmount.getAttribute("value"), false);
+			Web.clickOnElement(rothMaxAmountChkBox);
+			
+			}
+		}
+		if(nonRothSection.equalsIgnoreCase("Pre-tax")||
+				nonRothSection.equalsIgnoreCase("Non-Roth")||
+				nonRothSection.equalsIgnoreCase("After-tax"))
+		{
+			WebElement nonRothMaxAmountChkBox=Web.getDriver().findElement
+					(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", nonRothSection)));
+			if(nonRothMaxAmountChkBox.getAttribute("checked").contains("true"))
+			{
+				WebElement txtAmount = Web.getDriver().findElement(By
+						.xpath(inpAmtPWMoneyType.replaceAll("Money Source Type",nonRothSection)));
+				System.out.println(txtAmount.getAttribute("value"));
+				if(enteredNonRothWithdrawalAmt==Math.round(Float.parseFloat(txtAmount.getAttribute("value"))))
+					Reporter.logEvent(Status.PASS, "Verify the selected Max "+nonRothSection+" Amount for Part Withdrawal is displayed",
+							"The selected Max "+nonRothSection+" Amount is been displayed in the Request a Withdrawal Page: \n"+
+					"Selected Max "+nonRothSection+" Amount: "+enteredRothWithdrawalAmt 
+					+"\n Dispayed Max "+nonRothSection+" Amount: "+txtAmount.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL, "Verify the selected Max "+nonRothSection+" Amount for Part Withdrawal is displayed",
+						"The selected Max "+nonRothSection+" Amount is NOT been displayed in the Request a Withdrawal Page: \n"+
+				"Selected Max "+nonRothSection+" Amount: "+enteredRothWithdrawalAmt 
+				+"\n Dispayed Max "+nonRothSection+" Amount: "+txtAmount.getText(), false);
+				Web.clickOnElement(nonRothMaxAmountChkBox);
+			}
+		}
+	}
+	
+	public void unSelectWithdrawalType_InService(String withdrawalType,String moneySourceType)
+	{
+		try {
+			if(moneySourceType.equalsIgnoreCase("Pre-tax")||moneySourceType.equalsIgnoreCase("Non-Roth")||
+					moneySourceType.equalsIgnoreCase("After-tax")|| moneySourceType.equalsIgnoreCase("Roth"))
+			{
+				WebElement moneySourceTypeCheckBox=Web.getDriver().findElement(By.xpath(chkBoxInServiceMoneySourceType.replace("Withdrawal Type",
+						withdrawalType).replace("Money Source Type", moneySourceType).replaceAll("Source Type", moneySourceType)));
+				WebElement moneySourceMaxAmountCheckBox=Web.getDriver().findElement(By.xpath(moneyTypeMaxAmtChkBox.replace("Withdrawal Type",
+								withdrawalType).replaceAll("Money Source Type",moneySourceType)));
+				WebElement moneySourceInputTextBox = Web.getDriver().findElement(By.xpath(moneyTypeAmtTxt.replace("Withdrawal Type",
+								withdrawalType).replaceAll("Money Source Type",moneySourceType)));	
+				if(moneySourceMaxAmountCheckBox.isSelected())
+				{
+					Web.clickOnElement(moneySourceMaxAmountCheckBox);
+				}
+					else if(moneySourceTypeCheckBox.isSelected())						
+					{
+						moneySourceInputTextBox.clear();
+					}
+					/*if(Web.isWebElementDisplayed(moneySourceMaxAmountCheckBox) && moneySourceMaxAmountCheckBox.isSelected())
+						Web.clickOnElement(moneySourceMaxAmountCheckBox);
+						Web.clickOnElement(moneySourceTypeCheckBox);
+					*/
+									
+				
+			}
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+	
+	public void unSelectWithdrawalType_SepService(String moneySourceType)
+	{
+		try {
+			if(moneySourceType.equalsIgnoreCase("Pre-tax")||
+					moneySourceType.equalsIgnoreCase("Non-Roth")||
+					moneySourceType.equalsIgnoreCase("After-tax")|| moneySourceType.equalsIgnoreCase("Roth"))
+			{
+				WebElement moneySourceCheckBox=Web.getDriver().findElement(By.
+						xpath(chkBoxSepServiceMoneySourceType.replace("Money Source Type", moneySourceType)));
+				WebElement moneySourceMaxAmountChkBox=Web.getDriver().findElement
+						(By.xpath(inpMaxAmountPWChkBox.replace("Money Source Type", moneySourceType)));
+				WebElement moneySourceInputTextBox=Web.getDriver().findElement
+						(By.xpath(inpAmtPWMoneyType.replace("Money Source Type",moneySourceType)));
+				if(moneySourceCheckBox.isSelected())
+				{
+					Web.clickOnElement(moneySourceCheckBox);
+					moneySourceInputTextBox.clear();
+					if(Web.isWebElementDisplayed(moneySourceMaxAmountChkBox) && moneySourceMaxAmountChkBox.isSelected())
+						Web.clickOnElement(moneySourceMaxAmountChkBox);
+					
+				}		
+			}		
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+	public void verifyPlanMinErrorMessage(String withdrawalType)
+	{
+		Actions keyBoard = new Actions(Web.getDriver());
+		WebElement txtPlanMinimumMsg;
+		if(Web.isWebElementDisplayed(inpCurrentEmployerYes))
+		{	
+			if(withdrawalType.equals("PART WD") ||withdrawalType.equals("FULL WD"))		
+				Web.clickOnElement(inpCurrentEmployerNo);
+			else
+				Web.clickOnElement(inpCurrentEmployerYes);
+				keyBoard.sendKeys(Keys.TAB).build().perform();
+				keyBoard.sendKeys(Keys.ENTER).build().perform();
+		}			
+		Common.waitForProgressBar();
+		try {Thread.sleep(3000);} catch (InterruptedException e) {e.printStackTrace();}	
+		
+		if(withdrawalType.equals("PART WD") ||withdrawalType.equals("FULL WD"))		
+			txtPlanMinimumMsg= Web.getDriver().
+			findElement(By.xpath(txt_SepService_PlanMinimum.replace("WithdrawalType", withdrawalType)));		
+		else			
+			txtPlanMinimumMsg = Web.getDriver().
+			findElement(By.xpath(txt_InService_PlanMinimum.replace("WithdrawalType", withdrawalType)));		
+		
+		String expectedMsg="Insufficient balance to meet plan minimum";
+		String actualMsg=txtPlanMinimumMsg.getText().trim();
+		if(expectedMsg.equalsIgnoreCase(actualMsg))
+			Reporter.logEvent(Status.PASS, "Verify if the user has the current balance less than the plan miminum then "
+					+withdrawalType+" option should be DISABLED and system should display the error message",
+					"System displays the following error message when the current balanance is less than plan miminum for "+withdrawalType +":\n"+
+							actualMsg, false);
+		else
+			Reporter.logEvent(Status.FAIL, "Verify if the user has the current balance less than the plan miminum then "
+					+withdrawalType+" option should be DISABLED and system should display the error message",
+					"System displays the following error message when the current balanance is less than plan miminum for "+withdrawalType +":\n"+
+							actualMsg, false);
+		if(!isWebElementEnabled("CONTINUE"))
+			Reporter.logEvent(Status.PASS,"Verify if the Continue button is disbaled", "The Continue button is disabled",false);
+		else
+		Reporter.logEvent(Status.PASS,"Verify if the Continue button is disbaled", "The Continue button is NOT Disabled",true);
+			
+	}
+	
+
 }
