@@ -3,18 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fascore.qa.AutomationFramework</groupId>
 	<artifactId>Framework</artifactId>
-	<version>3.0.6-SNAPSHOT</version>
+	<version>3.0.7-SNAPSHOT</version>
 	<name>Automation framework </name>
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.0.1</version>
+			<version>3.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.10</version>
+			<version>6.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -58,11 +58,7 @@
 			<artifactId>xmlbeans</artifactId>
 			<version>2.6.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>3.12</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
@@ -123,6 +119,16 @@
 			<artifactId>jfiglet</artifactId>
 			<version>0.0.7</version>
 		</dependency>
+		<dependency>
+		  <groupId>joda-time</groupId>
+		  <artifactId>joda-time</artifactId>
+		  <version>2.9.9</version>
+		</dependency>
+		<dependency>
+	      <groupId>com.jayway.jsonpath</groupId>
+	      <artifactId>json-path</artifactId>
+	      <version>2.2.0</version>
+	    </dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>

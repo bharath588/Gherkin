@@ -54,9 +54,9 @@ public class ShellUtils {
 		 else {                  
 			 try {
 				 Stock.getParam(Globals.GC_TESTCONFIGLOC + Globals.GC_CONFIGFILEANDSHEETNAME + ".xls");
-				 userName = Stock.getConfigParam("SystemUserID");
-				 password =  Stock.getConfigParam("SystemPassword");
-				 shellJsch=new JSch();
+				 userName = Stock.getConfigParam(Globals.GC_COLNAME_USERID);
+				 password =  Stock.getConfigParam(Globals.GC_COLNAME_SYSPASSWORD);
+				shellJsch=new JSch();
 				 shellSession = shellJsch.getSession(userName, Globals.GC_SHELL_HOST_NAME, Globals.GC_SHELL_PORT_NUMBER);
 				 shellSession.setPassword(password);                                             
 				 shellSession.setUserInfo(new MyUserInfo());

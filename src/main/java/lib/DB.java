@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +18,9 @@ import java.util.Locale;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
+import javax.sql.rowset.Predicate;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 
 import oracle.jdbc.pool.OracleDataSource;
 //import com.sun.rowset.FilteredRowSetImpl;
@@ -32,7 +36,8 @@ public class DB {
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
 	//private static FilteredRowSetImpl filterObj;
 	static int count = 0;
-	
+	private static FilteredRowSet filterObj;
+	 static RowSetFactory rsf;
 	
 	/**
 	 *<pre>
@@ -158,9 +163,9 @@ public class DB {
 				//dataSource = new OracleDataSource();
 				//jdbcUrl = Stock.getConfigParam(DBName);
 				jdbcUrl = Globals.databaseConnectionStrings.get(DBName);
-				dbuserid = Stock.getConfigParam("DBUSERID");
-				dbpassword = Stock.getConfigParam("DBPASSWORD");
-				
+				dbuserid = Stock.getConfigParam(Globals.GC_COLNAME_USERID);
+				dbpassword = Stock.getConfigParam(Globals.GC_COLNAME_DBPASSWORD);
+					
 				if (jdbcUrl.trim().length() == 0) {
 					throw new Error ("No connection string found for the DB: " + DBName);
 				}
@@ -286,14 +291,15 @@ public class DB {
 	 * @return filteredObj and null if there is no values matching the filter criteria
 	 * @throws SQLException
 	 */
-/*	public static FilteredRowSet filterRecordSet(ResultSet unfilteredRecordSet,Predicate...predicates) throws SQLException
+	public static FilteredRowSet filterRecordSet(ResultSet unfilteredRecordSet,Predicate...predicates) throws SQLException
 	{
-		filterObj = new FilteredRowSetImpl();
+		rsf= RowSetProvider.newFactory();
+		filterObj = rsf.createFilteredRowSet();
 		
 		List<Predicate> filterList = Arrays.asList(predicates);
 		   for(Predicate p : filterList)
 	        {
-			    filterObj = new FilteredRowSetImpl();
+			    filterObj =rsf.createFilteredRowSet();
 	        	filterObj.populate(unfilteredRecordSet);
 	        	filterObj.setFilter(p);
 	        	unfilteredRecordSet = filterObj;
@@ -305,7 +311,7 @@ public class DB {
 		        	}
 	        }
 		return filterObj;
-	}*/
+	}
 	/**
 	 * Method to get Filtered RowSet Count 
 	 * @param frs
