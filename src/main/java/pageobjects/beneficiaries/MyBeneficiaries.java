@@ -63,7 +63,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(id="country") private WebElement selCountry;
 	@FindBy(id="removeBeneficiary") private WebElement chkDelBeneficiary;
 	@FindBy(xpath=".//*[@id='account-details-container']/div/div/form/div[1]/div/table/tbody/tr/td[1]/a") private WebElement Linkclick;
-
 	@FindBy(xpath="//h1[text()='Designate beneficiary']") private WebElement lblDesignateBeneficiary;
 	@FindBy(xpath="//span[text()='Yes']") private WebElement btnMarried;
 	@FindBy(xpath="//span[text()='No']") private WebElement btnUnmarried;
@@ -349,7 +348,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				this.enterAddressDetails();
 			}
 		}
-			
+		System.out.println(Web.isWebElementDisplayed(btnSave, true));
+		
 		Web.clickOnElement(btnSave);
 			if(!Web.isWebElementDisplayed(tblPrimaryBeneficiary, true))
 			{
@@ -449,21 +449,26 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						
 						if(attribute.equalsIgnoreCase("SSN")){
 //							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
+							//return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
+							return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3].substring(12), true);
 						}
 						if(attribute.equalsIgnoreCase("DOB")){
 							if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
 								return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablecontingentBeneficiary.get(i).getText().split("\n")[4], true);
 							else
-								return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablecontingentBeneficiary.get(i).getText().split("\n")[4], true);
+							{
+								return Web.VerifyText(Stock.GetParameterValue("DOB").substring(6), lstTablecontingentBeneficiary.get(i).getText().split("\n")[4].substring(21), true);
+							}
+							/*if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
+								return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablecontingentBeneficiary.get(i).getText().split("\n")[4], true);
+							else
+								return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablecontingentBeneficiary.get(i).getText().split("\n")[4], true);*/
 						}
 					
 						if(attribute.equalsIgnoreCase("Address")){
 							String appAddress=lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablecontingentBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ;
 							String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("State")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-							System.out.println("Address from test data:\nAddress:"+address);
-							System.out.println("Address from Application:"+appAddress);
-							return Web.VerifyText("ADDRESS: "+address, appAddress ,true);
+								return Web.VerifyText("ADDRESS: "+address, appAddress ,true);
 						}
 				
 			}
@@ -485,13 +490,20 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					
 					if(attribute.equalsIgnoreCase("SSN")){
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						//return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(12), true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
 							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
 						else
-							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						{
+							return Web.VerifyText(Stock.GetParameterValue("DOB").substring(6), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4].substring(21), true);
+						}
+						/*if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
+							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						else
+							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);*/
 					}
 					if(attribute.equalsIgnoreCase("Phone Number"))	
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
@@ -499,8 +511,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					if(attribute.equalsIgnoreCase("Address")){
 						String appAddress=lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ;
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("State")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-						System.out.println("Address from test data:\nAddress:"+address);
-						System.out.println("Address from Application:"+appAddress);
 						return Web.VerifyText("ADDRESS: "+address, appAddress ,true);
 					}
 				}
@@ -509,9 +519,10 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		}
 		}
 		else{
+			System.out.println("Size of table"+lstTablePrimaryBeneficiary.size());
 			for(int i=0;i<lstTablePrimaryBeneficiary.size();i++){
 				if(lstTablePrimaryBeneficiary.get(i).getText().contains(beneficiaryName)){
-						
+						//System.out.println(lstTablePrimaryBeneficiary.get(i).getText());
 					if(attribute.equalsIgnoreCase("Name"))
 						return Web.VerifyText("NAME: "+beneficiaryName+", "+Stock.GetParameterValue("Prefix"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[0], true);
 					
@@ -522,14 +533,18 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("RELATIONSHIP: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
+						//System.out.println("From UI"+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(8,11));
 //						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(12), true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){
 						if(Stock.GetParameterValue("Validate_Date").equalsIgnoreCase("Yes"))
 							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("Valid_Date"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
 						else
-							return Web.VerifyText("DATE OF BIRTH: "+Stock.GetParameterValue("DOB"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
+						{
+							return Web.VerifyText(Stock.GetParameterValue("DOB").substring(6), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4].substring(21), true);
+						}
+							
 					}
 					if(attribute.equalsIgnoreCase("Phone Number"))	
 						return Web.VerifyText("PHONE NUMBER: "+Stock.GetParameterValue("PhoneNumber"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[5], true);
@@ -537,8 +552,6 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 					if(attribute.equalsIgnoreCase("Address")){
 						String appAddress=lstTablePrimaryBeneficiary.get(i).getText().split("\n")[6]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[7]+" "+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[8] ;
 						String address= Stock.GetParameterValue("AddressOne")+" "+Stock.GetParameterValue("AddressTwo")+" "+Stock.GetParameterValue("City")+", "+Stock.GetParameterValue("State")+", "+Stock.GetParameterValue("Country")+", "+Stock.GetParameterValue("Zipcode").split("\\.")[0];
-						System.out.println("Address from test data:\nAddress:"+address);
-						System.out.println("Address from Application:"+appAddress);
 						return Web.VerifyText("ADDRESS: "+address, appAddress ,true);
 					}
 				}
@@ -574,7 +587,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 				
 				if(attribute.equalsIgnoreCase("TIN")){
 //					return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-					return Web.VerifyText("TIN (last four): "+Stock.GetParameterValue("Tax_Identification_No").substring(Stock.GetParameterValue("Tax_Identification_No").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+					//return Web.VerifyText("TIN (last four): "+Stock.GetParameterValue("Tax_Identification_No").substring(Stock.GetParameterValue("Tax_Identification_No").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+					return Web.VerifyText("TIN: "+Stock.GetParameterValue("Tax_Identification_No"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 				}
 				if(attribute.equalsIgnoreCase("DOT")){	
 					return Web.VerifyText("DATE OF TRUST: "+Stock.GetParameterValue("Date_of_Trust"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[4], true);
@@ -749,6 +763,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	}
 	public boolean isErrorMessageDisplayed(String errorMessage) {
 		boolean isTextDisplayed=false;
+		
 		 WebElement txterrorMessage= Web.getDriver().findElement(By.xpath(lblerrorMessage.replace("webElementText", errorMessage)));
 	
 		isTextDisplayed = Web.isWebElementDisplayed(txterrorMessage, true);

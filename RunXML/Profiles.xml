@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Profiles">
+
+		<classes>
+			<class name="app.pptweb.testcases.profile.Profiletestcases">
+				<methods>
+					<include name="Profile_Change_Password">
+						<parameter name="ManualTCName" value="DDTC-5956 Profile- Change Password">
+						</parameter>
+					</include>
+
+					<include name="Profile_Change_Username">
+						<parameter name="ManualTCName" value="DDTC-5814 Profile- Change Username">
+						</parameter>
+					</include>
+
+					<include name="Profile_Change_ContactInformation">
+						<parameter name="ManualTCName"
+							value="DDTC-6197 Profile- Change ContactInformation">
+						</parameter>
+					</include>
+
+					<include name="Profile_Change_Address">
+						<parameter name="ManualTCName" value="DDTC-6248 Profile- Change Address">
+						</parameter>
+					</include>
+
+					<include name="Profile_View_ContactInformation">
+						<parameter name="ManualTCName"
+							value="DDTC-5915 Profile- View Contact Information">
+						</parameter>
+					</include>
+					
+					<include name="Profile_ForceChangePassword">
+						<parameter name="ManualTCName"
+							value="DDTC-5769 Force Change password">
+						</parameter>
+					</include>
+
+					<include name="Profile_View_UsernameAndPassword">
+						<parameter name="ManualTCName"
+							value="DDTC-6120 Profile- View UsernameAndPassword">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

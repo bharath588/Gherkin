@@ -11,7 +11,7 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import org.jboss.netty.handler.traffic.GlobalTrafficShapingHandler;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

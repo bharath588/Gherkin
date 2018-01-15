@@ -62,6 +62,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	@FindBy(xpath="//button[contains(text(),'Back')]") private WebElement btnBack;
 	@FindBy(xpath = "//button[./strong[text()[normalize-space()='Continue to enrollment']]]") private WebElement btnContinueToEnroll;
 	@FindBy(xpath="//div[@class='modal-body auto-increase']//div/p") private List<WebElement> txtMadalContent;
+	@FindBy(xpath="//div[@class='error-block']") private WebElement errorBlock;
 	
 	private String textField = "//*[contains(text(),'webElementText')]";
 	private String strMethodTerminationOrRetirement = "//input[contains(@id,'method_Termination')][following-sibling::div//span[contains(text(),'webElementText')]]";
@@ -761,5 +762,75 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 		System.out.println("DATE"+endDate);
 		
 		return endDate;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to enter the Contribution Rate in Summary Page
+	 *
+	 * </pre>
+	 * @param contributionRate
+	 * 
+	 *
+	 */
+	public void enterDeferralAmountinSummaryPage(String contributionRate) {
+		
+		if (Web.isWebElementDisplayed(inpContributionRate)) {
+			Web.setTextToTextBox(inpContributionRate, contributionRate);
+		} else {
+					
+			lib.Reporter.logEvent(Status.FAIL, "Enter Contribution Rate",  
+					" Not Able to Enter Contribution Rate",true);
+			throw new Error("Contribution Rate Input Field is not displayed");
+		}
+	
+		
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Summary Page When Error Message is Displayed
+	 * </pre>
+	 * @param contributionRate
+	 */
+
+	public void VerifySummaryPageWithErrorMessage(String contributionRate) {
+			
+		try {
+			enterDeferralAmountinSummaryPage(contributionRate);
+			if(Web.isWebElementDisplayed(errorBlock, true)){
+				Reporter.logEvent(Status.PASS, "Verify Error Message is Displayed in Summary Page", 
+						"Error Message is Displayed in Summary Page", true);
+				if(!btnEditMyOptions.isEnabled()){
+					Reporter.logEvent(Status.PASS, "Verify 'Edit My Options' Button is disabled When Error Message is Dispalyed in Summary Page", 
+							"'Edit My Options' Button is Disabled When Error Message is Dispalyed in Summary Page", false);
+				}
+				else{
+					Reporter.logEvent(Status.FAIL, "Verify 'Edit My Options' Button is disabled When Error Message is Dispalyed in Summary Page", 
+							"'Edit My Options' Button is Not Disabled When Error Message is Dispalyed in Summary Page", true);
+				}
+				Web.clickOnElement(btnIAgreeEnrollNow);
+				if(Web.isWebElementDisplayed(errorBlock, false)){
+					
+					Reporter.logEvent(Status.PASS, "Verify No Action is Performed When User Clicks on 'I Agree, Enroll Now' Button", 
+							"No Action is Performed When User Clicks on 'I Agree, Enroll Now' Button and user is on Summary Page", true);
+				}
+				else{
+					Reporter.logEvent(Status.FAIL, "Verify No Action is Performed When User Clicks on 'I Agree, Enroll Now' Button", 
+							"User Navigated to confirmation Page When User Clicks on 'I Agree, Enroll Now' Button ", true);
+				}
+			}
+			else
+				Reporter.logEvent(Status.FAIL,"Verify Error Message is Displayed in Summary Page", 
+						"Error Message is Not Displayed in Summary Page", true);
+			
+			
+			enterDeferralAmountinSummaryPage("");
+		
+			
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

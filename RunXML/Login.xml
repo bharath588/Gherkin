@@ -138,6 +138,29 @@
                     <include name="NPDI_006_Validation_For_Enhanced_Security_Pages">
 					<parameter name="ManualTCName" value="SIT_NPDI_006_Validation_For_Enhanced_Security_Pages"></parameter>
                     </include>
+                     <include name="NPDI_007_Register_participant_doesnot_exists_inEASY_system">
+					<parameter name="ManualTCName" value="SIT_NPDI_007 Register a participant  does not exists in EASY system"></parameter>
+                    </include>
+                    
+                    <include name="NPDI_008_Register_a_ppt_exists_in_Easy_DB">
+					<parameter name="ManualTCName" value="NPDI_008_Register_a_ppt_exists_in_Easy_DB_Choose_a_SSN_from_194037-01_plan_and_do_NPDI_reg_flow_with_194391-01_plan"></parameter>
+                    </include>
+                    
+                    <include name="NPDI_009_Register_a_ppt_exists_in_Easy_DB">
+					<parameter name="ManualTCName" value="NPDI_009_Register_a_ppt_exists_in_Easy_DB,_Choose_a_SSN_from_194391_01_plan_and_do_NPDI_reg_flow_with_194391_01_plan"></parameter>
+                    </include>
+                    
+                    <include name="NPDI_010_Register_a_ppt_exists_in_Easy_DB">
+					<parameter name="ManualTCName" value="NPDI_010_Register_a_ppt_exists_in_Easy_DB,_Choose_a_SSN_from_194391_01_plan_and_do_NPDI_reg_flow_with_194391_02_plan"></parameter>
+                    </include>
+                    
+                    <include name="NPDI_011_Register_participant_doesnot_exists_inEASY_system">
+					<parameter name="ManualTCName" value="NPDI_011_Register_a_participant__does_not_exists_in_EASY_system_and_set_existing_Username_from_user_register_table"></parameter>
+                    </include>
+				
+                    <include name="NPDI_013_Register_a_participant_End_to_End_flow">
+					<parameter name="ManualTCName" value="NPDI_013 Register a participant  End to End flow"></parameter>
+                    </include>
 				</methods>
 			</class> 
 		

@@ -379,9 +379,201 @@ public class EnrollmentTestCases {
 						"Enrollment Summary Page is Not Displayed",
 						true);
 			}
-		//Step 8	
+			//Step 8	
 			
+			nqEnroll.VerifySummaryPageWithErrorMessage("500000");
+			//Step 9
+			Web.clickOnElement(nqEnroll, "BUTTON EDIT MY OPTIONS");
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			//Step 10
+			nqEnroll.clickOnBackButton();
 			
+			Web.waitForElement(nqEnroll, "BUTTON EDIT MY OPTIONS");
+			Common.isLabelDisplayed("FROM Employee deferral");
+			//Step 11
+			//TODO
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	/**
+	 * This Test Case is to Verify aDeferral Elections page for New users with 
+	 * multiple reasons during NQ Enrollment 
+	 * for a Single Election plan via Account Overview.
+	 * @param itr
+	 * @param testdata
+	 */
+
+	@Test(dataProvider = "setData")
+	public void DDTC_26977_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_New_User_With_Multiple_Reasons(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			disbMethod= new ArrayList<String>();
+			disbReason = new ArrayList<String>();
+			 DisbTiming = new ArrayList<String>();
+
+			// Step 1 to 4
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage myAccount = new MyAccountsPage(homePage);
+			myAccount.get();
+			NQEnrollment nqEnroll = new NQEnrollment();
+			myAccount.clickPlanNameByGAID(Stock.GetParameterValue("ga_id"));
+
+			// Step 5
+			AccountOverview accountOverview = new AccountOverview();
+			Web.waitForElement(accountOverview, "LINK ENROLL NOW");
+			accountOverview.isTextFieldDisplayed("Enrollment is now open.");
+
+			if (Web.isWebElementDisplayed(accountOverview, "LINK ENROLL NOW")) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'Enroll Now' Link is Displayed in Account Overview Page",
+						"'Enroll Now' Link is Displayed in Account Overview Page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'Enroll Now' Link is Displayed in Account Overview Page",
+						"'Enroll Now' Link is Not Displayed in Account Overview Page",
+						true);
+			}
+			// Step 6
+			accountOverview.clickOnEnrollNow();
+			Web.waitForElement(nqEnroll, "Button Continue To Enrollment");
+			//Step 7
+			Web.clickOnElement(nqEnroll, "Button Continue To Enrollment");
+			
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			
+			//Step 8
+			disbReason = Common.getDisbursmentReason(Stock
+					.GetParameterValue("ga_id"));
+			if (disbReason.size() > 0) {
+				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod = Common
+							.getMethodForDisbursmentReason(
+									Stock.GetParameterValue("ga_id"),
+									disbReason.get(i));
+					nqEnroll.selectDisbursementMethod(disbReason.get(i),
+							disbMethod.get(i));
+					 DisbTiming = Common.getTimingForDisbursmentMethod(
+							Stock.GetParameterValue("ga_id"), disbMethod.get(i));
+					nqEnroll.selectTimingForDistributionElectionMethod(DisbTiming.get(i));
+					mapDistributionElections.put(disbReason.get(i), disbMethod.get(i)+" - "+DisbTiming.get(i));
+				}
+				nqEnroll.clickContinue();
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Verify Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is Opted for Distribution Elections",
+						"Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is not Opted for Distribution Elections",
+						true);
+			}
+			
+			//Step 9
+			nqEnroll.verifyPageHeaderIsDisplayed("DEFERRAL ELECTION");
+			
+			//Step 10
+			Deferrals deferral=new Deferrals();
+			List<String> expectedDeferrals= new ArrayList<String>();
+			List<String> actualDeferrals= new ArrayList<String>();
+			
+			expectedDeferrals=Common.getAvailableDeferralsforPlan(Stock.GetParameterValue("ga_id"), Stock.GetParameterValue("enrollEndDate"));
+			
+			actualDeferrals=deferral.getAvailableDeferrals();
+			//for(int i=0;i<expectedDeferrals.size();i++){
+			if(expectedDeferrals.equals(actualDeferrals)){
+				Reporter.logEvent(Status.PASS,
+						"Verify All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container",
+						"All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container\nExpected Deferral Types:"+expectedDeferrals+"\nActual Deferral Types:"+actualDeferrals,
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container",
+						"All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are not displayed in Container\nExpected Deferral Types:"+expectedDeferrals+"\nActual Deferral Types:"+actualDeferrals,
+						true);
+			}
+			//Step 11 & 12
+			for(int i=0;i<expectedDeferrals.size();i++){
+				deferral.isTextFieldDisplayed("FROM "+actualDeferrals.get(i));
+			}
+			String minmaxRule=deferral.getWebElementText("Text Min/Max Rule");
+			if(minmaxRule.contains("0 minimum to")&&minmaxRule.contains("maximum")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Min/Max Rule is Displayed","Min/Max Rule is Displayed\nMin/Max Rule:"+minmaxRule,
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Min/Max Rule is Displayed","Min/Max Rule is Not Proper\nMin/Max Rule:"+minmaxRule,
+						true);
+			}
+			nqEnroll.VerifyDeferralElectionPageAsNewUser(Stock.GetParameterValue("Contribution Rate"));
+			
+			//Step 13
+			if(Web.isWebElementDisplayed(deferral, "Things To Know Container")){
+			
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Things To Know' Container is Displayed","'Things To Know' Container is Displayed",
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Things To Know' Container is Displayed","'Things To Know' Container is Not Displayed",
+						true);
+			}
+			deferral.isTextFieldDisplayed("Things to know");
+			//Step 14
+			deferral.verifyWebElementDisplayed("Continue Button");
+			deferral.verifyWebElementDisplayed("Back Button");
+			//Step 15
+			nqEnroll.clickOnBackButton();
+			
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			//Step 16
+			nqEnroll.clickContinue();
+			nqEnroll.verifyPageHeaderIsDisplayed("DEFERRAL ELECTION");
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -626,7 +818,7 @@ public class EnrollmentTestCases {
 					true)) {
 				Web.clickOnElement(distributions, "Button Continue");
 			}
-			
+		
 			Web.waitForElement(nqEnroll, "Button Continue To Enrollment");
 			//Step 7
 			Web.clickOnElement(nqEnroll, "Button Continue To Enrollment");
@@ -705,6 +897,7 @@ public class EnrollmentTestCases {
 						"Verify Min/Max Rule is Displayed","Min/Max Rule is Not Proper\nMin/Max Rule:"+minmaxRule,
 						true);
 			}
+			
 			nqEnroll.VerifyDeferralElectionPageAsNewUser(Stock.GetParameterValue("Contribution Rate"));
 			
 			//Step 12
@@ -758,7 +951,181 @@ public class EnrollmentTestCases {
 
 	}
 	
-	
+	/**
+	 * This Test Case is To verify the NQ enrollment Confirmation Page with 
+	 * Multiple Structure for new user via My Distributions page
+	 * @param itr
+	 * @param testdata
+	 */
+
+	@Test(dataProvider = "setData")
+	public void DDTC_26955_NQ_SE_As_New_User_Verify_ConfirmationPage_With_MulltipleStructures_via_MyDistributionPage(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			disbMethod= new ArrayList<String>();
+			disbReason = new ArrayList<String>();
+			 DisbTiming = new ArrayList<String>();
+			 //Step 1 to 4
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage myAccount = new MyAccountsPage(homePage);
+			myAccount.get();
+			myAccount.clickPlanNameByGAID(Stock.GetParameterValue("ga_id"));
+
+			// Step 5
+			LeftNavigationBar leftNav = new LeftNavigationBar();
+			MyDistributions distributions =new MyDistributions(leftNav);
+			distributions.get();
+			
+			NQEnrollment nqEnroll = new NQEnrollment();
+
+			// Step 6
+			
+			distributions.clickOnEnrollNow();
+			
+					
+			Web.waitForElement(nqEnroll, "Button Continue To Enrollment");
+			//Step 7
+			Web.clickOnElement(nqEnroll, "Button Continue To Enrollment");
+			//Step 8
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			
+		 //Step 9
+			
+			
+			disbReason = Common.getDisbursmentReason(Stock
+					.GetParameterValue("ga_id"));
+			if (disbReason.size() > 0) {
+				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod = Common
+							.getMethodForDisbursmentReason(
+									Stock.GetParameterValue("ga_id"),
+									disbReason.get(i));
+					nqEnroll.selectDisbursementMethod(disbReason.get(i),
+							disbMethod.get(i));
+					 DisbTiming = Common.getTimingForDisbursmentMethod(
+							Stock.GetParameterValue("ga_id"), disbMethod.get(i));
+					nqEnroll.selectTimingForDistributionElectionMethod(DisbTiming.get(i));
+					mapDistributionElections.put(disbReason.get(i), disbMethod.get(i)+" - "+DisbTiming.get(i));
+				}
+				nqEnroll.clickContinue();
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Verify Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is Opted for Distribution Elections",
+						"Plan '" + Stock.GetParameterValue("ga_id")
+								+ "' is not Opted for Distribution Elections",
+						true);
+			}
+			
+			//Step 8
+			nqEnroll.verifyPageHeaderIsDisplayed("DEFERRAL ELECTION");
+			
+			//Step 9
+			Deferrals deferral=new Deferrals();
+			List<String> expectedDeferrals= new ArrayList<String>();
+			List<String> actualDeferrals= new ArrayList<String>();
+			
+			expectedDeferrals=Common.getAvailableDeferralsforPlan(Stock.GetParameterValue("ga_id"), Stock.GetParameterValue("enrollEndDate"));
+			
+			actualDeferrals=deferral.getAvailableDeferrals();
+			//for(int i=0;i<expectedDeferrals.size();i++){
+			if(expectedDeferrals.equals(actualDeferrals)){
+				Reporter.logEvent(Status.PASS,
+						"Verify All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container",
+						"All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container\nExpected Deferral Types:"+expectedDeferrals+"\nActual Deferral Types:"+actualDeferrals,
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are displayed in Container",
+						"All the Possible Deferral Types Offered by the Plan '"+Stock.GetParameterValue("ga_id")+"' are not displayed in Container\nExpected Deferral Types:"+expectedDeferrals+"\nActual Deferral Types:"+actualDeferrals,
+						true);
+			}
+			
+			//}
+			//Step 10
+			//TODO
+			//Step 11
+			for(int i=0;i<expectedDeferrals.size();i++){
+				deferral.isTextFieldDisplayed("FROM "+actualDeferrals.get(i));
+			}
+			String minmaxRule=deferral.getWebElementText("Text Min/Max Rule");
+			if(minmaxRule.contains("0 minimum to")&&minmaxRule.contains("maximum")){
+				
+				Reporter.logEvent(Status.PASS,
+						"Verify Min/Max Rule is Displayed","Min/Max Rule is Displayed\nMin/Max Rule:"+minmaxRule,
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Min/Max Rule is Displayed","Min/Max Rule is Not Proper\nMin/Max Rule:"+minmaxRule,
+						true);
+			}
+			
+			nqEnroll.VerifyDeferralElectionPageAsNewUser(Stock.GetParameterValue("Contribution Rate"));
+			
+			//Step 12
+			if(Web.isWebElementDisplayed(deferral, "Things To Know Container")){
+			
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Things To Know' Container is Displayed","'Things To Know' Container is Displayed",
+						true);
+			}
+			else{
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Things To Know' Container is Displayed","'Things To Know' Container is Not Displayed",
+						true);
+			}
+			deferral.isTextFieldDisplayed("Things to know");
+			//Step 13
+			deferral.verifyWebElementDisplayed("Continue Button");
+			deferral.verifyWebElementDisplayed("Back Button");
+			//Step 14
+			nqEnroll.clickOnBackButton();
+			
+			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
+			//Step 15
+			nqEnroll.clickContinue();
+			nqEnroll.verifyPageHeaderIsDisplayed("DEFERRAL ELECTION");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 	/**
 	 * This Test Case is to Verify and Make Sure that when a
 	 *  User is Logged in as Returning user and user should

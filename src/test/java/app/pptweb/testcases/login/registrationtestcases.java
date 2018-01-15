@@ -1,6 +1,7 @@
 package app.pptweb.testcases.login;
 
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,6 +27,8 @@ import org.testng.annotations.Test;
 import appUtils.Common;
 import appUtils.ExecuteQuery;
 import appUtils.TestDataFromDB;
+import pageobjects.deferrals.Deferrals;
+import pageobjects.enrollment.Enrollment;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
@@ -3710,18 +3713,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			}
 		}
 	}
-	public void precondition() {
-		try {
-			String[] sqlQuery;
-			sqlQuery = Stock.getTestQuery("unlockParticipants");
-			DB.executeUpdate(sqlQuery[0], sqlQuery[1],
-					Stock.GetParameterValue("SSN"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+	
 	@Test(dataProvider = "setData")
 	public void NPDI_002_Validation_RegistrationPage_Provide_Personal_Information(int itr,
 			Map<String, String> testdata) {
@@ -3829,6 +3821,1429 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			}
 		}
 	}
+	@Test(dataProvider = "setData")
+	public void NPDI_007_Register_participant_doesnot_exists_inEASY_system(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			SSN = generateRandomSSN(9);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			Enrollment enroll = new Enrollment(objAuth);
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			accLookup.get();
+			registration.setPasswordForPlan();
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015","Corporate");
+			//registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if (Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			// Step 6
+			accSetup.validateProfileSettinsPage();
+			// Step 7
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
+			System.out.println(SSN + "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+
+			Web.waitForElement(objAuth, "Header Enhanced Security");
+			if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is not displayed", true);
+			}
+			// Step 8
+			Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+					+ "phone number or email address listed for your account.");
+			// Step 9
+			Common.isLabelDisplayed("Where should we send your code?");
+
+			if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+						true);
+			}
+			// Step 10
+			String[] deliveryMethodOptions = { "Choose delivery method",
+					"Text me: ***-***-9999", "Call me: ***-***-9999",
+					"Email: *******@gwl.com" };
+			objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+			// Step 11
+			
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Thread.sleep(4000);
+			Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+			// Step 12
+			objAuth.selectCodeDeliveryOption(
+					Stock.GetParameterValue("codeDeliveryOption"), true);
+			String verificationCode = "";
+			if (Stock.GetParameterValue("codeDeliveryOption").trim()
+					.equalsIgnoreCase("EMAIL")) {
+				verificationCode = objAuth.getVerificationCode(false);
+			}
+			// Step 13
+			objAuth.submitVerificationCode(verificationCode, false, false);
+			//Web.clickOnElement(objAuth, "ALREADY HAVE A CODE?");
+			//objAuth.submitVerificationCode("74196385", false, false);
+			Web.clickOnElement(objAuth, "SIGN IN");
+
+			String[] sqlQuery = Stock.getTestQuery(Stock
+					.GetParameterValue("queryName"));
+
+			ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+			rs.first();
+			System.out.println(SSN);
+			String sDbSSN = rs.getString("SSN");
+			String sDbGroupId = rs.getString("GA_ID");
+			String sDbEmail = rs.getString("EMAIL_ADDRESS");
+			System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+			if(sDbSSN.equalsIgnoreCase(SSN))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"SSN is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"SSN is not matching", false);
+			}
+			if(sDbGroupId.equalsIgnoreCase(Stock.GetParameterValue("planNumber")))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"Plan Number is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"Plan Number is not matching", false);
+			}
+			if(sDbEmail.equalsIgnoreCase(Stock.GetParameterValue("EmailId")))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"EmailId is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"EmailId is not matching", false);
+			}
+			
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void NPDI_008_Register_a_ppt_exists_in_Easy_DB(int itr, Map<String, String> testdata) {
+
+		try {
+			System.out.println("Before"+itr);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			if(itr==1)
+			{
+				SSN = generateRandomSSN(9);
+			}
+			System.out.println(itr+"@@"+SSN);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			accLookup.get();
+
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			registration.setPasswordForPlan();
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015",Stock.GetParameterValue("divisionName"));
+			
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if (Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			// Step 6
+			accSetup.validateProfileSettinsPage();
+			// Step 7
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			if(itr==2)
+			{
+				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABCD");
+			}
+			else
+			{
+				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
+			}
+			
+			System.out.println(SSN + "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+
+			Web.waitForElement(objAuth, "Header Enhanced Security");
+			if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is not displayed", true);
+			}
+			// Step 8
+			Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+					+ "phone number or email address listed for your account.");
+			// Step 9
+			Common.isLabelDisplayed("Where should we send your code?");
+
+			if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+						true);
+			}
+			// Step 10
+			String[] deliveryMethodOptions = { "Choose delivery method",
+					"Text me: ***-***-9999", "Call me: ***-***-9999",
+					"Email: *******@gwl.com" };
+			objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+			// Step 11
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Thread.sleep(4000);
+			Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+			// Step 12
+			objAuth.selectCodeDeliveryOption(
+					Stock.GetParameterValue("codeDeliveryOption"), true);
+			String verificationCode = "";
+			if (Stock.GetParameterValue("codeDeliveryOption").trim()
+					.equalsIgnoreCase("EMAIL")) {
+				verificationCode = objAuth.getVerificationCode(false);
+			}
+			// Step 13
+			objAuth.submitVerificationCode(verificationCode, false, false);
+			Web.clickOnElement(objAuth, "SIGN IN");
+			
+			
+			//System.out.println(joinPlan.get(0)+"@@"+joinPlan.get(1));
+			if(itr==2)
+			{
+				
+				
+				String[] sqlQuery = Stock.getTestQuery(Stock
+						.GetParameterValue("queryName"));
+
+				//ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				int i=0;
+				while(rs.next())
+				{
+					
+					++i;
+					
+				}
+				System.out.println("Number of plans"+i);
+				
+				if(i==2)
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"2 plans are associated with the user", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"Plans mismatch", false);
+				}
+				
+			}
+			else
+			{
+				String[] sqlQuery = Stock.getTestQuery(Stock
+						.GetParameterValue("queryName"));
+
+				ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				rs.first();
+				String sDbSSN = rs.getString("SSN");
+				String sDbGroupId = rs.getString("GA_ID");
+				String sDbEmail = rs.getString("EMAIL_ADDRESS");
+				System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+				if(sDbSSN.equalsIgnoreCase(SSN))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"SSN is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"SSN is not matching", false);
+				}
+				if(sDbGroupId.equalsIgnoreCase(Stock.GetParameterValue("planNumber")))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"Plan Number is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"Plan Number is not matching", false);
+				}
+				if(sDbEmail.equalsIgnoreCase(Stock.GetParameterValue("EmailId")))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"EmailId is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"EmailId is not matching", false);
+				}
+			}
+			
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_009_Register_a_ppt_exists_in_Easy_DB(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			String[] sqlQuery = Stock.getTestQuery(Stock
+					.GetParameterValue("queryName"));
+
+			ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],
+					Stock.GetParameterValue("planNumber"));
+			rs.first();
+			
+			SSN = rs.getString("SSN");
+			System.out.println(SSN);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			accLookup.get();
+
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			registration.setPasswordForPlan();
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015",
+					"CLM");
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(registration, "LABEL WE FOUND YOU!");
+			registration.isLabelDisplayed("We found you!");
+			//Thread.sleep(5000);
+			
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_010_Register_a_ppt_exists_in_Easy_DB(int itr, Map<String, String> testdata) {
+
+		try {
+			System.out.println("Before"+itr);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			if(itr==1)
+			{
+				SSN = generateRandomSSN(9);
+			}
+			System.out.println(itr+"@@"+SSN);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			accLookup.get();
+
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			registration.setPasswordForPlan();
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015",Stock.GetParameterValue("divisionName"));
+			
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+
+			if(itr==1)
+			{
+				Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+				if (Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")) {
+
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Profile Settings' Page is displayed",
+							"'Profile Settings' Page is displayed", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Profile Settings' Page is displayed",
+							"'Profile Settings' Page is not displayed", true);
+				}
+				// Step 6
+				accSetup.validateProfileSettinsPage();
+				// Step 7
+				Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+						Stock.GetParameterValue("EmailId"));
+				Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+						Stock.GetParameterValue("MOBILEPHONENUMBER"));
+				
+				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
+				
+				
+				System.out.println(SSN + "ABC");
+				Web.setTextToTextBox("PASSWORD", accSetup,
+						Stock.GetParameterValue("PASSWORD"));
+				Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+						Stock.GetParameterValue("REENTERPASSWORD"));
+				Reporter.logEvent(
+						Status.INFO,
+						"Enter  details and click on Register button.",
+						"Submitted participant details and clicked on Register button",
+						true);
+				keyBoard.sendKeys(Keys.TAB).perform();
+				keyBoard.sendKeys(Keys.ENTER).perform();
+				// Web.clickOnElement(accSetup, "REGISTER");
+
+				Thread.sleep(10000);
+
+				Web.waitForElement(objAuth, "Header Enhanced Security");
+				if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Enhanced Security' Page is displayed",
+							"'Enhanced Security' Page is displayed", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Enhanced Security' Page is displayed",
+							"'Enhanced Security' Page is not displayed", true);
+				}
+				// Step 8
+				Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+						+ "phone number or email address listed for your account.");
+				// Step 9
+				Common.isLabelDisplayed("Where should we send your code?");
+
+				if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+							true);
+				}
+				// Step 10
+				String[] deliveryMethodOptions = { "Choose delivery method",
+						"Text me: ***-***-9999", "Call me: ***-***-9999",
+						"Email: *******@gwl.com" };
+				objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+				// Step 11
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Thread.sleep(4000);
+				Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+				// Step 12
+				objAuth.selectCodeDeliveryOption(
+						Stock.GetParameterValue("codeDeliveryOption"), true);
+				String verificationCode = "";
+				if (Stock.GetParameterValue("codeDeliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
+					verificationCode = objAuth.getVerificationCode(false);
+				}
+				// Step 13
+				objAuth.submitVerificationCode(verificationCode, false, false);
+				Web.clickOnElement(objAuth, "SIGN IN");
+			}
+			else
+			{
+				Thread.sleep(10000);
+
+				Web.waitForElement(objAuth, "Header Enhanced Security");
+				if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+
+					Reporter.logEvent(Status.PASS,
+							"Verify 'Enhanced Security' Page is displayed",
+							"'Enhanced Security' Page is displayed", true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"Verify 'Enhanced Security' Page is displayed",
+							"'Enhanced Security' Page is not displayed", true);
+				}
+				// Step 8
+				Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+						+ "phone number or email address listed for your account.");
+				// Step 9
+				Common.isLabelDisplayed("Where should we send your code?");
+
+				if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+							true);
+				}
+				// Step 10
+				String[] deliveryMethodOptions = { "Choose delivery method",
+						"Text me: ***-***-9999", "Call me: ***-***-9999",
+						"Email: *******@gwl.com" };
+				objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+				// Step 11
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Thread.sleep(4000);
+				Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+				// Step 12
+				objAuth.selectCodeDeliveryOption(
+						Stock.GetParameterValue("codeDeliveryOption"), true);
+				String verificationCode = "";
+				if (Stock.GetParameterValue("codeDeliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
+					verificationCode = objAuth.getVerificationCode(false);
+				}
+				// Step 13
+				objAuth.submitVerificationCode(verificationCode, false, false);
+				Web.clickOnElement(objAuth, "SIGN IN");
+				Thread.sleep(4000);
+				Web.waitForPageToLoad(Web.getDriver());
+				registration.isLabelDisplayed("Link accounts");
+				registration.isLabelDisplayed("We found an existing account for you. Please confirm the information below and click \"Continue\" to link your accounts.");
+				
+			}
+			
+			
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_011_Register_participant_doesnot_exists_inEASY_system(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			SSN = generateRandomSSN(9);
+			System.out.println(SSN);
+			String[] sqlQuery = Stock.getTestQuery(Stock
+					.GetParameterValue("queryGetRegisteredUser"));
+
+			ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("planNumber"));
+			rs.first();
+			String sExistingUsername = rs.getString("USERNAME");
+			System.out.println(sExistingUsername);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			accLookup.get();
+
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			registration.setPasswordForPlan();
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			registration.provideEmploymentInformation("12000", "12/12/2015",
+					Stock.GetParameterValue("divisionName"));
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if (Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			// Step 6
+			accSetup.validateProfileSettinsPage();
+			// Step 7
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			Web.setTextToTextBox("USERNAME", accSetup, sExistingUsername);
+			
+			
+			
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			//Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+			Common.isErrorMessageDisplayed("Username already in use.");
+			Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			Thread.sleep(10000);
+			//Web.waitForElement(objAuth, "Header Enhanced Security");
+			if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+				Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+						+ "phone number or email address listed for your account.");
+				// Step 9
+				Common.isLabelDisplayed("Where should we send your code?");
+
+				if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+				} else {
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+							"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+							true);
+				}
+				// Step 10
+				String[] deliveryMethodOptions = { "Choose delivery method",
+						"Text me: ***-***-9999", "Call me: ***-***-9999",
+						"Email: *******@gwl.com" };
+				objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+				// Step 11
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+				Thread.sleep(4000);
+				Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+				// Step 12
+				objAuth.selectCodeDeliveryOption(
+						Stock.GetParameterValue("codeDeliveryOption"), true);
+				String verificationCode = "";
+				if (Stock.GetParameterValue("codeDeliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
+					verificationCode = objAuth.getVerificationCode(false);
+				}
+				// Step 13
+				objAuth.submitVerificationCode(verificationCode, false, false);
+				Web.clickOnElement(objAuth, "SIGN IN");
+				
+			} 
+			// Step 8
+			
+
+			String getNewUser[] = Stock.getTestQuery(Stock
+					.GetParameterValue("queryGetNewUserInformation"));
+
+			ResultSet rsGetInfo = DB.executeQuery(getNewUser[0], getNewUser[1],SSN);
+			rsGetInfo.first();
+			System.out.println(SSN);
+			String sDbSSN = rsGetInfo.getString("SSN");
+			String sDbGroupId = rsGetInfo.getString("GA_ID");
+			String sDbEmail = rsGetInfo.getString("EMAIL_ADDRESS");
+			System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+			if(sDbSSN.equalsIgnoreCase(SSN))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"SSN is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"SSN is not matching", false);
+			}
+			if(sDbGroupId.equalsIgnoreCase(Stock.GetParameterValue("planNumber")))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"Plan Number is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"Plan Number is not matching", false);
+			}
+			if(sDbEmail.equalsIgnoreCase(Stock.GetParameterValue("EmailId")))
+			{
+				Reporter.logEvent(Status.PASS,
+						"Verify Database values",
+						"EmailId is matching", false);
+			}else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Verify Database values",
+						"EmailId is not matching", false);
+			}
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	@Test(dataProvider = "setData")
+	public void NPDI_013_Register_a_participant_End_to_End_flow(int itr, Map<String, String> testdata) {
+
+		try {
+			System.out.println("Before"+itr);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			if(itr==1)
+			{
+				SSN = generateRandomSSN(9);
+			}
+			System.out.println(itr+"@@"+SSN);
+			Actions keyBoard = new Actions(Web.getDriver());
+			LoginPage loginPage = new LoginPage();
+
+			AccountLookup accLookup = new AccountLookup(loginPage);
+			Registration registration = new Registration(accLookup);
+			AccountSetup accSetup = new AccountSetup();
+			TwoStepVerification objAuth = new TwoStepVerification(accSetup);
+			Enrollment enroll = new Enrollment(objAuth);
+			// Steps
+			// Step 1 & 2 - Navigate to Account lookup page by clicking on
+			// Register
+			// link
+			System.out.println("Before");
+			accLookup.get();
+			System.out.println("Before1");
+			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
+					"Navigation succeeded", true);
+
+			// Step 3
+			registration.setPasswordForPlan();
+			System.out.println("Before2");
+			accLookup.navigateToTab("I have a plan enrollment code");
+			accLookup.registerWithPlanEnrollmentCode(
+					Stock.GetParameterValue("planNumber"),
+					Stock.GetParameterValue("planEnrollmentCode"));
+			Web.waitForElement(registration, "Header Registration");
+			if (Web.isWebElementDisplayed(registration, "Header Registration")) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Registration' Page is displayed",
+						"'Registration' Page is not displayed", true);
+			}
+
+			// Step 4
+			registration.isLabelDisplayed("Provide personal information");
+			registration.isLabelDisplayed("Employment information");
+			registration.isLabelDisplayed("Provide mailing address");
+			// Step 5
+
+			registration.providePersonalInformation("ABC", "XYZ", "ABC",
+					"12/12/1998", "Male", SSN, "Married");
+			if(itr==2)
+				registration.provideEmploymentInformation("12000", "12/12/2015");
+			else
+				registration.provideEmploymentInformation("12000", "12/12/2015",Stock.GetParameterValue("divisionName"));
+			
+			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
+					"California", "95001", "United States");
+
+			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
+			if (Web.isWebElementDisplayed(accSetup, "HEADER PROFILE SETTINGS")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Profile Settings' Page is displayed",
+						"'Profile Settings' Page is not displayed", true);
+			}
+			// Step 6
+			accSetup.validateProfileSettinsPage();
+			// Step 7
+			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
+					Stock.GetParameterValue("EmailId"));
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("MOBILEPHONENUMBER"));
+			if(itr==2)
+			{
+				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABCD");
+			}
+			else
+			{
+				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
+			}
+			
+			System.out.println(SSN + "ABC");
+			Web.setTextToTextBox("PASSWORD", accSetup,
+					Stock.GetParameterValue("PASSWORD"));
+			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
+					Stock.GetParameterValue("REENTERPASSWORD"));
+			Reporter.logEvent(
+					Status.INFO,
+					"Enter  details and click on Register button.",
+					"Submitted participant details and clicked on Register button",
+					true);
+			keyBoard.sendKeys(Keys.TAB).perform();
+			keyBoard.sendKeys(Keys.ENTER).perform();
+			// Web.clickOnElement(accSetup, "REGISTER");
+
+			Thread.sleep(10000);
+
+			Web.waitForElement(objAuth, "Header Enhanced Security");
+			if (Web.isWebElementDisplayed(objAuth, "Header Enhanced Security")) {
+
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Enhanced Security' Page is displayed",
+						"'Enhanced Security' Page is not displayed", true);
+			}
+			// Step 8
+			Common.isTextFieldDisplayed("To confirm your identity, we will send a verification code to the "
+					+ "phone number or email address listed for your account.");
+			// Step 9
+			Common.isLabelDisplayed("Where should we send your code?");
+
+			if (Web.isWebElementDisplayed(objAuth, "CHOOSE DELIVERY METHOD")) {
+
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is displayed", true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify 'CHOOSE DELIVERY METHOD' Drop Down is displayed",
+						"'CHOOSE DELIVERY METHOD' Drop Down is not displayed",
+						true);
+			}
+			// Step 10
+			String[] deliveryMethodOptions = { "Choose delivery method",
+					"Text me: ***-***-9999", "Call me: ***-***-9999",
+					"Email: *******@gwl.com" };
+			objAuth.verifyDeliveryMethodAvailableOptions(deliveryMethodOptions);
+			// Step 11
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Web.clickOnElement(objAuth, "BUTTON SEND ME A CODE");
+			Thread.sleep(4000);
+			Common.isErrorMessageDisplayed("Please select a delivery option from the dropdown");
+			// Step 12
+			objAuth.selectCodeDeliveryOption(
+					Stock.GetParameterValue("codeDeliveryOption"), true);
+			String verificationCode = "";
+			if (Stock.GetParameterValue("codeDeliveryOption").trim()
+					.equalsIgnoreCase("EMAIL")) {
+				verificationCode = objAuth.getVerificationCode(false);
+			}
+			// Step 13
+			objAuth.submitVerificationCode(verificationCode, false, false);
+			Web.clickOnElement(objAuth, "SIGN IN");
+			
+			if(itr==2)
+			{
+				
+				
+				String[] sqlQuery = Stock.getTestQuery(Stock
+						.GetParameterValue("queryName"));
+
+				//ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				int i=0;
+				while(rs.next())
+				{
+					
+					++i;
+					
+				}
+				System.out.println("Number of plans"+i);
+				
+				if(i==2)
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"2 plans are associated with the user", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"Plans mismatch", false);
+				}
+				
+			
+				
+				enroll.selectCustomizeEnroll();
+				enroll.verifyPriorPlanContributionsPage();
+				
+				Web.waitForElement(enroll,"Prior Plan No");
+				Web.clickOnElement(enroll,"Prior Plan No");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				Web.waitForElement(enroll,"Prior Plan Continue");
+				Web.clickOnElement(enroll,"Prior Plan Continue");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				Deferrals defr = new Deferrals();
+				defr.click_Select_Your_Contribution_Rate();
+				defr.select_ContributionType("Split");
+				
+				
+				Web.waitForElement(defr,"Button Confirm And Continue");
+				Web.clickOnElement(defr,"Button Confirm And Continue"); 
+				
+				
+				Web.waitForPageToLoad(Web.getDriver());
+				/*Web.waitForElement(enroll, "Enrollment Continue");
+				Web.clickOnElement(enroll,"Enrollment Continue");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				Web.waitForElement(enroll, "My Contributions Confirm");
+				Web.clickOnElement(enroll,"My Contributions Confirm");
+				Web.waitForPageToLoad(Web.getDriver());*/
+				
+				Web.waitForElement(enroll, "Do it for me");
+				Web.clickOnElement(enroll,"Do it for me");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				
+				JavascriptExecutor jse = (JavascriptExecutor)Web.getDriver();
+				jse.executeScript("window.scrollBy(0,450)", "");
+				Web.waitForElement(enroll, "Retirement Continue");
+				Web.clickOnElement(enroll, "Retirement Continue");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				Web.waitForElement(enroll, "Button I Agree Enroll Now");
+				Web.clickOnElement(enroll,"Button I Agree Enroll Now");
+				Web.waitForPageToLoad(Web.getDriver());
+				Thread.sleep(20000);
+				
+				//enroll.isTextFieldDisplayed("Congratulations!");
+				
+				/*Web.waitForElement(enroll, "Add Beneficiaries");
+				Web.clickOnElement(enroll,"Add Beneficiaries");
+				Web.waitForPageToLoad(Web.getDriver());*/
+				jse.executeScript("window.scrollBy(0,450)", "");
+				Web.waitForElement(enroll, "View My Account Link");
+				Web.clickOnElement(enroll, "View My Account Link");
+				Web.waitForPageToLoad(Web.getDriver());
+				
+				/*Web.waitForElement(enroll, "Account Overview");
+				Web.clickOnElement(enroll,"Account Overview");
+				Web.waitForPageToLoad(Web.getDriver());*/
+				
+				Web.waitForElement(enroll,"Read Balance");
+				String sBalance = enroll.getElementText("Read Balance");
+				System.out.println(sBalance);
+				
+				if(sBalance.equalsIgnoreCase("$0.00"))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Account overview Page",
+							"Balance is matching", false);
+				}
+				else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Account overview Page",
+							"Balance is not matching", true);
+				}
+				
+				Web.waitForElement(enroll, "LOG OUT");
+				Web.clickOnElement(enroll,"LOG OUT");
+				
+			}
+			else
+			{
+				String[] sqlQuery = Stock.getTestQuery(Stock
+						.GetParameterValue("queryName"));
+
+				ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
+				rs.first();
+				String sDbSSN = rs.getString("SSN");
+				String sDbGroupId = rs.getString("GA_ID");
+				String sDbEmail = rs.getString("EMAIL_ADDRESS");
+				System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+				if(sDbSSN.equalsIgnoreCase(SSN))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"SSN is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"SSN is not matching", false);
+				}
+				if(sDbGroupId.equalsIgnoreCase(Stock.GetParameterValue("planNumber")))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"Plan Number is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"Plan Number is not matching", false);
+				}
+				if(sDbEmail.equalsIgnoreCase(Stock.GetParameterValue("EmailId")))
+				{
+					Reporter.logEvent(Status.PASS,
+							"Verify Database values",
+							"EmailId is matching", false);
+				}else
+				{
+					Reporter.logEvent(Status.FAIL,
+							"Verify Database values",
+							"EmailId is not matching", false);
+				}
+			}
+			
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", e
+					.getCause().getMessage(), true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					"Assertion Failed!!", true);
+
+		} finally {
+			try {
+
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	public void precondition() {
+		try {
+			String[] sqlQuery;
+			sqlQuery = Stock.getTestQuery("unlockParticipants");
+			DB.executeUpdate(sqlQuery[0], sqlQuery[1],
+					Stock.GetParameterValue("SSN"));
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+
+	}
+
 	@AfterSuite
 	public void cleanupSessions() {
 		lib.Web.getDriver().close();

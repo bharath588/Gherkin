@@ -239,4 +239,18 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		
 	} 
 	
+	public void verifyWebElementDisplayed(String fieldName) {
+
+		if (Web.isWebElementDisplayed(this.getWebElement(fieldName), true)) {
+
+			Reporter.logEvent(Status.PASS, "Verify \'" + fieldName
+					+ "\' is displayed", fieldName + " is displayed", false);
+
+		} else {
+			Reporter.logEvent(Status.FAIL, "Verify \'" + fieldName
+					+ "\' is displayed", fieldName + " is not displayed", false);
+		}
+
+	}
+	
 }

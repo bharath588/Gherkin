@@ -3,11 +3,12 @@ package pageobjects.userregistration;
 
 import java.util.List;
 
+import lib.DB;
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 
 import com.aventstack.extentreports.*;
-
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -77,7 +78,8 @@ public class Registration extends LoadableComponent<Registration> {
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message") private WebElement Err_inpSSN;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message[1]") private WebElement Err_inpSSN1;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message[2]") private WebElement Err_inpSSN2;
-
+	@FindBy(id = "divisionInput")
+	private WebElement inpDivisionName;
 	private String textField="//*[contains(text(),'webElementText')]";
 	
 	/** Empty args constructor
@@ -194,27 +196,7 @@ public class Registration extends LoadableComponent<Registration> {
 		
 	}
 	
-	/**Method to set details under 'Registration -Provide mailing address
-	 * 
-	 */
 	
-	public void provideMailingAddress(String addressLine1,
-										String addressLine2,
-										String city,
-										String state,
-										String zip,
-										String country){
-		
-		Web.setTextToTextBox(inpAddressLine1, addressLine1);
-		Web.setTextToTextBox(inpAddressLine2, addressLine2);
-		Web.setTextToTextBox(inpCity, city);
-		Web.selectDropDownOption(drpState, state);
-		Web.setTextToTextBox(inpZipcode, zip);
-		Web.selectDropDownOption(drpCountry, country);
-		Web.getDriver().switchTo().defaultContent();
-		Web.clickOnElement(btnSubmit);
-				
-	}
 	
 	/**
 	 * Method to verify Label is Displayed
@@ -1180,4 +1162,56 @@ public class Registration extends LoadableComponent<Registration> {
 				}
 							
 				}
+		
+		public void setPasswordForPlan() throws Exception {
+			System.out.println("Insdie SQL");
+			System.out.println(Stock.GetParameterValue("planNumber"));
+			String[] sqlQuery = Stock.getTestQuery(Stock
+					.GetParameterValue("updatePassword"));
+
+			DB.executeQuery(sqlQuery[0], sqlQuery[1],
+					Stock.GetParameterValue("planEnrollmentCode"),
+					Stock.GetParameterValue("planNumber"));
+
+			DB.executeUpdate(sqlQuery[0], "commit");
+			
+			System.out.println("Outside SQL");
+		}
+		/**
+		 * Method to set details under 'Registration -Employment information
+		 * 
+		 */
+
+		public void provideEmploymentInformation(String annualIncome,
+				String dateOfHire, String... divisionName) {
+			String[] sDivision = divisionName;
+			Web.setTextToTextBox(inpAnnualIncome, annualIncome);
+			Web.setTextToTextBox(inpDateOfHire, dateOfHire);
+			System.out.println(divisionName.length);
+			if (divisionName.length != 0)
+				Web.selectDropDownOption(inpDivisionName, sDivision[0]);
+
+		}
+
+		/**
+		 * Method to set details under 'Registration -Provide mailing address
+		 * 
+		 */
+
+		public void provideMailingAddress(String addressLine1, String addressLine2,
+				String city, String state, String zip, String country) {
+
+			Web.setTextToTextBox(inpAddressLine1, addressLine1);
+			Web.setTextToTextBox(inpAddressLine2, addressLine2);
+			Web.setTextToTextBox(inpCity, city);
+			Web.selectDropDownOption(drpState, state);
+			Web.setTextToTextBox(inpZipcode, zip);
+			Web.selectDropDownOption(drpCountry, country);
+			Web.getDriver().switchTo().defaultContent();
+			System.out.println("Before");
+			Web.clickOnElement(btnSubmit);
+			System.out.println("After");
+		}
+
+
 }

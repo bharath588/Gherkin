@@ -65,6 +65,15 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[contains(@class,'participation-agreement-modal')]//div[@class='modal-content']") private WebElement txtModalContent;
 	@FindBy(xpath="//a[text()[normalize-space()='I Agree']]") private WebElement lnkIAgree;
 	@FindBy(xpath="//div[contains(@ng-if,'investmentOptions')]//h4") private WebElement txtInvestmentOption;
+	@FindBy(id="btnSubmit submit") private WebElement btnPriorPlanContinue;
+	@FindBy(id="buttonContinue submit") private WebElement btnMyContributionConfirm;
+	@FindBy(id="do-it-for-me-link") private WebElement btnDoItForMe;
+	@FindBy(xpath="//button[@class='btn btn-primary pull-right']") private WebElement btnRetirementContinue;
+	@FindBy(linkText="Next, Add Beneficiaries") private WebElement lnkNextBeneficiaries;
+	@FindBy(xpath="//span[@class='currency']") private WebElement txtBalance;
+	@FindBy(partialLinkText="Account overview") private WebElement lnkAccountOverview;
+	@FindBy(id="buttonContinue") private WebElement btnEnrollmentContinue;
+	@FindBy(id="submit") private WebElement lnkViewMyAccount;
 
 	
 	private String textField="//*[contains(text(),'webElementText')]";
@@ -178,6 +187,35 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		if (fieldName.trim().equalsIgnoreCase("Link I Agree")) {
 			return this.lnkIAgree;
 		}
+		
+		if (fieldName.trim().equalsIgnoreCase("Prior Plan Continue")) {
+			return this.btnPriorPlanContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Enrollment Continue")) {
+			return this.btnEnrollmentContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("My Contributions Confirm")) {
+			return this.btnMyContributionConfirm;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Do it for me")) {
+			return this.btnDoItForMe;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Retirement Continue")) {
+			return this.btnRetirementContinue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Add Beneficiaries")) {
+			return this.lnkNextBeneficiaries;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Account Overview")) {
+			return this.lnkAccountOverview;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Read Balance")) {
+			return this.txtBalance;
+		}
+		if (fieldName.trim().equalsIgnoreCase("View My Account Link")) {
+			return this.lnkViewMyAccount;
+		}
+		
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")
 						|| fieldName.trim().equalsIgnoreCase("LOGOUT")) {
@@ -588,7 +626,9 @@ return isTextDisplayed;
 		 return contributionPecent;
 	}
 	 
-	 
-	
+	 public String getElementText(String fieldName) {
+			return Web.getWebElementText(this.getWebElement(fieldName)).trim();
+		}
+		
 	    
 }
