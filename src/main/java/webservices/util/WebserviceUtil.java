@@ -118,8 +118,9 @@ public class WebserviceUtil {
 		{
 			salDetail.add(queryResultSet.getString("sal_amt"));
 			salDetail.add(queryResultSet.getString("encrypted_sal_amt"));
+			salDetail.add(queryResultSet.getString("dft_mngd_accts_income_amt"));
 		}
-		System.out.println("Salary details : "+salDetail.get(0)+", "+salDetail.get(1));
+		System.out.println("Salary details : "+salDetail.get(0)+", "+salDetail.get(1)+", "+salDetail.get(2));
 		return salDetail;
 	}
 
