@@ -7,10 +7,12 @@
 	<test name="LOGIN">
 		<classes>
 
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+		   <class name="app.pptweb.testcases.liat.liattestcases">
 				<methods>
-					<include name="Edit_MyContribution" > <parameter name="ManualTCName" 
-						value="Edit_MyContribution"> </parameter> </include> 
+					<include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
+                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security">
+                    </parameter>
+                    </include>
 				</methods>
 			</class>
 			

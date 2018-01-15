@@ -52,7 +52,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	// private WebElement lblUserName;
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	private WebElement lblUserName;
-	@FindBy(xpath = "//h1[text()[normalize-space()='My investments']]")
+	@FindBy(xpath = "//h1[text()[normalize-space()='My investments' or normalize-space()='My Investments']]")
 	private WebElement lblMyInvestments;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
