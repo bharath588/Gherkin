@@ -10,14 +10,16 @@
 		  <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                    
-                  
+                  <!--  <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter></include>
+                    
                   	<include name="Login_005_with_out_eDelivery_as_Electronic_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
+                     <parameter name="ManualTCName" value="SIT_Login_005_with out e-Delivery as Electronic_Greater than 180days"></parameter>
                     </include>
                     
-                    <!-- <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+                   <include name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC02_Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption"></parameter></include>
-                	
+                	 -->
                 	 <include name="Login_004_eDelivery_with_two_plans_with_legacy_and_next_gen_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_004_e-Delivery with two plans with legacy and next gen_Greater than 180days"></parameter>
                     </include>
@@ -47,7 +49,7 @@
                      <include name="Pre_Login_Page_footer_links_check">
                     <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check"></parameter>
                     </include>
-                  -->
+                  
                     
                 </methods>
             </class>  

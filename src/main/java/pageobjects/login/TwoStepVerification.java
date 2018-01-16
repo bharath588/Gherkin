@@ -64,6 +64,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
 	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
+	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'Save')]]") private WebElement btnSave;
 	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
@@ -228,6 +229,9 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 		if (fieldName.trim().equalsIgnoreCase("CONTINUE CONTACT INFO PAGE")) {
 			return this.btnContinue1;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Save")) {
+			return this.btnSave;
 		}
 		if (fieldName.trim().equalsIgnoreCase("BUTTON CONTINUE TO NEXTGEN")) {
 			return this.btnViewNextGen;

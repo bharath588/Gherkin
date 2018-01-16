@@ -1325,7 +1325,7 @@ public class logintestcases {
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "Button Save", true);
            
            if(isMatching){
 				lib.Reporter
@@ -1364,7 +1364,7 @@ public class logintestcases {
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.clickOnElement(twoStepVerification, "Button Save");
            Web.waitForElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            
@@ -1687,7 +1687,7 @@ public class logintestcases {
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "Button Save", true);
            
            if(isMatching){
 				lib.Reporter
@@ -1726,7 +1726,7 @@ public class logintestcases {
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.clickOnElement(twoStepVerification, "Button Save");
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
@@ -2050,7 +2050,7 @@ public class logintestcases {
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "Button Save", true);
            
            if(isMatching){
 				lib.Reporter
@@ -2069,7 +2069,7 @@ public class logintestcases {
 			}
            	// Step 7
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.clickOnElement(twoStepVerification, "Button Save");
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
@@ -2391,7 +2391,7 @@ public class logintestcases {
 						"Verify 'AGREEMENT FROM' Is Displayed",
 						"'AGREEMENT FROM' Is Not Displayed",true);
 			}
-           isMatching= Web.isWebElementDisplayed(twoStepVerification, "CONTINUE CONTACT INFO PAGE", true);
+           isMatching= Web.isWebElementDisplayed(twoStepVerification, "Button Save", true);
            
            if(isMatching){
 				lib.Reporter
@@ -2413,7 +2413,7 @@ public class logintestcases {
          
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
+           Web.clickOnElement(twoStepVerification, "Button Save");
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
