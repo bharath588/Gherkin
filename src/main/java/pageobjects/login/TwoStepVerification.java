@@ -15,6 +15,7 @@ import lib.Web;
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -62,7 +63,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
 	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
-	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')] OR ./span[contains(text(),'Save')]]") private WebElement btnContinue1;
+	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
@@ -489,4 +490,16 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		}
 
 	}
+	/**
+	 * <pre>
+	 * Method to Click on Continue Button in Confirm your contact information page
+	 * </pre>
+	 * 
+	 */
+	public void clickContinueInContactInfoPage() {
+		Web.waitForElement(btnContinue1);
+		Actions action = new Actions(Web.getDriver());
+		action.moveToElement(btnContinue1).click(btnContinue1).build().perform();
+	}
+
 }
