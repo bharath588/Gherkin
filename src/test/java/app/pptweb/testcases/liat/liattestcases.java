@@ -64,7 +64,7 @@ public class liattestcases {
 			LandingPage homePage = new LandingPage(mfaPage);
 			RetirementIncome retirement = new RetirementIncome(homePage);
 			retirement.get();
-			
+			homePage.dismissPopUps(true, true);
 			Reporter.logEvent(Status.INFO, "Navigate to Retirement Incomep page.", "Retirement Income page is displayed", true);
 			Web.clickOnElement(retirement, "Plan Savings");
 			//verify if we are able to navigate to Plan Savings Tab
@@ -188,6 +188,7 @@ public class liattestcases {
 			} catch (InterruptedException e) {				
 				
 			}
+			landing.dismissPopUps(true, true);
 			//Verifying if Retirement Income Page is loaded.
 			if(Web.isWebElementDisplayed(retirementIncome, "Estimated Retirement Income"))
 			{

@@ -306,7 +306,7 @@ public class AccountLookup extends LoadableComponent<AccountLookup> {
 		Web.waitForElement(inpPlanNumber);
 		Web.setTextToTextBox(inpPlanNumber, planNumber);
 		Web.setTextToTextBox(inpPlanEnrollmentCode, planEnrollmentCode);
-		Web.clickOnElement(btnContinue);
+		Web.clickOnElement(btnContinuehavePlanEnrollCode);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {

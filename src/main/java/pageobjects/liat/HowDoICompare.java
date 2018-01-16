@@ -180,6 +180,7 @@ private WebElement getWebElement(String fieldName) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			try{
 			System.out.println(Web.isWebElementDisplayed(this.btnViewDetails));
 			if (Web.isWebElementDisplayed(this.btnViewDetails)) {
 				
@@ -194,7 +195,11 @@ private WebElement getWebElement(String fieldName) {
 				}
 								
 			}else{
-				throw new Error("View Details button on HDIC page not desplayed, Verify the SSN(Test Data) used");
+				throw new Error("View Details button on HDIC page not displayed, Verify the SSN(Test Data) used");
+			}
+			}
+			catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 		/** Method to get the list of values for Contribution Rate.

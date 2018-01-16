@@ -269,6 +269,9 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (fieldName.trim().equalsIgnoreCase("Button Close WithOut Enrolling")) {
 			return this.btnCloseWithOutEnrolling;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Link Dismiss")) {
+			return this.lnkDismiss;
+		}
 
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",

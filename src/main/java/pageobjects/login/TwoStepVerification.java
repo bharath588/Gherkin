@@ -53,8 +53,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath="//h1[contains(text(),'Confirm your contact information')]") private WebElement txtConfirmContactInfo;
 	@FindBy(xpath="//p[contains(@ng-if,'editContactInfoAllowed')]") private WebElement txtConfirmIdentity;
 	@FindBy(xpath="//div[contains(text(),'Change communication preference')]") private WebElement txtChangeCommuniPrefer;
-	@FindBy(xpath="//label[@for='pptConsentForElectronic']") private WebElement txtYesIPrefer;
-	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private WebElement inpPlanName;
+	@FindBy(xpath="//label[contains(@for,'pptConsentForElectronic')]") private WebElement txtYesIPrefer;
+	@FindBy(xpath="//input[contains(@id,'pptConsentForElectronic')]") private WebElement inpPlanName;
 	@FindBy(xpath="//div[@class='checkbox']//label") private WebElement txtPlanName;
 	@FindBy(xpath=".//*[@id='emailChoice']") private WebElement drpEmail;
 	@FindBy(className="document-review") private WebElement txtagreementForm;

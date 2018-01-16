@@ -258,6 +258,8 @@ public class logintestcases {
 			}
 
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
@@ -541,6 +543,8 @@ public class logintestcases {
 			}
 
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 
@@ -1067,6 +1071,8 @@ public class logintestcases {
 						"Landing page is not displayed \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
 			}
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
@@ -1237,7 +1243,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           
+           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -1365,7 +1371,7 @@ public class logintestcases {
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
            Web.clickOnElement(twoStepVerification, "Button Save");
-           Web.waitForElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
+         if(Web.isWebEementEnabled(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            
            //Step 9
@@ -1425,6 +1431,8 @@ public class logintestcases {
 			
 			
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+			Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
@@ -1599,7 +1607,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           
+           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -1790,6 +1798,8 @@ public class logintestcases {
 			
 			
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
@@ -1962,7 +1972,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           
+           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN");
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -2132,6 +2142,8 @@ public class logintestcases {
 			
 			
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
@@ -2303,7 +2315,7 @@ public class logintestcases {
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");
-           
+           Web.waitForElement(twoStepVerification, "EMAIL DROP DOWN"); 
            isMatching= Web.isWebElementDisplayed(twoStepVerification, "Label Communication Preference", true);
            
            if(isMatching){
@@ -2477,6 +2489,8 @@ public class logintestcases {
 			
 			
 			// Logout if opted
+			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
+				Web.clickOnElement(landingPage, "Link Dismiss");
 			landingPage.logout(true);
 
 		} catch (Exception e) {
