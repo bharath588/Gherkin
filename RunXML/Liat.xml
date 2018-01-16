@@ -32,11 +32,8 @@
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC008_To verify Retirement Income tab_% of my goal section">
                     </parameter>
                     </include> 
-                  <include name="HCC_TC009_To_verify_Health_care_costs">
-                    <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs">
-                    </parameter>
-                    </include> 
-                
+                  
+                    
                     <include name="HDIC_TC010_To_verify_How_do_I_compare_tab">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_HV_TC010_To verify How do I compare tab">
                     </parameter>
@@ -77,17 +74,22 @@
 					<parameter name="ManualTCName" value="Liat_Verify_HowDoICompareTab_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values">
                     </parameter>
                     </include>
-				
-					
+					<include name="HCC_TC009_To_verify_Health_care_costs">
+						<parameter name="ManualTCName"
+							value="SIT_ParticipantWeb_HV_TC009_To verify Health care costs_Prod">
+						</parameter>
+					</include>
+                
+					   <include name="Verify_Health_care_costs_helpful_links" >
+					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
+                    </parameter>
+                    </include>
 					<include name="Verify_Tour_Link" >
 					<parameter name="ManualTCName" value="LIAT_Verify_Tour_Link">
                     </parameter>
                     </include>
                     
-                      <include name="Verify_Health_care_costs_helpful_links" >
-					<parameter name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links">
-                    </parameter>
-                    </include>
+                   
                 </methods>
             </class>
             

@@ -1010,15 +1010,17 @@ public class logintestcases {
 						"Verify Country Code Is Displayed",
 						"Country Code Is Not Displayed",true);
 			}
-           Web.setTextToTextBox("INPUT PERSONAL EMAIL", twoStepVerification, Stock.GetParameterValue("Email"));
-           Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
-           Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
+          // Web.setTextToTextBox("INPUT PERSONAL EMAIL", twoStepVerification, Stock.GetParameterValue("Email"));
+          // Web.selectDropDownOption(twoStepVerification, "DROP DOWN COUNTRY", Stock.GetParameterValue("Country"), true);
+          // Web.setTextToTextBox("INPUT PHONE NUMBER", twoStepVerification, Stock.GetParameterValue("phoneNo"));
            //Step5
-          Web.getDriver().switchTo().defaultContent();
+         // Web.getDriver().switchTo().defaultContent();
+           Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
            Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
            Thread.sleep(6000);
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
+         
            
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
