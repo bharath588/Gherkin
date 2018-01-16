@@ -110,10 +110,10 @@ public class WebserviceUtil {
 		return "";
 	}
 
-	public List<String> getSalDetails(String ind_Id, String ga_Id) throws Exception
+	public List<String> getSalDetails(String ind_Id, String ga_Id, String dbName) throws Exception
 	{
 		List<String> salDetail = new ArrayList<String>();
-		ResultSet queryResultSet=DB.executeQuery("PNP", Stock.getTestQuery("getSalDetails")[1], ga_Id.split("-")[0].toString(), ind_Id);
+		ResultSet queryResultSet=DB.executeQuery(dbName, Stock.getTestQuery("getSalDetails")[1], ga_Id.split("-")[0].toString(), ind_Id);
 		if(queryResultSet.next())
 		{
 			salDetail.add(queryResultSet.getString("sal_amt"));
@@ -124,11 +124,11 @@ public class WebserviceUtil {
 		return salDetail;
 	}
 
-	public void doSalSetup(String ind_Id, String ga_Id, String salAmt, String encryptSal, String defaultSalAmt) throws Exception
+	public void doSalSetup(String ind_Id, String ga_Id, String salAmt, String encryptSal, String defaultSalAmt, String dbName) throws Exception
 	{
-		DB.executeUpdate("PNP", Stock.getTestQuery("updateSalAmt")[1], salAmt, ga_Id.split("-")[0].toString(), ind_Id);
-		DB.executeUpdate("PNP", Stock.getTestQuery("updateEncryptSalAmt")[1], encryptSal, ga_Id.split("-")[0].toString(), ind_Id);
-		DB.executeUpdate("PNP", Stock.getTestQuery("doSalAmtSetup")[1], defaultSalAmt, ga_Id);
+		DB.executeUpdate(dbName, Stock.getTestQuery("updateSalAmt")[1], salAmt, ga_Id.split("-")[0].toString(), ind_Id);
+		DB.executeUpdate(dbName, Stock.getTestQuery("updateEncryptSalAmt")[1], encryptSal, ga_Id.split("-")[0].toString(), ind_Id);
+		DB.executeUpdate(dbName, Stock.getTestQuery("doSalAmtSetup")[1], defaultSalAmt, ga_Id);
 	}
 	
 	/**<pre>

@@ -203,6 +203,9 @@ public class Globals {
 					public static String GC_REMOTE_OUTPUT_PATH="";
 					public static String GC_REMOTE_INPUT_PATH="";    	  
 					public static String GC_REMOTE_ARCHIVE_PATH="";
+					public static final String GC_DEFAULT_PROSPECT_FILE_LOG_PATTERN="";
+				   public static final String	GC_OPTOUT_PROSPECT_FILE_NAMEPATTERN="";
+				   public static final String GC_OPTOUT_PROSPECT_FILE_LOG_PATTERN="";
 					/*Before Using these Remote Output, Input and Archive variables, 
 					 * call initializeRemoteDirectoryPath() method from SFTP Utils Call to initialize values
 					 */
@@ -222,6 +225,9 @@ public class Globals {
         			public static String GC_OPTOUT_LOG_FILE_PATTERN=null;
 					public static  Map<String, String> databaseConnectionStrings;
 					public static final String option_UserDefault = "AS_USER_DEFINED";
+					 public static final String  GC_DEFAULT_PROSPECT_FILE_NAMEPATTERN="";
+					 public static final String GC_OFFERLETTER_LOG_FILE_PATTERN="offrltr";
+				  	 public static final String GC_OFFER_LETTER_FILE_NAME_PATTERN="";
 					//	public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
 
 					public static void initializeDbConnectionStrings(String dbType){
