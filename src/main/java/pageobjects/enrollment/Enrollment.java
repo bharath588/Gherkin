@@ -45,7 +45,8 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//div[contains(@class,'title')]//p") private WebElement txtPriorContribution;
 	@FindBy(xpath="//label[./input[@id='radioPreviousContributionYes']]/span") private WebElement inpPriorPlanYes;
 	@FindBy(xpath="//label[./input[@id='radioPreviousContributionNo']]/span") private WebElement inpPriorPlanNo;
-	@FindBy(xpath="//button[contains(text(),'Continue')]") private WebElement btnContinue;
+	//@FindBy(xpath="//button[contains(text(),'Continue')]") private WebElement btnContinue;
+	@FindBy(xpath="//span[contains(text(),'Continue')]") private WebElement btnContinue;
 	@FindBy(id="skipButton") private WebElement btnSkip;
 	@FindBy(xpath="//button[text()[normalize-space()='Back']]") private WebElement btnBack;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
@@ -214,6 +215,9 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("View My Account Link")) {
 			return this.lnkViewMyAccount;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Prior Plan No")) {
+			return this.inpPriorPlanNo;
 		}
 		
 		// Log out

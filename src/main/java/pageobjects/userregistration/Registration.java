@@ -80,6 +80,8 @@ public class Registration extends LoadableComponent<Registration> {
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message[2]") private WebElement Err_inpSSN2;
 	@FindBy(id = "divisionInput")
 	private WebElement inpDivisionName;
+	@FindBy(xpath = "//h1[contains(text(),'We found you!')]")
+	private WebElement lblFoundYou;
 	private String textField="//*[contains(text(),'webElementText')]";
 	
 	/** Empty args constructor
@@ -156,6 +158,9 @@ public class Registration extends LoadableComponent<Registration> {
 		else if(fieldName.trim().equalsIgnoreCase("MARITAL STATUS")) {
 			return this.selMaritalStatus;
 			}
+		if (fieldName.trim().equalsIgnoreCase("LABEL WE FOUND YOU!")) {
+			return this.lblFoundYou;
+		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '" + fieldName + "'", 
 				"No WebElement mapped for this field\nPage: <b>" + this.getClass().getName() + "</b>", false);
 		return null;
@@ -1164,8 +1169,7 @@ public class Registration extends LoadableComponent<Registration> {
 				}
 		
 		public void setPasswordForPlan() throws Exception {
-			System.out.println("Insdie SQL");
-			System.out.println(Stock.GetParameterValue("planNumber"));
+			
 			String[] sqlQuery = Stock.getTestQuery(Stock
 					.GetParameterValue("updatePassword"));
 
@@ -1175,7 +1179,7 @@ public class Registration extends LoadableComponent<Registration> {
 
 			DB.executeUpdate(sqlQuery[0], "commit");
 			
-			System.out.println("Outside SQL");
+			
 		}
 		/**
 		 * Method to set details under 'Registration -Employment information
@@ -1208,9 +1212,9 @@ public class Registration extends LoadableComponent<Registration> {
 			Web.setTextToTextBox(inpZipcode, zip);
 			Web.selectDropDownOption(drpCountry, country);
 			Web.getDriver().switchTo().defaultContent();
-			System.out.println("Before");
+			
 			Web.clickOnElement(btnSubmit);
-			System.out.println("After");
+			
 		}
 
 

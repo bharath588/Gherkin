@@ -3905,7 +3905,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
 					Stock.GetParameterValue("MOBILEPHONENUMBER"));
 			Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
-			System.out.println(SSN + "ABC");
+			
 			Web.setTextToTextBox("PASSWORD", accSetup,
 					Stock.GetParameterValue("PASSWORD"));
 			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
@@ -3981,11 +3981,11 @@ Web.clickOnElement(objAuth, "SIGN IN");
 
 			ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],SSN);
 			rs.first();
-			System.out.println(SSN);
+			
 			String sDbSSN = rs.getString("SSN");
 			String sDbGroupId = rs.getString("GA_ID");
 			String sDbEmail = rs.getString("EMAIL_ADDRESS");
-			System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+			
 			if(sDbSSN.equalsIgnoreCase(SSN))
 			{
 				Reporter.logEvent(Status.PASS,
@@ -4047,7 +4047,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 	public void NPDI_008_Register_a_ppt_exists_in_Easy_DB(int itr, Map<String, String> testdata) {
 
 		try {
-			System.out.println("Before"+itr);
+			
 			Reporter.initializeReportForTC(
 					itr,
 					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
@@ -4064,7 +4064,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			{
 				SSN = generateRandomSSN(9);
 			}
-			System.out.println(itr+"@@"+SSN);
+			
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
@@ -4139,7 +4139,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
 			}
 			
-			System.out.println(SSN + "ABC");
+			
 			Web.setTextToTextBox("PASSWORD", accSetup,
 					Stock.GetParameterValue("PASSWORD"));
 			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
@@ -4208,7 +4208,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			Web.clickOnElement(objAuth, "SIGN IN");
 			
 			
-			//System.out.println(joinPlan.get(0)+"@@"+joinPlan.get(1));
+			
 			if(itr==2)
 			{
 				
@@ -4225,7 +4225,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 					++i;
 					
 				}
-				System.out.println("Number of plans"+i);
+				
 				
 				if(i==2)
 				{
@@ -4251,7 +4251,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				String sDbSSN = rs.getString("SSN");
 				String sDbGroupId = rs.getString("GA_ID");
 				String sDbEmail = rs.getString("EMAIL_ADDRESS");
-				System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+				
 				if(sDbSSN.equalsIgnoreCase(SSN))
 				{
 					Reporter.logEvent(Status.PASS,
@@ -4333,7 +4333,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			rs.first();
 			
 			SSN = rs.getString("SSN");
-			System.out.println(SSN);
+			
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
@@ -4411,7 +4411,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 	public void NPDI_010_Register_a_ppt_exists_in_Easy_DB(int itr, Map<String, String> testdata) {
 
 		try {
-			System.out.println("Before"+itr);
+			
 			Reporter.initializeReportForTC(
 					itr,
 					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
@@ -4428,7 +4428,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			{
 				SSN = generateRandomSSN(9);
 			}
-			System.out.println(itr+"@@"+SSN);
+			
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
@@ -4500,7 +4500,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
 				
 				
-				System.out.println(SSN + "ABC");
+				
 				Web.setTextToTextBox("PASSWORD", accSetup,
 						Stock.GetParameterValue("PASSWORD"));
 				Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
@@ -4671,14 +4671,14 @@ Web.clickOnElement(objAuth, "SIGN IN");
 					"Test Data used for this Test Case:", printTestData(),
 					false);
 			SSN = generateRandomSSN(9);
-			System.out.println(SSN);
+			
 			String[] sqlQuery = Stock.getTestQuery(Stock
 					.GetParameterValue("queryGetRegisteredUser"));
 
 			ResultSet rs = DB.executeQuery(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("planNumber"));
 			rs.first();
 			String sExistingUsername = rs.getString("USERNAME");
-			System.out.println(sExistingUsername);
+			
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
@@ -4820,11 +4820,11 @@ Web.clickOnElement(objAuth, "SIGN IN");
 
 			ResultSet rsGetInfo = DB.executeQuery(getNewUser[0], getNewUser[1],SSN);
 			rsGetInfo.first();
-			System.out.println(SSN);
+			
 			String sDbSSN = rsGetInfo.getString("SSN");
 			String sDbGroupId = rsGetInfo.getString("GA_ID");
 			String sDbEmail = rsGetInfo.getString("EMAIL_ADDRESS");
-			System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+			
 			if(sDbSSN.equalsIgnoreCase(SSN))
 			{
 				Reporter.logEvent(Status.PASS,
@@ -4884,7 +4884,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 	public void NPDI_013_Register_a_participant_End_to_End_flow(int itr, Map<String, String> testdata) {
 
 		try {
-			System.out.println("Before"+itr);
+			
 			Reporter.initializeReportForTC(
 					itr,
 					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
@@ -4901,7 +4901,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			{
 				SSN = generateRandomSSN(9);
 			}
-			System.out.println(itr+"@@"+SSN);
+			
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
 
@@ -4914,15 +4914,15 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			// Step 1 & 2 - Navigate to Account lookup page by clicking on
 			// Register
 			// link
-			System.out.println("Before");
+			
 			accLookup.get();
-			System.out.println("Before1");
+			
 			Reporter.logEvent(Status.PASS, "Navigate to Account Lookup page",
 					"Navigation succeeded", true);
 
 			// Step 3
 			registration.setPasswordForPlan();
-			System.out.println("Before2");
+			
 			accLookup.navigateToTab("I have a plan enrollment code");
 			accLookup.registerWithPlanEnrollmentCode(
 					Stock.GetParameterValue("planNumber"),
@@ -4981,7 +4981,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				Web.setTextToTextBox("USERNAME", accSetup, SSN + "ABC");
 			}
 			
-			System.out.println(SSN + "ABC");
+			
 			Web.setTextToTextBox("PASSWORD", accSetup,
 					Stock.GetParameterValue("PASSWORD"));
 			Web.setTextToTextBox("RE-ENTER PASSWORD", accSetup,
@@ -5065,7 +5065,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 					++i;
 					
 				}
-				System.out.println("Number of plans"+i);
+				
 				
 				if(i==2)
 				{
@@ -5083,6 +5083,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			
 				
 				enroll.selectCustomizeEnroll();
+				//Thread.sleep(5000);
 				enroll.verifyPriorPlanContributionsPage();
 				
 				Web.waitForElement(enroll,"Prior Plan No");
@@ -5143,7 +5144,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				
 				Web.waitForElement(enroll,"Read Balance");
 				String sBalance = enroll.getElementText("Read Balance");
-				System.out.println(sBalance);
+				
 				
 				if(sBalance.equalsIgnoreCase("$0.00"))
 				{
@@ -5172,7 +5173,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				String sDbSSN = rs.getString("SSN");
 				String sDbGroupId = rs.getString("GA_ID");
 				String sDbEmail = rs.getString("EMAIL_ADDRESS");
-				System.out.println(sDbSSN+sDbGroupId+sDbEmail);
+				
 				if(sDbSSN.equalsIgnoreCase(SSN))
 				{
 					Reporter.logEvent(Status.PASS,
