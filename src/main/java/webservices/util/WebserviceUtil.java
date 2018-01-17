@@ -113,7 +113,7 @@ public class WebserviceUtil {
 	public List<String> getSalDetails(String ind_Id, String ga_Id, String dbName) throws Exception
 	{
 		List<String> salDetail = new ArrayList<String>();
-		ResultSet queryResultSet=DB.executeQuery(dbName, Stock.getTestQuery("getSalDetails")[1], ga_Id.split("-")[0].toString(), ind_Id);
+		ResultSet queryResultSet=DB.executeQuery(dbName, Stock.getTestQuery("getSalDetails")[1], ga_Id.split("-")[0].toString(), ind_Id, ga_Id);
 		if(queryResultSet.next())
 		{
 			salDetail.add(queryResultSet.getString("sal_amt"));
