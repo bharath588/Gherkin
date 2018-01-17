@@ -40,8 +40,20 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[@id='confirmPasswordInput']") private WebElement txtReEnterPassword;
 	@FindBy(xpath=".//*[@id='accountRecoveryContinue']") private WebElement btnContinueAccRecovery;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	 @FindBy(xpath = "//img[@class='site-logo']")
+	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	 
+	@FindBy(id = "passwordId")
+	private WebElement txtCurrentPassword;
+	@FindBy(id = "newPasswordId")
+	private WebElement txtNewPassword;
+	@FindBy(id = "confirmPasswordId")
+	private WebElement txtReEnterPasswordBox;
+
+	@FindBy(xpath = "//input[@id='submit']")
+	private WebElement lnkSave;
+	@FindBy(xpath = ".//*[text()[normalize-space()='Cancel']]")
+	private WebElement lnkCancel;
 	
 	/** Empty args constructor
 	 * 
@@ -103,6 +115,21 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 		
 		if (fieldName.trim().equalsIgnoreCase("RETURN TO LOGIN")) {
 			return this.lnkReturnToLogin;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CURRENT PASSWORD")) {
+			return this.txtCurrentPassword;
+		}
+		if (fieldName.trim().equalsIgnoreCase("NEW PASSWORD")) {
+			return this.txtNewPassword;
+		}
+		if (fieldName.trim().equalsIgnoreCase("REENTER PASSWORD")) {
+			return this.txtReEnterPasswordBox;
+		}
+		if (fieldName.trim().equalsIgnoreCase("SAVE CHANGES")) {
+			return this.lnkSave;
+		}
+		if (fieldName.trim().equalsIgnoreCase("CANCEL")) {
+			return this.lnkCancel;
 		}
 		return null;
 	
