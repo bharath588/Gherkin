@@ -261,11 +261,14 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		String securityAnswer = "";
 		try{
 			if(this.getSecurityQuestion().equalsIgnoreCase("car"))
-				securityAnswer =    Stock.GetParameterValue("dreamCar");
+				//securityAnswer =    Stock.GetParameterValue("dreamCar");
+				securityAnswer = "testr";
 			else if(this.getSecurityQuestion().equalsIgnoreCase("drink"))
-				securityAnswer = Stock.GetParameterValue("favDrink");
+				//securityAnswer = Stock.GetParameterValue("favDrink");
+				securityAnswer = "testk";
 			else if(this.getSecurityQuestion().equalsIgnoreCase("spouse"))
-				securityAnswer = Stock.GetParameterValue("spouseMidName");
+				//securityAnswer = Stock.GetParameterValue("spouseMidName");
+				securityAnswer = "teste";
 			else
 				securityAnswer = Stock.GetParameterValue("UserSecondaryAns");
 		}
