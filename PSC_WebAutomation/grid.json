@@ -1,7 +1,7 @@
 [
 {
 
-        "Browser": "FF",
+        "Browser": "Chrome",
 
         "Port": "http://10.4.61.74:5556/wd/hub",
 
