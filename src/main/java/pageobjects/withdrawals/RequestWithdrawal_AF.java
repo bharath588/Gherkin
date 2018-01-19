@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -18,8 +21,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+
 import appUtils.Common;
+
 import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_AF> {
@@ -92,18 +98,28 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 	@FindBy(linkText="contingent beneficiary(ies)") private WebElement lnkContingentBeneficiary;
 	@FindBy(xpath="//h1[text()='Rights of accumulation (cumulative discount) for your American Funds IRA']") 
 	private WebElement lblROAPage;
-	@FindBy(id = "Non-Roth_input")
+	//@FindBy(id = "Non-Roth_input")
+	@FindBy(id = "Pre-tax_input")
 	private WebElement txtNonRothInput;
+	@FindBy(id = "Pre-tax_input")
+	private WebElement txtPreTaxInput;
 	@FindBy(id = "Roth_input")
 	private WebElement txtRothInput;
+	@FindBy(xpath = "(//*[contains(text(),'Date of birth must follow MM/DD/YYYY format.')])[2]")
+	private WebElement dobErrorMsg;
+	@FindBy(xpath = "(//*[contains(text(),'Social Security/Tax ID number must be 9 digits.')])[2]")
+	private WebElement SSNErrorMsg;
 	@FindBy(xpath = ".//input[@value='invest']")
 	private WebElement radioSelectMyOwnInvestment;
 	@FindBy(xpath = "//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Roth']]]//input[@type='text']")
 	private WebElement txtSepRothTextBox;
-	@FindBy(xpath = "//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Non-Roth']]]//input[@type='text']")
+	//@FindBy(xpath = "//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Non-Roth']]]//input[@type='text']")
+	@FindBy(xpath = "//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Pre-tax']]]//input[@type='text']")
 	private WebElement txtSepNonRothTextBox;
-	
+	@FindBy(xpath = ".//input[@value='advisor']")
+	private WebElement radioSelectMyFinancialAdvisor;
 	private String lblerrorMessage = "//*[contains(text(),'webElementText')]";
+	
 	private String btnAdvisoryOptionYesOrNo=".//Strong[.='advisoryOption']";
 	private String radioInvestOptions=".//input[@value='investOption']";
 	private String textField="//*[contains(text(),'webElementText')]";
@@ -125,7 +141,26 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 	//error message
 	private String errorMessage="//*[@id='primaryBene1']//label[contains(text(),'fieldName')]//following-sibling::ng-messages//ng-message";
 
+	@FindBy(xpath = ".//label[contains(@ng-class,'yes')]")
+	private WebElement aggregateYes;
 	
+	@FindBy(xpath = ".//label[contains(@ng-class,'no')]")
+	private WebElement aggregateNo;
+	
+	@FindBy(xpath = "//label[contains(@ng-class,'Exchange')][contains(@ng-class,'N')]")
+	private WebElement exchangeNo;
+	
+	@FindBy(xpath = "//label[contains(@ng-class,'Exchange')][contains(@ng-class,'Y')]")
+	private WebElement exchangeYes;
+	
+	@FindBy(xpath = "//label[contains(@ng-class,'Redemption')][contains(@ng-class,'Y')]")
+	private WebElement redemptionYes;
+	
+	@FindBy(xpath = "//label[contains(@ng-class,'Redemption')][contains(@ng-class,'N')]")
+	private WebElement redemptionNo;
+	
+	@FindBy(xpath = "//div[text()='Account number or SSN must be 7-11 digits']")
+	private WebElement aggregateError;
 	
 	/**
 	 * Default Constructor
@@ -177,6 +212,9 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		if (fieldName.trim().equalsIgnoreCase("SELECT MY OWN INVESTMENTS")) {
 			return this.radioSelectMyOwnInvestment;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Select Financial Advisor")) {
+			return this.radioSelectMyFinancialAdvisor;
+		}
 		if (fieldName.trim().equalsIgnoreCase("IRA CUSTODIAL LINK"))
 		{
 			return this.lnkIRA;
@@ -202,6 +240,9 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		if (fieldName.trim().equalsIgnoreCase("Non Roth Input TextBox")) {
 			return this.txtNonRothInput;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Pre Tax Input TextBox")) {
+			return this.txtPreTaxInput;
+		}
 		if (fieldName.trim().equalsIgnoreCase("Roth Input TextBox")) {
 			return this.txtRothInput;
 		}
@@ -211,7 +252,13 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		if (fieldName.trim().equalsIgnoreCase("Sep Non Roth Input TextBox")) {
 			return this.txtSepNonRothTextBox;
 		}
-
+		if (fieldName.trim().equalsIgnoreCase("DOD Error Message")) {
+			return this.dobErrorMsg;
+		}
+		if (fieldName.trim().equalsIgnoreCase("SSN Error Message")) {
+			return this.SSNErrorMsg;
+		}
+		
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
 				"No WebElement mapped for this field\nPage: <b>"
@@ -477,11 +524,11 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		else
 			Reporter.logEvent(Status.FAIL, "verify " + errorMessage
 					+ " Error Message is Displayed", errorMessage
-					+ " Error Message is Displayed", true);
+					+ " Error Message is not Displayed", true);
 
 	}
 
-
+	
 	public void verifyDoYouAlreadyHaveIRA_AccountPage(String doYouAlreadyHaveAF_IRA,String... advisoryOption)
 	{
 		try {
@@ -626,7 +673,10 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 	
 	public void designateBeneficiary(String designateBeneficary, String... isEmpMarried)
 	{
-		isTextFieldDisplayed("How would you like to designate a beneficiary for your American Funds IRA?");
+		if(Stock.GetParameterValue("doYouAlreadyHaveAF").equalsIgnoreCase("no"))
+			isTextFieldDisplayed("Would you like to designate your American Funds beneficiary?");
+		else
+			isTextFieldDisplayed("How would you like to designate a beneficiary for your American Funds IRA?");
 		
 		if(designateBeneficary.equalsIgnoreCase("No"))
 		{
@@ -681,6 +731,11 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 				By.xpath(prmBenf1PersonalDetails.replace("Benf Fields",
 						"socialSecurityNumber1")));
 
+		//mosin
+		WebElement txtPrmBenf1maskedDOB=Web.getDriver().findElement
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		WebElement txtPrmBenf1maskedSSN=Web.getDriver().findElement
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		designateBeneficiaries = new DesignateBeneficiaries();
 
 		designateBeneficiaries.setBenfCategory("Primary1");
@@ -698,10 +753,25 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 				designateBeneficiaries.getLastName());
 
 		designateBeneficiaries.setdOB(DOB);
-		Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());
-
+		try{
+			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf1maskedDOB.clear();
+			
+			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());
+		}
 		designateBeneficiaries.setSsn(SSN);
-		Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());
+		try{
+			Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf1maskedSSN.clear();
+			Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());
+			
+		}
 
 		if (Stock.GetParameterValue("empMarried").equalsIgnoreCase("unmarried")
 				&& type.length >= 0) {
@@ -785,7 +855,13 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		WebElement txtPrmBenf1DOB=Web.getDriver().findElement
 				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1")));
 		WebElement txtPrmBenf1SSN=Web.getDriver().findElement
-				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1")));		
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1")));	
+		
+		//mosin
+		WebElement txtPrmBenf1maskedDOB=Web.getDriver().findElement
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		WebElement txtPrmBenf1maskedSSN=Web.getDriver().findElement
+				(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		
 		designateBeneficiaries = new DesignateBeneficiaries();
 		
@@ -801,10 +877,25 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		Web.setTextToTextBox(txtPrmBenf1LastName, designateBeneficiaries.getLastName());		
 		
 		designateBeneficiaries.setdOB("01/20/2008");
-		Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());	
-		
+		try{
+			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf1maskedDOB.clear();
+			
+			Web.setTextToTextBox(txtPrmBenf1DOB, designateBeneficiaries.getdOB());
+		}
 		designateBeneficiaries.setSsn("123456789");
-		Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());		
+		try{
+			Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf1maskedSSN.clear();
+			Web.setTextToTextBox(txtPrmBenf1SSN, designateBeneficiaries.getSsn());
+			
+		}
 		
 		if(Stock.GetParameterValue("empMarried").equalsIgnoreCase("unmarried") && type.length>=0 )
 		{
@@ -882,6 +973,14 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		WebElement drpPrmBenf2Type=Web.getDriver().findElement
 				(By.xpath(prmBenf2TypeOrState.replace("Benf Fields", "beneficiaryType1")));
 		
+
+		//mosin
+		WebElement txtPrmBenf2maskedDOB=Web.getDriver().findElement
+				(By.xpath(prmBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		WebElement txtPrmBenf2maskedSSN=Web.getDriver().findElement
+				(By.xpath(prmBenf2PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
+		
+		
 		designateBeneficiaries = new DesignateBeneficiaries();
 		
 		designateBeneficiaries.setBenfCategory("Primary2");
@@ -896,11 +995,24 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		Web.setTextToTextBox(txtPrmBenf2LastName, designateBeneficiaries.getLastName());		
 		
 		designateBeneficiaries.setdOB("02/15/2006");
-		Web.setTextToTextBox(txtPrmBenf2DOB, designateBeneficiaries.getdOB());	
+		try{
+			Web.setTextToTextBox(txtPrmBenf2DOB, designateBeneficiaries.getdOB());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf2maskedDOB.clear();
+			Web.setTextToTextBox(txtPrmBenf2DOB, designateBeneficiaries.getdOB());
+		}
 		
 		designateBeneficiaries.setSsn("111111111");
+		try{
 		Web.setTextToTextBox(txtPrmBenf2SSN, designateBeneficiaries.getSsn());		
-		
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtPrmBenf2maskedSSN.clear();
+			Web.setTextToTextBox(txtPrmBenf2SSN, designateBeneficiaries.getSsn());
+		}
 		designateBeneficiaries.setType(type);
 		Web.selectDropDownOption(drpPrmBenf2Type, designateBeneficiaries.getType());	
 			
@@ -957,6 +1069,12 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		WebElement drpContBenf1Type=Web.getDriver().findElement
 				(By.xpath(contBenf1TypeOrState.replace("Benf Fields", "beneficiaryType1")));
 		
+		//mosin
+		WebElement txtConBenf1maskedDOB=Web.getDriver().findElement
+				(By.xpath(contBenf1PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		WebElement txtConBenf1maskedSSN=Web.getDriver().findElement
+				(By.xpath(contBenf1PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
+				
 		designateBeneficiaries = new DesignateBeneficiaries();
 		
 		designateBeneficiaries.setBenfCategory("Contingent1");
@@ -971,11 +1089,24 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		Web.setTextToTextBox(txtContBenf1LastName, designateBeneficiaries.getLastName());		
 		
 		designateBeneficiaries.setdOB("03/17/1991");
+		try{
 		Web.setTextToTextBox(txtContBenf1DOB, designateBeneficiaries.getdOB());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtConBenf1maskedDOB.clear();
+			Web.setTextToTextBox(txtContBenf1DOB, designateBeneficiaries.getdOB());
+		}
 		
 		designateBeneficiaries.setSsn("222222222");
+		try{
 		Web.setTextToTextBox(txtContBenf1SSN, designateBeneficiaries.getSsn());		
-		
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtConBenf1maskedSSN.clear();
+			Web.setTextToTextBox(txtContBenf1SSN, designateBeneficiaries.getSsn());
+		}
 		designateBeneficiaries.setType(type);
 		Web.selectDropDownOption(drpContBenf1Type, designateBeneficiaries.getType());	
 			
@@ -1032,6 +1163,11 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		WebElement drpContBenf2Type=Web.getDriver().findElement
 				(By.xpath(contBenf2TypeOrState.replace("Benf Fields", "beneficiaryType1")));
 		
+		//mosin
+		WebElement txtConBenf2maskedDOB=Web.getDriver().findElement
+				(By.xpath(contBenf2PersonalDetails.replace("Benf Fields", "dateOfBirth1Masked")));
+		WebElement txtConBenf2maskedSSN=Web.getDriver().findElement
+				(By.xpath(contBenf2PersonalDetails.replace("Benf Fields", "socialSecurityNumber1Masked")));
 		designateBeneficiaries = new DesignateBeneficiaries();
 		
 		designateBeneficiaries.setBenfCategory("Primary2");
@@ -1046,11 +1182,24 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		Web.setTextToTextBox(txtContBenf2LastName, designateBeneficiaries.getLastName());		
 		
 		designateBeneficiaries.setdOB("02/15/2006");
+		try{
 		Web.setTextToTextBox(txtContBenf2DOB, designateBeneficiaries.getdOB());	
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtConBenf2maskedDOB.clear();
+			Web.setTextToTextBox(txtContBenf2DOB, designateBeneficiaries.getdOB());
+		}
 		
 		designateBeneficiaries.setSsn("111111111");
+		try{
 		Web.setTextToTextBox(txtContBenf2SSN, designateBeneficiaries.getSsn());		
-		
+		}
+		catch(ElementNotVisibleException e)
+		{
+			txtConBenf2maskedSSN.clear();
+			Web.setTextToTextBox(txtContBenf2SSN, designateBeneficiaries.getSsn());
+		}
 		designateBeneficiaries.setType(type);
 		Web.selectDropDownOption(drpContBenf2Type, designateBeneficiaries.getType());	
 			
@@ -1270,5 +1419,344 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		{e.printStackTrace();}
 									
 		}
+	
+	//Mosin
+	public void verifyROAFields()
+	{
+		//Step 12 and 13
+		String sExchangeText = "Do you want the ability to make exchanges over the phone and on the website?";
+		String sRedemptionsText = "Do you want the ability to make redemptions over the phone and on the website?";
+		isTextFieldDisplayed("Rights of accumulation (cumulative discount) for your American Funds IRA");
+		isTextFieldDisplayed("The account owner, spouse, and minor children (under 21) can aggregate American Funds accounts to reduce sales charges on Class A shares only. Any share classes within these accounts will contribute toward a reduced sales charge.");
+		//step 14
+		List<WebElement> ROAYesNoButtons = Web .getDriver() .findElements( By.xpath("//span[@class='ng-binding ng-scope']/strong"));
+		List<WebElement>  ROAPrivileges = Web .getDriver() .findElements( By.xpath("//div[@class='col-xs-12 col-sm-9']/label[contains(text(),'Do you want the ability')]"));
+		ArrayList<String> lstPrivilages = new ArrayList<>();
+		for(int i=0;i<ROAYesNoButtons.size();i++)
+		{
+			
+			if(ROAYesNoButtons.get(i).getTagName().equalsIgnoreCase("Strong") && ROAYesNoButtons.get(i).isEnabled())
+				Reporter.logEvent(Status.PASS,
+						"Verify if “Yes/No” buttons should be bolded and should be clickable",
+						ROAYesNoButtons.get(i).getText()+" is Bold and Clickable" ,
+						false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify if “Yes/No” buttons should be bolded and should be clickable",
+						ROAYesNoButtons.get(i).getText()+" is not Bold and Clickable" ,
+						true);
+		}
+		
+		//Step 16
+		Web.clickOnElement(aggregateYes);
+		
+		if(txtSSNInput1.isDisplayed() && txtSSNInput1.getAttribute("placeholder").equalsIgnoreCase("Account number or SSN"))
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 1 is displayed and Account number or SSN is displayed" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 1 is not displayed and Account number or SSN is not displayed" ,
+					true);
+		
+		if(txtSSNInput2.isDisplayed())
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 2 is displayed and Account number or SSN is displayed" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 2 is not displayed and Account number or SSN is not displayed" ,
+					true);
+		
+		if(txtSSNInput3.isDisplayed())
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 3 is displayed and Account number or SSN is displayed" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not and Account number or SSN is displayed or not",
+					"TextBox 3 is not displayed and Account number or SSN is not displayed" ,
+					true);
+		
+		//step 17
+		Web.setTextToTextBox(txtSSNInput1, "1234567890");
+		Web.setTextToTextBox(txtSSNInput2, "789456123");
+		Web.setTextToTextBox(txtSSNInput3, "1357924685");
+		
+		Web.clickOnElement(aggregateNo);
+		
+		try{
+			if(txtSSNInput1.isDisplayed())
+				Reporter.logEvent(Status.FAIL,
+						"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+						"TextBox 1 is displayed" ,
+						true);
+		}
+		catch (NoSuchElementException e) {
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+					"TextBox 1 is not displayed" ,
+					false);
+		}
+		
+		try{
+			if(txtSSNInput2.isDisplayed())
+				Reporter.logEvent(Status.FAIL,
+						"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+						"TextBox 2 is displayed" ,
+						true);
+		}
+		catch (NoSuchElementException e) {
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+					"TextBox 2 is not displayed" ,
+					false);
+		}
+		
+		try{
+			if(txtSSNInput3.isDisplayed())
+				Reporter.logEvent(Status.FAIL,
+						"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+						"TextBox 3 is displayed" ,
+						true);
+		}
+		catch (NoSuchElementException e) {
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible or not",
+					"TextBox 3 is not displayed" ,
+					false);
+		}
+		
+		
+		
+		//step 18 and 19
+		Web.clickOnElement(aggregateYes);
+		
+		if(txtSSNInput1.isDisplayed() && txtSSNInput1.getText().equalsIgnoreCase(""))
+			Reporter.logEvent(Status.PASS,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible and Prior entered text is wiped off",
+					"TextBox 1 is displayed and Prior entered text is wiped off" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify upon clicking Yes for Aggregate accounts 3 Texboxes are visible and Prior entered text is wiped off",
+					"TextBox 1 is not displayed and Prior entered text is not wiped off" ,
+					true);
+		
+		//Step 20
+		
+		if(txtSSNInput1.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Validate the UI display when user selects Yes button",
+					"First TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"First TextBox field for SSN or account number is not enabled" ,
+					true);
+		if(!txtSSNInput2.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Validate the UI display when user selects Yes button",
+					"Second TextBox field for SSN or account number is not enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"Second TextBox field for SSN or account number is enabled" ,
+					true);
+		if(!txtSSNInput3.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Validate the UI display when user selects Yes button",
+					"Third TextBox field for SSN or account number is not enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"First TextBox field for SSN or account number is enabled" ,
+					true);
+		
+		//Step 21
+		Web.setTextToTextBox(txtSSNInput1, "1234567890");
+		if(txtSSNInput2.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Validate the UI display when user selects Yes button",
+					"Second TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"Second TextBox field for SSN or account number is not enabled" ,
+					true);
+		
+		//Step 22
+		Web.setTextToTextBox(txtSSNInput2, "789456123");
+		if(txtSSNInput3.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Validate the UI display when user selects Yes button",
+					"Thrid TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"Third TextBox field for SSN or account number is not enabled" ,
+					true);
+		Web.setTextToTextBox(txtSSNInput3, "789456123");
+		//step 23
+		Web.setTextToTextBox(txtSSNInput1, "");
+		if(txtSSNInput1.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user enters valid data in all 3 text-fields and removes one of the text-field value.",
+					"First TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"First TextBox field for SSN or account number is not enabled" ,
+					true);
+		if(txtSSNInput2.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user enters valid data in all 3 text-fields and removes one of the text-field value.",
+					"Second TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"Second TextBox field for SSN or account number is not enabled" ,
+					true);
+		if(txtSSNInput3.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user enters valid data in all 3 text-fields and removes one of the text-field value.",
+					"Third TextBox field for SSN or account number is enabled" ,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Validate the UI display when user selects Yes button",
+					"Third TextBox field for SSN or account number is not enabled" ,
+					true);
+		
+		//step 24 and 25
+		Web.setTextToTextBox(txtSSNInput1, "1");
+		if(aggregateError.getText().equalsIgnoreCase("Account number or SSN must be 7-11 digits"))
+			Reporter.logEvent(Status.PASS,
+					"Verify when user enter a invalid value < less than 7 digits> or deletes the entered value less than 7 digit length",
+					"Error message for text-field is displayed as Account number or SSN is less than 7-11 digits",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify when user enter a invalid value < less than 7 digits> or deletes the entered value less than 7 digit length",
+					"Error message for text-field is not displayed as Account number or SSN is less than 7-11 digits",
+					true);
+		
+		Web.setTextToTextBox(txtSSNInput1, "1234567",Keys.BACK_SPACE);
+		if(aggregateError.getText().equalsIgnoreCase("Account number or SSN must be 7-11 digits"))
+			Reporter.logEvent(Status.PASS,
+					"Verify when user enter a invalid value < less than 7 digits> or deletes the entered value less than 7 digit length",
+					"Error message for text-field is displayed as Account number or SSN is less than 7-11 digits",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify when user enter a invalid value < less than 7 digits> or deletes the entered value less than 7 digit length",
+					"Error message for text-field is not displayed as Account number or SSN is less than 7-11 digits",
+					true);
+		
+		//step 26
+		Web.setTextToTextBox(txtSSNInput1, Stock.GetParameterValue("invalidNumber"));
+		String sEnteredNumber = txtSSNInput1.getText();
+		if(!Stock.GetParameterValue("invalidNumber").equalsIgnoreCase(sEnteredNumber))
+			Reporter.logEvent(Status.PASS,
+					"Verify whether user can enter the text box value more than 11 digit.",
+					"User is not be allowed to enter more than 11 digit length value. It is restricted in the text field.",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify whether user can enter the text box value more than 11 digit.",
+					"User is  allowed to enter more than 11 digit length value. It is not restricted in the text field.",
+					true);
+		isTextFieldDisplayed("Exchange & redemption privileges for your American Funds IRA");
+		
+		//Step 27
+		for(int i=0;i<ROAPrivileges.size();i++)
+		{
+			lstPrivilages.add(i, ROAPrivileges.get(i).getText());
+		}
+		if(lstPrivilages.get(0).equalsIgnoreCase(sExchangeText))
+			Reporter.logEvent(Status.PASS,
+					"Verify another section available as Exchange & redemption privileges for your American Funds IRA and the contents in it.",
+					"Text Matched"+"Actual: "+lstPrivilages.get(0)+" Expected: "+sExchangeText,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify another section available as Exchange & redemption privileges for your American Funds IRA and the contents in it.",
+					"Text not Matched"+"Actual: "+lstPrivilages.get(0)+" Expected: "+sExchangeText,
+					true);
+		
+		if(lstPrivilages.get(1).equalsIgnoreCase(sRedemptionsText))
+			Reporter.logEvent(Status.PASS,
+					"Verify another section available as Exchange & redemption privileges for your American Funds IRA and the contents in it.",
+					"Text Matched"+"Actual: "+lstPrivilages.get(1)+" Expected: "+sExchangeText,
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify another section available as Exchange & redemption privileges for your American Funds IRA and the contents in it.",
+					"Text not Matched"+"Actual: "+lstPrivilages.get(1)+" Expected: "+sExchangeText,
+					true);
+		//step 28
+		Web.clickOnElement(aggregateNo);
+		Web.clickOnElement(aggregateYes);
+		Web.clickOnElement(exchangeYes);
+		Web.clickOnElement(redemptionYes);
+		
+		if(!btnContinue.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with out entering SSN/account number.",
+					"Continue button is not enabled on the initial screen",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with out entering SSN/account number.",
+					"Continue button is enabled on the initial screen",
+					true);
+		
+		//step 29
+		Web.clickOnElement(aggregateYes);
+		Web.setTextToTextBox(txtSSNInput1, "1234567890");
+		Web.setTextToTextBox(txtSSNInput2, "789456123");
+		Web.setTextToTextBox(txtSSNInput3, "1357924685");
+		Web.clickOnElement(exchangeYes);
+		Web.clickOnElement(redemptionYes);
+		
+		if(btnContinue.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with entering SSN/account number.",
+					"Continue button is enabled on the initial screen",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with entering SSN/account number.",
+					"Continue button is not enabled on the initial screen",
+					true);
+		
+		//step 30
+		Web.clickOnElement(aggregateNo);
+		Web.clickOnElement(exchangeNo);
+		Web.clickOnElement(redemptionNo);
+		if(btnContinue.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with entering SSN/account number.",
+					"Continue button is enabled on the initial screen",
+					false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify when user selects Yes option from ROA section and selects yes option for both from Exchange & redemption privileges for your American Funds IRA with entering SSN/account number.",
+					"Continue button is not enabled on the initial screen",
+					true);
+		
+	}
 	
 }
