@@ -1006,6 +1006,9 @@ public class Investmentstestcases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
+			if(Web.isWebElementDisplayed(investment, "Expand Sources", true)){
+				Web.clickOnElement(investment, "Expand Sources");
+			}
 			
 			if(!investment.verifyMoneyTypeGroupIsDisplayed(Stock.GetParameterValue("moneyTypeGrouping"))){
 				
