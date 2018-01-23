@@ -1784,8 +1784,11 @@ ORDER BY wb.ga_id,
 					<parameter name="SSN" value="119569874" />
 			</Iteration>
 		</TestCase>
-
-
-
+	</Module>
+	<Module name="AAGAccountAccess">
+		<TestCase name="csas_TC_16_Statement_Order_Update_Confirmation">
+			<Iteration Execution="Yes" id="1">
+		</Iteration>	
+		</TestCase>
 	</Module>
 </TestData>
