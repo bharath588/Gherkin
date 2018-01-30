@@ -14,6 +14,7 @@ import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -607,7 +608,13 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtMiddleName,Stock.GetParameterValue("MiddleName"));
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
+		
+			if(txtDateOfBirthMasked.isDisplayed()){
+		
 		txtDateOfBirthMasked.click();
+			}
+		
+		
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
 		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("BenificiarySSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));

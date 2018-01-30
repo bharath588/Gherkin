@@ -926,8 +926,17 @@ public class RequestWithdrawal_AF  extends LoadableComponent<RequestWithdrawal_A
 		if(useCurrentAddress.equalsIgnoreCase("No"))
 		{
 			Web.clickOnElement(chkPrm1CurrentAddress);
-			WebElement txtPrmBenf1Addr1=Web.getDriver().findElement
+			WebElement txtPrmBenf1Addr1 = null;
+			try{
+			txtPrmBenf1Addr1=Web.getDriver().findElement
 					(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "beneficiaryAddress11")));
+			}
+			catch(NoSuchElementException e)
+			{
+				Web.clickOnElement(chkPrm1CurrentAddress);
+				txtPrmBenf1Addr1=Web.getDriver().findElement
+						(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "beneficiaryAddress11")));
+			}
 			WebElement txtPrmBenf1Addr2=Web.getDriver().findElement
 					(By.xpath(prmBenf1PersonalDetails.replace("Benf Fields", "beneficiaryAddress21")));
 			WebElement txtPrmBenf1CityOrTown=Web.getDriver().findElement
