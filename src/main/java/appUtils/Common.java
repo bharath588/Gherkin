@@ -778,4 +778,118 @@ public class Common {
 		return lstDeferralTypes;
 	}
 	
+	/**
+	 * Method to get the Plan Name
+	 * @param gc_Id 150049
+	 * @param id -From Plan Tabel
+	 * @return planName
+	 * @throws SQLException
+	 */
+	public static String getPlanName(String gc_Id, String id) throws SQLException {
+
+		// query to get the no of plans
+		String[] sqlQuery = null;
+		ResultSet Plan= null;
+		String planName="";
+
+		try {
+			sqlQuery = Stock.getTestQuery("getPlanName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], gc_Id,id);
+try{
+		if (DB.getRecordSetCount(Plan) > 0) {
+			Plan.first();
+  			planName= Plan.getString("NAME");
+			} 
+	}catch (SQLException e) {
+				e.printStackTrace();
+				Reporter.logEvent(
+						Status.WARNING,
+						"Query get PlanName:" + sqlQuery[0],
+						"The Query did not return any results. Please check participant test data as the appropriate data base.",
+						false);
+			}
+  			
+		return planName;
+	}
+	
+
+
+/**
+ * Method to get the Plan Description from
+ * @param ga_Id 150049-N1
+ ** @return planDescription
+ * @throws SQLException
+ */
+public static String getEnrollmentPlanDescription(String ga_Id) throws SQLException {
+
+	// query to get the no of plans
+	String[] sqlQuery = null;
+	ResultSet Plan= null;
+	String planDescription="";
+
+	try {
+		sqlQuery = Stock.getTestQuery("getPlanDescription");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+try{
+	if (DB.getRecordSetCount(Plan) > 0) {
+		Plan.last();
+		planDescription= Plan.getString("description");
+		} 
+}catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query get Plan Description:" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+			
+	return planDescription;
+}
+
+/**
+ * Method to get the Plan Description from
+ * @param ga_Id 150049-N1
+ ** @return panelHeading
+ * @throws SQLException
+ */
+public static String getEnrollmentPanelHeading(String ga_Id) throws SQLException {
+
+	// query to get the no of plans
+	String[] sqlQuery = null;
+	ResultSet Plan= null;
+	String panelHeading="";
+
+	try {
+		sqlQuery = Stock.getTestQuery("getPlanDescription");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+try{
+	if (DB.getRecordSetCount(Plan) > 0) {
+		Plan.first();
+		panelHeading= Plan.getString("description")+" "+Plan.getString("name");
+		} 
+}catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query get Plan Description:" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+			
+	return panelHeading;
+}
+
 }

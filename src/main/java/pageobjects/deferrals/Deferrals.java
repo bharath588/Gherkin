@@ -2398,7 +2398,7 @@ return expectedCompanyMatch;
 		 * @return - boolean
 		 * @throws InterruptedException 
 		 */
-		public void selectContributionWhileEnroll() throws InterruptedException
+		public void selectContributionWhileEnroll(String contributionRate) throws InterruptedException
 		{	
 			Actions keyBoard = new Actions(Web.getDriver());
 			
@@ -2412,11 +2412,11 @@ return expectedCompanyMatch;
 			this.lnkContributionRate.click();
 			
 			Web.waitForElement(inpcontributionRateSlider);
-			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
-				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+			if(lnksliderValue.getText().equals(contributionRate)){
+				contrbution_rate= Integer.toString(Integer.parseInt(contributionRate)+1);
 			}
 			else
-				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
+				contrbution_rate = contributionRate;
 			
 			Web.setTextToTextBox(inpcontributionRateSlider, contrbution_rate);
 			//keyBoard.sendKeys(Keys.TAB).perform();

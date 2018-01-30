@@ -1932,7 +1932,7 @@ public class registrationtestcases {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())  + "_"
 					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-
+			System.out.println(Stock.GetParameterValue("ga_PlanId"));
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
