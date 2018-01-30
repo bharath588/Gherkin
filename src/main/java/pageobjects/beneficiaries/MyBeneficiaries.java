@@ -611,7 +611,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		
 			if(txtDateOfBirthMasked.isDisplayed()){
 		
-		txtDateOfBirthMasked.click();
+				txtDateOfBirthMasked.click();
 			}
 		
 		
