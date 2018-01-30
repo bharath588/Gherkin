@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="LOGIN">
+    <test name="Investments">
     <classes>
       <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
