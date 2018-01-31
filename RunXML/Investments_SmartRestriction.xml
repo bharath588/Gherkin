@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1" >
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="Investments">
+        <classes>
+          	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
+                <methods>
+                  
+                      
+                      <include name="DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29163_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_IndividualFunds"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29164_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_TargetDateFunds"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_29165_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29165_FullRebal_PAE_User_with_Inquire_Only_Permissions_Choose_RiskBasedFunds"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_29166_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29166_FullRebal_PAE_User_with_Inquire_Only_Permissions_BasedOnModelPortfolio"></parameter>
+                    </include>
+                     
+                   
+                 <include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund"></parameter>
+                    </include>
+                
+                  <include name="DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29364_LIAT_Smart_Restriction_Rebalance_LandingPage_With_Restricted_UnRetsricted_Funds"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29365_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_F2FTransfer"></parameter>
+                    </include>
+                    
+                   	<include name="DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29366_LIAT_No_SmartRestriction_When_Pending_TranferExists_Due_To_DCATransaction"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_29367_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_LeftNav">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29367_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_LeftNav"></parameter>
+                    </include>
+                    
+                    
+                    <include name="DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_29368_LIAT_No_SmartRestriction_When_Pending_TranferExists_DueTo_FullRebal_Via_SmartRestriction"></parameter>
+                    </include> 
+                    
+                    <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30104_FE_DIM_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice"></parameter>
+                    </include>
+                    <include name="DDTC_30107_FE_Guidance_DIM_Access_Online_Advice">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30107_FE_Guidance_DIM_Access_Online_Advice"></parameter>
+                    </include>
+                    
+                     
+				</methods>
+              
+			</class>
+		</classes>
+	</test> 
+                    	  
+</suite>

@@ -193,12 +193,7 @@
                     </parameter>
                     </include>   -->
                   
-                    
-                    <!-- Above test case is Not Visible Bonus type Contributions -->
-                   
-                   
-                  
-                    
+                 
                      <!-- PENDING DEFERRALS 6-->
                      
                        
@@ -241,10 +236,7 @@
                     
                  
                     
-                   <!-- <include name="Deferral_027_Multiple_No_changes_in_the_rate">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
-                    </parameter>
-                    </include> --> 
+                  
                    
                       <include name="Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_030_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUNDATE">
@@ -373,7 +365,7 @@
                     
                   <!-- Multiple Deferral 2 -->
                   
-                   <!--  <include name="Create_Multiple_deferral_split_contribution">
+                    <include name="Create_Multiple_deferral_split_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_023_Multiple_Create contribution rate for multiple deferral type, split contribution">
                     </parameter>
                     </include>
@@ -381,13 +373,13 @@
                      <include name="Edit_Multiple_deferral_split_contribution">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_024_Multiple_Change contribution rate for multiple deferral type, split contributions">
                     </parameter>
-                    </include>  -->
+                    </include> 
                      
                      
                     
                     <!-- DOLLAR DEFERRAL 2 -->
                 
-                <!-- 
+                
                         <include name="Deferral_028_Multiple_Create_Dollar_deferrals">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_028_Multiple_Create_Dollar_deferrals">
                     </parameter>
@@ -397,7 +389,12 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_029_Multiple_Change_Dollar_deferrals">
                     </parameter>
                     </include> 
-                     -->
+                     
+                     
+                     <include name="Deferral_027_Multiple_No_changes_in_the_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_027_Multiple_No_changes_in_the_rate">
+                    </parameter>
+                    </include> 
                     
                 </methods>
             </class>

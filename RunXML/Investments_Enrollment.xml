@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1" >
+    <listeners>
+        <listener class-name="core.framework.TestListener"/>
+    </listeners>
+    <test name="Investments">
+        <classes>
+          	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
+                <methods>
+                  
+                      
+                   
+                    <include name="DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25495_Custom_Enrollment_PPT_with_NotALLMTGs"></parameter>
+                    </include>
+                    
+                        <include name="DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25499_Custom_Enrollment_with_Plan_level_ALL_MTGs"></parameter>
+                    </include>
+                   
+                    <include name="DDTC_25497_Custom_Enrollment_PPT_with_EmployerDirected_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25497_Custom_Enrollment_PPT_with_EmployerDirected_MTGs"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_25500_Custom_Enrollment_with_No_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25500_Custom_Enrollment_with_No_MTGs"></parameter>
+                    </include> 
+                    
+                      <include name="DDTC_25496_Custom_Enrollment_PPT_with_PartLevel_MTGs">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25496_Custom_Enrollment_PPT_with_PartLevel_MTGs"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25438_Auto_Enrollment_for_NonAllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25438_Auto_Enrollment_for_NonAllMTG"></parameter>
+                    </include> 
+                    
+                     <include name="DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25441_Auto_Enrollment_for_PlanLevel_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25442_Auto_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25440_Auto_Enrollment_for_Employerdirected_MTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25445_Quick_Enrollment_for_PPT_with_AllMTG"></parameter>
+                    </include>
+                    
+                     <include name="DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_25446_Quick_Enrollment_for_PPT_with_NoMTG"></parameter>
+                    </include>
+                     
+                 
+                
+                     
+				</methods>
+              
+			</class>
+		</classes>
+	</test> 
+                    	  
+</suite>

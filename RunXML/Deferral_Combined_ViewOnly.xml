@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="LOGIN">
+		<classes>
+
+		 <class name="app.pptweb.testcases.investments.Investmentstestcases">
+                <methods>
+                  
+                   <!--COMBINED RULES 5 -->  
+                  
+             	    <include name="Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_017M_Combined_rules_error_message_when_minimum_not_met">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_018M_Combined_rules_error_message_when_maximum_is_breached">
+                    </parameter>
+                    </include>
+                    
+                     <include name="Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_019M_Combined_rules_error_message_when_both_dollar_and_percent_are_added">
+                    </parameter>
+                    </include>
+                   
+                
+                     <include name="Deferral_010M_Verify_combined_rules_with_election_greater_than_zero">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_010M_Verify combined rules on deferral types with election greater than zero">
+                    </parameter>
+                    </include> 
+                    
+                     
+                    <include name="Deferral_011M_Verify_combined_rules_with_zero_election">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_011M_Verify combined rules on deferral types with zero election">
+                    </parameter>
+                    </include>   
+                         
+                        
+                   
+  
+   
+   					<!-- VIEW ONLY CONTRIBUTIONS 5 -->
+   
+                  <include name="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_View_only_After_tax_with_no_split_contributions">
+                    </parameter>
+                    </include>
+                
+                     <include name="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_View_only_Standard_with_changes_allowed_deferral">
+                    </parameter>
+                    </include>
+                     <include name="Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016M_Deferral_viewonly_source_with_two_changes_allowed_sources">
+                    </parameter>
+                    </include> 
+                     <include name="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_View_only_Catchup_with_split_contributions">
+                    </parameter>
+                    </include>
+                       <include name="Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003A_Nonvisible_Bonus_deferral_not_displayed_on_confirm_page">
+                    </parameter>
+                    </include>    
+                    
+                     
+                     <!-- TIRED RULES 1  -->
+                          <include name="Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_020M_Tiered_rules_error_message_when_minimum_not_met">
+                    </parameter>
+                    </include>   
+                  
+                </methods>
+            </class>  
+		</classes>
+	</test>
+
+</suite>
