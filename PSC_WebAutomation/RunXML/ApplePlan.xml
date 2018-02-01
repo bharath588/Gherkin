@@ -20,7 +20,7 @@
 					</include>
 				</methods>
 			</class>
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 					 <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
@@ -196,7 +196,7 @@
 						</parameter>
 					</include> 
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
 					<include name="TC12_3rd_Level_Links">
