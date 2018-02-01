@@ -75,7 +75,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement btnConfirmContinue_disbld;	
 	@FindBy(id="futureDate")
 	private WebElement radioProcesAfterHold;
-	
+	@FindBy(xpath = ".//input[contains(@ng-model,'homePhoneNbr')]")
+	private WebElement txtHomePhoneNum;
 	@FindBy(xpath = ".//select[contains(@ng-model,'withdrawalType')]")
 	private WebElement drpWithdrawalType;
 	//@FindBy(xpath=".//select[contains(@class,'ng-pristine')]")
@@ -182,7 +183,9 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	private WebElement genericAlertIcon;
 	@FindBy(xpath=".//div[contains(@class,'alert alert-')]/p")
 	private WebElement txtSpousalConsentConf;
-	@FindBy(xpath=".//p[contains(@ng-if,'isFlowCompletelyBlocked')]")
+	//@FindBy(xpath=".//p[contains(@ng-if,'isFlowCompletelyBlocked')]")
+	//Mosin
+	@FindBy(xpath=".//p[contains(@ng-if,'wrCtrl.flowCompletelyBlocked')]")
 	private WebElement defaultDOBErrorMessage;
 	@FindBy(xpath=".//div[contains(@class,'in-service-help')]/p")
 	private WebElement txtSepServiceMessaging;
@@ -258,7 +261,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	public static boolean isAmericanFunds=false;
 	public static boolean isSourceHierarchy=false;
 	
+	@FindBy(xpath = "//div[@class='alert alert-warning']/p")
+	private WebElement disbursementRequest;
 	
+	@FindBy(xpath = "//li[@ng-repeat='terms in ssnCtrl.vm.termsAndConditions']")
+	private WebElement termsAndConditions;
+	
+	@FindBy(xpath = "//div[@class='has-error col-sm-12 help-text']")
+	private WebElement ssnErrorMsg;
 	/**
 	 * Default Constructor
 	 */
@@ -603,8 +613,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				enteredRothWithdrawalAmt = 0;
 		
 		//enter Amount for Non-roth Amount Section
+		
 		if(nonRothSection.equalsIgnoreCase("Pre-tax")||nonRothSection.equalsIgnoreCase("Non-Roth")||nonRothSection.equalsIgnoreCase("After-tax"))
 		{
+			
 			WebElement nonRothMoneyTypeSourceAvailable=Web.getDriver().findElement
 					(By.xpath(moneyTypeSourceSection.replace("Withdrawal Type",
 							withdrawalType).replaceAll("Money Source Type", nonRothSection)));
@@ -616,6 +628,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							.xpath(txtMoneyTypeAmt.replace("Withdrawal Type",
 									withdrawalType).replaceAll("Money Source Type", nonRothSection)));
 					maxAmount=(int)Math.round(Web.getIntegerCurrency(txtMaxAmount.getText().split("up to")[1].trim()));
+					
 					/*maxAmount=maxAmount/2;
 					System.out.println("PreTax Amount :"+ maxAmount);
 					enteredPreTaxWithdrawalAmt=maxAmount;	*/	
@@ -1209,7 +1222,150 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 				msg, true);}
 		
 	}
+		//Mosin - SSN Validation.
 		
+				public void ssnValidation(String SSN,String isCitizen)
+				{
+					try {	
+						
+					if(isTextFieldDisplayed("Plan withdrawal"))
+						isTextFieldDisplayed("Are you a U.S. citizen or resident?");
+					Web.waitForElement(inpYes);
+					Thread.sleep(2000);
+					Web.clickOnElement(inpYes);		
+					Thread.sleep(2000);
+					
+					if(Web.isWebElementDisplayed(this.inputSSN, true))
+					
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify upon selecting Yes",
+								"SSN Textbox is visibled", false);
+						else
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify upon selecting Yes",
+								"SSN Textbox is not visibled", true);
+					
+					if (isTextFieldDisplayed("Please enter your Social Security number.")) 
+						//enterSSN(SSN);
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify upon selecting Yes",
+								"Please enter your Social Security number message is displayed", false);
+					 else
+						 Reporter.logEvent(
+									Status.FAIL,
+									"Verify upon selecting Yes",
+									"Please enter your Social Security number message is displayed", true);
+
+					// Click on Confirm and Continue
+					if(!btnConfirmContinue.isEnabled())
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify upon selecting Yes",
+								"Confirm and Continue button is disabled", false);
+					 else
+						 Reporter.logEvent(
+									Status.FAIL,
+									"Verify upon selecting Yes",
+									"Confirm and Continue button is enabled by default", true);
+					
+					enterSSN(SSN);
+					
+					if(Stock.GetParameterValue("SSN").equalsIgnoreCase(SSN))
+					{
+						Thread.sleep(2000);
+						List<WebElement> lstTermsAndConditions = Web .getDriver() .findElements( By.xpath("//li[@ng-repeat='terms in ssnCtrl.vm.termsAndConditions']"));
+						System.out.println(lstTermsAndConditions.size()+" size");
+						if(lstTermsAndConditions.size()==5)
+						{
+							if(lstTermsAndConditions.get(3).getText().equalsIgnoreCase("The FATCA code(s) that will be reported, indicating that I am exempt from FATCA reporting, is correct. (Please note that the FATCA code will be reported as not applicable by American Funds.)"))
+								Reporter.logEvent(
+										Status.PASS,
+										"Verify Terms and Conditions",
+										"Terms and Conditions 4th point is validated", false);
+							 else
+								 Reporter.logEvent(
+											Status.FAIL,
+											"Verify Terms and Conditions",
+											"Terms and Conditions 4th point is validated", true);
+						}
+						else
+							Reporter.logEvent(
+									Status.FAIL,
+									"Verify Terms and Conditions",
+									"Terms and Conditions point do not match the record", true);
+						
+						if (Web.isWebElementDisplayed(btnConfirmContinue)) {
+							Web.clickOnElement(btnConfirmContinue);	
+							Thread.sleep(2000);
+						}
+						
+						
+						else
+							throw new Error("'Confirm and Continue' is not displayed");	
+					}
+					
+					
+					
+					if(Stock.GetParameterValue("wrongSSN").equalsIgnoreCase(SSN))
+					{
+						
+						Thread.sleep(1000);
+					
+						if(ssnErrorMsg.getText().equalsIgnoreCase("Your entry was not recognized. Please enter your 9-digit Social Security number."))
+							Reporter.logEvent(
+									Status.PASS,
+									"Verify SSN Error message",
+									"SSN Error message is matching", false);
+						 else
+							 Reporter.logEvent(
+										Status.FAIL,
+										"Verify SSN Error message",
+										"SSN Error message is not matching", true);
+						
+						if(!btnConfirmContinue.isEnabled())
+							Reporter.logEvent(
+									Status.PASS,
+									"Verify upon selecting Yes",
+									"Confirm and Continue button is disabled", false);
+						 else
+							 Reporter.logEvent(
+										Status.FAIL,
+										"Verify upon selecting Yes",
+										"Confirm and Continue button is enabled by default", true);
+					}
+					if(isCitizen.equalsIgnoreCase("No"))
+					{
+						Web.waitForElement(inpNo);
+						Thread.sleep(2000);
+						Web.clickOnElement(inpNo);		
+						Thread.sleep(2000);
+						isTextFieldDisplayed("If you do not have U.S. citizenship, you are required to submit IRS form W-8BEN with your distribution request. Download and print form W-8BEN and instructions at http://www.irs.ustreas.gov/prod/forms_pubs/  We will send an additional form to your email address for you to complete and submit with form W-8BEN. If you are not a U.S. Citizen or U.S. Resident Alien and have any questions, please contact a retirement specialist at 1-800-204-3731.");
+					}
+					
+					}
+					catch(NoSuchElementException e)		
+					{ 
+						Globals.exception = e;
+						Throwable t = e.getCause();
+						String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+						if (null != t) {
+							msg = t.getMessage();
+						}
+						Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
+								msg, true); }
+					catch(Exception e)
+					{ Globals.exception = e;
+					Throwable t = e.getCause();
+					String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+					if (null != t) {
+						msg = t.getMessage();
+					}
+					Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+							msg, true);}	
+				}
 		/**
 		 * citizenship Validation Page - User to Enter SSN
 		 * @param SSN
@@ -1218,6 +1374,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	{
 		try {	
 			// Click on Continue
+			Thread.sleep(4000);
 			if (Web.isWebElementDisplayed(btnContinue)) {
 				Web.clickOnElement(btnContinue);
 				Reporter.logEvent(
@@ -1324,6 +1481,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Web.clickOnElement(btnAfterTaxYes);
 		
 		selectRollOverCompany(withdrawalMethodType,emailAddress);
+		if (Web.isWebElementDisplayed(txtHomePhoneNum))
+			Web.setTextToTextBox(txtHomePhoneNum, "1234567891");
 		if (Web.isWebElementDisplayed(btnContinueWithdrawal)) {
 				Web.clickOnElement(btnContinueWithdrawal);
 				Web.waitForPageToLoad(Web.getDriver());
@@ -1667,8 +1826,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							+ "Actual Delivery type: "+confirmationPageDeliveryType.getText(), false);
 		
 		//Verify Payable To	
-				
-				if(confirmationPagePayableTo.getText().toString().trim().contains(pptFirstName.toString().trim()))
+				//if(pptFirstName.toString().trim().toUpperCase().contains(confirmationPagePayableTo.getText().toString().trim()))
+				if(confirmationPagePayableTo.getText().toString().trim().toLowerCase().contains(pptFirstName.toString().trim().toLowerCase()))
 					Reporter.logEvent(Status.PASS, "Verify the Payable To in the Confirmation Page", 
 							"The Payable To Field is displayed as:\n"
 							+ "Expected : "+pptFirstName +"\n"
@@ -1790,7 +1949,43 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 	 * This method is to select Roll Over Company for Withdrawal
 	 
 	 */
+	//Mosin
+	
 	public void selectRollOverCompany(String withdrawalMethodType,String emailAddress)
+	{
+		try {
+
+			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self") && !(withdrawalMethodType.equalsIgnoreCase("INSERVICE")))
+					//&& !(withdrawalMethodType.equalsIgnoreCase("PARTIAL PAYMENT TO SELF AND ROLLOVER REMAINING BALANCE")) && !(withdrawalMethodType.equalsIgnoreCase("ROLLOVER TO AMERICAN FUNDS TRADITIONAL AND ROTH IRA")))
+			{
+				Web.selectDropnDownOptionAsIndex(drpRollOverCompany, "5");
+				isTextFieldDisplayed("Your rollover check will be sent to the address of record on the account");
+				Thread.sleep(1000);
+				isTextFieldDisplayed("Please enter rollover information");
+				Web.setTextToTextBox(inpAccountNumber, "123456");
+				Reporter.logEvent(Status.PASS,"Verify if IRA Account Number has been displayed",
+						"IRA Account Number Field Has been Displayed and entered",true);
+				if (Web.isWebElementDisplayed(inpRothAccountNumber)) {
+					Web.setTextToTextBox(inpRothAccountNumber, "1111111");
+					Reporter.logEvent(Status.PASS,"Verify if Roth IRA Account Number has been displayed",
+							"Roth IRA Account Number Field Has been Displayed and entered",false);
+				}
+			}			
+		
+		isTextFieldDisplayed("Delivery information for mail or expedited delivery");
+		Thread.sleep(1000);
+		
+		// Enter participant email address and click on continue
+		Web.setTextToTextBox(txtEmailAddress,emailAddress);
+		txtEmailAddress.sendKeys(Keys.ENTER);	
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	/*public void selectRollOverCompany(String withdrawalMethodType,String emailAddress)
 	{
 		try {
 			if(!withdrawalMethodType.equalsIgnoreCase("Payment to Self") && !(withdrawalMethodType.equalsIgnoreCase("INSERVICE")))
@@ -1821,7 +2016,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		{
 			e.printStackTrace();
 		}
-	}
+	}*/
 	/**
 	 * <pre>
 	 * Method to get the text of an webElement
@@ -2272,8 +2467,9 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 				+ "Expected Delivery Type:  Payment to Self" +"\n"
 				+ "Actual Delivery type: "+lstConfirmationPageDeliveryType.get(0).getText(), false);
 		
-	//Verify Payable To		
-			if(lstConfirmationPagePayableTo.get(0).getText().trim().contains(pptFirstName.toString().trim()))
+	//Verify Payable To		//Mosin
+			if(lstConfirmationPagePayableTo.get(0).getText().toString().trim().toLowerCase().contains(pptFirstName.toString().trim().toLowerCase()))
+			//if(lstConfirmationPagePayableTo.get(0).getText().trim().contains(pptFirstName.toString().trim()))
 				Reporter.logEvent(Status.PASS, "Verify the Payable To in the Confirmation Page for PTS", 
 						"The Payable To Field is displayed as:\n"
 						+ "Payable To: "+lstConfirmationPagePayableTo.get(0).getText(), false);
@@ -2332,8 +2528,9 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 						+ "Expected Delivery Type:  Rollover" +"\n"
 						+ "Actual Delivery type: "+lstConfirmationPageDeliveryType.get(1).getText(), false);
 				
-			//Verify Payable To		
-					if(lstConfirmationPagePayableTo.get(1).getText().trim().contains(pptFirstName.toString().trim()))
+			//Verify Payable To	//Mosin	
+			if(lstConfirmationPagePayableTo.get(1).getText().toString().trim().toLowerCase().contains(pptFirstName.toString().trim().toLowerCase()))
+					//if(lstConfirmationPagePayableTo.get(1).getText().trim().contains(pptFirstName.toString().trim()))
 						Reporter.logEvent(Status.PASS, "Verify the Payable To in the Confirmation Page for PTS", 
 								"The Payable To Field is displayed as:\n"
 								+ "Payable To: "+lstConfirmationPagePayableTo.get(1).getText(), false);
@@ -2343,20 +2540,23 @@ public void verify_FWD_PartialPayments_WithdrawalConfirmation(String IndId,Strin
 								+ "Expected: "+ pptFirstName +"\n"
 								+ "Actual: "+lstConfirmationPagePayableTo.get(1).getText(), false);
 					
-					String rollOverMailDelivery=lstConfirmationPageDeliveryMethod.get(1).getText().contains("-")?
-							lstConfirmationPageDeliveryMethod.get(1).getText().replace("-", " "):
-								lstConfirmationPageDeliveryMethod.get(1).getText();
-					//deliveryMthd=deliveryMthd.contains("-")? deliveryMethod.replace("-", " ") : deliveryMethod;					
-					//if(rollOverMailDelivery.contains(rollOverDeliveryMthd))
-						Reporter.logEvent(Status.PASS, "Verify the Delivery Method in the Confirmation Page", 
-								"The Delivery Method is displayed as:\n"
-								+ "Expected Delivery Method: "+ rollOverDeliveryMthd +"\n"
-								+ "Actual Delivery Method: "+rollOverMailDelivery, false);
-					/*else
-						Reporter.logEvent(Status.FAIL, "Verify the Delivery Method in the Confirmation Page", 
-								"The Delivery Method is displayed as:\n"
-								+ "Expected Delivery Method: "+ rollOverDeliveryMthd +"\n"
-								+ "Actual Delivery Method: "+rollOverMailDelivery, false);*/
+					if(isAmericanFunds==false)
+					{
+						String rollOverMailDelivery=lstConfirmationPageDeliveryMethod.get(1).getText().contains("-")?
+								lstConfirmationPageDeliveryMethod.get(1).getText().replace("-", " "):
+									lstConfirmationPageDeliveryMethod.get(1).getText();
+						//deliveryMthd=deliveryMthd.contains("-")? deliveryMethod.replace("-", " ") : deliveryMethod;					
+						//if(rollOverMailDelivery.contains(rollOverDeliveryMthd))
+							Reporter.logEvent(Status.PASS, "Verify the Delivery Method in the Confirmation Page", 
+									"The Delivery Method is displayed as:\n"
+									+ "Expected Delivery Method: "+ rollOverDeliveryMthd +"\n"
+									+ "Actual Delivery Method: "+rollOverMailDelivery, false);
+						/*else
+							Reporter.logEvent(Status.FAIL, "Verify the Delivery Method in the Confirmation Page", 
+									"The Delivery Method is displayed as:\n"
+									+ "Expected Delivery Method: "+ rollOverDeliveryMthd +"\n"
+									+ "Actual Delivery Method: "+rollOverMailDelivery, false);*/
+					}
 					
 					//Verify Address
 					Reporter.logEvent(Status.INFO, "Verify the Sent To Address in the Confirmation Page", 
@@ -2555,7 +2755,44 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 			}
 		}
 	}
-
+//Mosin
+public void verifyDisbursementRequest() throws SQLException
+{
+	String[] sqlQueryEmail = Stock.getTestQuery(Stock
+			.GetParameterValue("getEmail"));
+	ResultSet rs_Email = DB.executeQuery(sqlQueryEmail[0],
+			sqlQueryEmail[1], Stock.GetParameterValue("userName"));
+	//System.out.println(sqlQueryEmail[0]+sqlQueryEmail[1]);
+	rs_Email.first();
+	//String sEmail1 = rs_Email.getString(1);
+	String sEmail = rs_Email.getString("email_address");
+	
+	if(Web.isWebElementDisplayed(btnIAgreeAndSubmit))
+	{
+		System.out.println("The I Agree and Submit element is identified");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");
+		((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,250)", "");			
+		Web.clickOnElement(btnIAgreeAndSubmit);			
+		Common.waitForProgressBar();		
+		Web.waitForPageToLoad(Web.getDriver());	
+	}
+	else
+		throw new Error("I Agree & Submit buton is NOT displayed");	
+	//String disbursementMsg = "A form has been emailed to "+sEmail;
+	String disbursementMsg = "A form has been emailed to abc@test.com";
+	
+	if(disbursementMsg.equalsIgnoreCase(disbursementRequest.getText()))
+		Reporter.logEvent(Status.PASS,
+				"Verify that disbursement request should get submitted successfully",
+				"Expected: "+disbursementMsg+"Actual: "+disbursementRequest.getText(),
+				false);
+	else
+		Reporter.logEvent(Status.FAIL,
+				"Verify that disbursement request should get submitted successfully",
+				"Expected: "+disbursementMsg+"Actual: "+disbursementRequest.getText(),
+				true);	
+}
 	public void verifyPlanWithdrawalCachingPage() {
 		if (isTextFieldDisplayed("Plan withdrawal")) {
 			isTextFieldDisplayed("Are you a U.S. citizen or resident?");
@@ -2772,6 +3009,7 @@ public void verifyWithdrawalMethodCachingPage(String withdrawalType,
 					"Request a Withdrawal Home Page is Not Displayed", false);
 			throw new Error ("Request a Withdrawal Page is Not Displayed");
 		}
+		System.out.println(isEmpQueDisplayedOrFWD+"@@@");
 			return isEmpQueDisplayedOrFWD;
 
 	}

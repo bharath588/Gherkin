@@ -2824,11 +2824,12 @@
 				requestWithdrawal.citizenShipValidation(Stock.GetParameterValue("SSN"));
 				requestWithdrawal.verifyWithdrawalMethodPage(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("withdrawalMethod"),
 						Stock.GetParameterValue("emailAddress"),Stock.GetParameterValue("rollingOverAccount"));
-				requestWithdrawal.verifyFWD_PartialPayment_MailDeliveryTypeAndWithDrawalSummary(Stock.GetParameterValue("PTSDeliveryMethod"),
+				/*requestWithdrawal.verifyFWD_PartialPayment_MailDeliveryTypeAndWithDrawalSummary(Stock.GetParameterValue("PTSDeliveryMethod"),
 						Stock.GetParameterValue("rollOverDeliveryMethod"));
+				//Needed
 				requestWithdrawal.verify_FWD_PartialPayments_WithdrawalConfirmation(Stock.GetParameterValue("ind_ID"),
 						Stock.GetParameterValue("PTSDeliveryMethod"),
-						Stock.GetParameterValue("rollOverDeliveryMethod"));
+						Stock.GetParameterValue("rollOverDeliveryMethod"));*/
 								
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -4952,6 +4953,12 @@
 				if(!requestWithdrawal.verifyEmpQueDisplayedOrSepServiceSelected(Stock.GetParameterValue("withdrawalTypeFrom")))
 					requestWithdrawal.verifyEnteredSepServiceAmount(Stock.GetParameterValue("withdrawalTypeFrom"),Stock.GetParameterValue("isRothAvailFrom"), 
 						Stock.GetParameterValue("isNonRothAvailFrom"));
+				//Mosin
+				else
+					System.out.println("In else");
+					if (Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE",true)) 
+						Web.clickOnElement(requestWithdrawal, "CONTINUE");
+					
 				
 				
 				/*requestWithdrawal.selectWithdrawalTypeForSepService(Stock.GetParameterValue("withdrawalTypeTo"));

@@ -30,7 +30,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	// @FindBy(xpath=".//h1[text()='My Accounts']") private WebElement
 	// hdrMyAccounts;
-	@FindBy(xpath = ".//h1[text()='My Accounts']")
+	@FindBy(xpath = ".//h1[text()='My Accounts' or text()='Account Overview']")
 	private WebElement hdrMyAccounts;
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private List<WebElement> lstLnkPlanName;
@@ -38,7 +38,7 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 	private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
-	@FindBy(linkText = "Log out")
+	@FindBy(xpath=".//a[contains(@translate,'Logout')]")
 	private WebElement lnkLogout;
 	@FindBy(xpath = "//*[@id='account-overview-chart']")
 	private WebElement imgGraph;
@@ -76,6 +76,12 @@ public class MyAccountsPage extends LoadableComponent<MyAccountsPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),"User Name is Not Displayed\n");
 
 			if(Common.verifyLoggedInUserIsSame()) {
