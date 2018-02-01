@@ -26,6 +26,8 @@ import org.testng.Assert;
 
 
 
+
+
 import core.framework.Globals;
 import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
@@ -178,7 +180,13 @@ protected void isLoaded() throws Error {
 @Override
 protected void load() {
 	this.parent.get();
-	//((LandingPage) this.parent).dismissPopUps(true,true);
+	try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	((LandingPage) this.parent).dismissPopUps(true,true);
 	Common.waitForProgressBar();
 	Web.waitForPageToLoad(Web.getDriver());
 	this.lnkHome.click();
