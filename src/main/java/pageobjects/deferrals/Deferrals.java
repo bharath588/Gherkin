@@ -2279,7 +2279,7 @@ return expectedCompanyMatch;
 			verifyWebElementDisplayed("Dollar Button");
 			verifyWebElementDisplayed("Continue Button");
 			verifyWebElementDisplayed("Back Button");
-			isTextFieldDisplayed("The estimated amount to be deducted from your paycheck is based on the salary provided times your contribution rate.");
+			//isTextFieldDisplayed("The estimated amount to be deducted from your paycheck is based on the salary provided times your contribution rate.");
 			
 	}		
 		
