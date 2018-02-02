@@ -10,8 +10,6 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
-import net.sourceforge.htmlunit.corejs.javascript.ast.SwitchCase;
-
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
