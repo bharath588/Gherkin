@@ -20,7 +20,7 @@ public class TestDataFromDB {
 	static LinkedHashMap<Long, LinkedHashMap<String, String>> testdataFromDB = new LinkedHashMap<Long, LinkedHashMap<String, String>>();
 	static ResultSet participants ;
 	static boolean queryExecuted=false;
-	static int j=3;
+	static int j=2;
 	
 	static ResultSetMetaData rsMetaData = null;
 	@SuppressWarnings("null")
