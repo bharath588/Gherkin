@@ -15,10 +15,10 @@
                 
                  <!-- PRIOR PLAN CONTRIBUTIONS 5 -->
    
-                      <!--  <include name="Deferrals_Participant_Prior_Contributions6">
+                       <include name="Deferrals_Participant_Prior_Contributions6">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_006M_Prior Plan Contributions_Participant within first year of employment">
                     </parameter>
-                    </include> -->
+                    </include>
                   <include name="Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_032_Regular_BEFORE_Update_auto_increase_when_payroll_calendar_ADJRUN_PAYROLLDATE">
                     </parameter>
