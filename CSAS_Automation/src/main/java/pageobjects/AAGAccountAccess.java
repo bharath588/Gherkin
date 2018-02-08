@@ -26,8 +26,10 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 	
 	@FindBy(id = "header-logo")
 	private WebElement FinancialEngines;
+	@FindBy(xpath = ".//td[@class,'ibbotson']")
+	private WebElement advisoryServices;
 	
-
+	
 	LoadableComponent<?> parent;
 
 	public AAGAccountAccess() {
@@ -41,7 +43,7 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void load() {
-		 this.parent = new ParticipantHome().get();
+		this.parent = new ParticipantHome().get();
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuAAGAccountAccess, true)) {
 			Web.clickOnElement(MenuAAGAccountAccess);
@@ -63,5 +65,28 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 					true);
 		}
 	}
-
+	
+	public void verifyFinancialEnginesTitle(){
+		if (Web.isWebElementDisplayed(FinancialEngines, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Check if FinancialEngines page displayed or not",
+					"FinancialEngines page displyed successfully", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check if FinancialEngines page displayed or not",
+					"FinancialEngines page didn't disply successfully", true);
+		}
+	}
+	public void verifyAdvisoryServicesTitle(){
+		if (Web.isWebElementDisplayed(advisoryServices, true)) {
+			Reporter.logEvent(Status.PASS,
+					"Check if AdvisoryServices page displayed or not",
+					"AdvisoryServices page displyed successfully", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"Check if AdvisoryServices page displayed or not",
+					"AdvisoryServices page didn't disply successfully", true);
+		}
+	}
+	
 }

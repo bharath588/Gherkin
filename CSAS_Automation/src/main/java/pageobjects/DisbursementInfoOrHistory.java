@@ -14,6 +14,7 @@ import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
@@ -383,9 +384,10 @@ public class DisbursementInfoOrHistory extends
 	 * </pre>
 	 * 
 	 * @throws ParseException
+	 * @throws InterruptedException 
 	 */
 	public void clickOnEventID(String date, String eventNo)
-			throws ParseException {
+			throws ParseException, InterruptedException {
 
 		if (Web.isWebElementDisplayed(DHFromDateFiled)) {
 			String dateFormat = DHFromDateFiled.getAttribute("placeholder");
@@ -402,10 +404,11 @@ public class DisbursementInfoOrHistory extends
 				Reporter.logEvent(Status.PASS,
 						"Check if Disbursement Summary displayed",
 						"Disbursement Summary displayed successfully", true);
+				wait(20000);
 				if (DSEventID.size() <= 0) {
 					throw new AssertionError("Does not display any events.");
 				} else {
-					for (int i = 0; i <= DSEventID.size(); i++) {
+					for (int i = 0; i < DSEventID.size(); i++) {
 						if (eventNo
 								.equalsIgnoreCase(DSEventID.get(i).getText())
 								&& DSDisbursementSts.get(i).getText().trim()

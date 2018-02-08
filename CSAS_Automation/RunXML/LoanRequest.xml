@@ -5,14 +5,17 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="LoanRequest">sorry wrong window
+	<test name="LoanRequest">
 	
 		<classes>
 		
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 			<methods>
+			<include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
+						<parameter name="ManualTCName" value="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod" />
+					</include>
 			
-			<include name="DDTC_26089_Paperless_Loan_Exceptions"> 
+			<!-- <include name="DDTC_26089_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26089_Paperless_Loan_Exceptions" />
 					</include>
 					 <include name="DDTC_25965_Paperless_Loan_Exceptions"> 
@@ -24,9 +27,7 @@
 			 <include name="DDTC_25959_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_25959_Paperless_Loan_Exceptions" />
 					</include>
-			<include name="DDTC_26960_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
-						<parameter name="ManualTCName" value="DDTC_26960_Paperless_LoanPaymentFrequenct_PaymentMethod" />
-					</include>
+			
 				
 				<include name="DDTC_25950_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_25950_Paperless_Loan_Exceptions" />
@@ -159,8 +160,10 @@
 				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
 					</include>	
-				 </methods>
-			</class>
+				
+			 -->
+			  </methods>
+			 </class>
 		</classes>
 	</test>
 

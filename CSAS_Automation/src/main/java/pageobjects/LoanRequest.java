@@ -2657,12 +2657,12 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		Web.clickOnElement(continue_button);
 		Reporter.logEvent(Status.INFO,
 				"Clicking the continue button to move to the next page",
-				"Continue button clicked and moved to next page", false);
+				"Continue button clicked and moved to next page", true);
 		// Get actual and expected frequency Method.
 		String actualPaymentFrequency = Web.getWebElementText(confirmPaymentFrequency);
 		// Verify Payment method is getting display in Loan Summary screen as "bi-weekly".
 		if(actualPaymentFrequency.contains(paymentFrequencyValue.toLowerCase())){
-			Reporter.logEvent(Status.PASS, "Payment method is getting display in Loan Summary screen as bi-weekly", "Expected was should present "+paymentFrequencyValue+" actual is "+actualPaymentFrequency+" ", false);
+			Reporter.logEvent(Status.PASS, "Payment method is getting display in Loan Summary screen as bi-weekly", "Expected was should present "+paymentFrequencyValue+" actual is "+actualPaymentFrequency+" ", true);
 		}else{
 			Reporter.logEvent(Status.FAIL, "Payment method is getting display in Loan Summary screen as bi-weekly", actualPaymentFrequency, true);
 		}

@@ -58,7 +58,7 @@
 						<parameter name="ManualTCName" value="validateConfirmationPage" />
 						</include>  
 		 				
-					<!-- 
+					
 					<include name="ValidateIndicativeCity">
 						<parameter name="ManualTCName" value="ValidateCity" />
 					</include>	
@@ -77,9 +77,9 @@
 					<include name="validateIndicativeData_InlineValidation">
 						<parameter name="ManualTCName" value="InlineValidation" />
 					</include>
-					 -->	
+						
 					
-				<!-- 	<include name="validateIndicativeData_ClearButton">
+					<include name="validateIndicativeData_ClearButton">
 						<parameter name="ManualTCName" value="validateClearButton" />
 					</include> 
 					
@@ -100,8 +100,8 @@
 					</include>	 
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
-					</include>	  -->
-					<!-- <include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
+					</include>	 
+					<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn" />
 					</include>
 					 <include name="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn">
@@ -118,7 +118,7 @@
 					</include>
 					<include name="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn" />
-					</include> -->
+					</include>
 					</methods> 
 			</class>
 		</classes>
