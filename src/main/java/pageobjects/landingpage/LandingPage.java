@@ -2,6 +2,7 @@ package pageobjects.landingpage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import lib.DB;
 import lib.Reporter;
@@ -400,10 +401,14 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		
 		try
 		{
-			WebElement lnkEnrollment = Web.getDriver().findElement(By		
+			Web.waitForElement(btnCloseWithOutEnrolling);
+			if(Web.isWebElementDisplayed(btnCloseWithOutEnrolling, true))
+				Web.clickOnElement(btnCloseWithOutEnrolling);
+			List<WebElement> lnkEnrollment = Web.getDriver().findElements(By		
 				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
-			if(lnkEnrollment.isDisplayed())
-				Web.clickOnElement(lnkEnrollment);
+			int i= lnkEnrollment.size();
+			if(lnkEnrollment.get(1).isEnabled())
+				Web.clickOnElement(lnkEnrollment.get(1));
 		}
           catch(NoSuchElementException e){
         	  e.printStackTrace();

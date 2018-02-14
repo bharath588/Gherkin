@@ -150,7 +150,7 @@ public class EnrollmentTestCases {
 			String contributionRate=nqEnroll.getDeferralAmount();
 			// Step 7
 			
-			nqEnroll.clickOnAddElectionsButton();
+			nqEnroll.clickEditMyOptionsButton();
 			nqEnroll.verifyPageHeaderIsDisplayed("DISTRIBUTION ELECTIONS");
 			//Step 8
 		
@@ -158,6 +158,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -184,6 +186,7 @@ public class EnrollmentTestCases {
 			
 			nqEnroll.VerifyDeferralElectionPageAsReturningUser(contributionRate);
 			//Step10
+			nqEnroll.clickOnBackButton();
 			nqEnroll.clickOnBackButton();
 			if(Web.isWebElementDisplayed(nqEnroll, "BUTTON EDIT MY OPTIONS", true)){
 				
@@ -492,6 +495,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -658,6 +663,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -837,6 +844,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1013,6 +1022,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1159,6 +1170,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1287,6 +1300,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1576,6 +1591,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1666,7 +1683,8 @@ public class EnrollmentTestCases {
 				int j=1;
 			
 				for (int i = 0; i < disbReason.size(); i++) {
-					
+					disbMethod.clear();
+					DisbTiming.clear();
 				
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
@@ -1911,6 +1929,8 @@ public class EnrollmentTestCases {
 					.GetParameterValue("ga_id"));
 			if (disbReason.size() > 0) {
 				for (int i = 0; i < disbReason.size(); i++) {
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),
@@ -1996,7 +2016,8 @@ public class EnrollmentTestCases {
 			
 				for (int i = 0; i < disbReason.size(); i++) {
 					
-				
+					disbMethod.clear();
+					DisbTiming.clear();
 					disbMethod = Common
 							.getMethodForDisbursmentReason(
 									Stock.GetParameterValue("ga_id"),

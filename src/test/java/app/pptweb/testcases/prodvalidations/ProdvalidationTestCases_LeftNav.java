@@ -40,7 +40,7 @@ import pageobjects.liat.HealthCareCosts;
 import pageobjects.liat.HowDoICompare;
 import pageobjects.liat.ProfilePage;
 import pageobjects.liat.RetirementIncome;
-import pageobjects.loan.RequestLonePage;
+import pageobjects.loan.RequestLoanPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
@@ -562,7 +562,7 @@ public class ProdvalidationTestCases_LeftNav {
 				  }
 				}*/
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
-			RequestLonePage requestLone = new RequestLonePage(lftBar);
+			RequestLoanPage requestLone = new RequestLoanPage(lftBar);
 			requestLone.get();
 			String parentWindow = Web.getDriver().getWindowHandle();
 			/*for (String winHandle : Web.getDriver().getWindowHandles()) {
@@ -3399,7 +3399,7 @@ public class ProdvalidationTestCases_LeftNav {
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
-			RequestLonePage requestLone = new RequestLonePage(lftBar);
+			RequestLoanPage requestLone = new RequestLoanPage(lftBar);
 			requestLone.get();
 			
 			boolean lblDisplayed = false;

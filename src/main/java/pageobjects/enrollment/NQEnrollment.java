@@ -3,8 +3,10 @@ package pageobjects.enrollment;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -70,7 +72,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	private WebElement btnAddElection;
 	@FindBy(id = "deferralAmounts0")
 	private WebElement inpContributionRate;
-	@FindBy(xpath = "//div[@class='input-group-btn']//span")
+	@FindBy(xpath = "//div[@class='btn-group']//button[contains(@class,'active')][./following-sibling::input]")
 	private WebElement txtContributionRateType;
 	@FindBy(xpath = "//*[contains(@class, 'editable-text-trigger')]")
 	private WebElement lnkContributionRate;
@@ -532,6 +534,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	public void verifyPageHeaderIsDisplayed(String webElement) {
 
 		WebElement webelement = getWebElement(webElement);
+		Web.waitForElement(webelement);
 
 		if (Web.isWebElementDisplayed(webelement)) {
 			lib.Reporter.logEvent(Status.PASS, "Verify " + webElement
@@ -562,8 +565,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 		String deferralAmt = "";
 
 		if (Web.isWebElementDisplayed(inpContributionRate)) {
-			deferralAmt = txtContributionRateType.getText()
-					+ inpContributionRate.getAttribute("value");
+			deferralAmt =txtContributionRateType.getText()+inpContributionRate.getAttribute("value");
 		} else {
 
 			lib.Reporter.logEvent(Status.FAIL, "Get Contribution Rate",
@@ -685,10 +687,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	 * <pre>
 	 * Method to Verify Modal Pop Up for Returning User
 	 * </pre>
+	 * @throws ParseException 
 	 * 
 	 */
 
-	public void VerifyModalPopupForReturningUser(String ga_id, String ssn) {
+	public void VerifyModalPopupForReturningUser(String ga_id, String ssn) throws ParseException {
 
 		try {
 			String expectedText = "";
@@ -789,10 +792,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	 * @param ga_id
 	 *            , ssn
 	 * @return effectiveDate
+	 * @throws ParseException 
 	 * 
 	 *
 	 */
-	public String getEffectiveDate(String ga_id, String ssn) {
+	public String getEffectiveDate(String ga_id, String ssn) throws ParseException {
 		String effectiveDate = "";
 
 		String[] sqlQuery = null;
@@ -811,7 +815,8 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 
 			try {
 				DisbursmentEffectiveDate.last();
-				effectiveDate = DisbursmentEffectiveDate.getString("effdate");
+				effectiveDate = DisbursmentEffectiveDate.getString("effdate").split(" ")[0];
+				System.out.println(effectiveDate);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
@@ -822,9 +827,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
 
 		}
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-DD");
+		DateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
 
-		effectiveDate = dateFormat.format(effectiveDate);
+		Date effectiveDate1 = dateFormat.parse(effectiveDate);
+		effectiveDate=dateFormat1.format(effectiveDate1);
 		System.out.println("DATE" + effectiveDate);
 
 		return effectiveDate;
@@ -837,10 +844,11 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 	 * 
 	 * @param ga_id
 	 * @return endDate
+	 * @throws ParseException 
 	 * 
 	 *
 	 */
-	public String getEnrollmentEndDate(String ga_id) {
+	public String getEnrollmentEndDate(String ga_id) throws ParseException {
 		String endDate = "";
 
 		String[] sqlQuery = null;
@@ -870,7 +878,12 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
 
 		}
-		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-DD");
+		DateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
+
+		Date effectiveDate1 = dateFormat.parse(endDate);
+		endDate=dateFormat1.format(effectiveDate1);
+		System.out.println("DATE" + endDate);
 
 		endDate = dateFormat.format(endDate);
 

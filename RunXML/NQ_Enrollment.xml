@@ -4,14 +4,71 @@
     <listeners>
         <listener class-name="core.framework.TestListener"/>
     </listeners>
-    <test name="LOGIN">
+    <test name="NQENROLLMENT">
     <classes>
         <class name="app.pptweb.testcases.enrollment.EnrollmentTestCases">
                 <methods>
                 
-                  <include name="DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User">
+                 <!--  <include name="DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User">
                     <parameter  name="ManualTCName" value="SIT_DDTC_26997_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_Returning_User"></parameter>
+                    </include> -->
+                    
+                    <include name="DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_27026_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User"></parameter>
                     </include>
+                    
+                   <!--  <include name="DDTC_27025_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User_When_Deferral_Amount_meets_granularity_rules">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_27025_NQ_SE_Via_Liat_Verify_Summary_Page_As_Returning_User_When_Deferral_Amount_meets_granularity_rules"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26977_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_New_User_With_Multiple_Reasons">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26977_NQ_SE_Via_AccountOverview_VerifyDeferral_Election_Page_As_New_User_With_Multiple_Reasons"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26975_NQ_SE_Via_Liat_VerifyDeferral_Election_Page_As_New_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26975_NQ_SE_Via_Liat_VerifyDeferral_Election_Page_As_New_User"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26963_NQ_SE_Vetify_Distribution_Election_Page_As_New_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26963_NQ_SE_Vetify_Distribution_Election_Page_As_New_User"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26955_NQ_SE_As_New_User_Verify_ConfirmationPage_With_MulltipleStructures_via_MyDistributionPage">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26955_NQ_SE_As_New_User_Verify_ConfirmationPage_With_MulltipleStructures_via_MyDistributionPage"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26846_NQ_SE_As_New_User_Verify_Summary_Page_via_MyDistributionPage">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26846_NQ_SE_As_New_User_Verify_Summary_Page_via_MyDistributionPage"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26831_NQ_SE_As_New_User_Verify_Summary_Page_via_LIATPage">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26831_NQ_SE_As_New_User_Verify_Summary_Page_via_LIATPage"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_27023_NQ_SE_Verify_Summary_Page_As_Returning_User_via_LIAT">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_27023_NQ_SE_Verify_Summary_Page_As_Returning_User_via_LIAT"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26959_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26959_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26961_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26961_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26827_NQ_SE_Via_AccountOverview_Verify_Distribution_Election_Page_As_Returning_User">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26827_NQ_SE_Via_AccountOverview_Verify_Distribution_Election_Page_As_Returning_User"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_26777_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26777_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
+                    </include>
+                    
+                    <include name="DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
+                    </include>
+                    -->
                     
 				</methods>
 			</class> 
