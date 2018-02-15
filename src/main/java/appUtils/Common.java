@@ -612,6 +612,27 @@ public class Common {
 		sqlQuery=Stock.getTestQuery("updateDeliveryMethodForParticipant");
 		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		DB.executeUpdate(sqlQuery[0], sqlQuery[1],Stock.GetParameterValue("deliveryMethod") ,ssn);
+		inserWorkEmailForIndividual(Stock.GetParameterValue("ID"));
+	}
+	
+	/**
+	 * Method to add work email for Participant
+	 * @param ind_id
+	 * @throws Exception
+	 */
+	public static void inserWorkEmailForIndividual(String ind_id) throws Exception {
+	
+		String userName=Stock.GetParameterValue("username");
+		
+		String[] sqlQuery = Stock.getTestQuery("getWorkEmailId");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		ResultSet rs=DB.executeQuery(sqlQuery[0], sqlQuery[1], ind_id);
+		if(!(DB.getRecordSetCount(rs)>0)){
+		String[] sqlQuery1 = Stock.getTestQuery("InsertWorkEmailId");
+		sqlQuery1[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		DB.executeUpdate(sqlQuery1[0], sqlQuery1[1], ind_id);
+		}
+		
 	}
 	public static String getFutureDate(String format) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat(format);

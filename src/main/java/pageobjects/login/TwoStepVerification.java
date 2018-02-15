@@ -506,6 +506,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		Actions action = new Actions(Web.getDriver());
 		action.moveToElement(btnContinue1).click(btnContinue1).build().perform();
 	}
+	
+
 	/**
 	 * <pre>
 	 * Method to Click on Save Button in Change Communication Preference page
@@ -514,6 +516,23 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 * 
 	 */
 	public void clickOnSaveButton() throws InterruptedException {
+		Web.waitForElement(inpPlanName);
+		Actions action = new Actions(Web.getDriver());
+		action.moveToElement(btnSave).build().perform();
+		Thread.sleep(2000);
+		action.click(btnSave).build().perform();
+		
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Method to Click on E-Delivery CheckBox in Change Communication Preference page
+	 * </pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void selectEdelivery() throws InterruptedException {
 		Web.waitForElement(btnSave);
 		Actions action = new Actions(Web.getDriver());
 		action.moveToElement(btnSave).build().perform();
