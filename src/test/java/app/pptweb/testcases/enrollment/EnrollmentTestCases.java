@@ -370,7 +370,7 @@ public class EnrollmentTestCases {
 			
 			//Step 7
 			
-			homePage.clickEnrollNowByGAID(Stock.GetParameterValue("ga_id"));
+			//homePage.clickEnrollNowByGAID(Stock.GetParameterValue("ga_id"));
 			Web.waitForElement(nqEnroll, "Button Continue");
 			Web.clickOnElement(nqEnroll, "Button Continue");
 			if(Web.isWebElementDisplayed(nqEnroll, "BUTTON EDIT MY OPTIONS", true)){

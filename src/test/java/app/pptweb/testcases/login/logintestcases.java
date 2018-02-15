@@ -20,6 +20,8 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -1021,15 +1023,19 @@ public class logintestcases {
           Web.getDriver().switchTo().defaultContent();
          // twoStepVerification.clickContinueInContactInfoPage();
            Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
-           Thread.sleep(6000);
+         Actions keyBoard = new Actions(Web.getDriver());
+         keyBoard.sendKeys(Keys.TAB).build().perform();
+         twoStepVerification.clickOnSaveButton();
+           if(Web.isWebEementEnabled(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
+             Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
+         
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
          
-           
 			// Dismiss pop ups if displayed
-			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
-			landingPage.get();
+			LandingPage landingPage = new LandingPage();
+			landingPage.dismissPopUps(true, true);
+			
 			Web.waitForElement(landingPage, "Log out");
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
@@ -1369,19 +1375,23 @@ public class logintestcases {
            
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
-           
-           Web.clickOnElement(twoStepVerification, "Button Save");
-         if(Web.isWebEementEnabled(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
+         
+           twoStepVerification.clickOnSaveButton();
+         if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
-           
+        
+           Common.waitForProgressBar();
+           Web.waitForPageToLoad(Web.getDriver());
+           LandingPage landingPage = new LandingPage();
+           Common.waitForProgressBar();
            //Step 9
 			// Dismiss pop ups if displayed
-			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
+			
+			 landingPage.dismissPopUps(true, true);
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
-			Common.waitForProgressBar();
+			
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
@@ -1734,21 +1744,22 @@ public class logintestcases {
            //Stp 8
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "Button Save");
+           twoStepVerification.clickOnSaveButton();
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            }
-           
+           Common.waitForProgressBar();
            //Step 9
 			// Dismiss pop ups if displayed
-			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
+			LandingPage landingPage = new LandingPage();
+			Common.waitForProgressBar();
+			 landingPage.dismissPopUps(true, true);
 
 			// Verify if landing page is displayed - Landing page is loaded if
 			// Logout link is displayed.
-			landingPage.get();
-			Common.waitForProgressBar();
+		
+			
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
@@ -2079,20 +2090,19 @@ public class logintestcases {
 			}
            	// Step 7
            
-           Web.clickOnElement(twoStepVerification, "Button Save");
+           twoStepVerification.clickOnSaveButton();
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            }
         
+           Common.waitForProgressBar();
+           //Step 9
 			// Dismiss pop ups if displayed
-			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
-
-			// Verify if landing page is displayed - Landing page is loaded if
-			// Logout link is displayed.
+			LandingPage landingPage = new LandingPage();
 			Common.waitForProgressBar();
-			landingPage.get();
+			 landingPage.dismissPopUps(true, true);
+			 
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,
@@ -2425,21 +2435,18 @@ public class logintestcases {
          
            Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
            
-           Web.clickOnElement(twoStepVerification, "Button Save");
+           twoStepVerification.clickOnSaveButton();
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
          
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
            }
            
-           //Step 8
+           Common.waitForProgressBar();
+           //Step 9
 			// Dismiss pop ups if displayed
-			LandingPage landingPage = new LandingPage(twoStepVerification);
-			// landingPage.dismissPopUps(true, true);
-
-			// Verify if landing page is displayed - Landing page is loaded if
-			// Logout link is displayed.
+			LandingPage landingPage = new LandingPage();
 			Common.waitForProgressBar();
-			landingPage.get();
+			 landingPage.dismissPopUps(true, true);
 			Web.waitForElement(landingPage, "Log out");
 			if (Web.isWebElementDisplayed(landingPage, "Log out")) {
 				Reporter.logEvent(Status.PASS,

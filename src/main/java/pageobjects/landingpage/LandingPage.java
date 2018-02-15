@@ -161,8 +161,8 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 		if (Web.isWebElementDisplayed(lnkDismiss)) {
 			this.lnkDismiss.click();
 		}
-		if (Web.isWebElementDisplayed(btnCloseTutorial)) {
-			//this.btnCloseTutorial.click();
+		if (Web.isWebElementDisplayed(btnCloseTutorial,true)) {
+			btnCloseTutorial.click();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -406,7 +406,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 				Web.clickOnElement(btnCloseWithOutEnrolling);
 			List<WebElement> lnkEnrollment = Web.getDriver().findElements(By		
 				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
-			int i= lnkEnrollment.size();
+			int i=lnkEnrollment.size();
 			if(lnkEnrollment.get(1).isEnabled())
 				Web.clickOnElement(lnkEnrollment.get(1));
 		}

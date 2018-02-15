@@ -14,6 +14,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -505,5 +506,19 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		Actions action = new Actions(Web.getDriver());
 		action.moveToElement(btnContinue1).click(btnContinue1).build().perform();
 	}
-
+	/**
+	 * <pre>
+	 * Method to Click on Save Button in Change Communication Preference page
+	 * </pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void clickOnSaveButton() throws InterruptedException {
+		Web.waitForElement(btnSave);
+		Actions action = new Actions(Web.getDriver());
+		action.moveToElement(btnSave).build().perform();
+		Thread.sleep(2000);
+		action.click(btnSave).build().perform();
+		
+	}
 }

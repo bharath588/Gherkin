@@ -816,7 +816,7 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			try {
 				DisbursmentEffectiveDate.last();
 				effectiveDate = DisbursmentEffectiveDate.getString("effdate").split(" ")[0];
-				System.out.println(effectiveDate);
+			
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
@@ -827,12 +827,12 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
 
 		}
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-DD");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
 
 		Date effectiveDate1 = dateFormat.parse(effectiveDate);
 		effectiveDate=dateFormat1.format(effectiveDate1);
-		System.out.println("DATE" + effectiveDate);
+		System.out.println("Effective DATE " + effectiveDate);
 
 		return effectiveDate;
 	}
@@ -866,8 +866,8 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 
 			try {
 				EnrollmentEndDate.last();
-				endDate = EnrollmentEndDate
-						.getString("end_of_enrl_processing_date");
+				endDate = EnrollmentEndDate.getString("end_of_enrl_processing_date").split(" ")[0];
+				System.out.println("DATE" + endDate);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
@@ -878,16 +878,12 @@ public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 			}
 
 		}
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-DD");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
 
 		Date effectiveDate1 = dateFormat.parse(endDate);
 		endDate=dateFormat1.format(effectiveDate1);
-		System.out.println("DATE" + endDate);
-
-		endDate = dateFormat.format(endDate);
-
-		System.out.println("DATE" + endDate);
+		System.out.println("End DATE" + endDate);
 
 		return endDate;
 	}
