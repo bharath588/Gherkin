@@ -10,8 +10,7 @@
 		     <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                 
-                  
-              <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
+               <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_01_TC01_Verify_invalid_Userid_and_Password"></parameter></include>
                   	
                   	<include name="Login_005_with_out_eDelivery_as_Electronic_Greater_than_180days">
@@ -32,9 +31,9 @@
                     <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
                     </include>
-                     <include name="Login_CallCenter_timings">
+                    <include name="Login_CallCenter_timings">
                     <parameter name="ManualTCName" value="Login_CallCenter_timings"></parameter>
-                    </include> 
+                    </include>
                        
                   	<include name="Login_002_eDelivery_as_Mail_Greater_than_180days">
                     <parameter name="ManualTCName" value="SIT_Login_002_eDelivery_as_Mail_Greater_than_180days"></parameter>
@@ -49,8 +48,8 @@
                     </include> 
                      <include name="Pre_Login_Page_footer_links_check">
                     <parameter name="ManualTCName" value="Pre_Login_Page_footer_links_check"></parameter>
-                    </include> 
-                </methods>
+                    </include>
+                                 </methods>
             </class>  
 		</classes>
 	</test>
