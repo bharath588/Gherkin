@@ -1,17 +1,12 @@
 
 package pageobjects.userregistration;
 
-import java.util.List;
-
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -19,17 +14,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-
-
-
-
-
 import org.testng.Assert;
 
-import appUtils.Common;
-import core.framework.Globals;
 import pageobjects.login.LoginPage;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class Registration extends LoadableComponent<Registration> {
 
@@ -268,11 +258,13 @@ public class Registration extends LoadableComponent<Registration> {
 
 	/**
 	 * Method to verify inline validations for Current Annual Income Input Field
+	 * @throws InterruptedException 
 	 * 
 	 */
-	public void validateCurrentAnnualIncomeField() {
+	public void validateCurrentAnnualIncomeField() throws InterruptedException {
 	Web.clickOnElement(inpAnnualIncome);
 	Web.clickOnElement(inpDateOfHire);
+	Thread.sleep(1000);
 	String actualErrMsg=Err_inpAnnualIncome.getText().trim();
 	String expectedErrMsg="Annual income is required.";
 	
@@ -385,9 +377,10 @@ public class Registration extends LoadableComponent<Registration> {
 	
 	/**
 	 * Method to verify inline validations for AddressLine1 Input Field
+	 * @throws InterruptedException 
 	 * 
 	 */
-	public void verifyInLineValidationsForAddressLine1() {
+	public void verifyInLineValidationsForAddressLine1() throws InterruptedException {
 		Actions keyBord=new Actions(Web.getDriver());
 	Web.setTextToTextBox(inpAddressLine1, "123ABC");
 	Web.clickOnElement(inpAddressLine1);
@@ -407,7 +400,9 @@ public class Registration extends LoadableComponent<Registration> {
 	
 	Web.setTextToTextBox(inpAddressLine1, "@");
 	Web.clickOnElement(inpAddressLine1);
-	Web.clickOnElement(inpCity);
+	//Web.clickOnElement(inpCity);
+	keyBord.sendKeys(Keys.TAB).build().perform();
+	Thread.sleep(1000);
 	String actualErrMsg=Err_inpAddress1.getText().trim();
 	String expectedErrMsg="Invalid Street Address.";
 	
@@ -1191,7 +1186,7 @@ public class Registration extends LoadableComponent<Registration> {
 			String[] sDivision = divisionName;
 			Web.setTextToTextBox(inpAnnualIncome, annualIncome);
 			Web.setTextToTextBox(inpDateOfHire, dateOfHire);
-			System.out.println(divisionName.length);
+			
 			if (divisionName.length != 0)
 				Web.selectDropDownOption(inpDivisionName, sDivision[0]);
 

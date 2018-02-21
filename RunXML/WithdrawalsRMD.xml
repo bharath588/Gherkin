@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="WITHDRAWAL AMERICAM FUNDS REGRESSION SUITE">
+		<classes>
+			<class	name="app.pptweb.testcases.withdrawals.withdrawalsrmdtestcases">
+				<methods>
+					<!-- Current year scenarios -->
+					<!-- 2nd Sprint below 6 TC's-->
+					<!-- Non Grace. Self and Full service -->
+					<include name="Withdrawals_RMD_29608_SelfService_NonGrace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_current_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29608 RMD Self Service Non Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Current calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29619_SelfService_NonGrace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_previous_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29619 RMD Self Service Non Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29622_FullService_NonGrace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_previous_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29622 RMD Full Service Non Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29623_FullService_NonGrace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_current_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29623 RMD Full Service Non Grace plan Participant required to take an RMD in current calendar year with RMD starting in the current calendar year">
+						</parameter>
+					</include>
+					
+					<!-- Grace plan. Self and Full service -->
+					
+					<include name="Withdrawals_RMD_29624_FullService_Grace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_current_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29624 RMD Full Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the current calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29627_FullService_Grace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_previous_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29627 RMD Full Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29666_SelfService_Grace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_current_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29666 RMD Self Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Current calendar year">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawals_RMD_29668_SelfService_Grace_plan_take_RMD_in_current_calendar_year_with_RMD_starting_in_the_previous_calendar_year">
+						<parameter name="ManualTCName"
+							value="DDTC-29668 RMD Self Service Grace plan Participant required to take an RMD in current calendar year with RMD starting in the Previous calendar year">
+						</parameter>
+					</include>
+					<!-- 1st Sprint below 3 TC's-->
+					<include name="Withdrawal_RMD_DDTC_29685_RMD_Verifying_How_is_this_Calculated_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29685 RMD - Verifying How is this Calculated Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29686_RMD_Verifying_Tax_Withholdings_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29686 RMD - Verifying Tax Withholdings Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29759_RMD_Verifying_Delivery_Method_Modal_in_RMD_screen">
+						<parameter name="ManualTCName"
+							value="DDTC-29759 RMD - Verifying Delivery Method Modal in RMD screen">
+						</parameter>
+					</include>
+					
+					<!-- RMD Informational Message -->
+					<!-- 2nd Sprint below 4 TC's-->
+					<include name="Withdrawal_RMD_DDTC_29975_Verifying_Informational_Message_5_or_greater_owner_using_joint_life_table_and_has_Spouse_DOB_on_file">
+						<parameter name="ManualTCName"
+							value="DDTC-29975 RMD - Verifying Informational Message 5 or greater owner using joint life table and has Spouse DOB on file">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29987_Verifying_Informational_Message_5_owner_using_joint_life_table_and_has_Spouse_DOB_on_file">
+						<parameter name="ManualTCName"
+							value="DDTC-29987 RMD - Verifying Informational Message 5 owner using joint life table and has Spouse DOB on file">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29988_Verifying_Informational_Message_greate_than_5_owner_using_uniform_life_table_and_has_No_Spouse_DOB_on_file">
+						<parameter name="ManualTCName"
+							value="DDTC-29988 RMD - Verifying Informational Message 5 or greater owner using uniform life table and has No Spouse DOB on file">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29990_Verifying_Informational_Message_less_than_5_owner_using_uniform_life_table_and_has_No_Spouse_DOB_on_file">
+						<parameter name="ManualTCName"
+							value="DDTC-29990 RMD - Verifying Informational Message less than 5 owner using uniform life table and has no Spouse DOB on file">
+						</parameter>
+					</include>
+					
+					<!--  -->
+					
+					<include name="Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal">
+						<parameter name="ManualTCName"
+							value="DDTC-29793 PPTWEB_RMD confirmation screen_Proactive enabled for RMD withdrawal">
+						</parameter>
+					</include>
+					
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

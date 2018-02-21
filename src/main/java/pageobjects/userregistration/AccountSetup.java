@@ -1030,6 +1030,7 @@ public class AccountSetup extends LoadableComponent<AccountSetup> {
 							"Verify 'Email Address' text field is displayed",
 							"'Email Address' is not displayed", false);
 				}
+				Thread.sleep(5000);
 				isLabelDisplayed("Phone number");
 				// Verify 'Mobile Phone Number' field is displayed
 				if (Web.isWebElementDisplayed(this.txtPhone)) {

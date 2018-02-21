@@ -1479,8 +1479,10 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Web.selectDropDownOption(drpWithdrawalType,withdrawalMethodType,true);		
 		if(Web.isWebElementDisplayed(btnAfterTaxYes))
 			Web.clickOnElement(btnAfterTaxYes);
-		
-		selectRollOverCompany(withdrawalMethodType,emailAddress);
+		System.out.println("@@@"+Stock.GetParameterValue("AccuCode"));
+		//System.out.println(Stock.GetParameterValue("AccuCode").equalsIgnoreCase("AmFunds"));
+		if(Stock.GetParameterValue("AccuCode")==null)
+			selectRollOverCompany(withdrawalMethodType,emailAddress);
 		if (Web.isWebElementDisplayed(txtHomePhoneNum))
 			Web.setTextToTextBox(txtHomePhoneNum, "1234567891");
 		if (Web.isWebElementDisplayed(btnContinueWithdrawal)) {
@@ -2091,7 +2093,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 		try {				
 		String[] sqlQuery = Stock.getTestQuery("getWithdrawalDisbursementRecords");
 		sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
-		ResultSet getWithdrawalsRecords=DB.executeQuery(sqlQuery[0], sqlQuery[1], txtConfirmationNo.getText());			
+		ResultSet getWithdrawalsRecords=DB.executeQuery(sqlQuery[0], sqlQuery[1], txtConfirmationNo.getText());	
+		System.out.println("Confirmation Number"+txtConfirmationNo.getText());
 		if(getWithdrawalsRecords!=null)
 		{			
 		int isDisbursementRecordsDisplayed = DB.getRecordSetCount(getWithdrawalsRecords);

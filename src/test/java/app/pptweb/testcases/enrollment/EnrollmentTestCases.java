@@ -362,6 +362,7 @@ public class EnrollmentTestCases {
 				Web.clickOnElement(homePage, "Button Close WithOut Enrolling");
 			
 			//Step 4
+			Common.waitForProgressBar();
 			homePage.verifyEnrollmentOpenNowLinkIsDisplayed(Stock.GetParameterValue("ga_id"));
 			//Step 5 & 6
 			homePage.clickEnrollNowByGAID(Stock.GetParameterValue("ga_id"));

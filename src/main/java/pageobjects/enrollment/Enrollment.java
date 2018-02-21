@@ -1,30 +1,23 @@
 package pageobjects.enrollment;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.List;
 
-import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import appUtils.Common;
-import pageobjects.beneficiaries.MyBeneficiaries;
-import pageobjects.general.LeftNavigationBar;
 import pageobjects.login.TwoStepVerification;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class Enrollment extends LoadableComponent<Enrollment> {
 	
@@ -74,8 +67,9 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 	@FindBy(xpath="//span[@class='currency']") private WebElement txtBalance;
 	@FindBy(partialLinkText="Account overview") private WebElement lnkAccountOverview;
 	@FindBy(id="buttonContinue") private WebElement btnEnrollmentContinue;
-	@FindBy(id="submit") private WebElement lnkViewMyAccount;
-
+	//@FindBy(id="submit") private WebElement lnkViewMyAccount;
+	@FindBy(id="enrollment-confirmation-view-account submit") private WebElement lnkViewMyAccount;
+	
 	
 	private String textField="//*[contains(text(),'webElementText')]";
 	
@@ -349,6 +343,7 @@ public class Enrollment extends LoadableComponent<Enrollment> {
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(hdrPriorContribution);
 		verifyPageHeaderIsDisplayed("Header Prior Plan Contribution");
+		Common.waitForProgressBar();
 		String actualText = txtPriorContribution.getText();
 		if(lib.Web.VerifyPartialText("Have you made contributions to any other retirement plans since 1/1/"+year+"?",actualText , true))
 			Reporter.logEvent(Status.PASS, "Verify text in Prior Contributions page", "text is matching\nExpected:Have you made contributions to any other retirement plans since 1/1/"+year+"? \nActual:"+actualText, true);

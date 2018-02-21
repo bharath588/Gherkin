@@ -554,7 +554,7 @@ public class Common {
 		if (isTextDisplayed)
 			lib.Reporter.logEvent(Status.PASS, "Verify " + labelName
 					+ "   Label is Displayed", "'"+labelName + "' Label is Displayed",
-					false);
+					true);
 
 		}
 		catch(NoSuchElementException e){

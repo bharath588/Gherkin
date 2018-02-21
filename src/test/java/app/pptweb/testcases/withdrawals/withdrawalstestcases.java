@@ -4953,11 +4953,10 @@
 				if(!requestWithdrawal.verifyEmpQueDisplayedOrSepServiceSelected(Stock.GetParameterValue("withdrawalTypeFrom")))
 					requestWithdrawal.verifyEnteredSepServiceAmount(Stock.GetParameterValue("withdrawalTypeFrom"),Stock.GetParameterValue("isRothAvailFrom"), 
 						Stock.GetParameterValue("isNonRothAvailFrom"));
-				//Mosin
+				/*//Mosin
 				else
-					System.out.println("In else");
 					if (Web.isWebElementDisplayed(requestWithdrawal, "CONTINUE",true)) 
-						Web.clickOnElement(requestWithdrawal, "CONTINUE");
+						Web.clickOnElement(requestWithdrawal, "CONTINUE");*/
 					
 				
 				
