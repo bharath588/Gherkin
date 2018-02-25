@@ -1074,7 +1074,7 @@ public class logintestcases {
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verify The Delivery Method in Data Base",
-						"Landing page is not displayed \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
+						"Delivery Method is not displayed As Expected In Data Base \nExpexted:"+Stock.GetParameterValue("deliveryMethod")+"\nActual:"+participantID.getString("delivery_method"), false);
 			}
 			// Logout if opted
 			if(Web.isWebEementEnabled(landingPage, "Link Dismiss", true))
@@ -1374,8 +1374,10 @@ public class logintestcases {
 			}
            
            //Stp 8
-           Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
+           String planName =Common.getPlanName(Stock.GetParameterValue("gc_id"), Stock.GetParameterValue("plan_id"));
+           twoStepVerification.selectEdelivery(planName);
          
+                  
            twoStepVerification.clickOnSaveButton();
          if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
            Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
@@ -1431,7 +1433,7 @@ public class logintestcases {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Verify The Delivery Method in Data Base",
-							"Landing page is not displayed \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+							"Delivery Method is not displayed As Expected In Data Base \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
 				}
 				counter++;
 				if(counter==deliveryMethodsList.size()){
@@ -1740,9 +1742,11 @@ public class logintestcases {
 						"'CheckBoxes With Diffrent Plan Names' Are Not DisplayedNo.Of Plans:"+twoStepVerification.getNoofPlans(),
 						true);
 			}
-           
            //Stp 8
-           Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
+           String planName =Common.getPlanName(Stock.GetParameterValue("gc_id"), Stock.GetParameterValue("plan_id"));
+           twoStepVerification.selectEdelivery(planName);
+         
+          
            
            twoStepVerification.clickOnSaveButton();
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){
@@ -1799,7 +1803,7 @@ public class logintestcases {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Verify The Delivery Method in Data Base",
-							"Landing page is not displayed \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+							"Delivery Method is not displayed As Expected In Data Base \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
 				}
 				counter++;
 				if(counter==deliveryMethodsList.size()){
@@ -2142,7 +2146,7 @@ public class logintestcases {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Verify The Delivery Method in Data Base",
-							"Landing page is not displayed \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
+							"Delivery Method is not displayed As Expected In Data Base \nExpexted:"+deliveryMethodsList.get(counter)+"\nActual:"+actualDelivryMethod, false);
 				}
 				counter++;
 				if(counter==deliveryMethodsList.size()){
@@ -2433,7 +2437,9 @@ public class logintestcases {
            	// Step 7
            
          
-           Web.clickOnElement(twoStepVerification,"CHECKBOX PLAN NAME");
+           String planName =Common.getPlanName(Stock.GetParameterValue("gc_id"), Stock.GetParameterValue("plan_id"));
+           twoStepVerification.selectEdelivery(planName);
+         
            
            twoStepVerification.clickOnSaveButton();
            if(Web.isWebElementDisplayed(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN", true)){

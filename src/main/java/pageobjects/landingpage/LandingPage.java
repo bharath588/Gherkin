@@ -432,7 +432,7 @@ public class LandingPage extends LoadableComponent<LandingPage> {
 				.xpath(lnkEnrollNow.replace("planid",groupAccountID)));
 			Web.waitForElements(lnkEnrollment);
 			int i=lnkEnrollment.size();
-			if(Web.isWebElementDisplayed(lnkEnrollment.get(i), true)){
+			if(Web.isWebElementDisplayed(lnkEnrollment.get(i-1), true)){
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify 'Enrollment Now Open' Link is Displayed in LIAT Page",

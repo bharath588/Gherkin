@@ -14,6 +14,7 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -69,6 +70,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath="//input[@id='pptConsentForElectronic']") private List<WebElement> inpPlanNamecheckBox;
 	@FindBy(xpath="//a[contains(text(),'View') and contains(@ng-click,'redirectToNextGen')]") private WebElement btnViewNextGen;
 	@FindBy(xpath="//header[@class='contained-form-header']/h1") private WebElement hdrEnhancedSecurity;
+	
+	private String inpEdelivery="//td[./div//label[contains(text(),'Plan Name')]]//following-sibling::td//input[contains(@id,'pptConsentForElectronic')]";
 	/** Empty args constructor
 	 * 
 	 */
@@ -530,14 +533,17 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	 * Method to Click on E-Delivery CheckBox in Change Communication Preference page
 	 * </pre>
 	 * @throws InterruptedException 
+	 * @throws SQLException 
 	 * 
 	 */
-	public void selectEdelivery() throws InterruptedException {
-		Web.waitForElement(btnSave);
-		Actions action = new Actions(Web.getDriver());
-		action.moveToElement(btnSave).build().perform();
-		Thread.sleep(2000);
-		action.click(btnSave).build().perform();
+	public void selectEdelivery(String planName) throws InterruptedException, SQLException {
+		WebElement chkEdelivery = Web.getDriver().findElement(By		
+				.xpath(inpEdelivery.replace("Plan Name",planName)));
+			Web.waitForElement(chkEdelivery);
+			if(!chkEdelivery.isSelected())
+			Web.clickOnElement(chkEdelivery);
+		
+		
 		
 	}
 }

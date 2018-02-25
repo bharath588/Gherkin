@@ -2,13 +2,21 @@ package pageobjects.loan;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
 import com.aventstack.extentreports.*;
+
+import oracle.sql.ARRAY;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -98,8 +106,21 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtLoanMaximum;
 	@FindBy(xpath = "//td[@class='loans-summary-allowed']//span")
 	private WebElement txtMaximumNoOfLoans;
+	@FindBy(xpath = "//span[contains(@ng-if,'GenPurLoans')]//li")
+	private WebElement txtMaximumNoOfLoansGeneral;
+	@FindBy(xpath = "//span[contains(@ng-if,'PrimaryResLoans')]//li")
+	private WebElement txtMaximumNoOfLoansPrincipal;
 	
+	@FindBy(xpath = "//div[@id='loanRequestMarketingInfoWrapper']//div[@class='loan-top-margin']/p")
+	private WebElement txtloanDisclaimer1;
+	@FindBy(xpath = "//div[@id='loanRequestMarketingInfoWrapper']//div[@class='loan-top-margin']/ul/li[1]")
+	private WebElement txtloanDisclaimer2;
+	@FindBy(xpath = "//div[@id='loanRequestMarketingInfoWrapper']//div[@class='loan-top-margin']/ul/li[2]")
+	private WebElement txtloanDisclaimer3;
 	private String loanQuote="//*[contains(text(),'webElementText')]";
+	
+	private String strmaxloan="//span[contains(@ng-if,'LoanTypeLoans')]//li";
+	
 	private String loanTerm="//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
 	/**
 	 * Default Constructor
@@ -411,7 +432,7 @@ return isTextDisplayed;
 			return loanAmount;
 		}
 		/**
-		 * Method to get Maximum No.Of Loans Allowed
+		 * Method to get Maximum No.Of Loans Allowed from Application
 		 * 
 		 * @return maximumNoOfLoans
 		 */
@@ -429,4 +450,182 @@ return isTextDisplayed;
 			}
 			return maximumNoOfLoans;
 		}
+		
+		/**
+		 * Method to get Maximum Loans Allowed for the plan
+		 * @param ga_Id 150049
+		* @return maxLoansAllowed
+		 * @throws SQLException
+		 */
+		public  String getMaximumLoansAllowedforPlan(String ga_Id) throws SQLException {
+
+			// query to get the no of Loans
+			String[] sqlQuery = null;
+			ResultSet loans= null;
+			String maxLoansAllowed="";
+
+			try {
+				sqlQuery = Stock.getTestQuery("getMaxLoansAllowed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			loans = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+	try{
+			if (DB.getRecordSetCount(loans) > 0) {
+				loans.first();
+	  			maxLoansAllowed= loans.getString("max_loans_allowed");
+				} 
+		}catch (SQLException e) {
+					e.printStackTrace();
+					Reporter.logEvent(
+							Status.WARNING,
+							"Query get PlanName:" + sqlQuery[0],
+							"The Query did not return any results. Please check participant test data as the appropriate data base.",
+							false);
+				}
+	  			
+			return maxLoansAllowed;
+		}
+		/**
+		 * Method to get Maximum Loans Allowed for the plan
+		 * @param ga_Id 150049
+		* @return 
+		 * @throws SQLException
+		 */
+		public  Map<String,String> getMaximumLoansAllowedforLoanReason(String ga_Id) throws SQLException {
+
+			// query to get the no of Loans
+			String[] sqlQuery = null;
+			ResultSet loans= null;
+			 Map<String, String> mapMaxLoansAllowed = new HashMap<String, String>();
+
+			try {
+				sqlQuery = Stock.getTestQuery("getMaxLoansAllowedforLoanReason");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			loans = DB.executeQuery(sqlQuery[0], sqlQuery[1], ga_Id);
+	try{
+			if (DB.getRecordSetCount(loans) > 0) {
+				
+				while(loans.next()){
+					mapMaxLoansAllowed.put(loans.getString("loan_reason_code"), loans.getString("max_loans_allowed"));
+				} 
+			}
+		}catch (SQLException e) {
+					e.printStackTrace();
+					Reporter.logEvent(
+							Status.WARNING,
+							"Query get PlanName:" + sqlQuery[0],
+							"The Query did not return any results. Please check participant test data as the appropriate data base.",
+							false);
+				}
+	  			
+			return mapMaxLoansAllowed;
+		}
+		/**
+		 * <pre>
+		 * Method to Verify the No.of Loans Displayed for Loan Reason Code is Same or Not
+		 *
+		 * </pre>
+		 * @throws SQLException 
+		 * 
+		 *
+		 */
+		public void verifyMaximumLoansForLoan(String ga_id) throws SQLException {
+			WebElement txtLoanQuote = null;
+			Map<String,String> maxloansActual;
+			Map<String,String> maxloansExpected = new HashMap<String,String>();
+			maxloansActual=getMaximumLoansAllowedforLoanReason(ga_id);
+			Set<String> keys = maxloansActual.keySet();
+		 	try{
+			for(String key: keys){
+	          if(key.equalsIgnoreCase("GENERAL")){
+	        	  txtLoanQuote= Web.getDriver().findElement(By.xpath(strmaxloan.replace("LoanType", "GenPur")));
+	          }
+	          else if(key.equalsIgnoreCase("MORTGAGE")){
+	        	  txtLoanQuote= Web.getDriver().findElement(By.xpath(strmaxloan.replace("LoanType", "PrimaryRes")));
+	          }
+	          maxloansExpected.put(key, txtLoanQuote.getText());
+	          
+		 	}
+		 	}catch(NoSuchElementException e){
+		 		e.printStackTrace();
+		 	}
+		 	if(maxloansExpected.equals(maxloansActual))Reporter.logEvent(Status.PASS,
+					"Verify  Maximum Loan Amount for each Loan Structure is displayed",
+					"Maximum Loan Amount for each Loan Structure is Matching "+maxloansActual, true);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify  Maximum Loan Amount for each Loan Structure is displayed",
+					"Maximum Loan Amount for  Loan Structure is not Matching\nExpected:"+maxloansExpected+"\nActual:"+maxloansActual, true);
+	
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Verify Loans Disclaimer
+		 *
+		 * </pre>
+		 */
+		public void verifyLoansDisclaimer() throws SQLException {
+
+		if (txtloanDisclaimer1.getText().toString().trim()
+				.equals(Stock.GetParameterValue("Disclaimer1")))
+			Reporter.logEvent(Status.PASS,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is displayed"
+							+ txtloanDisclaimer1.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is not matching \nExpected:"
+							+ Stock.GetParameterValue("Disclaimer1")
+							+ "\nActual:"
+							+ txtloanDisclaimer1.getText().toString().trim(),
+					true);
+
+		if (txtloanDisclaimer2.getText().toString().trim()
+				.equals(Stock.GetParameterValue("Disclaimer2")))
+			Reporter.logEvent(Status.PASS,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is displayed"
+							+ txtloanDisclaimer2.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is not matching \nExpected:"
+							+ Stock.GetParameterValue("Disclaimer2")
+							+ "\nActual:"
+							+ txtloanDisclaimer2.getText().toString().trim(),
+					true);
+
+		if (txtloanDisclaimer3.getText().toString().trim()
+				.equals(Stock.GetParameterValue("Disclaimer3")))
+			Reporter.logEvent(Status.PASS,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is displayed"
+							+ txtloanDisclaimer3.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Loans Diclaimer is displayed",
+					" Loans Diclaimer is not matching \nExpected:"
+							+ Stock.GetParameterValue("Disclaimer3")
+							+ "\nActual:"
+							+ txtloanDisclaimer3.getText().toString().trim(),
+					true);
+
+	}
 }

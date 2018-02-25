@@ -93,17 +93,54 @@ public class LoansTestCases {
 			requestLoan.get();
 
 			//Step 4
-			
+			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
+			String loanAmt =requestLoan.getMaximumLoanAmount();
+			if(!loanAmt.isEmpty())
 				Reporter.logEvent(Status.PASS,
-						"Verify Investment Allocation table is displayed",
-						"Investment Allocation table is displayed ", true);
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is displayed \nLoan Maximum:"+loanAmt, true);
 			
-			
+			else
 				Reporter.logEvent(Status.FAIL,
-						"Verify Investment Allocation table is displayed",
-						"Investment Allocation table is not displayed ", true);
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is not displayed \nLoan Maximum:"+loanAmt, true);
 		
+			//Step 5
+			String expectedNoofLoans =requestLoan.getMaximumLoansAllowed();
+			String ActualNoofLoans =requestLoan.getMaximumLoansAllowedforPlan(Stock.GetParameterValue("ga_id"));
+			if(expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
+				Reporter.logEvent(Status.PASS,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"+expectedNoofLoans+"\nActual No.Of Loans:"+ActualNoofLoans, false);
 			
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"+expectedNoofLoans+"\nActual No.Of Loans:"+ActualNoofLoans, true);
+			//Step 6
+			//TODO
+			//Step 7
+			requestLoan.verifyMaximumLoansForLoan(Stock.GetParameterValue("ga_id"));
+			//Step 8
+			requestLoan.verifyLoansDisclaimer();
+			//Step 9
+			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			
+			
+			requestLoan.isTextFieldDisplayed("Loan purpose");
+			requestLoan.isTextFieldDisplayed("Maximum loan");
+			requestLoan.isTextFieldDisplayed("Minimum loan");
+			requestLoan.isTextFieldDisplayed("Repayment term");
+			requestLoan.isTextFieldDisplayed("Documentation required");
+			requestLoan.isTextFieldDisplayed("Interest rate");
+			requestLoan.isTextFieldDisplayed("Repayment");
+			requestLoan.isTextFieldDisplayed("Fees");
+			
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			
+			requestLoan.EnterLoanAmtAndTerm("$1000", "12");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
