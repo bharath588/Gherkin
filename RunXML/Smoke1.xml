@@ -22,10 +22,10 @@
 						</parameter>
 					</include>
 
-					<include name="Investment_lineup_validations">
+					<!-- <include name="Investment_lineup_validations">
 						<parameter name="ManualTCName" value="Investment_lineup_validations">
 						</parameter>
-					</include>
+					</include> -->
 
 					<!-- <include name="Edit_MyContribution" > <parameter name="ManualTCName" 
 						value="Edit_MyContribution"> </parameter> </include> -->

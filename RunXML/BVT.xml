@@ -7,14 +7,17 @@
 	<test name="LOGIN">
 		<classes>
 
-		     <class name="app.pptweb.testcases.login.logintestcases">
-                <methods>
-                
-              
-                    
-                    <include name="Login_003_eDelivery_with_two_plans_Greater_than_180days">
-                    <parameter name="ManualTCName" value="SIT_Login_003_eDelivery_with_two_plans_Greater_than_180days"></parameter>
-                    </include>
+		   <class
+				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
+				<methods>
+
+
+					
+					<include name="Balance_validations">
+						<parameter name="ManualTCName" value="Balance_validations">
+						</parameter>
+					</include>
+
                     
                                  </methods>
             </class>  
