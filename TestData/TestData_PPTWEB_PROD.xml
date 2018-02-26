@@ -27,22 +27,22 @@
 		</TestCase>
 		<TestCase name="Manage_My_Investment_Flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444328ABC" />
+				<parameter name="userName" value="321444324ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
 				<parameter name="investment_percent" value="50" />
-				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="lblUserName" value="TEST WEB" />
 				<parameter name="Submit_Transaction" value="No" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="Dollar_Cost_Average_Flow">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="userName" value="321444328ABC" />
+				<parameter name="userName" value="321444324ABC" />
 				<parameter name="password" value="Test@1234" />
 				<parameter name="Frequency_Period" value="Once" />
 				<parameter name="Setup_date" value="Today" />
-				<parameter name="lblUserName" value="FOUR TESTING" />
+				<parameter name="lblUserName" value="TEST WEB" />
 				<parameter name="Submit_Transaction" value="No" />
 				<parameter name="percent" value="100" />
 				<parameter name="amount" value="1000" />
@@ -185,6 +185,8 @@
 				<parameter name="isPreTaxAvail" value="Yes" />
 				<parameter name="isRothAvail" value="No" />
 				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="AccuCode" value="Empower" />
+				
 			</Iteration>
 		</TestCase>
 		<TestCase
