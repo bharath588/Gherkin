@@ -38,7 +38,7 @@ public class Balance extends LoadableComponent<Balance> {
 	@FindBy(xpath="//li[contains(@class,'tab')]//a[text()[normalize-space()='Balance over time']]") private WebElement tabBalanceOverTime;
 	@FindBy(xpath="//li[contains(@class,'tab')]//a[text()[normalize-space()='Balance comparison']]") private WebElement tabBalanceComparison;
 	@FindBy(id="balanceByMoneyTypeTable") private WebElement tblBalanceByMoney;
-	@FindBy(id="balanceByFundDetailTable") private WebElement tblBalanceByInvestment;
+	@FindBy(xpath="//table[@id='balanceByFundDetailTable']") private WebElement tblBalanceByInvestment;
 	@FindBy(id="balanceHistoryTable") private WebElement tblBalanceHistory;
 	@FindBy(id="balanceComparisonTable") private WebElement tblBalanceComparison;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;

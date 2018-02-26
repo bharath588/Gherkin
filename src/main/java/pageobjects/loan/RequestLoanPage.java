@@ -98,7 +98,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement btnUpdate;
 	@FindBy(id = "proActiveNotificationScreen")
 	private WebElement hdrProactiveNotificationScreen;
-	@FindBy(id = "loan-total")
+	@FindBy(xpath = "//td[@data-header='LOAN TOTAL']")
 	private WebElement txtLoanTotal;
 	@FindBy(xpath = "//h1[text()[normalize-space()='Loan review']]")
 	private WebElement lblLoanReview;
