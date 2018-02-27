@@ -6,7 +6,7 @@ package pageobjects.myProfile;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+import org.openqa.selenium.interactions.Actions;
 import framework.util.CommonLib;
 import gwgwebdriver.ByAngularAttribute;
 import gwgwebdriver.ByAngularBinding;
@@ -39,6 +39,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 
 	private static final String rootSelector = "[ng-app]";
 	private static String randomEmailId;
+	Actions actions;
 
 	@FindBy(xpath=".//*[@id='myProfileModule']//h3[text()='My Profile']")
 	private WebElement myPrfilePageIdentity;
@@ -303,6 +304,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		// TODO Auto-generated method stub
 		Web.getDriver().switchTo().defaultContent();
 		HomePage homepage = (HomePage) this.parent;
+		actions = new Actions(Web.getDriver());
 
 		new HomePage(new LoginPage(), false, new String[] {
 			Stock.GetParameterValue("username"),
@@ -314,7 +316,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		try {
 			WebElement myProfileLink = Web.returnElement(new HomePage(), "MY PROFILE");
 			if(myProfileLink.isDisplayed())
-				myProfileLink.click();
+				actions.moveToElement(myProfileLink).click().build().perform();
 			Thread.sleep(3000);
 		} catch (Exception e) {
 			e.printStackTrace();
