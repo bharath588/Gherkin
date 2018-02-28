@@ -303,11 +303,8 @@ public class LoansTestCases {
 			//Step 19 and 20
 			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
 			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
-			requestLoan.isTextFieldDisplayed("My loan summary");
-			//Step 21
 			requestLoan.isTextFieldDisplayed("How would you like your funds delivered?");
-			//Step 22
-			
+			requestLoan.isTextFieldDisplayed("My loan summary");
 			
 			
 		} catch (Exception e) {

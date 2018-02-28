@@ -106,7 +106,7 @@
 						</parameter>
 					</include>
 					
-					<!--  -->
+					<!-- Pro-Active notification scenarios-->
 					
 					<include name="Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal">
 						<parameter name="ManualTCName"
@@ -114,6 +114,23 @@
 						</parameter>
 					</include>
 					
+					<include name="Withdrawal_RMD_DDTC_29938_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Email">
+						<parameter name="ManualTCName"
+							value="DDTC-29938 RMD - Request Current Year RMD with proactive notification type selected as Email">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29939_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message">
+						<parameter name="ManualTCName"
+							value="DDTC-29939 RMD - Request Current Year RMD with proactive notification type selected as Text Message">
+						</parameter>
+					</include>
+					
+					<include name="Withdrawal_RMD_DDTC_29941_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message_and_Email">
+						<parameter name="ManualTCName"
+							value="DDTC-29941 RMD - Request Current Year RMD with proactive notification type selected as Text Message and Email">
+						</parameter>
+					</include>
 				</methods>
 			</class>
 		</classes>

@@ -2,7 +2,6 @@ package app.pptweb.testcases.withdrawals;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,23 +9,18 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import pageobjects.withdrawals.RequestWithdrawal;
-import pageobjects.withdrawals.RequestWithdrawal_AF;
 import pageobjects.withdrawals.RequestWithdrawal_RMD;
 import appUtils.Common;
-import appUtils.TestDataFromDB;
 
 import com.aventstack.extentreports.Status;
 
@@ -400,8 +394,8 @@ public class withdrawalsrmdtestcases {
 		Verifying_Informational_Message(itr, testdata);
 	}
 	@Test(dataProvider = "setData")
-	public void Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal(int itr, Map<String, String> testdata){
-		
+	public void Withdrawal_RMD_DDTC_29793_PPTWEB_RMD_confirmation_screen_Proactive_enabled_for_RMD_withdrawal(int itr, Map<String, String> testdata)
+	{
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
 					+ Common.getSponser() + "_" + Stock.getConfigParam("BROWSER"));
@@ -422,10 +416,13 @@ public class withdrawalsrmdtestcases {
 			requestWithdrawal_rmd.get();
 			requestWithdrawal_rmd.selectRMDBy(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("selectDeliveryMethod"));
 			requestWithdrawal_rmd.citizenShipValidation(Stock.GetParameterValue("SSN"));
+			requestWithdrawal_rmd.Verify_confirmation_page_content();
 			requestWithdrawal_rmd.validateConfirmationPage_RMDConfirmationNumber();
 			requestWithdrawal_rmd.validateConfirmationPage_RMDProcessing();
-			requestWithdrawal_rmd.validateConfirmationPage_RMDPaymentType();
+			requestWithdrawal_rmd.validateConfirmationPage_RMDPaymentType(Stock.GetParameterValue("selectDeliveryMethod"));
 			requestWithdrawal_rmd.validateProactiveNotification(Stock.GetParameterValue("selectRMDBy"));
+			requestWithdrawal_rmd.validateConfirmationPage_FinalAmount(Stock.GetParameterValue("userName"));
+			//requestWithdrawal_rmd.validateEventTable(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("userName"));
 			} catch (Exception e) {
 				e.printStackTrace();
 				Globals.exception = e;
@@ -451,4 +448,75 @@ public class withdrawalsrmdtestcases {
 				}
 			}
 		}
+	@Test(dataProvider = "setData")
+	public void Withdrawal_RMD_DDTC_29938_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Email
+	(int itr, Map<String, String> testdata)
+	{
+		Verifying_Confirmation_Page(itr, testdata);
+		}
+	@Test(dataProvider = "setData")
+	public void Withdrawal_RMD_DDTC_29939_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message
+	(int itr, Map<String, String> testdata)
+	{
+		Verifying_Confirmation_Page(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void Withdrawal_RMD_DDTC_29941_RMD_Request_Current_Year_RMD_with_proactive_notification_type_selected_as_Text_Message_and_Email(
+			int itr, Map<String, String> testdata) throws Exception {
+		Verifying_Confirmation_Page(itr, testdata);
+	}
+	@Test(dataProvider = "setData")
+	public void Verifying_Confirmation_Page(int itr, Map<String, String> testdata){
+		
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME + "_"
+					+ Common.getSponser() + "_" + Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(), false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			myAccountPage.get();
+			if (Web.isWebElementDisplayed(myAccountPage, "PLAN NAME", true)) {
+				myAccountPage
+						.clickPlanNameByGAID(Stock.GetParameterValue("planId"));
+			}
+			LeftNavigationBar lftNavBar = new LeftNavigationBar(myAccountPage);
+			RequestWithdrawal_RMD requestWithdrawal_rmd = new RequestWithdrawal_RMD(
+					lftNavBar);
+			requestWithdrawal_rmd.get();
+			requestWithdrawal_rmd.selectRMDBy(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("selectDeliveryMethod"));
+			requestWithdrawal_rmd.citizenShipValidation(Stock.GetParameterValue("SSN"));
+			requestWithdrawal_rmd.validateConfirmationPage_RMDConfirmationNumber();
+			requestWithdrawal_rmd.validateConfirmationPage_RMDProcessing();
+			requestWithdrawal_rmd.validateConfirmationPage_RMDPaymentType(Stock.GetParameterValue("selectDeliveryMethod"));
+			requestWithdrawal_rmd.validateProactiveNotification(Stock.GetParameterValue("selectRMDBy"));
+			requestWithdrawal_rmd.validateConfirmationPage_FinalAmount(Stock.GetParameterValue("userName"));
+			requestWithdrawal_rmd.validateEventTable(Stock.GetParameterValue("selectRMDBy"),Stock.GetParameterValue("userName"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				Globals.exception = e;
+				Throwable t = e.getCause();
+				String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+				if (null != t) {
+					msg = t.getMessage();
+				}
+				Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+						msg, true);
+			} catch (Error ae) {
+				ae.printStackTrace();
+				Globals.error = ae;
+				Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+						ae.getMessage(), true);
+
+			} finally {
+				try {
+					RequestWithdrawal.resetTotalValues();
+					Reporter.finalizeTCReport();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+	}
 }

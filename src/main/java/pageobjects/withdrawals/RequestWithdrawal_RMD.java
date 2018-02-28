@@ -3,6 +3,7 @@ package pageobjects.withdrawals;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +36,10 @@ import core.framework.Globals;
 
 public class RequestWithdrawal_RMD extends
 		LoadableComponent<RequestWithdrawal_RMD> {
+			String sEmail=null;
+			String sFianlPhoneNum=null;
+			String confirmationNo=null;	
+			Actions keyBoardEvent=new Actions(Web.getDriver());
 	private LoadableComponent<?> parent;
 	@FindBy(xpath = ".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']")
 	private WebElement lblUserName;
@@ -196,6 +201,26 @@ public class RequestWithdrawal_RMD extends
 	private WebElement txtPaymentType;
 	@FindBy(xpath="(//div[@class='confirmation-process']/dl/div)[3]/dt")
 	private WebElement fulltxtPaymentType;
+	@FindBy(xpath="//div[@class='confirmation-process']/p")
+	private WebElement txtProactiveNotification;
+	
+	
+	@FindBy(xpath="//tr[./th[contains(text(),'Delivery Method')]]/td")
+	private WebElement confirmationPageDeliveryMethod;
+	@FindBy(xpath="//tr[./th[contains(text(),'Sent to')]]/td")
+	private WebElement confirmationPageSentToAddress;
+	@FindBy(xpath="//tr[./th[contains(text(),'Payment amount')]]/td")
+	private WebElement confirmationPagePaymentAmount;
+	@FindBy(xpath="//tr[./th[contains(text(),'Federal Tax Withholding')]]/td")
+	private WebElement confirmationPageFederalTaxAmount;
+	@FindBy(xpath="//tr[./th[contains(text(),'RMD Amount')]]/td")
+	private WebElement confirmationPageRMDAmount;
+	@FindBy(xpath="//tr[./th[contains(text(),'Processing date')]]/td")
+	private WebElement confirmationPageProcessingDate;
+	@FindBy(xpath="//tr[./th[contains(text(),'State Tax')]]/td")
+	private WebElement confirmationPageStateTax;
+	@FindBy(xpath="//tr[./th[contains(text(),'Delivery Fee')]]/td")
+	private WebElement confirmationPageDeliveryFee;
 	
 	/**
 	 * Default Constructor
@@ -525,7 +550,7 @@ public class RequestWithdrawal_RMD extends
 			if(RMDWindow.size()>=2)
 			{
 				Reporter.logEvent(Status.FAIL,"Verify if only current year block is displayed",
-						"Current year and Previous year block is displayed where it should only display Current year",
+						"Current year and Previous year block is displayed where it should be only Current year",
 						true);
 			}
 			else
@@ -895,7 +920,7 @@ public class RequestWithdrawal_RMD extends
 		
 		
 		lib.Web.setTextToTextBox(txtcontributionRateSlider, "0");
-		//Thread.sleep(3000);
+		
 		txtcontributionRateSlider.sendKeys(Keys.TAB);
 		//Web.clickOnElement(btnDone);
 		//keyBoard.sendKeys(Keys.TAB).build().perform();
@@ -1082,43 +1107,90 @@ public class RequestWithdrawal_RMD extends
 				"Updated db with proper fields", false);
 		
 	}
-	public void selectRMDBy(String option, String deliveryMethod)
+	public void getEmail_PhoneNumber()
 	{
-		this.lnkChangeMethod.click();
-		
-		if(deliveryMethod.equalsIgnoreCase("Regular Mail"))
-			this.btnRegaularMail.click();
-		else if(deliveryMethod.equalsIgnoreCase("Expedited Mail"))
-			this.btnExpeditedMail.click();
-		else
-			this.btnDirectDeposit.click();
-		
-		this.lnkUpdateTax.click();
-		
-		
-		if(!this.chkBoxStatus.isSelected())
-			chkBoxStatus.click();
-		
-		Web.selectDropDownOption(dropDownStatus, option);
-		if(option.equalsIgnoreCase("Email"))
-		{
-			if(txtStatus.getText().isEmpty())
-				Web.setTextToTextBox(txtStatus, Stock.GetParameterValue("emailID"));
+		try {
+			String[] sqlQueryNumber = Stock.getTestQuery("getPhoneNumber");
+			String[] sqlQueryEmail = Stock.getTestQuery("getEmailId");
+			sqlQueryNumber[0] = Common.getParticipantDBName(Stock
+					.GetParameterValue("userName"))
+					+ "DB_"
+					+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			sqlQueryEmail[0] = Common.getParticipantDBName(Stock
+					.GetParameterValue("userName"))
+					+ "DB_"
+					+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			ResultSet rs_Number = DB.executeQuery(sqlQueryNumber[0],
+					sqlQueryNumber[1], Stock.GetParameterValue("userName"));
+			rs_Number.first();
+			String sMobileAreaCode = rs_Number
+					.getString("mobile_phone_area_code");
+			String sMobileNbr = rs_Number.getString("mobile_phone_nbr");
+			String sPhoneNum = sMobileAreaCode+""+sMobileNbr;
+			sFianlPhoneNum=sPhoneNum.replaceAll("[-+.^:,]","");
+			ResultSet rs_Email = DB.executeQuery(sqlQueryEmail[0],
+					sqlQueryEmail[1], Stock.GetParameterValue("userName"));
+			rs_Email.first();
+			sEmail = rs_Email.getString("email_address");
+
+			System.out
+					.println("From DataBase: " + sEmail + " and " + sFianlPhoneNum);
 		}
-		else if(option.equalsIgnoreCase("Text message"))
-		{
-			if(txtPhoneStatus.getText().isEmpty())
-				Web.setTextToTextBox(txtPhoneStatus,Stock.GetParameterValue("phone"));
+		catch (Exception e) {
+			e.printStackTrace();
 		}
-		else
-		{
-			
-			if(txtStatus.getText().isEmpty())
-				Web.setTextToTextBox(txtStatus, Stock.GetParameterValue("emailID"));
-			if(txtPhoneStatus.getText().isEmpty())
-				Web.setTextToTextBox(txtPhoneStatus, Stock.GetParameterValue("phone"));
+	}
+
+	public void selectRMDBy(String option, String deliveryMethod) {
+		try {
+
+			getEmail_PhoneNumber();
+			this.lnkChangeMethod.click();
+
+			if (deliveryMethod.equalsIgnoreCase("Regular Mail"))
+				this.btnRegaularMail.click();
+			else if (deliveryMethod.equalsIgnoreCase("Expedited Mail"))
+				this.btnExpeditedMail.click();
+			else
+				this.btnDirectDeposit.click();
+
+			this.lnkUpdateTax.click();
+
+			if (!this.chkBoxStatus.isSelected())
+				chkBoxStatus.click();
+
+			Web.selectDropDownOption(dropDownStatus, option);
+			if (option.equalsIgnoreCase("Email")) {
+
+				if (txtStatus.getAttribute("value").isEmpty()) {
+					Web.setTextToTextBox(txtStatus,
+							Stock.GetParameterValue("emailID"));
+					sEmail = Stock.GetParameterValue("emailID");
+				}
+
+			} else if (option.equalsIgnoreCase("Text message")) {
+
+				if (txtPhoneStatus.getAttribute("value").isEmpty()) {
+					txtPhoneStatus.sendKeys(Stock.GetParameterValue("phone"));
+					sFianlPhoneNum = Stock.GetParameterValue("phone");
+				}
+
+			} else {
+				if (txtStatus.getAttribute("value").isEmpty()) {
+					Web.setTextToTextBox(txtStatus,
+							Stock.GetParameterValue("emailID"));
+					sEmail = Stock.GetParameterValue("emailID");
+				}
+				if (txtPhoneStatus.getAttribute("value").isEmpty()) {
+					txtPhoneStatus.sendKeys(Stock.GetParameterValue("phone"));
+					sFianlPhoneNum = Stock.GetParameterValue("phone");
+				}
+			}
+			this.btnRequestRMD.click();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		this.btnRequestRMD.click();
+
 	}
 
 	public void citizenShipValidation(String SSN){
@@ -1133,7 +1205,7 @@ public class RequestWithdrawal_RMD extends
 				Reporter.logEvent(Status.PASS,
 						"Verify if user enters Social Security number.",
 						"User enters Social Security number " + SSN
-								+ " in the field which is displayed", true);
+								+ " in the field which is displayed", false);
 			} else
 				Reporter.logEvent(Status.FAIL,
 						"Verify if user enters Social Security number.",
@@ -1173,7 +1245,7 @@ public class RequestWithdrawal_RMD extends
 	
 	public void enterSSN(String ssn) {		
 		try {
-				Actions keyBoardEvent=new Actions(Web.getDriver());
+				
 				if(Web.isWebElementDisplayed(this.inputSSN, true))
 				{
 					//Robot robot=new Robot();				
@@ -1192,6 +1264,7 @@ public class RequestWithdrawal_RMD extends
 	
 	public void validateConfirmationPage_RMDConfirmationNumber()
 	{
+		Common.waitForProgressBar();
 		if(isTextFieldDisplayed("RMD Request Received"))
 			isTextFieldDisplayed("Your RMD request has been received and is being processed.");
 		
@@ -1199,15 +1272,15 @@ public class RequestWithdrawal_RMD extends
 		isTextFieldDisplayed("RMD request received");
 		isConfirmationNumDisplayed(Stock.GetParameterValue("getConfirmationNumber"));
 		validateCurrentTimeStamp();
+		isTextFieldDisplayed("Complete");
 	}
 	public void isConfirmationNumDisplayed(String queryName)
 	{
 		
-		String confirmationNo=null;		
 		int isConfirmationNumDisplayed=0;
 		try {	
 			confirmationNo=txtConfirmationNumber.getText();
-			System.out.println("Confirmation Number"+confirmationNo);
+			
 			String[] sqlQuery = Stock.getTestQuery(queryName);
 			sqlQuery[0] = Common.getParticipantDBName(Stock.GetParameterValue("userName")) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 			ResultSet getWithdrawalConfRs=DB.executeQuery(sqlQuery[0],sqlQuery[1],confirmationNo);
@@ -1230,48 +1303,329 @@ public class RequestWithdrawal_RMD extends
 	public void validateCurrentTimeStamp()
 	{
 		Date date = new Date();
-		DateFormat time = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+		DateFormat time = new SimpleDateFormat("M/dd/yyyy hh");
 		time.setTimeZone(TimeZone.getTimeZone("MST"));
+		String sDateTime = txtCurrentTimeStapm.getText().substring(0, 12);
 		
-		System.out.println("From JA: "+time.format(date));
-		System.out.println("From UI: "+txtCurrentTimeStapm.getText());
-		if(txtCurrentTimeStapm.getText().contains(time.format(date)))
+		
+		if(sDateTime.contains(time.format(date)))
 			Reporter.logEvent(
 					Status.PASS,
-					"Verify Request Confirmation time stamp. Expected: "+time.format(date)+" Actual: "+txtCurrentTimeStapm.getText(),
-					"RMD Request Time matched",false);
+					"Verify Request Confirmation time stamp.",
+					"RMD Request Time matched Expected: "+time.format(date)+" Actual: "+sDateTime,false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
-					"Verify Request Confirmation time stamp. Expected: "+time.format(date)+" Actual: "+txtCurrentTimeStapm.getText(),
-					"RMD Request Time did not matched",true);
+					"Verify Request Confirmation time stamp.",
+					"RMD Request Time did not match Expected: "+time.format(date)+" Actual: "+sDateTime,true);
 	}
 	public void validateConfirmationPage_RMDProcessing()
 	{
 		isTextFieldDisplayed("Processing");
 		isTextFieldDisplayed("Typically 1 business day.");
 	}
-	public void validateConfirmationPage_RMDPaymentType()
+	public void validateConfirmationPage_RMDPaymentType(String sDeliveryType)
 	{
-		if(Stock.GetParameterValue("selectDeliveryMethod").equalsIgnoreCase("Regular Mail"))
+		if(sDeliveryType.equalsIgnoreCase("Regular Mail"))
 		{
-			isTextFieldDisplayed("Payment sent by regular mail");
+			if(fulltxtPaymentType.getText().equalsIgnoreCase("Payment sent by "+sDeliveryType))
+				Reporter.logEvent(Status.PASS,
+						"Verify RMD Payment Type.",
+						"RMD Payment Type Matched  Expected: "+"Payment sent by "+sDeliveryType+" Actual: "+fulltxtPaymentType.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify RMD Payment Type.",
+						"RMD Payment Type Matched  Expected: "+"Payment sent by "+sDeliveryType+" Actual: "+fulltxtPaymentType.getText(), true);
+			
 			isTextFieldDisplayed("Delivery can be up to 5 days.");
 		}
-		else if(Stock.GetParameterValue("selectDeliveryMethod").equalsIgnoreCase("expedited mail"))
+		else if(sDeliveryType.equalsIgnoreCase("expedited mail"))
 		{
-			isTextFieldDisplayed("Payment sent by expedited mail");
+			if(fulltxtPaymentType.getText().equalsIgnoreCase("Payment sent by "+sDeliveryType))
+				Reporter.logEvent(Status.PASS,
+						"Verify RMD Payment Type",
+						"RMD Payment Type Matched. Expected: "+"Payment sent by "+sDeliveryType+" Actual: "+fulltxtPaymentType.getText(), false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify RMD Payment Type",
+						"RMD Payment Type Matched. Expected: "+"Payment sent by "+sDeliveryType+" Actual: "+fulltxtPaymentType.getText(), true);
+			
 			isTextFieldDisplayed("Delivery can be up to 2 days.");
 		}
 		
 	}
-	public void validateProactiveNotification(String sRMDText)
+
+	public void validateProactiveNotification(String option)
 	{
-		if(sRMDText.equalsIgnoreCase("Email"))
-			isTextFieldDisplayed(Stock.GetParameterValue("statusUpdateText"));
-		else if(sRMDText.equalsIgnoreCase("Text Message"))
-			isTextFieldDisplayed(Stock.GetParameterValue("statusUpdateText"));
-		else if(sRMDText.equalsIgnoreCase("Both"))
-			isTextFieldDisplayed(Stock.GetParameterValue("statusUpdateText"));
+		if(option.equalsIgnoreCase("Email"))
+		{
+			if(txtProactiveNotification.getText().equalsIgnoreCase("You will receive status updates at "+sEmail+"."))
+				Reporter.logEvent(Status.PASS,
+				"Verify Proactive Notification Text",
+				"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sEmail+"."+" Actual: "+txtProactiveNotification.getText(),false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Proactive Notification Text",
+						"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sEmail+"."+" Actual: "+txtProactiveNotification.getText(),true);
+		}
+		else if(option.equalsIgnoreCase("Text Message"))
+		{
+			if(txtProactiveNotification.getText().equalsIgnoreCase("You will receive status updates at "+sFianlPhoneNum+"."))
+				Reporter.logEvent(Status.PASS,
+				"Verify Proactive Notification Text",
+				"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sFianlPhoneNum+"."+" Actual: "+txtProactiveNotification.getText(),false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Proactive Notification Text",
+						"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sFianlPhoneNum+"."+" Actual: "+txtProactiveNotification.getText(),true);
+		}
+		else if(option.equalsIgnoreCase("Both"))
+		{
+			if(txtProactiveNotification.getText().equalsIgnoreCase("You will receive status updates at "+sEmail+" and "+sFianlPhoneNum+"."))
+				Reporter.logEvent(Status.PASS,
+				"Verify Proactive Notification Text",
+				"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sEmail+" and "+sFianlPhoneNum+"."+" Actual: "+txtProactiveNotification.getText(),false);
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Proactive Notification Text",
+						"Proactive Notification Text matched. Expected: "+"You will receive status updates at "+sEmail+" and "+sFianlPhoneNum+"."+" Actual: "+txtProactiveNotification.getText(),true);
+		}
+	}
+	public void validateConfirmationPage_FinalAmount(String userName)
+	{
+		try
+		{
+			DecimalFormat f = new DecimalFormat(".##");
+			String sRMDAmount;
+			double finalA;
+			String[] sqlRMDAmount = Stock.getTestQuery("getMinDistrAmt");
+			sqlRMDAmount[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			ResultSet rs_Number = DB.executeQuery(sqlRMDAmount[0],
+					sqlRMDAmount[1], Stock.GetParameterValue("userName"));
+			rs_Number.first();
+			sRMDAmount = rs_Number.getString("min_distr_amt");
+			
+			Date date = new Date();
+			DateFormat time = new SimpleDateFormat("M/dd/yyyy");
+			time.setTimeZone(TimeZone.getTimeZone("MST"));
+			String sDateTime = confirmationPageProcessingDate.getText();
+			
+			double expectedFederalTax = Double.parseDouble(f.format((Double.parseDouble(sRMDAmount)*10)/100));
+			double stateTax=Double.parseDouble(f.format((expectedFederalTax*10)/100));
+			if(Web.isWebElementDisplayed(confirmationPageStateTax))
+			{
+				finalA = Double.parseDouble(sRMDAmount)-expectedFederalTax-stateTax;
+			}
+			else
+			{
+				finalA = Double.parseDouble(sRMDAmount)-expectedFederalTax;
+			}
+			
+			/*System.out.println("expectedFederalTax"+expectedFederalTax);
+			System.out.println("stateTax"+stateTax);
+			System.out.println("finalA"+f.format(finalA));*/
+			
+			
+			//Verify RMD Ammount
+			if (String.valueOf(
+					Web.getIntegerCurrency(confirmationPageRMDAmount.getText())).equalsIgnoreCase(sRMDAmount))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify RMD Amount in confirmation page",
+						"RMD Amount matched. Actual: "+ Web.getIntegerCurrency(confirmationPageRMDAmount.getText()) +
+						" Expected: "+ sRMDAmount, false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify RMD Amount in confirmation page",
+						"RMD Amount is not matching. Actual: "+ Web.getIntegerCurrency(confirmationPageRMDAmount.getText()) +
+						" Expected: "+ sRMDAmount, true);
+			
+			//Verify Processing date
+			if(sDateTime.contains(time.format(date)))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Request Confirmation Processing Date.",
+						"Processing Date matched. Expected: "+time.format(date)+" Actual: "+sDateTime,false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Request Confirmation Processing Date.",
+						"Processing Date did not match. Expected: "+time.format(date)+" Actual: "+sDateTime,true);
+			
+			// Verify Federal Tax 
+			if(String.valueOf(
+					Web.getIntegerCurrency(confirmationPageFederalTaxAmount.getText())).equalsIgnoreCase(f.format(expectedFederalTax)))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Federal Tax in Confirmation Page.",
+						"Federal Tax matched. Expected: "+expectedFederalTax+" Actual: "+String.valueOf(Web.getIntegerCurrency(confirmationPageFederalTaxAmount.getText())),false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Federal Tax in Confirmation Page.",
+						"Federal Tax matched. Expected: "+expectedFederalTax+" Actual: "+String.valueOf(Web.getIntegerCurrency(confirmationPageFederalTaxAmount.getText())),true);
+			
+			//Verify Delivery Method
+			if(confirmationPageDeliveryMethod.getText().equalsIgnoreCase(Stock.GetParameterValue("selectDeliveryMethod")))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Delivery Method in Confirmation Page.",
+						"Delivery Method matched. Expected: "+Stock.GetParameterValue("selectDeliveryMethod")+" Actual: "+confirmationPageDeliveryMethod.getText(),false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Delivery Method in Confirmation Page.",
+						"Delivery Method did not match. Expected: "+Stock.GetParameterValue("selectDeliveryMethod")+" Actual: "+confirmationPageDeliveryMethod.getText(),true);
+			
+			//Verify Sent To
+			Reporter.logEvent(Status.INFO, "Verify the Sent To Address in the Confirmation Page", 
+					"The Address is displayed as:\n"+
+				"Address: "+confirmationPageSentToAddress.getText().trim(), false);
+			
+			validateFinalPaymentAmount(Stock.GetParameterValue("selectDeliveryMethod"),finalA);
+			
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void validateFinalPaymentAmount(String sDeliverMethod, double finalAmount)
+	{
+		DecimalFormat f = new DecimalFormat(".##");
+		if(sDeliverMethod.equalsIgnoreCase("Regular Mail"))
+		{
+			if (String.valueOf(
+					Web.getIntegerCurrency(confirmationPagePaymentAmount.getText())).equalsIgnoreCase(f.format(finalAmount)))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Final payment Amount",
+						"Final payment Amount matched. Actual: "+ Web.getIntegerCurrency(confirmationPagePaymentAmount.getText()) +
+						" Expected: "+ f.format(finalAmount), false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Final payment Amount",
+						"Final payment Amount did not match. Actual: "+ Web.getIntegerCurrency(confirmationPagePaymentAmount.getText()) +
+						" Expected: "+ f.format(finalAmount),  true);
+		}
+		else if(sDeliverMethod.equalsIgnoreCase("Expedited Mail"))
+		{
+			double sDeliverFee = Double.parseDouble(String.valueOf(Web.getIntegerCurrency(confirmationPageDeliveryFee.getText())));
+			finalAmount = finalAmount-sDeliverFee;
+			if (String.valueOf(
+					Web.getIntegerCurrency(confirmationPagePaymentAmount.getText())).equalsIgnoreCase(f.format(finalAmount)))
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Final payment Amount",
+						"Final payment Amount matched. Actual: "+ Web.getIntegerCurrency(confirmationPagePaymentAmount.getText()) +
+						" Expected: "+ f.format(finalAmount), false);
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Final payment Amount",
+						"Final payment Amount did not match. Actual: "+ Web.getIntegerCurrency(confirmationPagePaymentAmount.getText()) +
+						" Expected: "+ f.format(finalAmount),  true);
+		}
+	}
+	public void Verify_confirmation_page_content()
+	{
+		Common.waitForProgressBar();
+		isTextFieldDisplayed("RMD Request Received");
+		isTextFieldDisplayed("Confirmation");
+		isTextFieldDisplayed("2018 RMD");
+		isTextFieldDisplayed("Processing date");
+		isTextFieldDisplayed("RMD Amount");
+		isTextFieldDisplayed("Federal Tax Withholding");
+		//isTextFieldDisplayed("State Tax Withholding");
+		isTextFieldDisplayed("Delivery Method");
+		isTextFieldDisplayed("Sent to");
+		isTextFieldDisplayed("Payment amount");
+	}
+
+	public void validateEventTable(String option, String userName) {
+		try {
+			int sEv_id = Integer.parseInt(confirmationNo) + 1;
+			//System.out.println(sEv_id);
+			String[] sqlquery = Stock.getTestQuery("getRMDEmailAndPhoneNumber");
+			sqlquery[0] = Common.getParticipantDBName(userName) + "DB_"
+					+ Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+			ResultSet rs_Number = DB.executeQuery(sqlquery[0], sqlquery[1],
+					String.valueOf(sEv_id));
+
+			if (option.equalsIgnoreCase("Email")) {
+				rs_Number.first();
+				String sRMDEmail = rs_Number.getString("email_address");
+
+				if (sRMDEmail.equalsIgnoreCase(sEmail))
+					Reporter.logEvent(Status.PASS,
+							"Verify Event table Email value",
+							"Event table Email filed matched. Expected: " + sEmail
+									+ " Actual: " + sRMDEmail, false);
+				else
+					Reporter.logEvent(Status.FAIL,
+							"Verify Event table Email value",
+							"Event table Email filed did not match. Expected: " + sEmail
+									+ " Actual: " + sRMDEmail, true);
+			}
+			else if(option.equalsIgnoreCase("Text Message")) {
+				rs_Number.first();
+				String sMobileAreaCode = rs_Number.getString("phone_area_code");
+				String sMobileNbr = rs_Number.getString("phone_nbr");
+				String sPhoneNum = sMobileAreaCode+""+sMobileNbr;
+
+				if (sPhoneNum.equalsIgnoreCase(sFianlPhoneNum))
+					Reporter.logEvent(Status.PASS,
+							"Verify Event table Phone Number",
+							"Event table Phone Number matched. Expected: " + sPhoneNum
+									+ " Actual: " + sFianlPhoneNum, false);
+				else
+					Reporter.logEvent(Status.FAIL,
+							"Verify Event table Phone Number",
+							"Event table Phone Number di not match. Expected: " + sPhoneNum
+									+ " Actual: " + sFianlPhoneNum, true);
+			}
+			else
+			{
+				int j=0;
+				ArrayList<String> lstEmail = new ArrayList<String>();
+				ArrayList<String> lstAreaCode = new ArrayList<String>();
+				ArrayList<String> lstMobilenbr = new ArrayList<String>();
+				while(rs_Number.next())
+				{
+					lstEmail.add(j, rs_Number.getString("email_address"));
+					lstAreaCode.add(j, rs_Number.getString("phone_area_code"));
+					lstMobilenbr.add(j, rs_Number.getString("phone_nbr"));
+					j++;
+				}
+				String sRMDEmail=lstEmail.get(0);
+				String sMobileAreaCode=lstAreaCode.get(1);
+				String sMobileNbr=lstMobilenbr.get(1);
+				String sPhoneNum = sMobileAreaCode+""+sMobileNbr;
+				if (sRMDEmail.equalsIgnoreCase(sEmail))
+					Reporter.logEvent(Status.PASS,
+							"Verify Event table Email value",
+							"Event table Email filed matched. Expected: " + sEmail
+									+ " Actual: " + sRMDEmail, false);
+				else
+					Reporter.logEvent(Status.FAIL,
+							"Verify Event table Email value",
+							"Event table Email filed did not match. Expected: " + sEmail
+									+ " Actual: " + sRMDEmail, true);
+				if (sPhoneNum.equalsIgnoreCase(sFianlPhoneNum))
+					Reporter.logEvent(Status.PASS,
+							"Verify Event table Phone Number",
+							"Event table Phone Number matched. Expected: " + sPhoneNum
+									+ " Actual: " + sFianlPhoneNum, false);
+				else
+					Reporter.logEvent(Status.FAIL,
+							"Verify Event table Phone Number",
+							"Event table Phone Number di not match. Expected: " + sPhoneNum
+									+ " Actual: " + sFianlPhoneNum, true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

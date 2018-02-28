@@ -999,6 +999,6 @@ return isTextDisplayed;
 
 				
 			}
-		
 		}
+		
 }
