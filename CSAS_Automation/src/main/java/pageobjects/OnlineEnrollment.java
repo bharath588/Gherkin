@@ -294,7 +294,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	@FindBy(xpath = "//div[@class='selectize-control single']")
 	private WebElement div;
 
-	@FindBy(xpath = "//div[./select[@id='division']]//div[@class='option'][2]")
+	@FindBy(xpath = "//div[./select[@id='division']]//div[@class='option'][1]")
 	private WebElement selectItem;
 
 	@FindBy(xpath = "//div[./select[@id='division']]//div[@class='option'][1]")
@@ -2085,7 +2085,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				CommonLib.verifyExpectedAndActualEual("D",
 						hm.get("DivisionCode"),
 						"Expected Division Code should exist on data base.");
-				CommonLib.verifyExpectedAndActualEual("1",
+				CommonLib.verifyExpectedAndActualEual("5",
 						hm.get("DivisionValue"),
 						"Expected Division Value should exist on data base.");
 			}
@@ -2217,6 +2217,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 							.getString("GCS_VALUE");
 					contactAndEmploymentList
 							.put("DivisionValue", divisionValue);
+						
 				}
 			}
 		}

@@ -118,7 +118,7 @@
 					</include>
 					<include name="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn" />
-					</include>
+					</include> 
 					</methods> 
 			</class>
 		</classes>
