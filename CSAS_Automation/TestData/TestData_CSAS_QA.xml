@@ -258,20 +258,20 @@
 		</TestCase>
 	</Module>
 	<Module name="query">
-		<parameter QueryName="getGAID" DB="ISISDB_DEV"
+		<parameter QueryName="getGAID" DB="ISISDB_QA"
 			Query="select gc_id from employment where ind_id = ? and rownum &lt;=1 " />
-		<parameter QueryName="getHireDateAndTerminationDate" DB="ISISDB_DEV"
+		<parameter QueryName="getHireDateAndTerminationDate" DB="ISISDB_QA"
 			Query="Select hire_date,emp_termdate from employment where ind_id = ? and GC_ID = ?" />
-		<parameter QueryName="getPageInstanceFromInd_id" DB="CommonDB_DEV"
+		<parameter QueryName="getPageInstanceFromInd_id" DB="CommonDB_QA"
 			Query="select database_instance from individual_registry where IND_ID = ?" />
-		<parameter QueryName="getPersonalDataOnPPTHomePage" DB="INSTDB_DEV"
+		<parameter QueryName="getPersonalDataOnPPTHomePage" DB="INSTDB_QA"
 			Query="select first_name,last_name,ssn,birth_date,sex from individual where ssn = ?" />
-		<parameter QueryName="getManagedAccStatus" DB="ISISDB_DEV"
+		<parameter QueryName="getManagedAccStatus" DB="ISISDB_QA"
 			Query="Select GA_ID,status_reason_code from part_service where ind_id = ?" />
-		<parameter QueryName="get_IndID_PlanID_FromPartService" DB="ISISDB_DEV"
+		<parameter QueryName="get_IndID_PlanID_FromPartService" DB="ISISDB_QA"
 			Query="SELECT ind_id,ga_id FROM part_service where status_reason_code = ? and status_code = 'A'" />
 		<parameter QueryName="get_Particiant_ID_From_Part_Services"
-			DB="ISISDB_DEV"
+			DB="ISISDB_QA"
 			Query="SELECT pt.ind_id,pt.status_reason_code FROM part_service pt,
 (SELECT ind_id,MAX(effdate) maxDate FROM
 (SELECT * FROM part_service WHERE ind_id =ANY
@@ -279,12 +279,12 @@
 ORDER BY effdate DESC)
 GROUP BY ind_id) dt
 WHERE pt.ind_id = dt.ind_id AND pt.effdate  = dt.maxDate" />
-		<parameter QueryName="get_Plan_Number_From_DB" DB="ISISDB_DEV"
+		<parameter QueryName="get_Plan_Number_From_DB" DB="ISISDB_QA"
 			Query="select ga_id from ga_service where ga_id not in (select distinct ga_id from ga_service where sdsv_code in ('ADVICE','ASSET_ALLOC'))
 and ga_id in (select distinct ga_id from part_service) and rownum= 1" />
-		<parameter QueryName="get_Part_ID_From_DB" DB="ISISDB_DEV"
+		<parameter QueryName="get_Part_ID_From_DB" DB="ISISDB_QA"
 			Query="SELECT ind_id FROM part_service WHERE GA_ID = ? and rownum = 1" />
-		<parameter QueryName="getPPTIDforWebRegStatus" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforWebRegStatus" DB="INSTDB_QA"
 			Query="select distinct v.ga_id,i.ID,i.ssn, u.username
 from access_customization_view v 
 join part_agrmt pa on pa.ga_id = v.ga_id 
@@ -297,7 +297,7 @@ and e.EMP_TERMDATE is null
 and u.username is not null
 and rownum &lt;= 1
 " />
-		<parameter QueryName="getPPTIDforWebNonRegStatus" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforWebNonRegStatus" DB="INSTDB_QA"
 			Query="select distinct v.ga_id,i.ID,i.ssn, u.username
 from access_customization_view v 
 join part_agrmt pa on pa.ga_id = v.ga_id 
@@ -310,7 +310,7 @@ and e.EMP_TERMDATE is null
 and u.username is null
 and rownum &lt;= 1
 " />
-		<parameter QueryName="getPPTIDforOrderPIN_Reg" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforOrderPIN_Reg" DB="INSTDB_QA"
 			Query="select id, ssn, pa.ga_id
 from individual i 
 join address a on (i.id = a.ind_id)
@@ -321,7 +321,7 @@ and PA.STATUS_CODE = 'A'
 and PA.PIN_AUTH_CODE = 'U'
 and i.ssn in (select ssn from username_registry_link)
 and rownum &lt;= 1" />
-		<parameter QueryName="getPPTIDforOrderPIN_NonReg" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforOrderPIN_NonReg" DB="INSTDB_QA"
 			Query="select id, ssn, pa.ga_id
 from individual i 
 join address a on (i.id = a.ind_id)
@@ -332,17 +332,17 @@ and PA.STATUS_CODE = 'A'
 and PA.PIN_AUTH_CODE = 'U'
 and i.ssn not in (select ssn from username_registry_link)
 and rownum &lt;= 1" />
-		<parameter QueryName="getPPTIDforPDIStatusY" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforPDIStatusY" DB="INSTDB_QA"
 			Query="select IND_ID from address where 
 validation_source_code = 'PDI'
 and effdate &gt;= sysdate-60" />
-		<parameter QueryName="getPPTIDforPDIStatusN" DB="INSTDB_DEV"
+		<parameter QueryName="getPPTIDforPDIStatusN" DB="INSTDB_QA"
 			Query="select IND_ID from address where 
 validation_source_code != 'PDI'
 and effdate &gt;= sysdate-4" />
-		<parameter QueryName="getPPTIDforLoanInfo" DB="ISISDB_DEV"
+		<parameter QueryName="getPPTIDforLoanInfo" DB="ISISDB_QA"
 			Query="select * from loan_acct where status_code='A'and TRF_loan_acct_ind='Y' and rownum &lt;= 1" />
-		<parameter QueryName="getActiveLegalNameList" DB="ISISDB_DEV"
+		<parameter QueryName="getActiveLegalNameList" DB="ISISDB_QA"
 			Query="SELECT si.legal_name
 FROM invopt_alloc ia
 JOIN STD_INVOPT si
@@ -350,7 +350,7 @@ ON si.id          = ia.sdio_id
 WHERE ind_id      = ?
 AND ia.ga_id = ?
 AND ia.termdate is NULL group by si.legal_name" />
-		<parameter QueryName="getInvestmentOptPer" DB="ISISDB_DEV"
+		<parameter QueryName="getInvestmentOptPer" DB="ISISDB_QA"
 			Query="SELECT ia.ind_id,ia.ga_id,ia.percent,si.legal_name
 FROM (select * from invopt_alloc order by effdate desc) ia
 JOIN STD_INVOPT si
@@ -358,7 +358,7 @@ ON si.id          = ia.sdio_id
 WHERE ind_id      = ?
 AND si.legal_name = ?
 AND rownum &lt;= 1" />
-		<parameter QueryName="getMoneyType" DB="ISISDB_DEV"
+		<parameter QueryName="getMoneyType" DB="ISISDB_QA"
 			Query="SELECT sdmt_code
 FROM invopt_alloc
 WHERE ind_id = ?
@@ -366,19 +366,19 @@ AND ga_id    = ?
 AND termdate IS NULL
 GROUP BY sdmt_code
 " />
-		<parameter QueryName="getMoneyTypeInfo" DB="ISISDB_DEV"
+		<parameter QueryName="getMoneyTypeInfo" DB="ISISDB_QA"
 			Query="SELECT sm.code,sm.descr,ia.gdmt_seqnbr,ia.ind_id
 FROM invopt_alloc ia 
 JOIN STD_MNTY sm
 ON sm.code  = ia.sdmt_code
 WHERE ia.ind_id = ? and sm.code = ? and rownum &lt;=1" />
-		<parameter QueryName="getMinLoanAmount" DB="ISISDB_DEV"
+		<parameter QueryName="getMinLoanAmount" DB="ISISDB_QA"
 			Query="select min_loan_amt as MinLoanAmount from GRP_LOAN_STRUC where GA_ID = ?" />
-		<parameter QueryName="getMaxLoanAmount" DB="ISISDB_DEV"
+		<parameter QueryName="getMaxLoanAmount" DB="ISISDB_QA"
 			Query="select low_thresh, high_thresh,amount,percent from grp_loan_max_amt where ga_id = ?" />
-		<parameter QueryName="getMaxLoanAllowed" DB="ISISDB_DEV"
+		<parameter QueryName="getMaxLoanAllowed" DB="ISISDB_QA"
 			Query="select max_loans_allowed as MaxLoanAllowed from GRP_LOAN_STRUC where GA_ID = ?" />
-		<parameter QueryName="getPaymentHistoryDtls" DB="INSTDB_DEV"
+		<parameter QueryName="getPaymentHistoryDtls" DB="INSTDB_QA"
 			Query="SELECT tempTab2.ssn,
     tempTab2.ev_id,
     tempTab2.effdate,
@@ -406,7 +406,7 @@ FROM
   AND aa.tracking_nbr IS NOT NULL
   ) tempTab2
 WHERE tempTab1.ssn = tempTab2.ssn and rownum &lt;=1" />
-		<parameter QueryName="getProcessingDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getProcessingDetails" DB="INSTDB_QA"
 			Query="SELECT db.ind_id,
   db.disb_psc_ind,
   db.ev_id,
@@ -417,9 +417,9 @@ FROM disb_basic db,
 WHERE db.ev_id =e.id 
 and db.ind_id = ? 
 AND rownum    &lt;=1" />
-		<parameter QueryName="getDefaultInvsOptsDtls" DB="ISISDB_DEV"
+		<parameter QueryName="getDefaultInvsOptsDtls" DB="ISISDB_QA"
 			Query="select distinct wb.ind_id,wb.ga_id,gdi.rule_criteria,gdid.percent from WORK_MNTY_BALS wb, individual il,grp_default_invopt gdi,grp_default_invopt_detl gdid where il.id=wb.ind_id AND vested_balance &gt; 0 AND gdi.ga_id = wb.ga_id AND gdi.id = gdid.gdi_id AND gdid.percent is not null AND rownum &lt;=1 order by wb.ga_id,wb.ind_id" />
-		<parameter QueryName="getCurrentDepositeAllDtls" DB="ISISDB_DEV"
+		<parameter QueryName="getCurrentDepositeAllDtls" DB="ISISDB_QA"
 			Query="SELECT ia.ind_id,
   ia.ga_id,
   si.legal_name,
@@ -438,7 +438,7 @@ AND i.id           = pa.ind_id
 AND ia.ind_id      = i.id
 AND ia.termdate   IS NULL
 AND rownum        &lt;= 1" />
-		<parameter QueryName="getGrpDefaultDtlsWithChkbx" DB="ISISDB_DEV"
+		<parameter QueryName="getGrpDefaultDtlsWithChkbx" DB="ISISDB_QA"
 			Query="SELECT DISTINCT wb.ind_id,
   wb.ga_id,
   gdi.rule_criteria,
@@ -460,24 +460,24 @@ ORDER BY wb.ga_id,
 
 		<!-- Queries for module ONLINE ENROLLMENT -->
 
-		<parameter QueryName="queryForRV_DOMAIN" DB="ISISDB_DEV"
+		<parameter QueryName="queryForRV_DOMAIN" DB="ISISDB_QA"
 			Query="Select * from ISIS_REF_VALUES where Rv_Domain='COUNTRY' ORDER BY dbms_random.value" />
-		<parameter QueryName="queryForRV_DOMAINState" DB="ISISDB_DEV"
+		<parameter QueryName="queryForRV_DOMAINState" DB="ISISDB_QA"
 			Query="Select * from ISIS_REF_VALUES where Rv_Domain='STATE' ORDER BY dbms_random.value" />
 
-		<parameter QueryName="getParticipantPersonelDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getParticipantPersonelDetails" DB="INSTDB_QA"
 			Query="Select * From Individual Where SSN = ?" />
-		<parameter QueryName="getParticipantAddressDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getParticipantAddressDetails" DB="INSTDB_QA"
 			Query="Select * from Address where Ind_id= ?" />
-		<parameter QueryName="getEventDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getEventDetails" DB="INSTDB_QA"
 			Query="Select * from event where id = ?" />
-		<parameter QueryName="getEmailDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getEmailDetails" DB="INSTDB_QA"
 			Query="Select * From Ind_Email Where Ind_Id= ?" />
-		<parameter QueryName="getEmploymentDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getEmploymentDetails" DB="INSTDB_QA"
 			Query="select * From employment  where Ind_id= ?" />
-		<parameter QueryName="getDivisionDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getDivisionDetails" DB="INSTDB_QA"
 			Query="Select * From Part_Subset Where Ind_Id= ?" />
-		<parameter QueryName="getEnabledDivisionDetails" DB="INSTDB_DEV"
+		<parameter QueryName="getEnabledDivisionDetails" DB="INSTDB_QA"
 			Query="Select Basis,Name, Value From Gc_Subset Where Gc_Id= 194391 And Basis= 'D'" />
 
 
@@ -1465,7 +1465,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="DB" value="ISISDB_DEV" />
+				<parameter name="DB" value="ISISDB_QA" />
 				<parameter name="PEC" value="1234" />
 				<parameter name="SSNwithDashes" value="123654789" />
 				<parameter name="GrpIdWithAlphaNumaric" value="92149-NQ" />
@@ -1762,7 +1762,22 @@ ORDER BY wb.ga_id,
 					<parameter name="SSN" value="119569874" />
 			</Iteration>
 		</TestCase>
-
+<Module name="aagaccountaccess">
+		<TestCase name="verifyFinancialEngines_ProspectUser">
+			<Iteration Execution="Yes" id="1">
+			<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball"/>
+			<parameter name="ParticipantID" value="1218857" />
+		</Iteration>	
+		</TestCase>
+		<TestCase name="verifyverifyAdvisoryServicesTitle_GuidenceUser">
+			<Iteration Execution="Yes" id="1">
+			<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball"/>
+			<parameter name="ParticipantID" value="4339720" />
+		</Iteration>	
+		</TestCase>
+	</Module>
 
 
 	</Module>

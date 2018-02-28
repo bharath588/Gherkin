@@ -15,7 +15,7 @@
 						<parameter name="ManualTCName" value="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod" />
 					</include>
 			
-			<!-- <include name="DDTC_26089_Paperless_Loan_Exceptions"> 
+			<include name="DDTC_26089_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26089_Paperless_Loan_Exceptions" />
 					</include>
 					 <include name="DDTC_25965_Paperless_Loan_Exceptions"> 
@@ -161,7 +161,7 @@
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
 					</include>	
 				
-			 -->
+			
 			  </methods>
 			 </class>
 		</classes>
