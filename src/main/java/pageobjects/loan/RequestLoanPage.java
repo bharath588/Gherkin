@@ -47,6 +47,12 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement inputLonatypeMortgage;
 	@FindBy(xpath = "//button[contains(text(),'Continue')]")
 	private WebElement btnContinue;
+	@FindBy(xpath = "//button[contains(text(),'Back')]")
+	private WebElement btnBack;
+	@FindBy(xpath = "//a[contains(text(),'OK')]")
+	private WebElement btnOK;
+	@FindBy(xpath = "//button[contains(text(),'Update')]")
+	private WebElement btnupdate;
     @FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
@@ -102,6 +108,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtLoanTotal;
 	@FindBy(xpath = "//h1[text()[normalize-space()='Loan review']]")
 	private WebElement lblLoanReview;
+	@FindBy(xpath = "//h1[text()[normalize-space()='How much would you like to borrow?']]")
+	private WebElement hdrLoanPage;
 	@FindBy(id = "currency-maximum")
 	private WebElement txtLoanMaximum;
 	@FindBy(xpath = "//td[@class='loans-summary-allowed']//span")
@@ -117,9 +125,36 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtloanDisclaimer2;
 	@FindBy(xpath = "//div[@id='loanRequestMarketingInfoWrapper']//div[@class='loan-top-margin']/ul/li[2]")
 	private WebElement txtloanDisclaimer3;
+	@FindBy(xpath = "//a[text()[normalize-space()='How is this calculated?']]")
+	private WebElement lnkHowIsThisCalculated;
+	
+	@FindBy(xpath = "//div[@id='min-loan-amount']/p")
+	private WebElement txtLoanMinimum;
+	
+	@FindBy(xpath = "//div[@class='error-block']")
+	private WebElement txtErrorMsg;
+	@FindBy(id = "quoteTable")
+	private WebElement tableRepaymentTerm;
+	@FindBy(xpath = "//a[contains(text(),'enter your own term')]")
+	private WebElement lnkEnterOwnTerm;
+	@FindBy(id = "emailId")
+	private WebElement inpEmail;
+	@FindBy(id = "phoneNumberId")
+	private WebElement inpPhoneNo;
+	@FindBy(xpath = "//a[contains(text(),'loan provisions')]")
+	private WebElement lnkLoanProvision;
+	@FindBy(xpath = "//div[@class='modal-title' and text()=' Loan provisions']")
+	private WebElement modalHeaderLoanProvision;
+	@FindBy(id = "txn-ofc-comply")
+	private WebElement loanAckWindow;
+	@FindBy(id = "first-class-mail-radio-selection") private WebElement inpRegularMail;
+	@FindBy(id = "express-mail-radio-selection") private WebElement inpExpressMail;
+	@FindBy(id = "ach-delivery-radio-selection") private WebElement inpACHDelivery;
+	
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	
 	private String strmaxloan="//span[contains(@ng-if,'LoanTypeLoans')]//li";
+	private String strRepaymentTerm="//table[@id='quoteTable']/tbody/tr[rownum]/td//span";
 	
 	private String loanTerm="//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
 	/**
@@ -263,12 +298,16 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		if (fieldName.trim().equalsIgnoreCase("LOAN TYPE GENERAL")) {
 			return this.inputLonatypeGeneral;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Button Update")) {
+		if (fieldName.trim().equalsIgnoreCase("BUTTON UPDATE")) {
 			return this.btnUpdate;
 		}
 		if (fieldName.trim().equalsIgnoreCase("BUTTON CONTINUE")) {
 			return this.btnContinue;
 		}
+		if (fieldName.trim().equalsIgnoreCase("BUTTON BACK")) {
+			return this.btnBack;
+		}
+		
 		if (fieldName.trim().equalsIgnoreCase("ProActive Notification Screen")) {
 			return this.hdrProactiveNotificationScreen;
 		}
@@ -277,6 +316,48 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("LOAN TOTAL")) {
 			return this.txtLoanTotal;
+		}
+		if (fieldName.trim().equalsIgnoreCase("GENERAL PURPOSE")) {
+			return this.inputLonatypeGeneral;
+		}
+		if (fieldName.trim().equalsIgnoreCase("MORTAGAGE")) {
+			return this.inputLonatypeMortgage;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Link How Is This Calculated")) {
+			return this.lnkHowIsThisCalculated;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Repayment Term Table")) {
+			return this.tableRepaymentTerm;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Link Enter Your Own Term")) {
+			return this.lnkEnterOwnTerm;
+		}
+		if (fieldName.trim().equalsIgnoreCase("EmailId Input Field")) {
+			return this.inpEmail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Phone No Input Field")) {
+			return this.inpPhoneNo;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LINK LOAN PROVISION")) {
+			return this.lnkLoanProvision;
+		}
+		if (fieldName.trim().equalsIgnoreCase("MODAL CONTENT LOAN PROVISIONS")) {
+			return this.modalHeaderLoanProvision;
+		}
+		if (fieldName.trim().equalsIgnoreCase("BUTTON OK")) {
+			return this.btnOK;
+		}
+		if (fieldName.trim().equalsIgnoreCase("LOAN ACKNOWLEDGEMENT WINDOW")) {
+			return this.loanAckWindow;
+		}
+		if (fieldName.trim().equalsIgnoreCase("REGULAR MAIL RADIO BUTTON")) {
+			return this.inpRegularMail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("EXPEDITED MAIL RADIO BUTTON")) {
+			return this.inpExpressMail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ACH DELIVERY RADIO BUTTON")) {
+			return this.inpACHDelivery;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -312,7 +393,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			}
 		}
 
-		//this.btnContinue.click();
+		Web.waitForElement(hdrLoanPage);
 		
 		try {
 			Thread.sleep(2000);
@@ -320,7 +401,26 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			e.printStackTrace();
 		}
 	}
-		
+	
+
+	/**
+	 * Method to Verify Request Loan Button is Displayed
+	 * 
+	 * @param fieldName
+	 * 
+	 */
+	public void verifyLoneTypeisDisplayed(String fieldName) {
+	
+			WebElement element=	getWebElement(fieldName);
+					
+			if (element.isDisplayed()) {
+				lib.Reporter.logEvent(Status.PASS, "Verify Reqest Loan Buttton is Displayed",  
+						"Reqest"+fieldName+"Buttton is Displayed",false);
+			} else {
+				lib.Reporter.logEvent(Status.FAIL, "Verify Reqest Loan Buttton is Displayed",  
+						"Reqest"+fieldName+"Buttton is not Displayed",true);
+			}
+	}
 		/**
 		 * <pre>
 		 * Method to get the text of an webElement
@@ -357,6 +457,41 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			 WebElement inpLoanTerm= Web.getDriver().findElement(By.xpath(this.loanTerm.replace("Repayment Term", loanTerm)));
 			Web.clickOnElement(inpLoanTerm);
 			
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/**
+		 * Method to Select Loan Term
+		* @param loanTerm
+		 * 
+		 */
+		public void selectLoanTerm(String loanTerm) {
+		
+			Common.waitForProgressBar();
+			 WebElement inpLoanTerm= Web.getDriver().findElement(By.xpath(this.loanTerm.replace("Repayment Term", loanTerm)));
+			 Web.clickOnElement(inpLoanTerm);
+			
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/**
+		 * Method to Enter Loan Amount
+		 * 
+		 * @param loanAmount
+		 * 
+		 */
+		public void EnterLoanAmount(String loanAmount) {
+		
+			Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
+		
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -628,4 +763,242 @@ return isTextDisplayed;
 					true);
 
 	}
+		
+		/**
+		 * <pre>
+		 * Method to Verify theLoan Minimum Amount is Displayed or Not
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyLoanMinimumIsDisplayed() {
+			
+		
+			if (Web.isWebElementDisplayed(txtLoanMinimum)) {
+				lib.Reporter.logEvent(Status.PASS, "Verify Minimum Loan Amount is Displayed" 
+						, "Minimum Loan Amount is Displayed"+txtLoanMinimum.getText().toString().trim(),
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify Minimum Loan Amount is Displayed" 
+						, "Minimum Loan Amount is Displayed"+txtLoanMinimum.getText().toString().trim(),
+						true);
+				
+			}
+		
+
+		}
+		/**
+		 * <pre>
+		 * Method to Verify WebElement is Displayed or Not
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyWebElementIsDisplayed(String fieldName) {
+			
+		WebElement element = getWebElement(fieldName);
+			if (Web.isWebElementDisplayed(element)) {
+				lib.Reporter.logEvent(Status.PASS, "Verify "+fieldName 
+						+ " is Displayed", fieldName 
+						+ " is Displayed",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify "+fieldName 
+						+ " is Displayed", fieldName 
+						+ " is Not Displayed",
+						true);
+				throw new Error(fieldName+" is not displayed");
+			}
+		
+
+		}
+		/**
+		 * <pre>
+		 * Method to Verify MinimumLoan Amount Error Message is Displayed
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyLoanMinimumErrorMessageIsDisplayed(String loanAmount) {
+			
+			Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
+			if (Web.isWebElementDisplayed(txtErrorMsg,true)) {
+				lib.Reporter.logEvent(Status.PASS, "Verify Minimum Loan Amount Error Message is Displayed" 
+						, "Minimum Loan Amount Error Message is Displayed\n"+txtErrorMsg.getText().toString().trim(),
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify Minimum Loan Amount Error Message is Displayed" 
+						, "Minimum Loan Amount Error Message is not Displayed\n"+txtErrorMsg.getText().toString().trim(),
+						true);
+				
+			}
+			if(!btnContinue.isEnabled()){
+				lib.Reporter.logEvent(Status.PASS, "Verify Continue Button is Disabled when Minimum Loan Amount Error Message is Displayed" 
+						, "Continue Button is Disabled when Minimum Loan Amount Error Message is Displayed",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify Continue Button is Disabled when Minimum Loan Amount Error Message is Displayed" 
+								, "Continue Button is Not Disabled when Minimum Loan Amount Error Message is Displayed",
+								true);
+
+				
+			
+			}
+		
+
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Click On Continue Button
+		 * </pre>
+		 *
+		 */
+
+		public void clickContinueButton() {
+			boolean isTextDisplayed = false;
+			try {
+
+				isTextDisplayed = Web.isWebElementDisplayed(btnContinue, true);
+
+				if (isTextDisplayed)
+					Web.clickOnElement(btnContinue);
+
+			} catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+		}
+		
+		/**
+		 * <pre>
+		 * Method Click on Back Button
+		 * </pre>
+		 * 
+		 */
+		public void clickOnBackButton() {
+			try {
+				Web.clickOnElement(btnBack);
+			} catch (NoSuchElementException e) {
+				throw new Error("Back Button is not displayed");
+
+			}
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Verify Default Repayment Term Options
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyDefaultRepamentTerm() {
+			String[] repaymentTerm={"12months","24months","36months","48months","60months"};
+			for(int i=1;i<=repaymentTerm.length;i++){
+				List<WebElement> inpLoanTerm= Web.getDriver().findElements(By.xpath(strRepaymentTerm.replace("rownum", Integer.toString(i))));
+				int j=inpLoanTerm.size();
+			String actualLoanTerm=inpLoanTerm.get(0).getText().toString().trim()+inpLoanTerm.get(1).getText().toString().trim();
+		
+			if(repaymentTerm[i].equalsIgnoreCase(actualLoanTerm)){
+				lib.Reporter.logEvent(Status.PASS, "Verify Repayment Term is Displayed in Ascending Order" 
+						, "Repayment Term "+i+actualLoanTerm,
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,  "Verify Repayment Term is Displayed in Ascending Order" 
+						, "Repayment Term is not displayed as expected\nExpected:"+repaymentTerm[i]+"\nActual:"+actualLoanTerm,
+						true);
+				
+			}
+		}
+		}
+		/**
+		 * <pre>
+		 * Method to Verify Loan Provision Link and Modal Pop Up
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifyLoanProvisionLink() {
+			
+			verifyWebElementIsDisplayed("LINK LOAN PROVISION");
+			Web.clickOnElement(lnkLoanProvision);
+			Web.waitForElement(modalHeaderLoanProvision);
+			verifyWebElementIsDisplayed("MODAL CONTENT LOAN PROVISIONS");
+			verifyWebElementIsDisplayed("BUTTON OK");
+			Web.clickOnElement(btnOK);
+			verifyPageHeaderIsDisplayed("Header Loan Review");
+		
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Verify Each Loan Term Have a Radio Button associated with it
+		 *
+		 * </pre>
+		 * 
+		 *
+		 */
+		public void verifySelectColumnForLoanTerm() {
+			String[] repaymentTerm={"12","24","36","48","60"};
+			for(int i=1;i<=repaymentTerm.length;i++){
+				 WebElement inpLoanTerm= Web.getDriver().findElement(By.xpath(this.loanTerm.replace("Repayment Term", repaymentTerm[i])));
+				
+			if(inpLoanTerm.isDisplayed()){
+				lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for Loan Term" 
+						, "Radio Button is Displayed for Loan Term "+repaymentTerm[i]+" Months",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for Loan Term" 
+						, "Radio Button is Not Displayed for Loan Term "+repaymentTerm[i]+" Months",
+						true);
+
+				
+			}
+		}
+		}
+		
+		/**
+		 * <pre>
+		 * Method to Verify Mail Delivery Options Available
+		 *
+		 * </pre>
+		 *
+		 */
+		public void verifyMailDeliveryOptions() {
+			verifyWebElementIsDisplayed("REGULAR MAIL RADIO BUTTON");
+			verifyWebElementIsDisplayed("EXPEDITED MAIL RADIO BUTTON");
+			verifyWebElementIsDisplayed("ACH DELIVERY RADIO BUTTON");
+			
+				if(inpRegularMail.isDisplayed()){
+				lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for Loan Term" 
+						, "Radio Button is Displayed for Loan Term ",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for Loan Term" 
+						, "Radio Button is Not Displayed for Loan Term ",
+						true);
+
+				
+			}
+		
+		}
 }

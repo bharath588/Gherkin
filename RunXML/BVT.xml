@@ -7,20 +7,16 @@
 	<test name="LOGIN">
 		<classes>
 
-		   <class
-				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
+			<class name="app.pptweb.testcases.liat.liattestcases">
 				<methods>
-
-
-					
-					<include name="Balance_validations">
-						<parameter name="ManualTCName" value="Balance_validations">
+					<include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
+						<parameter name="ManualTCName"
+							value="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
 						</parameter>
 					</include>
 
-                    
-                                 </methods>
-            </class>  
+				</methods>
+			</class>
 		</classes>
 	</test>
 

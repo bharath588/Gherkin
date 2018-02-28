@@ -70,6 +70,12 @@
 						</systemProperties>
 						<systemProperties>
 							<property>
+								<name>BROWSER</name>
+								<value>${BROWSER}</value>
+							</property>
+						</systemProperties>
+						<systemProperties>
+							<property>
 								<name>testDataPath</name>
 								<value>${testDataPath}</value>
 							</property>
