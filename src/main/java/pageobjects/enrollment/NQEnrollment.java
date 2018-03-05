@@ -5,13 +5,9 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import lib.DB;
@@ -19,23 +15,18 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-import com.gargoylesoftware.htmlunit.javascript.host.media.GainNode;
-
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import appUtils.Common;
-import pageobjects.beneficiaries.MyBeneficiaries;
-import pageobjects.general.LeftNavigationBar;
 import pageobjects.login.TwoStepVerification;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class NQEnrollment extends LoadableComponent<NQEnrollment> {
 

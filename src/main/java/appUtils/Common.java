@@ -1,16 +1,18 @@
 package appUtils;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.bcel.generic.RETURN;
+import lib.DB;
+import lib.Reporter;
+import lib.Stock;
+import lib.Web;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -18,16 +20,12 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import pageobjects.general.LeftNavigationBar;
-import core.framework.Globals;
-import lib.DB;
-import lib.Reporter;
-import lib.Stock;
-import lib.Web;
 
-import com.aventstack.extentreports.*;
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 
 public class Common {
 	

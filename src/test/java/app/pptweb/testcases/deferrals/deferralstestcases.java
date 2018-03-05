@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.firefox.internal.NewProfileExtensionConnection;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -34,7 +32,6 @@ import appUtils.Common;
 import appUtils.TestDataFromDB;
 
 import com.aventstack.extentreports.Status;
-import com.sun.prism.paint.Stop;
 
 import core.framework.Globals;
 

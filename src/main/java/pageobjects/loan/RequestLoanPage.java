@@ -150,6 +150,18 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(id = "first-class-mail-radio-selection") private WebElement inpRegularMail;
 	@FindBy(id = "express-mail-radio-selection") private WebElement inpExpressMail;
 	@FindBy(id = "ach-delivery-radio-selection") private WebElement inpACHDelivery;
+	@FindBy(xpath = "//span[./strong[contains(text(),'Regular mail')]]//following-sibling::span") private WebElement txtRegularMailDeliveryTime;
+	@FindBy(xpath = "//span[./strong[contains(text(),'Expedited mail')]]//following-sibling::span") private WebElement txtExpeditedMailDeliveryTime;
+	@FindBy(xpath = "//span[./strong[contains(text(),'ACH')]]//following-sibling::span") private WebElement txtACHMailDeliveryTime;
+	@FindBy(xpath= "//tr[./td[contains(text(),'Interest rate')]]//td[2]//span") private WebElement txtGeneralPurposeIntrestRate;
+	@FindBy(xpath= "//tr[./td[contains(text(),'Interest rate')]]//td[3]//span") private WebElement txtMortgageIntrestRate;
+	@FindBy(xpath= "//td[@data-header='INTEREST RATE']/a") private WebElement txtIntrestRateLoanSummary;
+	@FindBy(xpath= "//td[@data-header='FEES*']/a") private WebElement txtOriginationFee;
+	@FindBy(xpath= "//td[@data-header='CHECK TOTAL']") private WebElement txtCheckTotal;
+	@FindBy(xpath = "//h1[text()[normalize-space()='Loan request received']]")
+	private WebElement hdrLoanConfirmationPage;
+	@FindBy(xpath = "//div[@class='page-title'][./h1[contains(text(),'Loan request received')]]//following-sibling::div[1]")
+	private WebElement txtconfirmationdisclaimer;
 	
 	private String loanQuote="//*[contains(text(),'webElementText')]";
 	
@@ -157,6 +169,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private String strRepaymentTerm="//table[@id='quoteTable']/tbody/tr[rownum]/td//span";
 	
 	private String loanTerm="//table[@id='quoteTable']//tr[./td//span[contains(text(),'Repayment Term')]]//input";
+	
 	/**
 	 * Default Constructor
 	 */
@@ -358,6 +371,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("ACH DELIVERY RADIO BUTTON")) {
 			return this.inpACHDelivery;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Loan Confirmation")) {
+			return this.hdrLoanConfirmationPage;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -669,7 +685,7 @@ return isTextDisplayed;
 		 * 
 		 *
 		 */
-		public void verifyMaximumLoansForLoan(String ga_id) throws SQLException {
+		public void verifyMaximumLoansForLoanStructure(String ga_id) throws SQLException {
 			WebElement txtLoanQuote = null;
 			Map<String,String> maxloansActual;
 			Map<String,String> maxloansExpected = new HashMap<String,String>();
@@ -987,18 +1003,369 @@ return isTextDisplayed;
 			verifyWebElementIsDisplayed("ACH DELIVERY RADIO BUTTON");
 			
 				if(inpRegularMail.isDisplayed()){
-				lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for Loan Term" 
-						, "Radio Button is Displayed for Loan Term ",
+				lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for Regulr Mail" 
+						, "Radio Button is Displayed for Regulr Mail",
 						false);
 
 			} else {
 						
-				lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for Loan Term" 
-						, "Radio Button is Not Displayed for Loan Term ",
+				lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for Regulr Mail" 
+						, "Radio Button is Displayed forRegulr Mail",
+						true);
+
+				
+			}
+				if(inpExpressMail.isDisplayed()){
+					lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for EXPEDITED MAIL" 
+							, "Radio Button is Displayed for EXPEDITED MAIL",
+							false);
+
+				} else {
+							
+					lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for EXPEDITED MAIL" 
+							, "Radio Button is Displayed for EXPEDITED MAIL",
+							true);
+
+					
+				}
+				if(inpACHDelivery.isDisplayed()){
+					lib.Reporter.logEvent(Status.PASS, "Verify Radio Button is Displayed for ACH DELIVERY" 
+							, "Radio Button is Displayed for ACH DELIVERY",
+							false);
+
+				} else {
+							
+					lib.Reporter.logEvent(Status.FAIL,"Verify Radio Button is Displayed for ACH DELIVERY" 
+							, "Radio Button is Displayed for ACH DELIVERY",
+							true);
+
+					
+				}
+			
+				if(txtRegularMailDeliveryTime.isDisplayed()){
+					String expectedText="Delivery up to 5 business days";
+					String actualText=txtRegularMailDeliveryTime.getText().toString().trim();
+					if(expectedText.equalsIgnoreCase(actualText)){
+					lib.Reporter.logEvent(Status.PASS, "Verify Delivery Time for Regular Mail is Displayed" 
+							, "Delivery Time for Regular Mail is Displayed\nExpected:"+expectedText+"\nActual:"+actualText,
+							false);
+
+				} else {
+							
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for Regular Mail is Displayed" 
+							, "Delivery Time for Regular Mail is not Matching \nExpected:"+expectedText+"\nActual:"+actualText,
+							true);
+
+					
+				}
+				}
+				else {
+					
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for Regular Mail is Displayed" 
+							, "Delivery Time for Regular Mail is Displayed",
+							true);
+
+					
+				}
+				if(txtExpeditedMailDeliveryTime.isDisplayed()){
+					String expectedText="Delivery up to 2 business days";
+					String actualText=txtExpeditedMailDeliveryTime.getText().toString().trim();
+					if(expectedText.equalsIgnoreCase(actualText)){
+					lib.Reporter.logEvent(Status.PASS, "Verify Delivery Time for Expedited Mail is Displayed" 
+							, "Delivery Time for Expedited Mail is Displayed\nExpected:"+expectedText+"\nActual:"+actualText,
+							false);
+
+				} else {
+							
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for Expedited Mail is Displayed" 
+							, "Delivery Time for Expedited Mail is not Matching \nExpected:"+expectedText+"\nActual:"+actualText,
+							true);
+
+					
+				}
+				}
+				else {
+					
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for Expedited Mail is Displayed" 
+							, "Delivery Time for Expedited Mail is Displayed",
+							true);
+
+					
+				}
+				if(txtACHMailDeliveryTime.isDisplayed()){
+					String expectedText="Delivery up to 3 business days";
+					String actualText=txtACHMailDeliveryTime.getText().toString().trim();
+					if(expectedText.equalsIgnoreCase(actualText)){
+					lib.Reporter.logEvent(Status.PASS, "Verify Delivery Time for ACH is Displayed" 
+							, "Delivery Time for ACH is Displayed\nExpected:"+expectedText+"\nActual:"+actualText,
+							false);
+
+				} else {
+							
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for ACH is Displayed" 
+							, "Delivery Time for ACH is not Matching \nExpected:"+expectedText+"\nActual:"+actualText,
+							true);
+
+					
+				}
+				}
+				else {
+					
+					lib.Reporter.logEvent(Status.FAIL,"Verify Delivery Time for ACH is Displayed" 
+							, "Delivery Time for ACH is Displayed",
+							true);
+
+					
+				}
+		}
+		/**
+		 * <pre>
+		 * Method to Verify Regular Mail Delivery Option is Selected by Default
+		 *
+		 * </pre>
+		 *
+		 */
+		public void verifyRegularMailSelectedAsDefault() {
+			
+				if(inpRegularMail.isDisplayed() && inpRegularMail.isSelected()){
+				lib.Reporter.logEvent(Status.PASS, "Verify 'Regulr Mail' Radio Button is Selected By Default" 
+						, "'Regulr Mail' Radio Button is Selected By Default",
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,"Verify 'Regulr Mail' Radio Button is Selected By Default" 
+						, "'Regulr Mail' Radio Button is Not Selected By Default",
 						true);
 
 				
 			}
 		}
 		
+		/**
+		 * <pre>
+		 * Method to get the interest Rate for General Purpose/Mortgage loan from Request Loan Page
+		 *
+		 * </pre>
+		 *
+		 */
+		public String getInterestRateFromRequestLoanPage(String loanType) {
+			String interestRate="";
+				if(loanType.equalsIgnoreCase("GENERAL")){
+					interestRate=txtGeneralPurposeIntrestRate.getText().toString().trim();
+
+			} else if(loanType.equalsIgnoreCase("MORTGAGE")){
+					interestRate=txtMortgageIntrestRate.getText().toString().trim();
+
+				
+			}
+				return interestRate;
+		}
+		
+		 /** <pre>
+		 * Method to get the interest Rate from loan summary Table
+		 *
+		 * </pre>
+		 *
+		 */
+		public String getInterestRateFromLoanSummaryTable() {
+			String interestRate="";
+				if(txtIntrestRateLoanSummary.isDisplayed()){
+				
+					interestRate=txtIntrestRateLoanSummary.getText().toString().trim();
+
+							}
+				else{
+					throw(new Error("Interest Rate is Not Displayed in Loan Summary Page"));
+				}
+				return interestRate;
+		}	
+		
+		 /** <pre>
+		 * Method to get the Origination Fee from loan summary Table
+		 *
+		 * </pre>
+		 *
+		 */
+		public String getOriginationFeeFromLoanSummaryTable() {
+			String fee="";
+				if(txtOriginationFee.isDisplayed()){
+				
+					fee=txtOriginationFee.getText().toString().trim();
+
+							}
+				else{
+					throw(new Error("Origination Fee is Not Displayed in Loan Summary Page"));
+				}
+				return fee;
+		}	
+		 /** <pre>
+		 * Method to get Check Total from loan summary Table
+		 *
+		 * </pre>
+		 *
+		 */
+		public String getCheckTotalFromSummaryTable() {
+			String checkTotal="";
+				if(txtCheckTotal.isDisplayed()){
+				
+					checkTotal=txtCheckTotal.getText().toString().trim();
+
+							}
+				else{
+					throw(new Error("Check Total is Not Displayed in Loan Summary Page"));
+				}
+				return checkTotal;
+		}	
+		
+		 /** <pre>
+		 * Method to get the Loan Total from loan summary Table
+		 *
+		 * </pre>
+		 *
+		 */
+		public String getLoanTotalFromLoanSummaryTable() {
+			String loanTotal="";
+				if(txtLoanTotal.isDisplayed()){
+				
+					loanTotal=txtLoanTotal.getText().toString().trim();
+
+							}
+				else{
+					throw(new Error("Loan Total is Not Displayed in Loan Summary Page"));
+				}
+				return loanTotal;
+		}	
+		
+		/**
+		 * <pre>
+		 * Method to Verify  the Origination Fee from loan summary Table
+		 *
+		 * </pre>
+		 *
+		 */
+		public void verifyOriginationFeeDisplayed() {
+			
+				if(txtOriginationFee.isDisplayed()){
+				lib.Reporter.logEvent(Status.PASS, "Verify 'Origination Fee' is Displayed" 
+						, "'Origination Fee' is Displayed\n FEE*="+getOriginationFeeFromLoanSummaryTable(),
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,"Verify 'Origination Fee' is Displayed" 
+						, "'Origination Fee' is Not Displayed",
+						true);
+
+				
+			}
+		}
+		/**
+		 * <pre>
+		 * Method to Verify  Check Total Amount is Matching
+		 *
+		 * </pre>
+		 *
+		 */
+		public void verifyCheckTotalAmount() {
+			float originationFee= Web.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
+			float loanTotal= Web.getIntegerCurrency(getLoanTotalFromLoanSummaryTable());
+			String expectedCheckTotal = "$"+Float.toString(loanTotal - originationFee);
+			String actualCheckTotal= getCheckTotalFromSummaryTable();
+			
+				if(expectedCheckTotal.equalsIgnoreCase(actualCheckTotal)){
+				lib.Reporter.logEvent(Status.PASS, "Verify 'Check Total' Amount is Same" 
+						, "'Check Total' Amount is Same\nCheck Total="+actualCheckTotal,
+						false);
+
+			} else {
+						
+				lib.Reporter.logEvent(Status.FAIL,"Verify 'Check Total' Amount is Same" 
+						, "'Check Total' Amount is Not Same\nExpected:"+expectedCheckTotal+"\nActual:"+actualCheckTotal,
+						true);
+
+				
+			}
+		}
+				
+				/**
+				 * <pre>
+				 * Method to Verify  Loan Total Amount is Matching
+				 *
+				 * </pre>
+				 *
+				 */
+				public void verifyLoanTotalAmount() {
+					float originationFee= Web.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
+					float checkTotal= Web.getIntegerCurrency(getCheckTotalFromSummaryTable());
+					String expectedLoanTotal = "$"+Float.toString(checkTotal + originationFee);
+					String actualLoanTotal= getLoanTotalFromLoanSummaryTable();
+					
+						if(expectedLoanTotal.equalsIgnoreCase(actualLoanTotal)){
+						lib.Reporter.logEvent(Status.PASS, "Verify 'Loan Total' Amount is Same" 
+								, "'Loan Total' Amount is Same\nLoan Total="+actualLoanTotal,
+								false);
+
+					} else {
+								
+						lib.Reporter.logEvent(Status.FAIL,"Verify 'Loan Total' Amount is Same" 
+								, "'Loan Total' Amount is Not Same\nExpected:"+expectedLoanTotal+"\nActual:"+actualLoanTotal,
+								true);
+
+						
+					}
+		}
+				
+				/**
+				 * <pre>
+				 * Method to Click On I Agree And Submit Button
+				 * </pre>
+				 *
+				 */
+
+				public void clickOnIAgreeAndSubmit() {
+					boolean isTextDisplayed = false;
+					try {
+
+						isTextDisplayed = Web.isWebElementDisplayed(btnIAgreeAndSubmit, true);
+
+						if (isTextDisplayed)
+							Web.clickOnElement(btnIAgreeAndSubmit);
+
+					} catch (NoSuchElementException e) {
+						e.printStackTrace();
+					}
+
+				}
+				
+				
+				/**
+				 * <pre>
+				 * Method to Verify Disclaimer in Confirmation Page
+				 *
+				 * </pre>
+				 *
+				 */
+				public void verifyLoanConfirmationDisclaimer() {
+					
+					String expectedText = "Your loan request has been received and a pre-filled form will be emailed to you shortly. "
+							+ "To complete the process, you must sign and return the form to the address provided. "
+							+ "Depending on your preference, you will receive an email and/or text with your loan's status.";
+					String actualLoanText= txtconfirmationdisclaimer.getText().toString().trim();
+					
+						if(expectedText.equalsIgnoreCase(actualLoanText)){
+						lib.Reporter.logEvent(Status.PASS, "Verify disclaimer message below the 'Loan request received' section" 
+								, "'Disclaimer message below the 'Loan request received' section is displayed\nDisclaimer:"+actualLoanText,
+								false);
+
+					} else {
+								
+						lib.Reporter.logEvent(Status.FAIL,"Verify disclaimer message below the 'Loan request received' section" 
+								, "'Disclaimer message below the 'Loan request received' section is not same\nExpected Disclaimer:"+expectedText+"\nActual Disclaimer:"+actualLoanText,
+								true);
+
+						
+					}
+		}
+				
 }
