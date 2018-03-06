@@ -1,10 +1,10 @@
 [ {
-       "Browser": "FF",
+       "Browser": "CHROME",
        "Port": "http://10.4.61.208:5555/wd/hub",
        "Platform": "Windows.xp"
 },
 {
-       "Browser": "FF",
+       "Browser": "CHROME",
        "Port": " http://10.4.61.208:6666/wd/hub",
        "Platform": "Windows.xp"
 }
