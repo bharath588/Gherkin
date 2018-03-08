@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+	<test name="LOGIN">
+		<classes>
+
+		   <class
+				name="app.pptweb.testcases.NPDI.NPDILoadTesting">
+				<methods>
+
+
+					
+					<include name="Load_Testing">
+						<parameter name="ManualTCName" value="Load_test">
+						</parameter>
+					</include>
+
+                    
+                                 </methods>
+            </class>  
+		</classes>
+	</test>
+
+</suite>

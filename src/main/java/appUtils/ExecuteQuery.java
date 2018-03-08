@@ -14,7 +14,8 @@ public class ExecuteQuery {
 	public static Properties conf = null;
 	static char dbInital;
 	static String dbEnv;
-	static String dbName;	
+	static String dbName;
+	static String dbName1;
 	static String SSN;
 	static ResultSet resultSet;
 	static String getID;
@@ -27,6 +28,8 @@ public class ExecuteQuery {
 	static String queryDelActCodeChlng;
 	static String queryDelUsrNmReg;
 	static String queryCommit;
+	static String querydeleteEmail;
+	static String queryupdatePhoneNo;
 	 DB db = new DB();
 	
 	@SuppressWarnings("static-access")
@@ -36,6 +39,7 @@ public class ExecuteQuery {
 				//Access Data Sheet
 		Log.Report(Log.Level.INFO,"***************** Initiating execution of delete record query *****************");	
 		dbName = "CommonDB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		dbName1 = "ParticipantDataDB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		if(!dbName.isEmpty()){		
 			try{
 			   /*if(dbName.split("_")[0].length()>1)
@@ -64,6 +68,8 @@ public class ExecuteQuery {
 						   db.executeUpdate(dbName,queryDelIndReg,getID);
 						   db.executeUpdate(dbName,queryDelActCodeChlng,getID);
 						   db.executeUpdate(dbName,queryDelUsrNmReg,getID);
+						   db.executeUpdate(dbName1,querydeleteEmail,SSN);
+						   db.executeUpdate(dbName1,queryupdatePhoneNo,SSN);
 						   db.executeQuery(dbName,"commit");
 						   db.executeQuery(dbName,"commit");							
 						   getIDAfterDel = Execute(db,dbName,queryGetID,"ID",SSN);
@@ -111,6 +117,8 @@ public class ExecuteQuery {
 		queryDelIndReg = "delete from INDIVIDUAL_REGISTRY where usrreg_id = ?";
 		queryDelActCodeChlng ="delete from ACTIVATION_CODE_CHALLENGE  where usrreg_id = ?";
 		queryDelUsrNmReg ="delete from USERNAME_REGISTRY where id =?";
+		querydeleteEmail = "DELETE FROM ind_email WHERE Ind_ID= (SELECT ID from Individual WHERE SSN=?)";
+		queryupdatePhoneNo = "update Individual set mobile_phone_nbr='',mobile_phone_area_code='' where ssn=?";
 		queryCommit = "commit";
 	}
 	

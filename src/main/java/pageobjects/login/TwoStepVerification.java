@@ -51,7 +51,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(id="signin") private WebElement btnSignIn;
 	@FindBy(linkText="Didn't receive the code?") private WebElement lnkDidntReceiveCode;
 	@FindBy(xpath=".//*[text()[normalize-space()='Login help']]") private WebElement lblLoginHelp;
-	@FindBy(xpath="//button[contains(text(),'Continue to My Account')]") private WebElement btnContinueToMyAccount;
+	@FindBy(id="registration-summary-continue submit") private WebElement btnContinueToMyAccount;
 	@FindBy(xpath="//h1[contains(text(),'Confirm your contact information')]") private WebElement txtConfirmContactInfo;
 	@FindBy(xpath="//p[contains(@ng-if,'editContactInfoAllowed')]") private WebElement txtConfirmIdentity;
 	@FindBy(xpath="//div[contains(text(),'Change communication preference')]") private WebElement txtChangeCommuniPrefer;
