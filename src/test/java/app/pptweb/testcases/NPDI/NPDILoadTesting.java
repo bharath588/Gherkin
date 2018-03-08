@@ -136,6 +136,7 @@ LandingPage homePage = new LandingPage();
 			// Step 7
 			Web.setTextToTextBox("EMAIL ADDRESS", accSetup,
 					Stock.GetParameterValue("Mail"));
+			Thread.sleep(7000);
 			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
 					Stock.GetParameterValue("phone"));
 			
