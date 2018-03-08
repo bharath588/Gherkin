@@ -154,6 +154,9 @@ LandingPage homePage = new LandingPage();
 					"Enter  details and click on Register button.",
 					"Submitted participant details and clicked on Register button",
 					true);
+			Web.waitForElement(accSetup,"MOBILE PHONE NUMBER");
+			Web.setTextToTextBox("MOBILE PHONE NUMBER", accSetup,
+					Stock.GetParameterValue("phone"));
 			keyBoard.sendKeys(Keys.TAB).perform();
 			keyBoard.sendKeys(Keys.ENTER).perform();
 			// Web.clickOnElement(accSetup, "REGISTER");
