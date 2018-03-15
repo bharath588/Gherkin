@@ -236,7 +236,12 @@ public class Globals {
 						if(StringUtils.containsIgnoreCase(dbType, "postgres")){
 							//postgresql
 							databaseConnectionStrings.put("D_AMA", "jdbc:postgresql://143.199.166.219:5432/DAMA_DB?currentSchema=max_content");
-							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://easypg.cjh5m767ofzr.us-east-1.rds.amazonaws.com:5432/D_ASDB?currentSchema=sit_asdb_content");
+							//Dev database
+							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://easypg.cjh5m767ofzr.us-east-1.rds.amazonaws.com:5432/D_ASDB?currentSchema=dev_asdb_content");
+							//QA database
+							databaseConnectionStrings.put("Q_ASDB", "jdbc:postgresql://easypg.cjh5m767ofzr.us-east-1.rds.amazonaws.com:5432/D_ASDB?currentSchema=sit_asdb_content");
+
+						
 						}
 						else{
 
