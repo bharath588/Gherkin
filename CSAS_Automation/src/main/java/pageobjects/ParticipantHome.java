@@ -36,7 +36,6 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	LoanRequest LoanRequestPage;
 
 	// CSAS Login..
-
 	@FindBy(xpath = "//span[contains(text(),'CLIENT SERVICE ACCESS SYSTEM USER LOGON')]")
 	private WebElement CSASLoginHome;
 

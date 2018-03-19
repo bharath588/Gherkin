@@ -1,12 +1,9 @@
 package pageobjects;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;

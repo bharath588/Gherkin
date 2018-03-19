@@ -27,7 +27,6 @@ public class OnlineEnrollmentTestCases {
 	LoanRequest LoanRequestPage;
 	Statement_View_Update objStatement_View_Update;
 	OnlineEnrollment onlineEnrollmentObj;
-
 	boolean isPageDisplayed;
 
 	@BeforeClass

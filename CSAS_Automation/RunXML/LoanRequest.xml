@@ -140,7 +140,6 @@
 					 <include name="CSAS_Paperless_Loan_HappyPath_TC14_DDTC_27970">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_DeliverForm"/>						
 					</include>	
-								 				
 					<include name="CSAS_Paperless_Loan_HappyPath_TC18_DDTC_27976">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_HappyPath_ACH"/>						
 					</include> 

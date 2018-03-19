@@ -32,7 +32,6 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// TODO Auto-generated constructor stub
 	}
 
-	// Actions action = new Actions(Web.getDriver());
 
 	@FindBy(xpath = "//*[@class='pageMenuTitle' and text()='Loans']")
 	WebElement loanRequest;

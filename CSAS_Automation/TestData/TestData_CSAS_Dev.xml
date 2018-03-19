@@ -1747,19 +1747,14 @@ ORDER BY wb.ga_id,
 					<parameter name="SSN" value="119569874" />
 			</Iteration>
 		</TestCase>
-
-
 		<TestCase
 			name="Man_CSAS_Online_Enrollment_ddtc_28139_validate_plan_num_field">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
             <parameter name="PlanNumber" value="1536" />
-
 			</Iteration>
 		</TestCase>
-
-
 		<TestCase
 			name="Man_CSAS_Online_Enrollment_ddtc_28152_28150_validate_LastName_field">
 			<Iteration Execution="Yes" id="1">
@@ -1771,7 +1766,6 @@ ORDER BY wb.ga_id,
 					<parameter name="SSN" value="119569874" />
 			</Iteration>
 		</TestCase>
-
 
 		<TestCase
 			name="Man_CSAS_Online_Enrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
@@ -1785,6 +1779,7 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>
 	</Module>
+	
 	<Module name="aagaccountaccess">
 		<TestCase name="verifyFinancialEngines_ProspectUser">
 			<Iteration Execution="Yes" id="1">

@@ -21,6 +21,7 @@ import pageobjects.Rebalancer;
 
 public class validate_rebalancer {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
+	
 	String tcName;
 	Rebalancer rebalancer;
 	ParticipantHome participantHomeObj;

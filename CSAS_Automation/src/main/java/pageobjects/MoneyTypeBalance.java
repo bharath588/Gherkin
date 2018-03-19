@@ -9,8 +9,6 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import com.aventstack.extentreports.*;
-
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;

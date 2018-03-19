@@ -29,6 +29,7 @@ public class validate_participanthomepage {
 	boolean isPageDisplayed;
 	Map<String,String> sqlQueryRes = new HashMap<String,String>();
 	String ga_id = null ;
+	
 	@BeforeClass
 	public void ReportInit(){		
 		Reporter.initializeModule(this.getClass().getName());

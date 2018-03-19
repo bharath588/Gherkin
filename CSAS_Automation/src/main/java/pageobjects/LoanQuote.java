@@ -1,14 +1,9 @@
 package pageobjects;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import lib.DB;
 import lib.Reporter;
 import com.aventstack.extentreports.*;
 import lib.Stock;

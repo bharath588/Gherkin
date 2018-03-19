@@ -16,7 +16,6 @@ import org.testng.annotations.Test;
 
 import pageobjects.LoanInfo;
 import pageobjects.ParticipantHome;
-
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;

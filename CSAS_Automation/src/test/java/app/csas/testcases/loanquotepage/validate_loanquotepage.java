@@ -1,7 +1,6 @@
 package app.csas.testcases.loanquotepage;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.LoanInfo;
 import pageobjects.LoanQuote;
 import pageobjects.ParticipantHome;
 import core.framework.Globals;

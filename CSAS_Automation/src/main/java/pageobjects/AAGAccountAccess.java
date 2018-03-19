@@ -1,7 +1,5 @@
 package pageobjects;
 
-import java.util.List;
-
 import lib.Reporter;
 import lib.Web;
 
@@ -17,7 +15,6 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
 	private WebElement MenuPPTInfo;
 
-	//@FindBy(xpath = "//*[@id='oCMenu_25129'][contains(text() , 'Loan Info')]")
 	@FindBy(xpath = ".//*[contains(@id,'oCMenu')][contains(text() , 'AAG Account Access')]")
 	private WebElement MenuAAGAccountAccess;
 

@@ -8,7 +8,6 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 import com.aventstack.extentreports.*;
-
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

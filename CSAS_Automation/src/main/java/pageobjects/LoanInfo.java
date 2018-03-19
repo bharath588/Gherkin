@@ -1,11 +1,9 @@
 package pageobjects;
 
 import java.sql.ResultSet;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import lib.DB;
 import lib.Reporter;
 import lib.Stock;

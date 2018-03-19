@@ -15,9 +15,7 @@ import pageobjects.LoanRequest;
 import pageobjects.ParticipantHome;
 
 import pageobjects.Statement_View_Update;
-
 import com.aventstack.extentreports.Status;
-
 import core.framework.Globals;
 
 public class LoanRequestTestCases {

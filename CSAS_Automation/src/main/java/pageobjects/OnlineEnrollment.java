@@ -2,10 +2,9 @@ package pageobjects;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
 
 import lib.DB;
@@ -13,17 +12,15 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import org.apache.commons.beanutils.ResultSetIterator;
-import org.apache.poi.hssf.record.CountryRecord;
-import org.openqa.selenium.Alert;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.html5.AddLocationContext;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
