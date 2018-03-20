@@ -73,7 +73,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement sessionTimeOutErrMsg;
 	@FindBy(xpath = ".//*[@class='copyright']")
 	private WebElement txtCopyRightInfo;
-	@FindBy(linkText = "Requirements and Security")
+	@FindBy(linkText = "System Requirements")
 	private WebElement lnkSystemRequirements;
 	@FindBy(linkText = "Privacy")
 	private WebElement lnkPrivacy;
@@ -91,7 +91,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement imgSavings;
 	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Changing jobs?')]]")
 	private WebElement imgRollover;
-	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Having browser issues')]]")
+	@FindBy(xpath = "//a//img[following-sibling::h3[contains(text(),'Protect your personal information')]]")
 	private WebElement imgBrowserSupport;
 	@FindBy(xpath = ".//*[@id='prelogin-contact-modal-button'][contains(text(),'Dismiss')]")
 	private WebElement lnkDismiss;
@@ -280,7 +280,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		if (fieldName.trim().equalsIgnoreCase("COPYRIGHT INFO")) {
 			return this.txtCopyRightInfo;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Requirements and Security")) {
+		if (fieldName.trim().equalsIgnoreCase("System Requirements")) {
 			return this.lnkSystemRequirements;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Privacy")) {
@@ -311,7 +311,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			return this.imgRollover;
 		}
 		if (fieldName.trim().equalsIgnoreCase(
-				"IMAGE participant Browser Support")) {
+				"IMAGE Protect your personal information")) {
 			return this.imgBrowserSupport;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Dismiss")) {

@@ -7,18 +7,17 @@
 	<test name="LOGIN">
 		<classes>
 
-		<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+			<class	name="app.pptweb.testcases.loans.LoansTestCases">
 				<methods>
 
-					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data">
-						<parameter name="ManualTCName"
-							value="Verify_Custom_site_prelogin_postlogin_data">
+					<include name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						</parameter>
 					</include>
 
-                    
-                                 </methods>
-            </class>  
+
+				</methods>
+			</class>
 		</classes>
 	</test>
 

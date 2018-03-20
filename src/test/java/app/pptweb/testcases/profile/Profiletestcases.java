@@ -13,15 +13,12 @@ import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.SendKeysAction;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.ProfilePage;
 import pageobjects.login.ForgotPassword;
@@ -986,7 +983,7 @@ public class Profiletestcases {
 					{
 						sFirst.append(c[i]);
 					}
-					else if(Character.isSpace(c[i]))
+					else if(Character.isWhitespace(c[i]))
 					{
 						break;
 					}

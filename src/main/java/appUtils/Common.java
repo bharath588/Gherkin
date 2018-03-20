@@ -640,6 +640,21 @@ public class Common {
 		System.out.println("DATE"+date);
 		return date;
 	}
+	public static String getFutureDate(String format,int futeureDate) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		Calendar calendar = Calendar.getInstance();         
+		calendar.add(Calendar.DATE, futeureDate);
+		String date=dateFormat.format(calendar.getTime());
+		System.out.println("DATE"+date);
+		return date;
+	}
+	public static String getCurrentDate(String format) throws Exception {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		Calendar calendar = Calendar.getInstance();         
+		String date=dateFormat.format(calendar.getTime());
+		System.out.println("DATE"+date);
+		return date;
+	}
 	
 	
 	@SuppressWarnings("unchecked")
@@ -909,6 +924,43 @@ try{
 		}
 			
 	return panelHeading;
+}
+
+/**
+ * Method to get the Plan Name
+ * @param gc_Id 194044
+ * @return planName
+ * @throws SQLException
+ */
+public static String getPlanName(String gc_Id) throws SQLException {
+
+	// query to get the no of plans
+	String[] sqlQuery = null;
+	ResultSet Plan= null;
+	String planName="";
+
+	try {
+		sqlQuery = Stock.getTestQuery("getPlanNamewithGCID");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], gc_Id);
+try{
+	if (DB.getRecordSetCount(Plan) > 0) {
+		Plan.first();
+			planName= Plan.getString("NAME");
+		} 
+	}catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query get PlanName with GCID:" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+			
+	return planName;
 }
 
 

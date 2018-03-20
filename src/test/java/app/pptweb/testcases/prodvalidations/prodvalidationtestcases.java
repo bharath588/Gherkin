@@ -154,16 +154,17 @@ public class prodvalidationtestcases {
 			if (!Common.getSponser().equalsIgnoreCase("Apple")) {
 				login.verifyWebElementDisplayed("image participant Savings rates");
 				login.verifyWebElementDisplayed("image participant Rollover options");
-				login.verifyWebElementDisplayed("image participant Browser Support");
+				/*login.verifyWebElementDisplayed("image participant Browser Support");*/
+				login.verifyWebElementDisplayed("IMAGE Protect your personal information");
 			}
-			login.verifyWebElementDisplayed(/* "System Requirements and Security" */"Requirements and Security");
+			login.verifyWebElementDisplayed(/* "System Requirements and Security" */"System Requirements");
 			login.verifyWebElementDisplayed("Privacy");
 			login.verifyWebElementDisplayed(/* "Terms and Conditions" */"Terms");
 			login.verifyWebElementDisplayed(/* "Business Continuity Plan" */"Business Continuity");
 			login.verifyWebElementDisplayed(/* "Market Timing and Excessive Trading Policies" */"Market Timing and Excessive Trading");
 			login.verifyWebElementDisplayed("BrokerCheck Notification");
 			login.verifyWebElementDisplayed("FINRA Investor Education");
-			login.verifyLinkIsNotBroken("Requirements and Security");
+			login.verifyLinkIsNotBroken("System Requirements");
 			login.verifyLinkIsNotBroken("Privacy");
 			login.verifyLinkIsNotBroken("Terms");
 			login.verifyLinkIsNotBroken("Business Continuity");

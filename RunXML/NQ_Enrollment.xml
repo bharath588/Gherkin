@@ -64,6 +64,9 @@
                     <include name="DDTC_26777_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window">
                     <parameter  name="ManualTCName" value="SIT_DDTC_26777_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
                     </include>
+                     <include name="DDTC_26973_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_26973_NQ_SE_Via_LIAT_Verify_Distribution_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>
+                    </include>
                     
                     <include name="DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window">
                     <parameter  name="ManualTCName" value="SIT_DDTC_27002_NQ_SE_Via_AccountOverview_Verify_Deferral_Election_Page_As_Returning_User_Same_Enrollment_Window"></parameter>

@@ -130,7 +130,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement currentAssetBalGraph;
 	@FindBy(xpath = "//div[@id='transferGraphByAssetCurrentDivId']")
 	private WebElement postTransferBalanceGraph;
-	@FindBy(xpath = "//div[@class='dollarpercent']/a[contains(@class, 'percentbutton')]")
+	@FindBy(xpath = "//div[@class='dollarpercentselector']/a[contains(@class, 'percentbutton')]")
 	private WebElement btnPercent;
 
 	@FindBy(id = "transferFundFromTableId")
@@ -141,7 +141,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	private WebElement lnkTransferFromInvestmentOption;
 	@FindBy(xpath = "//input[contains(@id,'FromPercent')]")
 	private List<WebElement> txtTransferFromPercent;
-
+	@FindBy(xpath = "//input[contains(@id,'checkboxFundFrom')]")	private List<WebElement> inpFundFrom;
 	@FindBy(id = "fundTransferToTableSelectId")
 	private WebElement tblTransferFundTo;
 	@FindBy(xpath = "//table[@id='fundTransferToTableSelectId']/thead/tr")
@@ -1080,7 +1080,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		Web.getDriver().switchTo().defaultContent();
 	}
 
-	public void fundToFundTransfer(String fromPercent, String toPercent) {
+	public void fundToFundTransfer(String fromPercent, String toPercent) throws InterruptedException {
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(iframeLegacyFeature);
@@ -1096,6 +1096,9 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.clickOnElement(txtTransferFromPercent.get(0));
+			Web.clickOnElement(txtTransferFromPercent.get(0));
+			Thread.sleep(2000);
+		
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());

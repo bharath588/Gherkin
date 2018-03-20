@@ -22,7 +22,7 @@
 						</parameter>
 					</include>
 
-					<include name="Investment_lineup_validations">
+					 <include name="Investment_lineup_validations">
 						<parameter name="ManualTCName" value="Investment_lineup_validations">
 						</parameter>
 					</include>
