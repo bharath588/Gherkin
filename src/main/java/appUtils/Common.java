@@ -964,5 +964,44 @@ try{
 }
 
 
+/**
+ * Method to get Loan Notification Type
+ * @param ev_Id 
+ * @return notificationType
+ * @throws SQLException
+ */
+public static String getLoanNotificationType(String ev_Id) throws SQLException {
+
+	// query to get the no of plans
+	String[] sqlQuery = null;
+	ResultSet Plan= null;
+	String notificationType="";
+	String ev_id1=Integer.toString(Integer.parseInt(ev_Id)+1);
+
+	try {
+		sqlQuery = Stock.getTestQuery("getLoanNotificationType");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], ev_Id,ev_id1);
+try{
+	if (DB.getRecordSetCount(Plan) > 0) {
+		Plan.first();
+		notificationType= Plan.getString("notification_type");
+		} 
+	}catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query get Loan Notification Type:" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+			
+	return notificationType;
+}
+
+
 
 }

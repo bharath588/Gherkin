@@ -10,12 +10,73 @@
 			<class	name="app.pptweb.testcases.loans.LoansTestCases">
 				<methods>
 
-					<include name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
+					<!-- <include name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						<parameter name="ManualTCName" value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						</parameter>
+					</include> 
+					
+					 <include name="DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27491_General_Purpose_Loan_My_Loan_Page_Verification">
+						</parameter>
 					</include>
-
-
+					
+					<include name="DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27500_General_Purpose_Loan_Summary_Page_Verification">
+						</parameter>
+					</include>-->
+					<include name="DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
+						<parameter name="ManualTCName" value="SIT_DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification">
+						</parameter>
+					</include>
+				<!--	<include name="DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
+						<parameter name="ManualTCName" value="SIT_DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request">
+						</parameter>
+					</include>
+					<include name="DDTC_27594_Loan_Enter_Amount_field_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_27594_Loan_Enter_Amount_field_validation">
+						</parameter>
+					</include>
+					<include name="DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method">
+						</parameter>
+					</include>
+					<include name="DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method">
+						</parameter>
+					</include>
+					<include name="DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method">
+						</parameter>
+					</include>
+					<include name="DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27628_PreFilled_form_Delivery_for_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						</parameter>
+					</include>
+					<include name="DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27627_Future_Dated_General_Purpose_Loan_Request_by_participant_with_recent_address_change">
+						</parameter>
+					</include>
+					<include name="DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method">
+						</parameter>
+					</include>
+					<include name="DDTC_29034_Loans_quote_page_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_29034_Loans_quote_page_validation">
+						</parameter>
+					</include>
+					<include name="DDTC_28043_Verify_Loans_Back_button_GP_loans_flow">
+						<parameter name="ManualTCName" value="SIT_DDTC_28043_Verify_Loans_Back_button_GP_loans_flow">
+						</parameter>
+					</include>
+					<include name="DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
+						<parameter name="ManualTCName" value="SIT_DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted">
+						</parameter>
+					</include>
+					<include name="DDTC_28964_Loans_Reason_page_validation">
+						<parameter name="ManualTCName" value="SIT_DDTC_28964_Loans_Reason_page_validation">
+						</parameter>
+					</include>
+ -->
 				</methods>
 			</class>
 		</classes>

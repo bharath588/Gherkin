@@ -269,14 +269,14 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 		if (deliveryOption.trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
 			
 			try {
-				Thread.sleep(2000);
+				//Thread.sleep(2000);
 			} catch (Exception e1) {
 				//do nothing
 			}
 			
 			if (Web.isWebElementDisplayed(lblLoginHelp)) {
 				
-				this.lnkAlreadyHaveCodeFogotPsw.click();;
+				this.lnkAlreadyHaveCodeFogotPsw.click();
 			} else {
 				this.lnkAlreadyHaveCodeMFA.click();
 			}

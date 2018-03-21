@@ -817,7 +817,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 							By.xpath(strmaxloan.replace("LoanType",
 									"PrimaryRes")));
 				}
-				maxloansExpected.put(key, txtLoanQuote.getText());
+				maxloansExpected.put(key, txtLoanQuote.getText().split(" ")[0]);
 
 			}
 		} catch (NoSuchElementException e) {
@@ -944,7 +944,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	public void verifyWebElementIsDisplayed(String fieldName) {
 
 		WebElement element = getWebElement(fieldName);
-		if (Web.isWebElementDisplayed(element)) {
+		if (Web.isWebElementDisplayed(element,true)) {
 			lib.Reporter.logEvent(Status.PASS, "Verify " + fieldName
 					+ " is Displayed", fieldName + " is Displayed", false);
 
@@ -1172,10 +1172,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	public void verifyDefaultRepamentTerm() {
 		String[] repaymentTerm = { "12months", "24months", "36months",
 				"48months", "60months" };
-		for (int i = 1; i <= repaymentTerm.length; i++) {
+		for (int i = 0; i < repaymentTerm.length; i++) {
 			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
 					By.xpath(strRepaymentTerm.replace("rownum",
-							Integer.toString(i))));
+							Integer.toString(i+1))));
 			int j = inpLoanTerm.size();
 			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
 					.trim()
@@ -1186,13 +1186,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 						.logEvent(
 								Status.PASS,
 								"Verify Repayment Term is Displayed in Ascending Order",
-								"Repayment Term " + i + actualLoanTerm, false);
+								"Repayment Term " + (i+1)+" :" + actualLoanTerm, false);
 
 			} else {
 
 				lib.Reporter
 						.logEvent(
-								Status.FAIL,
+								Status.FAIL, 
 								"Verify Repayment Term is Displayed in Ascending Order",
 								"Repayment Term is not displayed as expected\nExpected:"
 										+ repaymentTerm[i] + "\nActual:"
@@ -1218,6 +1218,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyWebElementIsDisplayed("MODAL CONTENT LOAN PROVISIONS");
 		verifyWebElementIsDisplayed("BUTTON OK");
 		Web.clickOnElement(btnOK);
+		Web.waitForPageToLoad(Web.getDriver());
+		Web.waitForElement(lblLoanReview);
 		verifyPageHeaderIsDisplayed("Header Loan Review");
 
 	}
@@ -1232,7 +1234,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifySelectColumnForLoanTerm() {
 		String[] repaymentTerm = { "12", "24", "36", "48", "60" };
-		for (int i = 1; i <= repaymentTerm.length; i++) {
+		for (int i = 0; i < repaymentTerm.length; i++) {
 			WebElement inpLoanTerm = Web.getDriver().findElement(
 					By.xpath(this.loanTerm.replace("Repayment Term",
 							repaymentTerm[i])));
@@ -1656,15 +1658,15 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyCheckTotalAmount() {
-		float originationFee = Web
+		double originationFee = Web
 				.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
-		float loanTotal = Web
+		double loanTotal = Web
 				.getIntegerCurrency(getLoanTotalFromLoanSummaryTable());
 		String expectedCheckTotal = "$"
-				+ Float.toString(loanTotal - originationFee);
+				+ Double.toString(loanTotal - originationFee);
 		String actualCheckTotal = getCheckTotalFromSummaryTable();
 
-		if (expectedCheckTotal.equalsIgnoreCase(actualCheckTotal)) {
+		if (actualCheckTotal.contains(expectedCheckTotal)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Check Total' Amount is Same",
 					"'Check Total' Amount is Same\nCheck Total="
@@ -1689,15 +1691,15 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyLoanTotalAmount() {
-		float originationFee = Web
+		double originationFee = Web
 				.getIntegerCurrency(getOriginationFeeFromLoanSummaryTable());
-		float checkTotal = Web
+		double checkTotal = Web
 				.getIntegerCurrency(getCheckTotalFromSummaryTable());
 		String expectedLoanTotal = "$"
-				+ Float.toString(checkTotal + originationFee);
-		String actualLoanTotal = getLoanTotalFromLoanSummaryTable();
+				+ Double.toString(checkTotal + originationFee);
+		String actualLoanTotal = getLoanTotalFromLoanSummaryTable().replace(",", "");
 
-		if (expectedLoanTotal.equalsIgnoreCase(actualLoanTotal)) {
+		if (actualLoanTotal.contains(expectedLoanTotal)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Loan Total' Amount is Same",
 					"'Loan Total' Amount is Same\nLoan Total="
@@ -2014,7 +2016,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * @throws Exception
 	 *
 	 */
-	public void verifyLoanRequestRecievedSectionForRegularMail()
+	public String  verifyLoanRequestRecievedSectionForRegularMail()
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
@@ -2050,7 +2052,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
-
+		return confirmationNo;
 	}
 
 	/**
