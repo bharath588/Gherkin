@@ -76,8 +76,8 @@
                     <parameter  name="ManualTCName" value="SIT_DDTC_24362_Employer_directed_MTGs_Allocations_HMDI_When_Employer_Directed_Indic_Setto_N"></parameter>
                     </include>   
                     
-                     <include name="DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
+                     <include name="DDTC_24364_Handling_Employer_directed_MTGs_Rebalance_DIM">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_24364_Handling_Employer_directed_MTGs_Rebalance_DIM"></parameter>
                     </include>   
                      
                <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">

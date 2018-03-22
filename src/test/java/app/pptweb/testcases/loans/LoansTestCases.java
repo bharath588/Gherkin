@@ -966,9 +966,11 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
+			
+			
 
 			/**
 			 * Step 10 - Select 'Request a General purpose loan' button PPT is
@@ -1022,9 +1024,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 
 			/**
 			 * Step 14 - Click on 'Continue' button Confirm Information page
@@ -1267,9 +1267,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
 
 			/**
 			 * Step 9 - Select 'Request a General purpose loan' button PPT is
@@ -1317,9 +1317,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 13 - Verify the 'Delivery Options' offered for ppt without ACH set up
@@ -1604,6 +1602,12 @@ public class LoansTestCases {
 			 */
 			
 			requestLoan.EnterLoanAmount("");
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+			Reporter.logEvent(Status.INFO,
+					"Clear the Amount from the Enter Amount Field",
+					"Enter Amount Input Field is Empty and Continue button should be disabled",
+					true);
 			requestLoan.verifyContinueButtonIsEnabled(false);
 			
 			/**
@@ -1797,9 +1801,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
 
 			/**
 			 * Step 9 - Select 'Request a General purpose loan' button
@@ -1843,9 +1847,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 13 - Verify the 'Delivery Options' offered for ppt without ACH set up
@@ -2158,9 +2160,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
 
 			/**
 			 * Step 9 - Select 'Request a General purpose loan' button
@@ -2204,9 +2206,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 13 - Verify the 'Delivery Options' offered for ppt without ACH set up
@@ -2515,9 +2515,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
 
 			/**
 			 * Step 9 - Select 'Request a General purpose loan' button
@@ -2561,9 +2561,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 13 - Verify the 'Delivery Options' offered for ppt
@@ -3365,9 +3363,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
+			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+							.GetParameterValue("loanType")));
 
 			/**
 			 * Step 9 - Select 'Request a General purpose loan' button
@@ -3412,9 +3410,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 13 - Verify the 'Delivery Options' offered for ppt
@@ -4152,6 +4148,9 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Fees");
 			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
 			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.setInterestRate(requestLoan
+					.getInterestRateFromRequestLoanPage(Stock
+							.GetParameterValue("loanType")));
 			
 			/**
 			 * Step 5 -Click on 'Request a General Purpose loan' button.
@@ -4190,9 +4189,7 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("My loan summary");
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
-			requestLoan.setInterestRate(requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType")));
+			
 			
 			/**
 			 * Step 8 - Verify the 'Delivery Options' offered for ppt without ACH set up

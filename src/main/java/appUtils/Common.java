@@ -652,7 +652,7 @@ public class Common {
 		DateFormat dateFormat = new SimpleDateFormat(format);
 		Calendar calendar = Calendar.getInstance();         
 		String date=dateFormat.format(calendar.getTime());
-		System.out.println("DATE"+date);
+		System.out.println("DATE: "+date);
 		return date;
 	}
 	

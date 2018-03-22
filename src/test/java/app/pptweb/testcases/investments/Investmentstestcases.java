@@ -6332,7 +6332,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 
 	}
 	@Test(dataProvider = "setData")
-	public void DDTC_24643_Handling_Employer_directed_MTGs_Rebalance_DIM(int itr, Map<String, String> testdata) {
+	public void DDTC_24364_Handling_Employer_directed_MTGs_Rebalance_DIM(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));

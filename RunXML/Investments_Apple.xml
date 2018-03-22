@@ -98,8 +98,7 @@
 
 
 
-					<include
-						name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
+					<include name="DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_29363_LIAT_Smart_Restriction_Rebalance_LandingPage_Withonly_UnRetsricted_Fund"></parameter>
 					</include>

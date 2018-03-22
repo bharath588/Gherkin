@@ -507,12 +507,12 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 		if (element.isDisplayed()) {
 			lib.Reporter.logEvent(Status.PASS,
-					"Verify Reqest Loan Buttton is Displayed", "Reqest"
-							+ fieldName + "Buttton is Displayed", false);
+					"Verify Reqest Loan Button is Displayed", "Reqest "
+							+ fieldName + " Button is Displayed", false);
 		} else {
 			lib.Reporter.logEvent(Status.FAIL,
-					"Verify Reqest Loan Buttton is Displayed", "Reqest"
-							+ fieldName + "Buttton is not Displayed", true);
+					"Verify Reqest Loan Button is Displayed", "Reqest "
+							+ fieldName + " Buttton is not Displayed", true);
 		}
 	}
 
@@ -1291,18 +1291,21 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"Radio Button is Displayed for EXPEDITED MAIL", true);
 
 		}
-		if (!inpACHDelivery.isDisplayed()) {
-			lib.Reporter.logEvent(Status.PASS,
-					"Verify  ACH DELIVERY Option is Displayed",
-					" ACH DELIVERY Option is Not Displayed", false);
-
-		} else {
-
+		try{
+		if (inpACHDelivery.isDisplayed()) {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify  ACH DELIVERY Option is Displayed",
 					" ACH DELIVERY Option is Displayed", true);
-
 		}
+		}
+		catch(NoSuchElementException e){
+			
+		lib.Reporter.logEvent(Status.PASS,
+				"Verify  ACH DELIVERY Option is Displayed",
+				" ACH DELIVERY Option is Not Displayed", false);
+		}
+		
+		
 
 		if (txtRegularMailDeliveryTime.isDisplayed()) {
 			String expectedText = "Delivery up to 5 business days";
@@ -1749,8 +1752,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyLoanConfirmationDisclaimer() {
 
-		String expectedText = "Your loan request has been received and a pre-filled form will be emailed to you shortly. "
-				+ "To complete the process, you must sign and return the form to the address provided. "
+		String expectedText = "Your loan request has been received is being processed. "
 				+ "Depending on your preference, you will receive an email and/or text with your loan's status.";
 		String actualLoanText = txtconfirmationdisclaimer.getText().toString()
 				.trim();
@@ -1760,7 +1762,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					.logEvent(
 							Status.PASS,
 							"Verify disclaimer message below the 'Loan request received' section",
-							"'Disclaimer message below the 'Loan request received' section is displayed\nDisclaimer:"
+							"'Disclaimer message below the 'Loan request received' section is displayed\n Disclaimer:"
 									+ actualLoanText, false);
 
 		} else {
@@ -1769,9 +1771,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					.logEvent(
 							Status.FAIL,
 							"Verify disclaimer message below the 'Loan request received' section",
-							"'Disclaimer message below the 'Loan request received' section is not same\nExpected Disclaimer:"
+							"'Disclaimer message below the 'Loan request received' section is not same\n Expected Disclaimer:"
 									+ expectedText
-									+ "\nActual Disclaimer:"
+									+ "\n Actual Disclaimer:"
 									+ actualLoanText, true);
 
 		}
@@ -1792,14 +1794,14 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		String actualText = txtPlanName.getText().toString().trim();
 		if (expectedText.equalsIgnoreCase(actualText)) {
 			Reporter.logEvent(Status.PASS, "Verify Plan Name is Displayed",
-					"Plan Name is Displayed in Confirmation Page\nPlan Name"
+					"Plan Name is Displayed in Confirmation Page\nPlan Name: "
 							+ actualText, false);
 
 		} else {
 
 			Reporter.logEvent(Status.FAIL, "Verify Plan Name is Displayed",
-					"Plan Name is not Same in Confirmation Page\nExpected Plan Name"
-							+ expectedText + "\nActual Plan Name" + actualText,
+					"Plan Name is not Same in Confirmation Page\nExpected Plan Name: "
+							+ expectedText + "\nActual Plan Name: " + actualText,
 					true);
 
 		}
@@ -1813,14 +1815,14 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public String getInterestRateFromLoanConfirmationPage() {
-		String interestRate = "";
+		String interestRateinConfirmation = "";
 		if (txtInterestRate.isDisplayed()) {
-			txtInterestRate.getText().toString().trim();
+			interestRateinConfirmation=txtInterestRate.getText().toString().trim();
 		} else {
 			throw (new Error(
 					"Interest Rate is Not Displayed in Loan Confirmation Page"));
 		}
-		return interestRate;
+		return interestRateinConfirmation;
 	}
 
 	/**
@@ -1874,10 +1876,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 		if (txtLoanType.isDisplayed()
 				&& txtLoanType.getText().toString().trim()
-						.equalsIgnoreCase(Stock.GetParameterValue("loan_type"))) {
+						.equalsIgnoreCase(Stock.GetParameterValue("loan_type").trim())) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Loan Type' is Displayed",
-					"'Loan Type' is Displayed\n loan type"
+					"'Loan Type' is Displayed\n loan type: "
 							+ txtLoanType.getText().toString().trim(), false);
 
 		} else {
@@ -1906,15 +1908,15 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		if (expectedLoanTerm.equalsIgnoreCase(actualLoanTerm)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify Loan Term is Displayed in Confirmation Page",
-					"Loan Term is Displayed in Confirmation Page\nLoan Term"
+					"Loan Term is Displayed in Confirmation Page\nLoan Term: "
 							+ actualLoanTerm, false);
 
 		} else {
 
 			Reporter.logEvent(Status.FAIL,
 					"Verify Loan Term is Displayed in Confirmation Page",
-					"Loan Term is Displayed in Confirmation Page\nExpected:"
-							+ expectedLoanTerm + "\nActual:" + actualLoanTerm,
+					"Loan Term is Displayed in Confirmation Page\nExpected: "
+							+ expectedLoanTerm + "\nActual: " + actualLoanTerm,
 					true);
 
 		}
@@ -1934,7 +1936,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 				getInterestRate())) {
 			Reporter.logEvent(Status.PASS,
 					"Verify Interest Rate is Displayed in Confirmation Page",
-					"Interest Rate is Displayed in Confirmation Page\nInterest Rate"
+					"Interest Rate is Displayed in Confirmation Page\nInterest Rate:"
 							+ getInterestRate(), false);
 
 		} else {
@@ -1986,10 +1988,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyLoanAmountInConfirmationPage() {
 
-		String expectedLoanTotal = Stock.GetParameterValue("LoanTotal");
-		String actualLoanTotal = getLoanAmountFromLoanConfirmationPage();
+		String expectedLoanTotal = "$"+Stock.GetParameterValue("LoanTotal")+".00";
+		String actualLoanTotal = getLoanAmountFromLoanConfirmationPage().replace(",", "");
 
-		if (expectedLoanTotal.equalsIgnoreCase(actualLoanTotal)) {
+		if (actualLoanTotal.contains(expectedLoanTotal)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Loan Total' Amount is Same",
 					"'Loan Total' Amount is Same\nLoan Total="
@@ -2024,14 +2026,14 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		isTextFieldDisplayed("Check sent by Regular mail");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
-		String confirmationNo = confirmationtext.split(":")[1];
-		String date = confirmationtext.split(confirmationNo)[1];
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
 		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
 		String expectedDate = Common.getCurrentDate("M/dd/yyyy");
 		if (date.equalsIgnoreCase(expectedDate)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Submittion Date is Current date",
-					"'Loan Submittion Date is Same\nDate:" + expectedDate,
+					"'Loan Submittion Date is Same\nDate: " + expectedDate,
 					false);
 
 		} else {
