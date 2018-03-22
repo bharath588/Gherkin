@@ -5,7 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
+
 import com.aventstack.extentreports.*;
+
 import lib.Stock;
 import lib.Web;
 
@@ -19,6 +21,7 @@ import pageobjects.employeesearch.EmployeeSearch;
 import pageobjects.login.LoginPage;
 import pageobjects.userverification.UserVerificationPage;
 import core.framework.Globals;
+import framework.util.CommonLib;
 
 public class accountverificationtest_plan {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
@@ -44,6 +47,7 @@ public class accountverificationtest_plan {
 		this.testData = Stock.getTestData(this.getClass().getPackage()
 				.getName(), testCase.getName());
 	}
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Login_01_TC012_User access to New plan or Plans</u></b>
@@ -76,9 +80,14 @@ public class accountverificationtest_plan {
 			Map<String, String> testdata) {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			Reporter.logEvent(Status.INFO, "Testcase Description",
-					"Verify if the plan number field is displayed when a new plan is added for an existing user"+":"
-			+"Positive Sceanrio", false);
+			Reporter.logEvent(
+					Status.INFO,
+					"Testcase Description",
+					"Verify if the plan number field is displayed when a new plan is added for an existing user"
+							+ ":" + "Positive Sceanrio", false);
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for iteration" + itr,
+					CommonLib.getIterationDataAsString(testdata), false);
 			accountverificationpage = new AccountVerificationPage();
 			loginpage = new LoginPage();
 			userverification = new UserVerificationPage();
@@ -92,7 +101,7 @@ public class accountverificationtest_plan {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
-					Stock.GetParameterValue("UserSecondaryAns") });
+							Stock.GetParameterValue("UserSecondaryAns") });
 			Web.clickOnElement(accountverificationpage, "CANCEL");
 			Thread.sleep(2000);
 			if (Web.isWebElementDisplayed(loginpage, "LOGIN FRAME")) {
@@ -117,8 +126,9 @@ public class accountverificationtest_plan {
 			accountverificationpage.planNumberInput(Stock
 					.GetParameterValue("PlanNumber"));
 			errorMessage = accountverificationpage.getErrorMessageText();
-			accountverificationpage.actualErrorValidationRptPositiveFlow(errorMessage,"Add New Plan");
-					
+			accountverificationpage.actualErrorValidationRptPositiveFlow(
+					errorMessage, "Add New Plan");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -129,8 +139,8 @@ public class accountverificationtest_plan {
 			ae.printStackTrace();
 			Globals.error = ae;
 			String errorMsg = ae.getMessage();
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					errorMsg, true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", errorMsg,
+					true);
 		} finally {
 			try {
 				Reporter.finalizeTCReport();
@@ -139,7 +149,7 @@ public class accountverificationtest_plan {
 			}
 		}
 	}
-	
+
 	/**
 	 * <pre>
 	 * Testcase: <b><u>SIT_PSC_Login_01_TC012_User access to New plan or Plans</u></b>
@@ -168,16 +178,20 @@ public class accountverificationtest_plan {
 	@Test(dataProvider = "setData")
 	public void TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input(int itr,
 			Map<String, String> testdata) {
-	//	Stock.globalTestdata = testdata;
+		// Stock.globalTestdata = testdata;
 		try {
 			userverification = new UserVerificationPage();
 			accountverificationpage = new AccountVerificationPage();
-			Reporter.initializeReportForTC(itr,
-					Globals.GC_MANUAL_TC_NAME);
-			Reporter.logEvent(Status.INFO, "Testcase Description",
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			Reporter.logEvent(
+					Status.INFO,
+					"Testcase Description",
 					"Verify if the plan "
-					+ "r field is displayed when a new plan is added for an existing user"+":"
-			+"Negative Sceanrio", false);
+							+ "r field is displayed when a new plan is added for an existing user"
+							+ ":" + "Negative Sceanrio", false);
+			Reporter.logEvent(Status.INFO,
+					"Test Data used for iteration" + itr,
+					CommonLib.getIterationDataAsString(testdata), false);
 			accountverificationpage.addPlanNumber(
 					Stock.getTestQuery("addPlanNumberQuery"),
 					Stock.GetParameterValue("username"),
@@ -188,15 +202,16 @@ public class accountverificationtest_plan {
 					(userverification.getEmailAddressOfuser(
 							Stock.getTestQuery("getEmailaddressQuery"),
 							Stock.GetParameterValue("username"))).trim(),
-					Stock.GetParameterValue("UserSecondaryAns") });
+							Stock.GetParameterValue("UserSecondaryAns") });
 			accountverificationpage.planNumberInput(Stock
 					.GetParameterValue("PlanNumber"));
 			actualErrorMessage = accountverificationpage.getErrorMessageText();
 			Web.clickOnElement(userverification, "ERRORMSG");
 			Web.clickOnElement(userverification, "DISMISS");
 			Thread.sleep(1000);
-			accountverificationpage.actualErrorValidationRptNegativeFlow(actualErrorMessage, 
-			        Stock.GetParameterValue("expectedErrorMessage"));
+			accountverificationpage.actualErrorValidationRptNegativeFlow(
+					actualErrorMessage,
+					Stock.GetParameterValue("expectedErrorMessage"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -206,17 +221,18 @@ public class accountverificationtest_plan {
 			ae.printStackTrace();
 			Globals.error = ae;
 			String errorMsg = ae.getMessage();
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
-					errorMsg, true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", errorMsg,
+					true);
 		} finally {
-		
-		try {
-			Reporter.finalizeTCReport();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
-	}}
+	}
 
 	@AfterSuite
 	public void cleanUpSession() {
