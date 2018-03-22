@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="29" total="57" passed="28">
+<testng-results skipped="0" failed="8" ignored="65" total="77" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="1970158" started-at="2017-12-14T09:52:50Z" finished-at="2017-12-14T10:25:41Z">
+  <suite name="testsuite" duration-ms="1019574" started-at="2018-02-05T07:30:41Z" finished-at="2018-02-05T07:47:41Z">
     <groups>
     </groups>
-    <test name="Regression_Yellow_Period_Execution_1" duration-ms="1970158" started-at="2017-12-14T09:52:50Z" finished-at="2017-12-14T10:25:41Z">
-      <class name="app.psc.testcases.accountverification.accountverification_existingusr">
-        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="InitTest" is-config="true" duration-ms="15577" started-at="2017-12-14T15:31:10Z" finished-at="2017-12-14T15:31:26Z">
+    <test name="Regression_Yellow_Period_Exec2_Apple_Plan" duration-ms="1019574" started-at="2018-02-05T07:30:41Z" finished-at="2018-02-05T07:47:41Z">
+      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="ReportInit" is-config="true" duration-ms="9427" started-at="2018-02-05T13:00:41Z" finished-at="2018-02-05T13:00:51Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- InitTest -->
-        <test-method status="FAIL" signature="TC019_Verify_Default_Plan_Prompting(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC019_Verify_Default_Plan_Prompting" duration-ms="23366" started-at="2017-12-14T15:31:26Z" data-provider="setData" finished-at="2017-12-14T15:31:49Z">
+        </test-method> <!-- ReportInit -->
+        <test-method status="FAIL" signature="TC018_Employee_Contact_Info_Verification(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC018_Employee_Contact_Info_Verification" duration-ms="28494" started-at="2018-02-05T13:00:52Z" data-provider="setData" finished-at="2018-02-05T13:01:21Z">
           <params>
             <param index="0">
               <value>
@@ -20,14 +20,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PLANNUMBER=, PASSWORD=testing1, TXTPASSWORD=testing1, USERVERIEMAIL=abc@gwl.com, USERNAME=7K3IF, USERSECONDARYANS=test}]]>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, EXPCONTACTINFOLABELS=Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method, USERVERIFICATIONEMAIL=discard@gwl.com, EXPCONTACTSELECTLABELSWINDOW=Marital Status,Gender,Language Preference,State,Country, EXPCONTACTINPUTLABELSWINDOW=Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email, USERSECONDARYANS=test}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC019_Verify_Default_Plan_Prompting -->
-        <test-method status="FAIL" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="13284" started-at="2017-12-14T15:31:50Z" data-provider="setData" finished-at="2017-12-14T15:32:03Z">
+        </test-method> <!-- TC018_Employee_Contact_Info_Verification -->
+        <test-method status="FAIL" signature="TC019_Verify_Beneficiary_Info(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC019_Verify_Beneficiary_Info" duration-ms="85526" started-at="2018-02-05T13:01:21Z" data-provider="setData" finished-at="2018-02-05T13:02:46Z">
           <params>
             <param index="0">
               <value>
@@ -36,774 +36,151 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{NEWPASSWORD=Testing2, PASSWORD=testing1, CONFIRMPASSWORD=Testing3, EXPECTEDERRORMESSAGE=New Password must match Confirm Password, USERNAME=4GJWU, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC019_Verify_Beneficiary_Info -->
+        <test-method status="FAIL" signature="TC020_Recently_Viewed_Employee(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC020_Recently_Viewed_Employee" duration-ms="69967" started-at="2018-02-05T13:02:46Z" data-provider="setData" finished-at="2018-02-05T13:03:56Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC020_Recently_Viewed_Employee -->
+        <test-method status="FAIL" signature="TC021_Salary_View_And_Update(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC021_Salary_View_And_Update" duration-ms="107015" started-at="2018-02-05T13:03:56Z" data-provider="setData" finished-at="2018-02-05T13:05:43Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, SALARYSECTIONTITLE=Compensation, USERSECONDARYANS=test, EXPSALARYSECTIONHEADER=Effective date,Salary,Frequency}]]>
               </value>
             </param>
           </params>
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.accountverification.accountverification_existingusr.TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(accountverification_existingusr.java:109)
+	at lib.Reporter.logEvent(Reporter.java:253)
+	at app.psc.testcases.employeesearch.employeesearchtestcases.TC021_Salary_View_And_Update(employeesearchtestcases.java:1052)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
 ]]>
             </full-stacktrace>
           </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
-        <test-method status="FAIL" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="13747" started-at="2017-12-14T15:32:03Z" data-provider="setData" finished-at="2017-12-14T15:32:17Z">
+        </test-method> <!-- TC021_Salary_View_And_Update -->
+        <test-method status="FAIL" signature="TC026_Verify_Employee_Basic_Info(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC026_Verify_Employee_Basic_Info" duration-ms="247152" started-at="2018-02-05T13:05:43Z" data-provider="setData" finished-at="2018-02-05T13:09:50Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[2]]>
+                <![CDATA[1]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[{NEWPASSWORD=, PASSWORD=testing1, CONFIRMPASSWORD=, EXPECTEDERRORMESSAGE=Current password is required.
-
-New Password is required
-
-Confirm Password is required, USERNAME=4GJWU, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=, USERSECONDARYANS=test}]]>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, EXPECTEDLABELS=Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
               </value>
             </param>
           </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC026_Verify_Employee_Basic_Info -->
+        <test-method status="FAIL" signature="TC34_SIT_PSC_Accountdetail_Allocations_Reg(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC34_SIT_PSC_Accountdetail_Allocations_Reg" duration-ms="437953" started-at="2018-02-05T13:09:50Z" data-provider="setData" finished-at="2018-02-05T13:17:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, EXPECTEDHEADERS=Investment option,Fund short name,Deposit period,Default ind,Percent, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test, EXPECTEDMESSAGE=Employee currently has no allocations.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC34_SIT_PSC_Accountdetail_Allocations_Reg -->
+        <test-method status="FAIL" signature="TC_44_Enroll_And_Eligibility_Fields_Type_Validations(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations" duration-ms="32539" started-at="2018-02-05T13:17:08Z" data-provider="setData" finished-at="2018-02-05T13:17:41Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_44_Enroll_And_Eligibility_Fields_Type_Validations -->
+        <test-method status="FAIL" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@6e06451e]" name="cleanUpSession" is-config="true" duration-ms="0" started-at="2018-02-05T13:17:41Z" finished-at="2018-02-05T13:17:41Z">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.accountverification.accountverification_existingusr.TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(accountverification_existingusr.java:109)
+	at app.psc.testcases.employeesearch.employeesearchtestcases.cleanUpSession(employeesearchtestcases.java:3892)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:515)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:217)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:144)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:357)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1293)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1218)
+	at org.testng.TestNG.runSuites(TestNG.java:1133)
+	at org.testng.TestNG.run(TestNG.java:1104)
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
 ]]>
             </full-stacktrace>
           </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
-        <test-method status="PASS" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="15296" started-at="2017-12-14T15:32:17Z" data-provider="setData" finished-at="2017-12-14T15:32:32Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[3]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, EXPECTEDERRORMESSAGE=Incorrect current password. Please re-enter or contact your system administrator., USERNAME=4GJWU, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing2, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
-        <test-method status="PASS" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="15170" started-at="2017-12-14T15:32:32Z" data-provider="setData" finished-at="2017-12-14T15:32:47Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[4]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{NEWPASSWORD=test, PASSWORD=testing1, CONFIRMPASSWORD=test, EXPECTEDERRORMESSAGE=Invalid new password - Please re-enter password using the criteria shown below, USERNAME=4GJWU, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
-        <test-method status="PASS" signature="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow" duration-ms="67980" started-at="2017-12-14T15:32:47Z" data-provider="setData" finished-at="2017-12-14T15:33:55Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{NEWPASSWORD=Testing2, PASSWORD=testing1, CONFIRMPASSWORD=Testing2, TXTPASSWORD=testing1, USERNAME=7NHU3, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow -->
-        <test-method status="FAIL" signature="TC018_Security_Question_Validation_Existing_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC018_Security_Question_Validation_Existing_User" duration-ms="22528" started-at="2017-12-14T15:33:55Z" data-provider="setData" finished-at="2017-12-14T15:34:18Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=test, SECONDDRPDWNANS=test, USERNAME=6ISIS, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC018_Security_Question_Validation_Existing_User -->
-        <test-method status="FAIL" signature="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords" duration-ms="21640" started-at="2017-12-14T15:34:18Z" data-provider="setData" finished-at="2017-12-14T15:34:39Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{NEWPASSWORD=testing1, FAVDRINK=testk, PASSWORD=testing1, CONFIRMPASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Invalid new password - Please re-enter password using the criteria shown below, USERNAME=7FOOV, EMAILADDRESS=discard@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.accountverification.accountverification_existingusr.TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords(accountverification_existingusr.java:473)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Notification_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC006_01_Verify_Display_Of_Notification_On_HomePage" duration-ms="117710" started-at="2017-12-14T15:34:39Z" data-provider="setData" finished-at="2017-12-14T15:36:37Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=Availability, TXNCODE=PSCTOD, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=70NED, USERVERIFICATIONEMAIL=abc@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Display_Of_Notification_On_HomePage -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Notification_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC006_01_Verify_Display_Of_Notification_On_HomePage" duration-ms="117968" started-at="2017-12-14T15:36:37Z" data-provider="setData" finished-at="2017-12-14T15:38:35Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=NonAvailability, TXNCODE=PSCTOD, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=70NED, USERVERIFICATIONEMAIL=abc@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Display_Of_Notification_On_HomePage -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Compliance_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC006_01_Verify_Display_Of_Compliance_On_HomePage" duration-ms="117784" started-at="2017-12-14T15:38:35Z" data-provider="setData" finished-at="2017-12-14T15:40:33Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=Availability, TXNCODE=PSCCTR, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=70NED, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Display_Of_Compliance_On_HomePage -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Compliance_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC006_01_Verify_Display_Of_Compliance_On_HomePage" duration-ms="118327" started-at="2017-12-14T15:40:33Z" data-provider="setData" finished-at="2017-12-14T15:42:31Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=NonAvailability, TXNCODE=PSCCTR, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=70NED, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Display_Of_Compliance_On_HomePage -->
-        <test-method status="FAIL" signature="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security" duration-ms="34240" started-at="2017-12-14T15:42:31Z" data-provider="setData" finished-at="2017-12-14T15:43:06Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PLANNUMBER=331170-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, COMPLIANCEENABLE=true, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security -->
-        <test-method status="PASS" signature="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security" duration-ms="33643" started-at="2017-12-14T15:43:06Z" data-provider="setData" finished-at="2017-12-14T15:43:39Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PLANNUMBER=384728-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, COMPLIANCEENABLE=false, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security -->
-        <test-method status="FAIL" signature="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages" duration-ms="33303" started-at="2017-12-14T15:43:39Z" data-provider="setData" finished-at="2017-12-14T15:44:13Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{MENULABEL=Plan,Compliance,Reports,File sharing, FAVDRINK=testk, BREADCRUMB=Summary,Year end compliance,Standard reports,File sharing, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test, MENUTYPE=menu}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages -->
-        <test-method status="PASS" signature="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages" duration-ms="22906" started-at="2017-12-14T15:44:13Z" data-provider="setData" finished-at="2017-12-14T15:44:35Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{MENULABEL=todos,compliance,notifications, FAVDRINK=testk, BREADCRUMB=To do list,Year end compliance,To do list, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test, MENUTYPE=actionButton}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages -->
-        <test-method status="FAIL" signature="TC009_01_Verify_Multifactoring(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="TC009_01_Verify_Multifactoring" duration-ms="181" started-at="2017-12-14T15:44:35Z" data-provider="setData" finished-at="2017-12-14T15:44:36Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, NEWEMAILID=discard@gwl.com, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5ISIS, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.accountverification.accountverification_existingusr.TC009_01_Verify_Multifactoring(accountverification_existingusr.java:684)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC009_01_Verify_Multifactoring -->
-        <test-method status="PASS" signature="DriverQuite()[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5649fd9b]" name="DriverQuite" is-config="true" duration-ms="2886" started-at="2017-12-14T15:55:41Z" finished-at="2017-12-14T15:55:44Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- DriverQuite -->
-        <test-method status="FAIL" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@6adede5]" name="cleanUpSession" is-config="true" duration-ms="0" started-at="2017-12-14T15:55:44Z" finished-at="2017-12-14T15:55:44Z">
-          <exception class="org.openqa.selenium.NoSuchSessionException">
-            <message>
-              <![CDATA[Session ID is null. Using WebDriver after calling quit()?
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'XWJPMDD177', ip: '143.199.166.161', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_121'
-Driver info: driver.version: RemoteWebDriver]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'XWJPMDD177', ip: '143.199.166.161', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_121'
-Driver info: driver.version: RemoteWebDriver
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:131)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:82)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:637)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:694)
-	at org.openqa.selenium.remote.RemoteWebDriver.close(RemoteWebDriver.java:523)
-	at app.psc.testcases.accountverification.accountverificationtest_plan.cleanUpSession(accountverificationtest_plan.java:223)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:308)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.NoSuchSessionException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- cleanUpSession -->
-        <test-method status="SKIP" signature="DriverQuite()[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2017-12-14T15:55:44Z" finished-at="2017-12-14T15:55:44Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- DriverQuite -->
-        <test-method status="SKIP" signature="DriverQuite()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2017-12-14T15:55:44Z" finished-at="2017-12-14T15:55:44Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- DriverQuite -->
-      </class> <!-- app.psc.testcases.accountverification.accountverification_existingusr -->
-      <class name="app.psc.testcases.accountverification.accountverificationtestcases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="ReportInit" is-config="true" duration-ms="77" started-at="2017-12-14T15:28:35Z" finished-at="2017-12-14T15:28:35Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- ReportInit -->
-        <test-method status="FAIL" signature="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same" duration-ms="20217" started-at="2017-12-14T15:28:35Z" data-provider="setData" finished-at="2017-12-14T15:28:55Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=The security questions selected should not be same. , USERNAME=4GJWU, SECONDDRPDWNANS=test, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same -->
-        <test-method status="FAIL" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="18968" started-at="2017-12-14T15:28:55Z" data-provider="setData" finished-at="2017-12-14T15:29:14Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=, EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=4GJWU, SECONDDRPDWNANS=, FIRSTDRPDWNANS=}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
-        <test-method status="FAIL" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="19109" started-at="2017-12-14T15:29:14Z" data-provider="setData" finished-at="2017-12-14T15:29:33Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=4GJWU, SECONDDRPDWNANS=, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
-        <test-method status="FAIL" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="19047" started-at="2017-12-14T15:29:33Z" data-provider="setData" finished-at="2017-12-14T15:29:52Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[3]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=, EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=4GJWU, SECONDDRPDWNANS=test, FIRSTDRPDWNANS=}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
-        <test-method status="FAIL" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="18885" started-at="2017-12-14T15:29:52Z" data-provider="setData" finished-at="2017-12-14T15:30:11Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[4]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=, EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=4GJWU, SECONDDRPDWNANS=, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
-        <test-method status="FAIL" signature="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input" duration-ms="10363" started-at="2017-12-14T15:30:11Z" data-provider="setData" finished-at="2017-12-14T15:30:21Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=Registered Username is Required
-
-The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64., USERNAME=, SECONDDRPDWNANS=test, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_03_Verify_New_User_loginFlow_register_username_invalid_input -->
-        <test-method status="FAIL" signature="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input" duration-ms="49112" started-at="2017-12-14T15:30:21Z" data-provider="setData" finished-at="2017-12-14T15:31:10Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64., USERNAME=!nV@lid, SECONDDRPDWNANS=test, FIRSTDRPDWNANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC008_03_Verify_New_User_loginFlow_register_username_invalid_input -->
-        <test-method status="FAIL" signature="DriverQuite()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@29ca901e]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2017-12-14T15:31:10Z" finished-at="2017-12-14T15:31:10Z">
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.accountverification.accountverificationtestcases.DriverQuite(accountverificationtestcases.java:582)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:564)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:213)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)
-	at org.testng.internal.TestMethodWorker.invokeAfterClassMethods(TestMethodWorker.java:225)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:114)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- DriverQuite -->
-      </class> <!-- app.psc.testcases.accountverification.accountverificationtestcases -->
-      <class name="app.psc.testcases.userverification.userverificationtestcases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="ReportInit" is-config="true" duration-ms="26516" started-at="2017-12-14T15:22:50Z" finished-at="2017-12-14T15:23:17Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="47798" started-at="2017-12-14T15:23:17Z" data-provider="setData" finished-at="2017-12-14T15:24:05Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required
-
-Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
-        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="6162" started-at="2017-12-14T15:24:05Z" data-provider="setData" finished-at="2017-12-14T15:24:11Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
-        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="5728" started-at="2017-12-14T15:24:11Z" data-provider="setData" finished-at="2017-12-14T15:24:17Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[3]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
-        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="5931" started-at="2017-12-14T15:24:17Z" data-provider="setData" finished-at="2017-12-14T15:24:23Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[4]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, EXPECTEDERRORMESSAGE=Email format is invalid, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
-        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="5899" started-at="2017-12-14T15:24:23Z" data-provider="setData" finished-at="2017-12-14T15:24:29Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[5]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVERIEMAIL=Invalid@gwl.com, EXPECTEDERRORMESSAGE=Email is invalid
-
-If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive., USERNAME=1ISIS, USERSECONDARYANS=invalid}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
-        <test-method status="FAIL" signature="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input" duration-ms="111065" started-at="2017-12-14T15:24:29Z" data-provider="setData" finished-at="2017-12-14T15:26:20Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERNAME=7ISIS, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input -->
-        <test-method status="PASS" signature="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session" duration-ms="54906" started-at="2017-12-14T15:26:20Z" data-provider="setData" finished-at="2017-12-14T15:27:15Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERVERIFICATIONANS=test, USERNAME=4GJWU, IFSINGLESITEUSER=True, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session -->
-        <test-method status="PASS" signature="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@4bec1f0c]" name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session" duration-ms="79803" started-at="2017-12-14T15:27:15Z" data-provider="setData" finished-at="2017-12-14T15:28:34Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERVERIFICATIONANS=test, USERNAME=4GJWU, IFSINGLESITEUSER=True, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session -->
-      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
-      <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@6adede5]" name="ReportInit" is-config="true" duration-ms="169" started-at="2017-12-14T15:44:36Z" finished-at="2017-12-14T15:44:36Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- ReportInit -->
-        <test-method status="FAIL" signature="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@6adede5]" name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input" duration-ms="5424" started-at="2017-12-14T15:44:36Z" data-provider="setData" finished-at="2017-12-14T15:44:41Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PLANNUMBER=123, PASSWORD=testing1, USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Invalid Plan Number, USERNAME=7K3IF, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input -->
-        <test-method status="FAIL" signature="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@6adede5]" name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input" duration-ms="5442" started-at="2017-12-14T15:44:41Z" data-provider="setData" finished-at="2017-12-14T15:44:47Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PLANNUMBER=384171-09, PASSWORD=testing1, USERVERIEMAIL=abc@gwl.com, USERNAME=7K3IF, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC012_02_Verify_User_Access_New_Plan_For_Valid_Input -->
-      </class> <!-- app.psc.testcases.accountverification.accountverificationtest_plan -->
-      <class name="app.psc.testcases.login.logintestcases">
-        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="InitTest" is-config="true" duration-ms="88" started-at="2017-12-14T15:44:47Z" finished-at="2017-12-14T15:44:47Z">
+      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
+      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="InitTest" is-config="true" duration-ms="9429" started-at="2018-02-05T13:00:41Z" finished-at="2018-02-05T13:00:51Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitTest -->
-        <test-method status="PASS" signature="TC006_01_Verify_Force_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC006_01_Verify_Force_Login" duration-ms="17156" started-at="2017-12-14T15:44:47Z" data-provider="setData" finished-at="2017-12-14T15:45:04Z">
+        <test-method status="FAIL" signature="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password" duration-ms="53484" started-at="2018-02-05T13:00:52Z" data-provider="setData" finished-at="2018-02-05T13:01:46Z">
           <params>
             <param index="0">
               <value>
@@ -812,14 +189,14 @@ If you have forgotten your security answer, please contact Plan Technical Suppor
             </param>
             <param index="1">
               <value>
-                <![CDATA[{FORCELOGINTRUEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=true, FORCELOGINFALSEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=false, FORCELOGINDUMMYURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=1234ascd}]]>
+                <![CDATA[{FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, NEWEMAILID=rsp@gwl.com, BADPASSWORDS=test,test1,test2, SPOUSEMIDNAME=test, USERVERIFICATIONANS=test, USERNAME=98A51, USERSECONDARYANS=test}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Force_Login -->
-        <test-method status="PASS" signature="TC017_01_Internal_Employee_External_Client_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC017_01_Internal_Employee_External_Client_Login" duration-ms="11650" started-at="2017-12-14T15:45:04Z" data-provider="setData" finished-at="2017-12-14T15:45:16Z">
+        </test-method> <!-- TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="13703" started-at="2018-02-05T13:01:46Z" data-provider="setData" finished-at="2018-02-05T13:01:59Z">
           <params>
             <param index="0">
               <value>
@@ -828,14 +205,14 @@ If you have forgotten your security answer, please contact Plan Technical Suppor
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=testing1, USERNAME=7ISIS, COMMENTS=User ID for Internal users}]]>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=false, FAVDRINK=test, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, DREAMCAR=test, BADPASSWORDS=, SPOUSEMIDNAME=test, USERNAME=98A51, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC017_01_Internal_Employee_External_Client_Login -->
-        <test-method status="PASS" signature="TC017_01_Internal_Employee_External_Client_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC017_01_Internal_Employee_External_Client_Login" duration-ms="11139" started-at="2017-12-14T15:45:16Z" data-provider="setData" finished-at="2017-12-14T15:45:27Z">
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="46829" started-at="2018-02-05T13:01:59Z" data-provider="setData" finished-at="2018-02-05T13:02:46Z">
           <params>
             <param index="0">
               <value>
@@ -844,46 +221,14 @@ If you have forgotten your security answer, please contact Plan Technical Suppor
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=testing1, USERNAME=2ISIS, COMMENTS=User ID for External users}]]>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=false, FAVDRINK=test, QUESTIONINDEX=32, NEGATIVEVERIFY=true, PASSWORD=testing1, DREAMCAR=test, BADPASSWORDS=test1,test1,test2, SPOUSEMIDNAME=test, USERNAME=98A51, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC017_01_Internal_Employee_External_Client_Login -->
-        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="15363" started-at="2017-12-14T15:45:27Z" data-provider="setData" finished-at="2017-12-14T15:45:42Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD= , USERNAME=1ISIS, ERRORMESSAGES=Password is required.}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
-        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="13574" started-at="2017-12-14T15:45:42Z" data-provider="setData" finished-at="2017-12-14T15:45:56Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, USERNAME= , ERRORMESSAGES=User ID is required.}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
-        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="13532" started-at="2017-12-14T15:45:56Z" data-provider="setData" finished-at="2017-12-14T15:46:09Z">
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="2813" started-at="2018-02-05T13:02:46Z" data-provider="setData" finished-at="2018-02-05T13:02:49Z">
           <params>
             <param index="0">
               <value>
@@ -892,15 +237,14 @@ If you have forgotten your security answer, please contact Plan Technical Suppor
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD= , USERNAME= , ERRORMESSAGES=User ID is required.
-Password is required.}]]>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=true, SAMEANSWER=false, FAVDRINK=test, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, DREAMCAR=test, BADPASSWORDS=, SPOUSEMIDNAME=test, USERNAME=98A51, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
-        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="13510" started-at="2017-12-14T15:46:09Z" data-provider="setData" finished-at="2017-12-14T15:46:23Z">
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@59494225]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="34171" started-at="2018-02-05T13:02:49Z" data-provider="setData" finished-at="2018-02-05T13:03:23Z">
           <params>
             <param index="0">
               <value>
@@ -909,363 +253,14 @@ Password is required.}]]>
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=badpassword, USERNAME=1USER, ERRORMESSAGES=Please enter a valid Username / Password combination.}]]>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=true, FAVDRINK=test, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, DREAMCAR=test, BADPASSWORDS=, SPOUSEMIDNAME=test, USERNAME=98A51, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
-        <test-method status="PASS" signature="TC004_01_Verify_Header_and_Footer_Links_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC004_01_Verify_Header_and_Footer_Links_PreLogin" duration-ms="38166" started-at="2017-12-14T15:46:23Z" data-provider="setData" finished-at="2017-12-14T15:47:01Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{LINK_FOOTER4=sponsor-business-continuity, LINK_FOOTER5=sponsor-broker-check, LINK_FOOTER6=sponsor-excessive-trading, LINK_FOOTER7=Plan_Service_Center_User_Authorization_Form, LINK_HEADER2=https://participant.empower-retirement.com/participant/#/login, LINK_FOOTER1=sponsor-security, LINK_FOOTER2=sponsor-privacy, LINK_FOOTER3=sponsor-terms-and-conditions, LINK_HEADER1=sponsor-faq}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_01_Verify_Header_and_Footer_Links_PreLogin -->
-        <test-method status="PASS" signature="TC004_02_Verify_Header_and_Footer_Links_PostLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC004_02_Verify_Header_and_Footer_Links_PostLogin" duration-ms="32067" started-at="2017-12-14T15:47:01Z" data-provider="setData" finished-at="2017-12-14T15:47:33Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{LINK_FOOTER4=Business Continuity Plan, LINK_FOOTER5=BrokerCheck, LINK_FOOTER6=Market timing and excessive trading policies, LINK_FOOTER7=PSCUserAuthorizationForm, LINK_FOOTER1=Security, LINK_FOOTER2=Privacy, LINK_FOOTER3=Terms and conditions, USERVERIFICATIONANS=test, FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, TXTUSERVERIEMAIL=abc@gwl.com, USERNAME=1ISIS}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_02_Verify_Header_and_Footer_Links_PostLogin -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Error_Message_For_Terminated_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC006_01_Verify_Error_Message_For_Terminated_User" duration-ms="17090" started-at="2017-12-14T15:47:33Z" data-provider="setData" finished-at="2017-12-14T15:47:50Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{TERMDATE=2/6/2017, FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, USERVERIEMAIL=, USERNAME=76KNL, ERRORMESSAGES=The Username you are using is inactive. Please contact your administrator., USERSECONDARYANS=}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Error_Message_For_Terminated_User -->
-        <test-method status="FAIL" signature="TC006_01_Verify_Error_Message_For_Terminated_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC006_01_Verify_Error_Message_For_Terminated_User" duration-ms="21313" started-at="2017-12-14T15:47:50Z" data-provider="setData" finished-at="2017-12-14T15:48:12Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{TERMDATE=2/6/2022, FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, USERVERIEMAIL=discard@gwl.com, USERNAME=76KNL, ERRORMESSAGES=The Username you are using is inactive. Please contact your administrator., USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.login.logintestcases.TC006_01_Verify_Error_Message_For_Terminated_User(logintestcases.java:504)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC006_01_Verify_Error_Message_For_Terminated_User -->
-        <test-method status="PASS" signature="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt" duration-ms="11297" started-at="2017-12-14T15:48:12Z" data-provider="setData" finished-at="2017-12-14T15:48:23Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing, USERNAME=7H3ZR, ERRORMESSAGES=You have exceeded the maximum number of login attempts.}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt -->
-        <test-method status="PASS" signature="TC007_01_display_correct_date_and_time_of_my_last_login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC007_01_display_correct_date_and_time_of_my_last_login" duration-ms="40635" started-at="2017-12-14T15:48:23Z" data-provider="setData" finished-at="2017-12-14T15:49:04Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, MENU_FEATURE_CODE=BROWSER_INFO, SPOUSEMIDNAME=teste, APPLICATION=PSC, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC007_01_display_correct_date_and_time_of_my_last_login -->
-        <test-method status="PASS" signature="TC001_01_SIT_PSC_Sitenavigation_Menutabs(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC001_01_SIT_PSC_Sitenavigation_Menutabs" duration-ms="28774" started-at="2017-12-14T15:49:04Z" data-provider="setData" finished-at="2017-12-14T15:49:33Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, MENUTABS=Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC001_01_SIT_PSC_Sitenavigation_Menutabs -->
-        <test-method status="FAIL" signature="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs" duration-ms="22566" started-at="2017-12-14T15:49:33Z" data-provider="setData" finished-at="2017-12-14T15:49:55Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{CONTACTS=Plan contacts,Divisional contacts,Empower contacts, ADMINISTRATION=To do list,Vesting hours update &amp; verify,Vesting years update &amp; verify,Pay plan expenses,Username security management,Employee data file upload,View?change banking information,Asset allocation model setup,Plan messaging,Plan expense account, YEAR END COMPLIANCE=, OVERVIEW=Summary,Plan provisions,Vesting schedules,Participant web and VRU options, USERVERIFICATIONANS=test, SUBMENU=Overview,Investments &amp; Performance,Administration,Fiduciary records,Forms &amp; documents,Contacts, INVESTMENTS &AMP; PERFORMANCE=, SEARCH EMPLOYEE=, VIDEO DEMONSTRATION=, CENSUS FILE=, FIDUCIARY RECORDS=Required notices,Plan documents,Participant data extract order,Participant fee disclosure report order,Participant QDIA notice listing order, STANDARD REPORTS=, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, MENUNAME=Plan, ADD EMPLOYEE=, ENTER PAYROLL=, TRANSMIT YOUR OWN FILE=, COMPLIANCE USER GUIDE=, FORMS &AMP; DOCUMENTS=Administration documents,Scanned cash documents, PENDING=, EDUCATIONAL RESOURCES=, FORMS=, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, PRODUCTS &AMP; SERVICES=, VIEW?CHANGE BANKING INFORMATION=, SPOUSEMIDNAME=teste, MY REPORTS=}]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.login.logintestcases.TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(logintestcases.java:560)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC001_02_SIT_PSC_Sitenavigation_SubMenutabs -->
-        <test-method status="FAIL" signature="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs" duration-ms="7648" started-at="2017-12-14T15:49:55Z" data-provider="setData" finished-at="2017-12-14T15:50:03Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[2]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{CONTACTS=, ADMINISTRATION=, YEAR END COMPLIANCE=, OVERVIEW=, USERVERIFICATIONANS=test, SUBMENU=Search employee,Add employee,Forms, INVESTMENTS &AMP; PERFORMANCE=, SEARCH EMPLOYEE=, VIDEO DEMONSTRATION=, CENSUS FILE=, FIDUCIARY RECORDS=, STANDARD REPORTS=, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, MENUNAME=Employees, ADD EMPLOYEE=, ENTER PAYROLL=, TRANSMIT YOUR OWN FILE=, COMPLIANCE USER GUIDE=, FORMS &AMP; DOCUMENTS=, PENDING=, EDUCATIONAL RESOURCES=, FORMS=, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, PRODUCTS &AMP; SERVICES=, VIEW?CHANGE BANKING INFORMATION=, SPOUSEMIDNAME=teste, MY REPORTS=}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC001_02_SIT_PSC_Sitenavigation_SubMenutabs -->
-        <test-method status="FAIL" signature="TC004_Verify_PLUser_Login_With_No_Plna_Access(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC004_Verify_PLUser_Login_With_No_Plna_Access" duration-ms="14904" started-at="2017-12-14T15:50:03Z" data-provider="setData" finished-at="2017-12-14T15:50:18Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=5ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC004_Verify_PLUser_Login_With_No_Plna_Access -->
-        <test-method status="PASS" signature="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite" duration-ms="105110" started-at="2017-12-14T15:50:18Z" data-provider="setData" finished-at="2017-12-14T15:52:03Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERID=4GJWU, USERNAME=4GJWU, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite -->
-        <test-method status="PASS" signature="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites" duration-ms="44872" started-at="2017-12-14T15:52:03Z" data-provider="setData" finished-at="2017-12-14T15:52:48Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites -->
-        <test-method status="FAIL" signature="TC003_UI_Validations_On_JumpPage(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC003_UI_Validations_On_JumpPage" duration-ms="5928" started-at="2017-12-14T15:52:48Z" data-provider="setData" finished-at="2017-12-14T15:52:54Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.NullPointerException">
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at app.psc.testcases.login.logintestcases.TC003_UI_Validations_On_JumpPage(logintestcases.java:864)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
-	at org.testng.TestNG.run(TestNG.java:1031)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC003_UI_Validations_On_JumpPage -->
-        <test-method status="PASS" signature="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages" duration-ms="33181" started-at="2017-12-14T15:52:54Z" data-provider="setData" finished-at="2017-12-14T15:53:27Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages -->
-        <test-method status="PASS" signature="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts" duration-ms="21499" started-at="2017-12-14T15:53:27Z" data-provider="setData" finished-at="2017-12-14T15:53:49Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{PASSWORD=testing1, USERNAME=7H3ZR, ERRORMESSAGES=You have exceeded the maximum number of login attempts., INCORRECTPASSWORD=testing}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts -->
-        <test-method status="FAIL" signature="TC01_SIT_PSC_HomePage_Transaction_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@59494225]" name="TC01_SIT_PSC_HomePage_Transaction_Security" duration-ms="111941" started-at="2017-12-14T15:53:49Z" data-provider="setData" finished-at="2017-12-14T15:55:41Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC01_SIT_PSC_HomePage_Transaction_Security -->
-      </class> <!-- app.psc.testcases.login.logintestcases -->
-    </test> <!-- Regression_Yellow_Period_Execution_1 -->
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
+    </test> <!-- Regression_Yellow_Period_Exec2_Apple_Plan -->
   </suite> <!-- testsuite -->
 </testng-results>
