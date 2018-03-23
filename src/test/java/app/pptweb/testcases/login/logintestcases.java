@@ -1023,9 +1023,9 @@ public class logintestcases {
           Web.getDriver().switchTo().defaultContent();
          // twoStepVerification.clickContinueInContactInfoPage();
            Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
-         Actions keyBoard = new Actions(Web.getDriver());
+         /*Actions keyBoard = new Actions(Web.getDriver());
          keyBoard.sendKeys(Keys.TAB).build().perform();
-         twoStepVerification.clickOnSaveButton();
+         twoStepVerification.clickOnSaveButton();*/
            if(Web.isWebEementEnabled(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN",true))
              Web.clickOnElement(twoStepVerification, "BUTTON CONTINUE TO NEXTGEN");
          
