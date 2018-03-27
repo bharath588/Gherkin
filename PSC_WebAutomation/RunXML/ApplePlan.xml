@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Yellow_Period_Exec2_Apple_Plan">
+	<test name="Regression_Yellow_Period_Exec1_Apple_Plan">
 		 <classes>
 			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
