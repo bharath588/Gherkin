@@ -1936,6 +1936,7 @@ public class registrationtestcases {
 			prepareLoginTestData(Stock.GetParameterValue("queryName"),
 					Stock.GetParameterValue("ga_PlanId"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Common.updateEmailToNull(Stock.GetParameterValue("SSN"));
 			if (Common.getSponser().equalsIgnoreCase("Apple")) {
 				Web.getDriver()
 						.get("https://proj2.retirementpartner.com/participant-web-services/ws/appleRegLanding.do?accu=Apple&token=M0hFuIOjV3nCoTYKOPFd7G5vfErJkEVbKBpNzxGjRgXhYK5dLOh488J7lakZ2TS82NgzgDT5iAdnWkKOXptXxSlYo%2Bf0bRuGaiTU9SqGTio%3D");
@@ -2281,6 +2282,7 @@ public class registrationtestcases {
 					Stock.GetParameterValue("ga_PlanId"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			SSN = Stock.GetParameterValue("SSN");
+			Common.updateEmailToNull(SSN);
 			String hdrBlockText;
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();
@@ -2528,6 +2530,7 @@ public class registrationtestcases {
 					Stock.GetParameterValue("ga_PlanId"));
 			Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			SSN = Stock.GetParameterValue("SSN");
+			Common.updateEmailToNull(SSN);
 			String hdrBlockText;
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage loginPage = new LoginPage();

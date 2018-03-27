@@ -8,9 +8,7 @@
         <classes>
           	  <class name="app.pptweb.testcases.investments.Investmentstestcases">
                 <methods>
-                  
-                      
-                     
+                   
               <include name="DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype">
                     <parameter  name="ManualTCName" value="SIT_DDTC_29169_Rebal_Only_HMDI_Target_Date_Offer_All_Mntype"></parameter>
                     </include>

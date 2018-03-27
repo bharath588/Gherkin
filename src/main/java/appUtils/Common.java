@@ -1001,6 +1001,45 @@ try{
 			
 	return notificationType;
 }
+public static String getDBNameForUnregisteredUser(String ssn) throws SQLException {
+
+
+	String[] sqlQuery = null;
+
+	ResultSet participantDB = null;
+
+	try {
+		sqlQuery = Stock.getTestQuery("getDBNameForUnRegisteredUser");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],ssn);
+	if (DB.getRecordSetCount(participantDB) > 0) {
+		try {
+			participantDB.last();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query Participant DB:" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+
+	}
+	System.out.println("DATA BASE Name"
+			+ participantDB.getString("database_instance"));
+	return participantDB.getString("database_instance");
+}
+
+public static void updateEmailToNull(String ssn) throws Exception {
+
+	String[] sqlQuery = Stock.getTestQuery("updateemailandMobilNotonull");
+	sqlQuery[0] = Common.getDBNameForUnregisteredUser(ssn) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
+	
+}
 
 
 

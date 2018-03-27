@@ -15,7 +15,7 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC002_Married with Spouse One beneficiary use address on record_Sanity"></parameter>
                     </include>
     
-               <!--   <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
+                 <include name="Beneficiary_TC001_Married_with_Spouse_One_beneficiary_new_address_Sanity">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC001_Married with Spouse One beneficiary new address_Sanity"></parameter>
                     </include>
                     
@@ -120,7 +120,7 @@
                     </include>  
                      <include name="Beneficiary_TC020_Participants_with_auth_code_I">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I"></parameter>
-                    </include>  -->
+                    </include> 
                      
                        
                 </methods>
