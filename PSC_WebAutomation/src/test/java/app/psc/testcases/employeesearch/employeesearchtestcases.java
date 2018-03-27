@@ -1078,10 +1078,10 @@ public class employeesearchtestcases {
 			employeesearch = new EmployeeSearch().get();
 			CommonLib.switchToDefaultPlan();
 			employeesearch.navigateToEmployeeTab();
-			employeesearch.str1 = employeesearch.getBeneficiaryEmployeeSSN();
-			employeesearch.searchEmployeeBySSN(employeesearch.str1[0]);
+			employeesearch.getBeneficiaryEmployeeSSN();
+			employeesearch.searchEmployeeBySSN(EmployeeSearch.str1[0]);
 			employeesearch.navigateToEmployeeOverViewPage();
-			employeesearch.navigateBeneficiaryPage();
+			employeesearch.navigateBeneficiaryPage();//no beneficiary added for this user
 			employeesearch.validateBeneficiaryWithDB();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2607,7 +2607,7 @@ public class employeesearchtestcases {
 			// employeesearch.navigateToEmployeeTab();
 			employeesearch.validateDefaultEmpSearchOption();
 			employeesearch.validateRememberOfEmpSearchOption();
-			if (Stock.GetParameterValue("DataType").equals("NonApple"))
+			if (Stock.getConfigParam("DataType").equals("NonApple"))
 				employeesearch
 				.validateRememberOfEmpSearchOptionWhenPlanSwitch();
 			employeesearch.logoutFromApplication();

@@ -1,46 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" guice-stage="DEVELOPMENT" name="Failed suite [testsuite]" parallel="classes">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression_Yellow_Period_Exec2_Apple_Plan(failed)" parallel="classes">
+  <test name="Regression_Orange_Period_Execution_1(failed)">
     <classes>
       <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
         <methods>
-          <include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
-            <parameter name="ManualTCName" value="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations"/>
-          </include> <!-- TC_44_Enroll_And_Eligibility_Fields_Type_Validations -->
-          <include name="TC019_Verify_Beneficiary_Info">
-            <parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info"/>
-          </include> <!-- TC019_Verify_Beneficiary_Info -->
           <include name="ReportInit"/>
-          <include name="TC021_Salary_View_And_Update" invocation-numbers="0">
-            <parameter name="ManualTCName" value="DDTC-2245_Salary_View_And_Update"/>
-          </include> <!-- TC021_Salary_View_And_Update -->
-          <include name="TC020_Recently_Viewed_Employee">
-            <parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee"/>
-          </include> <!-- TC020_Recently_Viewed_Employee -->
-          <include name="TC018_Employee_Contact_Info_Verification">
-            <parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification"/>
-          </include> <!-- TC018_Employee_Contact_Info_Verification -->
-          <include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
-            <parameter name="ManualTCName" value="DDTC-218_SIT_PSC_Accountdetail_Allocations_Reg"/>
-          </include> <!-- TC34_SIT_PSC_Accountdetail_Allocations_Reg -->
-          <include name="TC026_Verify_Employee_Basic_Info">
-            <parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info"/>
-          </include> <!-- TC026_Verify_Employee_Basic_Info -->
+          <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+            <parameter name="ManualTCName" value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section"/>
+          </include> <!-- TC025_Verify_Employee_Overview_PlanList_Balance_Section -->
           <include name="cleanUpSession"/>
         </methods>
       </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
-      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
-        <methods>
-          <include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
-            <parameter name="ManualTCName" value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password"/>
-          </include> <!-- TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password -->
-          <include name="InitTest"/>
-        </methods>
-      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
     </classes>
-  </test> <!-- Regression_Yellow_Period_Exec2_Apple_Plan(failed) -->
+  </test> <!-- Regression_Orange_Period_Execution_1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

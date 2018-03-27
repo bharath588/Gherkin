@@ -27,6 +27,7 @@ import com.aventstack.extentreports.Status;
 
 import core.framework.ThrowException;
 import core.framework.ThrowException.TYPE;
+import framework.util.CommonLib;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 
@@ -89,12 +90,21 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Assert.assertEquals(Web.getDriver().getTitle(), "Empower Retirement - Plan Service Center");
+		//Assert.assertEquals(Web.getDriver().getTitle(), "Empower Retirement - Plan Service Center");
+		if(!Web.isWebElementDisplayed(txtUserName, false)){
+			throw new AssertionError("Plan service center login page not loaded.");
+		}
+		else{
+			Reporter.logEvent(Status.PASS, "Login page loads",""
+					+ "Login page loads",false);
+		}
 	}
 
 	@Override
 	protected void load() {
-		Web.getDriver().get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));	
+		Web.getDriver().get(Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV")));
+		CommonLib.FrameSwitchONandOFF(true, frmLogin);
+		Web.waitForElement(txtUserName);
 	}
 
 	/**

@@ -52,16 +52,15 @@ import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
 
-
-
 public class CommonLib {
 	static ResultSet queryResultSet;
 	static HomePage homePage;
 	public static String browserName;
 	static AccountVerificationPage accountVerPage;
 	static ReportsPage reportsPage;
-	//private static String progressBar =".//*[@id='pscSpinnerId']";
-	public CommonLib(){
+
+	// private static String progressBar =".//*[@id='pscSpinnerId']";
+	public CommonLib() {
 		PageFactory.initElements(Web.getDriver(), this);
 	}
 
@@ -77,9 +76,10 @@ public class CommonLib {
 		}
 	}
 
-	private static WebElement menuElement(String menuName)
-	{
-		return Web.getDriver().findElement(By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"+menuName+"')]"));
+	private static WebElement menuElement(String menuName) {
+		return Web.getDriver().findElement(
+				By.xpath("//ul[@id='newMenu']/li/a[contains(text(),'"
+						+ menuName + "')]"));
 	}
 
 	public static void enterData(WebElement ele, String value) {
@@ -109,19 +109,20 @@ public class CommonLib {
 
 	/**
 	 * This method converts the List of WebElements to List of string
+	 * 
 	 * @param refList
 	 * @return
 	 */
 
-	public static List<String> getWebElementstoListofStrings(List<WebElement> refList) {
+	public static List<String> getWebElementstoListofStrings(
+			List<WebElement> refList) {
 		List<String> list = new ArrayList<String>();
 		for (WebElement refWebElement : refList) {
 			list.add(refWebElement.getText());
 		}
 		return list;
 	}
-	
-	
+
 	public static void fillForm(WebElement parentNode, String... coLNames) {
 		String tagName = "";
 		try {
@@ -189,7 +190,8 @@ public class CommonLib {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		sqlQuery[0] = getUserDBName(userName) + "DB_"+checkEnv(Stock.getConfigParam("TEST_ENV"));
+		sqlQuery[0] = getUserDBName(userName) + "DB_"
+				+ checkEnv(Stock.getConfigParam("TEST_ENV"));
 		ResultSet participantInfo = DB.executeQuery(sqlQuery[0], sqlQuery[1],
 				userName.substring(0, 9));
 
@@ -219,7 +221,8 @@ public class CommonLib {
 			e.printStackTrace();
 		}
 
-		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],"K_"+userName);
+		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1], "K_"
+				+ userName);
 		if (DB.getRecordSetCount(participantDB) > 0) {
 			try {
 				participantDB.last();
@@ -233,11 +236,11 @@ public class CommonLib {
 			}
 
 		}
-		System.out.println("DATA BASE Name"+ participantDB.getString("DATABASE_INSTANCE"));
+		System.out.println("DATA BASE Name"
+				+ participantDB.getString("DATABASE_INSTANCE"));
 		String db = participantDB.getString("DATABASE_INSTANCE");
-		if(db.equals("QASK"))
-		{
-			db="ISIS";
+		if (db.equals("QASK")) {
+			db = "ISIS";
 		}
 		participantDB.close();
 		return db;
@@ -315,7 +318,6 @@ public class CommonLib {
 		return participantID.getString("ID");
 	}
 
-
 	public static String checkEnv(String envName) {
 		if (envName.contains("PROJ")) {
 			return Globals.DB_TYPE.get("PROJ");
@@ -329,68 +331,67 @@ public class CommonLib {
 		return null;
 	}
 
-
-
 	/**
 	 * @author smykjn<br>
-	 * This method returns true if xpath exist else false.
+	 *         This method returns true if xpath exist else false.
 	 */
 
-	public static boolean isElementExistByXpath(String xpath)
-	{
+	public static boolean isElementExistByXpath(String xpath) {
 		boolean xpathExist = false;
-		List<WebElement> webElements = Web.getDriver().findElements(By.xpath(xpath));
-		if(webElements.size()==0)
-		{
+		List<WebElement> webElements = Web.getDriver().findElements(
+				By.xpath(xpath));
+		if (webElements.size() == 0) {
+			xpathExist = false;
+		} else {
 			xpathExist = false;
 		}
-		else{
-			xpathExist=false;
-		}
 		return xpathExist;
-	}	
-	private static String progressBar =".//*[@id='pscSpinnerId']";    
-	public static void waitForProgressBar(){
-		int iTimeInSecond=100;
-		try{
+	}
 
-			WebElement ele = Web.getDriver().findElement(By.xpath(progressBar));
-			Web.waitForElement(ele);
-			int iCount = 0;
-			while (ele.isDisplayed()){
+	private static String progressBar = ".//*[@id='pscSpinnerId']";
 
-				if(iCount ==iTimeInSecond){
-					break;
-				}   
+	public static void waitForProgressBar() {
+		int iTimeInSecond = 100;
+		try {
 
-				System.out.println("Progress Bar displaying..");
-				Thread.sleep(1000);                       
-				iCount++;
+			List<WebElement> ele = Web.getDriver().findElements(
+					By.xpath(progressBar));
+			if (ele.size() > 0) {
+				Web.waitForElement(ele.get(0));
+				int iCount = 0;
+				while (ele.get(0).isDisplayed()) {
+
+					if (iCount == iTimeInSecond) {
+						break;
+					}
+
+					System.out.println("Progress Bar displaying..");
+					Thread.sleep(1000);
+					iCount++;
+				}
 			}
 
-
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.getMessage();
 		}
 
 	}
 
-
-	/**	
+	/**
 	 * @author smykjn
 	 * @Objective This method switches to default plan page
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static void switchToDefaultPlan() throws SQLException,Exception
-	{
-		if(!Stock.getConfigParam("DataType").equals("Apple")){
+	public static void switchToDefaultPlan() throws SQLException, Exception {
+		if (!Stock.getConfigParam("DataType").equals("Apple")) {
 			String defaultPlan = null;
 			homePage = new HomePage();
-			queryResultSet = DB.executeQuery(Stock.getTestQuery("selectDefaultPlanQuery")[0],Stock.getTestQuery("selectDefaultPlanQuery")[1],
-					"K_"+Stock.GetParameterValue("username"));
-			while(queryResultSet.next())
-			{
+			queryResultSet = DB.executeQuery(
+					Stock.getTestQuery("selectDefaultPlanQuery")[0],
+					Stock.getTestQuery("selectDefaultPlanQuery")[1], "K_"
+							+ Stock.GetParameterValue("username"));
+			while (queryResultSet.next()) {
 				defaultPlan = queryResultSet.getString("DEFAULT_GA_ID");
 			}
 			Web.getDriver().switchTo().defaultContent();
@@ -398,27 +399,26 @@ public class CommonLib {
 		}
 	}
 
-
 	/**
 	 * @author smykjn
 	 * @Objective This method returns true of list is sorted in ascending order
 	 * @return boolean
 	 */
 
-	public static boolean isSortedByDescOrder(List<Double> list)
-	{
-		boolean sorted = false; 
-		if(list.size()==1)
-		{
+	public static boolean isSortedByDescOrder(List<Double> list) {
+		boolean sorted = false;
+		if (list.size() == 1) {
 			sorted = true;
-			Reporter.logEvent(Status.INFO, "Only one allocation is found so sorting validation is not required.", "", true);
-		}
-		else{
+			Reporter.logEvent(
+					Status.INFO,
+					"Only one allocation is found so sorting validation is not required.",
+					"", true);
+		} else {
 			for (int i = 1; i < list.size(); i++) {
 
-				if (list.get(i-1).compareTo(list.get(i)) > 0) {
-					sorted = true;}
-				else{
+				if (list.get(i - 1).compareTo(list.get(i)) > 0) {
+					sorted = true;
+				} else {
 					sorted = false;
 					break;
 				}
@@ -427,148 +427,168 @@ public class CommonLib {
 
 		return sorted;
 	}
-	
-	
+
 	/**
 	 * @author smykjn
-	 * @Objective This method returns true if list is sorted based on sorting argument.
+	 * @Objective This method returns true if list is sorted based on sorting
+	 *            argument.
 	 * @return boolean
-	 * @param List,String
+	 * @param List
+	 *            ,String
 	 */
-	/*public static boolean isSorted(List<String> list,String order)
-	{
-		boolean sorted = false; 
-		if(list.size()==1)
-		{
-			sorted = true;
-			Reporter.logEvent(Status.INFO,
-					"Only one record is found so sorting validation is not required.", "", true);
-		}
-		else{
-			for (int i = 1; i < list.size(); i++) {
-				if (list.get(i-1).compareTo(list.get(i)) > 0) {
-					sorted = true;}
-				else{
-					sorted = false;
-					break;
-				}
+	/*
+	 * public static boolean isSorted(List<String> list,String order) { boolean
+	 * sorted = false; if(list.size()==1) { sorted = true;
+	 * Reporter.logEvent(Status.INFO,
+	 * "Only one record is found so sorting validation is not required.", "",
+	 * true); } else{ for (int i = 1; i < list.size(); i++) { if
+	 * (list.get(i-1).compareTo(list.get(i)) > 0) { sorted = true;} else{ sorted
+	 * = false; break; } } }
+	 * 
+	 * return sorted; }
+	 */
+
+	/**
+	 * @author smykjn
+	 * @param actHeaders
+	 *            <pre>
+	 * this parameter represents List of header WebElements captured from Xpath or any locators.
+	 * </pre>
+	 * @param expHeaders
+	 *            <pre>
+	 * This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.
+	 * </pre>
+	 * @return boolean
+	 * 
+	 *         <pre>
+	 * This method returns true if all actual headers are present in exppcted header list.
+	 * if any of the header is missing from expHeaders the returns false.
+	 * </pre>
+	 * @throws Exception
+	 * @Date 2nd-May-2017
+	 */
+	public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,
+			List<String> expHeaders) throws Exception {
+		boolean isdisplayed = false;
+		for (WebElement header : actHeaders) {
+			System.out.println("Actual Header is" + header.getText().trim());
+			if (expHeaders
+					.contains(header.getText().replaceAll(":", "").trim())) {
+				isdisplayed = true;
+			} else {
+				isdisplayed = false;
+				break;
 			}
 		}
-
-		return sorted;
-	}*/
-
-
-	/**
-	 * @author smykjn
-	 * @param actHeaders
-	 * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
-	 * @param expHeaders
-	 * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
-	 * @return boolean
-	 * <pre>This method returns true if all actual headers are present in exppcted header list.
-	 * if any of the header is missing from expHeaders the returns false.</pre>
-	 * @throws Exception
-	 * @Date 2nd-May-2017
-	 */
-	public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
-	{
-		boolean isdisplayed = false;
-		for(WebElement header : actHeaders){
-			System.out.println("Actual Header is"+header.getText().trim());
-			if(expHeaders.contains(header.getText().replaceAll(":", "").trim()))
-			{isdisplayed = true;}
-			else
-			{isdisplayed = false;break;}
-		}	
 		return isdisplayed;
 	}
 
 	/**
 	 * @author smykjn
 	 * @param actHeaders
-	 * <pre>this parameter represents List of header WebElements captured from Xpath or any locators.</pre>
+	 *            <pre>
+	 * this parameter represents List of header WebElements captured from Xpath or any locators.
+	 * </pre>
 	 * @param expHeaders
-	 * <pre>This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.</pre>
+	 *            <pre>
+	 * This parameter represents List of expected headers that can be taken from test data source ex. Excel,XML.
+	 * </pre>
 	 * @return boolean
-	 * <pre>This method returns true if all actual headers are present in exppcted header list.
-	 * if any of the header is missing from expHeaders the returns false.</pre>
+	 * 
+	 *         <pre>
+	 * This method returns true if all actual headers are present in exppcted header list.
+	 * if any of the header is missing from expHeaders the returns false.
+	 * </pre>
 	 * @throws Exception
 	 * @Date 2nd-May-2017
 	 */
-	public static boolean isAllHeadersDisplayedWhiteSpace(List<WebElement> actHeaders,List<String> expHeaders) throws Exception
-	{
+	public static boolean isAllHeadersDisplayedWhiteSpace(
+			List<WebElement> actHeaders, List<String> expHeaders)
+			throws Exception {
 		boolean isdisplayed = false;
-		for(WebElement header : actHeaders){
-			System.out.println("Actual Header is"+header.getText().replaceAll("\\s+", " ").trim());
-			if(expHeaders.contains(header.getText().replaceAll(":", "").replaceAll("\\s+", " ").trim()))
-			{isdisplayed = true;}
-			else
-			{isdisplayed = false;break;}
-		}	
+		for (WebElement header : actHeaders) {
+			System.out.println("Actual Header is"
+					+ header.getText().replaceAll("\\s+", " ").trim());
+			if (expHeaders.contains(header.getText().replaceAll(":", "")
+					.replaceAll("\\s+", " ").trim())) {
+				isdisplayed = true;
+			} else {
+				isdisplayed = false;
+				break;
+			}
+		}
 		return isdisplayed;
 	}
 
 	/**
-	 * <pre>This method converts String list into Date List and sort it in descending order.</pre>
+	 * <pre>
+	 * This method converts String list into Date List and sort it in descending order.
+	 * </pre>
+	 * 
 	 * @Date 3rd-May-2017
 	 * @author smykjn
 	 * @return boolean
-	 * <pre>returns true if list is sorted in descending order else false.</pre>
+	 * 
+	 *         <pre>
+	 * returns true if list is sorted in descending order else false.
+	 * </pre>
 	 * @throws Exception
 	 * @Parameter List of WebElements
 	 */
-	public static boolean validateDateSorting(List<WebElement> dateStringElements) throws Exception
-	{
-		boolean isSortedInDescen=false;
+	public static boolean validateDateSorting(
+			List<WebElement> dateStringElements) throws Exception {
+		boolean isSortedInDescen = false;
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		List<String> dateStringList = new ArrayList<String>();
 		List<Date> dateList = new ArrayList<Date>();
-		for(WebElement dateStringEle : dateStringElements)
-		{
+		for (WebElement dateStringEle : dateStringElements) {
 			dateStringList.add(dateStringEle.getText().trim());
 		}
-		for(String dateString : dateStringList)
-		{
+		for (String dateString : dateStringList) {
 			dateList.add(simpleDateFormat.parse(dateString));
 		}
 		List<Date> dateListOriginalOrder = new ArrayList<Date>(dateList);
-		System.out.println("Copy List to another list:"+dateListOriginalOrder);
+		System.out
+				.println("Copy List to another list:" + dateListOriginalOrder);
 		Collections.sort(dateList);
-		System.out.println("Natural sorting:"+dateList);
+		System.out.println("Natural sorting:" + dateList);
 		Collections.reverse(dateList);
-		System.out.println("Descending:"+dateList);
-		if(dateList.equals(dateListOriginalOrder))
-			isSortedInDescen=true;
+		System.out.println("Descending:" + dateList);
+		if (dateList.equals(dateListOriginalOrder))
+			isSortedInDescen = true;
 		else
-			isSortedInDescen=false;
+			isSortedInDescen = false;
 		return isSortedInDescen;
-	}	
-
+	}
 
 	/**
-	 * <pre>This method deletes all cookies.</pre>
+	 * <pre>
+	 * This method deletes all cookies.
+	 * </pre>
+	 * 
 	 * @Date 11th-May-2017
 	 * @author smykjn
 	 * @return void
-	 * <pre>returns true if list is sorted in descending order else false.</pre>
+	 * 
+	 *         <pre>
+	 * returns true if list is sorted in descending order else false.
+	 * </pre>
 	 * @throws Exception
 	 * @Parameter List of WebElements
 	 */
-	public static void deleteAllCookies() throws Exception
-	{
+	public static void deleteAllCookies() throws Exception {
 		Web.getDriver().manage().deleteAllCookies();
-	}	
+	}
 
-	public static int getRandomNumber(int range){
+	public static int getRandomNumber(int range) {
 
-		int random = (int )(Math.random() * range + 1);
+		int random = (int) (Math.random() * range + 1);
 
 		return random;
 
 	}
 
-	public static String appendRandomNumberToText(String text){
+	public static String appendRandomNumberToText(String text) {
 		return text + getRandomNumber(7);
 	}
 
@@ -583,343 +603,260 @@ public class CommonLib {
 		return result;
 	}
 
-	public boolean textEquality(String existingText, String newText, boolean exactMatch){
-		if(exactMatch){
-			if(newText.equalsIgnoreCase(existingText))
+	public boolean textEquality(String existingText, String newText,
+			boolean exactMatch) {
+		if (exactMatch) {
+			if (newText.equalsIgnoreCase(existingText))
 				return true;
 			return false;
-		}
-		else if(newText.contains(existingText)){
+		} else if (newText.contains(existingText)) {
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * <pre>This method Takes you to the specified menu or submenu page.</pre>
+	 * <pre>
+	 * This method Takes you to the specified menu or submenu page.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 */
-	public static boolean navigateToProvidedPage(String...specifiedTab) throws Exception
-	{
-		String bredCrumbValue= "";
+	public static boolean navigateToProvidedPage(String... specifiedTab)
+			throws Exception {
+		String bredCrumbValue = "";
 		WebElement breadCrumb;
 		boolean isPageDisplayed = false;
 		Actions act = new Actions(Web.getDriver());
-		String xpath1 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul";
-		String xpath2 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul";
-		String xpath3 = "//a[contains(text(),'"+specifiedTab[0]+"')]/following-sibling::ul//a[contains(text(),'"+specifiedTab[1]+"')]";
-		String xpath4 = "//a[contains(text(),'"+specifiedTab[1]+"')]/following-sibling::ul//a[.='"+specifiedTab[2]+"']";
-		if(Web.getDriver().findElements(By.xpath(xpath1)).size()>0){
-			act.moveToElement(Web.returnElement(new HomePage(),"Welcome")).build().perform();
-			//Web.clickOnElement(menuElement(specifiedTab[0]));
-			act.moveToElement(menuElement(specifiedTab[0])).click().build().perform();
+		String xpath1 = "//a[contains(text(),'" + specifiedTab[0]
+				+ "')]/following-sibling::ul";
+		String xpath2 = "//a[contains(text(),'" + specifiedTab[1]
+				+ "')]/following-sibling::ul";
+		String xpath3 = "//a[contains(text(),'" + specifiedTab[0]
+				+ "')]/following-sibling::ul//a[contains(text(),'"
+				+ specifiedTab[1] + "')]";
+		String xpath4 = "//a[contains(text(),'" + specifiedTab[1]
+				+ "')]/following-sibling::ul//a[.='" + specifiedTab[2] + "']";
+		if (Web.getDriver().findElements(By.xpath(xpath1)).size() > 0) {
+			act.moveToElement(Web.returnElement(new HomePage(), "Welcome"))
+					.build().perform();
+			// Web.clickOnElement(menuElement(specifiedTab[0]));
+			act.moveToElement(menuElement(specifiedTab[0])).click().build()
+					.perform();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Web.getDriver().findElements(By.xpath(xpath2)).size()>0)
-			{
-				//Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
-				act.click(Web.getDriver().findElement(By.xpath(xpath3))).build().perform();
-				Web.waitForElements(Web.getDriver().findElements(By.xpath(xpath4)));
-				if(Web.getDriver().findElements(By.xpath(xpath4)).size()>0){
-					Web.isWebElementDisplayed(Web.getDriver().findElement(By.xpath(xpath4)), true);
-					act.click(Web.getDriver().findElement(By.xpath(xpath4))).perform();
+			if (Web.getDriver().findElements(By.xpath(xpath2)).size() > 0) {
+				// Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+				act.click(Web.getDriver().findElement(By.xpath(xpath3)))
+						.build().perform();
+				Web.waitForElements(Web.getDriver().findElements(
+						By.xpath(xpath4)));
+				if (Web.getDriver().findElements(By.xpath(xpath4)).size() > 0) {
+					Web.isWebElementDisplayed(
+							Web.getDriver().findElement(By.xpath(xpath4)), true);
+					act.click(Web.getDriver().findElement(By.xpath(xpath4)))
+							.perform();
 					Web.waitForPageToLoad(Web.getDriver());
-					bredCrumbValue=specifiedTab[2];}
-			}
-			else
-			{
-				Web.clickOnElement(Web.getDriver().findElement(By.xpath(xpath3)));
+					bredCrumbValue = specifiedTab[2];
+				}
+			} else {
+				Web.clickOnElement(Web.getDriver()
+						.findElement(By.xpath(xpath3)));
 				Web.waitForPageToLoad(Web.getDriver());
-				bredCrumbValue=specifiedTab[1];
+				bredCrumbValue = specifiedTab[1];
 			}
-		}
-		else
-		{
+		} else {
 			Web.clickOnElement(menuElement(specifiedTab[0]));
 			Web.waitForPageToLoad(Web.getDriver());
-			bredCrumbValue=specifiedTab[0];
+			bredCrumbValue = specifiedTab[0];
 		}
 		breadCrumb = Web.getDriver().findElement(By.tagName("i"));
 		Web.waitForElement(breadCrumb);
-		if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
+		if (Web.getDriver().findElement(By.tagName("i")).getText()
+				.contains(bredCrumbValue))
 			isPageDisplayed = true;
 		else
 			isPageDisplayed = false;
 		return isPageDisplayed;
 	}
 
-
-/*	*//**
-	 * <pre>This method is used to switch to child window in case there is only two window.</pre>
+	/*	*//**
+	 * <pre>
+	 * This method is used to switch to child window in case there is only two window.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 * @return parentWindowID
-	 *//*
-	public static String switchToWindow()
-	{
-
-		Web.clickOnElement(menuElement(specifiedTab[0]));
-		Web.waitForPageToLoad(Web.getDriver());
-		bredCrumbValue=specifiedTab[0];
-	}
-	breadCrumb = Web.getDriver().findElement(By.tagName("i"));
-	Web.waitForElement(breadCrumb);
-	if(Web.getDriver().findElement(By.tagName("i")).getText().contains(bredCrumbValue))
-		isPageDisplayed = true;
-	else
-		isPageDisplayed = false;
-	return isPageDisplayed;
-}*/
-
-
-/**
- * <pre>This method is used to switch to child window in case there is only two window.</pre>
- * @author smykjn
- * @return parentWindowID
- */
-public static String switchToWindow()
-{
-	int count=0;
-	String parentWindow="";
-	try{
-		parentWindow = Web.getDriver().getWindowHandle();
-		while(Web.getDriver().getWindowHandles().size()==1)
-		{
-			if(count==10) break;
-			Thread.sleep(500);
-			count++;
-			System.out.println("Counter : "+count);
-		}
-		System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
-		Set<String> chiledWindows = Web.getDriver().getWindowHandles();
-		for(String activeWindow : chiledWindows){
-			if(!activeWindow.equals(parentWindow)){
-				Web.getDriver().switchTo().window(activeWindow);break;}
-		}
-		return parentWindow;
-	}catch(Exception e){
-		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
-		return parentWindow="";
-	}
-}
-
-/**
- * <pre>This method is used to switch to specified frame.</pre>
- * @author smykjn
- * @return void
- */
-/*public static void switchToFrame(WebElement frameIDorName)
-{
-	try{
-		//Web.waitForPageToLoad(Web.getDriver());
-		Web.getDriver().switchTo().defaultContent();
-		Web.waitForElement(frameIDorName);
-		Web.getDriver().switchTo().frame(frameIDorName);
-	}catch(NoSuchFrameException e){
-		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
-		int count=0;
-		String parentWindow="";
-		try{
-			parentWindow = Web.getDriver().getWindowHandle();
-			while(Web.getDriver().getWindowHandles().size()==1)
-			{
-				if(count==10) break;
-				Thread.sleep(500);
-				count++;
-				System.out.println("Counter : "+count);
-			}
-			System.out.println("Window size is:"+Web.getDriver().getWindowHandles().size());
-			Set<String> chiledWindows = Web.getDriver().getWindowHandles();
-			for(String activeWindow : chiledWindows){
-				if(!activeWindow.equals(parentWindow)){
-					Web.getDriver().switchTo().window(activeWindow);break;}
-			}
-			return parentWindow;
-		}catch(Exception e){
-			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
-			return parentWindow="";
-		}
-	}*/
+	 */
+	/*
+	 * public static String switchToWindow() {
+	 * 
+	 * Web.clickOnElement(menuElement(specifiedTab[0]));
+	 * Web.waitForPageToLoad(Web.getDriver()); bredCrumbValue=specifiedTab[0]; }
+	 * breadCrumb = Web.getDriver().findElement(By.tagName("i"));
+	 * Web.waitForElement(breadCrumb);
+	 * if(Web.getDriver().findElement(By.tagName(
+	 * "i")).getText().contains(bredCrumbValue)) isPageDisplayed = true; else
+	 * isPageDisplayed = false; return isPageDisplayed; }
+	 */
 
 	/**
-	 * <pre>This method is used to switch to specified frame.</pre>
+	 * <pre>
+	 * This method is used to switch to child window in case there is only two window.
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @return parentWindowID
+	 */
+	public static String switchToWindow() {
+		int count = 0;
+		String parentWindow = "";
+		try {
+			parentWindow = Web.getDriver().getWindowHandle();
+			while (Web.getDriver().getWindowHandles().size() == 1) {
+				if (count == 10)
+					break;
+				Thread.sleep(500);
+				count++;
+				System.out.println("Counter : " + count);
+			}
+			System.out.println("Window size is:"
+					+ Web.getDriver().getWindowHandles().size());
+			Set<String> chiledWindows = Web.getDriver().getWindowHandles();
+			for (String activeWindow : chiledWindows) {
+				if (!activeWindow.equals(parentWindow)) {
+					Web.getDriver().switchTo().window(activeWindow);
+					break;
+				}
+			}
+			return parentWindow;
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL,
+					"Exception occured while switching to window.",
+					e.getMessage(), true);
+			return parentWindow = "";
+		}
+	}
+
+	/**
+	 * <pre>
+	 * This method is used to switch to specified frame.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 * @return void
 	 */
-	public static void switchToFrame(WebElement frameIDorName)
-	{
-		try{
+	/*
+	 * public static void switchToFrame(WebElement frameIDorName) { try{
+	 * //Web.waitForPageToLoad(Web.getDriver());
+	 * Web.getDriver().switchTo().defaultContent();
+	 * Web.waitForElement(frameIDorName);
+	 * Web.getDriver().switchTo().frame(frameIDorName);
+	 * }catch(NoSuchFrameException e){ Reporter.logEvent(Status.FAIL,
+	 * "Exception occured while switching to window.",e.getMessage(),true); int
+	 * count=0; String parentWindow=""; try{ parentWindow =
+	 * Web.getDriver().getWindowHandle();
+	 * while(Web.getDriver().getWindowHandles().size()==1) { if(count==10)
+	 * break; Thread.sleep(500); count++;
+	 * System.out.println("Counter : "+count); }
+	 * System.out.println("Window size is:"
+	 * +Web.getDriver().getWindowHandles().size()); Set<String> chiledWindows =
+	 * Web.getDriver().getWindowHandles(); for(String activeWindow :
+	 * chiledWindows){ if(!activeWindow.equals(parentWindow)){
+	 * Web.getDriver().switchTo().window(activeWindow);break;} } return
+	 * parentWindow; }catch(Exception e){ Reporter.logEvent(Status.FAIL,
+	 * "Exception occured while switching to window.",e.getMessage(),true);
+	 * return parentWindow=""; } }
+	 */
+
+	/**
+	 * <pre>
+	 * This method is used to switch to specified frame.
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @return void
+	 */
+	public static void switchToFrame(WebElement frameIDorName) {
+		try {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
 			Web.waitForElement(frameIDorName);
 			Web.getDriver().switchTo().frame(frameIDorName);
-		}catch(NoSuchFrameException e){
-			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
+		} catch (NoSuchFrameException e) {
+			Reporter.logEvent(Status.FAIL,
+					"Exception occured while switching to window.",
+					e.getMessage(), true);
 		}
 	}
 
-/**
- * <pre>This method is used to switch to specified frame from another frame.</pre>
- * @author smykjn
- * @return void
- */
-/*public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
-{
-	try{
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(frameFrom);
-		Web.waitForElement(frameTo);
-		Web.getDriver().switchTo().frame(frameTo);
-	}catch(NoSuchFrameException e){
-		Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
-	}
-}*/
-
-/**
- * This method returns the broser name and version in runtime execution
- * @author smykjn
- * @return
- */
-/*public static String getBrowserName(){
-	Capabilities caps = ((RemoteWebDriver) Web.getDriver()).getCapabilities();
-	String browserName = caps.getBrowserName();
-	String browserVersion = caps.getVersion();
-	System.out.println("Browser name:"+browserName);
-	System.out.println("Browser version:"+browserVersion);
-	return browserName;
-}*/
-
-/**
- * <pre>This method returns the browser name and version in runtime execution</pre>
- * @author smykjn
- * @return
- */
-/*public static void waitForLoader(WebElement loader) throws Exception{
-	Web.waitForElement(loader);
-	do{
-		Thread.sleep(1000);
-		System.out.println("Loading......................");
-	}while(loader.isDisplayed());
-}*/
-
-/**
- * <pre>This method sorts list<INTEGER> in descending order.</pre>
- * @author smykjn
- * @return
- */
-/*public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
-	boolean isSorted = false;
-	List<Double> copyList = new ArrayList<Double>(expSortedList);
-	System.out.println("List copied:"+copyList);
-	Collections.sort(copyList);
-	System.out.println("copied List in ascending order:"+copyList);
-	Collections.reverse(copyList);
-	System.out.println("copied List in descending order:"+copyList);
-	System.out.println("Original List:"+expSortedList);
-	if(expSortedList.equals(copyList))
-		isSorted = true;
-	else
-		isSorted = false;
-	return isSorted;
-}*/
-
-
-/**
- * @author smykjn
- * @param downloadDir
- * @param fileExtension
- * @return downloaded file name
- */
-/*public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
-{	
-	String downloadedFileName = null;
-	boolean valid = true;
-	boolean found = false;
-
-	//default timeout in seconds
-	long timeOut = 20; 
-	try 
-	{					
-		Path downloadFolderPath = Paths.get(downloadDir);
-		WatchService watchService = FileSystems.getDefault().newWatchService();
-		downloadFolderPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-		long startTime = System.currentTimeMillis();
-		do 
-		{
-			WatchKey watchKey;
-			watchKey = watchService.poll(timeOut,TimeUnit.SECONDS);
-			long currentTime = (System.currentTimeMillis()-startTime)/1000;
-			if(currentTime>timeOut)
-			{
-				System.out.println("Download operation timed out.. Expected file was not downloaded");
-				return downloadedFileName;
-			}
-			
-			for (WatchEvent event : watchKey.pollEvents())
-		}*/
-
 	/**
-	 * <pre>This method is used to switch to specified frame from another frame.</pre>
+	 * <pre>
+	 * This method is used to switch to specified frame from another frame.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 * @return void
 	 */
-	public static void switchToFrameFromAnotherFrame(WebElement frameFrom,WebElement frameTo)
-	{
-		try{
-			Web.getDriver().switchTo().defaultContent();
-			Web.getDriver().switchTo().frame(frameFrom);
-			Web.getDriver().switchTo().frame(frameTo);
-		}catch(NoSuchFrameException e){
-			Reporter.logEvent(Status.FAIL, "Exception occured while switching to window.",e.getMessage(),true);
-		}
-	}
+	/*
+	 * public static void switchToFrameFromAnotherFrame(WebElement
+	 * frameFrom,WebElement frameTo) { try{
+	 * Web.getDriver().switchTo().defaultContent();
+	 * Web.getDriver().switchTo().frame(frameFrom); Web.waitForElement(frameTo);
+	 * Web.getDriver().switchTo().frame(frameTo); }catch(NoSuchFrameException
+	 * e){ Reporter.logEvent(Status.FAIL,
+	 * "Exception occured while switching to window.",e.getMessage(),true); } }
+	 */
 
 	/**
 	 * This method returns the broser name and version in runtime execution
+	 * 
 	 * @author smykjn
 	 * @return
 	 */
-	public static String getBrowserName(){
-		Capabilities caps = ((RemoteWebDriver) Web.getDriver()).getCapabilities();
-		String browserName = caps.getBrowserName();
-		String browserVersion = caps.getVersion();
-		System.out.println("Browser name:"+browserName);
-		System.out.println("Browser version:"+browserVersion);
-		return browserName;
-	}
+	/*
+	 * public static String getBrowserName(){ Capabilities caps =
+	 * ((RemoteWebDriver) Web.getDriver()).getCapabilities(); String browserName
+	 * = caps.getBrowserName(); String browserVersion = caps.getVersion();
+	 * System.out.println("Browser name:"+browserName);
+	 * System.out.println("Browser version:"+browserVersion); return
+	 * browserName; }
+	 */
 
 	/**
-	 * <pre>This method returns the browser name and version in runtime execution</pre>
+	 * <pre>
+	 * This method returns the browser name and version in runtime execution
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 * @return
 	 */
-	public static void waitForLoader(WebElement loader) throws Exception{
-		Web.waitForElement(loader);
-		do{
-			Thread.sleep(1000);
-			System.out.println("Loading......................");
-		}while(loader.isDisplayed());
-	}
+	/*
+	 * public static void waitForLoader(WebElement loader) throws Exception{
+	 * Web.waitForElement(loader); do{ Thread.sleep(1000);
+	 * System.out.println("Loading......................");
+	 * }while(loader.isDisplayed()); }
+	 */
 
 	/**
-	 * <pre>This method sorts list<INTEGER> in descending order.</pre>
+	 * <pre>
+	 * This method sorts list<INTEGER> in descending order.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 * @return
 	 */
-	public static boolean sortIntegerListDesc(List<Double> expSortedList) throws Exception{
-		boolean isSorted = false;
-		List<Double> copyList = new ArrayList<Double>(expSortedList);
-		System.out.println("List copied:"+copyList);
-		Collections.sort(copyList);
-		System.out.println("copied List in ascending order:"+copyList);
-		Collections.reverse(copyList);
-		System.out.println("copied List in descending order:"+copyList);
-		System.out.println("Original List:"+expSortedList);
-		if(expSortedList.equals(copyList))
-			isSorted = true;
-		else
-			isSorted = false;
-		return isSorted;
-	}
-
+	/*
+	 * public static boolean sortIntegerListDesc(List<Double> expSortedList)
+	 * throws Exception{ boolean isSorted = false; List<Double> copyList = new
+	 * ArrayList<Double>(expSortedList);
+	 * System.out.println("List copied:"+copyList); Collections.sort(copyList);
+	 * System.out.println("copied List in ascending order:"+copyList);
+	 * Collections.reverse(copyList);
+	 * System.out.println("copied List in descending order:"+copyList);
+	 * System.out.println("Original List:"+expSortedList);
+	 * if(expSortedList.equals(copyList)) isSorted = true; else isSorted =
+	 * false; return isSorted; }
+	 */
 
 	/**
 	 * @author smykjn
@@ -927,76 +864,173 @@ public static String switchToWindow()
 	 * @param fileExtension
 	 * @return downloaded file name
 	 */
-	public static String getDownloadedDocumentName(String downloadDir, String fileExtension)
-	{	
+	/*
+	 * public static String getDownloadedDocumentName(String downloadDir, String
+	 * fileExtension) { String downloadedFileName = null; boolean valid = true;
+	 * boolean found = false;
+	 * 
+	 * //default timeout in seconds long timeOut = 20; try { Path
+	 * downloadFolderPath = Paths.get(downloadDir); WatchService watchService =
+	 * FileSystems.getDefault().newWatchService();
+	 * downloadFolderPath.register(watchService,
+	 * StandardWatchEventKinds.ENTRY_CREATE); long startTime =
+	 * System.currentTimeMillis(); do { WatchKey watchKey; watchKey =
+	 * watchService.poll(timeOut,TimeUnit.SECONDS); long currentTime =
+	 * (System.currentTimeMillis()-startTime)/1000; if(currentTime>timeOut) {
+	 * System.out.println(
+	 * "Download operation timed out.. Expected file was not downloaded");
+	 * return downloadedFileName; }
+	 * 
+	 * for (WatchEvent event : watchKey.pollEvents()) }
+	 */
+
+	/**
+	 * <pre>
+	 * This method is used to switch to specified frame from another frame.
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @return void
+	 */
+	public static void switchToFrameFromAnotherFrame(WebElement frameFrom,
+			WebElement frameTo) {
+		try {
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(frameFrom);
+			Web.getDriver().switchTo().frame(frameTo);
+		} catch (NoSuchFrameException e) {
+			Reporter.logEvent(Status.FAIL,
+					"Exception occured while switching to window.",
+					e.getMessage(), true);
+		}
+	}
+
+	/**
+	 * This method returns the broser name and version in runtime execution
+	 * 
+	 * @author smykjn
+	 * @return
+	 */
+	public static String getBrowserName() {
+		Capabilities caps = ((RemoteWebDriver) Web.getDriver())
+				.getCapabilities();
+		String browserName = caps.getBrowserName();
+		String browserVersion = caps.getVersion();
+		System.out.println("Browser name:" + browserName);
+		System.out.println("Browser version:" + browserVersion);
+		return browserName;
+	}
+
+	/**
+	 * <pre>
+	 * This method returns the browser name and version in runtime execution
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @return
+	 */
+	public static void waitForLoader(WebElement loader) throws Exception {
+		Web.waitForElement(loader);
+		do {
+			Thread.sleep(1000);
+			System.out.println("Loading......................");
+		} while (loader.isDisplayed());
+	}
+
+	/**
+	 * <pre>
+	 * This method sorts list<INTEGER> in descending order.
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @return
+	 */
+	public static boolean sortIntegerListDesc(List<Double> expSortedList)
+			throws Exception {
+		boolean isSorted = false;
+		List<Double> copyList = new ArrayList<Double>(expSortedList);
+		System.out.println("List copied:" + copyList);
+		Collections.sort(copyList);
+		System.out.println("copied List in ascending order:" + copyList);
+		Collections.reverse(copyList);
+		System.out.println("copied List in descending order:" + copyList);
+		System.out.println("Original List:" + expSortedList);
+		if (expSortedList.equals(copyList))
+			isSorted = true;
+		else
+			isSorted = false;
+		return isSorted;
+	}
+
+	/**
+	 * @author smykjn
+	 * @param downloadDir
+	 * @param fileExtension
+	 * @return downloaded file name
+	 */
+	public static String getDownloadedDocumentName(String downloadDir,
+			String fileExtension) {
 		String downloadedFileName = null;
 		boolean valid = true;
 		boolean found = false;
 
-		//default timeout in seconds
-		long timeOut = 20; 
-		try 
-		{					
+		// default timeout in seconds
+		long timeOut = 20;
+		try {
 			Path downloadFolderPath = Paths.get(downloadDir);
-			WatchService watchService = FileSystems.getDefault().newWatchService();
-			downloadFolderPath.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+			WatchService watchService = FileSystems.getDefault()
+					.newWatchService();
+			downloadFolderPath.register(watchService,
+					StandardWatchEventKinds.ENTRY_CREATE);
 			long startTime = System.currentTimeMillis();
-			do 
-			{
+			do {
 				WatchKey watchKey;
-				watchKey = watchService.poll(timeOut,TimeUnit.SECONDS);
-				long currentTime = (System.currentTimeMillis()-startTime)/1000;
-				if(currentTime>timeOut)
-				{
-					System.out.println("Download operation timed out.. Expected file was not downloaded");
+				watchKey = watchService.poll(timeOut, TimeUnit.SECONDS);
+				long currentTime = (System.currentTimeMillis() - startTime) / 1000;
+				if (currentTime > timeOut) {
+					System.out
+							.println("Download operation timed out.. Expected file was not downloaded");
 					return downloadedFileName;
 				}
 
-				for (WatchEvent event : watchKey.pollEvents())
-				{
+				for (WatchEvent event : watchKey.pollEvents()) {
 					WatchEvent.Kind kind = event.kind();
-					if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) 
-					{
+					if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) {
 						String fileName = event.context().toString();
 						System.out.println("New File Created:" + fileName);
-						if(fileName.endsWith(fileExtension))
-						{
+						if (fileName.endsWith(fileExtension)) {
 							downloadedFileName = fileName;
-							System.out.println("Downloaded file found with extension " + fileExtension + ". File name is " + fileName);
+							System.out
+									.println("Downloaded file found with extension "
+											+ fileExtension
+											+ ". File name is "
+											+ fileName);
 							Thread.sleep(500);
 							found = true;
 							break;
 						}
 					}
 				}
-				if(found)
-				{
+				if (found) {
 					return downloadedFileName;
-				}
-				else
-				{
-					currentTime = (System.currentTimeMillis()-startTime)/1000;
-					if(currentTime>timeOut)
-					{
+				} else {
+					currentTime = (System.currentTimeMillis() - startTime) / 1000;
+					if (currentTime > timeOut) {
 						System.out.println("Failed to download expected file");
 						return downloadedFileName;
 					}
 					valid = watchKey.reset();
 				}
 			} while (valid);
-		} 
+		}
 
-		catch (InterruptedException e) 
-		{
+		catch (InterruptedException e) {
 			System.out.println("Interrupted error - " + e.getMessage());
 			e.printStackTrace();
-		}
-		catch (NullPointerException e) 
-		{
-			System.out.println("Download operation timed out.. Expected file was not downloaded");
-		}
-		catch (Exception e)
-		{
+		} catch (NullPointerException e) {
+			System.out
+					.println("Download operation timed out.. Expected file was not downloaded");
+		} catch (Exception e) {
 			System.out.println("Error occured - " + e.getMessage());
 			e.printStackTrace();
 		}
@@ -1004,79 +1038,91 @@ public static String switchToWindow()
 	}
 
 	/**
-	 * <pre>This method is to validate if user is assigned with particular transaction code/codes.</pre>
-	 * @author smykjn 
-	 * @param Resultset which should return distinct transaction codes
-	 * @param String[] of expected transaction codes
+	 * <pre>
+	 * This method is to validate if user is assigned with particular transaction code/codes.
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 * @param Resultset
+	 *            which should return distinct transaction codes
+	 * @param String
+	 *            [] of expected transaction codes
 	 */
-	public static boolean isTxnCodesPresent(ResultSet resultSet,String...expTxnCodes) throws SQLException
-	{
+	public static boolean isTxnCodesPresent(ResultSet resultSet,
+			String... expTxnCodes) throws SQLException {
 		boolean isPresent = false;
 		List<String> expTxnCodesList = Arrays.asList(expTxnCodes);
 		List<String> acttxncodes = new ArrayList<String>();
 
-		while(resultSet.next()){
+		while (resultSet.next()) {
 			acttxncodes.add(resultSet.getString("TXN_CODE"));
 		}
-		System.out.println("ActTxn codes:"+acttxncodes);
-		System.out.println("ExpTxn codes:"+expTxnCodes);
-		if(acttxncodes.size()>0){
-			if(expTxnCodesList.equals(acttxncodes))
-				isPresent=true;
+		System.out.println("ActTxn codes:" + acttxncodes);
+		System.out.println("ExpTxn codes:" + expTxnCodes);
+		if (acttxncodes.size() > 0) {
+			if (expTxnCodesList.equals(acttxncodes))
+				isPresent = true;
 			else
-				isPresent=false;
+				isPresent = false;
 		}
 		return isPresent;
 	}
 
-
-
 	/**
-	 * <pre>This method is to insert a Txn code for a specified uscs id.</pre>
-	 * @author smykjn 
+	 * <pre>
+	 * This method is to insert a Txn code for a specified uscs id.
+	 * </pre>
+	 * 
+	 * @author smykjn
 	 * @param txncode
 	 * @param uscsId
 	 */
-	public static void insertTxnCode(String txncode,String uscsId) throws SQLException
-	{
+	public static void insertTxnCode(String txncode, String uscsId)
+			throws SQLException {
 		DB.executeQuery(Stock.getTestQuery("insertSpecifiedTxnCode")[0],
-				Stock.getTestQuery("insertSpecifiedTxnCode")[1],txncode,uscsId);
+				Stock.getTestQuery("insertSpecifiedTxnCode")[1], txncode,
+				uscsId);
 
 	}
 
-
 	/**
-	 * <pre>This method is to know the list of Uscs ids to which specific txn codes are assigned with.</pre>
-	 * @author smykjn 
+	 * <pre>
+	 * This method is to know the list of Uscs ids to which specific txn codes are assigned with.
+	 * </pre>
+	 * 
+	 * @author smykjn
 	 * @param resultSet
 	 * @return : list of Uscs ids
 	 */
-	public static List<String> getUscsIDForTxnCodes(ResultSet resultSet) throws SQLException
-	{
+	public static List<String> getUscsIDForTxnCodes(ResultSet resultSet)
+			throws SQLException {
 		ArrayList<String> uscsId = new ArrayList<String>();
-		while(resultSet.next()){
+		while (resultSet.next()) {
 			uscsId.add(resultSet.getString("USCS_ID"));
 		}
-		System.out.println("Assigned uscs ids for txn codes :"+uscsId);
+		System.out.println("Assigned uscs ids for txn codes :" + uscsId);
 		return uscsId;
 	}
 
-
 	/**
-	 * <pre>Return date in specific time zone.</pre>
+	 * <pre>
+	 * Return date in specific time zone.
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 */
-	public static Date getSysDateWithTimeZone(String timezone){
-		Date date=null;
+	public static Date getSysDateWithTimeZone(String timezone) {
+		Date date = null;
 		Calendar present;
-		try{
+		try {
 			SimpleDateFormat isoFormat = new SimpleDateFormat();
 			isoFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-			present= Calendar.getInstance();
+			present = Calendar.getInstance();
 			present.setTime(present.getTime());
 			date = present.getTime();
-		}catch(Exception e){
-			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception occurred.",
+					e.getMessage(), true);
 		}
 		return date;
 	}
@@ -1084,14 +1130,15 @@ public static String switchToWindow()
 	/**
 	 * @author smykjn
 	 */
-	public static String getDateStringInDateFormat(String dateformat,Date date){
-		String dateString="";
-		try{
+	public static String getDateStringInDateFormat(String dateformat, Date date) {
+		String dateString = "";
+		try {
 			DateFormat df = new SimpleDateFormat(dateformat);
-			dateString= df.format(date);
+			dateString = df.format(date);
 
-		}catch(Exception e){
-			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception occurred.",
+					e.getMessage(), true);
 		}
 		return dateString;
 	}
@@ -1099,284 +1146,299 @@ public static String switchToWindow()
 	/**
 	 * @author smykjn
 	 */
-	public static Date getDateInDateFormatFromDateString(String dateformat,String dateString){
-		Date date=null;
-		try{
+	public static Date getDateInDateFormatFromDateString(String dateformat,
+			String dateString) {
+		Date date = null;
+		try {
 			DateFormat df = new SimpleDateFormat(dateformat);
-			date= df.parse(dateString);
+			date = df.parse(dateString);
 
-		}catch(Exception e){
-			Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
+		} catch (Exception e) {
+			Reporter.logEvent(Status.FAIL, "Exception occurred.",
+					e.getMessage(), true);
 			e.printStackTrace();
 		}
 		return date;
 	}
 
-
-
 	/**
-	 * <pre>This method let user select a random date between two specified dates</pre>
+	 * <pre>
+	 * This method let user select a random date between two specified dates
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 */
-/*	public static Date getRandomDateBetweenTwoDates(Date startRange,Date endRange) throws Exception{
+	/*
+	 * public static Date getRandomDateBetweenTwoDates(Date startRange,Date
+	 * endRange) throws Exception{ List<Date> listDate = new ArrayList<Date>();
+	 * Calendar calendar = new GregorianCalendar();
+	 * calendar.setTime(startRange); int count=0; while
+	 * (calendar.getTime().before(endRange)) { calendar.add(Calendar.DATE, 1);
+	 * Date result = calendar.getTime();
+	 * if(calendar.getTime().before(endRange)){ count++; listDate.add(result); }
+	 * } System.out.println("Number of days:"+count);
+	 * System.out.println("Dates:"+listDate); int randomNumber =
+	 * CommonLib.getRandomNumber(listDate.size());
+	 * 
+	 * return listDate.get(randomNumber);
+	 * 
+	 * }
+	 * 
+	 * 
+	 * public static Date calculateDay(int offset) { final Calendar cal =
+	 * Calendar.getInstance(); if(offset!=0){ cal.add(Calendar.DATE, offset);
+	 * return cal.getTime();} else { return cal.getTime(); } }
+	 */
+
+	/*
+	 * public static String getDate(String dateformat,int offset){
+	 * 
+	 * String date=null; try { DateFormat df = new SimpleDateFormat(dateformat);
+	 * date= df.parse(dateString);
+	 * 
+	 * }catch(Exception e){
+	 * Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(),
+	 * true); e.printStackTrace(); } return date; }
+	 */
+
+	/**
+	 * <pre>
+	 * This method let user select a random date between two specified dates
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 */
+	public static Date getRandomDateBetweenTwoDates(Date startRange,
+			Date endRange) throws Exception {
 		List<Date> listDate = new ArrayList<Date>();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(startRange);
-		int count=0;
-		while (calendar.getTime().before(endRange))
-		{
+		int count = 0;
+		while (calendar.getTime().before(endRange)) {
 			calendar.add(Calendar.DATE, 1);
 			Date result = calendar.getTime();
-			if(calendar.getTime().before(endRange)){
+			if (calendar.getTime().before(endRange)) {
 				count++;
 				listDate.add(result);
 			}
 		}
-		System.out.println("Number of days:"+count);
-		System.out.println("Dates:"+listDate);
-		int randomNumber =  CommonLib.getRandomNumber(listDate.size());
+		System.out.println("Number of days:" + count);
+		System.out.println("Dates:" + listDate);
+		int randomNumber = CommonLib.getRandomNumber(listDate.size());
 
 		return listDate.get(randomNumber);
 
 	}
 
-
-	public static Date calculateDay(int offset)
-	{
+	public static Date calculateDay(int offset) {
 		final Calendar cal = Calendar.getInstance();
-		if(offset!=0){
+		if (offset != 0) {
 			cal.add(Calendar.DATE, offset);
-			return cal.getTime();}
-		else
-		{
+			return cal.getTime();
+		} else {
 			return cal.getTime();
 		}
-	}*/
-
-/*	public static String getDate(String dateformat,int offset){
-	
-		String date=null;
-		try
-		{
-		DateFormat df = new SimpleDateFormat(dateformat);
-		date= df.parse(dateString);
-		
-	}catch(Exception e){
-		Reporter.logEvent(Status.FAIL,"Exception occurred.",e.getMessage(), true);
-		e.printStackTrace();
 	}
-	return date;
-}*/
 
-
-
-/**
- * <pre>This method let user select a random date between two specified dates</pre>
- * @author smykjn
- */
-public static Date getRandomDateBetweenTwoDates(Date startRange,Date endRange) throws Exception{
-	List<Date> listDate = new ArrayList<Date>();
-	Calendar calendar = new GregorianCalendar();
-    calendar.setTime(startRange);
-	int count=0;
-	 while (calendar.getTime().before(endRange))
-	    {
-		 calendar.add(Calendar.DATE, 1);
-	        Date result = calendar.getTime();
-	        if(calendar.getTime().before(endRange)){
-	        	count++;
-	        	listDate.add(result);
-	        }
-	    }
-    System.out.println("Number of days:"+count);
-    System.out.println("Dates:"+listDate);
-   int randomNumber =  CommonLib.getRandomNumber(listDate.size());
-   
-   return listDate.get(randomNumber);
-    
-}
-
-
-public static Date calculateDay(int offset)
-{
-       final Calendar cal = Calendar.getInstance();
-       if(offset!=0){
-              cal.add(Calendar.DATE, offset);
-              return cal.getTime();}
-       else
-       {
-              return cal.getTime();
-       }
-}
-
-public static String getDate(String dateformat,int offset)
-{
-       String date=null;
-       DateFormat df = new SimpleDateFormat(dateformat);
-       df.setLenient(false);
-       try{
-              date = df.format(calculateDay(offset));
-       }
-       catch(Exception e)
-       {
-              System.out.println (e.getMessage()) ;
-       }
-       System.out.println("Formatted date is:"+date);
-       return date;
-}
-
-
-/**
- * <pre>This method validates that event table is having entry with 
- * specified event id(confirmation number in UI)</pre>
- * @author smykjn
- */
-/*public static boolean validateEventID(String evenId) throws SQLException
-{
-	boolean isRecordFound = false;
-	String dbName =  getUserDBName(Stock.GetParameterValue("username"))
-	+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
-	queryResultSet = DB.executeQuery(dbName,
-			Stock.getTestQuery("validateEventId")[1],evenId);
-	if(DB.getRecordSetCount(queryResultSet)>0)
-		isRecordFound=true;
-	else
-		isRecordFound=false;
-	return isRecordFound;
-}
+	public static String getDate(String dateformat, int offset) {
+		String date = null;
+		DateFormat df = new SimpleDateFormat(dateformat);
 		df.setLenient(false);
-		try{
+		try {
 			date = df.format(calculateDay(offset));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		catch(Exception e)
-		{
-			System.out.println (e.getMessage()) ;
-		}
-		System.out.println("Formatted date is:"+date);
+		System.out.println("Formatted date is:" + date);
 		return date;
-	}*/
-
+	}
 
 	/**
-	 * <pre>This method validates that event table is having entry with specified event id(confirmation number in UI)</pre>
+	 * <pre>
+	 * This method validates that event table is having entry with 
+	 * specified event id(confirmation number in UI)
+	 * </pre>
+	 * 
 	 * @author smykjn
 	 */
-	public static boolean validateEventID(String evenId) throws SQLException
-	{
+	/*
+	 * public static boolean validateEventID(String evenId) throws SQLException
+	 * { boolean isRecordFound = false; String dbName =
+	 * getUserDBName(Stock.GetParameterValue("username")) +
+	 * "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	 * queryResultSet = DB.executeQuery(dbName,
+	 * Stock.getTestQuery("validateEventId")[1],evenId);
+	 * if(DB.getRecordSetCount(queryResultSet)>0) isRecordFound=true; else
+	 * isRecordFound=false; return isRecordFound; } df.setLenient(false); try{
+	 * date = df.format(calculateDay(offset)); } catch(Exception e) {
+	 * System.out.println (e.getMessage()) ; }
+	 * System.out.println("Formatted date is:"+date); return date; }
+	 */
+
+	/**
+	 * <pre>
+	 * This method validates that event table is having entry with specified event id(confirmation number in UI)
+	 * </pre>
+	 * 
+	 * @author smykjn
+	 */
+	public static boolean validateEventID(String evenId) throws SQLException {
 		boolean isRecordFound = false;
-		queryResultSet = DB.executeQuery(CommonLib.getUserDBName(Stock.GetParameterValue("username"))
-				+ "DB_"+CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV")),
-				Stock.getTestQuery("validateEventId")[1],evenId);
-		if(DB.getRecordSetCount(queryResultSet)>0)
-			isRecordFound=true;
+		queryResultSet = DB.executeQuery(
+				CommonLib.getUserDBName(Stock.GetParameterValue("username"))
+						+ "DB_"
+						+ CommonLib.checkEnv(Stock.getConfigParam("TEST_ENV")),
+				Stock.getTestQuery("validateEventId")[1], evenId);
+		if (DB.getRecordSetCount(queryResultSet) > 0)
+			isRecordFound = true;
 		else
-			isRecordFound=false;
+			isRecordFound = false;
 		return isRecordFound;
 
 	}
 
-	public static String getUserRole(String[] getUserRoleQuery,String userName){
+	public static String getUserRole(String[] getUserRoleQuery, String userName) {
 		String userRole = null;
-		try{
-			queryResultSet = DB.executeQuery(getUserRoleQuery[0], getUserRoleQuery[1], "K_"+userName);
-			while(queryResultSet.next()){
+		try {
+			queryResultSet = DB.executeQuery(getUserRoleQuery[0],
+					getUserRoleQuery[1], "K_" + userName);
+			while (queryResultSet.next()) {
 				userRole = queryResultSet.getString("ROLE");
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return userRole;
 	}
 
-	public static void switchToDefaultPlanPartnerLinkUserAndNumberOfPlansLessThan25() throws Exception{
+	public static void switchToDefaultPlanPartnerLinkUserAndNumberOfPlansLessThan25()
+			throws Exception {
 		accountVerPage = new AccountVerificationPage();
 		reportsPage = new ReportsPage();
-		String userRole = getUserRole(Stock.getTestQuery("getUserRoleQuery"), Stock.GetParameterValue("username"));
-		int numberOfPlans = accountVerPage.getNumberOfplans
-				(Stock.getTestQuery("getNumberOfplansQuery"),
-						"K_" + Stock.GetParameterValue("username"));
-		if(userRole.contains("PL")&& numberOfPlans>=1&&numberOfPlans<=25){
-			if(Web.isWebElementDisplayed(new HomePage(), "Plan Drop Down", false)){
-				Web.clickOnElement(new HomePage(),"Plan Drop Down Go Button");
+		String userRole = getUserRole(Stock.getTestQuery("getUserRoleQuery"),
+				Stock.GetParameterValue("username"));
+		int numberOfPlans = accountVerPage.getNumberOfplans(
+				Stock.getTestQuery("getNumberOfplansQuery"),
+				"K_" + Stock.GetParameterValue("username"));
+		if (userRole.contains("PL") && numberOfPlans >= 1
+				&& numberOfPlans <= 25) {
+			if (Web.isWebElementDisplayed(new HomePage(), "Plan Drop Down",
+					false)) {
+				Web.clickOnElement(new HomePage(), "Plan Drop Down Go Button");
 			}
-		}
-		else
-			throw new Exception("User is not PL user or user has more than 25 plans");
+		} else
+			throw new Exception(
+					"User is not PL user or user has more than 25 plans");
 
+	}
 
-
-}
-	
-
-	/**<pre>Method to check if a given transaction code already exists in user_auth_txn table<br> for any USCS ID of a given user</br></pre> 
-	 * @param query to be used
-	 * @param userName given user
-	 * @param txnCode given transaction code
+	/**
+	 * <pre>
+	 * Method to check if a given transaction code already exists in user_auth_txn table<br> for any USCS ID of a given user</br>
+	 * </pre>
+	 * 
+	 * @param query
+	 *            to be used
+	 * @param userName
+	 *            given user
+	 * @param txnCode
+	 *            given transaction code
 	 * @return
 	 */
-	public static boolean isTxnCode(String[] query,String userName,String txnCode){
-		try{
-			queryResultSet = DB.executeQuery(query[0], query[1], "K_"+userName,txnCode);
+	public static boolean isTxnCode(String[] query, String userName,
+			String txnCode) {
+		try {
+			queryResultSet = DB.executeQuery(query[0], query[1], "K_"
+					+ userName, txnCode);
 			int rowCount = 0;
-			while(queryResultSet.next()){
-				if(queryResultSet.last()){
+			while (queryResultSet.next()) {
+				if (queryResultSet.last()) {
 					rowCount = queryResultSet.getRow();
-					if(rowCount>0)
+					if (rowCount > 0)
 						return true;
 				}
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 
-	/**<pre> Method to insert the transaction code for a given USCS ID. Before inserting <br>it verifies if txn code exists for given user otherwise it inserts</br><pre>
+	/**
+	 * <pre>
+	 * Method to insert the transaction code for a given USCS ID. Before inserting <br>
+	 * it verifies if txn code exists for given user otherwise it inserts</br>
+	 * 
+	 * <pre>
 	 * @param query insert query to be used
 	 * @param userName User name 
 	 * @param txnCode Transaction code to be inserted.
-	 * @param uscsId <pre>USCS id for which txn code need to be inserted.This can be <br>fetched from <b>user#user_class</b> table</br></pre>
+	 * @param uscsId
+	 * 
+	 * <pre>
+	 * USCS id for which txn code need to be inserted.This can be <br>fetched from <b>user#user_class</b> table</br>
+	 * </pre>
+	 * 
 	 * @return
 	 */
-	public static boolean insertTxnCode(String[] query,String userName,String txnCode,String uscsId){
-		try{
-			if(isTxnCode(Stock.getTestQuery("getTransactionCodeAvailability"),userName,txnCode))
+	public static boolean insertTxnCode(String[] query, String userName,
+			String txnCode, String uscsId) {
+		try {
+			if (isTxnCode(Stock.getTestQuery("getTransactionCodeAvailability"),
+					userName, txnCode))
 				return true;
-			else{
-				int rowsUpdated = DB.executeUpdate(query[0], query[1], txnCode,uscsId,"0","N");
-				if(rowsUpdated>0)
+			else {
+				int rowsUpdated = DB.executeUpdate(query[0], query[1], txnCode,
+						uscsId, "0", "N");
+				if (rowsUpdated > 0)
 					return true;
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
-	public static String getIterationDataAsString(Map<String, String> testdata){
+
+	public static String getIterationDataAsString(Map<String, String> testdata) {
 		String result = "";
-		for(Map.Entry<String,String> td : testdata.entrySet()){
-			result = result+(td.getKey()+" : "+td.getValue())+" | ";
+		for (Map.Entry<String, String> td : testdata.entrySet()) {
+			result = result + (td.getKey() + " : " + td.getValue()) + " | ";
 		}
-		return result.substring(0,result.lastIndexOf("|"));
-	}
-	
-	public static void FrameSwitchONandOFF(boolean switchFrame,WebElement... frm){
-		if(Web.isWebElementDisplayed(frm[0],false) && switchFrame){
-		   Web.getDriver().switchTo().frame(frm[0]);
-		}
-		
-		if(!switchFrame){
-		   Web.getDriver().switchTo().defaultContent();
-		}		
+		return result.substring(0, result.lastIndexOf("|"));
 	}
 
+	public static void FrameSwitchONandOFF(boolean switchFrame,
+			WebElement... frm) {
+		if (frm.length > 0) {
+			if (Web.isWebElementDisplayed(frm[0], false) && switchFrame) {
+				Web.getDriver().switchTo().frame(frm[0]);
+			}
+		}
+		if (!switchFrame) {
+			Web.getDriver().switchTo().defaultContent();
+		}
+	}
 
-
-
-
+	public static int parse(String str) {
+		Number number = null;
+		try {
+			number = Float.parseFloat(str);
+		} catch (NumberFormatException e) {
+			try {
+				number = Double.parseDouble(str);
+			} catch (NumberFormatException e1) {
+				try {
+					number = Integer.parseInt(str);
+				} catch (NumberFormatException e2) {
+					try {
+						number = Long.parseLong(str);
+					} catch (NumberFormatException e3) {
+						throw e3;
+					}
+				}
+			}
+		}
+		return number.intValue();
+	}
 
 }

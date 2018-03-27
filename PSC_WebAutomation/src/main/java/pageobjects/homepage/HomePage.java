@@ -218,6 +218,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 				invokeMethod.invoke(this.parent.getClass().newInstance(),new Object[]{userData});			
 			}else{
 				//Performing Login
+				Web.getDriver().switchTo().defaultContent();
 				Object login = this.parent.getClass().newInstance(); 				
 				Web.getDriver().switchTo().frame(Web.returnElement(login,"LOGIN FRAME"));
 				Web.waitForElement(login,"USERNAME");
@@ -1036,6 +1037,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 		Actions act = new Actions(Web.getDriver());
 		act.moveToElement(weGreeting).build().perform();
 		Web.setTextToTextBox(searchPlansInput,iDOrName);
+		Thread.sleep(1000);
 		Web.clickOnElement(searchPlanButton);
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.getDriver().switchTo().defaultContent();
