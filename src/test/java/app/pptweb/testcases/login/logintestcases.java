@@ -1245,7 +1245,7 @@ public class logintestcases {
            //Step5
            Web.getDriver().switchTo().defaultContent();
            Web.clickOnElement(twoStepVerification, "CONTINUE CONTACT INFO PAGE");
-           Thread.sleep(6000);
+           Thread.sleep(2000);
            Common.waitForProgressBar();
            Web.waitForPageToLoad(Web.getDriver());
            Web.waitForElement(twoStepVerification,"Label Communication Preference");

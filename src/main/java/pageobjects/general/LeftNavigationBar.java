@@ -95,7 +95,11 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		try {
 			if(!Web.isWebElementDisplayed(weLeftNavSection)){
 				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS")){
-			Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+					Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
+					Common.waitForProgressBar();
+					if(Web.isWebElementsDisplayed(lstlnkPlanName))
+						(new MyAccountsPage()).clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
+				}
 			}
 				
 			else{
@@ -104,7 +108,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				
 				
 			}
-			}
+			
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
 			
