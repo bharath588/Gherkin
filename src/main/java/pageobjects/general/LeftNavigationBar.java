@@ -100,13 +100,14 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 					if(Web.isWebElementsDisplayed(lstlnkPlanName))
 						(new MyAccountsPage()).clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
 				}
-			}
+			
 				
 			else{
 				if(Web.isWebElementsDisplayed(lstlnkPlanName))
 				Web.clickOnElement(lstlnkPlanName.get(0));
 				
 				
+			}
 			}
 			
 				Common.waitForProgressBar();

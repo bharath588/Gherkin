@@ -114,7 +114,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@Override
     protected void isLoaded() throws Error {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
