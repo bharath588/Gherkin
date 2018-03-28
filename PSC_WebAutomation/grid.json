@@ -3,7 +3,7 @@
 
         "Browser": "FF",
 
-        "Port": "http://10.4.61.69:5557/wd/hub",
+        "Port": "http://10.4.61.146:5557/wd/hub",
 
         "Platform": "Windows.xp"
 
