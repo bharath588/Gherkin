@@ -174,6 +174,27 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 						"The user verification screen is loaded", true);
 			}
 		}
+	
+	/** This method Performs user verification based on the user input 
+	 * @throws InterruptedException */
+	public void performErrorVerification(String[] userVerfiData) throws InterruptedException {
+		new UserVerificationPage();	
+		Thread.sleep(3000);
+		if (Web.isWebElementDisplayed(txtUserVerificationEmail,true)) {			
+			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
+			
+			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
+			Web.clickOnElement(btnUserVerificationNext);
+			Web.waitForElement(imgEmpowerPsc);
+		}		
+		if (!Web.isWebElementDisplayed(txtUserVerificationEmail)) {
+				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
+						"The user verification screen is not loaded", false);
+			}else{
+				Reporter.logEvent(Status.PASS, "Verify if the user verification screen is loaded",
+						"The user verification screen is loaded", true);
+			}
+		}
 
 	/**
 	 * <pre>

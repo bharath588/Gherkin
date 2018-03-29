@@ -166,7 +166,7 @@ public class userverificationtestcases {
 			userverification = new UserVerificationPage().get();
 			
 
-			userverification.performVerification(
+			userverification.performErrorVerification(
 					new String[] { Stock.GetParameterValue("UserVeriEmail"),
 							       Stock.GetParameterValue("UserSecondaryAns") });
 			actualErrorMessage = userverification.getErrorMessageText();
