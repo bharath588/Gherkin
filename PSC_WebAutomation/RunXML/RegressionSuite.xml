@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Yellow period execution-3">
+	<test name="Yellow period execution-1">
 	<classes>
 	<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
