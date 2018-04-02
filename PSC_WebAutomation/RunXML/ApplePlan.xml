@@ -6,7 +6,7 @@
 	</listeners>
 	<test name="Regression_Yellow_Period_Exec2_Apple_Plan">
 		 <classes>
-			<!-- <class name="app.psc.testcases.userverification.userverificationtestcases">
+			<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
 					<include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
@@ -19,10 +19,10 @@
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<!--  <include name="TC001_Search_Employee_For_Valid_SSN">
+					 <include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName" value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
 						</parameter>
 					</include> 
@@ -78,16 +78,16 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22012_Employee_Search_Regression_noduplicateppt">
 						</parameter>
-					</include> -->
+					</include>
 					<include name="TC006_Search_Employee_For_Invalid_EmployeeID_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
 					</include>
-					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
-					</include> -->
+					</include>
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-1323_Employee_Contact_Info_Verification" />
 					</include>
@@ -100,40 +100,40 @@
 					<include name="TC021_Salary_View_And_Update">
 						<parameter name="ManualTCName" value="DDTC-2245_Salary_View_And_Update" />
 					</include>
-					<!-- <include name="TC022_Paycheck_contribution_View">
+					<include name="TC022_Paycheck_contribution_View">
 						<parameter name="ManualTCName" value="DDTC-2146_Paycheck_contribution_View" />
-					</include> -->
+					</include>
 					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
 					</include>
-					<!-- <include name="TC30_Account_balance_Tab">
+					<include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
 					</include>
 					<include name="TC42_Paycheck_Contribution_History">
 						<parameter name="ManualTCName" value="DDTC-2162_Paycheck_Contribution_History" />
-					</include> -->
+					</include>
 					<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="DDTC-1062_Disable_PAE_then_renable_PAE" />
 					</include>
 					<include name="TC34_SIT_PSC_Accountdetail_Allocations_Reg">
 						<parameter name="ManualTCName" value="DDTC-218_SIT_PSC_Accountdetail_Allocations_Reg" />
 					</include>
-					<!-- <include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
+					<include name="TC37_SIT_PSC_Recentlyviewed_MouseOver">
 						<parameter name="ManualTCName" value="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver" />
-					</include> -->
+					</include>
 					<include name="TC_44_Enroll_And_Eligibility_Fields_Type_Validations">
 						<parameter name="ManualTCName"
 							value="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations" />
 					</include>
-					<!-- <include name="TC_56_Info_Message_New_User">
+					<include name="TC_56_Info_Message_New_User">
 						<parameter name="ManualTCName" value="DDTC-1332_Info_Message_New_User" />
 					</include>
 					<include name="TC_51_Add_New_Employee_View_Page">
 						<parameter name="ManualTCName" value="DDTC-1494_Add_New_Employee_View_Page" />
-					</include> -->
+					</include>
 				</methods>
 			</class> 
-			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					 <include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
@@ -232,7 +232,7 @@
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>

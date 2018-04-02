@@ -1,0 +1,2084 @@
+<TestData Application="PSC" environment="QA">
+	<DateTime value="11/29/2017 3:53:27 PM"></DateTime>
+	<Module name="Program"></Module>
+	<Module name="login">
+		<TestCase name="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value=" " />
+				<parameter name="errorMessages" value="Password is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value=" " />
+				<parameter name="password" value="Testing1" />
+				<parameter name="errorMessages" value="User ID is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value=" " />
+				<parameter name="password" value=" " />
+				<parameter name="errorMessages"
+					value="User ID is required.&#xA;Password is required." />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="1USER" />
+				<parameter name="password" value="badpassword" />
+				<parameter name="errorMessages"
+					value="Please enter a valid Username / Password combination." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1379_SIT_PSC_Login_01_TC014_Footer links_Prelogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="link_Footer1" value="sponsor-security" />
+				<parameter name="link_Footer2" value="sponsor-privacy" />
+				<parameter name="link_Footer3" value="sponsor-terms-and-conditions" />
+				<parameter name="link_Footer4" value="sponsor-business-continuity" />
+				<parameter name="link_Footer5" value="sponsor-broker-check" />
+				<parameter name="link_Footer6" value="sponsor-excessive-trading" />
+				<parameter name="link_Footer7"
+					value="Plan_Service_Center_User_Authorization_Form" />
+				<parameter name="link_Header1" value="sponsor-faq" />
+				<parameter name="link_Header2"
+					value="https://participant.empower-retirement.com/participant/#/login" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="txtUserVeriEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="link_Footer1" value="Security" />
+				<parameter name="link_Footer2" value="Privacy" />
+				<parameter name="link_Footer3" value="Terms and conditions" />
+				<parameter name="link_Footer4" value="Business Continuity Plan" />
+				<parameter name="link_Footer5" value="BrokerCheck" />
+				<parameter name="link_Footer6"
+					value="Market timing and excessive trading policies" />
+				<parameter name="link_Footer7" value="PSCUserAuthorizationForm" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="ForceLoginTrueURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=true" />
+				<parameter name="ForceLoginFalseURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=false" />
+				<parameter name="ForceLoginDummyURL"
+					value="https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&amp;forceLogin=1234ascd" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="DDTC-1063_SIT_PSC_Login_01_TC017_Internal and External User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="Comments" value="User ID for Internal users" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="Comments" value="User ID for External users" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="userverification">
+		<TestCase
+			name="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value=" " />
+				<parameter name="UserSecondaryAns" value=" " />
+				<parameter name="expectedErrorMessage"
+					value="Email is Required&#xA;&#xA;Security Answer is Required" />
+				<parameter name="dreamCar" value=" " />
+				<parameter name="favDrink" value=" " />
+				<parameter name="spouseMidName" value=" " />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value=" " />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="expectedErrorMessage" value="Email is Required" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value=" " />
+				<parameter name="expectedErrorMessage" value="Security Answer is Required" />
+				<parameter name="dreamCar" value=" " />
+				<parameter name="favDrink" value=" " />
+				<parameter name="spouseMidName" value=" " />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="Invalid" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="expectedErrorMessage" value="Email format is invalid" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="5">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="Invalid@gwl.com" />
+				<parameter name="UserSecondaryAns" value="invalid" />
+				<parameter name="expectedErrorMessage"
+					value="Email is invalid&#xA;&#xA;If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive.&#xA;" />
+				<parameter name="dreamCar" value="invalid" />
+				<parameter name="favDrink" value="invalid" />
+				<parameter name="spouseMidName" value="invalid" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_multiple_site_within_same_browser_session">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="ifSingleSiteUser" value="False" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value=" " />
+				<parameter name="UserSecondaryAns" value=" " />
+				<parameter name="ifSingleSiteUser" value="False" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="ifSingleSiteUser" value="True" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="UserVeriEmail" value=" " />
+				<parameter name="UserSecondaryAns" value=" " />
+				<parameter name="ifSingleSiteUser" value="True" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="accountverification">
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Negative">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="CurrentPassword" value="" />
+				<parameter name="newPassword" value="" />
+				<parameter name="confirmPassword" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+				<parameter name="regUsername" value="User@123" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value=" " />
+				<parameter name="secondDrpdwnAns" value=" " />
+				<parameter name="thirdDrpdwnAns" value="" />
+				<parameter name="expectedErrorMessage" value="Please enter Security Answer" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value=" " />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="expectedErrorMessage" value="Please enter Security Answer" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value=" " />
+				<parameter name="expectedErrorMessage" value="Please enter Security Answer" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value=" " />
+				<parameter name="thirdDrpdwnAns" value=" " />
+				<parameter name="expectedErrorMessage" value="Please enter Security Answer" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="expectedErrorMessage"
+					value="The security questions selected should not be same. " />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_username">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="regUsername" value="" />
+				<parameter name="expectedErrorMessage"
+					value="Registered Username is Required&#xA;&#xA;The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="regUsername" value="!nV@lid" />
+				<parameter name="expectedErrorMessage"
+					value="The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC008_Login flow- New PSC User_user_redirect">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5XEEX" />
+				<parameter name="password" value="testing1" />
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC002_Expired Password_negative">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5116M" />
+				<parameter name="password" value="testing1" />
+				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing2" />
+				<parameter name="confirmPassword" value="Testing3" />
+				<parameter name="expectedErrorMessage" value="New Password must match Confirm Password" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="5116M" />
+				<parameter name="password" value="testing1" />
+				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="CurrentPassword" value="" />
+				<parameter name="newPassword" value="" />
+				<parameter name="confirmPassword" value="" />
+				<parameter name="expectedErrorMessage"
+					value="Current password is required.&#xA;&#xA;New Password is required&#xA;&#xA;Confirm Password is required" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="5116M" />
+				<parameter name="password" value="testing1" />
+				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="CurrentPassword" value="testing2" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="confirmPassword" value="Testing1" />
+				<parameter name="expectedErrorMessage"
+					value="Incorrect current password. Please re-enter or contact your system administrator." />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="5116M" />
+				<parameter name="password" value="testing1" />
+				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="CurrentPassword" value="testing1" />
+				<parameter name="newPassword" value="test" />
+				<parameter name="confirmPassword" value="test" />
+				<parameter name="expectedErrorMessage"
+					value="Invalid new password - Please re-enter password using the criteria shown below" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC002_Expired Password_positive">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5116M" />
+				<parameter name="password" value="testing1" />
+				<parameter name="txtPassword" value="testing1" />
+				<parameter name="emailAddress" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="currentPassword" value="testing1" />
+				<parameter name="newPassword" value="Testing2" />
+				<parameter name="confirmPassword" value="Testing2" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5BC5G" />
+				<parameter name="password" value="testing1" />
+				<parameter name="txtPassword" value="testing1" />
+				<parameter name="UserVeriEmail" value="discard@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC018_Existing User_Security questions validation">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="firstDrpdwnAns" value="test" />
+				<parameter name="secondDrpdwnAns" value="test" />
+				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="username" value="7ISIS" />
+				<parameter name="password" value="testing1" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5BC5G" />
+				<parameter name="password" value="testing1" />
+				<parameter name="UserVeriEmail" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="PlanNumber" value="123" />
+				<parameter name="expectedErrorMessage" value="Invalid Plan Number" />
+				<parameter name="addPlanNumber" value="384171-09" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="SIT_PSC_Login_01_TC003_Existing User_new Plan access_valid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="5BC5G" />
+				<parameter name="password" value="testing1" />
+				<parameter name="UserVeriEmail" value="abc@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="PlanNumber" value="384171-09" />
+				<parameter name="addPlanNumber" value="384171-09" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="guidedpayroll">
+		<TestCase name="Gpp Sanity_01">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="abc@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="amount" value="12#" />
+				<parameter name="ExpectedErrorMessage"
+					value="Contribution Total must be valid dollar amount (e.g, 9.99)&#xA;" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp Sanity_02">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="abc@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="amount" value="100" />
+				<parameter name="date" value="11/18/2015" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp Sanity_01">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="abc@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_Regression_New_Employee_add">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="abc@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="planNumber" value="332847-01" />
+				<parameter name="moneySource" value="BTK,ERM" />
+				<parameter name="SSN" value="100432592" />
+				<parameter name="ConfSSN" value="100432592" />
+				<parameter name="gpdto_firstName" value="testAutoFName" />
+				<parameter name="gpdto_lastName" value="testAutoLName" />
+				<parameter name="gpdto_birthDate" value="01/05/1967" />
+				<parameter name="gpdto_sex" value="FEMALE" />
+				<parameter name="gpdto_maritalStatus" value="SINGLE" />
+				<parameter name="gpdto_firstLineMailing" value="8515" />
+				<parameter name="gpdto_city" value="Greenwood Village" />
+				<parameter name="gpdto_stateCode" value="COLORADO" />
+				<parameter name="gpdto_zipCode" value="80111-5002" />
+				<parameter name="gpdto_hireDate" value="01/01/2008" />
+				<parameter name="gpdto_salAmt" value="10000" />
+				<parameter name="gpdto_salAmtQual" value="ANNUAL" />
+				<parameter name="gpdto_eligibilityYes" value="" />
+				<parameter name="gpdto_participationDate" value="12/09/2015" />
+				<parameter name="gpdto_creditedHours" value="400" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_Regression_Enable_Disable_Moneysource">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="moneySource" value="BTK1" />
+				<parameter name="planNumber" value="332847-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_Regression_ssn_error_invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="moneySource" value="BTK1" />
+				<parameter name="SSN" value="invalidInput" />
+				<parameter name="ConfSSN" value="confInvalidInput" />
+				<parameter name="errMessage_1" value="SSN format: xxx-xx-xxxx or xxxxxxxxx" />
+				<parameter name="errMessage_2" value="SSN does not match" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="payrollDate" value="" />
+				<parameter name="payrollAmt" value="" />
+				<parameter name="moneySource" value="" />
+				<parameter name="SSN" value="100432592" />
+				<parameter name="ConfSSN" value="100432592" />
+				<parameter name="errMessage_1"
+					value="The employee you entered is in the current payroll and will be populated to the top. Click Continue to return." />
+				<parameter name="errMessage_2" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_regression_improper_employee_data">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="04ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="planNumber" value="332847-01" />
+				<parameter name="moneySource" value="BTK" />
+				<parameter name="SSN" value="100432593" />
+				<parameter name="ConfSSN" value="100432593" />
+				<parameter name="gpdto_firstName" value="testAutoFName" />
+				<parameter name="gpdto_lastName" value="testAutoLName" />
+				<parameter name="gpdto_birthDate" value="01/05/1967" />
+				<parameter name="gpdto_sex" value="FEMALE" />
+				<parameter name="gpdto_maritalStatus" value="SINGLE" />
+				<parameter name="gpdto_firstLineMailing" value="8515" />
+				<parameter name="gpdto_city" value="Greenwood Village" />
+				<parameter name="gpdto_stateCode" value="COLORADO" />
+				<parameter name="gpdto_zipCode" value="80111-5002" />
+				<parameter name="gpdto_hireDate" value="01/01/2008" />
+				<parameter name="gpdto_salAmt" value="invaliddata" />
+				<parameter name="gpdto_salAmtQual" value="ANNUAL" />
+				<parameter name="gpdto_eligibilityYes" value="" />
+				<parameter name="gpdto_participationDate" value="12/09/2015" />
+				<parameter name="gpdto_creditedHours" value="400" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="" />
+				<parameter name="password" value="" />
+				<parameter name="userVerificationEmail" value="" />
+				<parameter name="userVerificationAns" value="" />
+				<parameter name="payrollDate" value="" />
+				<parameter name="payrollAmt" value="" />
+				<parameter name="planNumber" value="" />
+				<parameter name="moneySource" value="" />
+				<parameter name="SSN" value="100432593" />
+				<parameter name="ConfSSN" value="100432593" />
+				<parameter name="gpdto_firstName" value="#11121@" />
+				<parameter name="gpdto_lastName" value="11111" />
+				<parameter name="gpdto_birthDate" value="12121212" />
+				<parameter name="gpdto_sex" value="Select" />
+				<parameter name="gpdto_maritalStatus" value="Select" />
+				<parameter name="gpdto_firstLineMailing" value=" $_space" />
+				<parameter name="gpdto_city" value="$_space" />
+				<parameter name="gpdto_stateCode" value="Select" />
+				<parameter name="gpdto_zipCode" value="$_space" />
+				<parameter name="gpdto_hireDate" value="12121212" />
+				<parameter name="gpdto_salAmt" value="invaliddata" />
+				<parameter name="gpdto_salAmtQual" value="Select" />
+				<parameter name="gpdto_eligibilityYes" value="" />
+				<parameter name="gpdto_participationDate" value="12121212" />
+				<parameter name="gpdto_creditedHours" value="@!111" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="Error messages for all input fields" />
+				<parameter name="password" value="" />
+				<parameter name="userVerificationEmail" value="" />
+				<parameter name="userVerificationAns" value="" />
+				<parameter name="payrollDate" value="" />
+				<parameter name="payrollAmt" value="" />
+				<parameter name="planNumber" value="" />
+				<parameter name="moneySource" value="" />
+				<parameter name="SSN" value="" />
+				<parameter name="ConfSSN" value="" />
+				<parameter name="gpdto_firstName" value="Only letters, apostrophe or dash allowed" />
+				<parameter name="gpdto_lastName" value="Only letters, apostrophe or dash allowed" />
+				<parameter name="gpdto_birthDate" value="Format is mm/dd/yyyy" />
+				<parameter name="gpdto_sex" value="Gender is required" />
+				<parameter name="gpdto_maritalStatus" value="Marital Status" />
+				<parameter name="gpdto_firstLineMailing" value="Address is Required" />
+				<parameter name="gpdto_city" value="City is Required" />
+				<parameter name="gpdto_stateCode" value="State is required" />
+				<parameter name="gpdto_zipCode" value="Zip Code is required" />
+				<parameter name="gpdto_hireDate" value="Format is mm/dd/yyyy" />
+				<parameter name="gpdto_salAmt" value="Format is 0.00" />
+				<parameter name="gpdto_salAmtQual" value="Salary Frequency is required" />
+				<parameter name="gpdto_eligibilityYes" value="" />
+				<parameter name="gpdto_participationDate" value="Format is mm/dd/yyyy" />
+				<parameter name="gpdto_creditedHours" value="Format is 0.00" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_Regression_delete_record">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="SearchBy" value="SSN" />
+				<parameter name="SearchParameterSSN" value="100432592" />
+				<parameter name="errMessage_1"
+					value="By deleting this record you will only be removing them from this contribution and not the record keeping system. Are you sure you want to delete the following record?" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_regression_edit_employee_valid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="SearchBy" value="SSN" />
+				<parameter name="SearchParameterSSN" value="100432592" />
+				<parameter name="gpdto_lastName" value="lastNameAfterEdit" />
+				<parameter name="gpdto_firstName" value="firstNameAfterEdit" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_regression_edit_employee_invalid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="SearchBy" value="SSN" />
+				<parameter name="SearchParameterSSN" value="100432592" />
+				<parameter name="gpdto_salAmt" value="invaliddata" />
+				<parameter name="gpdto_hireDate" value="12121212" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="SearchBy" value="SSN" />
+				<parameter name="SearchParameterSSN" value="100432592" />
+				<parameter name="gpdto_salAmt" value="Format is 0.00" />
+				<parameter name="gpdto_hireDate" value="Format is mm/dd/yyyy" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Gpp_regression_process_confirm">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="moneySource" value="BTK,ERM,ERO" />
+				<parameter name="planNumber" value="332847-01" />
+				<parameter name="EMPLOYEE BEFORE TAX" value="12" />
+				<parameter name="EMPLOYER MATCH" value="12.67" />
+				<parameter name="EMPLOYER PROFIT SHARING" value="13" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="payrollDate" value="12/01/2015" />
+				<parameter name="payrollAmt" value="1000" />
+				<parameter name="moneySource" value="BTK,ERM,ERO" />
+				<parameter name="planNumber" value="332847-01" />
+				<parameter name="EMPLOYEE BEFORE TAX" value="14" />
+				<parameter name="EMPLOYER MATCH" value="13.6" />
+				<parameter name="EMPLOYER PROFIT SHARING" value="17" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="employeesearch">
+		<TestCase name="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="1" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2231_Employee_Search_Sanity_Suite_invalidssn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="423423" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21961_Employee_Search_Sanity_Suite_validname">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="s" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1389_Employee_Search_Sanity_Suite_invalidname">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="jack" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21962_Employee_Search_Sanity_Suite_validempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="0" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="21131" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Sanity_Suite_plandiv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2131_Employee_Search_Regression_valid_ppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ParticipantId" value="1" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21985_Employee_Search_Regression_invalid_ppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ParticipantId" value="dsq" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22057_Employee_Search_Regression_noduplicatessn">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="12" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22058_Employee_Search_Regression_noduplicatename">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Name" value="a" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21990_Employee_Search_Regression_noduplicateempid">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="EmployeeID" value="1" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22012_Employee_Search_Regression_noduplicateppt">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="Participant ID" value="2" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_noduplicatediv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ppt_planonediv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ppt_planmultidiv">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21950_Employee_Search_Regression_screen_elements">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21951_Employee_Search_Regression_sorting">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21952_Employee_Search_Regression_pagination">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="SSN" value="002143838" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21953_Employee_Search_Regression_order">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21954_Employee_Search_Regression_hyperlinks">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21955_Employee_Search_Regression_redirect">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21956_Employee_Search_Regression_limit">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-21957_Employee_Search_Regression_filter">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="FilterText" value="a" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_ssn_ext">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_emp_err_code">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="ExpectederrorMessage" value="NO SEARCH RESULTS FOUND" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_termed_employee">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="Employee_Search_Regression_valid_res_termed_emp">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22055_Employee_Search_Regression_ssn_masking">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="DataType" value="Apple" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1323_Employee_Contact_Info_Verification">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="expContactInfoLabels"
+					value="Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method" />
+				<parameter name="expContactInputLabelsWindow"
+					value="Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email" />
+				<parameter name="expContactSelectLabelsWindow"
+					value="Marital Status,Gender,Language Preference,State,Country" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2153_Verify_Beneficiary_Info">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2167_Recently_Viewed_Employee">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2245_Salary_View_And_Update">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpSalarySectionHeader" value="Effective date,Salary,Frequency" />
+				<parameter name="SalarySectionTitle" value="Compensation" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2146_Paycheck_contribution_View">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2091_Verify_Employee_Basic_Info">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedLabels"
+					value="Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-317_Validate_Account_balance_Tab">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedDisclaimer"
+					value="* All dates and times are in Mountain Time unless otherwise noted." />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2162_Paycheck_Contribution_History">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="SSN" value="3963876" />
+				<parameter name="planId" value="331044-01" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1062_Disable_PAE_then_renable_PAE">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedErrorMessage"
+					value="Data Setup Error. Please contact Plan Technical Support, option Website Support." />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-218_SIT_PSC_Accountdetail_Allocations_Reg">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedHeaders"
+					value="Investment option,Fund short name,Deposit period,Default ind,Percent" />
+				<parameter name="ExpectedMessage" value="Employee currently has no allocations." />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1515_SIT_PSC_Recentlyviewed_MouseOver">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1231_Enroll_And_Eligibility_Fields_Type_Validations">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1332_Info_Message_New_User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedMessage"
+					value="As you search for and view employees, your most recently viewed names will display here for easy access." />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1494_Add_New_Employee_View_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="LastName" value="Jain" />
+				<parameter name="UserSecondaryAns" value="test" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="query">
+		<parameter QueryName="setDefaultPlanNullQuery" DB="ParticipantDataDB"
+			Query="update users set default_ga_id=null where logon_id = ?" />
+		<parameter QueryName="getNumberOfPlansQuery" DB="ParticipantDataDB"
+			Query="select distinct uda.ga_id
+from user_data_access uda
+join(select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') reftable 
+ON uda.ga_id = reftable.ga_id 
+where uda.user_logon_id = ?" />
+		<parameter QueryName="deleteSecurityAnsQuery" DB="ParticipantDataDB"
+			Query="delete from user_security_questions where user_logon_id =?" />
+		<parameter QueryName="updateUserEffdateQuery" DB="ParticipantDataDB"
+			Query="update ISIS_PASSWORD set effdate =effdate-360 where user_logon_id = ?" />
+		<parameter QueryName="getEmailaddressQuery" DB="CommonDB_QA"
+			Query="select email_address from users where logon_id = ?" />
+		<parameter QueryName="deleteFriendlyUsernameQuery" DB="CommonDB"
+			Query="delete from FRIENDLY_USERNAME
+where user_logon_id =?
+and FRIENDLY_USERNAME in
+( select  FRIENDLY_USERNAME from users where logon_id = ?)" />
+		<parameter QueryName="updateAttributesQuery" DB="ParticipantDataDB"
+			Query="update users
+set LAST_LOGIN_DATE_TIME = null ,
+cas_web_agreement_accept_ind=null,
+CAS_WEB_AGREEMENT_DPDATE_TIME = null ,
+DEFAULT_GA_ID = null ,
+FRIENDLY_USERNAME = null ,
+FRIENDLY_USERNAME_OPT_OUT_IND = null
+where logon_id =?
+" />
+		<parameter QueryName="getRecentPlanQuery" DB="ParticipantDataDB"
+			Query="select ga_id from user_data_access where dpdate_time = (select max(dpdate_time) from user_data_access where user_logon_id= ? )  and ga_id is not null" />
+		<parameter QueryName="addPlanNumberQuery" DB="ParticipantDataDB"
+			Query="insert into std_restrc
+  values (std_restrcq.nextval,
+     ?, 'GA', 'Y', 'Y',
+     null, null, null,?, 
+     null, null, null, null, null, null, null,
+     null, null, null, null, null, 0, null)" />
+		<parameter QueryName="getPlanswithDivisions" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join (select distinct ga.id, 'no division' from group_account ga 
+where termdate is null minus select distinct ga.id, 
+'no division' from group_account ga, gc_subset gs where ga.gc_id = GS.GC_ID and 
+ga.termdate is null union select distinct ga.id, 'has divisions' from group_account ga, gc_subset gs where 
+ga.gc_id = GS.GC_ID and ga.termdate is null order by id) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getPlanswithMorethanSingleDivision"
+			DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
+      (SELECT GA.ID,
+       count(GS.BASIS) as count 
+ FROM GC_SUBSET GS, GROUP_CLIENT GC, GROUP_ACCOUNT GA
+ WHERE GA. GC_ID = GC.ID
+       AND GC .ID = GS .GC_ID
+      AND GS .BASIS IS NOT NULL
+      AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ? and reftable.count &gt; '1') ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getPlanswithSingleDivision" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct ga_id from user_data_access userdatatable join
+      (SELECT GA.ID,
+       count(GS.BASIS) as count 
+ FROM GC_SUBSET GS, GROUP_CLIENT GC, GROUP_ACCOUNT GA
+ WHERE GA. GC_ID = GC.ID
+       AND GC .ID = GS .GC_ID
+      AND GS .BASIS IS NOT NULL
+      AND GS .VALUE IS NOT NULL group by GA.ID order by GA.ID asc) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ? and reftable.count = '1') ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="selectDefaultPlanQuery" DB="ParticipantDataDB"
+			Query="select default_ga_id from users where logon_id = ?" />
+		<parameter QueryName="selectSSNwithExt" DB="ParticipantDataDB"
+			Query="SELECT  A.ID,
+        A.SSN  ,
+        A.SSN_EXT  ,
+        A.LAST_NAME  ,
+        B.GA_ID ,
+        B.STATUS_CODE ,
+        B.STATUS_SUBCODE
+    FROM INDIVIDUAL A, PART_AGRMT B
+   WHERE  A.ID  =  B.  IND_ID AND  B.  GA_ID =  ?  AND  A.  SSN_EXT IS  NOT  NULL
+ORDER BY A.LAST_NAME" />
+		<parameter QueryName="getPlansForErrCode" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select ga_id from part_agrmt where status_subcode = 'ERR') reftable ON userdatatable.ga_id = reftable.ga_id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getEmployeeIDErr" DB="ParticipantDataDB"
+			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id  = ? and status_subcode='ERR'and a.ind_id=b.id" />
+		<parameter QueryName="getPlanForTermedEmployees" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select p.ga_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
+order by emp_termdate desc) reftable ON userdatatable.ga_id = reftable.ga_id where
+userdatatable.user_logon_id =?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="getEmpIdforTermedEmployee" DB="ParticipantDataDB"
+			Query="select e.ind_id from employment e,part_agrmt p where p.ind_id= e.ind_id and e.emp_termdate is not null and emp_termdate &lt;= trunc(sysdate) 
+and p.ga_id= ?
+order by emp_termdate desc" />
+		<parameter QueryName="selectPlanForSSNMasking" DB="ParticipantDataDB"
+			Query="select distinct ref1.ga_id from (select distinct userdatatable.ga_id from user_data_access userdatatable join
+      (select ga.id,
+pv.SSN_MASKING_ALLOWED_IND as ssnMaskingAllowedInd, 
+pv.SSN_MASKING_FORMAT_VIEW_MODE as ssnMaskingFormatViewMode, 
+pv.SSN_MASKING_FORMAT_INPUT_MODE as ssnMaskingFormatInputMode, prov_company
+from PROV_COMPANY pv, product p, group_account ga 
+where pv.code = p.PROV_COMPANY 
+and pv.SSN_MASKING_ALLOWED_IND = 'Y'
+and p.id = ga.prod_id) reftable ON userdatatable.ga_id = reftable.id where
+userdatatable.user_logon_id = ?) ref1 join (select ga_id from access_customization_view 
+where access_type_code='PSC_WEB' and accu_code='PlanEmpower') ref2 ON ref1.ga_id = ref2.ga_id" />
+		<parameter QueryName="updateDefaultPlanQuery" DB="ParticipantDataDB"
+			Query="update users set DEFAULT_GA_ID=? where logon_id=?" />
+		<parameter QueryName="getMoneySourceCols" DB="ParticipantDataDB"
+			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
+gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai 
+where std.code = gm.sdmt_code 
+AND gm.ga_id = ?
+AND ai.ga_id = gm.ga_id  
+AND ai.sdmt_code = gm.sdmt_code 
+AND ai.gdmt_seqnbr = gm.seqnbr
+AND ai.sddety_code = 'REG' 
+AND ai.effdate &lt;= sysdate 
+AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)  
+AND ai.part_allocn_ind = 'Y'
+AND gm.SDMT_CODE IN (?)
+AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR" />
+		<parameter QueryName="getMoneySources" DB="ParticipantDataDB"
+			Query="SELECT DISTINCT gm.GA_ID as GaId, gm.SDMT_CODE as SdmtCode, gm.SEQNBR as Seqnbr, 
+gm.DESCR as Descr from std_mnty std,  grp_def_mnty gm, avail_invopt ai where std.code = gm.sdmt_code 
+AND gm.ga_id = ? 
+AND ai.ga_id = gm.ga_id  
+AND ai.sdmt_code = gm.sdmt_code 
+AND ai.gdmt_seqnbr = gm.seqnbr
+AND ai.sddety_code = 'REG' 
+AND ai.effdate &lt;= sysdate 
+AND (ai.termdate IS NULL OR ai.termdate &gt; sysdate)  
+AND ai.part_allocn_ind = 'Y'
+AND std.irs_rollover_source_code IS NULL ORDER BY gm.SDMT_CODE, gm.SEQNBR " />
+		<parameter QueryName="getTermedEmployees" DB="ParticipantDataDB"
+			Query="select b.ssn,b.id from part_agrmt a, individual b where a.ga_id = ? and status_code='T'and a.ind_id=b.id
+" />
+		<parameter QueryName="queryChangeUserCategory" DB="ParticipantDataDB"
+			Query="update users set user_category = 'PLAN EMPLOYEE' where logon_id=?" />
+		<parameter QueryName="getDefaultPlanUser" DB="ParticipantDataDB"
+			Query="select default_ga_id from users where logon_id=?" />
+		<parameter QueryName="checkIfSSNExist" DB="ParticipantDataDB"
+			Query="select ssn from individual where ssn = ?" />
+		<parameter QueryName="getGSCBasisAndValue" DB="ParticipantDataDB"
+			Query="select distinct gcs_basis,gcs_value from user_data_access where ga_id=?" />
+		<parameter QueryName="deleteOldPasswordRows" DB="ParticipantDataDB"
+			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
+not IN(select max(EFFDATE) 
+from isis_password 
+where user_logon_id=?) " />
+		<parameter QueryName="deleteRecentPasswordRows" DB="ParticipantDataDB"
+			Query="delete FROM isis_password WHERE user_logon_id = ? and EFFDATE 
+not IN(select min(EFFDATE) 
+from isis_password 
+where user_logon_id=?) " />
+		<parameter QueryName="queryToNumberOfrows" DB="ParticipantDataDB"
+			Query="select * from isis_password where user_logon_id = ?" />
+		<parameter QueryName="queryTosetOldPassword" DB="ParticipantDataDB"
+			Query="update ISIS_PASSWORD set effdate =sysdate where user_logon_id = ?" />
+		<parameter QueryName="getNumberofSiteAccess" DB="ParticipantDataDB"
+			Query="select distinct av.accu_code,ud.prod_id, ud.prov_company from user_data_access ud join access_customization_view av on ud.ga_id = av.ga_id where 
+user_logon_id = ? and av.access_type_code='PSC_WEB'" />
+		<parameter QueryName="queryTofindPlansForUser" DB="ParticipantDataDB"
+			Query="select distinct GA_ID from access_customization_view where  
+GA_ID in (select DISTINCT GA_ID from user_data_access where 
+user_logon_id=? and GA_ID is not null) and accu_code='PlanEmpower'" />
+		<parameter QueryName="queryToEnablePlanforSSNmasking" DB="ParticipantDataDB"
+			Query="update group_account set ssn_masking_allowed_ind ='Y',ssn_masking_format_view_mode = 'XXX-XX-####', ssn_masking_format_input_mode = 'XXX-XX-####' where id=?" />
+		<parameter QueryName="getPartcipantDBInfo" DB="CommonDB_QA"
+			Query="select database_instance from FRIENDLY_USERNAME where user_logon_id = ?" />
+		<parameter QueryName="getEmployeeID" DB="IN02DB_QA"
+			Query="select * from individual, employment where id in (select ind_id from part_agrmt where ga_id in 
+(select default_ga_id from users where logon_id=?)) and ssn is not null and individual.id=employment.ind_id and hire_date is not null and emp_termdate is not null" />
+		<parameter QueryName="getEmployeeInfo" DB="IN02DB_QA"
+			Query="select i.ssn,i.first_name,i.last_name,
+nvl(i.marital_status,' ') marital_status,
+nvl(i.middle_name,' ') middle_name,
+nvl(a.first_line_mailing,' ') first_line_mailing, 
+nvl(a.scnd_line_mailing,' ') scnd_line_mailing, 
+nvl(a.city,' ') city, 
+nvl( a.zip_code,' ') zip_code,
+nvl(a.state_code,' ') state_code,
+nvl(a.country,' ') country, 
+nvl(to_char(i.home_phone_area_code),' ') home_phone_area_code,
+nvl(to_char(i.home_phone_nbr),' ') home_phone_nbr, 
+nvl(to_char(i.work_phone_area_code),' ') work_phone_area_code,
+nvl(to_char(i.work_phone_nbr),' ') work_phone_nbr
+from individual i, address a where a.ind_id = i.id and i.ssn =?" />
+		<parameter QueryName="getMaritalStatus" DB="IN02DB_QA"
+			Query="select upper(rv_meaning) from isis_ref_values where rv_column = 'MARITAL_STATUS' and rv_table ='INTERLINK_DATA_EXCHANGE'and rv_low_value=?" />
+		<parameter QueryName="getState" DB="IN02DB_QA"
+			Query="select * from isis_ref_values where rv_low_value=? and rv_domain='STATE'" />
+		<parameter QueryName="getCountry" DB="IN02DB_QA"
+			Query="select * from isis_ref_values where rv_low_value=? and rv_domain='COUNTRY'" />
+		<parameter QueryName="getBeneficiaryEmployee" DB="IN02DB_QA"
+			Query="select * from 
+individual where id in (select pa_ind_id from 
+related_individual where pa_ga_id in (select default_ga_id from users where logon_id=?))" />
+		<parameter QueryName="getBeneficiary" DB="IN02DB_QA"
+			Query="select to_char(recorded_date,'MM/DD/YYYY') Effective_date,replace(mailing_name_1,' ','')mailing_name_1 ,Percent,SSN,Bene_type_code,to_char(Birth_date,'MM/DD/YYYY') Birth_Date,relationship_code from related_individual where pa_ind_id=? order by mailing_name_1" />
+		<parameter QueryName="getIncomeDataEmployee" DB="IN02DB_QA"
+			Query="select ga_id,ind_id from part_agrmt where ind_id in (select ind_id from income_data where
+ sal_amt is not null and sal_amt !=0 and ind_id in (select ind_id from part_agrmt where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple' 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')))) order by ind_id" />
+		<parameter QueryName="getIndividual" DB="IN02DB_QA"
+			Query="select ssn from individual where id =?" />
+		<parameter QueryName="getSSNForPaycheckContribution" DB="IN02DB_QA"
+			Query="SELECT GA.GC_ID,I.SSN,I.LAST_NAME,I.FIRST_NAME,ED.STDT_CODE,ED.PERCENTAGE,Ed.AMOUNT FROM INDIVIDUAL I,ELECTIVE_DEFERRAL ED,GROUP_ACCOUNT GA, user_data_access uda
+WHERE I.ID = ED.IND_ID AND ED.PLAN_ID = GA.PLAN_ID and ga.id= uda.ga_id  and ga.id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda1
+on uda1.ga_id= acv1.ga_id and uda1.user_logon_id=? and acv1.accu_code='PlanApple' 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')) and rownum&lt;50" />
+		<parameter QueryName="getQDROIndividual" DB="IN02DB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
+pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
+where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'Q' and i.sex is not null
+and pa.ga_id in (select GA_ID from access_customization_view 
+where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
+and accu_code='PlanApple')" />
+		<parameter QueryName="getNormalIndividual" DB="IN02DB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
+pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
+where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'N' and i.sex is not null
+and pa.ga_id in (select GA_ID from access_customization_view 
+where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
+and accu_code='PlanApple')" />
+		<parameter QueryName="getTransferIndividual" DB="IN02DB_QA"
+			Query="select pa.GA_ID,pa.IND_ID, pa.pa_ind_id,i.SSN,i.SSN_EXT , i.FIRST_NAME, 
+i.MIDDLE_NAME, i.LAST_NAME, to_char(i.BIRTH_DATE,'MM/DD/YYYY') birth_date, i.marital_status, i.language_code,pa.ownership_ind, i.SSN_EXT_RSN_CODE, pa.PIN_AUTH_CODE, 
+pa.RESTRC_CODE, i.SEX, pa.STATUS_CODE from PART_AGRMT pa, individual i
+where i.id = pa.ind_id and pa.OWNERSHIP_IND = 'T' and i.sex is not null
+and pa.ga_id in (select GA_ID from access_customization_view 
+where  GA_ID in (select  GA_ID from user_data_access where user_logon_id=? and GA_ID is not null)
+and accu_code='PlanApple')" />
+		<parameter QueryName="getEmployeeWithSubSetSection" DB="IN02DB_QA"
+			Query="select i.ssn,ga.id, gs.basis, gs.value, gs.client_div_code from group_client gc
+inner join group_account ga on ga.gc_id = gc.id
+inner join gc_subset gs  on gc.id=gs.gc_id
+inner join part_agrmt pa on pa.ga_id=ga.id
+inner join access_customization_view acv on acv.ga_id=pa.ga_id
+inner join user_data_access uda on uda.ga_id= acv.ga_id
+inner join individual i on i.id = pa.ind_id
+and acv.accu_code='PlanApple' and ga.id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
+and acv.access_type_code='PSC_WEB' 
+and gs.basis is not null and gs.value is not null" />
+		<parameter QueryName="getEmployeeWithoutSubSetSection" DB="IN02DB_QA"
+			Query="select i.ssn,i.id, pa.ga_id from individual i 
+inner join  part_agrmt pa on i.id = pa.ind_id
+inner join access_customization_view acv on acv.ga_id= pa.ga_id
+inner join user_data_access uda on acv.ga_id= uda.ga_id
+where acv.accu_code='PlanApple' and acv.access_type_code='PSC_WEB'
+and uda.user_logon_id=? and pa.ga_id in (select ga.id 
+from group_account ga, 
+group_client gc where ga.gc_id = gc.id 
+and not exists (select 'X' from gc_subset 
+where gc_id = ga.gc_id))" />
+		<parameter QueryName="getPartWithAccountBalance" DB="IN02DB_QA"
+			Query="select i.ssn from loan_assess la left join individual i on i.id=la.ind_id   where la.status_code in ('PARTIAL','PAID','DEFAULT') and ga_id in (
+select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple' 
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))" />
+		<parameter QueryName="CheckPortalTypecodeForEmpower" DB="IN02DB_QA"
+			Query="select portal_type_code from access_portal where accu_code like '%Apple%' and portal_type_code = 'PAE_URL' " />
+		<parameter QueryName="DisablePAE" DB="IN02DB_QA"
+			Query="update ACCESS_PORTAL set portal_type_code = 'test' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Apple') and portal_type_code = 'PAE_URL'" />
+		<parameter QueryName="EnablePAE" DB="IN02DB_QA"
+			Query="update ACCESS_PORTAL set portal_type_code = 'PAE_URL' WHERE  accu_code in ('Gwrs','PptWebGwrs','GwrsEmpowerWR','Apple') and portal_type_code = 'test'" />
+		<parameter QueryName="deletePSCPAETxnCode" DB="IN02DB_QA"
+			Query="delete from user_txn_auth where txn_code = 'PSCPAE' and uscs_id = ?" />
+		<parameter QueryName="CheckPSCPAETxnCode" DB="IN02DB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code = 'PSCPAE'" />
+		<parameter QueryName="insertPSCPAETxnCode_1" DB="IN02DB_QA"
+			Query="insert into user_txn_auth values('PSCPAE', ? , null, 'N')" />
+		<parameter QueryName="getInvetmentAllocationEmp" DB="IN02DB_QA"
+			Query="select  DISTINCT i.ssn from invopt_alloc ia left join individual i on i.id = ia.ind_id where ga_id in (select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))  and termdate is null and i.ssn is not null" />
+		<parameter QueryName="insertESCCPAtxnCode" DB="IN02DB_QA"
+			Query="Insert into USER_TXN_AUTH (TXN_CODE, USCS_ID, MAX_AMT, UPDATE_IND) Values ('ESCCPA',?, 0, 'N') " />
+		<parameter QueryName="checkESCCPAtxnCode_1" DB="IN02DB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA','ESCPAL') " />
+		<parameter QueryName="checkESCCPAtxnCode" DB="IN02DB_QA"
+			Query="select * from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ?) and txn_code in ('ESCCPA')" />
+		<parameter QueryName="DeleteESCCPAtxnCode" DB="IN02DB_QA"
+			Query="delete from user_txn_auth where uscs_id in (select uscs_id from user#user_class where user_logon_id = ? ) and txn_code in ('ESCCPA') " />
+		<parameter QueryName="getPPtWithEnrollAndEligDetails" DB="IN02DB_QA"
+			Query="SELECT i.ssn FROM IND_ELIGIBILITY IE INNER JOIN INDIVIDUAL I
+INNER JOIN part_agrmt pa on i.id= pa.ind_id and  pa.ga_id in(select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs'))
+ON I.ID=IE.IND_ID WHERE IE.ELIGIBILITY_IND IS NOT NULL " />
+		<parameter QueryName="getPPtWithEnrollAndEligDetails_1" DB="IN02DB_QA"
+			Query="select eligibility_ind, 
+nvl(to_char(participation_date,'MM/dd/yyyy'),' ') participation_date,
+nvl(to_char(enroll_invite_date_time,'MM/dd/yyyy'),' ') enroll_invite_date_time,
+nvl(to_char(enroll_invite_reply_date_time,'MM/dd/yyyy'),' ') enroll_invite_reply_date_time,
+nvl(to_char(enroll_pin_date_time,'MM/dd/yyyy'),' ') enroll_pin_date_time, 
+nvl(ineligibility_reason_code,' ') ineligibility_reason_code,
+nvl(to_char(enroll_notification_date_time,'MM/dd/yyyy'),' ') enroll_notification_date_time, 
+nvl(suppress_auto_enroll_ind,' ') suppress_auto_enroll_ind
+from ind_eligibility where ind_id in 
+(select id from individual where ssn=?) and eligibility_ind is not null" />
+		<parameter QueryName="DeleteRecentlyViewedRecords" DB="IN02DB_QA"
+			Query="delete from work_recently_viewed_part where user_logon_id=?" />
+		<parameter QueryName="queryTofindPlansForNextGen" DB="IN02DB_QA"
+			Query="select distinct acv1.ga_id from access_customization_view acv1 inner join user_data_access uda
+on uda.ga_id= acv1.ga_id and uda.user_logon_id=? and acv1.accu_code='PlanApple' and acv1.access_type_code='PSC_WEB'
+where not EXISTS(select * from access_customization_view acv2 where acv1.ga_id= acv2.ga_id and acv2.accu_code='PscGwrs')" />
+		<parameter QueryName="updatePasswordTotesting1" DB="CommonDB_QA"
+			Query="update isis_password set hash_value='50000:964bea4afe7e9cfffc63a7edcd832857:ac09816956b32d0a6154691804054de335c7642028258528c153c27a1b16071765c7104607018a41f1f0e00af1d5b3382535ef40fb77990d7df8b637a1be9a506f40fcfc170649393d37be6ba8cee4b68fc356a0af9043fc111b11b315140783b2768f95250e2c3d34e0fdc30408f6cf6de361e145db76f3dfa54f5e627cd211' where user_logon_id=?" />
+		<parameter QueryName="updateSecurityQuestions" DB="CommonDB_QA"
+			Query="update user_security_questions set encrypted_security_answer='3549616654736245664542536F' where user_logon_id = ?" />
+	</Module>
+	<Module name="plan">
+		<TestCase name="DDTC-11941_SIT_PSC_Plan_messaging_confirmation_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22129_SIT_PSC_Investment_Fixed_Investment_Rates_Page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="150550-01" />
+				<parameter name="ExpectedFixedInvstColumn" value="Investment option,Legal name,Term,Rate" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="937878-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-23517_Disable_certain_user_edit_fields_for_SAW">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="331044-01" />
+				<parameter name="lastName" value="Boss" />
+				<parameter name="firstName" value="Ken" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-99_Order_Participant_QDIA_Notice_Listing">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="3ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="338566-01" />
+				<parameter name="planNumber1" value="331170-01" />
+				<parameter name="ignoreDivision" value="yes" />
+				<parameter name="Participant Identifier" value="FULL SSN 123-45-6789" />
+				<parameter name="Sort Order" value="Participant ID" />
+				<parameter name="Report Format" value="PDF" />
+			</Iteration>
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="338566-01" />
+				<parameter name="planNumber1" value="331170-01" />
+				<parameter name="ignoreDivision" value="no" />
+				<parameter name="Participant Identifier" value="FULL SSN 123-45-6789" />
+				<parameter name="Sort Order" value="Participant ID" />
+				<parameter name="Report Format" value="PDF" />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="DDTC-2168_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="1260028-01" />
+				<parameter name="planNumberNoPartGrp" value="1260028-01" />
+				<parameter name="NoPlanDocMsg"
+					value="No plan documents were found for this account." />
+			</Iteration>
+		</TestCase>
+		<TestCase
+			name="DDTC-2256_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumberWithPartGrp" value="385092-01" />
+				<parameter name="Notice Documents"
+					value="Fee Disclosure Documents,Qualified Default Investment Alternative,Safe Harbor Notice" />
+				<parameter name="ExpectedDocMsg"
+					value="To view the most recent version(s) of your Safe Harbor documents, please select from the list below." />
+				<parameter name="ExpectedHistoryLinkText"
+					value="View the Safe Harbor document history for the past 3 years." />
+				<parameter name="ExpTitleOnHistoryPage" value="Safe Harbor Notice document history" />
+				<parameter name="ExpDescOnHistoryPage"
+					value="This page is designed to help you view monthly Safe Harbor documents for up to three years." />
+				<parameter name="AccordionTitle" value="Safe Harbor Notice Documents" />
+				<parameter name="ExpListOfMonths"
+					value="Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1064_3rd_Level_Links">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpPlanOverviewOptions"
+					value="Plan provisions,Vesting schedules,Participant web and VRU options" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22077_SIT_PSC_Investment_Fixed_Investment_FutureRates">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="ExpectedFixedInvstColumn"
+					value="Investment option,Legal name,Term,Current rate,Future rate,Future rate effective date" />
+				<parameter name="planNumber" value="384037-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1232_SIT_PSC_Investment_Options">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="937878-01" />
+				<parameter name="ExpectedInvestmentColumns"
+					value="Name,Symbol,Category,Morningstar rating,Participant count,Balance,YTD,1YR,3YR,5YR,10YR/incept,2,Exp. Ratio" />
+				<parameter name="ExpHeaderText" value="Participant and fund balances as of" />
+				<parameter name="QuickLinks" value="Investment Overview,Online Prospectus" />
+				<parameter name="Disclaimer1"
+					value="Return information as of the most recent month-end. The Overall Morningstar Rating information is provided as of the most recent quarter-end. Although data is gathered from reliable sources, including but not limited to Morningstar, Inc., the completeness or accuracy of the data shown cannot be guaranteed. Where data obtained from Morningstar, © 2017 Morningstar, Inc. All Rights Reserved. The data: (1) is proprietary to Morningstar and/or its content providers; (2) may not be copied or distributed; and (3) is not warranted to be accurate, complete or timely. Neither Morningstar nor its content providers are responsible for any damages or losses arising from any use of this information. Past performance is no guarantee of future results." />
+				<parameter name="Disclaimer2"
+					value="Current performance may be lower or higher than performance data shown. Performance data quoted represents past performance and is not a guarantee or prediction of future results. When redeemed, units/shares may be worth more or less than their original cost. Performance returns reflect deduction for fund operating expenses. Your Plan may assess a plan administrative fee that was not deducted in the returns shown above. The returns shown would be reduced if this charge was applied. For investments offered through a group annuity, returns also reflect a mortality and expense risk charge of up to 0% , an average Contract Maintenance Charge (CMC) of 0.02%, and a Contingent Deferred Sales Charge (CDSC) of up to 0%. Your Plan may have higher, lower or no CMC or CDSC charges. For investments offered through a group annuity, returns prior to the separate account’s inception date or the investment option’s addition to the separate account, if later, are hypothetical. Please note performance figures shown do not reflect any applicable taxes. For performance data current to the most recent month-end, including fees and expenses, please click here." />
+				<parameter name="Disclaimer3"
+					value="1The net expense ratio is less applicable fee waivers or expense reimbursements the investment adviser and/or administrator may have agreed upon, either voluntary or by contractual agreement, while the gross expense ratio is not. Fee waivers and reimbursements may be modified or terminated at any time. Additional information can be found in the Fund's prospectus and/or other disclosure documents regarding effective dates and/or if waivers or reimbursements are voluntary or by contractual agreement. Absent waivers or reimbursements, the performance would have been lower." />
+				<parameter name="Disclaimer4"
+					value="2For those investment options that are not part of an annuity contract, the 10 yr/incep column represents the return of the investment option for the period that is the lesser of the inception of the investment option or the prior ten years. If your investment is part of an annuity contract, the 10 yr/incep column represents the return of the fund for the period that is the lesser of the separate account's inception date or the prior ten years. For details about the investment's inception, click (tap) on the fund name and review the information in the Investment Overview document." />
+				<parameter name="Disclaimer5"
+					value="Regarding variable life and annuity products, while some of the funds offered have similar names and investment objectives and/or may be modeled after publicly traded mutual funds, they are different from the publicly traded funds. Some of the investment options referenced herein may have names and investment objectives that are similar to certain retail mutual funds. They are not, however, directly related to those mutual funds and their investment performance may differ substantially." />
+				<parameter name="Disclaimer6"
+					value="Investment decisions should not be made on performance information alone. Investors should carefully consider other factors as well such as risk, fund expenses, fund management and more. For important information about the available investment options click here." />
+				<parameter name="Disclaimer7"
+					value="The overall Morningstar Rating™ for a fund is derived from a weighted average of the performance figures associated with its three-, five-, and ten-year (if applicable) Morningstar Rating metrics." />
+				<parameter name="Disclaimer8"
+					value="For each mutual fund with at least a three-year history, Morningstar calculates a Morningstar Rating based on a Morningstar Risk-Adjusted Return measure that accounts for variation in a funds monthly performance (including the effects of sales charges, loads and redemption fees), placing more emphasis on downward variations and rewarding consistent performance. The top 10% of funds in each category receive 5 stars, the next 22.5% receive 4 stars, the next 35% receive 3 stars, the next 22.5% receive 2 stars and the bottom 10% receive 1 star. (Each share class is counted as a fraction of one fund within this scale and rated separately, which may cause slight variations in the distribution percentages.)" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="NewRoutingNumber" value="051000017" />
+				<parameter name="planNumber" value="331044-01" />
+				<parameter name="NewAccNumber" value="345678987" />
+				<parameter name="ConfirmationMsg" value="Please take note of the reference number" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2150_Plan_Provisions_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="331044-01" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-24356_Add_PPT_And_SearchForPPT">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="LastName" value="ket" />
+				<parameter name="FirstName" value="James" />
+				<parameter name="IneligibilityReasonCode" value="Excluded Class,Other" />
+				<parameter name="IncomeDataErrorMsg" value="Salary Amount is not a valid number." />
+				<parameter name="FrequencyOptions"
+					value="ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52" />
+				<parameter name="expHireDateErrorMsg" value="Hire Date is mandatory." />
+				<parameter name="ExpectedManagedAccntLabels"
+					value="Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary" />
+				<parameter name="AllocationValidationMsg" value="Percentage do not add up to 100." />
+				<parameter name="planNumber" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="331044-01" />
+				<parameter name="ExpectedUnitShareCol"
+					value="Investment option,Symbol,Share value as of,Share value as of,Dividends/capital gains,Change" />
+				<parameter name="ExpectedWatrMarkTxt1" value="*Please select dates between" />
+				<parameter name="ExpectedWatrMarkTxt2"
+					value="*If the dates selected are weekends or market holidays, values are shown as of the prior business day." />
+				<parameter name="ExpectedWatrMarkTxt3"
+					value="*If 'NOT AVAILABLE' appears for an investment option, the value is not available for the date you specified. The most recent fund information on file can be found by viewing the Plan's Investment Performance." />
+				<parameter name="ExpectedWatrMarkTxt4"
+					value="*Percent change in value reflects dividends, capital gains distributions, stock splits and stock market results for the period shown. It represents the total return over the specified period and is not annualized." />
+				<parameter name="ExpectedWatrMarkTxt5"
+					value="*Investment results shown do not reflect a sales charge. Additional fees or expenses may be imposed that will affect actual results." />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-2073_Complex_User">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="NonComplexUserId" value="55W3S" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-4_Find_Users_by_Name">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="FirstName" value="Ayshwar" />
+				<parameter name="LastName" value="amRIT" />
+				<parameter name="ExpectedErrorMessage" value="No records found" />
+				<parameter name="Flow" value="Positive" />
+				<parameter name="ExpectedHeaders"
+					value="Registered Username,Assigned Username,First Name,Last Name,Email,Phone,Last Login,User Type,Status,Action" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="FirstName" value="AyshwarInvalid" />
+				<parameter name="LastName" value="amRIT" />
+				<parameter name="ExpectedErrorMessage" value="No records found" />
+				<parameter name="Flow" value="Negative" />
+				<parameter name="ExpectedHeaders" value="" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="1ISIS" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+				<parameter name="FirstName" value="7isis" />
+				<parameter name="LastName" value="USER" />
+				<parameter name="ExpectedErrorMessage" value="No records found" />
+				<parameter name="Flow" value="Negative" />
+				<parameter name="ExpectedHeaders" value="" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1432_Added_to_USERS_table_via_SAW">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="9M0RF" />
+				<parameter name="password" value="Testing1" />
+				<parameter name="userVerificationEmail" value="discard@gwl.com" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="dreamCar" value="testr" />
+				<parameter name="favDrink" value="testk" />
+				<parameter name="spouseMidName" value="teste" />
+				<parameter name="NonComplexUserId" value="55W3S" />
+			</Iteration>
+		</TestCase>
+	</Module>
+	<Module name="myprofile">
+		<TestCase name="DDTC-1276_SIT_PSC_Update_Email_Address_Positive_Flow">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl.com" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1276_SIT_PSC_Update_Email_Address_Negative_Flow">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="badPasswords" value="test,test1,test2" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="newEmailID" value="rsp@gwl.com" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1534_SIT_PSC_Update_User_Name">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K98A51_1" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="No" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="NewAssignedUserName" value=" " />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="Yes" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K1INS" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="Yes" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="NewAssignedUserName" value="K1INST%" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="Yes" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-1024_SIT_PSC_Update_My_profile_Security_Questions">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="true" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+				<parameter name="badPasswords" value="test1,test1,test2" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameAnswer" value="false" />
+				<parameter name="sameQuestions" value="true" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="sameAnswer" value="true" />
+				<parameter name="sameQuestions" value="false" />
+				<parameter name="Answer1" value="test1" />
+				<parameter name="Answer2" value="test2" />
+				<parameter name="Answer3" value="test3" />
+				<parameter name="questionIndex" value="32" />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-10186_SIT_PSC_Update_My_profile_Password">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="2">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="fasle" />
+				<parameter name="newPassword" value="Test1" />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="3">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="false" />
+				<parameter name="newPassword" value=" " />
+				<parameter name="badPasswords" value="" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+			<Iteration Execution="Yes" id="4">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="NegativeVerify" value="true" />
+				<parameter name="newPassword" value="Testing1" />
+				<parameter name="badPasswords" value="test,test1,test2" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="DDTC-245_FAQ_DDTC">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="98A51" />
+				<parameter name="password" value="testing1" />
+				<parameter name="userVerificationAns" value="test" />
+				<parameter name="UserSecondaryAns" value="test" />
+				<parameter name="dreamCar" value="test" />
+				<parameter name="favDrink" value="test" />
+				<parameter name="spouseMidName" value="test" />
+			</Iteration>
+		</TestCase>
+	</Module>
+</TestData>

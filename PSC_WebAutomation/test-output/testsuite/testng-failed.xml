@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [testsuite]" parallel="classes">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression_Orange_Period_Execution_1(failed)">
+  <test name="Yellow period execution-1(failed)" parallel="classes">
     <classes>
-      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+      <class name="app.psc.testcases.userverification.userverificationtestcases">
         <methods>
+          <include name="DriverQuite"/>
           <include name="ReportInit"/>
-          <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
-            <parameter name="ManualTCName" value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section"/>
-          </include> <!-- TC025_Verify_Employee_Overview_PlanList_Balance_Section -->
-          <include name="cleanUpSession"/>
+          <include name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session" invocation-numbers="0 1">
+            <parameter name="ManualTCName" value="DDTC-20238_SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session"/>
+          </include> <!-- TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session -->
         </methods>
-      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
+      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
     </classes>
-  </test> <!-- Regression_Orange_Period_Execution_1(failed) -->
+  </test> <!-- Yellow period execution-1(failed) -->
 </suite> <!-- Failed suite [testsuite] -->

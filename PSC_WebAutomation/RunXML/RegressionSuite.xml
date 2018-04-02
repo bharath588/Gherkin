@@ -30,7 +30,7 @@
 					</include>
 				</methods>
 			</class>
-			<class
+			<!-- <class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
 					<include
@@ -490,10 +490,10 @@
 						<parameter name="ManualTCName"
 							value="DDTC-204_Agecatchup" />
 					</include>
-					<!-- <include name="TC_64_OngoingDeferralUIValidation">
+					<include name="TC_64_OngoingDeferralUIValidation">
 						<parameter name="ManualTCName"
 							value="DDTC-298_OngoingDeferral_UI_Validation" />
-					</include> -->
+					</include>
 				</methods> 
 			</class>
 			
@@ -729,7 +729,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
+			<class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
 				<methods>
 					<include name="TC001_Verify_Contributiontotal_for_Invalid_User_input">
 						<parameter name="ManualTCName" value="DDTC-160_Gpp Sanity_01"/>
@@ -875,7 +875,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class> -->
+			</class>
 			<class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
@@ -889,7 +889,7 @@
 							value="DDTC_8283_PSCNextGen-Reports-Plan_review_PDF_PPTX"/>
 					</include>
 				</methods>
-			</class>
+			</class> -->
 		</classes>
 	</test>
 </suite>
