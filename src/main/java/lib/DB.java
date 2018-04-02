@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
@@ -33,7 +35,7 @@ import core.framework.Globals;
 public class DB {
 
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
-	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
+	public static ConcurrentHashMap<String, Connection> dbConnections = new ConcurrentHashMap<String, Connection>();
 	//private static FilteredRowSetImpl filterObj;
 	static int count = 0;
 	private static FilteredRowSet filterObj;
@@ -231,7 +233,8 @@ public class DB {
 		}
 		recordSetsIterator.remove();
 		
-		
+//		String[] connectionNames = new String[10];
+//		int count=0;
 		while (connectionsIterator.hasNext()) {
 			String connectionName = (String) connectionsIterator.next();
 			
@@ -246,8 +249,10 @@ public class DB {
 			} 
 			
 			dbConnections.remove(connectionName);	
+//			connectionNames[count++]=connectionName;
 		}
-		
+//		for(int i=0;i<count;i++)	
+//			dbConnections.remove(connectionNames[i]);
 	}
 
 	/**

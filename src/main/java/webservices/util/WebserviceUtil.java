@@ -70,17 +70,21 @@ public class WebserviceUtil {
 	
 	public String proj1AuthURL="http://fss-dapps1:8516/security/authenticate/participant";
 	public String proj2AuthURL="http://fss-dapps1:8517/security/authenticate/participant";
+	public String proj3AuthURL="http://fss-dapps1:8618/security/authenticate/participant";
 	public String proj6AuthURL="http://fss-dapps1:8611/security/authenticate/participant";
+	public String proj8AuthURL="http://fss-dapps1:8613/security/authenticate/participant";
 	public String proj9AuthURL="http://fss-dapps1:8614/security/authenticate/participant";
 	public String proj10AuthURL="http://fss-dapps1:8615/security/authenticate/participant";
 	public String qabAuthURL="http://fss-dapps1:8617/security/authenticate/participant";
 	
 	public String proj1URL="http://fss-dapps1:8516/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
 	public String proj2URL="http://fss-dapps1:8517/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj3URL="http://fss-dapps1:8518/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
 	public String proj6URL="http://fss-dapps1:8611/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj8URL="http://fss-dapps1:8613/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
 	public String proj9URL="http://fss-dapps1:8614/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
 	public String proj10URL="http://fss-dapps1:8615/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
-	public String qabURL="http://fss-dapps1:8617/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String qabURL="http://143.199.232.101:8006/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
 
 	public String getAuthURL()
 	{
@@ -88,7 +92,9 @@ public class WebserviceUtil {
 		{
 		case "PROJ_1": return proj1AuthURL;
 		case "PROJ_2": return proj2AuthURL;
+		case "PROJ_3": return proj3AuthURL;
 		case "PROJ_6": return proj6AuthURL;
+		case "PROJ_8": return proj8AuthURL;
 		case "PROJ_9": return proj9AuthURL;
 		case "PROJ_10": return proj10AuthURL;
 		case "QAB": return qabAuthURL;
@@ -102,7 +108,9 @@ public class WebserviceUtil {
 		{
 		case "PROJ_1": return proj1URL;
 		case "PROJ_2": return proj2URL;
+		case "PROJ_3": return proj3URL;
 		case "PROJ_6": return proj6URL;
+		case "PROJ_8": return proj8URL;
 		case "PROJ_9": return proj9URL;
 		case "PROJ_10": return proj10URL;
 		case "QAB": return qabURL;
