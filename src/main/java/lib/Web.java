@@ -544,6 +544,7 @@ public class Web {
 				webDriver = new InternetExplorerDriver(capabilities);
 
 			} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
+			
 				System.setProperty("webdriver.chrome.driver",
 						Stock.getConfigParam("ChromeDriverClassPath"));
 				webDriver = new ChromeDriver();
@@ -810,6 +811,152 @@ public class Web {
 			else
 				return -1;
 		}
+		
+		
+		/**
+		 * <pre>
+		 * Method to return the Selected Option of the dropdown
+		 * </pre>
+		 * 
+		 * @param pageObjectClass
+		 *            - Object of the Page class
+		 * @param dropDownElementName
+		 *            - Name of the Dropdown element as displayed in the page
+		 * @param selValue
+		 *            - Value of the item listed in Dropdown box (Full or partial)
+		 * @return <b>String</b> - Dropdown option text</b> if the specified element
+		 *         is found <b>Empty string</b> otherwise
+		 * @throws Exception
+		 */
+		public static String getSelectedDropDownOption(Object pageClassObj,
+				String dropDownElementName)
+				{
+			String selectedItemText = null;
+			try{
+				initDropDownObj(pageClassObj, dropDownElementName);				
+				selectedItemText = objSelect.getFirstSelectedOption().getText();
+			}
+			catch(Exception e){
+				throw new Error(e.getMessage());
+			}
+			
+			return selectedItemText;
+		
+		}
+
+		 /* <pre>
+		 * Method to return the  Option Count of the dropdown
+		 * </pre>
+		 * 
+		 * @param pageObjectClass
+		 *            - Object of the Page class
+		 * @param dropDownElementName
+		 *            - Name of the Dropdown element as displayed in the page
+		 * @return <b>int</b> - Dropdown option Count</b> 
+		 * @throws Exception
+		 */
+		public static int getDropDownOptionCount(Object pageClassObj,
+				String dropDownElementName)
+				{
+			int optionCount = 0;
+			try{
+				initDropDownObj(pageClassObj, dropDownElementName);				
+				List<WebElement> optionList = objSelect.getOptions();
+				optionCount = optionList.size();
+			}
+			catch(Exception e){
+				throw new Error(e.getMessage());
+			}
+			
+			return optionCount;
+		
+		}
+		
+		
+		
+		/* <pre>
+		 * Method to return the True or false Status if checkbox is check or not
+		 * </pre>
+		 * 
+		 * @param pageObjectClass
+		 *            - Object of the Page class
+		 * @param dropDownElementName
+		 *            - Name of the Checkbox element as displayed in the page
+		 * @return <b>boolean</b> -True False</b> 
+		 * @throws Exception
+		 */
+			public static boolean isCheckBoxChecked(Object pageClassObj,String fieldName, 
+				boolean... waitForElement)
+		{
+			boolean isElementChecked = false;
+			try
+			{
+				if(isWebElementDisplayed(pageClassObj, fieldName, waitForElement)){
+					WebElement enabledElement = getPageObjectFields(pageClassObj,fieldName);
+					isElementChecked = enabledElement.isSelected();	
+				}				
+			}
+			catch(Exception e)
+			{
+				throw new Error(e.getMessage());
+			}
+			return isElementChecked;
+		}
+		
+			public static boolean isCheckBoxChecked(WebElement fieldName, 
+				boolean... waitForElement)
+		{
+			boolean isElementChecked = false;
+			try
+			{
+				if(isWebElementDisplayed(fieldName, waitForElement)){
+					isElementChecked = fieldName.isSelected();	
+				}			
+			}
+			catch(Exception e)
+			{
+				throw new Error(e.getMessage());
+			}
+			return isElementChecked;
+		}
+		
+		
+		/* <pre>
+		 * Method to return the attribute of an element
+		 * </pre>
+		 * 
+		 * @param pageObjectClass
+		 *            - Object of the Page class
+		 * @param webElementName
+		 *            - Name of the element as displayed in the page
+		 * @param elementAttribute
+		 *            - Name of the Attribute that needs to be retrived
+		 * @return <b>String</b> Attribute value of the element</b> 
+		 * @throws Exception
+		 */
+		public static String getElementAttribute(Object pageClassObj,String webElementName, String elementAttribute)
+		{
+			String strElementAttribute=null;
+			try
+			{
+				if(isWebElementDisplayed(pageClassObj,webElementName)){
+					WebElement currElement = returnElement(pageClassObj,webElementName);
+					if(elementAttribute.equalsIgnoreCase("text")){
+						strElementAttribute = currElement.getText();
+					}else{						
+						strElementAttribute = currElement.getAttribute(elementAttribute.toLowerCase().trim());		
+					}
+					
+				}				
+			}
+			catch(Exception e)
+			{
+				throw new Error(e.getMessage());
+			}
+			return strElementAttribute;
+		}
+		
+		
 
 		/**
 		 * <pre>
