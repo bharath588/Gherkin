@@ -90,7 +90,7 @@
 				<parameter name="password" value="baseball" />
 				<parameter name="ppt_id" value="6021452" />
 				<parameter name="web_reg_status" value="Not Registered" />
-				<parameter name="btnName" value="Mail_Existing_PIN" />
+				<parameter name="btnName" value="Mail 14-day Temp EIVR PIN" />
 				<parameter name="planID" value="194037-01" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
@@ -839,7 +839,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="1737090" />
 				<parameter name="Amount_to_Borrow" value="100.00" />
 			</Iteration>
 		</TestCase>
@@ -889,7 +889,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="1737090" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -899,7 +899,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="5322457" />		<!-- 10824079, 11300720 -->
+				<parameter name="PPT_ID" value="1737090" />		<!-- 10824079, 11300720 -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -909,7 +909,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="16345511" /><!-- inst 7305060 
+				<parameter name="PPT_ID" value="1737090" /><!-- inst 7305060 
 					pnp -->
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
@@ -920,7 +920,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="1737090" />
 				<parameter name="HomePhoneNumber" value="8797947961" />
 				<parameter name="MobilePhoneNumber" value="8797947961" />
 				<parameter name="PersonalEmail" value="discard@gwl.com" />
@@ -1041,7 +1041,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1374559" />
+				<parameter name="PPT_ID" value="5322457" />
 				<parameter name="ExceptionMessage" value="Participant has Pending Transfer WR_477" />
 			</Iteration> 
 		</TestCase>
@@ -1083,7 +1083,7 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>	
 			<TestCase name="DDTC_26926_Paperless_Loan_Exceptions">
-			<Iteration Execution="Yes" id="1">
+			<Iteration Execution="Yes" id="1">5322457
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="1731515" />
