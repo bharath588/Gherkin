@@ -335,15 +335,15 @@ public class Web {
 	public static boolean clickOnElement(Object pageClassObj,
 			String webElementName) {
 		boolean success = false;
+	
 		if (webElementName != null) {
 			WebElement clickableElement = getPageObjectFields(pageClassObj,
-					webElementName);
-			if (Web.isWebElementDisplayed(clickableElement)) {
-				clickableElement.click();
-				success = true;
-			}
+					webElementName);		
+			return clickOnElement(clickableElement);
 		}
+		
 		return success;
+		
 	}
 
 	/**
