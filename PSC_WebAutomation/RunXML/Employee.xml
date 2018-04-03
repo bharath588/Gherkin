@@ -4,15 +4,15 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Regression_Orange_Period_Execution_1">
+	<test name="Regression_Yellow_Period_Execution_1">
 		<classes>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
-					</include> -->
-					<!-- <include name="TC001_Search_Employee_For_Valid_SSN">
+					</include>
+					<include name="TC001_Search_Employee_For_Valid_SSN">
 						<parameter name="ManualTCName"
 							value="DDTC-21982_Employee_Search_Sanity_Suite_validssn">
 						</parameter>
@@ -30,8 +30,8 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1389_Employee_Search_Sanity_Suite_invalidname">
 						</parameter>
-					</include> -->
-					 <!-- <include name="TC005_Search_Employee_For_Valid_EmployeeID_Input">
+					</include>
+					 <include name="TC005_Search_Employee_For_Valid_EmployeeID_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21962_Employee_Search_Sanity_Suite_validempid" />
 					</include>
@@ -87,8 +87,8 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22060_Employee_Search_Regression_ppt_planonediv">
 						</parameter>
-					</include>-->
-					<!-- <include name="TC016_Check_For_Plans_With_multiple_divisions">
+					</include>
+					<include name="TC016_Check_For_Plans_With_multiple_divisions">
 						<parameter name="ManualTCName"
 							value="DDTC-22061_Employee_Search_Regression_ppt_planmultidiv">
 						</parameter>
@@ -104,14 +104,14 @@
 					<include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName"
 							value="DDTC-1323_Employee_Contact_Info_Verification" />
-					</include> -->
-					<!-- <include name="TC019_Verify_Beneficiary_Info">
+					</include>
+					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info" />
-					</include> -->
-					<!-- <include name="TC020_Recently_Viewed_Employee">
+					</include>
+					<include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
-					</include> -->
-					<!-- <include name="TC021_Salary_View_And_Update">
+					</include>
+					<include name="TC021_Salary_View_And_Update">
 						<parameter name="ManualTCName" value="DDTC-2245_Salary_View_And_Update" />
 					</include>
 					<include name="TC022_Paycheck_contribution_View">
@@ -119,15 +119,15 @@
 					</include> 
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
-					</include>-->
+					</include>
 					 <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
 					</include>
-					<!--<include name="TC026_Verify_Employee_Basic_Info">
+					<include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
-					</include> -->
-					<!--<include name="TC027_Verify_Subset_History_Section">
+					</include>
+					<include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1022_Verify_Subset_History_Section" />
 					</include>
@@ -285,7 +285,7 @@
 					</include>
 					<include name="TC_64_OngoingDeferralUIValidation">
 						<parameter name="ManualTCName" value="DDTC-298_OngoingDeferral_UI_Validation" />
-					</include> -->
+					</include>
 				</methods>
 			</class>
 			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
