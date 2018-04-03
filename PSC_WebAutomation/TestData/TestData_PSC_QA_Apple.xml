@@ -1076,7 +1076,7 @@
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="ExpSalarySectionHeader" value="Effective date,Salary,Frequency" />
+				<parameter name="ExpSalarySectionHeader" value="Effective date,Frequency" />
 				<parameter name="SalarySectionTitle" value="Compensation" />
 				<parameter name="UserSecondaryAns" value="test" />
 			</Iteration>

@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [testsuite]" parallel="classes">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Yellow period execution-1(failed)" parallel="classes">
+  <test name="Regression_Yellow_Period_Exec2_Apple_Plan(failed)">
     <classes>
-      <class name="app.psc.testcases.userverification.userverificationtestcases">
+      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
         <methods>
-          <include name="DriverQuite"/>
+          <include name="TC019_Verify_Beneficiary_Info">
+            <parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info"/>
+          </include> <!-- TC019_Verify_Beneficiary_Info -->
           <include name="ReportInit"/>
-          <include name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session" invocation-numbers="0 1">
-            <parameter name="ManualTCName" value="DDTC-20238_SIT_PSC_Login_01_TC007_Login flow- Existing user_accessing_single_site_within_same_browser_session"/>
-          </include> <!-- TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session -->
+          <include name="TC021_Salary_View_And_Update" invocation-numbers="0">
+            <parameter name="ManualTCName" value="DDTC-2245_Salary_View_And_Update"/>
+          </include> <!-- TC021_Salary_View_And_Update -->
+          <include name="TC026_Verify_Employee_Basic_Info">
+            <parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info"/>
+          </include> <!-- TC026_Verify_Employee_Basic_Info -->
+          <include name="cleanUpSession"/>
         </methods>
-      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
+      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
     </classes>
-  </test> <!-- Yellow period execution-1(failed) -->
+  </test> <!-- Regression_Yellow_Period_Exec2_Apple_Plan(failed) -->
 </suite> <!-- Failed suite [testsuite] -->
