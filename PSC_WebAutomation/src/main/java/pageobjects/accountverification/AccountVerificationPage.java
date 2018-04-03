@@ -433,7 +433,8 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public void resetPassword(String... params) {
 		int iLoopCnt=0;
 		for(String param : params){
-			if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)){
+			if(Web.isWebElementDisplayed(createNewPwdfields.get(iLoopCnt), true)
+					&&createNewPwdfields.get(iLoopCnt).isEnabled()){
 				createNewPwdfields.get(iLoopCnt).click();
 				Web.setTextToTextBox(createNewPwdfields.get(iLoopCnt),param);
 			}
@@ -600,11 +601,11 @@ public class AccountVerificationPage extends LoadableComponent<AccountVerificati
 	public void logoutFromApplication() throws InterruptedException
 	{
 		if(Web.isWebElementDisplayed(linkLogout)){
-			linkLogout.click();
+			Web.actionsClickOnElement(linkLogout);
 		}
 		else if(Web.isWebElementDisplayed(linkLogoutAccveri))
 		{
-			linkLogoutAccveri.click();
+			Web.actionsClickOnElement(linkLogout);
 
 		}
 		Thread.sleep(3000);

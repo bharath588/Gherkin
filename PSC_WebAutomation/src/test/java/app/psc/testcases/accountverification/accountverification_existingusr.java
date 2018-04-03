@@ -486,8 +486,24 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("CurrentPassword"),
 					Stock.GetParameterValue("newPassword"),
 					Stock.GetParameterValue("confirmPassword"));
+			
+			if (Web.isWebElementDisplayed(accountverification, "ERRORMSG")) {
+				Reporter.logEvent(Status.PASS,
+						"Enter any of the last 10 passwords.",
+						"Error message displayed\n"
+						+accountverification.getErrorMessageText(), false);
+				Web.clickOnElement(accountverification, "ERRORMSG");
+				Web.clickOnElement(accountverification, "DISMISS");
+			}
+			else
+			{
+				Reporter.logEvent(Status.FAIL,
+						"Enter any of the last 10 passwords.",
+						"Next button is not disabled and"
+								+ " user can use that password.", true);
+			}
 
-			if (!Web.returnElement(accountverification, "BTNNEXT").isEnabled())
+			/*if (!Web.returnElement(accountverification, "BTNNEXT").isEnabled())
 				Reporter.logEvent(Status.PASS,
 						"Enter any of the last 10 passwords.",
 						"Next button is disabled and"
@@ -496,12 +512,12 @@ public class accountverification_existingusr {
 				Reporter.logEvent(Status.FAIL,
 						"Enter any of the last 10 passwords.",
 						"Next button is not disabled and"
-								+ " user can use that password.", true);
+								+ " user can use that password.", true);*/
 
-			accountverification.setOldPassword(
+			/*accountverification.setOldPassword(
 					Stock.getTestQuery("deleteRecentPasswordRows"),
 					Stock.getTestQuery("queryTosetOldPassword"),
-					Stock.GetParameterValue("username"));
+					Stock.GetParameterValue("username"));*/
 
 			/*
 			 * actualErrorMessage = accountverification.getErrorMessageText();
@@ -732,9 +748,11 @@ public class accountverification_existingusr {
 					Stock.GetParameterValue("username"));
 			MyProfilePage myProfPage = new MyProfilePage().get();
 			isEmailUpdatedFromUI = myProfPage.updateEmailAddress();
+			Thread.sleep(3000);
 			updatedEmailAddress = userVer.getEmailAddressOfuser(
 					Stock.getTestQuery("getEmailaddressQuery"),
 					Stock.GetParameterValue("username"));
+			Reporter.logEvent(Status.INFO, "Email address in DB post update", updatedEmailAddress, true);
 			if (isEmailUpdatedFromUI
 					&& (!prevEmailAddress.equals(updatedEmailAddress))) {
 				Reporter.logEvent(Status.PASS,

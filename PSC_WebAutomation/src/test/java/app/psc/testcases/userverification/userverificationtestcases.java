@@ -222,12 +222,12 @@ public class userverificationtestcases {
 				if(Web.isWebElementDisplayed(home,"JUMP_PAGE_NXTGEN_LINK",false)){
 					Web.clickOnElement(home,"JUMP_PAGE_NXTGEN_LINK");
 					Web.waitForElement(home,"LOGOUT_LINK");
-					Web.clickOnElement(home,"LOGOUT_LINK");
+					Web.actionsClickOnElement(Web.returnElement(home,"LOGOUT_LINK"));
 				}
 				
 				//If already in Home Page
 				if(Web.isWebElementDisplayed(home,"LOGOUT_LINK",false)){
-					Web.clickOnElement(home,"LOGOUT_LINK");
+					Web.actionsClickOnElement(Web.returnElement(home,"LOGOUT_LINK"));
 				}				
 				checkReLoginStats = true;
 			}else{

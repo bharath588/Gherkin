@@ -306,17 +306,17 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					Thread.sleep(3000);
 				}
 
-				if ((testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")) {
+				/*if ((testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")) {
 					String winHandleBefore = Web.getDriver().getWindowHandle();
 					for (String winHandle : Web.getDriver().getWindowHandles()) {
 						Web.getDriver().switchTo().window(winHandle);
 						currentURL = Web.getDriver().getCurrentUrl();
 					}
-					Web.getDriver().close();
+					//Web.getDriver().close();
 					Web.getDriver().switchTo().window(winHandleBefore);
-				} else {
+				} else {*/
 					currentURL = Web.getDriver().getCurrentUrl();
-				}
+				
 
 				// Verification against redirected URLs
 
@@ -328,8 +328,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 							"Respective page :" + testData + " is not loaded", true);
 				}
 
-				if (!(testDataColNm + (iLoopCnt + 1)).equals("link_Footer7")
-						&& !(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
+				if (!(testDataColNm + (iLoopCnt + 1)).equals("link_Header2")) {
 					Web.waitForElement(linkPSCBreadCrumHome);
 					linkPSCBreadCrumHome.click();
 				}

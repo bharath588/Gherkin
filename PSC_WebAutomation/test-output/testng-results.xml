@@ -1,17 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="3" ignored="58" total="65" passed="4">
+<testng-results skipped="0" failed="41" ignored="6" total="111" passed="64">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="1213027" started-at="2018-04-02T09:38:02Z" finished-at="2018-04-02T09:58:15Z">
+  <suite name="testsuite" duration-ms="2600798" started-at="2018-04-03T07:05:25Z" finished-at="2018-04-03T07:48:46Z">
     <groups>
     </groups>
-    <test name="Regression_Yellow_Period_Exec2_Apple_Plan" duration-ms="1213027" started-at="2018-04-02T09:38:02Z" finished-at="2018-04-02T09:58:15Z">
-      <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="ReportInit" is-config="true" duration-ms="8735" started-at="2018-04-02T15:08:02Z" finished-at="2018-04-02T15:08:11Z">
+    <test name="Yellow period execution-2" duration-ms="2600798" started-at="2018-04-03T07:05:25Z" finished-at="2018-04-03T07:48:46Z">
+      <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="InitTest" is-config="true" duration-ms="43" started-at="2018-04-03T13:01:38Z" finished-at="2018-04-03T13:01:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="PASS" signature="TC017_Verify_the_dropdown_options_And_Screen_elements(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC017_Verify_the_dropdown_options_And_Screen_elements" duration-ms="113383" started-at="2018-04-03T13:01:38Z" data-provider="setData" finished-at="2018-04-03T13:03:32Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC017_Verify_the_dropdown_options_And_Screen_elements -->
+        <test-method status="PASS" signature="TC018_Verify_the_sorting_in_search_results(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC018_Verify_the_sorting_in_search_results" duration-ms="28967" started-at="2018-04-03T13:03:32Z" data-provider="setData" finished-at="2018-04-03T13:04:01Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC018_Verify_the_sorting_in_search_results -->
+        <test-method status="FAIL" signature="TC019_Verify_the_Pagination_on_search_results_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC019_Verify_the_Pagination_on_search_results_page" duration-ms="14777" started-at="2018-04-03T13:04:01Z" data-provider="setData" finished-at="2018-04-03T13:04:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, SSN=002143838}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC019_Verify_the_Pagination_on_search_results_page -->
+        <test-method status="PASS" signature="TC020_Verify_the_Order_of_search_results(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC020_Verify_the_Order_of_search_results" duration-ms="11938" started-at="2018-04-03T13:04:16Z" data-provider="setData" finished-at="2018-04-03T13:04:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC020_Verify_the_Order_of_search_results -->
+        <test-method status="PASS" signature="TC021_Verify_Search_results_are_displayed_as_Hyperlinks(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC021_Verify_Search_results_are_displayed_as_Hyperlinks" duration-ms="82388" started-at="2018-04-03T13:04:28Z" data-provider="setData" finished-at="2018-04-03T13:05:50Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC021_Verify_Search_results_are_displayed_as_Hyperlinks -->
+        <test-method status="PASS" signature="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page" duration-ms="18762" started-at="2018-04-03T13:05:50Z" data-provider="setData" finished-at="2018-04-03T13:06:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC022_Verify_if_the_clicking_on_a_searchresults_redirects_to_employee_overview_page -->
+        <test-method status="FAIL" signature="TC023_Verify_the_limit_of_search_results_on_searchpage(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC023_Verify_the_limit_of_search_results_on_searchpage" duration-ms="18121" started-at="2018-04-03T13:06:09Z" data-provider="setData" finished-at="2018-04-03T13:06:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC023_Verify_the_limit_of_search_results_on_searchpage -->
+        <test-method status="FAIL" signature="TC024_Verify_Filter_Functionality_Search_Results_Page(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC024_Verify_Filter_Functionality_Search_Results_Page" duration-ms="91014" started-at="2018-04-03T13:06:27Z" data-provider="setData" finished-at="2018-04-03T13:07:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, FILTERTEXT=a, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC024_Verify_Filter_Functionality_Search_Results_Page -->
+        <test-method status="PASS" signature="TC025_Verify_search_results_for_ssn_with_extension(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC025_Verify_search_results_for_ssn_with_extension" duration-ms="88849" started-at="2018-04-03T13:07:58Z" data-provider="setData" finished-at="2018-04-03T13:09:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC025_Verify_search_results_for_ssn_with_extension -->
+        <test-method status="PASS" signature="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code" duration-ms="131551" started-at="2018-04-03T13:09:27Z" data-provider="setData" finished-at="2018-04-03T13:11:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, EXPECTEDERRORMESSAGE=NO SEARCH RESULTS FOUND, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC026_Verify_search_results_are_not_displayed_for_employess_with_err_code -->
+        <test-method status="PASS" signature="TC027_Verify_termed_employeedetails_are_displayed(int, java.util.HashMap)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC027_Verify_termed_employeedetails_are_displayed" duration-ms="14487" started-at="2018-04-03T13:11:38Z" data-provider="setData" finished-at="2018-04-03T13:11:53Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC027_Verify_termed_employeedetails_are_displayed -->
+        <test-method status="PASS" signature="TC028_Verify_search_results_are_displayed_for_termed_employees(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC028_Verify_search_results_are_displayed_for_termed_employees" duration-ms="332943" started-at="2018-04-03T13:11:53Z" data-provider="setData" finished-at="2018-04-03T13:17:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC028_Verify_search_results_are_displayed_for_termed_employees -->
+        <test-method status="PASS" signature="TC029_Verify_ssn_masking_for_external_users(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="TC029_Verify_ssn_masking_for_external_users" duration-ms="77591" started-at="2018-04-03T13:17:26Z" data-provider="setData" finished-at="2018-04-03T13:18:44Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC029_Verify_ssn_masking_for_external_users -->
+        <test-method status="PASS" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases_db@64bf3bbf]" name="cleanUpSession" is-config="true" duration-ms="2385" started-at="2018-04-03T13:18:44Z" finished-at="2018-04-03T13:18:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanUpSession -->
+      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases_db -->
+      <class name="app.psc.testcases.accountverification.accountverificationtestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="ReportInit" is-config="true" duration-ms="8934" started-at="2018-04-03T12:35:25Z" finished-at="2018-04-03T12:35:34Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="TC018_Employee_Contact_Info_Verification(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC018_Employee_Contact_Info_Verification" duration-ms="258001" started-at="2018-04-02T15:08:12Z" data-provider="setData" finished-at="2018-04-02T15:12:30Z">
+        <test-method status="PASS" signature="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same" duration-ms="48277" started-at="2018-04-03T12:35:35Z" data-provider="setData" finished-at="2018-04-03T12:36:24Z">
           <params>
             <param index="0">
               <value>
@@ -20,14 +238,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, EXPCONTACTINFOLABELS=Name,Address,Home phone,Work phone,Mobile phone,Email address,Personal email address,Communication method, USERVERIFICATIONEMAIL=discard@gwl.com, EXPCONTACTSELECTLABELSWINDOW=Marital Status,Gender,Language Preference,State,Country, EXPCONTACTINPUTLABELSWINDOW=Last Name,First Name,Middle Name,Suffix,Birth Date,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,Zip,Home Phone,Work Phone,Extension,Fax,Email, USERSECONDARYANS=test}]]>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=The security questions selected should not be same. , USERNAME=5XEEX, SECONDDRPDWNANS=test, CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC018_Employee_Contact_Info_Verification -->
-        <test-method status="FAIL" signature="TC019_Verify_Beneficiary_Info(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC019_Verify_Beneficiary_Info" duration-ms="71543" started-at="2018-04-02T15:12:30Z" data-provider="setData" finished-at="2018-04-02T15:13:42Z">
+        </test-method> <!-- TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same -->
+        <test-method status="PASS" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="29459" started-at="2018-04-03T12:36:24Z" data-provider="setData" finished-at="2018-04-03T12:36:53Z">
           <params>
             <param index="0">
               <value>
@@ -36,30 +254,62 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS= , EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=5XEEX, SECONDDRPDWNANS= , CURRENTPASSWORD=testing1, FIRSTDRPDWNANS= }]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC019_Verify_Beneficiary_Info -->
-        <test-method status="PASS" signature="TC020_Recently_Viewed_Employee(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC020_Recently_Viewed_Employee" duration-ms="84923" started-at="2018-04-02T15:13:42Z" data-provider="setData" finished-at="2018-04-02T15:15:07Z">
+        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
+        <test-method status="PASS" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="30623" started-at="2018-04-03T12:36:53Z" data-provider="setData" finished-at="2018-04-03T12:37:24Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[1]]>
+                <![CDATA[2]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=5XEEX, SECONDDRPDWNANS= , CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC020_Recently_Viewed_Employee -->
-        <test-method status="FAIL" signature="TC021_Salary_View_And_Update(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC021_Salary_View_And_Update" duration-ms="73625" started-at="2018-04-02T15:15:07Z" data-provider="setData" finished-at="2018-04-02T15:16:20Z">
+        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
+        <test-method status="PASS" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="34041" started-at="2018-04-03T12:37:24Z" data-provider="setData" finished-at="2018-04-03T12:37:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS= , EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=5XEEX, SECONDDRPDWNANS=test, CURRENTPASSWORD=testing1, FIRSTDRPDWNANS= }]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
+        <test-method status="PASS" signature="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User" duration-ms="29454" started-at="2018-04-03T12:37:58Z" data-provider="setData" finished-at="2018-04-03T12:38:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS= , EXPECTEDERRORMESSAGE=Please enter Security Answer, USERNAME=5XEEX, SECONDDRPDWNANS= , CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_01_Verify_Login_Flow_Security_Answer_Invalid_Input_New_PSC_User -->
+        <test-method status="PASS" signature="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input" duration-ms="115170" started-at="2018-04-03T12:38:27Z" data-provider="setData" finished-at="2018-04-03T12:40:22Z">
           <params>
             <param index="0">
               <value>
@@ -68,30 +318,279 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, SALARYSECTIONTITLE=Compensation, USERSECONDARYANS=test, EXPSALARYSECTIONHEADER=Effective date,Salary,Frequency}]]>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=Registered Username is Required
+
+The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64., USERNAME=5XEEX, SECONDDRPDWNANS=test, CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test, REGUSERNAME= }]]>
               </value>
             </param>
           </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_03_Verify_New_User_loginFlow_register_username_invalid_input -->
+        <test-method status="PASS" signature="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input" duration-ms="115899" started-at="2018-04-03T12:40:22Z" data-provider="setData" finished-at="2018-04-03T12:42:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS=test, EXPECTEDERRORMESSAGE=The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64., USERNAME=5XEEX, SECONDDRPDWNANS=test, CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test, REGUSERNAME=!nV@lid}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_03_Verify_New_User_loginFlow_register_username_invalid_input -->
+        <test-method status="FAIL" signature="TC008_00_Verify_new_user_flow_negative(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_00_Verify_new_user_flow_negative" duration-ms="20205" started-at="2018-04-03T12:42:18Z" data-provider="setData" finished-at="2018-04-03T12:42:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD= , USERNAME=5XEEX, PASSWORD=testing1, CONFIRMPASSWORD= , CURRENTPASSWORD= }]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_00_Verify_new_user_flow_negative -->
+        <test-method status="PASS" signature="TC008_00_Verify_new_user_flow_positive(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="TC008_00_Verify_new_user_flow_positive" duration-ms="104416" started-at="2018-04-03T12:42:39Z" data-provider="setData" finished-at="2018-04-03T12:44:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, THIRDDRPDWNANS=test, USERNAME=5XEEX, SECONDDRPDWNANS=test, CURRENTPASSWORD=testing1, FIRSTDRPDWNANS=test, REGUSERNAME=User@123}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC008_00_Verify_new_user_flow_positive -->
+        <test-method status="PASS" signature="DriverQuite()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtestcases@2d928643]" name="DriverQuite" is-config="true" duration-ms="3323" started-at="2018-04-03T12:44:23Z" finished-at="2018-04-03T12:44:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DriverQuite -->
+      </class> <!-- app.psc.testcases.accountverification.accountverificationtestcases -->
+      <class name="app.psc.testcases.accountverification.accountverification_existingusr">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="InitTest" is-config="true" duration-ms="8931" started-at="2018-04-03T12:35:25Z" finished-at="2018-04-03T12:35:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="PASS" signature="TC019_Verify_Default_Plan_Prompting(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC019_Verify_Default_Plan_Prompting" duration-ms="31612" started-at="2018-04-03T12:35:35Z" data-provider="setData" finished-at="2018-04-03T12:36:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=384171-09, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, TXTPASSWORD=testing1, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERNAME=5BC5G, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC019_Verify_Default_Plan_Prompting -->
+        <test-method status="PASS" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="64121" started-at="2018-04-03T12:36:07Z" data-provider="setData" finished-at="2018-04-03T12:37:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing2, FAVDRINK=test, PASSWORD=testing1, CONFIRMPASSWORD=Testing3, DREAMCAR=test, SPOUSEMIDNAME=test, EXPECTEDERRORMESSAGE=Password must match, USERNAME=5116M, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
+        <test-method status="PASS" signature="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario" duration-ms="24336" started-at="2018-04-03T12:37:35Z" data-provider="setData" finished-at="2018-04-03T12:37:59Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, FAVDRINK=test, PASSWORD=testing1, CONFIRMPASSWORD=Testing1, DREAMCAR=test, SPOUSEMIDNAME=test, EXPECTEDERRORMESSAGE=Incorrect current password. Please re-enter or contact your system administrator., USERNAME=5116M, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing2, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario -->
+        <test-method status="PASS" signature="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow" duration-ms="98132" started-at="2018-04-03T12:38:24Z" data-provider="setData" finished-at="2018-04-03T12:40:02Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing2, FAVDRINK=testk, PASSWORD=testing1, CONFIRMPASSWORD=Testing2, DREAMCAR=testr, TXTPASSWORD=testing1, SPOUSEMIDNAME=teste, USERNAME=5116M, EMAILADDRESS=abc@gwl.com, CURRENTPASSWORD=testing1, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow -->
+        <test-method status="PASS" signature="TC018_Security_Question_Validation_Existing_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC018_Security_Question_Validation_Existing_User" duration-ms="65524" started-at="2018-04-03T12:40:02Z" data-provider="setData" finished-at="2018-04-03T12:41:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, THIRDDRPDWNANS=test, SPOUSEMIDNAME=teste, SECONDDRPDWNANS=test, USERNAME=7ISIS, FIRSTDRPDWNANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC018_Security_Question_Validation_Existing_User -->
+        <test-method status="FAIL" signature="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords" duration-ms="35945" started-at="2018-04-03T12:41:08Z" data-provider="setData" finished-at="2018-04-03T12:41:44Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{CONFIRMPASSWORD=testing1, EMAILADDRESS=discard@gwl.com, CURRENTPASSWORD=testing1, NEWPASSWORD=testing1, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Invalid new password - Please re-enter password using the criteria shown below, USERNAME=87LSS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_Verify_PSC_Users_Are_Unbale_To_Reuse_Last_Ten_Passwords -->
+        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Notification_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC006_01_Verify_Display_Of_Notification_On_HomePage" duration-ms="106430" started-at="2018-04-03T12:41:44Z" data-provider="setData" finished-at="2018-04-03T12:43:30Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=Availability, TXNCODE=PSCTOD, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5IP4Z, USERVERIFICATIONEMAIL=abc@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_Verify_Display_Of_Notification_On_HomePage -->
+        <test-method status="FAIL" signature="TC006_01_Verify_Display_Of_Compliance_On_HomePage(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC006_01_Verify_Display_Of_Compliance_On_HomePage" duration-ms="104626" started-at="2018-04-03T12:45:20Z" data-provider="setData" finished-at="2018-04-03T12:47:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, INFOTYPE=Availability, TXNCODE=PSCCTR, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5IP4Z, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_Verify_Display_Of_Compliance_On_HomePage -->
+        <test-method status="PASS" signature="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security" duration-ms="115478" started-at="2018-04-03T12:48:50Z" data-provider="setData" finished-at="2018-04-03T12:50:45Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331170-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, COMPLIANCEENABLE=true, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security -->
+        <test-method status="PASS" signature="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security" duration-ms="52530" started-at="2018-04-03T12:50:45Z" data-provider="setData" finished-at="2018-04-03T12:51:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=384728-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, COMPLIANCEENABLE=false, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC012_SIT_PSC_HomePage_02_TC003_Compliance_Security -->
+        <test-method status="FAIL" signature="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages" duration-ms="33618" started-at="2018-04-03T12:51:38Z" data-provider="setData" finished-at="2018-04-03T12:52:12Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{BREADCRUMB=Summary,Year end compliance,Standard reports,File sharing, USERVERIFICATIONANS=test, MENUTYPE=menu, MENULABEL=Plan,Compliance,Reports,File sharing, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC013_SIT_PSC_HomePage_01_TC010_Regression_Testing_New_Pages -->
+        <test-method status="FAIL" signature="TC009_01_Verify_Multifactoring(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="TC009_01_Verify_Multifactoring" duration-ms="23434" started-at="2018-04-03T12:52:46Z" data-provider="setData" finished-at="2018-04-03T12:53:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, NEWEMAILID=discard@gwl.com, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=5ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC009_01_Verify_Multifactoring -->
+        <test-method status="FAIL" signature="DriverQuite()[pri:0, instance:app.psc.testcases.accountverification.accountverification_existingusr@5025a98f]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2018-04-03T13:18:46Z" finished-at="2018-04-03T13:18:46Z">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
-	at lib.Reporter.logEvent(Reporter.java:253)
-	at app.psc.testcases.employeesearch.employeesearchtestcases.TC021_Salary_View_And_Update(employeesearchtestcases.java:1190)
+	at app.psc.testcases.accountverification.accountverification_existingusr.DriverQuite(accountverification_existingusr.java:939)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
-	at org.testng.TestRunner.privateRun(TestRunner.java:756)
-	at org.testng.TestRunner.run(TestRunner.java:610)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:387)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:382)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:515)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:217)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:144)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:357)
 	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
@@ -107,60 +606,1224 @@
           </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC021_Salary_View_And_Update -->
-        <test-method status="PASS" signature="TC022_Paycheck_contribution_View(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC022_Paycheck_contribution_View" duration-ms="56468" started-at="2018-04-02T15:16:20Z" data-provider="setData" finished-at="2018-04-02T15:17:17Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
+        </test-method> <!-- DriverQuite -->
+        <test-method status="SKIP" signature="DriverQuite()[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2018-04-03T13:18:46Z" finished-at="2018-04-03T13:18:46Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC022_Paycheck_contribution_View -->
-        <test-method status="FAIL" signature="TC026_Verify_Employee_Basic_Info(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC026_Verify_Employee_Basic_Info" duration-ms="609855" started-at="2018-04-02T15:17:17Z" data-provider="setData" finished-at="2018-04-02T15:27:27Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, EXPECTEDLABELS=Last Name,First Name,Middle Name,Suffix,Birth Date,Marital Status,Gender,Language Preference,Mailing Name 1,Mailing Name 2,Mailing Name 3,Address,City,State,Zip,Country,Home Phone,Work Phone,Extension,Fax,Email, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC026_Verify_Employee_Basic_Info -->
-        <test-method status="PASS" signature="TC30_Account_balance_Tab(int, java.util.Map)[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="TC30_Account_balance_Tab" duration-ms="48332" started-at="2018-04-02T15:27:27Z" data-provider="setData" finished-at="2018-04-02T15:28:15Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=9M0RF, EXPECTEDDISCLAIMER=* All dates and times are in Mountain Time unless otherwise noted., USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TC30_Account_balance_Tab -->
-        <test-method status="PASS" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.employeesearch.employeesearchtestcases@72d818d1]" name="cleanUpSession" is-config="true" duration-ms="1513" started-at="2018-04-02T15:28:15Z" finished-at="2018-04-02T15:28:17Z">
+        </test-method> <!-- DriverQuite -->
+        <test-method status="SKIP" signature="cleanUpSession()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@49993335]" name="cleanUpSession" is-config="true" duration-ms="0" started-at="2018-04-03T13:18:46Z" finished-at="2018-04-03T13:18:46Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- cleanUpSession -->
-      </class> <!-- app.psc.testcases.employeesearch.employeesearchtestcases -->
-    </test> <!-- Regression_Yellow_Period_Exec2_Apple_Plan -->
+        <test-method status="SKIP" signature="DriverQuite()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="DriverQuite" is-config="true" duration-ms="0" started-at="2018-04-03T13:18:46Z" finished-at="2018-04-03T13:18:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DriverQuite -->
+      </class> <!-- app.psc.testcases.accountverification.accountverification_existingusr -->
+      <class name="app.psc.testcases.userverification.userverificationtestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="ReportInit" is-config="true" duration-ms="15457" started-at="2018-04-03T12:35:25Z" finished-at="2018-04-03T12:35:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReportInit -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="70699" started-at="2018-04-03T12:35:41Z" data-provider="setData" finished-at="2018-04-03T12:36:51Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required
+
+Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="7131" started-at="2018-04-03T12:36:51Z" data-provider="setData" finished-at="2018-04-03T12:36:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL= , EXPECTEDERRORMESSAGE=Email is Required, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="9407" started-at="2018-04-03T12:36:58Z" data-provider="setData" finished-at="2018-04-03T12:37:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK= , PASSWORD=testing1, DREAMCAR= , SPOUSEMIDNAME= , USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Security Answer is Required, USERNAME=1ISIS, USERSECONDARYANS= }]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="6973" started-at="2018-04-03T12:37:08Z" data-provider="setData" finished-at="2018-04-03T12:37:15Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=Invalid, EXPECTEDERRORMESSAGE=Email format is invalid, USERNAME=1ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input" duration-ms="8455" started-at="2018-04-03T12:37:15Z" data-provider="setData" finished-at="2018-04-03T12:37:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[5]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testInvalid, PASSWORD=testing1, DREAMCAR=testInvalid, SPOUSEMIDNAME=testInvalid, USERVERIEMAIL=Invalid@gwl.com, EXPECTEDERRORMESSAGE=Email is invalid
+
+If you have forgotten your security answer, please contact Plan Technical Support, Website Support option, at (877)-694-4015 so we can assist you with resetting your security question. Please note: The Security Answer is case sensitive., USERNAME=1ISIS, USERSECONDARYANS=invalid}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input -->
+        <test-method status="PASS" signature="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input" duration-ms="112357" started-at="2018-04-03T12:37:23Z" data-provider="setData" finished-at="2018-04-03T12:39:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=Testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERNAME=7ISIS, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input -->
+        <test-method status="FAIL" signature="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session(int, java.util.Map)[pri:0, instance:app.psc.testcases.userverification.userverificationtestcases@6adede5]" name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session" duration-ms="32028" started-at="2018-04-03T12:39:16Z" data-provider="setData" finished-at="2018-04-03T12:39:48Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERVERIFICATIONANS=test, USERNAME=5XHPE, IFSINGLESITEUSER=True, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session -->
+      </class> <!-- app.psc.testcases.userverification.userverificationtestcases -->
+      <class name="app.psc.testcases.myprofile.MyProfileTestCases">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="InitTest" is-config="true" duration-ms="134" started-at="2018-04-03T13:05:12Z" finished-at="2018-04-03T13:05:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="FAIL" signature="TC001_01_SIT_PSC_Update_My_profile_Default_Plan(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan" duration-ms="8626" started-at="2018-04-03T13:05:23Z" data-provider="setData" finished-at="2018-04-03T13:05:32Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, USERSECONDARYANS=test, DEFAULTGAID=351663-01}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC001_01_SIT_PSC_Update_My_profile_Default_Plan -->
+        <test-method status="PASS" signature="TC001_02_SIT_PSC_Update_My_profile_Default_Plan(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan" duration-ms="3630" started-at="2018-04-03T13:05:32Z" data-provider="setData" finished-at="2018-04-03T13:05:35Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, USERSECONDARYANS=test, INVALIDGAID=1111114-01}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC001_02_SIT_PSC_Update_My_profile_Default_Plan -->
+        <test-method status="FAIL" signature="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow" duration-ms="14551" started-at="2018-04-03T13:05:35Z" data-provider="setData" finished-at="2018-04-03T13:05:50Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, NEWEMAILID=rsp@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_01_SIT_PSC_Update_Email_Address_Positive_Flow -->
+        <test-method status="PASS" signature="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow" duration-ms="6809" started-at="2018-04-03T13:05:50Z" data-provider="setData" finished-at="2018-04-03T13:05:57Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, NEWEMAILID=rsp@gwl, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_02_SIT_PSC_Update_Email_Address_Negative_Flow -->
+        <test-method status="FAIL" signature="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password" duration-ms="52042" started-at="2018-04-03T13:05:57Z" data-provider="setData" finished-at="2018-04-03T13:06:49Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PASSWORD=testing1, NEWEMAILID=rsp@gwl.com, BADPASSWORDS=test,test1,test2, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password -->
+        <test-method status="PASS" signature="TC003_01_SIT_PSC_Update_User_Name(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC003_01_SIT_PSC_Update_User_Name" duration-ms="1637" started-at="2018-04-03T13:07:01Z" data-provider="setData" finished-at="2018-04-03T13:07:03Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEGATIVEVERIFY=Yes, PASSWORD=testing1, NEWASSIGNEDUSERNAME= , USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC003_01_SIT_PSC_Update_User_Name -->
+        <test-method status="PASS" signature="TC003_01_SIT_PSC_Update_User_Name(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC003_01_SIT_PSC_Update_User_Name" duration-ms="1887" started-at="2018-04-03T13:07:03Z" data-provider="setData" finished-at="2018-04-03T13:07:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEGATIVEVERIFY=Yes, PASSWORD=testing1, NEWASSIGNEDUSERNAME=K1INS, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC003_01_SIT_PSC_Update_User_Name -->
+        <test-method status="PASS" signature="TC003_01_SIT_PSC_Update_User_Name(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC003_01_SIT_PSC_Update_User_Name" duration-ms="1735" started-at="2018-04-03T13:07:05Z" data-provider="setData" finished-at="2018-04-03T13:07:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEGATIVEVERIFY=Yes, PASSWORD=testing1, NEWASSIGNEDUSERNAME=K1INST%, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC003_01_SIT_PSC_Update_User_Name -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="7191" started-at="2018-04-03T13:07:07Z" data-provider="setData" finished-at="2018-04-03T13:07:14Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=false, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, BADPASSWORDS=, USERNAME=1INST, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="8004" started-at="2018-04-03T13:07:14Z" data-provider="setData" finished-at="2018-04-03T13:07:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=false, QUESTIONINDEX=32, NEGATIVEVERIFY=true, PASSWORD=testing1, BADPASSWORDS=test1,test1,test2, USERNAME=1INST, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="1671" started-at="2018-04-03T13:07:22Z" data-provider="setData" finished-at="2018-04-03T13:07:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=true, SAMEANSWER=false, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, BADPASSWORDS=, USERNAME=1INST, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC004_01_SIT_PSC_Update_My_profile_Security_Questions(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC004_01_SIT_PSC_Update_My_profile_Security_Questions" duration-ms="3620" started-at="2018-04-03T13:07:24Z" data-provider="setData" finished-at="2018-04-03T13:07:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, SAMEQUESTIONS=false, SAMEANSWER=true, QUESTIONINDEX=32, NEGATIVEVERIFY=false, PASSWORD=testing1, BADPASSWORDS=, USERNAME=1INST, ANSWER1=test1, ANSWER3=test3, USERSECONDARYANS=test, ANSWER2=test2}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_SIT_PSC_Update_My_profile_Security_Questions -->
+        <test-method status="PASS" signature="TC005_01_SIT_PSC_Update_My_profile_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC005_01_SIT_PSC_Update_My_profile_Password" duration-ms="7103" started-at="2018-04-03T13:07:27Z" data-provider="setData" finished-at="2018-04-03T13:07:34Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, NEGATIVEVERIFY=false, PASSWORD=testing1, BADPASSWORDS=, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_SIT_PSC_Update_My_profile_Password -->
+        <test-method status="PASS" signature="TC005_01_SIT_PSC_Update_My_profile_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC005_01_SIT_PSC_Update_My_profile_Password" duration-ms="1878" started-at="2018-04-03T13:07:34Z" data-provider="setData" finished-at="2018-04-03T13:07:36Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Test1, NEGATIVEVERIFY=fasle, PASSWORD=testing1, BADPASSWORDS=, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_SIT_PSC_Update_My_profile_Password -->
+        <test-method status="PASS" signature="TC005_01_SIT_PSC_Update_My_profile_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC005_01_SIT_PSC_Update_My_profile_Password" duration-ms="1348" started-at="2018-04-03T13:07:36Z" data-provider="setData" finished-at="2018-04-03T13:07:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD= , NEGATIVEVERIFY=false, PASSWORD=testing1, BADPASSWORDS=, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_SIT_PSC_Update_My_profile_Password -->
+        <test-method status="PASS" signature="TC005_01_SIT_PSC_Update_My_profile_Password(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC005_01_SIT_PSC_Update_My_profile_Password" duration-ms="20564" started-at="2018-04-03T13:07:38Z" data-provider="setData" finished-at="2018-04-03T13:07:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NEWPASSWORD=Testing1, NEGATIVEVERIFY=true, PASSWORD=testing1, BADPASSWORDS=test,test1,test2, USERVERIFICATIONANS=test, USERNAME=1INST, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_SIT_PSC_Update_My_profile_Password -->
+        <test-method status="PASS" signature="TC006_01_FAQ_DDTC_245(int, java.util.Map)[pri:0, instance:app.psc.testcases.myprofile.MyProfileTestCases@55d56113]" name="TC006_01_FAQ_DDTC_245" duration-ms="73007" started-at="2018-04-03T13:07:58Z" data-provider="setData" finished-at="2018-04-03T13:09:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, USERNAME=1INST, PASSWORD=testing1, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_FAQ_DDTC_245 -->
+      </class> <!-- app.psc.testcases.myprofile.MyProfileTestCases -->
+      <class name="app.psc.testcases.accountverification.accountverificationtest_plan">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@49993335]" name="ReportInit" is-config="true" duration-ms="141" started-at="2018-04-03T12:39:55Z" finished-at="2018-04-03T12:39:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReportInit -->
+        <test-method status="FAIL" signature="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@49993335]" name="TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input" duration-ms="6928" started-at="2018-04-03T12:39:55Z" data-provider="setData" finished-at="2018-04-03T12:40:02Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=123, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, ADDPLANNUMBER=384171-09, SPOUSEMIDNAME=teste, USERVERIEMAIL=abc@gwl.com, EXPECTEDERRORMESSAGE=Invalid Plan Number, USERNAME=5BC5G, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC012_01_Verify_User_Access_New_Plan_For_Invalid_Input -->
+        <test-method status="FAIL" signature="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input(int, java.util.Map)[pri:0, instance:app.psc.testcases.accountverification.accountverificationtest_plan@49993335]" name="TC012_02_Verify_User_Access_New_Plan_For_Valid_Input" duration-ms="6944" started-at="2018-04-03T12:40:02Z" data-provider="setData" finished-at="2018-04-03T12:40:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=384171-09, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, ADDPLANNUMBER=384171-09, SPOUSEMIDNAME=teste, USERVERIEMAIL=abc@gwl.com, USERNAME=5BC5G, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC012_02_Verify_User_Access_New_Plan_For_Valid_Input -->
+      </class> <!-- app.psc.testcases.accountverification.accountverificationtest_plan -->
+      <class name="app.psc.testcases.login.logintestcases">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="InitTest" is-config="true" duration-ms="109" started-at="2018-04-03T12:40:09Z" finished-at="2018-04-03T12:40:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="PASS" signature="TC006_01_Verify_Force_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC006_01_Verify_Force_Login" duration-ms="26193" started-at="2018-04-03T12:40:09Z" data-provider="setData" finished-at="2018-04-03T12:40:36Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FORCELOGINTRUEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=true, FORCELOGINFALSEURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=false, FORCELOGINDUMMYURL=https://qaa-plan.retirementpartner.com/psc/?accu=PscGwrs&forceLogin=1234ascd}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_Verify_Force_Login -->
+        <test-method status="PASS" signature="TC017_01_Internal_Employee_External_Client_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC017_01_Internal_Employee_External_Client_Login" duration-ms="14868" started-at="2018-04-03T12:40:36Z" data-provider="setData" finished-at="2018-04-03T12:40:50Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=7ISIS, COMMENTS=User ID for Internal users, PASSWORD=Testing1}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC017_01_Internal_Employee_External_Client_Login -->
+        <test-method status="PASS" signature="TC017_01_Internal_Employee_External_Client_Login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC017_01_Internal_Employee_External_Client_Login" duration-ms="14352" started-at="2018-04-03T12:40:50Z" data-provider="setData" finished-at="2018-04-03T12:41:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=2ISIS, COMMENTS=User ID for External users, PASSWORD=testing1}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC017_01_Internal_Employee_External_Client_Login -->
+        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="21437" started-at="2018-04-03T12:41:05Z" data-provider="setData" finished-at="2018-04-03T12:41:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=1ISIS, PASSWORD= , ERRORMESSAGES=Password is required.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
+        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="18583" started-at="2018-04-03T12:41:26Z" data-provider="setData" finished-at="2018-04-03T12:41:45Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME= , PASSWORD=testing1, ERRORMESSAGES=User ID is required.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
+        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="19266" started-at="2018-04-03T12:41:45Z" data-provider="setData" finished-at="2018-04-03T12:42:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME= , PASSWORD= , ERRORMESSAGES=User ID is required.
+Password is required.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
+        <test-method status="PASS" signature="TC002_01_Verify_Existing_User_Error_Messages_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC002_01_Verify_Existing_User_Error_Messages_PreLogin" duration-ms="18346" started-at="2018-04-03T12:42:04Z" data-provider="setData" finished-at="2018-04-03T12:42:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=1USER, PASSWORD=badpassword, ERRORMESSAGES=Please enter a valid Username / Password combination.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_01_Verify_Existing_User_Error_Messages_PreLogin -->
+        <test-method status="FAIL" signature="TC004_01_Verify_Header_and_Footer_Links_PreLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC004_01_Verify_Header_and_Footer_Links_PreLogin" duration-ms="97536" started-at="2018-04-03T12:42:23Z" data-provider="setData" finished-at="2018-04-03T12:44:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{LINK_FOOTER4=sponsor-business-continuity, LINK_FOOTER5=sponsor-broker-check, LINK_FOOTER6=sponsor-excessive-trading, LINK_FOOTER7=Plan_Service_Center_User_Authorization_Form, LINK_HEADER2=https://participant.empower-retirement.com/participant/#/login, LINK_FOOTER1=sponsor-security, LINK_FOOTER2=sponsor-privacy, LINK_FOOTER3=sponsor-terms-and-conditions, LINK_HEADER1=sponsor-faq}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_01_Verify_Header_and_Footer_Links_PreLogin -->
+        <test-method status="FAIL" signature="TC004_02_Verify_Header_and_Footer_Links_PostLogin(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC004_02_Verify_Header_and_Footer_Links_PostLogin" duration-ms="95506" started-at="2018-04-03T12:44:00Z" data-provider="setData" finished-at="2018-04-03T12:45:36Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{LINK_FOOTER4=Business Continuity Plan, LINK_FOOTER5=BrokerCheck, LINK_FOOTER6=Market timing and excessive trading policies, LINK_FOOTER7=PSCUserAuthorizationForm, LINK_FOOTER1=Security, LINK_FOOTER2=Privacy, LINK_FOOTER3=Terms and conditions, USERVERIFICATIONANS=test, FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, TXTUSERVERIEMAIL=abc@gwl.com, USERNAME=1ISIS}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_02_Verify_Header_and_Footer_Links_PostLogin -->
+        <test-method status="PASS" signature="TC006_01_Verify_Error_Message_For_Terminated_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC006_01_Verify_Error_Message_For_Terminated_User" duration-ms="18722" started-at="2018-04-03T12:45:36Z" data-provider="setData" finished-at="2018-04-03T12:45:54Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{TERMDATE=2/6/2017, FAVDRINK=test, PASSWORD=testing1, DREAMCAR=test, SPOUSEMIDNAME=test, USERVERIEMAIL=, USERNAME=54AFP, ERRORMESSAGES=The Username you are using is inactive. Please contact your administrator., USERSECONDARYANS=}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC006_01_Verify_Error_Message_For_Terminated_User -->
+        <test-method status="FAIL" signature="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt" duration-ms="28507" started-at="2018-04-03T12:46:16Z" data-provider="setData" finished-at="2018-04-03T12:46:45Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=54AFP, PASSWORD=testing, ERRORMESSAGES=You have exceeded the maximum number of login attempts.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt -->
+        <test-method status="PASS" signature="TC007_01_display_correct_date_and_time_of_my_last_login(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC007_01_display_correct_date_and_time_of_my_last_login" duration-ms="70921" started-at="2018-04-03T12:46:45Z" data-provider="setData" finished-at="2018-04-03T12:47:56Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, MENU_FEATURE_CODE=BROWSER_INFO, SPOUSEMIDNAME=teste, APPLICATION=PSC, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC007_01_display_correct_date_and_time_of_my_last_login -->
+        <test-method status="PASS" signature="TC001_01_SIT_PSC_Sitenavigation_Menutabs(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC001_01_SIT_PSC_Sitenavigation_Menutabs" duration-ms="71249" started-at="2018-04-03T12:47:56Z" data-provider="setData" finished-at="2018-04-03T12:49:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, MENUTABS=Plan,Employees,Process center,Compliance,Reports,Resource center,File sharing, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC001_01_SIT_PSC_Sitenavigation_Menutabs -->
+        <test-method status="PASS" signature="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs" duration-ms="105442" started-at="2018-04-03T12:49:36Z" data-provider="setData" finished-at="2018-04-03T12:51:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{CONTACTS=, ADMINISTRATION=, YEAR END COMPLIANCE=, OVERVIEW=, USERVERIFICATIONANS=test, SUBMENU=Search employee,Add employee,Forms, INVESTMENTS &AMP; PERFORMANCE=, SEARCH EMPLOYEE=, VIDEO DEMONSTRATION=, CENSUS FILE=, FIDUCIARY RECORDS=, STANDARD REPORTS=, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, MENUNAME=Employees, ADD EMPLOYEE=, ENTER PAYROLL=, TRANSMIT YOUR OWN FILE=, COMPLIANCE USER GUIDE=, FORMS &AMP; DOCUMENTS=, PENDING=, EDUCATIONAL RESOURCES=, FORMS=, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, PRODUCTS &AMP; SERVICES=, VIEW?CHANGE BANKING INFORMATION=, SPOUSEMIDNAME=teste, MY REPORTS=}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC001_02_SIT_PSC_Sitenavigation_SubMenutabs -->
+        <test-method status="PASS" signature="TC004_Verify_PLUser_Login_With_No_Plna_Access(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC004_Verify_PLUser_Login_With_No_Plna_Access" duration-ms="58021" started-at="2018-04-03T12:51:22Z" data-provider="setData" finished-at="2018-04-03T12:52:20Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=5ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC004_Verify_PLUser_Login_With_No_Plna_Access -->
+        <test-method status="PASS" signature="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite" duration-ms="122567" started-at="2018-04-03T12:52:20Z" data-provider="setData" finished-at="2018-04-03T12:54:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERID=6X52E, USERNAME=6X52E, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite -->
+        <test-method status="FAIL" signature="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites" duration-ms="150043" started-at="2018-04-03T12:54:23Z" data-provider="setData" finished-at="2018-04-03T12:56:53Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=6IUEF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites -->
+        <test-method status="FAIL" signature="TC003_UI_Validations_On_JumpPage(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC003_UI_Validations_On_JumpPage" duration-ms="14462" started-at="2018-04-03T12:56:53Z" data-provider="setData" finished-at="2018-04-03T12:57:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=6IUEF, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC003_UI_Validations_On_JumpPage -->
+        <test-method status="FAIL" signature="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages" duration-ms="128940" started-at="2018-04-03T12:57:07Z" data-provider="setData" finished-at="2018-04-03T12:59:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERVERIEMAIL=discard@gwl.com, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC05_01_SIT_PSC_HomePage_01_TC001_frame_on_Dashboard_Filesharing_and_Reports_pages -->
+        <test-method status="PASS" signature="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts" duration-ms="68812" started-at="2018-04-03T12:59:16Z" data-provider="setData" finished-at="2018-04-03T13:00:25Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERNAME=54AFP, PASSWORD=testing1, ERRORMESSAGES=You have exceeded the maximum number of login attempts., INCORRECTPASSWORD=testing}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC011_01_SIT_PSC_Login_01_TC020_Unsuccessful_login_attempts -->
+        <test-method status="FAIL" signature="TC01_SIT_PSC_HomePage_Transaction_Security(int, java.util.Map)[pri:0, instance:app.psc.testcases.login.logintestcases@20322d26]" name="TC01_SIT_PSC_HomePage_Transaction_Security" duration-ms="73192" started-at="2018-04-03T13:00:25Z" data-provider="setData" finished-at="2018-04-03T13:01:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIEMAIL=discard@gwl.com, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, USERSECONDARYANS=test}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC01_SIT_PSC_HomePage_Transaction_Security -->
+      </class> <!-- app.psc.testcases.login.logintestcases -->
+      <class name="app.psc.testcases.plan.plantestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="ReportInit" is-config="true" duration-ms="63" started-at="2018-04-03T12:53:09Z" finished-at="2018-04-03T12:53:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReportInit -->
+        <test-method status="FAIL" signature="TC16_Plan_Provisions_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC16_Plan_Provisions_page" duration-ms="116526" started-at="2018-04-03T12:53:10Z" data-provider="setData" finished-at="2018-04-03T12:55:06Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC16_Plan_Provisions_page -->
+        <test-method status="FAIL" signature="TC17_Add_PPT_And_SearchForPPT(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC17_Add_PPT_And_SearchForPPT" duration-ms="165059" started-at="2018-04-03T12:55:06Z" data-provider="setData" finished-at="2018-04-03T12:57:51Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, FREQUENCYOPTIONS=ANNUAL      *    1,BI-WEEKLY   *   26,HOURLY      * 2080,MONTHLY     *   12,SEMI-MONTH  *   24,WEEKLY      *   52, FIRSTNAME=James, INELIGIBILITYREASONCODE=Excluded Class,Other, INCOMEDATAERRORMSG=Salary Amount is not a valid number., PLANNUMBER=, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=ket, SPOUSEMIDNAME=teste, ALLOCATIONVALIDATIONMSG=Percentage do not add up to 100., USERNAME=1ISIS, EXPECTEDMANAGEDACCNTLABELS=Marital Status,State of Residence,Gender,Date of Birth,Current Annual Salary, USERVERIFICATIONEMAIL=discard@gwl.com, EXPHIREDATEERRORMSG=Hire Date is mandatory.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC17_Add_PPT_And_SearchForPPT -->
+        <test-method status="PASS" signature="TC18_SIT_PSC_Investment_UnitShare_values_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC18_SIT_PSC_Investment_UnitShare_values_page" duration-ms="78676" started-at="2018-04-03T12:57:51Z" data-provider="setData" finished-at="2018-04-03T12:59:10Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{EXPECTEDWATRMARKTXT2=*If the dates selected are weekends or market holidays, values are shown as of the prior business day., EXPECTEDWATRMARKTXT1=*Please select dates between, USERVERIFICATIONANS=test, EXPECTEDUNITSHARECOL=Investment option,Symbol,Share value as of,Share value as of,Dividends/capital gains,Change, PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERNAME=1ISIS, EXPECTEDWATRMARKTXT5=*Investment results shown do not reflect a sales charge. Additional fees or expenses may be imposed that will affect actual results., EXPECTEDWATRMARKTXT4=*Percent change in value reflects dividends, capital gains distributions, stock splits and stock market results for the period shown. It represents the total return over the specified period and is not annualized., USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDWATRMARKTXT3=*If 'NOT AVAILABLE' appears for an investment option, the value is not available for the date you specified. The most recent fund information on file can be found by viewing the Plan's Investment Performance.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC18_SIT_PSC_Investment_UnitShare_values_page -->
+        <test-method status="FAIL" signature="TC20_Complex_User(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC20_Complex_User" duration-ms="68540" started-at="2018-04-03T12:59:10Z" data-provider="setData" finished-at="2018-04-03T13:00:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NONCOMPLEXUSERID=55W3S, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC20_Complex_User -->
+        <test-method status="FAIL" signature="TC23_Find_Users_by_Name(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC23_Find_Users_by_Name" duration-ms="61886" started-at="2018-04-03T13:01:26Z" data-provider="setData" finished-at="2018-04-03T13:02:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{USERVERIFICATIONANS=test, FIRSTNAME=AyshwarInvalid, FLOW=Negative, FAVDRINK=testk, EXPECTEDHEADERS=, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=amRIT, SPOUSEMIDNAME=teste, EXPECTEDERRORMESSAGE=No records found, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC23_Find_Users_by_Name -->
+        <test-method status="FAIL" signature="TC24_Investment_Charts_Page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plantestcases@64bfbc86]" name="TC24_Investment_Charts_Page" duration-ms="108889" started-at="2018-04-03T13:03:23Z" data-provider="setData" finished-at="2018-04-03T13:05:12Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=384037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.NullPointerException">
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException
+	at lib.Reporter.logEvent(Reporter.java:253)
+	at app.psc.testcases.plan.plantestcases.TC24_Investment_Charts_Page(plantestcases.java:468)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC24_Investment_Charts_Page -->
+      </class> <!-- app.psc.testcases.plan.plantestcases -->
+      <class name="app.psc.testcases.reports.ReportsTestCases">
+        <test-method status="PASS" signature="InitTest()[pri:0, instance:app.psc.testcases.reports.ReportsTestCases@148080bb]" name="InitTest" is-config="true" duration-ms="50" started-at="2018-04-03T13:05:57Z" finished-at="2018-04-03T13:05:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitTest -->
+        <test-method status="FAIL" signature="TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters(int, java.util.Map)[pri:0, instance:app.psc.testcases.reports.ReportsTestCases@148080bb]" name="TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters" duration-ms="24311" started-at="2018-04-03T13:05:57Z" data-provider="setData" finished-at="2018-04-03T13:06:21Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERTYPE=PSC_USER, USERVERIFICATIONANS=test, USERNAME=1ISIS, REPORTNAME=Loan Summary, TABNAME=Cross Plan}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC01_01_SIT_PSC_Reports_02_TC017_ViewReport_Parameters -->
+        <test-method status="FAIL" signature="TC02_01_PSCNextGen_Reports_Plan_review_PDF_PPTX(int, java.util.Map)[pri:0, instance:app.psc.testcases.reports.ReportsTestCases@148080bb]" name="TC02_01_PSCNextGen_Reports_Plan_review_PDF_PPTX" duration-ms="53984" started-at="2018-04-03T13:07:22Z" data-provider="setData" finished-at="2018-04-03T13:08:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{ADD INVESTMENT PERFORMANCE?=Yes, TABTXNCODE=NGRP9, USERVERIFICATIONANS=test, REPORTNAME=Plan Review, ADD RETIREMENT LANDSCAPE LEGISLATIVE AND REGULATORY UPDATES?=No, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, USCSID=PSC_USER, ADD PAGE NUMBERS? *=No, PLANID=331045-01, SPOUSEMIDNAME=teste, USERTYPE=PSC_USER, TXNCODE=PRBE, USERNAME=1ISIS, EMAILNOTIFICATION=NO, TABNAME=Plan Review, END DATE *=9/30/2017}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC02_01_PSCNextGen_Reports_Plan_review_PDF_PPTX -->
+      </class> <!-- app.psc.testcases.reports.ReportsTestCases -->
+      <class name="app.psc.testcases.plan.plansearchtestcases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="ReportInit" is-config="true" duration-ms="1983" started-at="2018-04-03T12:44:26Z" finished-at="2018-04-03T12:44:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReportInit -->
+        <test-method status="FAIL" signature="TC01_search_plan_for_valid_plan(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC01_search_plan_for_valid_plan" duration-ms="115231" started-at="2018-04-03T12:44:28Z" data-provider="setData" finished-at="2018-04-03T12:46:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331045-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC01_search_plan_for_valid_plan -->
+        <test-method status="FAIL" signature="TC02_Validate_error_message_when_plan_field_is_left_blank(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC02_Validate_error_message_when_plan_field_is_left_blank" duration-ms="6133" started-at="2018-04-03T12:46:24Z" data-provider="setData" finished-at="2018-04-03T12:46:30Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, ERRORTEXT=Please enter a plan in the search box.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC02_Validate_error_message_when_plan_field_is_left_blank -->
+        <test-method status="PASS" signature="TC03_Verify_planDetails_Populated(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC03_Verify_planDetails_Populated" duration-ms="3074" started-at="2018-04-03T12:46:30Z" data-provider="setData" finished-at="2018-04-03T12:46:33Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331045-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC03_Verify_planDetails_Populated -->
+        <test-method status="PASS" signature="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered" duration-ms="48707" started-at="2018-04-03T12:46:33Z" data-provider="setData" finished-at="2018-04-03T12:47:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=4@344, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, ERRORTEXT=Plan Not Found.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered -->
+        <test-method status="PASS" signature="TC04_Validate_Plan_Page_When_PlanName_Entered(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC04_Validate_Plan_Page_When_PlanName_Entered" duration-ms="92293" started-at="2018-04-03T12:47:22Z" data-provider="setData" finished-at="2018-04-03T12:48:54Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331045-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, PLANNAME=Hoe. Ecug ss Fghgssgf 401, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, ERRORTEXT=Please enter a plan in the search box.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC04_Validate_Plan_Page_When_PlanName_Entered -->
+        <test-method status="FAIL" signature="TC05_SIT_PSC_Plan_messaging_confirmation_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC05_SIT_PSC_Plan_messaging_confirmation_page" duration-ms="96616" started-at="2018-04-03T12:48:54Z" data-provider="setData" finished-at="2018-04-03T12:50:31Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC05_SIT_PSC_Plan_messaging_confirmation_page -->
+        <test-method status="FAIL" signature="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page" duration-ms="135386" started-at="2018-04-03T12:50:31Z" data-provider="setData" finished-at="2018-04-03T12:52:46Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=937878-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPECTEDFIXEDINVSTCOLUMN=Investment option,Legal name,Term,Rate, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC06_SIT_PSC_Investment_Fixed_Investment_Rates_Page -->
+        <test-method status="PASS" signature="TC07_SIT_PSC_Investment_Asset_Allocations_page(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC07_SIT_PSC_Investment_Asset_Allocations_page" duration-ms="69786" started-at="2018-04-03T12:52:46Z" data-provider="setData" finished-at="2018-04-03T12:53:56Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=937878-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC07_SIT_PSC_Investment_Asset_Allocations_page -->
+        <test-method status="FAIL" signature="TC08_Disable_certain_user_edit_fields_for_SAW(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC08_Disable_certain_user_edit_fields_for_SAW" duration-ms="88895" started-at="2018-04-03T12:53:56Z" data-provider="setData" finished-at="2018-04-03T12:55:25Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331044-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, LASTNAME=Boss, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=3ISIS, FIRSTNAME=Ken, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC08_Disable_certain_user_edit_fields_for_SAW -->
+        <test-method status="FAIL" signature="TC09_Order_Participant_QDIA_Notice_Listing(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC09_Order_Participant_QDIA_Notice_Listing" duration-ms="93644" started-at="2018-04-03T12:55:25Z" data-provider="setData" finished-at="2018-04-03T12:56:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{REPORT FORMAT=PDF, USERVERIFICATIONANS=test, PLANNUMBER=338566-01, PLANNUMBER1=331170-01, PARTICIPANT IDENTIFIER=FULL SSN 123-45-6789, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, SORT ORDER=Participant ID, USERNAME=3ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, IGNOREDIVISION=yes}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC09_Order_Participant_QDIA_Notice_Listing -->
+        <test-method status="FAIL" signature="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" duration-ms="88387" started-at="2018-04-03T12:56:59Z" data-provider="setData" finished-at="2018-04-03T12:58:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=1260028-01, FAVDRINK=testk, PLANNUMBERNOPARTGRP=1260028-01, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, NOPLANDOCMSG=No plan documents were found for this account.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping -->
+        <test-method status="FAIL" signature="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" duration-ms="88373" started-at="2018-04-03T12:58:27Z" data-provider="setData" finished-at="2018-04-03T12:59:55Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{NOTICE DOCUMENTS=Fee Disclosure Documents,Qualified Default Investment Alternative,Safe Harbor Notice, EXPECTEDDOCMSG=To view the most recent version(s) of your Safe Harbor documents, please select from the list below., PLANNUMBERWITHPARTGRP=385092-01, EXPDESCONHISTORYPAGE=This page is designed to help you view monthly Safe Harbor documents for up to three years., USERVERIFICATIONANS=test, ACCORDIONTITLE=Safe Harbor Notice Documents, FAVDRINK=testk, EXPTITLEONHISTORYPAGE=Safe Harbor Notice document history, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERNAME=1ISIS, EXPLISTOFMONTHS=Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec, USERVERIFICATIONEMAIL=discard@gwl.com, EXPECTEDHISTORYLINKTEXT=View the Safe Harbor document history for the past 3 years.}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC11_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping -->
+        <test-method status="FAIL" signature="TC12_3rd_Level_Links(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC12_3rd_Level_Links" duration-ms="95889" started-at="2018-04-03T12:59:55Z" data-provider="setData" finished-at="2018-04-03T13:01:31Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, EXPPLANOVERVIEWOPTIONS=Plan provisions,Vesting schedules,Participant web and VRU options}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC12_3rd_Level_Links -->
+        <test-method status="FAIL" signature="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates" duration-ms="88095" started-at="2018-04-03T13:01:31Z" data-provider="setData" finished-at="2018-04-03T13:02:59Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=384037-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, EXPECTEDFIXEDINVSTCOLUMN=Investment option,Legal name,Term,Current rate,Future rate,Future rate effective date, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates -->
+        <test-method status="FAIL" signature="TC14_SIT_PSC_Investment_Options(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC14_SIT_PSC_Investment_Options" duration-ms="88076" started-at="2018-04-03T13:02:59Z" data-provider="setData" finished-at="2018-04-03T13:04:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{DISCLAIMER7=The overall Morningstar Rating™ for a fund is derived from a weighted average of the performance figures associated with its three-, five-, and ten-year (if applicable) Morningstar Rating metrics., DISCLAIMER8=For each mutual fund with at least a three-year history, Morningstar calculates a Morningstar Rating based on a Morningstar Risk-Adjusted Return measure that accounts for variation in a funds monthly performance (including the effects of sales charges, loads and redemption fees), placing more emphasis on downward variations and rewarding consistent performance. The top 10% of funds in each category receive 5 stars, the next 22.5% receive 4 stars, the next 35% receive 3 stars, the next 22.5% receive 2 stars and the bottom 10% receive 1 star. (Each share class is counted as a fraction of one fund within this scale and rated separately, which may cause slight variations in the distribution percentages.), DISCLAIMER3=1The net expense ratio is less applicable fee waivers or expense reimbursements the investment adviser and/or administrator may have agreed upon, either voluntary or by contractual agreement, while the gross expense ratio is not. Fee waivers and reimbursements may be modified or terminated at any time. Additional information can be found in the Fund's prospectus and/or other disclosure documents regarding effective dates and/or if waivers or reimbursements are voluntary or by contractual agreement. Absent waivers or reimbursements, the performance would have been lower., DISCLAIMER4=2For those investment options that are not part of an annuity contract, the 10 yr/incep column represents the return of the investment option for the period that is the lesser of the inception of the investment option or the prior ten years. If your investment is part of an annuity contract, the 10 yr/incep column represents the return of the fund for the period that is the lesser of the separate account's inception date or the prior ten years. For details about the investment's inception, click (tap) on the fund name and review the information in the Investment Overview document., DISCLAIMER5=Regarding variable life and annuity products, while some of the funds offered have similar names and investment objectives and/or may be modeled after publicly traded mutual funds, they are different from the publicly traded funds. Some of the investment options referenced herein may have names and investment objectives that are similar to certain retail mutual funds. They are not, however, directly related to those mutual funds and their investment performance may differ substantially., EXPHEADERTEXT=Participant and fund balances as of, DISCLAIMER6=Investment decisions should not be made on performance information alone. Investors should carefully consider other factors as well such as risk, fund expenses, fund management and more. For important information about the available investment options click here., USERVERIFICATIONANS=test, DISCLAIMER1=Return information as of the most recent month-end. The Overall Morningstar Rating information is provided as of the most recent quarter-end. Although data is gathered from reliable sources, including but not limited to Morningstar, Inc., the completeness or accuracy of the data shown cannot be guaranteed. Where data obtained from Morningstar, © 2017 Morningstar, Inc. All Rights Reserved. The data: (1) is proprietary to Morningstar and/or its content providers; (2) may not be copied or distributed; and (3) is not warranted to be accurate, complete or timely. Neither Morningstar nor its content providers are responsible for any damages or losses arising from any use of this information. Past performance is no guarantee of future results., DISCLAIMER2=Current performance may be lower or higher than performance data shown. Performance data quoted represents past performance and is not a guarantee or prediction of future results. When redeemed, units/shares may be worth more or less than their original cost. Performance returns reflect deduction for fund operating expenses. Your Plan may assess a plan administrative fee that was not deducted in the returns shown above. The returns shown would be reduced if this charge was applied. For investments offered through a group annuity, returns also reflect a mortality and expense risk charge of up to 0% , an average Contract Maintenance Charge (CMC) of 0.02%, and a Contingent Deferred Sales Charge (CDSC) of up to 0%. Your Plan may have higher, lower or no CMC or CDSC charges. For investments offered through a group annuity, returns prior to the separate account’s inception date or the investment option’s addition to the separate account, if later, are hypothetical. Please note performance figures shown do not reflect any applicable taxes. For performance data current to the most recent month-end, including fees and expenses, please click here., PLANNUMBER=937878-01, FAVDRINK=testk, PASSWORD=testing1, DREAMCAR=testr, QUICKLINKS=Investment Overview,Online Prospectus, SPOUSEMIDNAME=teste, EXPECTEDINVESTMENTCOLUMNS=Name,Symbol,Category,Morningstar rating,Participant count,Balance,YTD,1YR,3YR,5YR,10YR/incept,2,Exp. Ratio, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC14_SIT_PSC_Investment_Options -->
+        <test-method status="FAIL" signature="TC13_PLN_ADM_View_Change_Banking_Information_Regr(int, java.util.Map)[pri:0, instance:app.psc.testcases.plan.plansearchtestcases@192b07fd]" name="TC13_PLN_ADM_View_Change_Banking_Information_Regr" duration-ms="89191" started-at="2018-04-03T13:04:28Z" data-provider="setData" finished-at="2018-04-03T13:05:57Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[{PLANNUMBER=331044-01, FAVDRINK=testk, NEWROUTINGNUMBER=051000017, PASSWORD=testing1, DREAMCAR=testr, SPOUSEMIDNAME=teste, USERVERIFICATIONANS=test, USERNAME=1ISIS, USERVERIFICATIONEMAIL=discard@gwl.com, CONFIRMATIONMSG=Please take note of the reference number, NEWACCNUMBER=345678987}]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC13_PLN_ADM_View_Change_Banking_Information_Regr -->
+      </class> <!-- app.psc.testcases.plan.plansearchtestcases -->
+    </test> <!-- Yellow period execution-2 -->
   </suite> <!-- testsuite -->
 </testng-results>

@@ -179,6 +179,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	private Method invokeMethodforUserVerification;
 	private String[] userData;
 	private String[] userVeriData;
+	Actions act;
 
 	Map<String,String> securityAnsMap=null;
 	static ResultSet queryResultSet;
@@ -416,7 +417,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	public void logoutPSC() throws Exception{
 		Web.getDriver().switchTo().defaultContent();
 		if(Web.isWebElementDisplayed(logoutLink,true)){
-			Web.clickOnElement(logoutLink);
+			Web.actionsClickOnElement(logoutLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.isWebElementDisplayed(Web.returnElement(new LoginPage(),"USERNAME"),false);
 			Reporter.logEvent(Status.PASS,"Perform logout of PSC","Logged out of PSC successfully",false);
@@ -430,6 +431,7 @@ public class HomePage extends LoadableComponent<HomePage>{
 	public boolean searchPlan()
 	{ boolean planTextDisplayed = false;
 	try{
+		Web.actionsClickOnElement(searchPlansInput);
 		Web.setTextToTextBox(searchPlansInput, Stock.GetParameterValue("planNumber"));
 		Web.clickOnElement(searchPlanButton);
 		Web.isWebElementDisplayed(moreButton, true);
@@ -1450,7 +1452,7 @@ public boolean navigateToHomePage() throws Exception{
 				for(String menuName : menuNames){
 					WebElement menuItem = menuElement(menuName);
 					if(menuItem.isDisplayed())
-						Web.clickOnElement(menuItem);
+						Web.actionsClickOnElement(menuItem);
 					Thread.sleep(5000);
 					if(pageRedirected(breadCrumbs[counter]))
 						navigated++;
@@ -1488,7 +1490,7 @@ public boolean navigateToHomePage() throws Exception{
 					Web.getDriver().switchTo().frame("frameb");
 					WebElement buttonElement = returnActionButtonsOnHomePage(buttonName);
 					if(buttonElement.isDisplayed())
-						Web.clickOnElement(buttonElement);
+						Web.actionsClickOnElement(buttonElement);
 					Thread.sleep(5000);
 					if(pageRedirected(breadCrumbs[counter]))
 						navigated++;

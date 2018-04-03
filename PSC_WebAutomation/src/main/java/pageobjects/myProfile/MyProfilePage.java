@@ -387,7 +387,6 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 				Web.clickOnElement(confirmPwdButton);
 				Web.gwgWebDriver.waitForAngularRequestsToFinish();
 			}
-
 			if(successMessageDiv.isDisplayed()&&
 					currentEmailAddress().getText().equalsIgnoreCase
 					(randomEmailId))
