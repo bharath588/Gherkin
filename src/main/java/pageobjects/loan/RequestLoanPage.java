@@ -610,7 +610,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * 
 	 */
 	public void EnterLoanAmount(String loanAmount) {
-
+		inputLoanAmount.clear();
 		Web.setTextToTextBox(this.inputLoanAmount, loanAmount);
 
 		try {
@@ -2029,7 +2029,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
 		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
 		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
-		String expectedDate = Common.getCurrentDate("M/dd/yyyy");
+		String expectedDate = Common.getCurrentDate("M/d/yyyy");
 		if (date.equalsIgnoreCase(expectedDate)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Submittion Date is Current date",
@@ -2041,7 +2041,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify Loan Submittion Date is Current date",
 					"'Loan Submittion Date is not Same\nExpected Date:"
-							+ expectedDate + "\nActual Date" + date, true);
+							+ expectedDate + "\nActual Date:" + date, true);
 		}
 
 		verifyWebElementIsDisplayed("TEXT COMPLETE");
@@ -2066,7 +2066,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * @throws Exception
 	 *
 	 */
-	public void verifyLoanRequestRecievedSectionforExpeditedMail()
+	public String verifyLoanRequestRecievedSectionforExpeditedMail()
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
@@ -2074,10 +2074,11 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		isTextFieldDisplayed("Check sent by Expedited mail");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
-		String confirmationNo = confirmationtext.split(":")[1];
-		String date = confirmationtext.split(confirmationNo)[1];
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
 		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
-		String expectedDate = Common.getCurrentDate("M/dd/yyyy");
+		String expectedDate = Common.getCurrentDate("M/d/yyyy");
+		System.out.println("system Date:"+expectedDate);
 		if (date.equalsIgnoreCase(expectedDate)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Submittion Date is Current date",
@@ -2089,7 +2090,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify Loan Submittion Date is Current date",
 					"'Loan Submittion Date is not Same\nExpected Date:"
-							+ expectedDate + "\nActual Date" + date, true);
+							+ expectedDate + "\nActual Date: " + date, true);
 		}
 
 		verifyWebElementIsDisplayed("TEXT COMPLETE");
@@ -2102,7 +2103,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
-
+		return confirmationNo;
 	}
 
 	/**
@@ -2114,7 +2115,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * @throws Exception
 	 *
 	 */
-	public void verifyLoanRequestRecievedSectionforACHDelivery()
+	public String verifyLoanRequestRecievedSectionforACHDelivery()
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
@@ -2122,10 +2123,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		isTextFieldDisplayed("Funds sent by ACH");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
-		String confirmationNo = confirmationtext.split(":")[1];
-		String date = confirmationtext.split(confirmationNo)[1];
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
 		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
-		String expectedDate = Common.getCurrentDate("M/dd/yyyy");
+		String expectedDate = Common.getCurrentDate("M/d/yyyy");
 		if (date.equalsIgnoreCase(expectedDate)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Submittion Date is Current date",
@@ -2137,7 +2138,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify Loan Submittion Date is Current date",
 					"'Loan Submittion Date is not Same\nExpected Date:"
-							+ expectedDate + "\nActual Date" + date, true);
+							+ expectedDate + "\nActual Date: " + date, true);
 		}
 
 		verifyWebElementIsDisplayed("TEXT COMPLETE");
@@ -2150,7 +2151,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
-
+		return confirmationNo;
 	}
 
 	public static String getInterestRate() {
@@ -2221,6 +2222,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		Web.waitForElement(drpACHAcoount);
 		int actualAccounts = Web.getDropDownOptionCount(new RequestLoanPage(),
 				"ACH ACCOUNT DROP DOWN");
+		if(Web.getDropDownOptionAsText(drpACHAcoount, "Select Account").equalsIgnoreCase("Select Account"))
+			actualAccounts=actualAccounts-1;
 		int expectedAccounts = getACHAccounts(ssn).size();
 		List<String> accounts = getACHAccounts(ssn);
 		if (actualAccounts == expectedAccounts) {
@@ -2252,7 +2255,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			lib.Reporter.logEvent(Status.FAIL,
 					"Verify No.Of ACH Accounts in DropDown",
 					"'No.Of ACH Accounts in DropDown are not Same\nExpected:"
-							+ expectedAccounts + "\nActual" + actualAccounts,
+							+ expectedAccounts + "\nActual:" + actualAccounts,
 					true);
 		}
 	}
@@ -2425,7 +2428,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * @throws Exception
 	 *
 	 */
-	public void verifyLoanRequestRecievedSectionForFutureDatedLoan()
+	public String verifyLoanRequestRecievedSectionForFutureDatedLoan()
 			throws Exception {
 
 		isTextFieldDisplayed("Loan request received");
@@ -2433,10 +2436,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		isTextFieldDisplayed("Check sent by Regular mail");
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
-		String confirmationNo = confirmationtext.split(":")[1];
-		String date = confirmationtext.split(confirmationNo)[1];
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
 		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
-		String expectedDate = Common.getFutureDate("M/dd/yyyy", 14);
+		String expectedDate = Common.getFutureDate("M/d/yyyy", 14);
 		if (date.equalsIgnoreCase(expectedDate)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify Loan Request Received Date",
@@ -2461,6 +2464,6 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
-
+		return confirmationNo;
 	}
 }

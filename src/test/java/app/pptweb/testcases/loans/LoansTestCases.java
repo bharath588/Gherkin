@@ -1602,6 +1602,8 @@ public class LoansTestCases {
 			 */
 			
 			requestLoan.EnterLoanAmount("");
+		
+			//Web.clickOnElement(requestLoan, "INPUT AMOUNT FIELD");
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
 			Reporter.logEvent(Status.INFO,
@@ -1845,8 +1847,7 @@ public class LoansTestCases {
 			requestLoan
 					.isTextFieldDisplayed("How would you like your funds delivered?");
 			requestLoan.isTextFieldDisplayed("My loan summary");
-			requestLoan.setCheckTotal(requestLoan
-					.getCheckTotalFromSummaryTable());
+			
 			
 			
 			/**
@@ -1878,7 +1879,8 @@ public class LoansTestCases {
 			 * It must be present & enabled
 			 */
 			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
-
+			requestLoan.setCheckTotal(requestLoan
+					.getCheckTotalFromSummaryTable());
 			/**
 			 * Step 17 - Verify the 'My loan summary' section It must have the below
 			 * details iin the form of a table INTEREST RATE FEES* CHECK TOTAL
@@ -2559,8 +2561,7 @@ public class LoansTestCases {
 			requestLoan
 					.isTextFieldDisplayed("How would you like your funds delivered?");
 			requestLoan.isTextFieldDisplayed("My loan summary");
-			requestLoan.setCheckTotal(requestLoan
-					.getCheckTotalFromSummaryTable());
+			
 			
 			
 			/**
@@ -2624,7 +2625,8 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("FEES*");
 			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
 			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
-
+			requestLoan.setCheckTotal(requestLoan
+					.getCheckTotalFromSummaryTable());
 			/**
 			 * Step 21 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.

@@ -1083,7 +1083,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	public void fundToFundTransfer(String fromPercent, String toPercent) throws InterruptedException {
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
-		Web.waitForElement(iframeLegacyFeature);
+	Web.waitForElement(iframeLegacyFeature);
 		Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		if (Web.isWebElementDisplayed(tblTransferFundFrom)) {
 			Reporter.logEvent(Status.INFO,
@@ -1095,11 +1095,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 			//btnPercent.click();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			Web.clickOnElement(txtTransferFromPercent.get(0));
-			Web.clickOnElement(txtTransferFromPercent.get(0));
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		
 			Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
+			Actions action= new Actions(Web.getDriver());
+			action.sendKeys(Keys.TAB);
+			Web.clickOnElement(txtTransferFromPercent.get(0));
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			fromInvestmentOption = lnkTransferFromInvestmentOption.getText();
@@ -1113,13 +1114,24 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 					"Verify 'Transfer Fund To' Table is displayed",
 					"Table is displayed", true);
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if(tblTransferFundTo.isEnabled())
-			Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
+			{
+				try{
+					Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
+				}
+				catch(Exception e)
+				{
+					Web.setTextToTextBox(txtTransferFromPercent.get(0), Keys.TAB);
+					Web.setTextToTextBox(txtTransferFromPercent.get(0), fromPercent);
+					txtTransferFromPercent.get(0).click();
+					Web.setTextToTextBox(txtTransferToPercent.get(1), toPercent);
+				}
+			}
 			toInvestmentOption = lnkTransferToInvestmentOption.get(1).getText();
 		} else
 			Reporter.logEvent(Status.FAIL,

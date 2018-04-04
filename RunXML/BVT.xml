@@ -6,31 +6,18 @@
 	</listeners>
 	<test name="LOGIN">
 		<classes>
- <class name="app.pptweb.testcases.login.authenticationtestcases">
+ 	<class	name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
                 <methods>
-                    <include name="SF01_TC01_SendActivationCodeThroughLoginFlow">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_01_TC03_Send Activation Code by Email through Login flow"></parameter>
-                    </include>
-                
-                    <include name="ForgotPasswordFlow_SendActivationCode_Have_Activation_Code">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC01_already have an Activation Code"></parameter>
-                    </include>
-               
-                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Text">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC02_Send Activation Code by Text"></parameter>
-                    </include>
-                
-                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Voice">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC03_Send Activation Code by Voice"></parameter>
-                    </include>
-               
-                    <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Email">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC04_Send Activation Code by Email"></parameter>
-                    </include>
-               
-                    <include name="SF04_TC05_ForgotPassword_DidntReceiveActivationCode">
-                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_03_04_TC05_Didnt_Receive_Activation_Code"></parameter>
-                    </include>
+                   
+					<!-- <include name="FundToFundTransfer">
+						<parameter name="ManualTCName" value="FundToFundTransfer">
+						</parameter>
+					</include> -->
+
+					 <include name="Statement_and_Documents_validations">
+						<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+						</parameter>
+					</include> 
                 </methods>
             </class>  
        

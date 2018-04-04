@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" thread-count="2" parallel="classes">
+<suite name="testsuite" thread-count="3" parallel="classes">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
@@ -10,7 +10,24 @@
 				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
 				<methods>
 
+				<include name="SF01_TC01_Verify_Custom_site_prelogin_data">
+						<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
+						</parameter>
+					</include>
 
+					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data">
+						<parameter name="ManualTCName"
+							value="Verify_Custom_site_prelogin_postlogin_data">
+						</parameter>
+					</include>
+
+					<include
+						name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
+						<parameter name="ManualTCName"
+							value="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
+						</parameter>
+					</include>
+					
 					<include name="SF01_TC018_Verify_ROR_link">
 						<parameter name="ManualTCName" value="RateOfReturn_Validations">
 						</parameter>
@@ -22,10 +39,10 @@
 						</parameter>
 					</include>
 
-					<!-- <include name="Investment_lineup_validations">
+					 <include name="Investment_lineup_validations">
 						<parameter name="ManualTCName" value="Investment_lineup_validations">
 						</parameter>
-					</include> -->
+					</include> 
 
 					<!-- <include name="Edit_MyContribution" > <parameter name="ManualTCName" 
 						value="Edit_MyContribution"> </parameter> </include> -->
@@ -58,28 +75,12 @@
 						<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
 						</parameter>
 					</include>
-					<!-- <include name="Edit_Beneficiary">
-						<parameter name="ManualTCName" value="Edit_Beneficiary">
-						</parameter>
-					</include> -->
+										
 					
-					<include name="Manage_My_Investment_Flow_New">
-						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
-						</parameter>
-					</include>
-					<include name="Dollar_Cost_Average_Flow">
-						<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
-						</parameter>
-					</include>
-					<include name="Edit_Beneficiary">
-						<parameter name="ManualTCName" value="Edit_Beneficiary">
-						</parameter>
-					</include>
-
-					<include name="SF01_TC19_Verify_Legacy_Home_Page">
+					<!-- <include name="SF01_TC19_Verify_Legacy_Home_Page">
 						<parameter name="ManualTCName" value="Legacy_Home_Page_From_Magic_URL">
 						</parameter>
-					</include>
+					</include> -->
 
 					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
 						<parameter name="ManualTCName" value="SendActivationCode_ForgotPasswordFlow">
@@ -91,23 +92,7 @@
 			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 				<methods>
 
-					<include name="SF01_TC01_Verify_Custom_site_prelogin_data">
-						<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
-						</parameter>
-					</include>
-
-					<include name="SF01_TC03_Verify_Custom_site_prelogin_postlogin_data">
-						<parameter name="ManualTCName"
-							value="Verify_Custom_site_prelogin_postlogin_data">
-						</parameter>
-					</include>
-
-					<include
-						name="SF01_TC02_Verify_login_Successfully_into_unregistered_Device">
-						<parameter name="ManualTCName"
-							value="Verify_login_Successfully_into_unregistered_Device_AlreadyHaveACodeOption">
-						</parameter>
-					</include>
+					
 					<include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
 						<parameter name="ManualTCName"
 							value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security_Prod">
@@ -185,12 +170,30 @@
 						name="ManualTCName" value="LIAT_Verify_Health_care_costs_helpful_links"> 
 						</parameter> </include>
 
-					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
+					
+				</methods>
+			</class>
+			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_PreLogin">
+			<methods>
+					<include name="Manage_My_Investment_Flow_New">
+						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+						</parameter>
+					</include>
+					<include name="Dollar_Cost_Average_Flow">
+						<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+						</parameter>
+					</include>
+					
+				<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
 						<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
 						</parameter>
 					</include>
 					<include name="PlanForms_Validations">
 						<parameter name="ManualTCName" value="PlanForms_Validations">
+						</parameter>
+					</include>
+					<include name="Edit_Beneficiary">
+						<parameter name="ManualTCName" value="Edit_Beneficiary">
 						</parameter>
 					</include>
 
@@ -205,9 +208,10 @@
 							value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice">
 						</parameter>
 					</include>
-
-				</methods>
+			
+			</methods>
 			</class>
+			
 		</classes>
 	</test>
 
