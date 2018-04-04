@@ -51,7 +51,7 @@ import pageobjects.withdrawals.RequestWithdrawal;
 import appUtils.Common;
 import core.framework.Globals;
 
-public class prodvalidationtestcases {
+public class ProdvalidationTestCases_Liat {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;

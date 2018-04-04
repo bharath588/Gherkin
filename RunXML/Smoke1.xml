@@ -7,7 +7,7 @@
 	<test name="PROD SMOKE SUITE">
 		<classes>
 			<class
-				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
+				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Login_LeftNav">
 				<methods>
 
 				<include name="SF01_TC01_Verify_Custom_site_prelogin_data">
@@ -89,7 +89,7 @@
 
 				</methods>
 			</class>
-			<class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
 				<methods>
 
 					
@@ -173,7 +173,7 @@
 					
 				</methods>
 			</class>
-			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_PreLogin">
+			<class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
 			<methods>
 					<include name="Manage_My_Investment_Flow_New">
 						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
@@ -184,7 +184,7 @@
 						</parameter>
 					</include>
 					
-				<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
+					<include name="SF01_TC019_Verify_Request_A_Withdrawal_link">
 						<parameter name="ManualTCName" value="Request_A_Withdrawal_Flow">
 						</parameter>
 					</include>
