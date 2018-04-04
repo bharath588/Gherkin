@@ -3,10 +3,7 @@
  */
 package pageobjects.psc;
 
-
-
 import java.util.List;
-
 
 import lib.CommonLib;
 import lib.Stock;
@@ -14,12 +11,9 @@ import lib.Web;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import org.openqa.selenium.support.ui.LoadableComponent;
-
 import org.testng.Assert;
 
 import com.aventstack.extentreports.Status;
@@ -49,26 +43,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement loginSpinner;
 	@FindBy(css = "input[class *= 'emailBox']")
 	private WebElement txtUserVerificationEmail;
-	@FindBy(id="logOutLink")
+	@FindBy(id = "logOutLink")
 	private WebElement logout;
-	@FindBy(id="errorMessage")
+	@FindBy(id = "errorMessage")
 	private WebElement errorMessage;
-	@FindBy(xpath="//div[@class='disclosure']/p/a")
+	@FindBy(xpath = "//div[@class='disclosure']/p/a")
 	private WebElement termsAndConditionsLink;
-	@FindBy(xpath="//div[contains(@class,'footer-doc-links')]//li")
+	@FindBy(xpath = "//div[contains(@class,'footer-doc-links')]//li")
 	private List<WebElement> footerLinks;
-	@FindBy(linkText="Forgot Password?")
+	@FindBy(linkText = "Forgot Password?")
 	private WebElement forgotPassword;
-	@FindBy(xpath=".//*[@id='main']/div[2]/div[2]/div")
+	@FindBy(xpath = ".//*[@id='main']/div[2]/div[2]/div")
 	private WebElement sysReqDiv;
-	@FindBy(id="ifrmFooter")
+	@FindBy(id = "ifrmFooter")
 	private WebElement iframeFooter;
-	@FindBy(id="fund_iframe")
+	@FindBy(id = "fund_iframe")
 	private WebElement prospectusFrame;
-	@FindBy(id="fundProspectusDisclaimer")
+	@FindBy(id = "fundProspectusDisclaimer")
 	private List<WebElement> fundProspectusContent;
-	@FindBy(xpath="//*[@id='main']//div/ol[@class='breadcrumb']")
+	@FindBy(xpath = "//*[@id='main']//div/ol[@class='breadcrumb']")
 	private WebElement prospectusBreadcrumb;
+	@FindBy(xpath = ".//*[@id='main']/div[1]/div/ol/li[2]")
+	private WebElement preloginBreadcrumbs;
+	@FindBy(xpath = ".//*[@id='main']/div[1]/div/ol/li[1]")
+	private WebElement homeLinkInBreadcrumb;
 
 	LoadableComponent<?> parent;
 	public static String URL;
@@ -76,18 +74,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	ForgotPasswordPage forgotPwdPage;
 	String primeWindow = "";
 	static String accucode;
-	/*-----------------------------------------------------------------*/
 
+	/*-----------------------------------------------------------------*/
 
 	public LoginPage() {
 
 		PageFactory.initElements(Web.getDriver(), this);
-/*		Web.getDriver().manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver() );
-		NextGenPageFactory.initWebElements(Web.getDriver(),this);*/
 	}
 
-	public LoginPage(WebDriver webDriver){
+	public LoginPage(WebDriver webDriver) {
 		LoginPage.webDriver = webDriver;
 		commonLib = new CommonLib(webDriver);
 		PageFactory.initElements(webDriver, this);
@@ -96,12 +91,11 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	@Override
 	protected void load() {
 		// TODO Auto-generated method stub
-		//webDriver.get(Stock.getConfigParam("AppURLPSC"));
-		if(!(URL==null)){
+		// webDriver.get(Stock.getConfigParam("AppURLPSC"));
+		if (!(URL == null)) {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
-		}
-		else{
+		} else {
 			URL = Stock.getConfigParam("AppURLPSC");
 			URL = URL.replace("accucode", Stock.getConfigParam("accucode"));
 			Web.getDriver().get(URL);
@@ -113,8 +107,9 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	protected void isLoaded() throws Error {
 		// TODO Auto-generated method stub
 		Web.getDriver().switchTo().defaultContent();
-		Assert.assertTrue(Web.isWebElementDisplayed(frmLogin, false) /*&& 
-				Web.getDriver().getCurrentUrl().contains(LoginPage.accucode+"/welcome")*/);
+		Assert.assertTrue(Web.isWebElementDisplayed(frmLogin, false)
+				&& Web.getDriver().getCurrentUrl()
+						.contains(LoginPage.accucode + "/welcome"));
 
 	}
 
@@ -158,7 +153,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		if (fieldName.trim().equalsIgnoreCase("LOGO EMPOWER")) {
 			return this.logoEmpower;
 		}
-		if(fieldName.trim().equalsIgnoreCase("Logout")){
+		if (fieldName.trim().equalsIgnoreCase("Logout")) {
 			return this.logout;
 		}
 
@@ -172,7 +167,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	}
 
-	public void submitLoginCredentials(String userName, String password){
+	@SuppressWarnings("unused")
+	private List<WebElement> getWebElements(String fieldName) {
+		if (fieldName.trim().equalsIgnoreCase("Footer Links")) {
+			return this.footerLinks;
+		}
+		return null;
+	}
+
+	public void submitLoginCredentials(String userName, String password) {
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frmLogin);
 		Web.setTextToTextBox(this.txtUserName, userName);
@@ -182,11 +185,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			ThrowException.Report(TYPE.INTERRUPTED, "Exception occurred for thread sleep");
+			ThrowException.Report(TYPE.INTERRUPTED,
+					"Exception occurred for thread sleep");
 		}
 
-
 	}
+
 	/**
 	 * Method to enter user credentials and click on Sign In button
 	 * 
@@ -204,83 +208,86 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			ThrowException.Report(TYPE.INTERRUPTED, "Exception occurred for thread sleep");
+			ThrowException.Report(TYPE.INTERRUPTED,
+					"Exception occurred for thread sleep");
 		}
 	}
 
 	public void waitForSuccessfulLogin() throws InterruptedException {
 		// TODO Auto-generated method stub
 
-		if(Web.isWebElementDisplayed(frmLogin))
+		if (Web.isWebElementDisplayed(frmLogin))
 			Web.getDriver().switchTo().frame(frmLogin);
-		do{
+		do {
 			Thread.sleep(3000);
-		}while(Web.isWebElementDisplayed(loginSpinner));
+		} while (Web.isWebElementDisplayed(loginSpinner));
 		Web.getDriver().switchTo().defaultContent();
 
 	}
 
-	public void logout() throws InterruptedException{
-		if(Web.isWebElementDisplayed(logout)){
+	public void logout() throws InterruptedException {
+		if (Web.isWebElementDisplayed(logout)) {
 			Web.clickOnElement(logout);
 			Web.waitForElement(frmLogin);
 		}
 	}
 
-	public static String setURL(String accucode){
+	public static String setURL(String accucode) {
 		LoginPage.accucode = accucode;
 		String cleintURL = Stock.getConfigParam("AppURLPSC");
+		System.out.println("client URL is:" + cleintURL);
+		System.out.println("Accucode is :" + LoginPage.accucode);
 		URL = cleintURL.replace("accucode", accucode);
-		if(accucode.equalsIgnoreCase("InstAF")){
+		if (accucode.equalsIgnoreCase("InstAF")) {
 			URL = URL.replace("welcome", "welcome_bundled");
 			return URL;
 		}
 		return URL;
 	}
 
-	public boolean isErrorDisplayed(){
-		if(errorMessage.isDisplayed()){
-			Reporter.logEvent(Status.INFO, "Error displays", 
-					"Error displays:"+errorMessage.getText(), true);
+	public boolean isErrorDisplayed() {
+		if (errorMessage.isDisplayed()) {
+			Reporter.logEvent(Status.INFO, "Error displays", "Error displays:"
+					+ errorMessage.getText(), true);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean isTermsAndConditionsDisplayed(){
-		if(Web.isWebElementDisplayed(termsAndConditionsLink))
+	public boolean isTermsAndConditionsDisplayed() {
+		if (Web.isWebElementDisplayed(termsAndConditionsLink))
 			return true;
 		return false;
 	}
 
-	public boolean isTnCDisplayedInSysTray()
-	{ String footerLink="";
-	System.out.println("Footer links size:"+footerLinks.size());
-	if(Web.isWebElementsDisplayed(footerLinks)){
-		for (WebElement ele : footerLinks){
-			footerLink+=ele.getText()+", ";
+	public boolean isTnCDisplayedInSysTray() {
+		String footerLink = "";
+		System.out.println("Footer links size:" + footerLinks.size());
+		if (Web.isWebElementsDisplayed(footerLinks)) {
+			for (WebElement ele : footerLinks) {
+				footerLink += ele.getText() + ", ";
+			}
+			Reporter.logEvent(Status.INFO, "Footer links on login page are:",
+					footerLink, true);
+			if (!footerLink.contains("Terms and Conditions"))
+				return true;
 		}
-		Reporter.logEvent(Status.INFO, "Footer links on login page are:", 
-				footerLink, true);
-		if(!footerLink.contains("Terms and Conditions"))
-			return true;
-	}
-	return false;
+		return false;
 	}
 
-	public void clickOnTermsAndConditionsLink(){
-		if(Web.isWebElementDisplayed(termsAndConditionsLink))
+	public void clickOnTermsAndConditionsLink() {
+		if (Web.isWebElementDisplayed(termsAndConditionsLink))
 			Web.clickOnElement(termsAndConditionsLink);
 	}
 
-	public boolean tNCOpensInNewTab(){
+	public boolean tNCOpensInNewTab() {
 		primeWindow = Web.getDriver().getWindowHandle();
-		if(Web.getDriver().getWindowHandles().size() > 1){
-			for(String subWindow : Web.getDriver().getWindowHandles()){
+		if (Web.getDriver().getWindowHandles().size() > 1) {
+			for (String subWindow : Web.getDriver().getWindowHandles()) {
 				Web.getDriver().switchTo().window(subWindow);
 			}
 			String tNcURL = Web.getDriver().getCurrentUrl();
-			if(tNcURL.contains("InstSunTrust/pdf/TermsandConditions.pdf")){
+			if (tNcURL.contains("InstSunTrust/pdf/TermsandConditions.pdf")) {
 				Web.getDriver().close();
 				Web.getDriver().switchTo().window(primeWindow);
 				return true;
@@ -289,96 +296,143 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		return false;
 	}
 
-	public void clickOnFooterLink(String footerLink){
-		if(Web.isWebElementsDisplayed(footerLinks)){
-			for (WebElement ele : footerLinks){
-				if(ele.getText().contains(footerLink)){
-					Web.clickOnElement(ele);
-					break;
+	public void clickOnFooterLink(String footerLink) {
+		try {
+			if (Web.isWebElementsDisplayed(footerLinks)) {
+				for (WebElement ele : footerLinks) {
+					if (ele.getText().contains(footerLink)) {
+						Web.clickOnElement(ele);
+						Reporter.logEvent(Status.INFO,
+								"Click on " + footerLink, "Click on "
+										+ footerLink, true);
+						Thread.sleep(2000);
+						break;
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	public boolean isSysReqDisplayed(){
-		try{
-			if(Web.isWebElementDisplayed(sysReqDiv, true)){
-				Reporter.logEvent(Status.INFO, "System Requirement marking text:", 
+	public boolean isSysReqDisplayed() {
+		try {
+			if (Web.isWebElementDisplayed(sysReqDiv, true)) {
+				Reporter.logEvent(Status.INFO,
+						"System Requirement marking text:",
 						sysReqDiv.getText(), true);
 				return true;
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 
 	}
 
-	public boolean doTextMatches(String marketingText,WebElement...frame){
+	public boolean doTextMatches(String marketingText, WebElement... frame) {
 
-		try{
+		try {
 			forgotPwdPage = new ForgotPasswordPage();
-			if(frame.length>0){
+			if (frame.length > 0) {
 				Web.FrameSwitchONandOFF(true, frame);
-				if(Web.isWebElementDisplayed(forgotPwdPage, "System Requirement Window")){
-					if(Web.returnWebElement(forgotPwdPage, 
+				if (Web.isWebElementDisplayed(forgotPwdPage,
+						"System Requirement Window")) {
+					if (Web.returnWebElement(forgotPwdPage,
 							"System Requirement Window").getText().trim()
 							.equalsIgnoreCase(marketingText.trim()))
 						return true;
 				}
-			}
-			else if(Web.isWebElementDisplayed(sysReqDiv)){
-				if(sysReqDiv.getText().trim().equalsIgnoreCase(marketingText.trim()))
+			} else if (Web.isWebElementDisplayed(sysReqDiv)) {
+				if (sysReqDiv.getText().trim()
+						.equalsIgnoreCase(marketingText.trim()))
 					return true;
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 
 	}
-	
-	public void displayFundProspectusContent(){
-		
-		try{
-			String fundProsContent="";
+
+	public void displayFundProspectusContent() {
+
+		try {
+			String fundProsContent = "";
 			Web.FrameSwitchONandOFF(true, prospectusFrame);
 			Web.waitForElements(fundProspectusContent);
-			for(WebElement ele : fundProspectusContent){
-				fundProsContent+=ele.getText()+"\n\n";
+			for (WebElement ele : fundProspectusContent) {
+				fundProsContent += ele.getText() + "\n\n";
 			}
-			if (fundProsContent.length()>0){
-				Reporter.logEvent(Status.PASS, "Fund prospectus content displayed", 
-						fundProsContent, true);
-			}
-			else{
-				Reporter.logEvent(Status.FAIL, "Fund prospectus content displayed", 
+			if (fundProsContent.length() > 0) {
+				Reporter.logEvent(Status.PASS,
+						"Fund prospectus content displayed", fundProsContent,
+						true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Fund prospectus content displayed",
 						"Fund prospectus content not displayed", true);
 			}
 			Web.FrameSwitchONandOFF(false, prospectusFrame);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean isFundProspectusBreadCrumbDisplayed(){
-		try{
-			if (Web.isWebElementDisplayed(prospectusBreadcrumb,true))
+
+	public boolean isFundProspectusBreadCrumbDisplayed() {
+		try {
+			if (Web.isWebElementDisplayed(prospectusBreadcrumb, true))
 				return true;
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
-		
+
 	}
-	
-	public static String getBrowserTitle(){
+
+	public static String getBrowserTitle() {
 		return Web.getDriver().getTitle();
 	}
-	
-	
+
+	public boolean isLinkDisplayed(String footerLinkName) {
+		for (WebElement link : footerLinks) {
+			if (link.getText().trim().equalsIgnoreCase(footerLinkName))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isCorrectPage(String pageName) {
+		if (Web.isWebElementDisplayed(preloginBreadcrumbs, true)) {
+			if (preloginBreadcrumbs.getText().equalsIgnoreCase(pageName))
+				return true;
+		}
+		return false;
+	}
+
+	// click on home link
+	public void clickOnHomeLink() {
+		try {
+			if (Web.isWebElementDisplayed(homeLinkInBreadcrumb, true)) {
+				Web.clickOnElement(homeLinkInBreadcrumb);
+				Thread.sleep(2000);
+				/*
+				 * Reporter.logEvent(Status.INFO,
+				 * "Click on home link in breadcrumb",
+				 * "Click on home link in breadcrumb", true);
+				 */
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// verify pre login page is loaded
+	public boolean isPreloginPage() {
+		if (Web.getDriver().getCurrentUrl()
+				.contains(LoginPage.accucode + "/welcome"))
+			return true;
+		return false;
+	}
+
 }

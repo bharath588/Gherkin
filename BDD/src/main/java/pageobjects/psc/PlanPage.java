@@ -27,7 +27,9 @@ import org.testng.Assert;
  */
 public class PlanPage extends LoadableComponent<PlanPage> {
 	
-	
+	public PlanPage(){
+		PageFactory.initElements(Web.getDriver(), this);
+	}
 
 	public PlanPage(WebDriver webDriver){
 		PlanPage.webDriver = webDriver;

@@ -25,6 +25,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
@@ -517,7 +518,13 @@ public class Web {
 			} else if (webBrowser.trim().equalsIgnoreCase("CHROME")) {
 				System.setProperty("webdriver.chrome.driver",
 						Stock.getConfigParam("ChromeDriverClassPath"));
-				webDriver = new ChromeDriver();
+				DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--disable-extensions");
+				options.addArguments("test-type");
+				capabilities.setCapability("chrome.exe","C:\\Program Files (x86)\\Google\\Chrome\\Application");
+				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+				webDriver = new ChromeDriver(capabilities);
 
 			} else if (webBrowser.trim().equalsIgnoreCase("FIREFOX")
 					|| webBrowser.trim().equalsIgnoreCase("FF")) {

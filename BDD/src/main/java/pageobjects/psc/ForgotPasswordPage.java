@@ -106,6 +106,7 @@ public class ForgotPasswordPage extends LoadableComponent<ForgotPasswordPage> {
 		Web.clickOnElement(termsAndConditions);
 	}
 	
+	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName){
 		if (fieldName.trim().equalsIgnoreCase("System Requirement Window")) {
 			return this.sysReqDiv;
@@ -115,8 +116,35 @@ public class ForgotPasswordPage extends LoadableComponent<ForgotPasswordPage> {
 		return null;
 	}
 	
+	public boolean isLinkDisplayed(String footerLinkName){
+		try {
+			//Thread.sleep(1000);
+			for(WebElement link : footerLinks){
+				System.out.println(link.getText());
+				if(link.getText().trim().contains(footerLinkName.trim()))
+					return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 	
+	public boolean isForgotPwdPagePostPopUpClose(){
+		try {
+			Web.FrameSwitchONandOFF(false, tNcIframe);
+			Web.clickOnElement(closeFooterDialog);
+			Thread.sleep(1000);
+			if(Web.getDriver().getCurrentUrl().contains("forgotPassword.xhtml"))
+				return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 
 }

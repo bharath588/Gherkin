@@ -4,9 +4,9 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-<test name="Test diary">
+<test name="BDD Tests">
 <packages>
-<package name="test"/>
+<package name="testrunner"/>
 </packages>
 </test>
 </suite>
