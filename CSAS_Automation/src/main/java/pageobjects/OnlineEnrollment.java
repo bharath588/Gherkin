@@ -83,7 +83,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	@FindBy(id = "firstName")
 	private WebElement firstNameTextbox;
 
-	@FindBy(id = "lastName")
+	@FindBy(xpath = ".//*[@name='lastName']")
 	private WebElement lastNameTextbox;
 
 	@FindBy(id = "datOfBirth")
@@ -97,6 +97,10 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	@FindBy(id = "annualIncome")
 	private WebElement annualIncomeTextBox;
+	
+	@FindBy(id = "annualIncomeLabel")
+	private WebElement annualIncomeLabel;
+	
 
 	@FindBy(id = "dateOfHire")
 	private WebElement dateOfHireTextBox;
@@ -106,12 +110,15 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	@FindBy(id = "city")
 	private WebElement cityTextbox;
-
+	
 	@FindBy(id = "cityError")
 	private WebElement cityError;
 
 	@FindBy(id = "state")
 	private WebElement stateTextbox;
+	
+	@FindBy(id = "stateLabel")
+	private WebElement stateLabel;
 	
 	@FindBy(xpath =".//select[@id='state']")
 	private WebElement stateDropDown;
@@ -1324,7 +1331,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-				fillTheFieldesinOnlineEnrollmentForm();
+				//fillTheFieldesinOnlineEnrollmentForm();
 
 				// enter invalid data into personal email field and validate
 				// error message.
@@ -1900,7 +1907,8 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	public void verifyAnnualIncomeField() throws InterruptedException {
 		// Click on annual income field and should not enter data verify error
 		// message.
-		Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
+		Web.clickOnElement(annualIncomeTextBox);
+		Web.clickOnElement(annualIncomeLabel);
 		Web.clickOnElement(annualIncomeError);
 
 		// Verify error message is displayed.
@@ -1923,7 +1931,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		// Verify if you enter 100 to text box it will add decimal.
 		Web.setTextToTextBox(annualIncomeTextBox,"100");
-		//Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
+		Web.clickOnElement(annualIncomeLabel);
 		CommonLib
 				.verifyFieldValue(annualIncomeTextBox, "$100.00",
 						"Actual Annual income field value should be match with expected.");
@@ -1931,7 +1939,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 		// Verify if you enter 100 to text box it will add decimal.
 		annualIncomeTextBox.clear();
 		Web.setTextToTextBox(annualIncomeTextBox,"1000");
-		//Web.setTextToTextBox(annualIncomeTextBox, Keys.TAB);
+		Web.clickOnElement(annualIncomeLabel);
 		CommonLib
 				.verifyFieldValue(annualIncomeTextBox, "$1,000.00",
 						"Actual Annual income field value should be match with expected.");
@@ -2082,7 +2090,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 				CommonLib.verifyExpectedAndActualEual("D",
 						hm.get("DivisionCode"),
 						"Expected Division Code should exist on data base.");
-				CommonLib.verifyExpectedAndActualEual("5",
+				CommonLib.verifyExpectedAndActualEual("1",
 						hm.get("DivisionValue"),
 						"Expected Division Value should exist on data base.");
 			}
@@ -2214,6 +2222,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 							.getString("GCS_VALUE");
 					contactAndEmploymentList
 							.put("DivisionValue", divisionValue);
+							break;
 						
 				}
 			}
@@ -2465,8 +2474,8 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			Reporter.logEvent(Status.PASS,
 					"Check if Country element is Drop down",
 					"Country element is a drop down", true);
-			if (sel.getFirstSelectedOption().getText()
-					.equalsIgnoreCase("US - United States")) {
+					String defaultCountry = Web.getWebElementText(countryTextbox);
+			if (defaultCountry.contains("United States")) {
 				Reporter.logEvent(Status.PASS,
 						"Check default value of country field",
 						"Default value in drop down is: " + "\nExpected: "
@@ -2578,7 +2587,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			}
 
 			Web.selectDropnDownOptionAsIndex(stateTextbox, "0");
-			stateTextbox.sendKeys(Keys.TAB);
+			Web.clickOnElement(stateLabel);
 			if (Web.isWebElementDisplayed(stateError, true)) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -2605,7 +2614,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	public void confirmationPage_InformationalMsg() throws InterruptedException {
 
-		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
+		/*if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
 				Web.setTextToTextBox(firstNameTextbox,
@@ -2641,7 +2650,8 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 						Status.INFO,
 						"Entering all the details in Personal Information section",
 						"All the details in Personal Information section are entered",
-						true);
+						true);*/
+			fillTheFieldesinOnlineEnrollmentForm();
 				Web.clickOnElement(contToCreateNewAccountBtn);
 				if (Web.isWebElementDisplayed(preConfirmEnroll, true)) {
 					Reporter.logEvent(
@@ -2702,60 +2712,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 							"Pre-Confirmation Enroll page not displayed successfully",
 							true);
 				}
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Check if Create Account page is displayed or not",
-						"create Account Enrollment didn't get displayed successfully",
-						true);
-			}
-		} else {
-			Reporter.logEvent(Status.FAIL,
-					"Check if Create Account page is displayed or not",
-					"Create Account page didn't get displayed successfully",
-					true);
-		}
-	}
+			} 
+	
 
 	public void confirmationPage_BackButton() throws InterruptedException {
 
-		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
-
-			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-				Web.setTextToTextBox(firstNameTextbox,
-						Stock.GetParameterValue("FIRST NAME"));
-				Web.setTextToTextBox(lastNameTextbox,
-						Stock.GetParameterValue("LAST NAME"));
-				Web.setTextToTextBox(DateOfBirthTextbox,
-						Stock.GetParameterValue("DOB"));
-				DateOfBirthTextbox.sendKeys(Keys.TAB);
-				List<WebElement> genderRadioBtns = Web.getDriver()
-						.findElements(By.id("gender"));
-				Thread.sleep(3000);
-				genderRadioBtns.get(1).click();
-				List<WebElement> maritalStatusRadioBtns = Web.getDriver()
-						.findElements(By.id("married"));
-				Thread.sleep(3000);
-				maritalStatusRadioBtns.get(1).click();
-				Web.setTextToTextBox(annualIncomeTextBox,
-						Stock.GetParameterValue("ANNUAl INCOME"));
-				Web.setTextToTextBox(dateOfHireTextBox,
-						Stock.GetParameterValue("DOH"));
-				dateOfHireTextBox.sendKeys(Keys.TAB);
-				Web.setTextToTextBox(addressLine1,
-						Stock.GetParameterValue("ADDR LINE1"));
-				Web.setTextToTextBox(cityTextbox,
-						Stock.GetParameterValue("CITY"));
-				Web.selectDropnDownOptionAsIndex(stateTextbox, "2");
-				Web.setTextToTextBox(zipCodeTextBox,
-						Stock.GetParameterValue("ZIP CODE"));
-				Web.setTextToTextBox(personalEmailTextBox,
-						Stock.GetParameterValue("PERSONAL EMAIL"));
-				Reporter.logEvent(
-						Status.INFO,
-						"Entering all the details in Personal Information section",
-						"All the details in Personal Information section are entered",
-						true);
+		fillTheFieldesinOnlineEnrollmentForm();
 				Web.clickOnElement(contToCreateNewAccountBtn);
 				if (Web.isWebElementDisplayed(preConfirmEnroll, true)) {
 					Reporter.logEvent(
@@ -2821,13 +2783,13 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 									true);
 						}
 						Web.setTextToTextBox(personalEmailTextBox,
-								Stock.GetParameterValue("NEW EMAIL"));
+								Stock.GetParameterValue("PERSONAL EMAIL1"));
 						Reporter.logEvent(
 								Status.INFO,
 								"Changing Data entered in the page",
 								"Changing the personal email\n:"
 										+ "New data entered is: "
-										+ Stock.GetParameterValue("NEW EMAIL"),
+										+ Stock.GetParameterValue("PERSONAL EMAIL1"),
 								true);
 						Web.clickOnElement(contToCreateNewAccountBtn);
 
@@ -2850,25 +2812,12 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 							"Pre-Confirmation Enroll page not displayed successfully",
 							true);
 				}
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Check if Create Account page is displayed or not",
-						"create Account Enrollment didn't get displayed successfully",
-						true);
-			}
-		} else {
-			Reporter.logEvent(Status.FAIL,
-					"Check if Create Account page is displayed or not",
-					"Create Account page didn't get displayed successfully",
-					true);
-		}
-	}
+			} 
 
 	public void confirmationPage_CreateNewAccount() throws SQLException,
 			InterruptedException {
-
-		if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
+		fillTheFieldesinOnlineEnrollmentForm();
+		/*if (Web.isWebElementDisplayed(createAccountEnrollTable, true)) {
 
 			if (Web.isWebElementDisplayed(planFoundLabel, true)) {
 				Web.setTextToTextBox(firstNameTextbox,
@@ -2904,7 +2853,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 						Status.INFO,
 						"Entering all the details in Personal Information section",
 						"All the details in Personal Information section are entered",
-						true);
+						true);*/
 				Web.clickOnElement(contToCreateNewAccountBtn);
 				if (Web.isWebElementDisplayed(preConfirmEnroll, true)) {
 					Reporter.logEvent(
@@ -2974,7 +2923,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 							"Pre-Confirmation Enroll page not displayed successfully",
 							true);
 				}
-			} else {
+			/*} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Check if Create Account page is displayed or not",
@@ -2986,7 +2935,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					"Check if Create Account page is displayed or not",
 					"Create Account page didn't get displayed successfully",
 					true);
-		}
+		}*/
 	}
 
 	/*
@@ -3012,14 +2961,14 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	}
 
 	public void Validate_invalid_ssn() {
-		Web.clickOnElement(ssnSearchedLabel);
-
+		ssnSearchedTextbox.sendKeys(Keys.TAB);
+		ssnSearchedError.click();
 		if (Web.isWebElementDisplayed(ssnSearchedError, true)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Verify ssn error message for invalid ssn",
 					"error message displayed for ssn "
-							+ EnrollErrorMessageText.getText(), true);
+							+ ssnSearchedError.getText(), true);
 		}
 		//
 		else {
@@ -3032,18 +2981,6 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 	public void submit() {
 		Web.clickOnElement(submitBtn);
-		if (Web.isWebElementDisplayed(planFoundLabel, true)) {
-			Reporter.logEvent(Status.PASS,
-					"Verify navigation to Enrollment/info page",
-					"Page is loaded", true);
-		}
-		//
-		else {
-			Reporter.logEvent(Status.FAIL,
-					"Verify navigation to Enrollment/info page",
-					"Page NOT loaded due to invalid data", true);
-		}
-
 	}
 
 	public void Validate_existing_ssn() {
@@ -3053,7 +2990,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 					Status.PASS,
 					"Verify ssn error message for existing ssn",
 					"error message displayed."
-							+ EnrollErrorMessageText.getText(), true);
+							+ EnrollErrorMessage.getText(), true);
 		}
 		//
 		else {

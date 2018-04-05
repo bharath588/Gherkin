@@ -73,7 +73,7 @@
 					</include>
 					<include name="validateIndicative_ValidationErrorMessage">
 						<parameter name="ManualTCName" value="ValidateErrorMessage" />
-					</include>	
+					</include>	 
 					<include name="validateIndicativeData_InlineValidation">
 						<parameter name="ManualTCName" value="InlineValidation" />
 					</include>
@@ -116,8 +116,8 @@
 					<include name="CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field" />
 					</include>
-					<include name="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
-						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn" />
+					<include name="CSAS_OnlineEnrollment_ddtc_28155_checkSsn">
+						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
 					</include> 
 					</methods> 
 			</class>

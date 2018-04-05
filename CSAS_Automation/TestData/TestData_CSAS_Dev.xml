@@ -584,7 +584,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="1737090" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="100" />
 				<parameter name="TransferToVal" value="100" />
@@ -596,7 +596,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="1737090" />
 				<parameter name="SelectTransferType" value="FundToFund" />
 				<parameter name="TransferFromVal" value="1" />
 				<parameter name="TransferToVal" value="100" />
@@ -685,7 +685,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3815564" />
+				<parameter name="PPT_ID" value="1720824" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -695,7 +695,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="3824181" />
+				<parameter name="PPT_ID" value="1720804" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -1163,6 +1163,7 @@ ORDER BY wb.ga_id,
 				<parameter name="LAST NAME" value="Brown" />
 				<parameter name="DOB" value="05-Nov-1993" />
 				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="GENDER" value="M" />
 				<parameter name="DOH" value="18-Aug-2017" />
 				<parameter name="ADDR LINE1" value="Baker Street" />
 				<parameter name="CITY" value="Florida" />
@@ -1342,16 +1343,20 @@ ORDER BY wb.ga_id,
 				<parameter name="password" value="baseball" />
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123654789" />
-				<parameter name="FIRST NAME" value="Albert" />
-				<parameter name="LAST NAME" value="Brown" />
-				<parameter name="DOB" value="05-Nov-1993" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
-				<parameter name="DOH" value="18-Aug-2017" />
-				<parameter name="ADDR LINE1" value="Baker Street" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="DOH" value="01-Nov-2016" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
+				<parameter name="ADDR LINE1" value="12" />
+				<parameter name="ADDR LINE2" value="B123" />
+				<parameter name="CITY" value="Denver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
+				<parameter name="MOBILE PHONE" value="9591588128" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="confirmationPageBackButton">
@@ -1360,17 +1365,21 @@ ORDER BY wb.ga_id,
 				<parameter name="password" value="baseball" />
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
-				<parameter name="SSN" value="123654789" />
-				<parameter name="FIRST NAME" value="Albert" />
-				<parameter name="LAST NAME" value="Brown" />
-				<parameter name="DOB" value="05-Nov-1993" />
+				<parameter name="FIRST NAME" value="saru" />
+				<parameter name="LAST NAME" value="reddy" />
+				<parameter name="DOB" value="09-Nov-1988" />
 				<parameter name="ANNUAL INCOME" value="12365" />
-				<parameter name="DOH" value="18-Aug-2017" />
-				<parameter name="ADDR LINE1" value="Baker Street" />
-				<parameter name="CITY" value="Florida" />
-				<parameter name="ZIP CODE" value="123654789" />
+				<parameter name="DOH" value="01-Nov-2016" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
+				<parameter name="ADDR LINE1" value="12" />
+				<parameter name="ADDR LINE2" value="B123" />
+				<parameter name="CITY" value="Denver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
-				<parameter name="NEW EMAIL" value="discardNew@gwl.com" />
+				<parameter name="PERSONAL EMAIL1" value="discard3@gwl.com" />
+				<parameter name="MOBILE PHONE" value="9591588128" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="confirmationPageCreateNewAccount">
@@ -1380,6 +1389,22 @@ ORDER BY wb.ga_id,
 				<parameter name="GrpId" value="19439101" />
 				<parameter name="PEC" value="1234" />
 				<parameter name="SSN" value="123654789" />
+				<parameter name="FIRST NAME" value="Albert" />
+				<parameter name="LAST NAME" value="Brown" />
+				<parameter name="DOB" value="05-Nov-1993" />
+				<parameter name="ANNUAL INCOME" value="12365" />
+				<parameter name="GENDER" value="M" />
+				<parameter name="MaritialStatus" value="S" />
+				<parameter name="DOH" value="18-Aug-2017" />
+				<parameter name="ADDR LINE1" value="Baker Street" />
+				<parameter name="ADDR LINE2" value="Baker Street state" />
+				<parameter name="CITY" value="Deniver" />
+				<parameter name="STATE" value= "CO - Colorado"/>
+				<parameter name="ZIP CODE" value="80111" />
+				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
+				<parameter name="MOBILE PHONE" value="7896541230" />
+				<parameter name="HOME PHONE" value="7896541230" />
+				<parameter name="DivisionValue" value="D1 - Corporate" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="DDTC_28159_validIndicativeData_AddressLine1_Line2">
@@ -1715,7 +1740,7 @@ ORDER BY wb.ga_id,
 				<parameter name="DOBFutureDateErrorMsg" value="Date of birth cannot be future dated." />
 			</Iteration>
 		</TestCase>
-		<TestCase name="Man_CSAS_Online_Enrollment_ddtc_28131_invalid_ssn">
+		<TestCase name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
@@ -1725,19 +1750,19 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>
 
-		<TestCase name="Man_CSAS_Online_Enrollment_ddtc_28138_28141_Existing_ssn">
+		<TestCase name="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
 					<parameter name="PlanNumber" value="19439101" />
 					<parameter name="PEC" value="1234" />
-					<parameter name="SSN" value="123456789" />
+					<parameter name="SSN" value="909999887" />
 			</Iteration>
 		</TestCase>
 
 
 		<TestCase
-			name="Man_CSAS_Online_Enrollment_ddtc_28137_28140_invalid_Pec_Gaid">
+			name="CSAS_OnlineEnrollment_ddtc_28137_28140_invalid_Pec_Gaid">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
@@ -1748,7 +1773,7 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="Man_CSAS_Online_Enrollment_ddtc_28139_validate_plan_num_field">
+			name="CSAS_OnlineEnrollment_ddtc_28139_validate_plan_num_field">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
@@ -1756,26 +1781,23 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>
 		<TestCase
-			name="Man_CSAS_Online_Enrollment_ddtc_28152_28150_validate_LastName_field">
+			name="CSAS_OnlineEnrollment_ddtc_28152_28150_validate_LastName_field">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
-                                                
-					<parameter name="PlanNumber" value="19439101" />
-					<parameter name="PEC" value="123" />
-					<parameter name="SSN" value="119569874" />
+					<parameter name="PEC" value="1234" />
+					<parameter name="GrpId" value="19439101" />
 			</Iteration>
 		</TestCase>
 
 		<TestCase
-			name="Man_CSAS_Online_Enrollment_ddtc_28159_validate_addressLine_field_28155_checkSsn">
+			name="CSAS_OnlineEnrollment_ddtc_28155_checkSsn">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
                                                 
-					<parameter name="PlanNumber" value="19439101" />
-					<parameter name="PEC" value="123" />
-					<parameter name="SSN" value="119569874" />
+					<parameter name="PEC" value="1234" />
+					<parameter name="GrpId" value="19439101" />
 			</Iteration>
 		</TestCase>
 	</Module>

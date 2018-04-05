@@ -19,6 +19,7 @@ import pageobjects.Statement_View_Update;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+import framework.util.CommonLib;
 
 public class OnlineEnrollmentTestCases {
 
@@ -479,6 +480,7 @@ public class OnlineEnrollmentTestCases {
 
 			onlineEnrollmentObj = new OnlineEnrollment();
 			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
 			onlineEnrollmentObj.validateIndicativeData_Country();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -590,6 +592,7 @@ public class OnlineEnrollmentTestCases {
 
 			onlineEnrollmentObj = new OnlineEnrollment();
 			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
 			onlineEnrollmentObj.confirmationPage_InformationalMsg();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -627,6 +630,7 @@ public class OnlineEnrollmentTestCases {
 
 			onlineEnrollmentObj = new OnlineEnrollment();
 			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
 			onlineEnrollmentObj.confirmationPage_BackButton();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -664,6 +668,7 @@ public class OnlineEnrollmentTestCases {
 
 			onlineEnrollmentObj = new OnlineEnrollment();
 			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
 			onlineEnrollmentObj.confirmationPage_CreateNewAccount();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -815,12 +820,7 @@ public class OnlineEnrollmentTestCases {
 			if (itr == 1) {
 				// participantHomeObj = new ParticipantHome().get();
 				onlineEnrollmentObj = new OnlineEnrollment().get();
-
-				onlineEnrollmentObj.Enter_gaId(Stock
-						.GetParameterValue("PlanNumber"));
-				onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-				onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); // 736012845
-				onlineEnrollmentObj.submit();
+				onlineEnrollmentObj.enterValidInputDetails();
 				onlineEnrollmentObj.last_Name_Field();
 				onlineEnrollmentObj.first_Name_Field();
 			}
@@ -848,14 +848,16 @@ public class OnlineEnrollmentTestCases {
 				// participantHomeObj = new ParticipantHome().get();
 				onlineEnrollmentObj = new OnlineEnrollment().get();
 				onlineEnrollmentObj.Enter_gaId(Stock
-						.GetParameterValue("PlanNumber"));
+						.GetParameterValue("GrpId"));
 				onlineEnrollmentObj.Enter_Pec(Stock.GetParameterValue("PEC"));
-				onlineEnrollmentObj.Enter_ssn(Stock.GetParameterValue("SSN")); // 736012845
+				long randomNumber = CommonLib.getRandomNumber(9);
+				String SSNValue = Long.toString(randomNumber);
+				onlineEnrollmentObj.Enter_ssn(SSNValue); // 736012845
 				onlineEnrollmentObj.submit();
+				
 				String ssn = onlineEnrollmentObj.Validate_Ssn_Enroll();
 
-				if (ssn.equalsIgnoreCase(Stock.GetParameterValue("SSN")))
-					;
+				if (ssn.equalsIgnoreCase(SSNValue));
 				{
 
 					Reporter.logEvent(Status.PASS,
