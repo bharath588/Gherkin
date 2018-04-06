@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [testsuite]">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [allSuites]">
   <listeners>
     <listener class-name="core.framework.TestListener"/>
   </listeners>
-  <test name="Regression Suite">
+  <test name="OnlineEnrollment">
     <classes>
-      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
         <methods>
-          <include name="Validate_Employment_Status_As_Active">
-            <parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"/>
-          </include> <!-- Validate_Employment_Status_As_Active -->
+          <include name="validateIndicativeData_State">
+            <parameter name="ManualTCName" value="validateIndicativeData_State"/>
+          </include> <!-- validateIndicativeData_State -->
         </methods>
-      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
+      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
     </classes>
-  </test> <!-- Regression Suite -->
-</suite> <!-- Failed suite [testsuite] -->
+  </test> <!-- OnlineEnrollment -->
+</suite> <!-- Failed suite [allSuites] -->

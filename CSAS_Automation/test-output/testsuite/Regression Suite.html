@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Regression Suite</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>1/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>7/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Oct 24 12:28:30 IST 2017</td>
+<td>Started on:</td><td>Wed Apr 04 10:36:41 IST 2018</td>
 </tr>
-<tr><td>Total time:</td><td>80 seconds (80730 ms)</td>
+<tr><td>Total time:</td><td>512 seconds (512948 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,6 +67,39 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund2Fund_Transfer_Restriction_Type_No()'><b>Validate_Fund2Fund_Transfer_Restriction_Type_No</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, ISERRMSG=RestrictionType, TRANSFERFROMVAL=1, ERRMSG_RESTRICTIONTYPE=•Client Service Representative must mark the Check Box to confirm that the participant has been advised of the Fund(s) that will be subject to transfer restrictions before continuing. , USERNAME=cswa, TRASACTIONTYPE=Complete, SELECTTRANSFERTYPE=FundToFund, ISRESTRICTIONCHCKBXSELECTED=NO}</td>
+<td></td>
+<td>99</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund2Fund_Transfer_Restriction_Type_Yes()'><b>Validate_Fund2Fund_Transfer_Restriction_Type_Yes</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, ISERRMSG=RestrictionType, TRANSFERFROMVAL=1, ERRMSG_RESTRICTIONTYPE=•Client Service Representative must mark the Check Box to confirm that the participant has been advised of the Fund(s) that will be subject to transfer restrictions before continuing. , USERNAME=cswa, TRASACTIONTYPE=Complete, SELECTTRANSFERTYPE=FundToFund, ISRESTRICTIONCHCKBXSELECTED=YES}</td>
+<td></td>
+<td>83</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per()'><b>Validate_Fund2Fund_Transfer_Restriction_Type_grt100Per</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {ERRMSG_GRT100PER=transfers are restricted to 100% or less of the fund balance, TRANSFERTOVAL=100, PASSWORD=baseball, ISERRMSG=grtr100Perc, TRANSFERFROMVAL=101, ERRMSG_RESTRICTIONTYPE=•Client Service Representative must mark the Check Box to confirm that the participant has been advised of the Fund(s) that will be subject to transfer restrictions before continuing. , USERNAME=cswa, TRASACTIONTYPE=Complete, SELECTTRANSFERTYPE=FundToFund, ISRESTRICTIONCHCKBXSELECTED=YES}</td>
+<td></td>
+<td>83</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal()'><b>Validate_Fund2Fund_Transfer_Restriction_Type_grtPriorDayBal</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, ISERRMSG=grtrPriordayBal, TRANSFERFROMVAL=1, ERRMSG_RESTRICTIONTYPE=•Client Service Representative must mark the Check Box to confirm that the participant has been advised of the Fund(s) that will be subject to transfer restrictions before continuing. , ERRMSG_GRTPRIORDAYBAL=Amount requested is greater than the available balance for, USERNAME=cswa, TRASACTIONTYPE=Complete, SELECTTRANSFERTYPE=FundToFund, ISRESTRICTIONCHCKBXSELECTED=YES}</td>
+<td></td>
+<td>82</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund_to_Fund_Basic_Transfer()'><b>Validate_Fund_to_Fund_Basic_Transfer</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, PPT_ID=1737090, TRANSFERFROMVAL=1, GA_ID=340001-01, USERNAME=cswa, TRASACTIONTYPE=Complete, SELECTTRANSFERTYPE=FundToFund}</td>
+<td></td>
+<td>74</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+</table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
@@ -75,10 +108,15 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='app.csas.testcases.participanthomepage.validate_participanthomepage.Validate_Employment_Status_As_Active()'><b>Validate_Employment_Status_As_Active</b><br>Test class: app.csas.testcases.participanthomepage.validate_participanthomepage<br>Parameters: 1, {PASSWORD=baseball, PPT_ID=6021452, EMP_STATUS=ACTIVE, USERNAME=cswa}</td>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund_to_Fund_Cancel_Transfer()'><b>Validate_Fund_to_Fund_Cancel_Transfer</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, PPT_ID=11528366, TRANSFERFROMVAL=1, GA_ID=340001-01, USERNAME=cswa, TRASACTIONTYPE=Cancel, SELECTTRANSFERTYPE=FundToFund}</td>
 <td></td>
-<td>43</td>
-<td>app.csas.testcases.participanthomepage.validate_participanthomepage@73f792cf</td></tr>
+<td>42</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
+<tr>
+<td title='app.csas.testcases.fundtofund.validate_fundtofundtransfer.Validate_Fund_to_Fund_Transfer()'><b>Validate_Fund_to_Fund_Transfer</b><br>Test class: app.csas.testcases.fundtofund.validate_fundtofundtransfer<br>Parameters: 1, {TRANSFERTOVAL=100, PASSWORD=baseball, PPT_ID=1737090, TRANSFERFROMVAL=100, GA_ID=340304-02, USERNAME=cswa, TRASACTIONTYPE=Default, SELECTTRANSFERTYPE=FundToFund}</td>
+<td></td>
+<td>34</td>
+<td>app.csas.testcases.fundtofund.validate_fundtofundtransfer@2f7a2457</td></tr>
 </table><p>
 </body>
 </html>

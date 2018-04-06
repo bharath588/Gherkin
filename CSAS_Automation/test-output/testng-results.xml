@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="80730" started-at="2017-10-24T06:58:30Z" finished-at="2017-10-24T06:59:50Z">
+  <suite name="allSuites" duration-ms="32664" started-at="2018-04-06T05:09:58Z" finished-at="2018-04-06T05:10:30Z">
     <groups>
     </groups>
-    <test name="Regression Suite" duration-ms="80730" started-at="2017-10-24T06:58:30Z" finished-at="2017-10-24T06:59:50Z">
-      <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
-        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@73f792cf]" name="ReportInit" is-config="true" duration-ms="37377" started-at="2017-10-24T12:28:30Z" finished-at="2017-10-24T12:29:07Z">
+    <test name="OnlineEnrollment" duration-ms="32664" started-at="2018-04-06T05:09:58Z" finished-at="2018-04-06T05:10:30Z">
+      <class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+        <test-method status="PASS" signature="ReportInit()[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@566776ad]" name="ReportInit" is-config="true" duration-ms="11723" started-at="2018-04-06T10:39:58Z" finished-at="2018-04-06T10:40:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ReportInit -->
-        <test-method status="PASS" signature="Validate_Employment_Status_As_Active(int, java.util.Map)[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@73f792cf]" name="Validate_Employment_Status_As_Active" duration-ms="43187" started-at="2017-10-24T12:29:07Z" data-provider="setData" finished-at="2017-10-24T12:29:50Z">
+        <test-method status="PASS" signature="validateIndicativeData_State(int, java.util.Map)[pri:0, instance:app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases@566776ad]" name="validateIndicativeData_State" duration-ms="20796" started-at="2018-04-06T10:40:10Z" data-provider="setData" finished-at="2018-04-06T10:40:30Z">
           <params>
             <param index="0">
               <value>
@@ -20,18 +20,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[{PASSWORD=baseball, PPT_ID=6021452, EMP_STATUS=ACTIVE, USERNAME=cswa}]]>
+                <![CDATA[{PASSWORD=baseball, USERNAME=cswa, GRPID=19439101, PEC=1234, SSN=123654789}]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Validate_Employment_Status_As_Active -->
-        <test-method status="PASS" signature="cleanUpSession()[pri:0, instance:app.csas.testcases.participanthomepage.validate_participanthomepage@73f792cf]" name="cleanUpSession" is-config="true" duration-ms="1311" started-at="2017-10-24T12:29:50Z" finished-at="2017-10-24T12:29:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- cleanUpSession -->
-      </class> <!-- app.csas.testcases.participanthomepage.validate_participanthomepage -->
-    </test> <!-- Regression Suite -->
-  </suite> <!-- testsuite -->
+        </test-method> <!-- validateIndicativeData_State -->
+      </class> <!-- app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases -->
+    </test> <!-- OnlineEnrollment -->
+  </suite> <!-- allSuites -->
 </testng-results>

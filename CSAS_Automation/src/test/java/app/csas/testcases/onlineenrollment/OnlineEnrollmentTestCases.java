@@ -518,6 +518,7 @@ public class OnlineEnrollmentTestCases {
 
 			onlineEnrollmentObj = new OnlineEnrollment();
 			onlineEnrollmentObj.get();
+			onlineEnrollmentObj.enterValidInputDetails();
 			onlineEnrollmentObj.validateIndicativeData_State();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -241,7 +241,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 	@FindBy(css = "table#table_popupLayout tr:nth-of-type(2) span.titleShadow")
 	private WebElement OrderPINTitle;
 
-	@FindBy(css = "input[value = 'Mail Existing PIN']")
+	@FindBy(css = "input[value = 'Mail 14-day Temp EIVR PIN']")
 	private WebElement btnMailExistingPIN;
 
 	@FindBy(css = "input[value = 'Order Temp PIN']")
@@ -472,7 +472,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 			return this.SSNfield;
 		}
 
-		if (fieldName.trim().equalsIgnoreCase("Mail_Existing_PIN")) {
+		if (fieldName.trim().equalsIgnoreCase("Mail 14-day Temp EIVR PIN")) {
 			return this.btnMailExistingPIN;
 		}
 

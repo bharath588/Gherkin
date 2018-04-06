@@ -2540,7 +2540,6 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 
 		String rv_low_val = null;
 		String rv_meaning = null;
-
 		Select sel = new Select(stateTextbox);
 
 		if (stateTextbox.isDisplayed()) {
