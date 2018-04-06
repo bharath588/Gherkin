@@ -2587,6 +2587,7 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 			}
 
 			Web.selectDropnDownOptionAsIndex(stateTextbox, "0");
+			stateTextbox.sendKeys(Keys.TAB);
 			Web.clickOnElement(stateLabel);
 			if (Web.isWebElementDisplayed(stateError, true)) {
 				Reporter.logEvent(

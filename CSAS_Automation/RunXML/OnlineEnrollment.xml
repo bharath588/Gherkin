@@ -9,7 +9,10 @@
 		<classes>
 					<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 						<methods>
-						<include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
+						<include name="validateIndicativeData_State">
+						<parameter name="ManualTCName" value="validateIndicativeData_State" />
+					</include>
+					<include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
 						<parameter name="ManualTCName" value="CORE_18537_CORE_19807_EndToEndTesting_WithDivision" />
 						</include>
 						<include name="CORE_19833_EnterIndicativedata_Current_Dateofbirth">
@@ -83,9 +86,7 @@
 						<parameter name="ManualTCName" value="validateClearButton" />
 					</include> 
 					
-					<include name="validateIndicativeData_State">
-						<parameter name="ManualTCName" value="validateIndicativeData_State" />
-					</include>		
+							
 					<include name="validateIndicativeData_ZipCode">
 						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
 					</include>	
@@ -118,7 +119,7 @@
 					</include>
 					<include name="CSAS_OnlineEnrollment_ddtc_28155_checkSsn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
-					</include> 
+					</include>  
 					</methods> 
 			</class>
 		</classes>
