@@ -11,9 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.LoanRequest;
 import pageobjects.OnlineEnrollment;
-import pageobjects.ParticipantHome;
 import pageobjects.Statement_View_Update;
 
 import com.aventstack.extentreports.Status;
@@ -24,8 +22,8 @@ import framework.util.CommonLib;
 public class OnlineEnrollmentTestCases {
 
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
-	ParticipantHome participantHomeObj;
-	LoanRequest LoanRequestPage;
+	/*ParticipantHome participantHomeObj;
+	LoanRequest LoanRequestPage;*/
 	Statement_View_Update objStatement_View_Update;
 	OnlineEnrollment onlineEnrollmentObj;
 	boolean isPageDisplayed;

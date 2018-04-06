@@ -90,7 +90,9 @@
 					<include name="validateIndicativeData_ZipCode">
 						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
 					</include>	
-					<include name="confirmationPageInformationalMessage">
+					<include name="
+					
+					confirmationPageInformationalMessage">
 						<parameter name="ManualTCName" value="confirmationPageInformationalMessage" />
 					</include> 
 					<include name="confirmationPageBackButton">
@@ -102,7 +104,9 @@
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
 					</include>	 
-					<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
+			
+
+	<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn" />
 					</include>
 					 <include name="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn">
