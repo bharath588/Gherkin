@@ -30,7 +30,7 @@
 					</include>
 				</methods>
 			</class>
-			<!-- <class
+			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
 					<include
@@ -73,12 +73,12 @@
 							value="DDTC-22072_SIT_PSC_Login_01_TC019_Default_Plan_Prompting">
 						</parameter>
 					</include>
-					<include
+					<!-- <include
 						name="TC004_01_Verify_Changepasword_When_Password_Expired_Negative_Scenario">
 						<parameter name="ManualTCName"
 							value="DDTC-22070_SIT_PSC_Login_01_TC002_Expired Password_negative">
 						</parameter>
-					</include>
+					</include> -->
 					<include
 						name="TC004_02_Verify_Changepasword_When_Password_Expired_Positive_Flow">
 						<parameter name="ManualTCName"
@@ -225,7 +225,7 @@
 					</include>
 				</methods>
 			</class>
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
 				<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
@@ -495,7 +495,7 @@
 							value="DDTC-298_OngoingDeferral_UI_Validation" />
 					</include>
 				</methods> 
-			</class>
+			</class> -->
 			
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
@@ -597,43 +597,7 @@
 							value="DDTC-22127_Investment_Charts_Page" />
 					</include>
 				</methods>
-			</class>  
-			<class name="app.psc.testcases.plan.plantestcases">
-				<methods>
-					<include name="TC16_Plan_Provisions_page">
-						<parameter name="ManualTCName"
-							value="DDTC-2150_Plan_Provisions_page" />
-					</include> 
-					<include name="TC17_Add_PPT_And_SearchForPPT">
-						<parameter name="ManualTCName"
-							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
-					</include>
-					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
-						<parameter name="ManualTCName"
-							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
-					</include>
-					<include name="TC20_Complex_User">
-						<parameter name="ManualTCName"
-							value="DDTC-2073_Complex_User" />
-					</include> 
-					<include name="TC23_Find_Users_by_Name">
-						<parameter name="ManualTCName"
-							value="DDTC-4_Find_Users_by_Name" />
-					</include>
-					<include name="TC25_Investment_Document_Page">
-						<parameter name="ManualTCName"
-							value="DDTC-22126_Investment_Document_Page" />
-					</include>
-					<include name="TC24_Investment_Charts_Page">
-						<parameter name="ManualTCName"
-							value="DDTC-22127_Investment_Charts_Page" />
-					</include>
-					<include name="TC26_Terminate_User_ID">
-						<parameter name="ManualTCName"
-							value="DDTC-1301_Terminate_User_ID" />
-					</include>
-				</methods>
-			</class> 
+			</class>   
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
@@ -729,7 +693,7 @@
 					</include>
 				</methods>
 			</class>
-			<class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
+			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
 				<methods>
 					<include name="TC001_Verify_Contributiontotal_for_Invalid_User_input">
 						<parameter name="ManualTCName" value="DDTC-160_Gpp Sanity_01"/>
@@ -875,7 +839,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class>
+			</class> -->
 			<class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
@@ -889,7 +853,7 @@
 							value="DDTC_8283_PSCNextGen-Reports-Plan_review_PDF_PPTX"/>
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>
