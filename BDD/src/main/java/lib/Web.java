@@ -56,6 +56,7 @@ public class Web {
 
 	private static ThreadLocal<WebDriver> multiDriver = new ThreadLocal<WebDriver>();
 	private static ThreadLocal<RemoteWebDriver> multiRemoteDriver = new ThreadLocal<RemoteWebDriver>();
+	private static String progressBar = ".//*[@id='pscSpinnerId']";
 
 	public static boolean isLastIteration() {
 		return isLastIteration;
@@ -1211,6 +1212,53 @@ public class Web {
 	
 	public static List<Map<String, String>> rawValues(DataTable creds){
 		return creds.asMaps(String.class, String.class);
+	}
+	
+	/**
+	 * Method to click on a specified web element using Actions click.
+	 * @param webElementName
+	 *            - Name of the web element to be clicked
+	 * @return <b>true</b> if successful, <b>false</b> otherwise.
+	 * @throws Exception
+	 */
+	public static boolean actionsClickOnElement(WebElement webElementName) {
+		Actions act = new Actions(Web.getDriver());
+		boolean success = false;
+		if (webElementName != null) {
+			
+			if (Web.isWebElementDisplayed(webElementName)) {
+				act.moveToElement(webElementName).click().build().perform();
+				success = true;
+			}
+		}
+		return success;
+	}
+	
+	public static void waitForProgressBar() {
+		int iTimeInSecond = 100;
+		try {
+
+			List<WebElement> ele = Web.getDriver().findElements(
+					By.xpath(progressBar));
+			if (ele.size() > 0) {
+				Web.waitForElement(ele.get(0));
+				int iCount = 0;
+				while (ele.get(0).isDisplayed()) {
+
+					if (iCount == iTimeInSecond) {
+						break;
+					}
+
+					System.out.println("Progress Bar displaying..");
+					Thread.sleep(1000);
+					iCount++;
+				}
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
 	}
 
 }

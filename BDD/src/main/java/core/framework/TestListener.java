@@ -1,35 +1,15 @@
 package core.framework;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import lib.Stock;
 import lib.Web;
 
-
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.WebDriverException;
 import org.testng.IAnnotationTransformer;
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
@@ -42,24 +22,15 @@ import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.ITestAnnotation;
-import org.testng.xml.XmlClass;
-import org.testng.xml.XmlInclude;
-import org.testng.xml.XmlTest;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import reporter.Reporter;
-
-import com.aventstack.extentreports.Status;
-import com.fasterxml.jackson.core.JsonParseException;
-
 import core.framework.ThrowException.TYPE;
 
 
 
 public class TestListener implements ITestListener, IConfigurationListener2,
-		ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
-		IAnnotationTransformer {
+ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
+IAnnotationTransformer {
 
 	int currentTCInvocationCount = 0;
 	static int suiteInvCount = 0;
@@ -69,9 +40,9 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	public Map<Integer, Map<String, String>> failedXmlMap = new LinkedHashMap<>();
 	static int i = 0;
 	static Map<String, Map<String, String>> gridPropertiesMap;
-	
-	
-	
+
+
+
 
 	private boolean isFinalTestStatus() {
 		return finalTestStatusMap.get(Thread.currentThread().getId());
@@ -88,7 +59,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	private void generateTestcaseReferenceMap(ISuite suite) {
-		
+
 	}
 
 	public void onStart(ITestContext test) {
@@ -98,9 +69,9 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-}
+	}
 
-	
+
 
 	public void onTestStart(ITestResult result) {
 	}
@@ -121,7 +92,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	public void onFinish(ITestContext context) {
-		
+
 		Iterator<ITestResult> failedTestCases = context.getFailedTests()
 				.getAllResults().iterator();
 		while (failedTestCases.hasNext()) {
@@ -149,7 +120,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	public void beforeConfiguration(ITestResult result) {
-	
+
 		/*if(result.getMethod().isBeforeClassConfiguration())
 		{
 			Reporter.initializeModule("Login Test");
@@ -158,22 +129,22 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 	public void onFinish(ISuite suite) {
 		try{
-		Reporter.objReport.flush();
-		
-		if (Web.getDriver().getWindowHandles().size() >= 0)
+			Reporter.objReport.flush();
+
+			if (Web.getDriver().getWindowHandles().size() >= 0)
 				Web.getDriver().quit();
 		}
 		catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Failed to quit Web Driver :"
 					+ e.getMessage());
-	}
+		}
 	}
 
 	// This belongs to IInvokedMethodListener and will execute before every
 	// method including @Before @After @Test
 	@SuppressWarnings("unchecked")
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-	//	System.out.println("hi");
+		//	System.out.println("hi");
 		/*try {
 
 			if (!Web.getDriver().getWindowHandle().isEmpty()) {
@@ -183,13 +154,13 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 		} catch (Exception t) {
 			try {
-				
-				
+
+
 			} catch (Exception e) {
 				throw new WebDriverException("unable to start browser");
 			}
 		}*/
-		
+
 	}
 
 	@SuppressWarnings({ "serial", "static-access" })
@@ -223,7 +194,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	public void transform(ITestAnnotation arg0, Class arg1, Constructor arg2,
 			Method arg3) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public boolean retry(ITestResult arg0) {
@@ -231,6 +202,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		return false;
 	}
 
-	
-	
+
+
 }

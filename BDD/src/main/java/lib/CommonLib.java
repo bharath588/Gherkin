@@ -20,7 +20,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import pageobject.pptweb.LeftNavigationBar;
+/*import pageobject.pptweb.LeftNavigationBar;*/
 
 import com.aventstack.extentreports.Status;
 
@@ -219,7 +219,7 @@ public class CommonLib {
          
    }
 
-   public  static void handlePageToLoad(String pageName){
+ /*  public  static void handlePageToLoad(String pageName){
        try{
             LeftNavigationBar lftbar=new LeftNavigationBar();
               lftbar.clickNavigationLink("Rate Of Return");
@@ -232,7 +232,7 @@ public class CommonLib {
        
        }
        
- }
+ }*/
    public static String getParticipantDBName(String userName) throws SQLException {
 
 		// query to get the no of plans
