@@ -8,10 +8,10 @@
         <classes>
             <class name="app.pptweb.testcases.liat.liattestcases">
                 <methods>
-                  <!--  <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
+                   <include name="RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC004_To verify Retirement Income tab_Plan Savings">
                     </parameter>
-                    </include> -->
+                    </include> 
                 
                     <include name="RIP_TC005_To_Verify_RetirementIncomeTab_Social_Security">
                     <parameter name="ManualTCName" value="SIT_ParticipantWeb_RIP_TC005_To verify Retirement Income tab_Social security">
@@ -53,7 +53,7 @@
                     </methods>
                     </class>
                     
-                     <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                     <class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
                 <methods>
                     
                     <include name="LIAT_To_verify_PayCheckView_Displayed" >

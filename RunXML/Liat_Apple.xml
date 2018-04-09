@@ -54,7 +54,7 @@
                     </methods>
                     </class>
                     
-                     <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
+                     <class name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Liat">
                 <methods>
                     
                     <include name="LIAT_To_verify_PayCheckView_Displayed" >
