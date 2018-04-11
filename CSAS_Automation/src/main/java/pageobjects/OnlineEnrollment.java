@@ -43,7 +43,6 @@ public class OnlineEnrollment extends LoadableComponent<OnlineEnrollment> {
 	public OnlineEnrollment() {
 		PageFactory.initElements(Web.getDriver(), this);
 	}
-
 	@FindBy(id = "oCMenu_318")
 	private WebElement menuAddtlResources;
 

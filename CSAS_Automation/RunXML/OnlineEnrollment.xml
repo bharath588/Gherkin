@@ -12,7 +12,7 @@
 						<include name="validateIndicativeData_State">
 						<parameter name="ManualTCName" value="validateIndicativeData_State" />
 					</include>
-					<include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
+					 <include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
 						<parameter name="ManualTCName" value="CORE_18537_CORE_19807_EndToEndTesting_WithDivision" />
 						</include>
 						<include name="CORE_19833_EnterIndicativedata_Current_Dateofbirth">
@@ -90,9 +90,7 @@
 					<include name="validateIndicativeData_ZipCode">
 						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
 					</include>	
-					<include name="
-					
-					confirmationPageInformationalMessage">
+					<include name="confirmationPageInformationalMessage">
 						<parameter name="ManualTCName" value="confirmationPageInformationalMessage" />
 					</include> 
 					<include name="confirmationPageBackButton">
@@ -104,9 +102,7 @@
 					<include name="confirmationPageCreateNewAccount">
 						<parameter name="ManualTCName" value="confirmationPageCreateNewAccount" />
 					</include>	 
-			
-
-	<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
+					<include name="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn">
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28131_invalid_ssn" />
 					</include>
 					 <include name="CSAS_OnlineEnrollment_ddtc_28138_28141_Existing_ssn">

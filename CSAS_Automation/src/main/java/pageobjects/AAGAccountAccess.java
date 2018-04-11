@@ -11,7 +11,7 @@ import org.testng.Assert;
 
 import com.aventstack.extentreports.Status;
 
-public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
+public class AAGAccountAccess extends LoadableComponent<AAGAccountAccess> {
 	@FindBy(xpath = "//*[@id='oCMenu_315'][contains(text(),'Participant Info')]")
 	private WebElement MenuPPTInfo;
 
@@ -35,6 +35,7 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 
 	@Override
 	protected void isLoaded() throws Error {
+		
 		Assert.assertTrue(Web.isWebElementDisplayed(AAGAccountAccessPageTitle));
 	}
 
@@ -44,6 +45,7 @@ public class AAGAccountAccess extends LoadableComponent<LoanInfo> {
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuAAGAccountAccess, true)) {
 			Web.clickOnElement(MenuAAGAccountAccess);
+			Web.getDriver().switchTo().frame(0);
 			if (Web.isWebElementDisplayed(AAGAccountAccessPageTitle, true)) {
 				Reporter.logEvent(Status.PASS,
 						"Check if AAGAccount Access page displayed or not",

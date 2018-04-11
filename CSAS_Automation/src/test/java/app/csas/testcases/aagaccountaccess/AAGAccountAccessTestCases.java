@@ -60,14 +60,14 @@ public class AAGAccountAccessTestCases {
 			throws InterruptedException {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			participantHomeObj = new ParticipantHome();
+			participantHomeObj = new ParticipantHome().get();
 			participantHomeObj.gotoParticipantPageAndSearchParticipant();
-			aAGAccountAccessObj = new AAGAccountAccess();
+			aAGAccountAccessObj = new AAGAccountAccess().get();
 			aAGAccountAccessObj.verifyFinancialEnginesTitle();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
+		} finally { 
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e) {
@@ -98,12 +98,12 @@ public class AAGAccountAccessTestCases {
 			throws InterruptedException {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
-			participantHomeObj = new ParticipantHome();
+			participantHomeObj = new ParticipantHome().get();
 			participantHomeObj.gotoParticipantPageAndSearchParticipant();
-			aAGAccountAccessObj = new AAGAccountAccess();
+			aAGAccountAccessObj = new AAGAccountAccess().get();
 			aAGAccountAccessObj.verifyAdvisoryServicesTitle();
 
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			e.printStackTrace();
 		} finally {
 			try {
