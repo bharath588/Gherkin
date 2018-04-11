@@ -6,7 +6,7 @@
     </listeners>
     <test name="LOGIN">
         <classes>
-           <class name="app.pptweb.testcases.login.logintestcases">
+          <!--  <class name="app.pptweb.testcases.login.logintestcases">
                 <methods>
                    
                    <include name="SF01_TC01_Verify_invalid_Userid_and_Password">
@@ -162,7 +162,7 @@
 					<parameter name="ManualTCName" value="NPDI_013 Register a participant  End to End flow"></parameter>
                     </include>
 				</methods>
-			</class> 
+			</class>  -->
 		
          <class name="app.pptweb.testcases.login.authenticationtestcases">
                 <methods>

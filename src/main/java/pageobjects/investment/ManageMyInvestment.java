@@ -367,6 +367,8 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 	@FindBy(xpath = "//button[@id='guidance-link']") private WebElement btnAccessOnlineGuidance;
 	@FindBy(xpath = "//button[contains(text(),'Refresh')]") private WebElement btnRefresh;
 	@FindBy(xpath = "//button[contains(text(),'Close and continue')]") private WebElement btnCloseAndContinue;
+	@FindBy(id = "btnOkBot") private WebElement btnNext;
+	@FindBy(xpath = "//button[contains(text(),'Accept')]") private WebElement btnAccept;
 	
 	String inputAllocationPercrntage="//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//input[@name='allocationPercentage']";
 	String buttonlock=".//*[@id='rebalance-destination-funds-table']//tbody//tr[.//td//a[contains(text(),'Investment Option')]]//button[contains(@class,'btn-link')]";
@@ -439,7 +441,7 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		this.parent.get();
 		if (Stock.globalTestdata.get(Thread.currentThread().getId()).containsKey("NAVIGATEFROM")){
 			if(Stock.GetParameterValue("NAVIGATEFROM").equalsIgnoreCase("GuidancePage"))	{
-				((LandingPage) this.parent).clickOnGuidanceLink();
+				(new LandingPage()).clickOnGuidanceLink();
 				try {
 					Thread.sleep(10000);
 				} catch (InterruptedException e) {
@@ -672,6 +674,12 @@ public class ManageMyInvestment extends LoadableComponent<ManageMyInvestment> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Header Rebalance Your Portfolio")) {
 			return this.hdrRebalanceYourPortfolio;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Next")) {
+			return this.btnNext;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Button Accept")) {
+			return this.btnAccept;
 		}
 		// Log out
 		if (fieldName.trim().equalsIgnoreCase("LOG OUT")

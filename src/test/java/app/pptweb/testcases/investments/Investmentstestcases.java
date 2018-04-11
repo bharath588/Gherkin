@@ -9381,6 +9381,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
 			    	   Thread.sleep(10000);
+			    	   Web.waitForElement(investment, "Button Next");
+			    	   if(Web.isWebEementEnabled(investment, "Button Next"))
+			    		   Web.clickOnElement(investment, "Button Next");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
 				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
 			    		  Reporter.logEvent(Status.PASS,
@@ -9453,8 +9458,8 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			
 			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
 			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
-			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
-			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			/*investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");*/
 		
 			//Step 6 to 9
 			investment.choseInvestmentOption("Change Future Contribution");
@@ -9486,6 +9491,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
+			    	   Web.waitForElement(investment, "Button Accept");
+			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
+			    		   Web.clickOnElement(investment, "Button Accept");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
@@ -9574,6 +9584,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
 			    	   Thread.sleep(10000);
+			    	   Web.waitForElement(investment, "Button Next");
+			    	   if(Web.isWebEementEnabled(investment, "Button Next"))
+			    		   Web.clickOnElement(investment, "Button Next");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
 				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
 			    		  Reporter.logEvent(Status.PASS,
@@ -9639,8 +9654,6 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			
-		
-		
 			//Step 6 
 			
 			investment.verifyWebElementDisplayed("Do It Myself");
@@ -9665,6 +9678,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
+			    	   Web.waitForElement(investment, "Button Accept");
+			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
+			    		   Web.clickOnElement(investment, "Button Accept");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
