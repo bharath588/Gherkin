@@ -97,8 +97,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS")){
 					Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 					Common.waitForProgressBar();
-					if(Web.isWebElementsDisplayed(lstlnkPlanName))
+					if(Web.isWebElementsDisplayed(lstlnkPlanName)){
+						try{
+							if(!(Stock.GetParameterValue("ga_PlanId")==null)||!Stock.GetParameterValue("ga_PlanId").isEmpty())
+					
 						(new MyAccountsPage()).clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
+						}
+						catch(Error e)
+						{
+							Web.clickOnElement(lstlnkPlanName.get(0));
+						}
+					}
 				}
 			
 				

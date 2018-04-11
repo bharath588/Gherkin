@@ -4429,4 +4429,326 @@ public class LoansTestCases {
 			}
 		}
 	}
+	
+	/**
+	 * This Test Case to verify Principle Residence Loan Confirmation Page
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@SuppressWarnings("static-access")
+	@Test(dataProvider = "setData")
+	public void DDTC_28010_Loans_Screen_6_PR_loan_confirmation_page(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+
+			/**
+			 * Step 1 Launch Browser and enter URL: Enter Valid credentials
+			 * and login Navigate to My Accounts -> Loans & Withdrawals -> Loans
+			 * 
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+
+			/**
+			 * Step 2 - Verify contents displayed on loans landing page and
+			 *  compare this with CSAS and Legacy page.
+			 *  Loans landing page displays amount available to borrow and summary section.
+			 *   It could be general purpose or primary residence. Similar value is observed with CSAS and Legacy PW
+			 *  
+			 */
+			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
+			String loanAmt = requestLoan.getMaximumLoanAmount();
+			if (!loanAmt.isEmpty())
+				Reporter.logEvent(Status.PASS,
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is displayed \nLoan Maximum:"
+								+ loanAmt, true);
+
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is not displayed \nLoan Maximum:"
+								+ loanAmt, true);
+
+			/**
+			 * Step 3 - Verify the Number of active loans in this plan below
+			 * summary section Validate the number of active loans in the select
+			 * plan/ppt displayed correct.
+			 */
+			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
+			String ActualNoofLoans = requestLoan
+					.getMaximumLoansAllowedforPlan(Stock
+							.GetParameterValue("ga_id"));
+			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
+				Reporter.logEvent(Status.PASS,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
+								+ expectedNoofLoans + "\nActual No.Of Loans:"
+								+ ActualNoofLoans, false);
+
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
+								+ expectedNoofLoans
+								+ "\nActual No.Of Loans:"
+								+ ActualNoofLoans, true);
+			/**
+			 * Step 4 Verify the Number of active loans in all plans below
+			 * Summary section Validate all the the number of loans available in
+			 * multiple plans for the selected test ppt are displayed correct
+			 * This option is displayed only when ppt have more than one plan
+			 * eligible for a loan
+			 */
+
+			// TODO
+
+			/**
+			 * Step 5 - Verify Number of loans allowed below Summary section
+			 * Validate the number of loans available for the plan is displayed
+			 * correct with the number of loans allowed for each loan structure
+			 * is also displayed if the plan is setup for
+			 */
+
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock
+					.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 6 - Verify the disclaimer displayed at the bottom of the
+			 * page on loans landing page Validate the disclaimer displayed at
+			 * the bottom of the page is displayed per latest design reqs on
+			 * loans landing page
+			 */
+			requestLoan.verifyLoansDisclaimer();
+
+			/**
+			 * Step 7 - Click on'Request a new loan' button on the loans landing
+			 * Loan type selection page with header 'What type of loan would you like?' was displayed
+			 */
+
+			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.isTextFieldDisplayed("What type of loan would you like to request?");
+			/**
+			 * Step 8 Verify all correct values are displayed for the PPT in the loan type 
+			 * selection page for available loan structures such as GR , PR:
+			 * Loan purpose
+			 * Maximum loan
+			 * Minimum loan
+			 * Repayment term
+			 * Documentation required
+			 * Interest rate
+			 * Repayment
+			 * Fees
+			 * #Loans allowed
+			 * Waiting period
+			 * Verified with CSAS, Legacy PW and backend tables.
+			 *  correct values are getting displayed for the said headers along with 2 clickable buttons as 
+			 *  a. Request a general purpose loan
+			 *  b. Request a primary resident loan
+			 */
+			requestLoan.isTextFieldDisplayed("Loan purpose");
+			requestLoan.isTextFieldDisplayed("Maximum loan");
+			requestLoan.isTextFieldDisplayed("Minimum loan");
+			requestLoan.isTextFieldDisplayed("Repayment term");
+			requestLoan.isTextFieldDisplayed("Documentation required");
+			requestLoan.isTextFieldDisplayed("Interest rate");
+			requestLoan.isTextFieldDisplayed("Repayment");
+			requestLoan.isTextFieldDisplayed("Fees");
+			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
+			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.setInterestRate(requestLoan
+					.getInterestRateFromRequestLoanPage(Stock
+							.GetParameterValue("loanType")));
+			
+			
+
+			/**
+			 * Step 10 - Select 'Request a General purpose loan' button PPT is
+			 * navigated to General purpose loan page/ How much would you like
+			 * to borrow page with the max and min amount balance for General
+			 * purpose loan and a 'Enter amount' text box to enter valid amt
+			 * values with a 'Continue' and 'Back' buttons 'How is this
+			 * calculated?' link displaying the calculation in the hover help
+			 * from design team
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			requestLoan
+					.isTextFieldDisplayed("How much would you like to borrow?");
+			requestLoan.verifyLoanMinimumIsDisplayed();
+			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
+
+			/**
+			 * Step 11 - Enter amount in entry box Validate only proper values
+			 * (numeric/decimal)are accepted into this field Validate 'Continue'
+			 * button is enabled only when the min and max amt values are met
+			 * else display the min,max amt error in red text if the criteria is
+			 * not met.
+			 */
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));
+			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
+			requestLoan.verifyWebElementIsDisplayed("BUTTON BACK");
+			requestLoan
+					.verifyWebElementIsDisplayed("Link How Is This Calculated");
+
+			/**
+			 * Step 12 - Hit 'Continue' button Validate that Repayment Term
+			 * options section should be displayed below the 'How much would you
+			 * like to borrow' section
+			 */
+
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
+
+			/**
+			 * Step 13 - Opt for a desired REPAYMENT TERM by selecting the radio
+			 * button Verbiage should be
+			 * "Select from a repayment term option below or enter your own term"
+			 */
+
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
+			requestLoan
+					.isTextFieldDisplayed("How would you like your funds delivered?");
+			requestLoan.isTextFieldDisplayed("My loan summary");
+			requestLoan.setCheckTotal(requestLoan
+					.getCheckTotalFromSummaryTable());
+			
+
+			/**
+			 * Step 14 - Click on 'Continue' button Confirm Information page
+			 * should be displayed
+			 */
+			requestLoan.clickContinueButton();
+
+			requestLoan
+					.verifyWebElementIsDisplayed("ProActive Notification Screen");
+
+			requestLoan
+					.isTextFieldDisplayed("Sign up for updates on your loan process");
+			/**
+			 * Step 15 -In 'Confirm Information' page, verify the email address,
+			 * phone number and click 'Continue' button In 'Confirm Information'
+			 * page, verify the email address, phone number and click 'Continue'
+			 * button
+			 */
+			requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
+			requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
+
+			/**
+			 * Step 16 - Verify the Loan Summary page and click on 'I agree &
+			 * Submit' page User should be displayed with the Confirmation page
+			 */
+
+			if (Web.isWebElementDisplayed(requestLoan, "I AGREE AND SUBMIT",
+					true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'I Agree and Submit' Button is Displayed",
+						"'I Agree and Submit' Button is Displayed", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'I Agree and Submit' Button is Displayed",
+						"'I Agree and Submit' Button is Not Displayed", true);
+			}
+
+			requestLoan.clickOnIAgreeAndSubmit();
+			Common.waitForProgressBar();
+			requestLoan.verifyPageHeaderIsDisplayed("Loan Confirmation");
+			/**
+			 * Step 17 - Verify the page sections It should have 'Loan request
+			 * received' and 'Confirmation' sections
+			 */
+			requestLoan.isTextFieldDisplayed("Loan request received");
+			requestLoan.isTextFieldDisplayed("Loan Details");
+
+			/**
+			 * Step 18 - Verify the disclaimer message below the 'Loan request
+			 * received' section It should be 'Your loan request has been
+			 * received is being processed. Depending on your preference, you
+			 * will receive an email and/or text with your loan's status.
+			 * 
+			 */
+
+			requestLoan.verifyLoanConfirmationDisclaimer();
+
+			/**
+			 * Step 19 to 26 - Verify the information under the 'Loan request
+			 * received' section It should have below information: 1 Loan
+			 * request received 2 Approval from your employer 3. Processing 4.
+			 * Check sent by <selected delivery option>
+			 * 
+			 */
+			requestLoan.verifyLoanRequestRecievedSectionForRegularMail();
+
+			/**
+			 * Step 27 - N/A FOR OTHER SECTIONS MOCKUP IS NOT UPDATED.THIS TEST
+			 * CASE WILL BE UPDATED ONCE THE MOCKUP SCREEN IS AVAILABLE
+			 * 
+			 */
+
+			/**
+			 * Step 28 - Verify the 'Print' hyperlink It must be present at the
+			 * top right corner of the page
+			 */
+			requestLoan.verifyWebElementIsDisplayed("PRINT LINK");
+
+			/**
+			 * Step 29 - Click on 'Print' hyperlink - partially Automatable
+			 * 'Confirmation & What's next' page should be opened in a new modal
+			 * window in PDF format & user should be able to save it Step 30 -
+			 * Verify the content of the PDF - N/A It should be same exactly as
+			 * the 'Confirmation & What's next' page
+			 * 
+			 */
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
 }

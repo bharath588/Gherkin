@@ -9358,8 +9358,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
-			
-			investment.verifyWebElementDisplayed("Do It Myself");
+					investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Do It For Me");
 			//Step 10
@@ -9382,7 +9381,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
 			    	   Thread.sleep(10000);
-				    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Financial Engines - Log in"))
+				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
 			    		  Reporter.logEvent(Status.PASS,
 									"Verify 'Financial Engine Page'opened in New Window",
@@ -9398,7 +9397,13 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			       }
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
+	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+		           Web.clickOnElement(investment, "Button Refresh");
+		         else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+		        	   Web.clickOnElement(investment, "Button Close And Continue");//cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
+	           Web.waitForPageToLoad(Web.getDriver());
+	           Common.waitForProgressBar();
 	        
 		 
 		}catch (Exception e) {
@@ -9427,7 +9432,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	}
 
 	@Test(dataProvider = "setData")
-	public void DDTC_30104_FE_DIM_Access_Online_Advice(int itr, Map<String, String> testdata) {
+	public void DDTC_30104_FE_DIM_Access_Online_Guidance(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -9467,9 +9472,9 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			investment.isTextFieldDisplayed("Online Guidance can help you get pointed in the right direction.");
 			//Step 11
 			Web.clickOnElement(investment,"Access Online Guidance");
-			Web.waitForElement(investment, "Continue Button");
+			/*Web.waitForElement(investment, "Continue Button");
 			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
-			Web.clickOnElement(investment, "Continue Button");
+			Web.clickOnElement(investment, "Continue Button");*/
 			Thread.sleep(10000);
 			//Step 12
 			
@@ -9481,23 +9486,29 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Financial Engines - Log in")){
+			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
-									"Verify 'Financial Engine Page'opened in New Window",
-									"'Financial Engine Page' opened in New Window", true);
+									"Verify 'Advice & Guidance Page'opened in New Window",
+									"'Advice & Guidance Page' opened in New Window", true);
 						}
 						else{
 							Reporter.logEvent(Status.FAIL,
-									"Verify 'Financial Engine Page'opened in New Window ",
-									"'Financial Engine Page' is not opened in New Window ", true);
+									"Verify 'Advice & Guidance Page'opened in New Window ",
+									"'Advice & Guidance Page' is not opened in New Window ", true);
 						}
 			     
 			    }
 			       }
 			   Web.getDriver().close(); //closing child window
-	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
+	           Web.getDriver().switchTo().window(parentWindow);
+	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+		           Web.clickOnElement(investment, "Button Refresh");
+		           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+		        	   Web.clickOnElement(investment, "Button Close And Continue");//cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
+	           Web.waitForPageToLoad(Web.getDriver());
+	           Common.waitForProgressBar();
 	        
 		} 
 		catch (Exception e) {
@@ -9539,9 +9550,6 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
 			
-		
-			
-		
 			//Step 6
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
@@ -9551,9 +9559,9 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			investment.isTextFieldDisplayed("Online investment advice can help you select investments that align with your retirement objectives.");
 			//Step 8
 			Web.clickOnElement(investment,"Access Online Advice");
-			/*Web.waitForElement(investment, "Continue Button");
+			Web.waitForElement(investment, "Continue Button");
 			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
-			Web.clickOnElement(investment, "Continue Button");*/
+			Web.clickOnElement(investment, "Continue Button");
 			   Thread.sleep(10000);
 			//Step 12
 			
@@ -9566,7 +9574,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   
 			    	   Thread.sleep(10000);
-				    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Financial Engines - Log in"))
+				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
 				    	  {
 			    		  Reporter.logEvent(Status.PASS,
 									"Verify 'Financial Engine Page'opened in New Window",
@@ -9583,7 +9591,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
+	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
 	           Web.clickOnElement(investment, "Button Refresh");
+	           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+	        	   Web.clickOnElement(investment, "Button Close And Continue");
 	           Web.waitForPageToLoad(Web.getDriver());
 	           Common.waitForProgressBar();
 	        
@@ -9614,7 +9625,7 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 	}
 
 	@Test(dataProvider = "setData")
-	public void DDTC_30107_FE_Guidance_DIM_Access_Online_Advice(int itr, Map<String, String> testdata) {
+	public void DDTC_30107_FE_Guidance_DIM_Access_Online_Guidance(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -9654,16 +9665,16 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Financial Engines - Log in")){
+			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
-									"Verify 'Financial Engine Page'opened in New Window",
-									"'Financial Engine Page' opened in New Window", true);
+									"Verify 'Advice & Guidance Page'opened in New Window",
+									"'Advice & Guidance Page' opened in New Window", true);
 						}
 						else{
 							Reporter.logEvent(Status.FAIL,
-									"Verify 'Financial Engine Page'opened in New Window ",
-									"'Financial Engine Page' is not opened in New Window ", true);
+									"Verify 'Advice & Guidance Page'opened in New Window ",
+									"'Advice & Guidance Page' is not opened in New Window ", true);
 						}
 			     
 			    }
@@ -9671,7 +9682,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
-	           Web.clickOnElement(investment, "Button Refresh");
+	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+		           Web.clickOnElement(investment, "Button Refresh");
+		           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+		        	   Web.clickOnElement(investment, "Button Close And Continue");
 	           Web.waitForPageToLoad(Web.getDriver());
 	           Common.waitForProgressBar();
 	        

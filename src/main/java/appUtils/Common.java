@@ -93,7 +93,7 @@ public class Common {
 
 		if (DB.getRecordSetCount(participantInfo) > 0) {
 			try {
-				participantInfo.last();
+				participantInfo.first();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
@@ -122,7 +122,7 @@ public class Common {
 		participantDB = DB.executeQuery(sqlQuery[0], sqlQuery[1],userName);
 		if (DB.getRecordSetCount(participantDB) > 0) {
 			try {
-				participantDB.last();
+				participantDB.first();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				Reporter.logEvent(
