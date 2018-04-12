@@ -1808,6 +1808,8 @@ ORDER BY wb.ga_id,
 			<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
 			<parameter name="ParticipantID" value="1218857" />
+			<parameter name="Page" value="Financial Services"/>
+			
 		</Iteration>	
 		</TestCase>
 		<TestCase name="verifyverifyAdvisoryServicesTitle_GuidenceUser">
@@ -1815,6 +1817,7 @@ ORDER BY wb.ga_id,
 			<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
 			<parameter name="ParticipantID" value="4339720" />
+			<parameter name="Page" value="Advisory Services" />
 		</Iteration>	
 		</TestCase>
 	</Module>

@@ -8,7 +8,20 @@
 	<test name="Regression Suite">
 
 	<classes> 
-		
+	<class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
+				<methods>
+					 <include name="verifyFinancialEngines_ProspectUser">
+						<parameter name="ManualTCName"
+							value="verifyFinancialEngines_ProspectUser"></parameter>
+				</include> 
+				 <include name="verifyverifyAdvisoryServicesTitle_GuidenceUser">
+						<parameter name="ManualTCName"
+							value="verifyverifyAdvisoryServicesTitle_GuidenceUser"></parameter>
+				</include>
+				
+				</methods>
+			</class>  
+	<!-- 	
 		<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 						<methods>
 						<include name="validateIndicativeData_State">
@@ -178,19 +191,7 @@
 							
 								</methods>
 			</class> 
-			<class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
-				<methods>
-					 <include name="verifyFinancialEngines_ProspectUser">
-						<parameter name="ManualTCName"
-							value="verifyFinancialEngines_ProspectUser"></parameter>
-				</include> 
-				 <include name="verifyverifyAdvisoryServicesTitle_GuidenceUser">
-						<parameter name="ManualTCName"
-							value="verifyverifyAdvisoryServicesTitle_GuidenceUser"></parameter>
-				</include>
-				
-				</methods>
-			</class>  
+			
 			 
 	 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
 				<methods>
@@ -330,7 +331,7 @@
 					</include>
 				</methods>
 				
-			</class>  
+			</class>   -->
 		
 		
 

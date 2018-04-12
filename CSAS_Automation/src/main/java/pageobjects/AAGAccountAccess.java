@@ -1,6 +1,7 @@
 package pageobjects;
 
 import lib.Reporter;
+import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.WebElement;
@@ -19,12 +20,21 @@ public class AAGAccountAccess extends LoadableComponent<AAGAccountAccess> {
 	private WebElement MenuAAGAccountAccess;
 
 	@FindBy(id = "page")
-	private WebElement AAGAccountAccessPageTitle;
+	private WebElement FinancialServicesPageTitle;
+	
+	@FindBy(id = "Body")
+	private WebElement AdvisoryServicesPageTitle;
 	
 	@FindBy(id = "header-logo")
 	private WebElement FinancialEngines;
 	@FindBy(xpath = ".//td[@class,'ibbotson']")
 	private WebElement advisoryServices;
+	
+	@FindBy(css = "div#oCMenu_319")
+	private WebElement menuSearch;
+	
+	String parentWindow;
+	
 	
 	
 	LoadableComponent<?> parent;
@@ -35,35 +45,60 @@ public class AAGAccountAccess extends LoadableComponent<AAGAccountAccess> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		
-		Assert.assertTrue(Web.isWebElementDisplayed(AAGAccountAccessPageTitle));
+		String expectedPage = Stock.GetParameterValue("Page");
+		if(expectedPage.equalsIgnoreCase("Financial Services")){
+		Assert.assertTrue(Web.isWebElementDisplayed(FinancialServicesPageTitle));
+		}else if(expectedPage.equalsIgnoreCase("Advisory Services")){
+			Assert.assertTrue(Web.isWebElementDisplayed(AdvisoryServicesPageTitle));
+		}
 	}
 
 	@Override
 	protected void load() {
 		this.parent = new ParticipantHome().get();
+		 parentWindow =  Web.getDriver().getWindowHandle();
 		Web.mouseHover(MenuPPTInfo);
 		if (Web.isWebElementDisplayed(MenuAAGAccountAccess, true)) {
 			Web.clickOnElement(MenuAAGAccountAccess);
-			Web.getDriver().switchTo().frame(0);
-			if (Web.isWebElementDisplayed(AAGAccountAccessPageTitle, true)) {
+			switchToWindow(parentWindow);
+			if (Web.isWebElementDisplayed(FinancialServicesPageTitle, true)) {
 				Reporter.logEvent(Status.PASS,
 						"Check if AAGAccount Access page displayed or not",
-						"Loan info page displyed successfully", true);
-			} else {
+						"AAGAccount Access page displyed successfully", true);
+			}else if(Web.isWebElementDisplayed(AdvisoryServicesPageTitle, true)){
+				Reporter.logEvent(Status.PASS,
+						"Check if AAGAccount Access page displayed or not",
+						"AAGAccount Access page successfully", true);
+				
+			}
+				else {
 				Reporter.logEvent(Status.FAIL,
 						"Check if AAGAccount Access page displayed or not",
-						"Loan info page didn't disply successfully", true);
+						" Expected AAGAccount Access page didn't disply successfully", true);
 			}
 
-		} else {
+		}
+			else {
+		
 			Reporter.logEvent(
 					Status.FAIL,
-					"Check if Loan info Link on Participant Info tab displayed or not",
-					"Loan info Link on Participant Info tab didn't display successfully",
+					"Expected AAGAccount Access page tab displayed or not",
+					"Expected AAGAccount Access page tab didn't display successfully",
 					true);
 		}
 	}
+	
+	public void switchToWindow(String parentWindow){
+	
+    for(String winHandle : Web.getDriver().getWindowHandles()){
+
+            if(!winHandle.equals(parentWindow))
+
+                    Web.getDriver().switchTo().window(winHandle);
+
+    }
+	}
+
 	
 	public void verifyFinancialEnginesTitle(){
 		if (Web.isWebElementDisplayed(FinancialEngines, true)) {
@@ -75,9 +110,11 @@ public class AAGAccountAccess extends LoadableComponent<AAGAccountAccess> {
 					"Check if FinancialEngines page displayed or not",
 					"FinancialEngines page didn't disply successfully", true);
 		}
+		Web.getDriver().switchTo().window(parentWindow);
+		Web.clickOnElement(menuSearch);
 	}
 	public void verifyAdvisoryServicesTitle(){
-		if (Web.isWebElementDisplayed(advisoryServices, true)) {
+		if (Web.isWebElementDisplayed(AdvisoryServicesPageTitle, true)) {
 			Reporter.logEvent(Status.PASS,
 					"Check if AdvisoryServices page displayed or not",
 					"AdvisoryServices page displyed successfully", true);
