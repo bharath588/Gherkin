@@ -94,7 +94,7 @@ public class AAGAccountAccessTestCases {
 	 */
 
 	@Test(dataProvider = "setData")
-	public void verifyverifyAdvisoryServicesTitle_GuidenceUser(int itr, Map<String, String> testdata)
+	public void verifyAdvisoryServicesTitle_GuidenceUser(int itr, Map<String, String> testdata)
 			throws InterruptedException {
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
