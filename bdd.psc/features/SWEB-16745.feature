@@ -16,6 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
+@SWEB-16745
 Feature: File Sharing File Movement
 
   Background: 
@@ -27,41 +28,41 @@ Feature: File Sharing File Movement
 
   Scenario: verify appropriate checkboxes are selected
     Given the user has files within a folder
-    When User selects the header row checkbox
-    Then All checkboxes on that page should be selected
-    And The checkboxes on other page(s) should NOT be selected
+    When User "select" the header row checkbox
+    Then All checkboxes on screen should be "selected"
+    And The checkboxes on other page should be "deselected"
 
   Scenario: verify appropriate checkboxes are deselected
-    Given The header row checkbox is selected
-    And All checkboxes on the page are selected
-    When User deselects the header row checkbox
-    Then All checkboxes on screen should be deselected
+    Given The header row checkbox is "selected"
+    And All checkboxes on screen should be "selected"
+    When User "deselect" the header row checkbox
+    Then All checkboxes on screen should be "deselected"
 
   Scenario: verify button row visibility
     Given the user has files within a folder
     When User selects a checkbox that is NOT the header row checkbox
-    Then The Button Row becomes visible
+    Then The Button Row becomes "visible"
 
   Scenario: verify selected checkboxes cleared after leaving page
     Given User has selected one or more checkboxes on a page
     When User navigates to another page
-    Then Selected checkboxes should clear
-    And The Button Row should no longer be visible
+    Then Selected checkboxes should be "clear"
+    And The Button Row becomes "invisible"
 
   Scenario: verify button row invisibility
     Given User has selected one or more checkboxes on a page
     When User unselects all selected checkboxes
-    Then The Button Row should no longer be visible
+    Then The Button Row becomes "invisible"
 
   Scenario: verify header row checkbox selection
     Given the user has files within a folder
     When All row-level checkboxes are selected
-    Then The header-row checkbox should be selected
+    Then The header-row checkbox should be "selected"
 
   Scenario: verify header row checkbox deselection
     Given the user has files within a folder
     When At least one row-level checkbox is not selected
-    Then The header-row checkbox should not be selected
+    Then The header-row checkbox should be "deselected"
 
   Scenario Outline: verify "<Modal Box>" appears when user clicks on "<button>"
     Given The Button Row is visible

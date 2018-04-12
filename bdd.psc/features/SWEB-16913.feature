@@ -24,173 +24,112 @@ Feature: InstMetLife - Footer - System Tray Requirements Pre-login and Post-Logi
       | accuCode    |
       | InstMetLife |
     When user scroll down to footer section
-    Then the Partner specific disclosures and copyright content should be displayed
-    And the following text should be displayed
+    Then the following below text should be displayed in "InstMetLife"
       """
       Access to the website may be limited or unavailable during periods of peak demand, market volatility, systems upgrades/maintenance or other reasons.
-      
-      The Legal Notices posted on this website apply to our third party services providers that provide services, information and content in connection with this website, 
-      and such services providers are deemed third party beneficiaries of such Legal Notices. 
-      
-      © ccyy MetLife Services and Solutions LLC
+      The Legal Notices posted on this website apply to our third party services providers that provide services, information and content in connection with this website, and such services providers are deemed third party beneficiaries of such Legal Notices.
+      Â© 2018 MetLife Services and Solutions LLC
       """
 
-  Scenario: Verify the Footer is reflecting current year in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
+  Scenario Outline: Verify the Footer is reflecting current year in Pre-Login page
+    Given user is on the Login page of "<accuCode>"
     When user scroll down to footer section
-    Then the copyright year should reflect current year
+    Then the copyright date should be "<text>"
+
+    Examples: 
+      | accuCode    | text                                    |
+      | InstMetLife | 2018 MetLife Services and Solutions LLC |
 
   Scenario: Verify the Footer includes the correct content in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
+    Given user is on the Home page of accuCode when user login with correct username and password
+      | accuCode    | username |  | password |
+      | InstMetLife | 1IML     |  | testing1 |
     And user scroll down to footer section
-    Then the Partner specific disclosures and copyright content should be displayed
-    And the following text should be displayed
+    Then the following below text should be displayed in "InstMetLife"
       """
       Access to the website may be limited or unavailable during periods of peak demand, market volatility, systems upgrades/maintenance or other reasons.
-      
-      The Legal Notices posted on this website apply to our third party services providers that provide services, information and content in connection with this website, 
-      and such services providers are deemed third party beneficiaries of such Legal Notices. 
-      
-      © ccyy MetLife Services and Solutions LLC
+      The Legal Notices posted on this website apply to our third party services providers that provide services, information and content in connection with this website, and such services providers are deemed third party beneficiaries of such Legal Notices.
+      Â© 2018 MetLife Services and Solutions LLC
       """
 
-  Scenario: Verify the Footer is reflecting current year in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
+  Scenario Outline: Verify the Footer is reflecting current year in Post-Login page
+    Given user is on the Login page of "<accuCode>"
+    When user enters "<username>" and "<password>" and clicks on sign in button
     And user scroll down to footer section
-    Then the copyright year should reflect current year
+    Then the copyright date should be "<text>"
 
-  Scenario: Verify the System tray includes the correct content in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
+    Examples: 
+      | accuCode    | username | password | text                                    |
+      | InstMetLife | 1IML     | testing1 | 2018 MetLife Services and Solutions LLC |
+
+  Scenario Outline: Verify the System tray includes the correct content in Pre-Login page
+    Given user is on the Login page of "<accuCode>"
     When user scroll down to footer section
-    Then the line Important Information | Privacy Policy  | Legal Notices should be displayed
+    Then following "<links>" should be displayed in the system tray
 
-  Scenario: Verify the Important Information includes the correct content in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
+    Examples: 
+      | accuCode    | links                        |
+      | InstMetLife | Privacy Policy,Legal Notices |
+
+  Scenario Outline: Verify the Privacy Policy and Legal Notices includes the correct link in Pre-Login page
+    Given user is on the Login page of "<accuCode>"
     When user scroll down to footer section
-    And clicks Important Information
-    Then the same information is shown as on heritage site with the login inputs displayed
+    And User clicks on the "<link>"
+    Then A new tab opens with "<url>"
 
-  Scenario: Verify the Privacy Policy includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user scroll down to footer section
-    And clicks Privacy Policy
-    Then will link to https://www.metlife.com/about/privacy-policy/online-privacy-policy/index.html
+    Examples: 
+      | accuCode    | link                         | url                                                                                                                                         |
+      | InstMetLife | Privacy Policy,Legal Notices | https://www.metlife.com/about/privacy-policy/online-privacy-policy/index.html,https://www.metlife.com/about/terms-and-conditions/index.html |
 
-  Scenario: Verify the Legal Notices includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user scroll down to footer section
-    And clicks Legal Notices
-    Then will link to https://www.metlife.com/about/terms-and-conditions/index.html
-
-  Scenario: Verify the System tray includes the correct content in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
+  Scenario Outline: Verify the System tray includes the correct content in Post-Login page
+    Given user is on the Login page of "<accuCode>"
+    When user enters "<username>" and "<password>" and clicks on sign in button
     And user scroll down to footer section
-    Then the line Important Information | Privacy Policy  | Legal Notices should be displayed --Scope of improvement
-    Then following links should be displayed in the system tray
-      | links                 |
-      | Important Information |
-      | Privacy Policy        |
+    Then following "<links>" should be displayed in the system tray
 
-  Scenario: Verify the Important Information includes the correct content in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
+    Examples: 
+      | accuCode    | username | password | links                        |
+      | InstMetLife | 1IML     | testing1 | Privacy Policy,Legal Notices |
+
+  Scenario Outline: Verify the Privacy Policy and Legal Notices includes the correct link in Post-Login page
+    Given user is on the Login page of "<accuCode>"
+    When user enters "<username>" and "<password>" and clicks on sign in button
     And user scroll down to footer section
-    And clicks Important Information
-    Then the same information is shown as on heritage site with the login inputs displayed
+    And User clicks on the "<link>"
+    Then A new tab opens with "<url>"
 
-  Scenario: Verify the Privacy Policy includes the correct link in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
-    And user scroll down to footer section
-    And clicks Privacy Policy
-    Then will link to https://www.metlife.com/about/privacy-policy/online-privacy-policy/index.html
-
-  Scenario: Verify the Legal Notices includes the correct link in Post-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user enters username and password
-      | username |  | password |
-      | 1IML     |  | testing1 |
-    When user scroll down to footer section
-    And clicks Legal Notices
-    Then will link to https://www.metlife.com/about/terms-and-conditions/index.html
+    Examples: 
+      | accuCode    | username | password | link                         | url                                                                                                                                         |
+      | InstMetLife | 1IML     | testing1 | Privacy Policy,Legal Notices | https://www.metlife.com/about/privacy-policy/online-privacy-policy/index.html,https://www.metlife.com/about/terms-and-conditions/index.html |
 
   Scenario Outline: Verify the Social Media icons are displayed with correct content and links in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
+    Given user is on the Login page of "<accuCode>"
     When user scroll down to footer section
     Then the Social Media "<icons>" are displayed
 
     Examples: 
-      | icons    |
-      | Facebook |
-      | Twitter  |
-      | Linkedin |
-      | YouTube  |
+      | accuCode    | icons                             |
+      | InstMetLife | Facebook,Twitter,Linkedin,YouTube |
 
-  Scenario: Verify the Facebook icon includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
+  Scenario Outline: Verify the Social Media icons includes the correct link in Pre-Login page
+    Given user is on the Login page of "<accuCode>"
     When user scroll down to footer section
-    And clicks Facebook
-    Then will link to https://www.facebook.com/metlife
+    And User clicks on the "<icons>"
+    Then A new tab opens with "<url>"
 
-  Scenario: Verify the Twitter icon includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user scroll down to footer section
-    And clicks Twitter
-    Then will link to https://twitter.com/metlife
+    Examples: 
+      | accuCode    | icons                             | url                                                                                                                                         |
+      | InstMetLife | Facebook,Twitter,Linkedin,YouTube | https://www.facebook.com/metlife/,https://twitter.com/MetLife,https://www.linkedin.com/company/metlife,https://www.youtube.com/user/Metlife |
 
-  Scenario: Verify the Linkedin icon includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user scroll down to footer section
-    And clicks Linkedin
-    Then will link to https://www.linkedin.com/company/metlife
+    
+  Scenario Outline: Verify the Social Media icons includes the correct link in Post-Login page
+    Given user is on the Login page of "<accuCode>"
+    When user enters "<username>" and "<password>" and clicks on sign in button
+    And user scroll down to footer section
+    And User clicks on the "<icons>"
+    Then A new tab opens with "<url>"
 
-  Scenario: Verify the YouTube icon includes the correct link in Pre-Login page
-    Given user is on the Login page of accuCode
-      | accuCode    |
-      | InstMetLife |
-    When user scroll down to footer section
-    And clicks YouTube
-    Then will link to https://www.youtube.com/user/Metlife
+    Examples: 
+      | accuCode   |username | password | icons                             | url                                                                                                                                         |
+      | InstMetLife| 1IML    | testing1 | Facebook,Twitter,Linkedin,YouTube | https://www.facebook.com/metlife/,https://twitter.com/MetLife,https://www.linkedin.com/company/metlife,https://www.youtube.com/user/Metlife |
+      

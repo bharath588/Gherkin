@@ -558,4 +558,48 @@ public class LoginStepDefinitions {
 					true);
 		}
 	}
+
+	@Then("^the following below text should be displayed in \"([^\"]*)\"$")
+	public void the_following_below_text_should_be_displayed_in_something(
+			String accuCode, String expectedText) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		login = new LoginPage();
+		homePage = new HomePage();
+		forgotPwdPage = new ForgotPasswordPage();
+		if (Globals.scenarioName.endsWith("Post-Login page")
+				|| Globals.scenarioName.endsWith("Forgot password page")) {
+			if (accuCode.equalsIgnoreCase("InstMetLife")) {
+				if (login.textFormatMatches(expectedText,
+						Web.returnWebElement(login, "footerReqText"))) {
+					Reporter.logEvent(Status.PASS,
+							"System requirement texts displayed correctly",
+							"System requirement texts displayed correctly",
+							true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"System requirement texts displayed correctly",
+							"System requirement texts not displayed correctly",
+							true);
+				}
+			}
+
+		} else {
+			if (login.textFormatMatches(expectedText,
+					Web.returnWebElement(login, "footerReqText"))) {
+
+				Reporter.logEvent(Status.PASS,
+						"System requirement texts displayed correctly",
+						"System requirement texts displayed correctly", true);
+			} else {
+				Reporter.logEvent(Status.FAIL,
+						"System requirement texts displayed correctly",
+						"System requirement texts not displayed correctly",
+						true);
+			}
+		}
+
+	}
+	
+	
+	
 }

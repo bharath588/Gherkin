@@ -40,7 +40,7 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
 		/*format = { "json", "json:target/cucumber.json" },strict = false,*/
 		plugin = {"pretty","html:target/cucumber-html-report"} ,
 		monochrome = true
-		,tags = {"@SWEB-16822,@SWEB-16823"})
+		,tags = {"@SWEB-16583"})
 public class TestRunner extends AbstractTestNGCucumberTests {
 
 }

@@ -51,6 +51,14 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	private List<WebElement> subfolderInFolders;
 	@FindBy(how=How.REPEATER,using="document in fileShareRepo.view.filtered",exact=false)
 	private List<WebElement> documentsInSubfolder;
+	@FindBy(how=How.ID,using="headercheckbox")
+	private WebElement headerCheckbox;
+	@FindBy(how=How.XPATH,using=".//*[@class='rowselector']")
+	private List<WebElement> allCheckBoxes;
+	@FindBy(how=How.XPATH,using=".//*[@ng-click='fileShareRepo.view.nextPage()']")
+	private WebElement nextPage;
+	@FindBy(how=How.XPATH,using="//button[@class='btn btn-default ng-binding']")
+	private List<WebElement> buttonRow;
 
 
 
@@ -158,6 +166,115 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 		}
 		return false;
 	}
+	
+	public void selectOrDeselectTheHeaderRowCheckBox(String selectOrDeselect){
+		try{
+			if(selectOrDeselect.equalsIgnoreCase("select")||selectOrDeselect.equalsIgnoreCase("selected")){
+				if(!(headerCheckbox.isSelected()))
+					headerCheckbox.click();
+			}
+			else{
+				if(headerCheckbox.isSelected())
+					headerCheckbox.click();
+			}
+		}
+		catch(Exception e){
+			//throw new Error("Error getting when trying to check the checkbox : "+ e.getMessage());
+		}		
+	}
+	
+	public int countOfAllCheckBox(){
+		return allCheckBoxes.size();
+	}
+	
+	public void selectOneOrMoreNonHeaderRowCheckBox(int... n){
+		int i = 0;
+		int numberOfCheckboxToSelect = 0;
+		if (n.length == 0)
+			numberOfCheckboxToSelect = allCheckBoxes.size();
+		else
+			numberOfCheckboxToSelect = n.length;
+
+		if (Web.isWebElementsDisplayed(allCheckBoxes, true)) {
+			for (WebElement element : allCheckBoxes) {
+				element.click();
+				++i;
+				if (i == numberOfCheckboxToSelect)
+					break;
+			}
+		}
+		
+	}
+	public void deselectOneOrMoreNonHeaderRowCheckBox(){
+			if(Web.isWebElementsDisplayed(allCheckBoxes, true)){
+				for(WebElement element:allCheckBoxes){
+					if(element.isSelected())
+						element.click();
+				}
+			}
+		
+	}
+	
+	public boolean isSelectedHeaderRowCheckBox(String selectedOrDeselected){
+		if(selectedOrDeselected.equalsIgnoreCase("selected")){
+			if(headerCheckbox.isSelected())
+				return true;
+		}
+		else{
+			if(!(headerCheckbox.isSelected()))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isAllCheckBoxSelectedOrDeselected(String selectedOrDeselected) {
+		boolean flag = false;
+		try {
+			if (selectedOrDeselected.equalsIgnoreCase("selected")) {
+				for (WebElement checkBox : allCheckBoxes) {
+					if (checkBox.isSelected())
+						flag = true;
+					else
+						return false;
+				}
+			} else {
+				for (WebElement checkBox : allCheckBoxes) {
+					if (!(checkBox.isSelected()))
+						flag = true;
+					else
+						return false;
+				}
+			}
+		} catch (Exception e) {
+			//throw new Error("Error getting when trying to check the checkbox selected or deselected : "+ e.getMessage());
+			}
+		return flag;
+	}
+	public boolean isButtonRowVisible(String visibleOrInvisible){
+		
+		if(visibleOrInvisible.equalsIgnoreCase("visible")){
+			if(Web.isWebElementsDisplayed(buttonRow, true))
+				return true;
+		}
+		else{
+			if(!(Web.isWebElementsDisplayed(buttonRow, true)))
+				return true;
+		}
+		return false;
+	}
+
+	public void navigateToNextPage() {
+		try {
+			if (Web.isWebElementDisplayed(nextPage, true)) {
+				nextPage.click();
+				Web.nextGenDriver.waitForAngular();
+			}
+
+		} catch (Exception e) {
+			//throw new Error("Error getting when trying click on next page : "+ e.getMessage());
+		}
+	}
+	
 }
 
 

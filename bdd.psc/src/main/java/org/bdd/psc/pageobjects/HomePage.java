@@ -54,7 +54,7 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement closeFooterDialog;
 	@FindBy(xpath = ".//*[@id='main']/div")
 	private WebElement sysReqDiv;
-	@FindBy(xpath = ".//div[contains(@class,'CopyRight') or contains(@class,'copyright')]")
+	@FindBy(xpath = ".//div[contains(@class,'CopyRight') or contains(@class,'copyright') or contains(@id,'footLegal') or contains(@class,'disclosure')]")
 	private WebElement copyrightText;
 	@FindBy(xpath = "//*[@id='newMenu']//li/a[text()='Reports']")
 	private WebElement reportsMenu;

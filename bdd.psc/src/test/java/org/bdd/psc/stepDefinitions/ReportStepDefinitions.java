@@ -234,5 +234,40 @@ public class ReportStepDefinitions {
 	    Reporter.logEvent(Status.INFO, "the content of the file should match the selected report",
 	    		"Cannot verify this automatically", true);
 	}
+	
+	@When("^user clicks on \"([^\"]*)\" under Reports tab$")
+	public void user_clicks_on_under_Reports_tab(String arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	   ReportsPage reportPage = new ReportsPage();
+	   reportPage.get();
+	   
+	}
+	@Then("^the Reports catalog link is displayed next to the Search entry text box$")
+	public void the_Reports_catalog_link_is_displayed_next_to_the_Search_entry_text_box() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		if(Web.isWebElementDisplayed(new ReportsPage(), "ReportsCatalogLink", true)){
+			   Reporter.logEvent(Status.PASS, "Reports catalog link displays next to the Search entry text box", 
+		    			"Reports catalog link displays next to the Search entry text box", true);
+		   }
+		   else{
+			   Reporter.logEvent(Status.FAIL, "Reports catalog link displays next to the Search entry text box", 
+		    			"Reports catalog link does not displays next to the Search entry text box", true);
+		   }    
+	}
+	@Given("^user is on the \"([^\"]*)\" page$")
+    public void user_is_on_the_standard_reports_page(String arg1) throws Throwable {
+        new ReportsPage().get();
+    }
+	@When("^user clicks Reports Catalog Link$")
+    public void user_clicks_reports_catalog_link() throws Throwable {
+        if(Web.isWebElementDisplayed(new ReportsPage(), "ReportsCatalogLink", true))
+        	Web.clickOnElement(new ReportsPage(), "ReportsCatalogLink");
+    }
+	@Then("^link downloads the Reports Catalog excel file$")
+	public void link_downloads_the_Reports_Catalog_excel_file() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+		new ReportsPage().downloadReportCatlogFile();
+	   
+	}
 
 }

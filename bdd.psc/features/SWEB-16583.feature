@@ -1,4 +1,4 @@
-#Author: Connor
+#Author:
 #Keywords Summary :
 #Feature: List of scenarios.
 #Scenario: Business rule through list of steps with arguments.
@@ -16,12 +16,32 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
+@SWEB-16583
 Feature: PSC social media icons
 
-  Scenario: Social media icons display on PSC home page
-    Given User is on Home Page of NextGen
-    And User is connected to a plan
-    When User clicks on the YouTube social media icon
-    Then A new tab opens with https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ
-    When User clicks on the Instagram social media icon
-    Then A new tab opens with https://www.instagram.com/empowerretirement/
+Scenario Outline: Verify the Social Media icons are displayed on PSC login page with correct content and order
+Given user is on the Login page of "<accuCode>"
+When user scroll down to footer section
+Then the Social Media "<icons>" are displayed in correct order
+And User clicks on the "<icons>"
+Then A new tab opens with "<url>"
+
+Examples: 
+      | accuCode    | icons                                       |url                                                                                                                                                             |
+      | PlanEmpower | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/@empowertoday,https://www.linkedin.com/company/empower-retirement/,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
+ 
+Scenario Outline: Verify the Social Media icons are displayed on PSC home page with correct order and includes the correct link     
+ Given user is on the Login page of "<accuCode>"
+ When user enters "<username>" and "<password>" and clicks on sign in button
+ And user scroll down to footer section
+ Then the Social Media "<icons>" are displayed in correct order
+ And User clicks on the "<icons>"
+ Then A new tab opens with "<url>"
+
+ Examples: 
+      | accuCode   |username | password | icons                                       | url                                                                                                                                         |
+      | PlanEmpower| 1isis   | testing1 | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/empowertoday,https://www.linkedin.com/company/empower-retirement/,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
+      
+
+
+

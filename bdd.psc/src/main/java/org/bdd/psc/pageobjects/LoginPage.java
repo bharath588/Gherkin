@@ -4,6 +4,7 @@
 package org.bdd.psc.pageobjects;
 
 import java.util.List;
+import java.util.Set;
 
 import lib.CommonLib;
 import lib.Stock;
@@ -51,6 +52,28 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement termsAndConditionsLink;
 	@FindBy(xpath = "//div[contains(@class,'footer-doc-links')]//li")
 	private List<WebElement> footerLinks;
+	
+	@FindBy(linkText="Privacy Policy")
+	private WebElement PrivacyPolicy;
+	@FindBy(linkText="Legal Notices")
+	private WebElement LegalNotices;
+	//@FindBy(id="facebook")
+	@FindBy(xpath="//*[contains(@id,'facebook') or contains(@class,'social-link facebook')]")
+	private WebElement facebook;
+	@FindBy(xpath="//*[contains(@id,'twitter') or contains(@class,'social-link twitter')]")
+	private WebElement twitter;
+	@FindBy(xpath="//*[contains(@id,'linkedin') or contains(@class,'social-link linkedin')]")
+	private WebElement linkedin;
+	@FindBy(id="instagram")
+	private WebElement instagram;
+	@FindBy(id="youtube")
+	private WebElement youtube;
+	@FindBy(xpath="//div[@class='footer-social-media']/a")
+	private List<WebElement> socialMediaIcons;
+	
+	@FindBy(xpath="//div[contains(@class,'disclosure') or contains(@id,'footLegal')]")
+	private WebElement footerReqText;
+	
 	@FindBy(linkText = "Forgot Password?")
 	private WebElement forgotPassword;
 	@FindBy(xpath = ".//*[@id='main']/div[2]/div[2]/div")
@@ -155,6 +178,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("Logout")) {
 			return this.logout;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Legal Notices")){
+			return this.LegalNotices;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Privacy Policy")){
+			return this.PrivacyPolicy;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Facebook")){
+			return this.facebook;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Twitter")){
+			return this.twitter;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Linkedin")){
+			return this.linkedin;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Youtube")){
+			return this.youtube;
+		}
+		if(fieldName.trim().equalsIgnoreCase("Instagram")){
+			return this.instagram;
+		}
+		if(fieldName.trim().equalsIgnoreCase("footerReqText")){
+			return this.footerReqText;
 		}
 
 		// Reporter.logEvent(
@@ -433,6 +480,84 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 				.contains(LoginPage.accucode + "/welcome"))
 			return true;
 		return false;
+	}
+	
+	public String openAndCloseNewTab(String linkName) {
+		try {
+			WebElement element = getWebElement(linkName);
+			String newUrl="";
+			if (Web.isWebElementDisplayed(element, true)) {
+				Web.clickOnElement(element);
+				Thread.sleep(2000);
+				Set<String> handles = Web.getDriver().getWindowHandles();
+				String firstWindow = Web.getDriver().getWindowHandle();
+				handles.remove(firstWindow);
+				if (handles.iterator().next() != firstWindow) {
+					Web.getDriver().switchTo().window(handles.iterator().next());
+					newUrl=Web.getDriver().getCurrentUrl();
+					Web.getDriver().close();
+					Web.getDriver().switchTo().window(firstWindow);
+				}
+
+			}
+
+			return newUrl;
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public boolean textFormatMatches(String marketingText,WebElement element, WebElement...frame){
+
+		try{
+			forgotPwdPage = new ForgotPasswordPage();
+			if(frame.length>0){
+				Web.FrameSwitchONandOFF(true, frame);
+				if(Web.isWebElementDisplayed(forgotPwdPage, "System Requirement Window")){
+					if(Web.returnWebElement(forgotPwdPage, 
+							"System Requirement Window").getText().trim()
+							.contains(marketingText.trim()))
+						return true;
+				}
+			}
+			else if(Web.isWebElementDisplayed(element)){
+				if(element.getText().trim().contains(marketingText.trim()))
+					System.out.println("true");
+					return true;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	public void checkCorrectOrderOfSocialIconObjects(List<String> icon) {
+		try {
+			int i = 0;
+			if (icon.size() == socialMediaIcons.size()) {
+				for (WebElement element : socialMediaIcons) {
+					String expIcon=icon.get(i++);
+					if (element.getText().trim().replaceAll(" ","").equalsIgnoreCase(expIcon))
+					{
+						Reporter.logEvent(Status.PASS, " Social media icon "+expIcon+" should displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" displayed in correct order in Pre/post-Login page", true);
+					}
+					else
+						Reporter.logEvent(Status.FAIL, " Social media icon "+expIcon+" should displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" does not displayed in correct order in Pre/post-Login page", true);
+				}
+			} 
+			else
+				Reporter.logEvent(Status.FAIL, " All Social media icon should displays in Pre/post-Login page", 
+        				" All Social media icon does not displayed in Pre/post-Login page", true);
+			}
+		catch (Exception e) {
+			throw new Error("Error getting in social media icon obejct fields : "+ e.getMessage());
+			
+		}
+
 	}
 
 }

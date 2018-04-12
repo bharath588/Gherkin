@@ -3,21 +3,26 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import lib.CommonLib;
 import lib.Web;
 
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
 import gherkin.formatter.model.Scenario;
+
 import org.bdd.psc.pageobjects.FileSharingPage;
 import org.bdd.psc.pageobjects.ForgotPasswordPage;
 import org.bdd.psc.pageobjects.HomePage;
 import org.bdd.psc.pageobjects.JumpPage;
 import org.bdd.psc.pageobjects.LoginPage;
 import org.bdd.psc.pageobjects.UserVerificationPage;
+
 import reporter.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
@@ -36,6 +41,7 @@ public class HomeStepDefinitions {
 	public static String featureName = null;
 	public static Scenario scenario = null;
 	public static String planNumber;
+	private static List<String> newTabUrl=new ArrayList<String>();
 
 	LoginPage login;
 	UserVerificationPage userVerPage;
@@ -391,4 +397,93 @@ public class HomeStepDefinitions {
 			homePageVisits = 0;
 		}
 	}
+	@When("^User clicks on the \"([^\"]*)\"$")
+    public void clicks_something(@Delimiter(",") List<String> links) throws Throwable {
+		if(!(newTabUrl.isEmpty()))
+			newTabUrl.clear();
+		for(String link:links){
+			try{
+				String linkUrl=new LoginPage().openAndCloseNewTab(link);
+				newTabUrl.add(linkUrl);
+			}
+			catch(Exception e){
+				
+			}
+			
+		}
+        
+    }
+	
+	@Then("^A new tab opens with \"([^\"]*)\"$")
+	public void a_new_tab_opens_with_something(@Delimiter(",") List<String> url)
+			throws Throwable {
+		try {
+			Collections.sort(newTabUrl);
+			String[] arr = new String[newTabUrl.size()];
+			arr = newTabUrl.toArray(arr);
+			for (String featureUrl : url) {
+				if (CommonLib.binarySearch(arr, featureUrl, 0, arr.length) >= 0) {
+					Reporter.logEvent(Status.PASS,
+							"A new tab should open with " + featureUrl,
+							"A new tab opens with " + featureUrl, true);
+				} else {
+					Reporter.logEvent(Status.FAIL,
+							"A new tab should opens with " + featureUrl,
+							"A new tab does not opens with " + featureUrl, true);
+				}
+			}
+
+		} 
+		catch (Exception e) {
+
+		}
+
+	}
+	
+	@Then("^following \"([^\"]*)\" should be displayed in the system tray$")
+	public void following_something_should_be_displayed_in_the_system_tray(
+			@Delimiter(",") List<String> links) throws Throwable {
+		for (String link : links) {
+			if (Web.isWebElementDisplayed(new LoginPage(), link, true)) {
+				Reporter.logEvent(Status.PASS, link
+						+ " link should displays in Pre/post-Login page", link
+						+ " link displays in Pre/post-Login page", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, link
+						+ " link should displays in Pre/post-Login page", link
+						+ " link does not displays in Pre/post-Login page",
+						true);
+			}
+		}
+	}
+
+	@Then("^the Social Media \"([^\"]*)\" are displayed$")
+	public void the_social_media_something_are_displayed(
+			@Delimiter(",") List<String> icons) throws Throwable {
+		for (String icon : icons) {
+			if (Web.isWebElementDisplayed(new LoginPage(), icon, true)) {
+				Reporter.logEvent(Status.PASS, "the Social Media " + icon
+						+ " should displays in Pre-Login page",
+						"the Social Media " + icon
+								+ " displays in Pre-Login page", true);
+			} else {
+				Reporter.logEvent(Status.FAIL, "the Social Media " + icon
+						+ " should displays in Pre-Login page",
+						"the Social Media " + icon
+								+ " does not displays in Pre-Login page", true);
+			}
+		}
+	}
+
+	@Then("^the Social Media \"([^\"]*)\" are displayed in correct order$")
+	public void the_social_media_something_are_displayed_in_correct_order(
+			@Delimiter(",") List<String> icons) throws Throwable {
+		List<String> listObject = new ArrayList<String>();
+		for (String icon : icons) {
+			listObject.add(icon);
+		}
+		new LoginPage().checkCorrectOrderOfSocialIconObjects(listObject);
+
+	}
+
 }
