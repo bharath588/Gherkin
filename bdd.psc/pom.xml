@@ -42,12 +42,12 @@
 								<value>${env}</value>
 							</property>
 						</systemProperties>
-						<systemProperties>
+						<!-- <systemProperties>
 							<property>
 								<name>testDataPath</name>
 								<value>${testDataPath}</value>
 							</property>
-						</systemProperties>
+						</systemProperties> -->
 						<systemProperties>
 							<property>
 								<name>CAPTURESCREENSHOT</name>
@@ -60,12 +60,12 @@
 								<value>${BROWSER}</value>
 							</property>
 						</systemProperties>
-						<systemProperties>
+						<!-- <systemProperties>
 							<property>
 								<name>type</name>
 								<value>${ExecutionMode}</value>
 							</property>
-						</systemProperties>
+						</systemProperties> -->
 					</configuration>
 				</plugin>
 				<!-- Compiler plugin configures the java version to be used for compiling 
