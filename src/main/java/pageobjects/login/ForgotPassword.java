@@ -38,7 +38,8 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	@FindBy(xpath=".//*[text()[normalize-space()='Recover your account']]") private WebElement lblRecoverYourAccount;
 	@FindBy(xpath=".//*[@id='acPasswordInput' and @name='password']") private WebElement txtPassword;
 	@FindBy(xpath=".//*[@id='confirmPasswordInput']") private WebElement txtReEnterPassword;
-	@FindBy(xpath=".//*[@id='accountRecoveryContinue']") private WebElement btnContinueAccRecovery;
+	//@FindBy(xpath=".//*[@id='accountRecoveryContinue']") private WebElement btnContinueAccRecovery;
+	@FindBy(xpath=".//*[@id='accountRecoveryForm']//button") private WebElement btnContinueAccRecovery;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
@@ -246,7 +247,7 @@ public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 	
 	public void helpResetMyPassword(String password,String reEnterPassword) {
 			
-			
+			Web.waitForElement(lnkNeedHelpWithPassword);
 			this.lnkNeedHelpWithPassword.click();
 			try {
 				Web.waitForElement(this.lblRecoverYourAccount);

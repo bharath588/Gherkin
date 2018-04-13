@@ -210,6 +210,16 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement inpEmailForm;
 	@FindBy(xpath = "//div[./input[@id='prefilled']]")
 	private WebElement txtEmailForm;
+	@FindBy(xpath = "//div[@class='principal-residence-requirement-container']/p[1]")
+	private WebElement txtPrincipalloanDisclaimer1;
+	@FindBy(xpath = "//div[@class='principal-residence-requirement-container']/p[2]")
+	private WebElement txtPrincipalloanDisclaimer2;
+	@FindBy(xpath = "//div[@class='principal-residence-requirement-container']//li//span")
+	private WebElement txtPrincipalloanDisclaimer3;
+	@FindBy(xpath = "//div[./strong[contains(text(),'Request form received')]]/following-sibling::div")
+	private WebElement txtBeingReviewed;
+	
+	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
 
 	private String strmaxloan = "//span[contains(@ng-if,'LoanTypeLoans')]//li";
@@ -2011,7 +2021,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 	/**
 	 * <pre>
-	 * Method to Verify Loan Request Received Section Confirmation Page
+	 * Method to Verify Loan Request Received Section in Confirmation Page for General Purpose Loan
 	 *
 	 * </pre>
 	 * 
@@ -2466,4 +2476,117 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyLoanAmountInConfirmationPage();
 		return confirmationNo;
 	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Loans Disclaimer
+	 *
+	 * </pre>
+	 */
+	public void verifyPrincipalResidenceLoanDisclaimer() throws SQLException {
+
+		if (txtPrincipalloanDisclaimer1.getText().toString().trim()
+				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer1")))
+			Reporter.logEvent(Status.PASS,
+					"Verify Principal Residence Loans Diclaimer is displayed",
+					" Principal Residence Loans Diclaimer is displayed"
+							+ txtPrincipalloanDisclaimer1.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Principal Residence Loans Diclaimer is displayed",
+					" Principal Residence Loans Diclaimer is not matching \nExpected:"
+							+ Stock.GetParameterValue("Disclaimer1")
+							+ "\nActual:"
+							+ txtPrincipalloanDisclaimer2.getText().toString().trim(),
+					true);
+
+		if (txtPrincipalloanDisclaimer2.getText().toString().trim()
+				.equals(Stock.GetParameterValue("PrincipalResidenceDisclaimer2")))
+			Reporter.logEvent(Status.PASS,
+					"Verify Principal Residence Loans Diclaimer is displayed",
+					" Principal Residence Loans Diclaimer is displayed"
+							+ txtPrincipalloanDisclaimer2.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Principal Residence Loans Diclaimer is displayed",
+					" Principal Residence Loans Diclaimer is not matching \nExpected:"
+							+ Stock.GetParameterValue("Disclaimer2")
+							+ "\nActual:"
+							+ txtPrincipalloanDisclaimer2.getText().toString().trim(),
+					true);
+
+		if (txtPrincipalloanDisclaimer3.getText().toString().trim()
+				.equals("Purchase agreement"))
+			Reporter.logEvent(Status.PASS,
+					"Verify Purchase agreement text is displayed",
+					" Purchase agreement text is displayed"
+							+ txtPrincipalloanDisclaimer3.getText().toString().trim(),
+					false);
+
+		else
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify Purchase agreement text is displayed",
+					" Purchase agreement text is displayed"
+							+ txtPrincipalloanDisclaimer3.getText().toString().trim(),
+					true);
+		verifyContinueButtonIsEnabled(true);
+		verifyBackButtonIsEnabled(true);
+
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Loan Request Received Section in Confirmation Page for Principal Residence Loan
+	 *
+	 * </pre>
+	 * 
+	 * @throws Exception
+	 *
+	 */
+	public String  verifyPrincipalResidenceLoanRequestRecievedSectionForRegularMail()
+			throws Exception {
+		isTextFieldDisplayed("Print, sign, and return the pre-filled form that will be emailed to you at the end of this process.");
+		isTextFieldDisplayed("Request form received");
+		isTextFieldDisplayed("Form review complete");
+		isTextFieldDisplayed("Check sent by Regular mail");
+		String confirmationtext = txtConfirmationNumber.getText().toString()
+				.trim();
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
+		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
+		String expectedDate = Common.getCurrentDate("M/d/yyyy");
+		if (date.equalsIgnoreCase(expectedDate)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Loan Submittion Date is Current date",
+					"'Loan Submittion Date is Same\nDate: " + expectedDate,
+					false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Loan Submittion Date is Current date",
+					"'Loan Submittion Date is not Same\nExpected Date:"
+							+ expectedDate + "\nActual Date:" + date, true);
+		}
+
+		
+		isTextFieldDisplayed("Typically 2 business days");
+		isTextFieldDisplayed("Delivery up to 5 business days");
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		verifyLoanTermInConfirmationPage();
+		verifyInterestRateInConfirmationPage();
+		verifyCheckAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPage();
+		return confirmationNo;
+	}
+
+
 }

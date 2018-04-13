@@ -9402,10 +9402,10 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			       }
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
-	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+	           if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+	        	   Web.clickOnElement(investment, "Button Close And Continue");
+	           else if(Web.isWebEementEnabled(investment, "Button Refresh",true))
 		           Web.clickOnElement(investment, "Button Refresh");
-		         else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
-		        	   Web.clickOnElement(investment, "Button Close And Continue");//cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
 	           Web.waitForPageToLoad(Web.getDriver());
 	           Common.waitForProgressBar();
@@ -9496,23 +9496,23 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    		   Web.clickOnElement(investment, "Button Accept");
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(5000);
-			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
+			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
-									"Verify 'Advice & Guidance Page'opened in New Window",
-									"'Advice & Guidance Page' opened in New Window", true);
+									"Verify 'Advisory Services Page'opened in New Window",
+									"'Advisory Services Page' opened in New Window", true);
 						}
 						else{
 							Reporter.logEvent(Status.FAIL,
-									"Verify 'Advice & Guidance Page'opened in New Window ",
-									"'Advice & Guidance Page' is not opened in New Window ", true);
+									"Verify 'Advisory Services Page'opened in New Window ",
+									"'Advisory Services Page' is not opened in New Window ", true);
 						}
 			     
 			    }
 			       }
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow);
-	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+	           if(Web.isWebElementDisplayed(investment, "Button Refresh",true))
 		           Web.clickOnElement(investment, "Button Refresh");
 		           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
 		        	   Web.clickOnElement(investment, "Button Close And Continue");//cntrl to parent window
@@ -9606,10 +9606,11 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
 	           Web.getDriver().switchTo().defaultContent();
-	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
-	           Web.clickOnElement(investment, "Button Refresh");
-	           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
+	           
+	           if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
 	        	   Web.clickOnElement(investment, "Button Close And Continue");
+	           else if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+		           Web.clickOnElement(investment, "Button Refresh");
 	           Web.waitForPageToLoad(Web.getDriver());
 	           Common.waitForProgressBar();
 	        
@@ -9683,17 +9684,17 @@ if(!Web.isWebElementDisplayed(investment, "Expand Sources", true)){
 			    		   Web.clickOnElement(investment, "Button Accept");
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(5000);
-			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advice & Guidance")){
-			    	  
-			    		  Reporter.logEvent(Status.PASS,
-									"Verify 'Advice & Guidance Page'opened in New Window",
-									"'Advice & Guidance Page' opened in New Window", true);
-						}
-						else{
-							Reporter.logEvent(Status.FAIL,
-									"Verify 'Advice & Guidance Page'opened in New Window ",
-									"'Advice & Guidance Page' is not opened in New Window ", true);
-						}
+			    	   if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
+					    	  
+				    		  Reporter.logEvent(Status.PASS,
+										"Verify 'Advisory Services Page'opened in New Window",
+										"'Advisory Services Page' opened in New Window", true);
+							}
+							else{
+								Reporter.logEvent(Status.FAIL,
+										"Verify 'Advisory Services Page'opened in New Window ",
+										"'Advisory Services Page' is not opened in New Window ", true);
+							}
 			     
 			    }
 			       }

@@ -44,7 +44,8 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//form/.//a[text()[normalize-space()='Already have a code?']][1]") private WebElement lnkAlreadyHaveCodeFogotPsw;
 	@FindBy(xpath=".//form/.//a[text()[normalize-space()='Already have a code?']][2]") private WebElement lnkAlreadyHaveCodeMFA;
 	@FindBy(id="submit") private WebElement btnContinue;
-	@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinueFogotPsw;
+	//@FindBy(xpath=".//*[@id='submit' and @value='Continue']") private WebElement btnContinueFogotPsw;
+	@FindBy(xpath="//button[@id='signin'][./span[contains(text(),'Continue')]]") private WebElement btnContinueFogotPsw;
 	@FindBy(id="deliveryOptionsContinue") private WebElement btnSendMeACode;
 	@FindBy(id="verification_codeInput") private WebElement txtCodeInput;
 	@FindBy(id="remember_deviceInput") private WebElement chkRememberDevice;

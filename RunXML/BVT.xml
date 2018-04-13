@@ -4,28 +4,76 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Investments">
+	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
+	<test name="Fee RRR Suite">
 		<classes>
- 	<class	name="app.pptweb.testcases.investments.Investmentstestcases">
-                <methods>
-                   
-					  <include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice"></parameter>
-                    </include>
-                    <include name="DDTC_30104_FE_DIM_Access_Online_Advice">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice"></parameter>
-                    </include>
-                    <include name="DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice"></parameter>
-                    </include>
-                    <include name="DDTC_30107_FE_Guidance_DIM_Access_Online_Advice">
-                    <parameter  name="ManualTCName" value="SIT_DDTC_30107_FE_Guidance_DIM_Access_Online_Advice"></parameter>
-                    </include>
-                    
-                </methods>
-            </class>  
-       
+			<class name="app.planexpress.testcases.feerrr.Validate_FEE_RRR">
+				<methods>
+					 <include name="Validate_Global_Payee_TaxID">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_2895/10_Global_Payee_Tax_ID_Blank_Null_Value"></parameter>
+					</include>
+					 <include name="Validate_DealerAssinedPlanNum_PI">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_2600_Plan_Information_Dealer_assigned_shell_plan_number_Stored_in_EXTR_EASY_Form"></parameter>
+					</include> 
+					<include name="Verify_BrokerDealerPageLocation">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_Move_the_Broker/Dealer_IPS_page_to_location_1100"></parameter>
+					</include>
+					<include name="Verify_DealerTaxID_BrkDlrPage">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_Broker_Dealer_Page_New_field_Dealer_TAX_ID"></parameter>
+					</include> 
+					<include name="Verify_Page2610_replaced_with_2850">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_Move_2850:_General_Plan_Services_Page_5_Advisor_Payment_above_the_Create_Draft_Financial_Professional_Kit_to_2610"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2615">
+						<parameter name="ManualTCName" value="PE_UI_2615_Plan_Information_Page_3_Advisor_Payment_Rate"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2865">
+						<parameter name="ManualTCName" value="PE_UI_2865_General_Plan_Services_Page_6_TPA_Payment_Rate"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2620">
+						<parameter name="ManualTCName" value="PE_UI_2620_Plan_Information_Page_4_Recurring_Advisory_Fees"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2880">
+						<parameter name="ManualTCName" value="PE_UI_2880_General_Plan_Services_Page_8_Payment_Source"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2890">
+						<parameter name="ManualTCName" value="PE_UI_2890_General_Plan_Services_Page_9_Payment_Method"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2630">
+						<parameter name="ManualTCName" value="PE_UI_2630_Plan_Information_Page_3_Global_Payee"></parameter>
+					</include>
+					<include name="Verify_UIchanges_For_2895">
+						<parameter name="ManualTCName" value="PE_UI_2895_General_Plan_Services_Page_10_Tax_ID"></parameter>
+					</include>  
+					<include name="Verify_basispoint_R2E">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R2E_2610_Advisor_recapture_Plan_Recurring_advisory_fees_Deducted_from_participant_accounts_Payment_Method_Basis_Points"></parameter>
+					</include> 
+					 <include name="Verify_basispoint_R2">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R2_2610_Advisor_recapture_Plan_Recurring_advisory_fees_Deducted_from_participant_accounts_Payment_Method_Dollar_Amount_For_recovery_method_as_Flat_dollar_fee_per_capita"></parameter>
+					</include> 
+					<include name="Verify_basispoint_R3">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R3_2610_Advisor_recapture_Plan_Recurring_advisory_fees_Paid_by_employer"></parameter>
+					</include> 
+					<include name="Verify_basispoint_R5">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R5_Recurring_advisory_fees_Deducted_from_plan_account_Payment_Method_Basis_Points"></parameter>
+					</include> 
+					<include name="Verify_basispoint_R5E">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R5E_Recurring_advisory_fees_Deducted_from_participant_accounts_Payment_Method_Dollar_Amount_For_recovery_method_as_Flat_dollar_fee_per_capita"></parameter>
+					</include> 
+					<include name="Verify_basispoint_R6">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_R6_Recurring_advisory_fees_Paid_by_employer"></parameter>
+					</include> 
+					<include name="Validate_PageSeqNo_QID_2615">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_2615_Plan_Information_Page_3_Advisor_Payment_Rate"></parameter>
+					</include> 
+					<include name="Validate_PageSeqNo_QID_2865">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_2865_General_Plan_Services_Page_6_TPA_Payment_Rate"></parameter>
+					</include> 
+					<include name="Validate_PageSeqNo_QID_2620">
+						<parameter name="ManualTCName" value="PE_Fee_RRR_Questionnaire_2620_Plan_Information_Page_4_Recurring_Advisory_Fees"></parameter>
+					</include> 
+				</methods>
+			</class>
 		</classes>
 	</test>
-
 </suite>

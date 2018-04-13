@@ -4581,19 +4581,26 @@ public class LoansTestCases {
 			
 
 			/**
-			 * Step 10 - Select 'Request a General purpose loan' button PPT is
-			 * navigated to General purpose loan page/ How much would you like
-			 * to borrow page with the max and min amount balance for General
-			 * purpose loan and a 'Enter amount' text box to enter valid amt
-			 * values with a 'Continue' and 'Back' buttons 'How is this
-			 * calculated?' link displaying the calculation in the hover help
-			 * from design team
+			 * Step 10 - Select 'Request a primary residence loan' button
+			 * PPT is navigated to Primary Residence loan requirements with the following 
+			 * This type of loan is only for purchasing or building your principal residence; not renovating
+			 * or refinancing your current home.
+			 * At the end of this process, a pre-filled form will be emailed to you. 
+			 * You must sign and return to us at the address provided, with the following documentation,
+			 *  to complete this loan request.
+			 *  and with billeted documents and 
+			 *  the following verbiage at the bottom of the page
+			 *  I certify this request is for my principal residence and will 
+			 *  provide documentation upon request as
+			 *  detailed in the loan policy.
+			 *  with 'continue' and 'back' buttons
 			 */
 			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
 			requestLoan
-					.isTextFieldDisplayed("How much would you like to borrow?");
-			requestLoan.verifyLoanMinimumIsDisplayed();
-			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
+					.isTextFieldDisplayed("Principal residence loan requirements");
+			requestLoan.verifyPrincipalResidenceLoanDisclaimer();
+			requestLoan.clickContinueButton();
+			
 
 			/**
 			 * Step 11 - Enter amount in entry box Validate only proper values
@@ -4602,42 +4609,47 @@ public class LoansTestCases {
 			 * else display the min,max amt error in red text if the criteria is
 			 * not met.
 			 */
+			requestLoan.verifyLoanMinimumIsDisplayed();
+			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
 			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));
-			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
-			requestLoan.verifyWebElementIsDisplayed("BUTTON BACK");
+			
 			requestLoan
 					.verifyWebElementIsDisplayed("Link How Is This Calculated");
-
-			/**
-			 * Step 12 - Hit 'Continue' button Validate that Repayment Term
-			 * options section should be displayed below the 'How much would you
-			 * like to borrow' section
-			 */
-
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
-			Web.waitForElement(requestLoan, "Repayment Term Table");
-			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
 
 			/**
-			 * Step 13 - Opt for a desired REPAYMENT TERM by selecting the radio
-			 * button Verbiage should be
-			 * "Select from a repayment term option below or enter your own term"
+			 * Step 12 - Select the repayment radio button
+			 * Upon repayment term selection the delivery section and loan summary
+			 *  section was displayed with contents in a tabular format.
 			 */
 
+		
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
+			requestLoan.verifyDefaultRepamentTerm();
+
+			
 			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
 			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
 			requestLoan
 					.isTextFieldDisplayed("How would you like your funds delivered?");
 			requestLoan.isTextFieldDisplayed("My loan summary");
+			requestLoan.isTextFieldDisplayed("INTEREST RATE");
+			requestLoan.isTextFieldDisplayed("FEES*");
+			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
+			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyLoanTotalAmount();
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
 			
-
 			/**
-			 * Step 14 - Click on 'Continue' button Confirm Information page
-			 * should be displayed
+			 * Step 13 - Verify the loan summary values, choose delivery radio button and click on continue button
+			 * The address page was displayed with a header "Please confirm your address"
 			 */
+
+			requestLoan.verifyRegularMailSelectedAsDefault();
+
 			requestLoan.clickContinueButton();
 
 			requestLoan
@@ -4645,24 +4657,59 @@ public class LoansTestCases {
 
 			requestLoan
 					.isTextFieldDisplayed("Sign up for updates on your loan process");
+			
+			
+
 			/**
-			 * Step 15 -In 'Confirm Information' page, verify the email address,
-			 * phone number and click 'Continue' button In 'Confirm Information'
-			 * page, verify the email address, phone number and click 'Continue'
-			 * button
+			 * Step 14 - Verify the contact information/pls confirm your address page and click on continue.
+			 * Loan summary page was displayed
+			 * 
 			 */
+			requestLoan
+			.isTextFieldDisplayed("Sign up for updates on your loan process");
 			requestLoan.verifyWebElementIsDisplayed("EmailId Input Field");
 			requestLoan.verifyWebElementIsDisplayed("Phone No Input Field");
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
-
+			
 			/**
-			 * Step 16 - Verify the Loan Summary page and click on 'I agree &
-			 * Submit' page User should be displayed with the Confirmation page
+			 * Step 15 -Verify Loan summary page with all the correct information/ values selected in all the previous
+			 *  pages with loan provision link and click on "I agree & submit" buttons
+			 *  Loan request received'/ confirmation page was displayed with all the steps in progress as below:
+			 *  1. Print, sign and return the pre-filled form that will be emailed you at the end of the process
+			 *  2. Request form received
+			 *  3. Form Review Complete
+			 *  4. Check sent by expedited mail
 			 */
-
+			
+			requestLoan.isTextFieldDisplayed("Loan Details");
+			requestLoan.isTextFieldDisplayed("PLAN:");
+			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
+			requestLoan.isTextFieldDisplayed("TERM:");
+			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
+			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
+			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
+			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
+			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
+			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
+			requestLoan
+					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
+			requestLoan.isTextFieldDisplayed("Payment Information");
+			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
+			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
+			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
+			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
+			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
+			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
+			requestLoan.isTextFieldDisplayed("Fees and Taxes");
+			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
+			requestLoan.isTextFieldDisplayed("Delivery Information");
+			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
+			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
+			requestLoan.isTextFieldDisplayed("Loan Provisions");
+		
 			if (Web.isWebElementDisplayed(requestLoan, "I AGREE AND SUBMIT",
 					true)) {
 				Reporter.logEvent(Status.PASS,
@@ -4673,34 +4720,25 @@ public class LoansTestCases {
 						"Verify 'I Agree and Submit' Button is Displayed",
 						"'I Agree and Submit' Button is Not Displayed", true);
 			}
-
 			requestLoan.clickOnIAgreeAndSubmit();
 			Common.waitForProgressBar();
 			requestLoan.verifyPageHeaderIsDisplayed("Loan Confirmation");
-			/**
-			 * Step 17 - Verify the page sections It should have 'Loan request
-			 * received' and 'Confirmation' sections
-			 */
 			requestLoan.isTextFieldDisplayed("Loan request received");
 			requestLoan.isTextFieldDisplayed("Loan Details");
-
 			/**
-			 * Step 18 - Verify the disclaimer message below the 'Loan request
-			 * received' section It should be 'Your loan request has been
-			 * received is being processed. Depending on your preference, you
-			 * will receive an email and/or text with your loan's status.
-			 * 
+			 * Step 16 - Verify the 1) 'Print, sign and return the pre-filled form that will 
+			 * be emailed you at the end of the process' section timestamp
+			 * Conf no. should be displayed 
+			 * timestamp format is displayed as MM/DD/YYYY
 			 */
 
 			requestLoan.verifyLoanConfirmationDisclaimer();
-
+		
+			
 			/**
-			 * Step 19 to 26 - Verify the information under the 'Loan request
-			 * received' section It should have below information: 1 Loan
-			 * request received 2 Approval from your employer 3. Processing 4.
-			 * Check sent by <selected delivery option>
+			 * Step 17 - 24
 			 * 
-			 */
+			 */ 
 			requestLoan.verifyLoanRequestRecievedSectionForRegularMail();
 
 			/**

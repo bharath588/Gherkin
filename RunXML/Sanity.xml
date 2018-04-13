@@ -19,7 +19,7 @@
                     </parameter>
                     </include>
                
-                    <include name="Registration_MFA_OFF_5Point_registration">
+                   <!--  <include name="Registration_MFA_OFF_5Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Idonthavepin">
 					</parameter>
                     </include>
@@ -27,7 +27,7 @@
 					<include name="Registration_MFA_OFF_2Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin">
 					</parameter>
-                    </include>
+                    </include> -->
                 
                     <include name="ForgotPasswordFlow_SendActivationCode_Activation_Code_Email">
                      <parameter name="ManualTCName" value="SIT_xPPTWEB_Sanity_Login_03_04_TC02_Send Activation Code by Email">
@@ -79,7 +79,31 @@
                     </include>
              </methods>
          </class>
-   
+         
+   <class name="app.pptweb.testcases.login.registrationtestcases">
+                <methods>
+                  <include name="SF01_TC01_User_has_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
+                    </include>
+               
+                    <include name="SF01_TC02_User_does_not_have_PIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC002_UI_Validation_User_does_not_have_PIN"></parameter>
+                    </include>
+               
+                   
+                    <include name="AccountLookup_PositiveFlow_WithOutPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC001_Functionality_Without_PIN__Positive_flow"></parameter>
+                    </include>
+               
+                    <include name="AccountLookup_PositiveFlow_WithPIN">
+                    <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
+                    </include> 
+                                 			
+                    <include name="NPDI_013_Register_a_participant_End_to_End_flow">
+					<parameter name="ManualTCName" value="NPDI_013 Register a participant  End to End flow"></parameter>
+                    </include>
+				</methods>
+			</class> 
 			 <class name="app.pptweb.testcases.prodvalidations.prodvalidationtestcases">
 			
 				<methods>
