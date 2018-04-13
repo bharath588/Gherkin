@@ -234,7 +234,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public static String setURL(String accucode) {
 		LoginPage.accucode = accucode;
-		String cleintURL = Stock.getConfigParam("AppURLPSC");
+		String cleintURL = Stock.getConfigParam("AppURL"+"_"+Stock.getConfigParam("TEST_ENV"));
 		System.out.println("client URL is:" + cleintURL);
 		System.out.println("Accucode is :" + LoginPage.accucode);
 		URL = cleintURL.replace("accucode", accucode);
