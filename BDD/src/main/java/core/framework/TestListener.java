@@ -1,5 +1,6 @@
 package core.framework;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -7,9 +8,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import lib.Log;
+import lib.Log.Level;
 import lib.Stock;
 import lib.Web;
 
+import org.apache.commons.io.FileUtils;
 import org.testng.IAnnotationTransformer;
 import org.testng.IConfigurationListener2;
 import org.testng.IInvokedMethod;
@@ -26,23 +30,18 @@ import org.testng.annotations.ITestAnnotation;
 import reporter.Reporter;
 import core.framework.ThrowException.TYPE;
 
-
-
 public class TestListener implements ITestListener, IConfigurationListener2,
-ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
-IAnnotationTransformer {
+		ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
+		IAnnotationTransformer {
 
 	int currentTCInvocationCount = 0;
 	static int suiteInvCount = 0;
-	private static Map<Long,Boolean> finalTestStatusMap = new LinkedHashMap<>();
+	private static Map<Long, Boolean> finalTestStatusMap = new LinkedHashMap<>();
 	public static Map<Long, String> browserMap = new LinkedHashMap<>();
 	public static Map<Long, String> portMap = new LinkedHashMap<>();
 	public Map<Integer, Map<String, String>> failedXmlMap = new LinkedHashMap<>();
 	static int i = 0;
 	static Map<String, Map<String, String>> gridPropertiesMap;
-
-
-
 
 	private boolean isFinalTestStatus() {
 		return finalTestStatusMap.get(Thread.currentThread().getId());
@@ -51,11 +50,46 @@ IAnnotationTransformer {
 	public static void setFinalTestStatus(boolean testStatus) {
 		finalTestStatusMap.put(Thread.currentThread().getId(), testStatus);
 	}
+
 	public void onStart(ISuite suite) {
-		Stock.readConfigProperty("testexecutionconfig.properties");
-		Web.getWebDriver(Stock.getConfigParam("BROWSER"));
-		Web.getDriver().manage().window().maximize();
-		//Web.getDriver().get(Stock.getConfigParam("AppURL"));			
+		try {
+			Stock.readConfigProperty("testexecutionconfig.properties");
+			if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
+				Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV,
+						Globals.GC_EXECUTION_ENVIRONMENT, true);
+			}
+			if (!Globals.GC_EXECUTION_BROWSER.isEmpty()) {
+				Stock.setConfigParam(Globals.GC_COLNAME_BROWSER,
+						Globals.GC_EXECUTION_BROWSER, true);
+			}
+			if (!Globals.GC_CAPTURE_SCREENSHOT.isEmpty()) {
+				Stock.setConfigParam(Globals.GC_COLNAME_CAPTURESCREENSHOT,
+						Globals.GC_CAPTURE_SCREENSHOT, true);
+
+			}
+			if (new File(Globals.GC_TEST_REPORT_DIR).exists()) {
+
+				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
+
+				System.out.println("Deleted report folder from directory : "
+
+				+ new File(Globals.GC_TEST_REPORT_DIR)
+
+				.getAbsolutePath());
+
+				Log.Report(Level.INFO,
+
+				"Test Report folder removed on exist on suite level");
+
+			}
+			/*
+			 * Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+			 * Web.getDriver().manage().window().maximize();
+			 */
+			// Web.getDriver().get(Stock.getConfigParam("AppURL"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void generateTestcaseReferenceMap(ISuite suite) {
@@ -64,14 +98,12 @@ IAnnotationTransformer {
 
 	public void onStart(ITestContext test) {
 		try {
-			//Reporter.initializeReportForTC(1, test.getName());
+			// Reporter.initializeReportForTC(1, test.getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-
 
 	public void onTestStart(ITestResult result) {
 	}
@@ -121,20 +153,19 @@ IAnnotationTransformer {
 
 	public void beforeConfiguration(ITestResult result) {
 
-		/*if(result.getMethod().isBeforeClassConfiguration())
-		{
-			Reporter.initializeModule("Login Test");
-		}*/
+		/*
+		 * if(result.getMethod().isBeforeClassConfiguration()) {
+		 * Reporter.initializeModule("Login Test"); }
+		 */
 	}
 
 	public void onFinish(ISuite suite) {
-		try{
+		try {
 			Reporter.objReport.flush();
 
 			if (Web.getDriver().getWindowHandles().size() >= 0)
 				Web.getDriver().quit();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Failed to quit Web Driver :"
 					+ e.getMessage());
 		}
@@ -142,24 +173,40 @@ IAnnotationTransformer {
 
 	// This belongs to IInvokedMethodListener and will execute before every
 	// method including @Before @After @Test
-	@SuppressWarnings("unchecked")
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		//	System.out.println("hi");
-		/*try {
-
+		try {
 			if (!Web.getDriver().getWindowHandle().isEmpty()) {
 				Log.Report(Level.INFO,
-						"Web Driver instance fou      nd to be active for the Test Case :"
-								);
+						"Web Driver instance found to be active for the Test Case :");
 			}
-		} catch (Exception t) {
+
+		} catch (Exception eo) {
 			try {
-
-
-			} catch (Exception e) {
-				throw new WebDriverException("unable to start browser");
+				Log.Report(Level.INFO,
+						"Web Driver instance found to be inactive for the Test Case :"
+								+ " ,hence re-initiating");
+				Web.getWebDriver(Stock.getConfigParam("BROWSER"));
+				
+			} catch (Exception ei) {
+				ThrowException.Report(
+						TYPE.EXCEPTION,
+						"Failed to re-initialize Web Driver :"
+								+ ei.getMessage());
 			}
-		}*/
+		}
+		// System.out.println("hi");
+		/*
+		 * try {
+		 * 
+		 * if (!Web.getDriver().getWindowHandle().isEmpty()) {
+		 * Log.Report(Level.INFO,
+		 * "Web Driver instance fou      nd to be active for the Test Case :" );
+		 * } } catch (Exception t) { try {
+		 * 
+		 * 
+		 * } catch (Exception e) { throw new
+		 * WebDriverException("unable to start browser"); } }
+		 */
 
 	}
 
@@ -172,7 +219,7 @@ IAnnotationTransformer {
 			}
 			if (suiteInvCount == 0) {
 				if (testResult.getStatus() == testResult.FAILURE) {
-					//Reporter.testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL,testResult.getThrowable());
+					// Reporter.testCaseMap.get(Thread.currentThread().getId()).log(Status.FAIL,testResult.getThrowable());
 					final String className = testResult.getTestClass()
 							.getName();
 					final String methodName = method.getTestMethod()
@@ -201,7 +248,5 @@ IAnnotationTransformer {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 
 }
