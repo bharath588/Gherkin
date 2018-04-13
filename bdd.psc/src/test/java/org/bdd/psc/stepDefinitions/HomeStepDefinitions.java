@@ -35,7 +35,6 @@ import cucumber.api.java.en.When;
 public class HomeStepDefinitions {
 	public static String featureName = null;
 	public static Scenario scenario = null;
-	public static String planNumber;
 
 	LoginPage login;
 	UserVerificationPage userVerPage;
@@ -87,7 +86,7 @@ public class HomeStepDefinitions {
 	@When("^user switches to \"([^\"]*)\"$")
 	public void user_switches_to(String planNumber) throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		HomeStepDefinitions.planNumber = planNumber;
+		Globals.planNumber = planNumber;
 		homePage = new HomePage();
 		homePage.switchPlan(planNumber);
 	}

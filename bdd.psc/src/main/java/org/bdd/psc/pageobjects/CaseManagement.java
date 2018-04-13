@@ -15,7 +15,6 @@ import lib.CommonLib;
 import lib.Web;
 import lib.XL_ReadWrite;
 
-import org.bdd.psc.stepDefinitions.HomeStepDefinitions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -118,7 +117,7 @@ public class CaseManagement extends LoadableComponent<CaseManagement> {
 
 	public String[] getCaseHistoryColNames(){
 		try{
-			String fileName = "Case_history_"+HomeStepDefinitions.planNumber+".xls";
+			String fileName = "Case_history_"+Globals.planNumber+".xls";
 			xlUtil = new XL_ReadWrite("H:\\Downloads\\"+fileName);
 			return xlUtil.getColNames("Case_history");
 		}
