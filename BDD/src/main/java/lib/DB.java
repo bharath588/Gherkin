@@ -18,7 +18,6 @@ import java.util.Locale;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
 
-import oracle.jdbc.pool.OracleDataSource;
 //import com.sun.rowset.FilteredRowSetImpl;
 import core.framework.Globals;
 /**

@@ -92,10 +92,6 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		}
 	}
 
-	private void generateTestcaseReferenceMap(ISuite suite) {
-
-	}
-
 	public void onStart(ITestContext test) {
 		try {
 			// Reporter.initializeReportForTC(1, test.getName());
