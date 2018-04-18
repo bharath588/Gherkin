@@ -41,14 +41,13 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	private WebElement lblSponser;
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
-	private String lnkRequestLoan="//a[text()[normalize-space()='Request a loan']]";
-	private String lnkBrokerage="//a[text()[normalize-space()='Brokerage']]";
+	private String lnkRequestLoan = "//a[text()[normalize-space()='Request a loan']]";
+	private String lnkBrokerage = "//a[text()[normalize-space()='Brokerage']]";
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
 	@FindBy(xpath = "//span[@class='plan']//a")
 	private List<WebElement> lstlnkPlanName;
-	private String lnkStatementDocument="//a[text()[normalize-space()='Statements and documents']]";
-	
+	private String lnkStatementDocument = "//a[text()[normalize-space()='Statements and documents']]";
 
 	/**
 	 * Empty args constructor
@@ -78,7 +77,8 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			e.printStackTrace();
 		}
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),"Left Navigation Bar is Not Loaded");
+		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),
+				"Left Navigation Bar is Not Loaded");
 
 	}
 
@@ -87,42 +87,41 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// boolean paramFlag = false;
 
 		this.parent.get();
-		//((LandingPage) this.parent).dismissPopUps(true, true);
+		// ((LandingPage) this.parent).dismissPopUps(true, true);
 		// if(new
 		// LandingPage().getNoOfPlansFromDB(lib.Stock.GetParameterValue("Particicpant_ssn"))<=2){
 		// System.out.println("inside");
-		 ((LandingPage) this.parent).dismissPopUps(true,true);
+		((LandingPage) this.parent).dismissPopUps(true, true);
 		try {
-			if(!Web.isWebElementDisplayed(weLeftNavSection)){
-				if(Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS")){
+			if (!Web.isWebElementDisplayed(weLeftNavSection)) {
+				if (Web.isWebElementDisplayed(new LandingPage(), "MY ACCOUNTS")) {
 					Web.clickOnElement(new LandingPage(), "MY ACCOUNTS");
 					Common.waitForProgressBar();
-					if(Web.isWebElementsDisplayed(lstlnkPlanName)){
-						try{
-							if(!(Stock.GetParameterValue("ga_PlanId")==null)||!Stock.GetParameterValue("ga_PlanId").isEmpty())
-					
-						(new MyAccountsPage()).clickPlanNameByGAID(Stock.GetParameterValue("ga_PlanId"));
-						}
-						catch(Error e)
-						{
+					if (Web.isWebElementsDisplayed(lstlnkPlanName)) {
+						try {
+							if (!(Stock.GetParameterValue("ga_PlanId") == null)
+									|| !Stock.GetParameterValue("ga_PlanId")
+											.isEmpty())
+
+								(new MyAccountsPage())
+										.clickPlanNameByGAID(Stock
+												.GetParameterValue("ga_PlanId"));
+						} catch (Error e) {
 							Web.clickOnElement(lstlnkPlanName.get(0));
 						}
 					}
 				}
-			
-				
-			else{
-				if(Web.isWebElementsDisplayed(lstlnkPlanName))
-				Web.clickOnElement(lstlnkPlanName.get(0));
-				
-				
+
+				else {
+					if (Web.isWebElementsDisplayed(lstlnkPlanName))
+						Web.clickOnElement(lstlnkPlanName.get(0));
+
+				}
 			}
-			}
-			
-				Common.waitForProgressBar();
-				Web.waitForPageToLoad(Web.getDriver());
-			
-		
+
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,7 +150,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-		
+
 	}
 
 	@SuppressWarnings("unused")
@@ -174,12 +173,12 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	 *            - Link name as it is displayed on the page
 	 * @return boolean - <b>true</b> if link is successfully found and clicked.
 	 *         <b>false</b> otherwise.
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
-	public boolean clickNavigationLink(String linkName)  {
+	public boolean clickNavigationLink(String linkName) {
 		boolean success = false;
 		Actions mouse = new Actions(Web.getDriver());
-		  JavascriptExecutor executor = (JavascriptExecutor)Web.getDriver();
+		JavascriptExecutor executor = (JavascriptExecutor) Web.getDriver();
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
 			strLinkText = "Account Information";
 		} else if (linkName.trim().equalsIgnoreCase("PAYCHECK CONTRIBUTIONS")) {
@@ -195,107 +194,105 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
 			strLinkText = "Rate of return";
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
-			strLinkText=lnkRequestLoan;
+			strLinkText = lnkRequestLoan;
 		} else if (linkName.trim().equalsIgnoreCase("BROKERAGE")) {
-			strLinkText=lnkBrokerage;
+			strLinkText = lnkBrokerage;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
 		} else if (linkName.trim().equalsIgnoreCase("STATEMENTS AND DOCUMENTS")) {
 			strLinkText = lnkStatementDocument;
 		} else if (linkName.trim().equalsIgnoreCase("MY DISTRIBUTIONS")) {
-				strLinkText = "My distributions";
-				
-			}else {
+			strLinkText = "My distributions";
+
+		} else if (linkName.trim().equalsIgnoreCase("UPLOAD DOCUMENTS")) {
+			strLinkText = " Upload documents";
+
+		} else {
 			strLinkText = linkName.trim();
 		}
-		if(linkName.equalsIgnoreCase("REQUEST A LOAN")){
-			lnkLeftNavItem=By.xpath(strLinkText);
-			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
-			  executor.executeScript("arguments[0].click();", leftNavLink);
-			
+		if (linkName.equalsIgnoreCase("REQUEST A LOAN")) {
+			lnkLeftNavItem = By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection
+					.findElement(lnkLeftNavItem);
+			// mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			executor.executeScript("arguments[0].click();", leftNavLink);
+
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//mouse.release().build().perform();
-			
-		}
-		else if(linkName.equalsIgnoreCase("Brokerage")){
-			lnkLeftNavItem=By.xpath(strLinkText);
-			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
-			
-			  executor.executeScript("arguments[0].click();", leftNavLink);
+			// mouse.release().build().perform();
+
+		} else if (linkName.equalsIgnoreCase("Brokerage")) {
+			lnkLeftNavItem = By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection
+					.findElement(lnkLeftNavItem);
+			// mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+
+			executor.executeScript("arguments[0].click();", leftNavLink);
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//mouse.release().build().perform();
-			
-			
-		}
-		else if(linkName.equalsIgnoreCase("Statements and documents")){
-			lnkLeftNavItem=By.xpath(strLinkText);
-			WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-			//mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
-			  executor.executeScript("arguments[0].click();", leftNavLink);
+			// mouse.release().build().perform();
+
+		} else if (linkName.equalsIgnoreCase("Statements and documents")) {
+			lnkLeftNavItem = By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection
+					.findElement(lnkLeftNavItem);
+			// mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
+			executor.executeScript("arguments[0].click();", leftNavLink);
 			try {
 				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//mouse.release().build().perform();
-			
-			
-		}
-		else {
-		lnkLeftNavItem = By.linkText(strLinkText);
-		List<WebElement> leftNavLink = weLeftNavSection
-				.findElements(lnkLeftNavItem);
+			// mouse.release().build().perform();
 
-		if (leftNavLink.size() > 0) {
-		
+		} else {
+			lnkLeftNavItem = By.linkText(strLinkText);
+			List<WebElement> leftNavLink = weLeftNavSection
+					.findElements(lnkLeftNavItem);
 
-              executor.executeScript("arguments[0].click();", leftNavLink.get(0));
+			if (leftNavLink.size() > 0) {
 
-             // mouse.moveToElement(leftNavLink.get(0)).build().perform();
-			try {
-				Thread.sleep(2000);
-			} catch (Exception e) {
-				e.printStackTrace();
+				executor.executeScript("arguments[0].click();",
+						leftNavLink.get(0));
+
+				// mouse.moveToElement(leftNavLink.get(0)).build().perform();
+				try {
+					Thread.sleep(2000);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				// mouse.click().build().perform();
+				// leftNavLink.get(0).click();;
+				success = true;
+			} else {
+				Reporter.logEvent(Status.INFO,
+						"Click the specified link on left navigation bar", "'"
+								+ linkName + "' not found", false);
 			}
-		
-			//mouse.click().build().perform();
-			//leftNavLink.get(0).click();;
-			success = true;
-		} 
-		else {
-			Reporter.logEvent(Status.INFO,
-					"Click the specified link on left navigation bar", "'"
-							+ linkName + "' not found", false);
-		}
 		}
 
 		return success;
 	}
-	
-	
+
 	/**
 	 * Method to click on the specified link in Left navigation bar
 	 * 
 	 * @param linkName
 	 *            - Link name as it is displayed on the page
-	 * @return boolean - <b>true</b> if link is  found .
-	 *         <b>false</b> otherwise.
-	 * @throws InterruptedException 
+	 * @return boolean - <b>true</b> if link is found . <b>false</b> otherwise.
+	 * @throws InterruptedException
 	 */
-	public boolean isLeftNavigationLinkDisplayed(String linkName)  {
+	public boolean isLeftNavigationLinkDisplayed(String linkName) {
 		boolean success = false;
 		Actions mouse = new Actions(Web.getDriver());
 		if (linkName.trim().equalsIgnoreCase("ACCOUNT INFORMATION")) {
@@ -313,9 +310,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} else if (linkName.trim().equalsIgnoreCase("RATE OF RETURN")) {
 			strLinkText = "Rate of return";
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A LOAN")) {
-			strLinkText=lnkRequestLoan;
+			strLinkText = lnkRequestLoan;
 		} else if (linkName.trim().equalsIgnoreCase("BROKERAGE")) {
-			strLinkText=lnkBrokerage;
+			strLinkText = lnkBrokerage;
 		} else if (linkName.trim().equalsIgnoreCase("REQUEST A WITHDRAWAL")) {
 			strLinkText = "Request a withdrawal";
 		} else if (linkName.trim().equalsIgnoreCase("STATEMENTS AND DOCUMENTS")) {
@@ -325,18 +322,17 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = linkName.trim();
 		}
 		lnkLeftNavItem = By.linkText(strLinkText);
-		try{
-		WebElement leftNavLink = weLeftNavSection.findElement(lnkLeftNavItem);
-		
-        if(Web.isWebElementDisplayed(leftNavLink,true))
-			
-			success = true;
-		
-		}
-		catch(NoSuchElementException e){
+		try {
+			WebElement leftNavLink = weLeftNavSection
+					.findElement(lnkLeftNavItem);
+
+			if (Web.isWebElementDisplayed(leftNavLink, true))
+
+				success = true;
+
+		} catch (NoSuchElementException e) {
 			success = false;
 		}
-		
 
 		return success;
 	}
