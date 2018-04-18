@@ -51,7 +51,7 @@
 						</parameter>
 					</include>
 
-				<!-- 	<include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+					<include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice">
 						</parameter>
@@ -61,7 +61,7 @@
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice">
 						</parameter>
-					</include> -->
+					</include> 
 
 					
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
@@ -163,7 +163,7 @@
 							value="LIAT_Verify_Health_care_costs_helpful_links">
 						</parameter>
 					</include>
-
+				
 
 				</methods>
 			</class>
