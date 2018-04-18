@@ -57,11 +57,10 @@
 						</parameter>
 					</include>
 
-					<include name="DDTC_30104_FE_DIM_Access_Online_Advice">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_30104_FE_DIM_Access_Online_Advice">
-						</parameter>
-					</include> 
+					<include name="DDTC_30104_FE_DIM_Access_Online_Guidance">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Guidance">
+                    </parameter>
+                    </include>
 
 					
 					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
