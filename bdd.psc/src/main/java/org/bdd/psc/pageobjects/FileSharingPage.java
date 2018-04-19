@@ -4,6 +4,7 @@
 package org.bdd.psc.pageobjects;
 
 import gwgwebdriver.How;
+import gwgwebdriver.NextGenBy;
 import gwgwebdriver.NextGenWebDriver;
 import gwgwebdriver.pagefactory.NextGenPageFactory;
 
@@ -11,17 +12,35 @@ import gwgwebdriver.pagefactory.NextGenPageFactory;
 
 
 
+
+
+
+
+
+
+
+
+
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import lib.CommonLib;
 import lib.Web;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import annotations.FindBy;
 
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.aventstack.extentreports.Status;
@@ -45,20 +64,56 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	private WebElement fileSharingFrame;
 	@FindBy(how=How.XPATH,using=".//div[@class='breadcrumb']/i[contains(text(),'File Sharing']")
 	private WebElement fileSharingTag;
-	@FindBy(how=How.REPEATER,using="folder in fileShareRepo.folders",exact=true)
+	//@FindBy(how=How.REPEATER,using="folder in fileShareRepo.folders",exact=true)
+	//private List<WebElement> fileSharingFolders;
+	@FindBy(how=How.XPATH,using="//li[@ng-repeat='folder in fileShareRepo.folders']/div[1]")
 	private List<WebElement> fileSharingFolders;
 	@FindBy(how=How.REPEATER,using="subfolder in fileShareRepo.subfolders",exact=false)
 	private List<WebElement> subfolderInFolders;
 	@FindBy(how=How.REPEATER,using="document in fileShareRepo.view.filtered",exact=false)
 	private List<WebElement> documentsInSubfolder;
+	@FindBy(how=How.REPEATER,using="document in fileShareRepo.view.filtered",exact=false)
+	private List<WebElement> documentsInSubfolders;
 	@FindBy(how=How.ID,using="headercheckbox")
 	private WebElement headerCheckbox;
 	@FindBy(how=How.XPATH,using=".//*[@class='rowselector']")
 	private List<WebElement> allCheckBoxes;
 	@FindBy(how=How.XPATH,using=".//*[@ng-click='fileShareRepo.view.nextPage()']")
 	private WebElement nextPage;
+	@FindBy(how=How.XPATH,using=".//*[@ng-click='fileShareRepo.view.prevPage()']")
+	private WebElement previousPage;
 	@FindBy(how=How.XPATH,using="//button[@class='btn btn-default ng-binding']")
 	private List<WebElement> buttonRow;
+	@FindBy(how=How.XPATH,using="//div[@class='FidHeading pull-left ng-scope']/button[contains(text(),'Delete')]")
+	private WebElement deleteButton;
+	@FindBy(how=How.XPATH,using="//div[@class='FidHeading pull-left ng-scope']/button[contains(text(),'Move')]")
+	private WebElement moveButton;
+	@FindBy(how=How.XPATH,using="//h4[contains(text(),'Move file(s)')]")
+	private WebElement moveFileModalBox;
+	@FindBy(how=How.ID,using="deleteDocumentsLabel")
+	private WebElement deleteFileModalBox;
+	@FindBy(how=How.XPATH,using="//button[text()='Move file(s)']/following-sibling::button")
+	private WebElement cancelButtonOfMovefileModalBox;
+	@FindBy(how=How.BUTTON_TEXT,using="Move file(s)")
+	private WebElement moveButtonOfMovefileModalBox;
+	@FindBy(how=How.XPATH,using="//h4[text()='Move file(s)']/preceding-sibling::button")
+	private WebElement closeButtonOfMovefileModalBox;
+	@FindBy(how=How.XPATH,using="//button[text()='Delete file(s)']/following-sibling::button")
+	private WebElement cancelButtonOfDeletefileModalBox;
+	@FindBy(how=How.BUTTON_TEXT,using="Delete file(s)")
+	private WebElement deleteButtonOfDeletefileModalBox;
+	@FindBy(how=How.XPATH,using="//h4[@id='deleteDocumentsLabel']/preceding-sibling::button")
+	private WebElement closeButtonOfDeletefileModalBox;
+	@FindBy(how=How.MODEL,using="fileMoveModal.selectedFolder")
+	private WebElement parentFolderDropdownOfMoveModalBox;
+	@FindBy(how=How.MODEL,using="fileMoveModal.selectedSubfolder")
+	private WebElement subFolderDropdownOfMoveModalBox;
+	@FindBy(how=How.MODEL,using="fileMoveModal.confirmationCheck")
+	private WebElement requiredCheckboxInMoveModalBox;
+	
+	
+	private static final String folderRepeater = "folder in fileShareRepo.folders";
+	
 
 
 
@@ -128,13 +183,18 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	}
 
 	public void openFolder(String folderName){
+		System.out.println(fileSharingFolders.size());
 		if(fileSharingFolders.size()>0){
 			for(WebElement ele : fileSharingFolders){
-				if(ele.getText().equalsIgnoreCase(folderName)){
+				System.out.println(ele.getText().trim());
+				System.out.println(folderName.trim());
+				if(ele.getText().trim().equalsIgnoreCase(folderName.trim())){
 					Web.clickOnElement(ele);
 					Web.nextGenDriver.waitForAngular();
 					break;
+					
 				}
+				
 			}
 		}
 		else{
@@ -183,33 +243,74 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 		}		
 	}
 	
+	public void clickOnMoveFiles(){
+		if(Web.isWebElementDisplayed(moveButtonOfMovefileModalBox, true))
+			moveButtonOfMovefileModalBox.click();
+	}
+	
 	public int countOfAllCheckBox(){
 		return allCheckBoxes.size();
 	}
 	
+	public int countOfNonSelectedCheckbox(){
+		int i = 0;
+		if (Web.isWebElementsDisplayed(allCheckBoxes, true)) {
+			for (WebElement element : allCheckBoxes) {
+				if (!(element.isSelected()))
+					++i;
+			}
+		}
+		return i;
+	}
+	
+	public boolean isFileCountSameAsManyFileSelected() throws ParseException{
+		WebElement pElement=requiredCheckboxInMoveModalBox.findElement(By.xpath("parent::*"));
+		String text=pElement.getText();
+		int COUNT=((Number)NumberFormat.getInstance().parse(text)).intValue();
+		if(allCheckBoxes.size()-countOfNonSelectedCheckbox()==COUNT)
+			return true;
+		return false;
+	}
+	
+	
 	public void selectOneOrMoreNonHeaderRowCheckBox(int... n){
 		int i = 0;
 		int numberOfCheckboxToSelect = 0;
-		if (n.length == 0)
-			numberOfCheckboxToSelect = allCheckBoxes.size();
-		else
-			numberOfCheckboxToSelect = n.length;
-
 		if (Web.isWebElementsDisplayed(allCheckBoxes, true)) {
+			if (n.length == 0)
+				numberOfCheckboxToSelect = allCheckBoxes.size();
+			else{
+				//numberOfCheckboxToSelect = n.length;
+				numberOfCheckboxToSelect = n[0];
+			}
+
 			for (WebElement element : allCheckBoxes) {
-				element.click();
+				if (!(element.isSelected()))
+					element.click();
 				++i;
 				if (i == numberOfCheckboxToSelect)
 					break;
 			}
 		}
-		
+
 	}
-	public void deselectOneOrMoreNonHeaderRowCheckBox(){
+	public void deselectOneOrMoreNonHeaderRowCheckBox(int... n){
+		int i = 0;
+		int numberOfCheckboxToDeSelect = 0;
 			if(Web.isWebElementsDisplayed(allCheckBoxes, true)){
+				if (n.length == 0)
+					numberOfCheckboxToDeSelect = allCheckBoxes.size();
+				else{
+					//numberOfCheckboxToSelect = n.length;
+					numberOfCheckboxToDeSelect = n[0];
+				}
+				
 				for(WebElement element:allCheckBoxes){
 					if(element.isSelected())
 						element.click();
+					++i;
+					if (i == numberOfCheckboxToDeSelect)
+						break;
 				}
 			}
 		
@@ -262,6 +363,63 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 		}
 		return false;
 	}
+	
+	public void clickOnButton(String buttonName){
+		if(buttonName.trim().equalsIgnoreCase("Delete") || buttonName.trim().equalsIgnoreCase("Delete File(s)")){
+			if(Web.isWebElementDisplayed(deleteButton, true))
+				deleteButton.click();
+		}
+		else if(buttonName.trim().equalsIgnoreCase("Move") || buttonName.trim().equalsIgnoreCase("Move File(s)")){
+			if(Web.isWebElementDisplayed(moveButton, true))
+				moveButton.click();
+		}
+		else{
+			//click on download button
+		}
+	}
+	
+	public boolean isModalBoxPopupDisplayedOrNot(String popupName){
+		if(popupName.trim().equalsIgnoreCase("Delete File(s)")){
+			if(Web.isWebElementDisplayed(deleteFileModalBox, true))
+				return true;
+		}
+		else if(popupName.trim().equalsIgnoreCase("Move File(s)")){
+			if(Web.isWebElementDisplayed(moveFileModalBox, true))
+				return true;
+		}
+		else{
+			//check for download popup
+		}
+		return false;
+	}
+	
+	public void cancelModalBoxPopup(String popupName){
+		if(popupName.trim().equalsIgnoreCase("Delete File(s)")){
+			if(Web.isWebElementDisplayed(cancelButtonOfDeletefileModalBox, true))
+				cancelButtonOfDeletefileModalBox.click();
+		}
+		else if(popupName.trim().equalsIgnoreCase("Move File(s)")){
+			if(Web.isWebElementDisplayed(cancelButtonOfMovefileModalBox, true))
+				cancelButtonOfMovefileModalBox.click();
+		}
+		else{
+			//cancel for download popup
+		}
+	}
+	
+	public void closeModalBoxPopup(String popupName){
+		if(popupName.trim().equalsIgnoreCase("Delete File(s)") || popupName.trim().equalsIgnoreCase("Delete")){
+			if(Web.isWebElementDisplayed(closeButtonOfDeletefileModalBox, true))
+				closeButtonOfDeletefileModalBox.click();
+		}
+		else if(popupName.trim().equalsIgnoreCase("Move File(s)") ||popupName.trim().equalsIgnoreCase("Move")){
+			if(Web.isWebElementDisplayed(closeButtonOfMovefileModalBox, true))
+				closeButtonOfMovefileModalBox.click();
+		}
+		else{
+			//close for download popup
+		}
+	}
 
 	public void navigateToNextPage() {
 		try {
@@ -274,6 +432,141 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 			//throw new Error("Error getting when trying click on next page : "+ e.getMessage());
 		}
 	}
+	public void navigateToPreviousPage() {
+		try {
+			if (Web.isWebElementDisplayed(previousPage, true)) {
+				previousPage.click();
+				Web.nextGenDriver.waitForAngular();
+			}
+
+		} catch (Exception e) {
+			//throw new Error("Error getting when trying click on next page : "+ e.getMessage());
+		}
+	}
+	
+
+	public String getDropDownSelectedText(String dropDownName) {
+		WebElement element = null;
+		String text = null;
+		if (dropDownName.trim().equalsIgnoreCase("Parent Folder") ||dropDownName.trim().equalsIgnoreCase("Parent"))
+			element = parentFolderDropdownOfMoveModalBox;
+		if (dropDownName.trim().equalsIgnoreCase("Sub Folder")||dropDownName.trim().equalsIgnoreCase("Sub"))
+			element = subFolderDropdownOfMoveModalBox;
+		try {
+			if (Web.isWebElementDisplayed(element, true))
+			{
+				//new Select(element).getOptions().get(0).click();
+				text = new Select(element).getFirstSelectedOption().getText().trim();
+			}
+				
+		} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "dropdown not available",
+					"dropdown not available", true);
+		}
+		/*finally{
+			if(Web.isWebElementDisplayed(cancelButtonOfMovefileModalBox, true))
+				cancelButtonOfMovefileModalBox.click();
+			else
+				cancelButtonOfDeletefileModalBox.click();
+		}*/
+		return text;
+	}
+	
+	public int getTheCountOfDropDown(String dropDownName){
+		WebElement element = null;
+		if (dropDownName.trim().equalsIgnoreCase("Parent Folder") ||dropDownName.trim().equalsIgnoreCase("Parent"))
+			element = parentFolderDropdownOfMoveModalBox;
+		if (dropDownName.trim().equalsIgnoreCase("Sub Folder")||dropDownName.trim().equalsIgnoreCase("Sub"))
+			element = subFolderDropdownOfMoveModalBox;
+		try {
+			if (Web.isWebElementDisplayed(element, true))
+			{
+				
+				return new Select(element).getOptions().size();
+			}
+				
+		} catch (Exception e) {
+			Reporter.logEvent(Status.INFO, "dropdown not available",
+					"dropdown not available", true);
+		}
+		return 0;
+	}
+	
+	public void selectDropDownValue(String dropDownName,String valueToSelect){
+		WebElement element = null;
+		if (dropDownName.trim().equalsIgnoreCase("Parent"))
+			element = parentFolderDropdownOfMoveModalBox;
+		if (dropDownName.trim().equalsIgnoreCase("Sub"))
+			element = subFolderDropdownOfMoveModalBox;
+		if(Web.isWebElementDisplayed(element, true))
+			Web.selectDropDownOption(element, valueToSelect);
+	}
+	
+	public void checkTheCheckboxInMoveFileModalBox(){
+		if(!(requiredCheckboxInMoveModalBox.isSelected()))
+			requiredCheckboxInMoveModalBox.click();
+		
+	}
+	public void deSelectTheCheckboxInMoveFileModalBox(){
+		if(requiredCheckboxInMoveModalBox.isSelected())
+			requiredCheckboxInMoveModalBox.click();
+		
+	}
+	public boolean isMoveFileButtonEnableOrDisabled(String enableOrDisabled){
+		if (enableOrDisabled.trim().equalsIgnoreCase("enabled")) {
+			if (moveButtonOfMovefileModalBox.isEnabled())
+				return true;
+			}
+		if (enableOrDisabled.trim().equalsIgnoreCase("disabled")) {
+			if (!(moveButtonOfMovefileModalBox.isEnabled()))
+				return true;
+			}
+		return false;
+	}
+	
+	public boolean isUserAllSubfoldersDisplayedInTheSubfolderNameDropdown(String rootFolderName){
+		boolean flag=false;
+		int i=0;
+		List<String> subFolderNames=getSubfolderNameWithinFolder(rootFolderName);
+		Collections.sort(subFolderNames);
+		String[] arr = new String[subFolderNames.size()];
+		arr=subFolderNames.toArray(arr);
+		List<WebElement> dropDownList=new Select(subFolderDropdownOfMoveModalBox).getOptions();
+		if(!(subFolderNames.size()==dropDownList.size()-1))
+			return flag;
+		for(WebElement elemnt:dropDownList){
+			if(i>0){
+				if(CommonLib.binarySearch(arr, elemnt.getText(), 0, arr.length)>=0)
+					flag=true;
+				else
+					return false;
+			}
+			i++;
+			
+		}
+		
+		return flag;
+	}
+	
+	public List<String> getSubfolderNameWithinFolder(String folderName){
+		
+		List<String> subFolderNames = new ArrayList<String>();
+		List<WebElement> subfolders = Web.getDriver().findElement(NextGenBy.repeaterRows(folderRepeater, 0)).findElements(NextGenBy.repeater("subfolder in fileShareRepo.subfolders", false));
+		System.out.println(subfolders.size());
+		if (subfolders.size() > 0) {
+			for (WebElement ele : subfolders) {
+				String text = ele.getText().trim();
+				if (ele.getText().trim().length() > 0) {
+					subFolderNames.add(text);
+				}
+
+			}
+		}
+		return subFolderNames;
+	}
+	
+	
+	
 	
 }
 

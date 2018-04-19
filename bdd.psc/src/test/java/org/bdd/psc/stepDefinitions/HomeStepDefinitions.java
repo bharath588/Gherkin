@@ -283,7 +283,7 @@ public class HomeStepDefinitions {
 		}
 
 	}
-
+	
 	@When("^user clicks on filesharing tab$")
 	public void user_clicks_on_filesharing_tab() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
