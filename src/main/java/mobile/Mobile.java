@@ -7,6 +7,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSElement;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -611,16 +613,16 @@ public class Mobile {
 	
 	if(sActValue != null){
 	if(sActValue.replaceAll("\\n","").trim().equals(sExpText.trim())){
-		Reporter.logEvent(Status.PASS,sMsg, "Actual Value :  "+sActValue,false);
-	}else{
-	     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\n But Actucal was:  "+sActValue,true);
-	}
-	}else{
-	     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\nBut Actual it was not present",true);
+		Reporter.logEvent(Status.PASS,sMsg, "Expected value is displayed :\n  "+sActValue,true);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : \n "+sExpText +"\n But Actucal was: \n "+sActValue,true);
+		}
+		}else{
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : \n "+sExpText +"\nBut Actual it was not present",true);
 
+		}
+		
 	}
-	
-}
 
 
 
@@ -649,6 +651,66 @@ public class Mobile {
 	}
 	
 
+	/**
+	 * Method to click on a specified web element.
+	 * 
+	 * @param pageClassObj
+	 *            - Object of the Page class
+	 * @param webElementName
+	 *            - Name of the web element to be clicked
+	 * @return <b>true</b> if successful, <b>false</b> otherwise.
+	 * @throws Exception
+	 */
+	public static boolean clickOnElement(Object pageClassObj,
+			String webElementName) {
+		boolean success = false;
+		if (webElementName != null) {
+			WebElement clickableElement = getPageObjectFields(pageClassObj,
+					webElementName);
+			if (Web.isWebElementDisplayed(clickableElement)) {
+				clickableElement.click();
+				success = true;
+			}
+		}
+		return success;
+	}
+	
+	/**
+	 * <pre>
+	 * Method to get declared WebElement from a specified page.
+	 * Returns corresponding <b>WebElement</b> from <b>getWebElement</b> method available in PageObject class.
+	 * Returns null is case of no element found in the page
+	 * </pre>
+	 * 
+	 * @param pageObjectClass
+	 *            - Object of the Page class
+	 * @param fieldName
+	 *            - Name of the Element listed in getWebElement method
+	 * @return <b>WebElement</b> - Corresponding WebElement mapped against the
+	 *         fieldName
+	 * @throws Exception
+	 */
+	private static MobileElement getPageObjectFields(Object pageObjectClass,
+			String fieldName) {
+		Method getWebElementMethod = null;
+		MobileElement element = null;
+		try {
+			getWebElementMethod = pageObjectClass.getClass().getDeclaredMethod(
+					"getWebElement", String.class);
+		} catch (NoSuchMethodException e) {
+			throw new Error("getWebElement() method is not found in "
+					+ pageObjectClass.getClass().toString());
+		}
+		getWebElementMethod.setAccessible(true);
+		try {
+			element = (MobileElement) getWebElementMethod.invoke(pageObjectClass,
+					fieldName);
+		} catch (Exception e) {
+			throw new Error("Error getting page obejct fields : "
+					+ e.getMessage());
+		}
+		return element;
+	}
 
 	public  static void verifyElement_Is_Not_Displayed(String sStep,By sObj,String sMsg){			
 		IOSElement ele =  findElementBy(sObj);
@@ -1298,15 +1360,19 @@ public class Mobile {
 	 */
 	public static void switchButton( Boolean bValue) {
 		try{
+			String sFlag = "0";
+			if(bValue){
+				sFlag = "1";
+			}
 		
 		IOSElement element =	(IOSElement) Mobile.getDriver().findElement(By.className("XCUIElementTypeSwitch"));	
        if(element != null){
 		
 		String isSelected = element.getAttribute("value");;
-		if (Boolean.valueOf(isSelected) != bValue) {	
+		if (!sFlag.equals(isSelected)) {	
 				element.click();		}
        }else{
-    	   System.out.println("Not able to Switch Button");
+    	   System.out.println("Not able to Switch Button ");
 		}
        wait(1000);
 		}catch (NoSuchElementException ex){
@@ -1321,11 +1387,16 @@ public class Mobile {
 	 */
 	public static void switchButton( MobileElement element ,Boolean bValue) {
 		try{
+			
+			String sValue = "0";
+					if(bValue){
+						sValue = "1";
+					}
 				
        if(element != null){
 		
-		String isSelected = element.getAttribute("value");;
-		if (Boolean.valueOf(isSelected) != bValue) {	
+		String isSelected = element.getAttribute("value");
+		if (!isSelected.equals(sValue)) {	
 				element.click();		}
        }else{
     	   System.out.println("Not able to Switch Button");
@@ -1424,6 +1495,7 @@ public class Mobile {
 	
 	
 	
+
 	/**
 	 * This function will select value from Picker in increment order
 	 * 
@@ -1433,16 +1505,48 @@ public class Mobile {
 	 */
 public static void selectPickerValue(String sValue,String sOrder){
 	
-	try{		
+	try{
+		try{
+		selectPicker(sValue, sOrder);
+	}catch(WebDriverException e){
+		if(sOrder.equals("next")){
+		selectPicker(sValue, "previous");
+		}
+		else{
+		selectPicker(sValue, "next");
+		}
+	}
+	}catch(Exception ex){
+	 	
+		  Reporter.logEvent(Status.FAIL, "Select Picker Value was not found",sValue, true);
+		  Mobile.clickElement("Done");
+		
+	}
+	
+	}
+
+
+private static void selectPicker(String sValue,String sOrder){
+	
+
 		@SuppressWarnings("unchecked")
 		List<IOSElement> wheels =  (List<IOSElement>) Mobile.getDriver().findElements(By.className("XCUIElementTypePickerWheel"));
-			if(wheels.get(0) != null){			
-		    for(int i =0;i<20;i++){
-		      String  sActValue = wheels.get(0).getText();	
-		       System.out.println(sActValue);
-		    	if(sActValue.contains(sValue)){
+		String  tempActValue = ""; 
+		
+		if(wheels.get(0) != null){			
+		    for(int i =0;i<8;i++){
+		    	   String  sActValue = wheels.get(0).getText();	
+		    	if(tempActValue.equals(sActValue)){
 		    		break;
-		    	}
+		    	}else{
+		    		tempActValue=sActValue;
+		    	}    	
+		   		      
+		       System.out.println(sActValue);
+		    	if(sActValue.startsWith(sValue)){
+		    		break;
+		    	}	    	
+		    	
 		    	else{
 		    	 JavascriptExecutor js = (JavascriptExecutor) Mobile.getDriver();
 		   	      Map<String, Object> params = new HashMap<>();
@@ -1453,12 +1557,12 @@ public static void selectPickerValue(String sValue,String sOrder){
 		    		
 		    	}	    	
 		    }	 
-	    
+	      
 	  	  Mobile.clickElement("Done");
 		}
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	
+	
+	
 	
 	}
 	
@@ -1504,4 +1608,68 @@ public static void selectPickerValue(String sValue,String sOrder){
 		 }
 	
 	 }
+	 
+	 /**
+		 *  Method will get element value using By locator
+		 * @param locator
+		 * @return
+		 * @Author : Siddartha 
+		 * @date : March 2018
+		 */
+			
+		public static String getElementName(MobileElement locator) {
+			String sValue = "";
+			//IOSElement ele = find(locator);
+
+			if (locator != null) {
+				return locator.getAttribute("name");
+			
+			}
+			return sValue;
+
+		}
+		
+		/**
+		 * Method to verify element value
+		 * @param Obj as MobileElement
+		 * @param sExpText
+		 * @param sMsg
+		 *   @Author : Siddartha 
+		 * @date : March 2018
+		 */
+
+		public  static void verify_Element_Label(MobileElement Obj,String sExpText,String sMsg){	
+			String sActValue ="";
+			if(Obj != null)	
+		 sActValue = getElementLabel(Obj);
+		
+		if(sActValue != null){
+		if(sActValue.replaceAll("\\n","").trim().contains(sExpText.trim())){
+			Reporter.logEvent(Status.PASS,sMsg, "Actual Value :  "+sActValue,false);
+		}else{
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\n But Actucal was:  "+sActValue,true);
+		}
+		}else{
+		     Reporter.logEvent(Status.FAIL,sMsg," Expected Value : "+sExpText +"\nBut Actual it was not present",true);
+
+		}
+		
+	}
+		/**
+		 *  Method will get element value using MobileElement
+		 * @param locator
+		 * @return
+		 */
+		public static String getElementLabel(MobileElement ele) {
+			String sValue = "";
+			
+
+			if (ele != null) {
+				sValue= ele.getAttribute("label");
+			
+			}
+			return sValue;
+
+		}
+
 }
