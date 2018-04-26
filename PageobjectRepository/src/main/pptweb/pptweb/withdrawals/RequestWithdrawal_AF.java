@@ -23,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import pptweb.appUtils.Common;
+import pptweb.withdrawals.DesignateBeneficiaries;
 
 import com.aventstack.extentreports.Status;
 
