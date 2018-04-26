@@ -28,6 +28,7 @@ import pageobjects.balance.Balance;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MeAndMyMoney;
 import pageobjects.general.MyAccountsPage;
 import pageobjects.general.RateOfReturnPage;
 import pageobjects.investment.Brokerage;
@@ -47,6 +48,7 @@ import pageobjects.payroll.PayrollCalendar;
 import pageobjects.planinformation.PlanForms;
 import pageobjects.statementsanddocuments.StatementsAndDocuments;
 import pageobjects.transactionhistory.TransactionHistory;
+import pageobjects.uploaddocuments.UploadDocuments;
 import pageobjects.withdrawals.RequestWithdrawal;
 import appUtils.Common;
 import core.framework.Globals;
@@ -1164,6 +1166,87 @@ public class ProdvalidationTestCases_Liat {
 				Reporter.logEvent(Status.FAIL,"Verify TOUR button is displayed","Tour button is displayed", false);
 			//Web.clickOnElement(retirement, "LOG OUT");
 			
+			
+		}
+		catch(Exception e)
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Throwable t = e.getCause();
+            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.",msg, true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);                    
+                        
+        }
+		finally { 
+			try { 
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void verify_Upload_Documents(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			UploadDocuments uploadDocuments=new UploadDocuments(leftmenu);
+			uploadDocuments.get();
+			uploadDocuments.verifyUploadDocumentPage();
+			
+		}
+		catch(Exception e)
+        {
+            e.printStackTrace();
+            Globals.exception = e;
+            Throwable t = e.getCause();
+            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+            Reporter.logEvent(Status.FAIL, "A run time exception occured.",msg, true);
+        }
+		catch(Error ae)
+        {
+                        ae.printStackTrace();
+                        Globals.error = ae;
+                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);                    
+                        
+        }
+		finally { 
+			try { 
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport(); }
+			catch (Exception e1) { e1.printStackTrace(); } 
+			}
+	}
+	
+	@Test(dataProvider = "setData")
+	public void verify_MeAndMyMoneyPage(int itr, Map<String, String> testdata){
+		
+		try{
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			homePage.get();
+			MeAndMyMoney meandmoney = new MeAndMyMoney();
+			meandmoney.verifyArticlesAndCalculatorsTab();
 			
 		}
 		catch(Exception e)

@@ -42,6 +42,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(linkText = "Log out")
 	private WebElement lnkLogout;
 	private String lnkRequestLoan = "//a[text()[normalize-space()='Request a loan']]";
+	private String lnkUploadDocuments = "//a[text()[normalize-space()='Upload documents']]";
 	private String lnkBrokerage = "//a[text()[normalize-space()='Brokerage']]";
 	@FindBy(xpath = ".//*[@class='plan']/*[starts-with(@id,'ga_')]")
 	private WebElement lnkPlanName;
@@ -205,7 +206,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "My distributions";
 
 		} else if (linkName.trim().equalsIgnoreCase("UPLOAD DOCUMENTS")) {
-			strLinkText = " Upload documents";
+			strLinkText = lnkUploadDocuments;
 
 		} else {
 			strLinkText = linkName.trim();
@@ -239,7 +240,19 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				e.printStackTrace();
 			}
 			// mouse.release().build().perform();
+		} else if (linkName.equalsIgnoreCase("UPLOAD DOCUMENTS")) {
+			lnkLeftNavItem = By.xpath(strLinkText);
+			WebElement leftNavLink = weLeftNavSection
+					.findElement(lnkLeftNavItem);
+			// mouse.moveToElement(leftNavLink).keyDown(Keys.SHIFT).click(leftNavLink).keyUp(Keys.SHIFT).build().perform();
 
+			executor.executeScript("arguments[0].click();", leftNavLink);
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (linkName.equalsIgnoreCase("Statements and documents")) {
 			lnkLeftNavItem = By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection

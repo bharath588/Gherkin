@@ -25,6 +25,7 @@ public class ThreadInvocation {
            // suites.add(System.getProperty("user.dir")+"\\RunXML\\BVT.xml");
             suites.add(xml);
             testng.setTestSuites(suites);
+         
 			Runnable threadRunnable = new Runnable() {
 				
 				@Override

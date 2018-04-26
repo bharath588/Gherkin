@@ -1609,8 +1609,8 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 					"Yes"))
 				investment.cancelTransfer("F2F");
 			Web.getDriver().switchTo().defaultContent();
-			 //Web.clickOnElement(investment, "LOGOUT");
-			// Web.waitForElement(investment, "Login");
+			/* Web.clickOnElement(investment, "LOGOUT");
+			Web.waitForElement(investment, "Login");*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3615,8 +3615,7 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(investment, "Header How Would You Like To Invest");
 			investment.verifyPageHeaderIsDisplayed("Header How Would You Like To Invest");
-			
-			investment.verifyWebElementDisplayed("Do It Myself");
+					investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Do It For Me");
 			//Step 10
@@ -3627,8 +3626,7 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			/*Web.waitForElement(investment, "Continue Button");
 			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
 			Web.clickOnElement(investment, "Continue Button");*/
-			 Web.waitForPageToLoad(Web.getDriver());
-			 Thread.sleep(10000);
+			Thread.sleep(10000);
 			//Step 12
 			
 			String parentWindow = Web.getDriver().getWindowHandle();
@@ -3639,7 +3637,11 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%"+Web.getDriver().getTitle());
+			    	   Web.waitForElement(investment, "Button Accept");
+			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
+			    		   Web.clickOnElement(investment, "Button Accept");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
@@ -3656,12 +3658,13 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			       }
 			   Web.getDriver().close(); //closing child window
 	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
+	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
+		           Web.clickOnElement(investment, "Button Refresh");
 	           Web.getDriver().switchTo().defaultContent();
-	           Web.clickOnElement(investment, "Button Refresh");
 	           Web.waitForPageToLoad(Web.getDriver());
 	           Common.waitForProgressBar();
 	        
-	
+		 
 		}catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3688,7 +3691,7 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 	}
 
 	@Test(dataProvider = "setData")
-	public void DDTC_30104_FE_DIM_Access_Online_Advice(int itr, Map<String, String> testdata) {
+	public void DDTC_30104_FE_DIM_Access_Online_Guidance(int itr, Map<String, String> testdata) {
 
 		try {
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
@@ -3709,8 +3712,8 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			
 			investment.verifyInvestmentOptionIsDisplayed("Rebalance Current Balance");
 			investment.verifyInvestmentOptionIsDisplayed("Change Future Contribution");
-			investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
-			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");
+			/*investment.verifyInvestmentOptionIsDisplayed("Change Current Balance Investment");
+			investment.verifyInvestmentOptionIsDisplayed("Dollar Cost");*/
 		
 			//Step 6 to 9
 			investment.choseInvestmentOption("Change Future Contribution");
@@ -3731,9 +3734,9 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			/*Web.waitForElement(investment, "Continue Button");
 			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
 			Web.clickOnElement(investment, "Continue Button");*/
+			Thread.sleep(10000);
 			//Step 12
-			Web.waitForPageToLoad(Web.getDriver());
-			 Thread.sleep(10000);
+			
 			String parentWindow = Web.getDriver().getWindowHandle();
 			Set<String> handles =  Web.getDriver().getWindowHandles();
 			   for(String windowHandle  : handles)
@@ -3742,29 +3745,36 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
-					    	  
-				    		  Reporter.logEvent(Status.PASS,
-										"Verify 'Advisory Services Page'opened in New Window",
-										"'Advisory Services Page' opened in New Window", true);
-							}
-							else{
-								Reporter.logEvent(Status.FAIL,
-										"Verify 'Advisory Services Page'opened in New Window ",
-										"'Advisory Services Page' is not opened in New Window ", true);
-							}
-				     
-				    }
-		}
-				   Web.getDriver().close(); //closing child window
-		           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
-		           Web.getDriver().switchTo().defaultContent();
+			    	   Web.waitForElement(investment, "Button Accept");
+			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
+			    		   Web.clickOnElement(investment, "Button Accept");
+			    	   Web.waitForPageToLoad(Web.getDriver());
+			    	   Thread.sleep(5000);
+			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
+			    	  
+			    		  Reporter.logEvent(Status.PASS,
+									"Verify 'Advisory Services Page'opened in New Window",
+									"'Advisory Services Page' opened in New Window", true);
+						}
+						else{
+							Reporter.logEvent(Status.FAIL,
+									"Verify 'Advisory Services Page'opened in New Window ",
+									"'Advisory Services Page' is not opened in New Window ", true);
+						}
+			     
+			    }
+			       }
+			   Web.getDriver().close(); //closing child window
+	           Web.getDriver().switchTo().window(parentWindow);
+	           if(Web.isWebElementDisplayed(investment, "Button Refresh",true))
 		           Web.clickOnElement(investment, "Button Refresh");
-		           Web.waitForPageToLoad(Web.getDriver());
-		           Common.waitForProgressBar();
-		        
+		         
+	           Web.getDriver().switchTo().defaultContent();
+	           Web.waitForPageToLoad(Web.getDriver());
+	           Common.waitForProgressBar();
 	        
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
@@ -3788,7 +3798,5 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 		}
 
 	}
-	
-	
 
 }

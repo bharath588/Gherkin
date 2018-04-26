@@ -1,6 +1,6 @@
 [ {
        "Browser": "CHROME",
-       "Port": "http://10.4.61.208:5555/wd/hub",
+       "Port": "http://10.4.61.11:5555/wd/hub",
        "Platform": "Windows.xp"
 },
 {

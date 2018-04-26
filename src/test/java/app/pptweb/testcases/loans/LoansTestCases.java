@@ -4726,41 +4726,314 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("Loan request received");
 			requestLoan.isTextFieldDisplayed("Loan Details");
 			/**
-			 * Step 16 - Verify the 1) 'Print, sign and return the pre-filled form that will 
+			 * Step 16 - 25- Verify the 1) 'Print, sign and return the pre-filled form that will 
 			 * be emailed you at the end of the process' section timestamp
 			 * Conf no. should be displayed 
 			 * timestamp format is displayed as MM/DD/YYYY
 			 */
 
-			requestLoan.verifyLoanConfirmationDisclaimer();
+			
+			requestLoan.verifyLoanRequestRecievedSectionForRegularMail();
+			/**
+			 * Step 26 - Verify 'Loan provisions' section content -N/A
+			 */
+			
+			/**
+			 * Step 27 - Verify the loan provision hyperlink status -N/A
+			 * 
+			 */
+
+			/**
+			 * Step 28 - Verify presence of back button
+			 * Verified. Back button is not required in confirmation page.
+			 */
+			requestLoan.verifyBackButtonIsDisplayed(false);
+			
+			/**
+			 * Step 29 - Validate the print button on all the screens including 'Loan provisions' modal
+			 * Able to print functionality works with no issues for all the loans pages selected
+			 * 
+			 */
+			requestLoan.verifyWebElementIsDisplayed("PRINT LINK");
+			/**
+			 * Step 30 -Validate tooltips on all the applicable pages
+			 * Tool tip functions correct per design/requirements     -N/A
+			 */
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	/**
+	 * This Test Case to verify Principal Residence Loan Repayment Page
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@SuppressWarnings("static-access")
+	@Test(dataProvider = "setData")
+	public void DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Step 1  - 3 Launch Browser and enter URL: Enter Valid credentials
+			 * and login Navigate to My Accounts -> Loans & Withdrawals -> Loans
+			 * 
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+
+
+			/**
+			 * Step 4 - Verify contents displayed on loans landing page and
+			 *  compare this with CSAS and Legacy page.
+			 *  Loans landing page displays amount available to borrow and summary section.
+			 *   It could be general purpose or primary residence. Similar value is observed with CSAS and Legacy PW
+			 *  
+			 */
+			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
+			String loanAmt = requestLoan.getMaximumLoanAmount();
+			if (!loanAmt.isEmpty())
+				Reporter.logEvent(Status.PASS,
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is displayed \nLoan Maximum:"
+								+ loanAmt, true);
+
+			else
+				Reporter.logEvent(Status.FAIL,
+						"Verify Loan Maximum Amount is displayed",
+						"Loan Maximum Amount is not displayed \nLoan Maximum:"
+								+ loanAmt, true);
+
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below
+			 * summary section Validate the number of active loans in the select
+			 * plan/ppt displayed correct.
+			 */
+			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
+			String ActualNoofLoans = requestLoan
+					.getMaximumLoansAllowedforPlan(Stock
+							.GetParameterValue("ga_id"));
+			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
+				Reporter.logEvent(Status.PASS,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
+								+ expectedNoofLoans + "\nActual No.Of Loans:"
+								+ ActualNoofLoans, false);
+
+			else
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Maximum Loans Allowed is Matching",
+						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
+								+ expectedNoofLoans
+								+ "\nActual No.Of Loans:"
+								+ ActualNoofLoans, true);
+			/**
+			 * Step 6 Verify the Number of active loans in all plans below
+			 * Summary section Validate all the the number of loans available in
+			 * multiple plans for the selected test ppt are displayed correct
+			 * This option is displayed only when ppt have more than one plan
+			 * eligible for a loan
+			 */
+
+			// TODO
+
+			/**
+			 * Step 7 - Verify Number of loans allowed below Summary section
+			 * Validate the number of loans available for the plan is displayed
+			 * correct with the number of loans allowed for each loan structure
+			 * is also displayed if the plan is setup for
+			 */
+
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock
+					.GetParameterValue("ga_id"));
+
+			/**
+			 * Step 8 - Verify the disclaimer displayed at the bottom of the
+			 * page on loans landing page Validate the disclaimer displayed at
+			 * the bottom of the page is displayed per latest design reqs on
+			 * loans landing page
+			 */
+			requestLoan.verifyLoansDisclaimer();
+
+			/**
+			 * Step 9 - Click on'Request a new loan' button on the loans landing
+			 * Loan type selection page with header 'What type of loan would you like?' was displayed
+			 *  Verify all correct values are displayed for the PPT in the loan type 
+			 * selection page for available loan structures such as GR , PR:
+			 * Loan purpose
+			 * Maximum loan
+			 * Minimum loan
+			 * Repayment term
+			 * Documentation required
+			 * Interest rate
+			 * Repayment
+			 * Fees
+			 * #Loans allowed
+			 * Waiting period
+			 * Verified with CSAS, Legacy PW and backend tables.
+			 *  correct values are getting displayed for the said headers along with 2 clickable buttons as 
+			 *  a. Request a general purpose loan
+			 *  b. Request a primary resident loan
+			 */
+
+			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.isTextFieldDisplayed("What type of loan would you like to request?");
+			
+			requestLoan.isTextFieldDisplayed("Loan purpose");
+			requestLoan.isTextFieldDisplayed("Maximum loan");
+			requestLoan.isTextFieldDisplayed("Minimum loan");
+			requestLoan.isTextFieldDisplayed("Repayment term");
+			requestLoan.isTextFieldDisplayed("Documentation required");
+			requestLoan.isTextFieldDisplayed("Interest rate");
+			requestLoan.isTextFieldDisplayed("Repayment");
+			requestLoan.isTextFieldDisplayed("Fees");
+			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
+			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.setInterestRate(requestLoan
+					.getInterestRateFromRequestLoanPage(Stock
+							.GetParameterValue("loanType")));
+			
+			/**
+			 * Step 10 - Select 'Request a Principal Residence loan' button
+			 * Ppt must be navigated to 'Principal Residence Loan Requirements' page
+			 * 
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+
+			requestLoan
+			.isTextFieldDisplayed("Principal residence loan requirements");
 		
 			
 			/**
-			 * Step 17 - 24
-			 * 
-			 */ 
-			requestLoan.verifyLoanRequestRecievedSectionForRegularMail();
-
-			/**
-			 * Step 27 - N/A FOR OTHER SECTIONS MOCKUP IS NOT UPDATED.THIS TEST
-			 * CASE WILL BE UPDATED ONCE THE MOCKUP SCREEN IS AVAILABLE
-			 * 
-			 */
-
-			/**
-			 * Step 28 - Verify the 'Print' hyperlink It must be present at the
-			 * top right corner of the page
-			 */
-			requestLoan.verifyWebElementIsDisplayed("PRINT LINK");
-
-			/**
-			 * Step 29 - Click on 'Print' hyperlink - partially Automatable
-			 * 'Confirmation & What's next' page should be opened in a new modal
-			 * window in PDF format & user should be able to save it Step 30 -
-			 * Verify the content of the PDF - N/A It should be same exactly as
-			 * the 'Confirmation & What's next' page
+			 * Step 11 -Verify the 'Principal Residence Loan Requirements' page.
+			 * Page should have below content:
+			 * Principal residence loan requirements(IN BOLD)
+			 * This type of loan is only for purchasing or building your principal residence;
+			 *  not renovating or refinancing you current home.(IN BOLD)
+			 *  At the end of this process, a pre-filled form will be emailed to you.
+			 *   you must be sign and return to the address provided,along with the following documentation,
+			 *    to complete this loan request.
+			 *    Documentation type 1(TBD)
+			 *    Documentation type 2(TBD)
+			 *    Documentation type 3(TBD)
+			 *    'Back' & 'Continue' buttons should be enabled.
 			 * 
 			 */
+			requestLoan.verifyPrincipalResidenceLoanDisclaimer();
+			/**
+			 * Step 12,13;
+			 * PPT must be navigated to  
+			 * How much would you like to borrow page with
+			 *  the max and min amount balance for Principal Residence loan and a 'Enter amount' 
+			 *  text box to enter valid amt values with a 'Continue' and 'Back' buttons
+			 *  'How is this calculated?' link displaying the calculation in the hover help from design team.
+			 */
+			requestLoan.clickContinueButton();
+			
+			requestLoan.verifyLoanMinimumIsDisplayed();
+			requestLoan.verifyLoanMinimumErrorMessageIsDisplayed("10");
+			requestLoan
+			.verifyWebElementIsDisplayed("Link How Is This Calculated");
+			
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));
+			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
+			requestLoan.verifyWebElementIsDisplayed("BUTTON BACK");
+			
+			/**
+			 * Step 14 - Hit 'Continue' button 
+			 * Validate that Repayment Term options section
+			 *  should be displayed below the 'How much would you like to borrow' section.
+			 */
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
+			/**
+			 * Step 15 -Verify the Repayment Term options/values section verbiage.
+			 * Verbiage should be "Select from a repayment term option below or enter your own term"
+			 */
+			requestLoan
+					.isTextFieldDisplayed("Select from a repayment term option below or");
+
+			/**
+			 * Step 16 - Verify "enter your own loan term" at the end of the verbiage.
+			 * It must be a link & text should be in blue color.
+			 */
+			requestLoan.isTextFieldDisplayed("enter your own term");
+			requestLoan.verifyWebElementIsDisplayed("Link Enter Your Own Term");
+			/**
+			 * Step 17-19 - Verify the Repayment Term options/values section table
+			 * It should have 3 columns with below headers 
+			 * i) SELECT
+			 * ii) <Repayment Frequency Value>(Dynamic value)
+			 * iii) REPAYMENT TERM
+			 * Five 'Repayment Term' options should be offered to the participant with 
+			 * below tenures by default in ascending order
+			 * 12 months
+			 * 24 months
+			 * 36 months
+			 * 48 months
+			 * 60 months
+			 * 
+			 */
+			requestLoan.isTextFieldDisplayed("Select");
+			requestLoan.isTextFieldDisplayed(" bi-weekly");
+			requestLoan.isTextFieldDisplayed("Repayment Term");
+			requestLoan.verifySelectColumnForPrincipalResidenceLoanTerm();
+			requestLoan.verifyDefaultRepamentTermForPrinciplaResidence();
+			/**
+			 * Step 20 - Now re-enter/change the amount in the 'ENTER AMOUNT' field.
+			 * Button label should change form 'Continue' to 'Update
+			 */
+			requestLoan.EnterLoanAmount("200");
+			requestLoan.verifyWebElementIsDisplayed("BUTTON UPDATE");
+			/**
+			 * Step 21 - Now, click on 'UPDATE' button
+			 */
+			Web.clickOnElement(requestLoan, "BUTTON UPDATE");
+			//Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
 
 		} catch (Exception e) {
 			e.printStackTrace();

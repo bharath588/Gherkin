@@ -15,6 +15,7 @@ import lib.Stock;
 import lib.Web;
 
 import com.aventstack.extentreports.*;
+import com.sun.javafx.collections.SetListenerHelper;
 
 import oracle.sql.ARRAY;
 
@@ -218,6 +219,12 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtPrincipalloanDisclaimer3;
 	@FindBy(xpath = "//div[./strong[contains(text(),'Request form received')]]/following-sibling::div")
 	private WebElement txtBeingReviewed;
+	@FindBy(xpath = "//div[./strong[contains(text(),'Form review complete')]]/following-sibling::div[1]")
+	private WebElement txtLoanReqInProcess;
+	@FindBy(xpath = "//div[./strong[contains(text(),'Form review complete')]]/following-sibling::div[2]")
+	private WebElement txtTypically2BDays;
+	@FindBy(xpath = "//div[./strong/span[contains(text(),'Check sent by Regular mail')]]/following-sibling::div/span")
+	private WebElement txtDeliveryUpTo5BDays;
 	
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
@@ -229,6 +236,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 	private static String checkTotal = "";
 	private static String interestRate = "";
+	private static String loanType = "";
 
 	/**
 	 * Default Constructor
@@ -1170,6 +1178,43 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 
 	}
+	/**
+	 * <pre>
+	 * Method to Verify Back Button Is Displayed
+	 *
+	 * </pre>
+	 */
+	public void verifyBackButtonIsDisplayed(boolean displayed) {
+		Web.waitForElement(btnBack);
+		if (displayed) {
+			if (btnBack.isDisplayed()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Back Button is Displayed",
+						"Back Button is Displayed", false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Back Button is Displayed",
+						"Back Button is Not Displayed", true);
+
+			}
+		} else {
+			if (!btnBack.isDisplayed()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Back Button is Displayed",
+						"Back Button is Displayed", false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Back Button is Displayed",
+						"Back Button is Not Displayed", true);
+
+			}
+		}
+
+	}
 
 	/**
 	 * <pre>
@@ -1883,10 +1928,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyLoanTypeInConfirmationPage() {
-
+		String loanType =Stock.GetParameterValue("loan_type").trim();
 		if (txtLoanType.isDisplayed()
 				&& txtLoanType.getText().toString().trim()
-						.equalsIgnoreCase(Stock.GetParameterValue("loan_type").trim())) {
+						.equalsIgnoreCase(loanType)) {
 			lib.Reporter.logEvent(Status.PASS,
 					"Verify 'Loan Type' is Displayed",
 					"'Loan Type' is Displayed\n loan type: "
@@ -1899,6 +1944,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 					"'Loan Type' is Not Displayed", true);
 
 		}
+		setLoanType(loanType);
 	}
 
 	/**
@@ -1910,8 +1956,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 *
 	 */
 	public void verifyLoanTermInConfirmationPage() {
-		String expectedLoanTerm = Stock.GetParameterValue("loanTerm")
-				+ " months";
+		String expectedLoanTerm;
+		if(getLoanType().equalsIgnoreCase("Principal Residence"))
+		 expectedLoanTerm = Stock.GetParameterValue("loanTerm")
+				+ " years";
+		else
+			expectedLoanTerm = Stock.GetParameterValue("loanTerm")
+			+ " months";
 
 		String actualLoanTerm = txtLoanTerm.getText().toString().trim();
 
@@ -2178,6 +2229,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 	public static void setCheckTotal(String checkTotal) {
 		RequestLoanPage.checkTotal = checkTotal;
+	}
+	public static String getLoanType() {
+		return loanType;
+	}
+
+	public static void setLoanType(String loanType) {
+		RequestLoanPage.loanType = loanType;
 	}
 
 	/**
@@ -2552,10 +2610,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public String  verifyPrincipalResidenceLoanRequestRecievedSectionForRegularMail()
 			throws Exception {
+		isTextFieldDisplayed("Your loan request has been received and a pre-filled form will be emailed to you shortly. "
+				+ "To complete the process, you must sign and return the form to the address provided. Depending on your preference, "
+				+ "you will receive an email and/or text with your loan's status.");
+		
 		isTextFieldDisplayed("Print, sign, and return the pre-filled form that will be emailed to you at the end of this process.");
-		isTextFieldDisplayed("Request form received");
-		isTextFieldDisplayed("Form review complete");
-		isTextFieldDisplayed("Check sent by Regular mail");
+		
+		
 		String confirmationtext = txtConfirmationNumber.getText().toString()
 				.trim();
 		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
@@ -2576,17 +2637,215 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 							+ expectedDate + "\nActual Date:" + date, true);
 		}
 
+		isTextFieldDisplayed("Request form received");
+		String expectedText="Being reviewed for completeness";
+		String actualText=txtBeingReviewed.getText().toString().trim();
+		if (expectedText.equals(actualText)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Request form received section",
+					"Text Field '"+expectedText+"' is Displayed",
+					false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Request form received section",
+					"Text Field '"+expectedText+"' is Not Matching", true);
+		}
+		isTextFieldDisplayed("Form review complete");
+	
+		 expectedText="Loan request in process";
+		 actualText=txtLoanReqInProcess.getText().toString().trim();
+			if (expectedText.equals(actualText)) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify 'Form Review Complete' section",
+						"Text Field '"+expectedText+"' is Displayed",
+						false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify 'Form Review Complete' section",
+						"Text Field '"+expectedText+"' is Not Matching", true);
+			}
+			expectedText="Typically 2 business days";
+			 actualText=txtTypically2BDays.getText().toString().trim();
+				if (expectedText.equals(actualText)) {
+					lib.Reporter.logEvent(Status.PASS,
+							"Verify 'Form Review Complete' section",
+							"Text Field '"+expectedText+"' is Displayed",
+							false);
+
+				} else {
+
+					lib.Reporter.logEvent(Status.FAIL,
+							"Verify 'Form Review Complete' section",
+							"Text Field '"+expectedText+"' is Not Matching", true);
+				}
 		
-		isTextFieldDisplayed("Typically 2 business days");
-		isTextFieldDisplayed("Delivery up to 5 business days");
+	
+		isTextFieldDisplayed("Check sent by Regular mail");
+		expectedText="Delivery up to 5 business days";
+		 actualText=txtDeliveryUpTo5BDays.getText().toString().trim();
+			if (expectedText.equals(actualText)) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify 'Check Sent by Regular Mail' section",
+						"Text Field '"+expectedText+"' is Displayed",
+						false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify 'Check Sent by Regular Mail' section",
+						"Text Field '"+expectedText+"' is Not Matching", true);
+			}
+	
+			verifyLoanDetailsSectionConfirmationPage();
+		return confirmationNo;
+	}
+	
+
+	/**
+	 * <pre>
+	 * Method to Verify  Loan Details Section in Confirmation Page
+	 *
+	 * </pre>
+	 * @throws Exception 
+	 *
+	 */
+	public void verifyLoanDetailsSectionConfirmationPage() throws Exception {
+
 		verifyPlanName(Stock.GetParameterValue("gc_id"));
 		verifyLoanTypeInConfirmationPage();
 		verifyLoanTermInConfirmationPage();
 		verifyInterestRateInConfirmationPage();
 		verifyCheckAmountInConfirmationPage();
 		verifyLoanAmountInConfirmationPage();
-		return confirmationNo;
+		
 	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify  Payment Information Section in Confirmation Page
+	 *
+	 * </pre>
+	 * @throws Exception 
+	 *
+	 */
+	public void verifyPaymentInformationSectionInConfirmationPage() throws Exception {
 
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		verifyLoanTermInConfirmationPage();
+		verifyInterestRateInConfirmationPage();
+		verifyCheckAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPage();
+		
+	}
+	/**
+	 * <pre>
+	 * Method to Verify Fees And Taxes Section in Confirmation Page
+	 *
+	 * </pre>
+	 * @throws Exception 
+	 *
+	 */
+	public void verifyFeesAndTaxesSectionInConfirmationPage() throws Exception {
+
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		
+		
+		
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Delivery Information Section in Confirmation Page
+	 *
+	 * </pre>
+	 * @throws Exception 
+	 *
+	 */
+	public void verifyDeliveryInformationSectionInConfirmationPage() throws Exception {
+
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		
+		
+		
+	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Default Repayment Term Options for Principal Residence Loan
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifyDefaultRepamentTermForPrinciplaResidence() {
+		String[] repaymentTerm = { "5years", "10years", "15years",
+				"20years", "25years" };
+		for (int i = 0; i < repaymentTerm.length; i++) {
+			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
+					By.xpath(strRepaymentTerm.replace("rownum",
+							Integer.toString(i+1))));
+			int j = inpLoanTerm.size();
+			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
+					.trim()
+					+ inpLoanTerm.get(1).getText().toString().trim();
+
+			if (repaymentTerm[i].equalsIgnoreCase(actualLoanTerm)) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term " + (i+1)+" :" + actualLoanTerm, false);
+
+			} else {
+
+				lib.Reporter
+						.logEvent(
+								Status.FAIL, 
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term is not displayed as expected\nExpected:"
+										+ repaymentTerm[i] + "\nActual:"
+										+ actualLoanTerm, true);
+
+			}
+		}
+	}
+	/**
+	 * <pre>
+	 * Method to Verify Each Loan Term Have a Radio Button associated with it
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifySelectColumnForPrincipalResidenceLoanTerm() {
+		String[] repaymentTerm = { "5", "10", "15", "20", "25" };
+		for (int i = 0; i < repaymentTerm.length; i++) {
+			WebElement inpLoanTerm = Web.getDriver().findElement(
+					By.xpath(this.loanTerm.replace("Repayment Term",
+							repaymentTerm[i])));
+
+			if (inpLoanTerm.isDisplayed()) {
+				lib.Reporter.logEvent(Status.PASS,
+						"Verify Radio Button is Displayed for Loan Term",
+						"Radio Button is Displayed for Loan Term "
+								+ repaymentTerm[i] + " Years", false);
+
+			} else {
+
+				lib.Reporter.logEvent(Status.FAIL,
+						"Verify Radio Button is Displayed for Loan Term",
+						"Radio Button is Not Displayed for Loan Term "
+								+ repaymentTerm[i] + " Years", true);
+
+			}
+		}
+	}
 
 }
