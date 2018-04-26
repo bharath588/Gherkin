@@ -2734,12 +2734,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyPaymentInformationSectionInConfirmationPage() throws Exception {
 
-		verifyPlanName(Stock.GetParameterValue("gc_id"));
-		verifyLoanTypeInConfirmationPage();
-		verifyLoanTermInConfirmationPage();
-		verifyInterestRateInConfirmationPage();
-		verifyCheckAmountInConfirmationPage();
-		verifyLoanAmountInConfirmationPage();
+		
 		
 	}
 	/**
@@ -2752,8 +2747,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyFeesAndTaxesSectionInConfirmationPage() throws Exception {
 
-		verifyPlanName(Stock.GetParameterValue("gc_id"));
-		verifyLoanTypeInConfirmationPage();
+	
 		
 		
 		
@@ -2769,8 +2763,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyDeliveryInformationSectionInConfirmationPage() throws Exception {
 
-		verifyPlanName(Stock.GetParameterValue("gc_id"));
-		verifyLoanTypeInConfirmationPage();
+		
 		
 		
 		
