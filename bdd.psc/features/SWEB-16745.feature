@@ -16,6 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
+
 Feature: File Sharing File Movement
 
   Background: 
@@ -24,6 +25,7 @@ Feature: File Sharing File Movement
       | PlanEmpower | 1ISIS    | testing1 |
     When user clicks on filesharing tab
     Then user is on filesharing page
+    
 
   Scenario: verify appropriate checkboxes are selected
     Given the user has files within a folder

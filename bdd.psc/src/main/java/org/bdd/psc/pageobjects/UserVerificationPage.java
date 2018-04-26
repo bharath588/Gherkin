@@ -43,6 +43,14 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 	private WebElement imgEmpowerPsc;
 	@FindBy(xpath = ".//label[contains(text(),'What')]")
 	private WebElement txtSecurityQuestion;
+	@FindBy(xpath = ".//*[contains(@id,'securityEmail')]")
+	private WebElement heritageSecEmail;
+	@FindBy(xpath = ".//*[contains(@id,'securityAnswer')]")
+	private WebElement heritageSecAnswer;
+	@FindBy(xpath = ".//*[contains(@id,'securityQuestion')]")
+	private WebElement heritageSecQuestion;
+	@FindBy(xpath=".//button/span[text()='DONE']")
+	private WebElement heritageUserVerDoneButton;
 	LoadableComponent<?> parent;
 	public static WebDriver webDriver;
 	CommonLib commonLib;
@@ -89,6 +97,7 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private WebElement getWebElement(String fieldName) {
 		if (fieldName.trim().equalsIgnoreCase("EMAIL ADDRESS")) {
 			return this.txtUserVerificationEmail;
@@ -100,6 +109,15 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 		if(fieldName.trim().equalsIgnoreCase("SECURITYQUESTION"))
 		{
 			return this.txtSecurityQuestion;
+		}
+		if(fieldName.trim().equalsIgnoreCase("HERITAGE SEC ANSWER")){
+			return this.heritageSecAnswer;
+		}
+		if(fieldName.trim().equalsIgnoreCase("HERITAGE EMAIL")){
+			return this.heritageSecEmail;
+		}
+		if(fieldName.trim().equalsIgnoreCase("HERITAGE SEC QUESTN")){
+			return this.heritageSecQuestion;
 		}
 		return null;
 	}
@@ -127,6 +145,24 @@ public class UserVerificationPage extends LoadableComponent<UserVerificationPage
 			Web.setTextToTextBox(txtUserVerificationEmail, userVerfiData[0]);
 			Web.setTextToTextBox(txtUserVerificationSecAns, userVerfiData[1]);
 			btnUserVerificationNext.click();
+			Web.waitForElement(imgEmpowerPsc);
+		}		
+		if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {
+				Reporter.logEvent(Status.INFO, "Verify if the user verification screen is loaded",
+						"The user verification screen is not loaded", false);
+			}else{
+				Reporter.logEvent(Status.PASS, "Verify if the user verification screen is loaded",
+						"The user verification screen is loaded", false);
+			}
+		}
+	
+	/** This method Performs user verification based on the user input for heritage page*/
+	public void performVerificationHeritage(String[] userVerfiData) {
+		//new UserVerificationPage();	
+		if (Web.isWebElementDisplayed(heritageSecEmail)) {			
+			Web.setTextToTextBox(heritageSecEmail, userVerfiData[0]);
+			Web.setTextToTextBox(heritageSecAnswer, userVerfiData[1]);
+			Web.clickOnElement(heritageUserVerDoneButton);
 			Web.waitForElement(imgEmpowerPsc);
 		}		
 		if (!Web.isWebElementDisplayed(imgEmpowerPsc)) {

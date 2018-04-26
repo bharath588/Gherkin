@@ -146,33 +146,6 @@ public class HomeStepDefinitions {
 		throw new PendingException();
 	}
 
-	@When("^User clicks on the YouTube social media icon$")
-	public void user_clicks_on_the_YouTube_social_media_icon() throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@Then("^A new tab opens with https://www\\.youtube\\.com/channel/UCFPLlGp(\\d+)vPjBb-G(\\d+)SnUWhQ$")
-	public void a_new_tab_opens_with_https_www_youtube_com_channel_UCFPLlGp_vPjBb_G_SnUWhQ(
-			int arg1, int arg2) throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@When("^User clicks on the Instagram social media icon$")
-	public void user_clicks_on_the_Instagram_social_media_icon()
-			throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
-	@Then("^A new tab opens with https://www\\.instagram\\.com/empowerretirement/$")
-	public void a_new_tab_opens_with_https_www_instagram_com_empowerretirement()
-			throws Throwable {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
-	}
-
 	@When("^user is on home page$")
 	public void user_is_on_home_page() throws Throwable {
 		// Write code here that turns the phrase above into concrete actions

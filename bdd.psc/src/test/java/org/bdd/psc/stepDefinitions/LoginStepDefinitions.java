@@ -317,6 +317,7 @@ public class LoginStepDefinitions {
 		// E,K,V must be a scalar (String, Integer, Date, enum etc)
 		login = new LoginPage();
 		login.get();
+		Globals.creds = creds;
 		List<Map<String, String>> credentials = creds.asMaps(String.class,
 				String.class);
 		login.submitLoginCredentials(credentials.get(0).get("username"),
