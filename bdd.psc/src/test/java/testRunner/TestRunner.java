@@ -20,7 +20,7 @@ import cucumber.api.testng.TestNGCucumberRunner;
   *
   */
 @CucumberOptions(
-		/*format = { "json", "json:target/cucumber.json" },*/
+		format = { "json", "json:target/cucumber.json" },
 		features = { "target/generated-test-sources/cucumber" }, strict = true,
 		glue={"org.bdd.psc.stepDefinitions"})
 public class TestRunner {
@@ -53,7 +53,7 @@ public class TestRunner {
 
 	    @AfterClass(alwaysRun = true)
 	    public void tearDownClass() throws Exception {
-	    	testListener.onFinish(suite);
+	    	//testListener.onFinish(suite);
 	        testNGCucumberRunner.finish();
 	    }
 
