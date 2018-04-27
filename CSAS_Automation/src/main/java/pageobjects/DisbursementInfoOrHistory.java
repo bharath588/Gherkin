@@ -404,7 +404,7 @@ public class DisbursementInfoOrHistory extends
 				Reporter.logEvent(Status.PASS,
 						"Check if Disbursement Summary displayed",
 						"Disbursement Summary displayed successfully", true);
-				wait(20000);
+				//wait(2000);
 				if (DSEventID.size() <= 0) {
 					throw new AssertionError("Does not display any events.");
 				} else {

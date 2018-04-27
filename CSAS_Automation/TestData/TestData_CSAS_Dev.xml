@@ -1816,7 +1816,8 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 			<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
-			<parameter name="ParticipantID" value="4339720" />
+			<parameter name="ParticipantID" value="select * from part_service 
+" />
 			<parameter name="Page" value="Advisory Services" />
 		</Iteration>	
 		</TestCase>

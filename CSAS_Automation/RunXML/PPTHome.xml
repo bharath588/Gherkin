@@ -8,6 +8,23 @@
 	<test name="Regression Suite">
 
 	<classes> 
+	<class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
+				<methods>
+					<include name="Verify_DIH_PaymentHistory">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"></parameter>
+					</include>
+				<include name="Verify_DIH_Vesting">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"></parameter>
+					</include>
+					<include name="Verify_DIH_ProcessingDetails">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"></parameter>
+					</include> 
+				</methods>
+			</class>  
+	
 	<class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
 				<methods>
 					 <include name="verifyFinancialEngines_ProspectUser">
@@ -21,13 +38,13 @@
 				
 				</methods>
 			</class>  
-	<!-- 	
-		<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
+	 	
+			<class name="app.csas.testcases.onlineenrollment.OnlineEnrollmentTestCases">
 						<methods>
 						<include name="validateIndicativeData_State">
 						<parameter name="ManualTCName" value="validateIndicativeData_State" />
 					</include>
-					<include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
+					 <include name="CORE_18537_CORE_19807_EndToEndTesting_WithDivision">
 						<parameter name="ManualTCName" value="CORE_18537_CORE_19807_EndToEndTesting_WithDivision" />
 						</include>
 						<include name="CORE_19833_EnterIndicativedata_Current_Dateofbirth">
@@ -95,10 +112,13 @@
 					<include name="validateIndicativeData_InlineValidation">
 						<parameter name="ManualTCName" value="InlineValidation" />
 					</include>
+						
 					
 					<include name="validateIndicativeData_ClearButton">
 						<parameter name="ManualTCName" value="validateClearButton" />
 					</include> 
+					
+							
 					<include name="validateIndicativeData_ZipCode">
 						<parameter name="ManualTCName" value="validateIndicativeData_ZipCode" />
 					</include>	
@@ -133,7 +153,7 @@
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
 					</include>  
 					</methods> 
-			</class> 
+			</class>
 	
 	 <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
@@ -263,22 +283,7 @@
 			 </class>   
 			 
 		
-			<class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
-				<methods>
-					<include name="Verify_DIH_PaymentHistory">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_Info_Disbursement_Histroy_Payment_History"></parameter>
-					</include>
-				<include name="Verify_DIH_Vesting">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_Info_Disbursement_Histroy_Vesting"></parameter>
-					</include>
-					<include name="Verify_DIH_ProcessingDetails">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_Info_Disbursement_Histroy_Processing_Details"></parameter>
-					</include> 
-				</methods>
-			</class>  
+			
 							
 	<class	name="app.csas.testcases.contributionallocationchange.validate_contributionallocationchange">
 				<methods>
@@ -331,7 +336,7 @@
 					</include>
 				</methods>
 				
-			</class>   -->
+			</class>   
 		
 		
 
