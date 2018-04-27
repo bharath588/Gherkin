@@ -11,9 +11,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import lib.DB;
+import lib.Reporter;
+import lib.Stock;
+import lib.Web;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -22,12 +26,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import core.framework.Globals;
-import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
-import lib.*;
+import appUtils.Common;
 
-import com.aventstack.extentreports.*;
+import com.aventstack.extentreports.Status;
 
 
 public class Deferrals extends LoadableComponent<Deferrals> {

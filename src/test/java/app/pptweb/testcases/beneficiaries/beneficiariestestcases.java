@@ -11,13 +11,10 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.*;
 
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.enrollment.Enrollment;
@@ -27,6 +24,9 @@ import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import appUtils.Common;
 import appUtils.TestDataFromDB;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class beneficiariestestcases {

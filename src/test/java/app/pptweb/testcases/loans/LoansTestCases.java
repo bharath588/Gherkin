@@ -2,15 +2,11 @@ package app.pptweb.testcases.loans;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
-import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
@@ -19,12 +15,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.deferrals.Deferrals;
-import pageobjects.enrollment.Enrollment;
 import pageobjects.general.LeftNavigationBar;
-import pageobjects.investment.ManageMyInvestment;
 import pageobjects.landingpage.LandingPage;
-import pageobjects.liat.RetirementIncome;
 import pageobjects.loan.RVMD_Multiple_Disbursement_Reversals_Executed_via_MAIN_MENU;
 import pageobjects.loan.RequestLoanPage;
 import pageobjects.login.LoginPage;
@@ -5034,6 +5026,8 @@ public class LoansTestCases {
 			Web.clickOnElement(requestLoan, "BUTTON UPDATE");
 			//Web.waitForElement(requestLoan, "Repayment Term Table");
 			requestLoan.verifyWebElementIsDisplayed("Repayment Term Table");
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

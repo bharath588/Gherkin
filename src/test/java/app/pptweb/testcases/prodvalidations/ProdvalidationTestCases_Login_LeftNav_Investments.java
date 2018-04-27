@@ -11,16 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 import lib.Reporter;
-
-import com.aventstack.extentreports.*;
-
 import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -50,6 +45,9 @@ import pageobjects.statementsanddocuments.StatementsAndDocuments;
 import pageobjects.transactionhistory.TransactionHistory;
 import pageobjects.withdrawals.RequestWithdrawal;
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class ProdvalidationTestCases_Login_LeftNav_Investments {

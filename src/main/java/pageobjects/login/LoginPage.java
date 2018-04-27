@@ -7,9 +7,6 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -17,7 +14,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import appUtils.Common;
-import core.framework.Globals;
+
+import com.aventstack.extentreports.Status;
 
 public class LoginPage extends LoadableComponent<LoginPage> {
 

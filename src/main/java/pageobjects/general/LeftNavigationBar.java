@@ -1,18 +1,13 @@
 package pageobjects.general;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.Status;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -21,8 +16,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 

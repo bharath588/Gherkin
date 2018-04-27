@@ -7,7 +7,6 @@ import java.util.Map;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -19,6 +18,9 @@ import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class retirementincometestcases {

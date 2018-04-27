@@ -3,9 +3,6 @@ package app.pptweb.testcases.login;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -18,22 +15,18 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
-import appUtils.TestDataFromDB;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+import appUtils.Common;
+import appUtils.TestDataFromDB;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class logintestcases {

@@ -1,16 +1,10 @@
 
 package pageobjects.liat;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 import lib.Reporter;
-
-import com.aventstack.extentreports.*;
-
-import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.By;
@@ -23,14 +17,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-
-
-
-
-
-import core.framework.Globals;
-import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class RetirementIncome extends LoadableComponent<RetirementIncome> {
 

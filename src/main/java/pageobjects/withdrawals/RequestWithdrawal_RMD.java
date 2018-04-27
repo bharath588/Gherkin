@@ -27,11 +27,12 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import com.aventstack.extentreports.Status;
-
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class RequestWithdrawal_RMD extends

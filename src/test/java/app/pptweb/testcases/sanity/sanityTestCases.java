@@ -8,12 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-
-import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
@@ -21,13 +18,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
-import appUtils.ExecuteQuery;
-import appUtils.TestDataFromDB;
 import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.general.LeftNavigationBar;
-import pageobjects.general.MyAccountsPage;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.HealthCareCosts;
 import pageobjects.liat.HowDoICompare;
@@ -37,6 +30,12 @@ import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
+import appUtils.ExecuteQuery;
+import appUtils.TestDataFromDB;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class sanityTestCases {

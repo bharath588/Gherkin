@@ -5,14 +5,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
-import lib.DB;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -20,12 +17,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import core.framework.Globals;
-import appUtils.Common;
-import pageobjects.balance.Balance;
-import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.general.LeftNavigationBar;
-import pageobjects.transactionhistory.TransactionHistory;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 
 public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocuments>{
 

@@ -12,10 +12,7 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -25,6 +22,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 
 public class TwoStepVerification extends LoadableComponent<TwoStepVerification> {

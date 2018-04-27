@@ -11,16 +11,11 @@ import java.util.Map;
 import java.util.Set;
 
 import lib.Reporter;
-
-import com.aventstack.extentreports.*;
-
 import lib.Stock;
 import lib.Web;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -50,6 +45,9 @@ import pageobjects.statementsanddocuments.StatementsAndDocuments;
 import pageobjects.transactionhistory.TransactionHistory;
 import pageobjects.withdrawals.RequestWithdrawal;
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class ProdvalidationTestCases_LeftNav {
@@ -57,7 +55,7 @@ public class ProdvalidationTestCases_LeftNav {
 	private LinkedHashMap<Integer, Map<String, String>> testData = null;
 	LoginPage login;
 	String tcName;
-	static String printTestData="";
+	static String printTestData = "";
 
 	@BeforeClass
 	public void ReportInit() {
@@ -75,13 +73,16 @@ public class ProdvalidationTestCases_LeftNav {
 				.getName(), testCase.getName());
 
 	}
+
 	private String printTestData() throws Exception {
-		printTestData="";
-		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(Thread.currentThread().getId()).entrySet()) {
-			if(!entry.getKey().equalsIgnoreCase("PASSWORD"))
-				printTestData=printTestData+entry.getKey() + "="+ entry.getValue() +"\n";
+		printTestData = "";
+		for (Map.Entry<String, String> entry : Stock.globalTestdata.get(
+				Thread.currentThread().getId()).entrySet()) {
+			if (!entry.getKey().equalsIgnoreCase("PASSWORD"))
+				printTestData = printTestData + entry.getKey() + "="
+						+ entry.getValue() + "\n";
 		}
-	 return printTestData;
+		return printTestData;
 	}
 
 	@Test(dataProvider = "setData")
@@ -89,13 +90,16 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter
-			.logEvent(
-					Status.INFO,
-					"Test Data used for this Test Case:",
-					printTestData(),
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
 					false);
 			LoginPage login = new LoginPage();
 			login.get();
@@ -145,12 +149,11 @@ public class ProdvalidationTestCases_LeftNav {
 								false);
 
 			} else {
-				lib.Reporter
-						.logEvent(
-								Status.FAIL,
-								"Check CopyRight Information on the Login Page",
-								"CopyRight Informatio is Not Same on the Login Page\nExpected:"+Stock.GetParameterValue("copyright info")+"\nActual:"+copyRightInfo,
-								false);
+				lib.Reporter.logEvent(Status.FAIL,
+						"Check CopyRight Information on the Login Page",
+						"CopyRight Informatio is Not Same on the Login Page\nExpected:"
+								+ Stock.GetParameterValue("copyright info")
+								+ "\nActual:" + copyRightInfo, false);
 			}
 			if (!Common.getSponser().equalsIgnoreCase("Apple")) {
 				login.verifyWebElementDisplayed("image participant Savings rates");
@@ -215,18 +218,22 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
-				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
-				((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
-			    Reporter.finalizeTCReport();
+				((JavascriptExecutor) Web.getDriver()).executeScript(
+						"window.scrollBy(0,-250)", "");
+				((JavascriptExecutor) Web.getDriver()).executeScript(
+						"window.scrollBy(0,-250)", "");
+				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -238,12 +245,20 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			login.get();
-			if(Web.isWebElementDisplayed(login, "DISMISS"))
+			if (Web.isWebElementDisplayed(login, "DISMISS"))
 				Web.clickOnElement(login, "DISMISS");
 			String customerSupportInfo = "";
 			boolean isTextMatching = false;
@@ -304,14 +319,16 @@ public class ProdvalidationTestCases_LeftNav {
 			List<String> telePhoneNo = login.getPreLoginTelePhoneNo(Stock
 					.GetParameterValue("Sponsor"));
 			Web.clickOnElement(login, "dismiss");
-			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
-			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript(
+					"window.scrollBy(0,-250)", "");
+			((JavascriptExecutor) Web.getDriver()).executeScript(
+					"window.scrollBy(0,-250)", "");
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			homePage.get();
-			
+
 			homePage.dismissPopUps(true, true);
-			
+
 			Thread.sleep(4000);
 
 			customerSupportInfo = login.isValidCustomerSupportInfo();
@@ -368,7 +385,7 @@ public class ProdvalidationTestCases_LeftNav {
 						false);
 			}
 			homePage.dismissPopUps(true, true);
-		
+
 			Thread.sleep(4000);
 
 		} catch (Exception e) {
@@ -379,11 +396,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -400,9 +419,17 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -424,20 +451,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 			Web.clickOnElement(profilePage, "HOME");
 			Common.waitForProgressBar();
-			/*Web.getDriver().navigate().back();
-			Web.getDriver().navigate().refresh();
-			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME")){
-			Web.waitForElement(profilePage, "LOG OUT");
-			homePage.dismissPopUps(false, true);
-			//}
-			Web.waitForElement(profilePage, "LOG OUT");
-			if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
-			Web.clickOnElement(profilePage, "LOG OUT");*/
+			/*
+			 * Web.getDriver().navigate().back();
+			 * Web.getDriver().navigate().refresh();
+			 * if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("CHROME")){
+			 * Web.waitForElement(profilePage, "LOG OUT");
+			 * homePage.dismissPopUps(false, true); //}
+			 * Web.waitForElement(profilePage, "LOG OUT");
+			 * if(Stock.getConfigParam("BROWSER").equalsIgnoreCase("FIREFOX"))
+			 * Web.clickOnElement(profilePage, "LOG OUT");
+			 */
 			Web.waitForElement(profilePage, "LOG OUT");
 			Web.clickOnElement(profilePage, "LOG OUT");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -446,11 +474,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -467,9 +497,17 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -491,9 +529,9 @@ public class ProdvalidationTestCases_LeftNav {
 						"Account Overview Lable verification",
 						"Account Overview is NOT visible", false);
 			}
-			lblDisplayed = Web.VerifyPartialText(
-					Stock.GetParameterValue("groupId"),
-					Web.getDriver().getCurrentUrl(), false);
+			lblDisplayed = Web.VerifyPartialText(Stock
+					.GetParameterValue("groupId"), Web.getDriver()
+					.getCurrentUrl(), false);
 			if (lblDisplayed) {
 				Reporter.logEvent(
 						Status.PASS,
@@ -525,11 +563,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -546,33 +586,43 @@ public class ProdvalidationTestCases_LeftNav {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
-			/*	MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
-			if(Stock.getConfigParam("TEST_ENV").contains("QA")){
-				 myAccountPage.get();
-				 if(Web.isWebElementDisplayed(myAccountPage,
-				  "PLAN NAME", true)) { myAccountPage.clickPlanNameByGAID("332125-01"); 
-				
-				  }
-				}*/
+			/*
+			 * MyAccountsPage myAccountPage = new MyAccountsPage(homePage);
+			 * if(Stock.getConfigParam("TEST_ENV").contains("QA")){
+			 * myAccountPage.get(); if(Web.isWebElementDisplayed(myAccountPage,
+			 * "PLAN NAME", true)) {
+			 * myAccountPage.clickPlanNameByGAID("332125-01");
+			 * 
+			 * } }
+			 */
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLone = new RequestLoanPage(lftBar);
 			requestLone.get();
 			String parentWindow = Web.getDriver().getWindowHandle();
-			/*for (String winHandle : Web.getDriver().getWindowHandles()) {
-				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
-				Web.waitForPageToLoad(Web.getDriver());
-			}
-*/
+			/*
+			 * for (String winHandle : Web.getDriver().getWindowHandles()) {
+			 * Web.getDriver().switchTo().window(winHandle); // switch focus of
+			 * WebDriver to the next found window handle (that's your newly
+			 * opened window) Web.waitForPageToLoad(Web.getDriver()); }
+			 */
 			boolean lblDisplayed = false;
-//			int confirmationNumber = 0;
-            Thread.sleep(5000);
+			// int confirmationNumber = 0;
+			Thread.sleep(5000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
 			if (lblDisplayed) {
@@ -584,55 +634,41 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify Request A Loan Page is Displayed",
 						"Request A Loan Page is NOT visible", true);
 			}
-		
-			
+
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
-			
-			/*lblDisplayed = Web
-					.VerifyPartialText(
-							"Selected Loan Type:\nGeneral Purpose (Available for any purpose.)",
-							requestLone.getWebElementText("TEXT LOAN TYPE"),
-							true);
-			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.PASS,
-						"Verify Selected Loan Type is Displayed",
-						"Selected Loan Type"
-								+ Stock.GetParameterValue("loanType")
-								+ " is visible", true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Selected Loan Type is Displayed",
-						"Selected Loan Type"
-								+ Stock.GetParameterValue("loanType")
-								+ " is Not visible", true);
-			}*/
-			
-		
+
+			/*
+			 * lblDisplayed = Web .VerifyPartialText(
+			 * "Selected Loan Type:\nGeneral Purpose (Available for any purpose.)"
+			 * , requestLone.getWebElementText("TEXT LOAN TYPE"), true); if
+			 * (lblDisplayed) { Reporter.logEvent( Status.PASS,
+			 * "Verify Selected Loan Type is Displayed", "Selected Loan Type" +
+			 * Stock.GetParameterValue("loanType") + " is visible", true); }
+			 * else { Reporter.logEvent( Status.FAIL,
+			 * "Verify Selected Loan Type is Displayed", "Selected Loan Type" +
+			 * Stock.GetParameterValue("loanType") + " is Not visible", true); }
+			 */
+
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
-			
+
 			Web.waitForElement(requestLone, "BUTTON CONTINUE");
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
-			
-			
-			lblDisplayed = Web.isWebElementDisplayed(requestLone, "ProActive Notification Screen",true);
+
+			lblDisplayed = Web.isWebElementDisplayed(requestLone,
+					"ProActive Notification Screen", true);
 			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.PASS,
+				Reporter.logEvent(Status.PASS,
 						"Verify ProActive Notification Screen is Displayed",
-						"ProActive Notification Screen is Displayed",	
-						true);
+						"ProActive Notification Screen is Displayed", true);
 			} else {
-				Reporter.logEvent(
-						Status.FAIL,
+				Reporter.logEvent(Status.FAIL,
 						"Verify ProActive Notification Screen is Displayed",
-						"ProActive Notification Screen is Not Displayed",	
-						true);
+						"ProActive Notification Screen is Not Displayed", true);
 			}
-			requestLone.isTextFieldDisplayed("Sign up for updates on your loan process");
+			requestLone
+					.isTextFieldDisplayed("Sign up for updates on your loan process");
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
-			
+
 			lblDisplayed = Web.VerifyPartialText("Loan Term = 12 Months",
 					requestLone.getWebElementText("TEXT LOAN TERM"), true);
 			if (lblDisplayed) {
@@ -640,14 +676,16 @@ public class ProdvalidationTestCases_LeftNav {
 						Status.PASS,
 						"Verify Loan Term is Displayed",
 						"Loan Term is Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone.getWebElementText("TEXT LOAN TERM"),
+								+ requestLone
+										.getWebElementText("TEXT LOAN TERM"),
 						false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify Loan Term is Displayed",
 						"Loan Term is Not Displayed \n Expected:Loan Term = 12 Months \nActual:"
-								+ requestLone.getWebElementText("TEXT LOAN TERM"),
+								+ requestLone
+										.getWebElementText("TEXT LOAN TERM"),
 						false);
 			}
 			requestLone.isTextFieldDisplayed("Loan Origination Fee:");
@@ -684,7 +722,8 @@ public class ProdvalidationTestCases_LeftNav {
 			requestLone.isTextFieldDisplayed("Mobile Phone:");
 			requestLone.isTextFieldDisplayed("Work Phone/Ext:");
 			requestLone.isTextFieldDisplayed("Email Address:");
-			requestLone.isTextFieldDisplayed("Please review the above contact information and make any necessary changes before you continue.");
+			requestLone
+					.isTextFieldDisplayed("Please review the above contact information and make any necessary changes before you continue.");
 			Web.setTextToTextBox("INPUT HOME AREA CODE", requestLone, "123");
 			Web.setTextToTextBox("INPUT HOME PREFIX", requestLone, "456");
 			Web.setTextToTextBox("INPUT HOME SUFFIX", requestLone, "7890");
@@ -692,10 +731,11 @@ public class ProdvalidationTestCases_LeftNav {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(requestLone, "CHECKBOX I ACCEPT");
-			lblDisplayed = Web.VerifyText(
+			lblDisplayed = Web
+					.VerifyText(
 							"PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\".",
-							requestLone.getWebElementText("TEXT VERIFY ALL INFO").trim(),
-							true);
+							requestLone.getWebElementText(
+									"TEXT VERIFY ALL INFO").trim(), true);
 
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
@@ -708,13 +748,15 @@ public class ProdvalidationTestCases_LeftNav {
 						"PLEASE VERIFY ALL INFO..... Text is Not Dispalyed Expected:"
 								+ "PLEASE VERIFY ALL INFORMATION AND CAREFULLY READ ALL TERMS OF THE LOAN PROMISSORY NOTE AND THE PLAN'S LOAN PROVISIONS BEFORE CLICKING \"I ACCEPT\"."
 								+ "\nActual:"
-								+ requestLone.getWebElementText("TEXT VERIFY ALL INFO"),
+								+ requestLone
+										.getWebElementText("TEXT VERIFY ALL INFO"),
 						true);
 			}
 			lblDisplayed = Web
 					.VerifyText(
 							"Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions.",
-							requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
+							requestLone
+									.getWebElementText("TEXT ONCE YOU CLICK"),
 							true);
 
 			if (lblDisplayed) {
@@ -729,14 +771,16 @@ public class ProdvalidationTestCases_LeftNav {
 						"ONCE YOU CLICK I ACCEPT..... Text is Not Dispalyed Expected:"
 								+ "Once you click \"I Accept\", you will initiate the loan described below and you are acknowledging that you accept the terms of the Loan Promissory Note and the Plan's Loan Provisions."
 								+ "\nActual:"
-								+ requestLone.getWebElementText("TEXT ONCE YOU CLICK"),
+								+ requestLone
+										.getWebElementText("TEXT ONCE YOU CLICK"),
 						false);
 			}
 
 			requestLone.isTextFieldDisplayed("Loan Information");
 			requestLone.isTextFieldDisplayed("Loan Amount");
 			requestLone.isTextFieldDisplayed("Total Interest Charge");
-			requestLone.isTextFieldDisplayed("Total Principal and Interest Amount");
+			requestLone
+					.isTextFieldDisplayed("Total Principal and Interest Amount");
 			requestLone.isTextFieldDisplayed("Interest Rate ");
 			requestLone.isTextFieldDisplayed("Loan Type");
 			requestLone.isTextFieldDisplayed("Loan Term");
@@ -764,7 +808,8 @@ public class ProdvalidationTestCases_LeftNav {
 			requestLone.isTextFieldDisplayed("Zip");
 			requestLone.isTextFieldDisplayed("Country");
 			requestLone.isTextFieldDisplayed("Express Mail Service");
-			requestLone.isTextFieldDisplayed("I have read and agree to the Plan");
+			requestLone
+					.isTextFieldDisplayed("I have read and agree to the Plan");
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"CHECKBOX I ACCEPT", true);
 			if (lblDisplayed) {
@@ -791,7 +836,8 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify I Accept Button is Displayed",
 						"I ACCEPT Button is Not Displayed", false);
 			}
-			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
+			if (Stock.GetParameterValue("submitRequest")
+					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestLone, "I ACCEPT");
 				Thread.sleep(3000);
 				lblDisplayed = Web.VerifyPartialText(
@@ -809,20 +855,24 @@ public class ProdvalidationTestCases_LeftNav {
 				}
 				if (Web.isWebElementDisplayed(requestLone,
 						"TEXT CONFIRMATION NUMBER", true)) {
-					lblDisplayed = Common.verifyStringIsInNumberFormat(requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					lblDisplayed = Common
+							.verifyStringIsInNumberFormat(requestLone
+									.getWebElementText("TEXT CONFIRMATION NUMBER"));
 					if (lblDisplayed) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
-										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is Number Format",
 								"Request Confirmation Number is  Not in Number Format"
-										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								true);
 					}
 				} else {
@@ -833,13 +883,15 @@ public class ProdvalidationTestCases_LeftNav {
 				}
 			}
 			Web.getDriver().switchTo().defaultContent();
-			//Web.getDriver().close();
-			//Web.getDriver().switchTo().window(parentWindow);
-			//Web.getDriver().switchTo().defaultContent();
-			/*Web.clickOnElement(requestLone, "LOGOUT");
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.waitForElement(login, "SIGN IN");*/
+			// Web.getDriver().close();
+			// Web.getDriver().switchTo().window(parentWindow);
+			// Web.getDriver().switchTo().defaultContent();
+			/*
+			 * Web.clickOnElement(requestLone, "LOGOUT");
+			 * Common.waitForProgressBar();
+			 * Web.waitForPageToLoad(Web.getDriver()); Web.waitForElement(login,
+			 * "SIGN IN");
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -848,11 +900,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -868,9 +922,17 @@ public class ProdvalidationTestCases_LeftNav {
 	public void SF01_TC018_Verify_ROR_link(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -893,7 +955,7 @@ public class ProdvalidationTestCases_LeftNav {
 						true);
 			}
 			Web.getDriver().switchTo().defaultContent();
-			//Web.clickOnElement(ROR, "LOGOUT");
+			// Web.clickOnElement(ROR, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -902,11 +964,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -923,9 +987,17 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LegacyLandingPage homePage = new LegacyLandingPage(mfaPage);
@@ -933,14 +1005,15 @@ public class ProdvalidationTestCases_LeftNav {
 			homePage.get();
 
 			boolean lblDisplayed = false;
-			
-			//Thread.sleep(6000);
-			/*Web.getDriver().navigate().refresh();
-			Thread.sleep(6000);*/
-			if(Web.isWebElementDisplayed(homePage, "Button Close", true)){
+
+			// Thread.sleep(6000);
+			/*
+			 * Web.getDriver().navigate().refresh(); Thread.sleep(6000);
+			 */
+			if (Web.isWebElementDisplayed(homePage, "Button Close", true)) {
 				Web.clickOnElement(homePage, "Button Close");
 			}
-			
+
 			lblDisplayed = Web.isWebElementDisplayed(homePage, "USER NAME",
 					true);
 			if (lblDisplayed) {
@@ -974,7 +1047,7 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify INVESTMENTS Link is Displayed",
 						"INVESTMENTS Link is Not Displayed", false);
 			}
-			//Web.clickOnElement(homePage, "LOGOUT");
+			// Web.clickOnElement(homePage, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -983,11 +1056,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -1003,8 +1078,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void Balance_validations(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -1014,11 +1096,11 @@ public class ProdvalidationTestCases_LeftNav {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			Thread.sleep(5000);
-			
-				if(!Web.isWebElementDisplayed(balance, "Balance",true)){
-					Common.handlePageToLoad("Balance");
-				}
-				
+
+			if (!Web.isWebElementDisplayed(balance, "Balance", true)) {
+				Common.handlePageToLoad("Balance");
+			}
+
 			balance.navigateToTab("Balance");
 			// not seeing this table in PRod data
 			/*
@@ -1044,7 +1126,7 @@ public class ProdvalidationTestCases_LeftNav {
 			balance.verifytableHeaderNotEmpty("Balance Comparison Table Header");
 			balance.verifyTableDataDisplayed("Balance Comparison Table");
 			balance.verifyGraphDisplayed("Balance Comparison Graph");
-		//	Web.clickOnElement(balance, "LOGOUT");
+			// Web.clickOnElement(balance, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1053,11 +1135,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1074,8 +1158,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1088,30 +1179,36 @@ public class ProdvalidationTestCases_LeftNav {
 			Thread.sleep(5000);
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			if(Common.switchToLegacyFutureFrame()){
-				if(!Web.isWebElementDisplayed(transaction, "DropDown Frequency",true)){
+			if (Common.switchToLegacyFutureFrame()) {
+				if (!Web.isWebElementDisplayed(transaction,
+						"DropDown Frequency", true)) {
 					Common.handlePageToLoad("Transaction history");
 				}
-				}
-				else
-					Common.handlePageToLoad("Transaction history");
-				
+			} else
+				Common.handlePageToLoad("Transaction history");
+
 			transaction.selectDateFrequency("Three Years");
 			Thread.sleep(5000);
 			// transaction.clickConfirmationNumber();
 			transaction.verifyTableDisplayed("Transaction Filter Option Table");
 			transaction.clickConfirmationNumber();
 
-			transaction.verifyTableDisplayed("Transaction History Contr Summary Table");
-			transaction.verifytableHeaderNotEmpty("Transaction History Contr Summary Table Header");
-			transaction.verifyTableDataDisplayed("Transaction History Contr Summary Table");
+			transaction
+					.verifyTableDisplayed("Transaction History Contr Summary Table");
+			transaction
+					.verifytableHeaderNotEmpty("Transaction History Contr Summary Table Header");
+			transaction
+					.verifyTableDataDisplayed("Transaction History Contr Summary Table");
 
-			transaction.verifyTableDisplayed("Transaction History Contr Detail Table");
-			transaction.verifytableHeaderNotEmpty("Transaction History Contr Detail Table Header");
-			transaction.verifyTableDataDisplayed("Transaction History Contr Detail Table");
+			transaction
+					.verifyTableDisplayed("Transaction History Contr Detail Table");
+			transaction
+					.verifytableHeaderNotEmpty("Transaction History Contr Detail Table Header");
+			transaction
+					.verifyTableDataDisplayed("Transaction History Contr Detail Table");
 
 			transaction.verifyReferenceNumber();
-		//	 Web.clickOnElement(transaction, "LOGOUT");
+			// Web.clickOnElement(transaction, "LOGOUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1120,11 +1217,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1142,8 +1241,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1158,48 +1264,59 @@ public class ProdvalidationTestCases_LeftNav {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			String parentWindow = Web.getDriver().getWindowHandle();
-			/*for (String winHandle : Web.getDriver().getWindowHandles()) {
-	       Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
-	       Web.waitForPageToLoad(Web.getDriver());
-       }*/
+			/*
+			 * for (String winHandle : Web.getDriver().getWindowHandles()) {
+			 * Web.getDriver().switchTo().window(winHandle); // switch focus of
+			 * WebDriver to the next found window handle (that's your newly
+			 * opened window) Web.waitForPageToLoad(Web.getDriver()); }
+			 */
 			String parentWindow1 = Web.getDriver().getWindowHandle();
-			/*if(Common.switchToLegacyFutureFrame()){
-			if(!Web.isWebElementDisplayed(statements, "Stmts On Demand Tab",true)){
-				Common.handlePageToLoad("Statements and documents");
-			}
-			}
-			else
-				Common.handlePageToLoad("Statements and documents");*/
-					
+			/*
+			 * if(Common.switchToLegacyFutureFrame()){
+			 * if(!Web.isWebElementDisplayed(statements,
+			 * "Stmts On Demand Tab",true)){
+			 * Common.handlePageToLoad("Statements and documents"); } } else
+			 * Common.handlePageToLoad("Statements and documents");
+			 */
+
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
 			statements.verifyTableDisplayed("Account at a Glance Table");
-			statements.verifytableHeaderNotEmpty("Account at a Glance Table Header");
+			statements
+					.verifytableHeaderNotEmpty("Account at a Glance Table Header");
 			statements.verifyTableDataDisplayed("Account at a Glance Table");
 
-			statements.verifyTableDisplayed("Activity by Contribution Source Table");
-			statements.verifytableHeaderNotEmpty("Activity by Contribution Source Table Header");
-			statements.verifyTableDataDisplayed("Activity by Contribution Source Table");
+			statements
+					.verifyTableDisplayed("Activity by Contribution Source Table");
+			statements
+					.verifytableHeaderNotEmpty("Activity by Contribution Source Table Header");
+			statements
+					.verifyTableDataDisplayed("Activity by Contribution Source Table");
 
-			statements.verifyTableDisplayed("Activity by Investment Option Table");
-			statements.verifytableHeaderNotEmpty("Activity by Investment Option Table Header");
-			statements.verifyTableDataDisplayed("Activity by Investment Option Table");
+			statements
+					.verifyTableDisplayed("Activity by Investment Option Table");
+			statements
+					.verifytableHeaderNotEmpty("Activity by Investment Option Table Header");
+			statements
+					.verifyTableDataDisplayed("Activity by Investment Option Table");
 
-			statements.clickOnStatementFromTable("Activity by Contribution Source");
+			statements
+					.clickOnStatementFromTable("Activity by Contribution Source");
 			statements.verifyTableDisplayed("Transaction Details Table");
-			statements.verifytableHeaderNotEmpty("Transaction Details Table Header");
-			statements. verifyTableDataDisplayed("Transaction Details Table");
-			//closing child window
-	   		 Web.getDriver().close();
-	          //cntrl to parent window1
-	      	//  Web.getDriver().switchTo().window(parentWindow1);
-	      	  //close parent window 1
-	      	// Web.getDriver().close();
-	      	 //cntrl to parent window
-	      	 Web.getDriver().switchTo().window(parentWindow);
-	      	Web.getDriver().switchTo().defaultContent();
-			//statements.switchToWindow();
+			statements
+					.verifytableHeaderNotEmpty("Transaction Details Table Header");
+			statements.verifyTableDataDisplayed("Transaction Details Table");
+			// closing child window
+			Web.getDriver().close();
+			// cntrl to parent window1
+			// Web.getDriver().switchTo().window(parentWindow1);
+			// close parent window 1
+			// Web.getDriver().close();
+			// cntrl to parent window
+			Web.getDriver().switchTo().window(parentWindow);
+			Web.getDriver().switchTo().defaultContent();
+			// statements.switchToWindow();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1209,11 +1326,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1230,8 +1349,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void Manage_My_Investment_Flow(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1241,7 +1367,7 @@ public class ProdvalidationTestCases_LeftNav {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 
 			investment.get();
-			//Thread.sleep(5000);
+			// Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Rebalance Currnet Balance");
 			Web.clickOnElement(investment, "Continue button1");
@@ -1265,8 +1391,8 @@ public class ProdvalidationTestCases_LeftNav {
 				investment.cancelTransfer("Rebalance Currnet Balance");
 			}
 			Web.getDriver().switchTo().defaultContent();
-			 //Web.clickOnElement(investment, "LOGOUT");
-			
+			// Web.clickOnElement(investment, "LOGOUT");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1275,11 +1401,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1297,8 +1425,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1307,8 +1442,8 @@ public class ProdvalidationTestCases_LeftNav {
 			leftmenu = new LeftNavigationBar(homePage);
 			PayrollCalendar payroll = new PayrollCalendar(leftmenu);
 			payroll.get();
-			
-			//Thread.sleep(5000);
+
+			// Thread.sleep(5000);
 			payroll.verifyDataIsDiaplyed();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1318,11 +1453,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1339,8 +1476,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1349,14 +1493,14 @@ public class ProdvalidationTestCases_LeftNav {
 			leftmenu = new LeftNavigationBar(homePage);
 			InvestmentLineup investment = new InvestmentLineup(leftmenu);
 			investment.get();
-			
-				if(!Web.isWebElementDisplayed(investment, "Options tab",true)){
-					Common.handlePageToLoad("Investment lineup");
-				}
-				
-			//Thread.sleep(5000);
+
+			if (!Web.isWebElementDisplayed(investment, "Options tab", true)) {
+				Common.handlePageToLoad("Investment lineup");
+			}
+
+			// Thread.sleep(5000);
 			investment.viewProspectus();
-		    Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1365,11 +1509,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1385,8 +1531,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void Edit_MyContribution(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1394,7 +1547,7 @@ public class ProdvalidationTestCases_LeftNav {
 			leftmenu = new LeftNavigationBar(homePage);
 			Deferrals deferral = new Deferrals(leftmenu);
 			deferral.get();
-			//Thread.sleep(5000);
+			// Thread.sleep(5000);
 			if (deferral.clickAddEditButton("Standard Edit"))
 				Reporter.logEvent(Status.PASS,
 						"Verify Standard contribution page",
@@ -1407,9 +1560,8 @@ public class ProdvalidationTestCases_LeftNav {
 			deferral.select_ContributionType("Before");
 			lib.Web.clickOnElement(deferral, "Continue button");
 			Thread.sleep(3000);
-			if (deferral.verifyMyContributions(
-					deferral.contrbution_rate, "Before Tax",
-					"Standard"))
+			if (deferral.verifyMyContributions(deferral.contrbution_rate,
+					"Before Tax", "Standard"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify Before contribution percent for Standard deferral",
@@ -1425,7 +1577,7 @@ public class ProdvalidationTestCases_LeftNav {
 				lib.Web.clickOnElement(deferral, "MyContribution Button");
 			}
 			Web.getDriver().switchTo().defaultContent();
-			//lib.Web.clickOnElement(deferral, "LOG OUT");
+			// lib.Web.clickOnElement(deferral, "LOG OUT");
 			Web.clickOnElement(homePage, "HOME");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1435,11 +1587,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1451,14 +1605,19 @@ public class ProdvalidationTestCases_LeftNav {
 		}
 	}
 
-	
-	
 	@Test(dataProvider = "setData")
 	public void Brokerage_validations(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1468,27 +1627,33 @@ public class ProdvalidationTestCases_LeftNav {
 			Brokerage brokerage = new Brokerage(leftmenu);
 			brokerage.get();
 			String parentWindow = Web.getDriver().getWindowHandle();
-						/*for (String winHandle : Web.getDriver().getWindowHandles()) {
-				Web.getDriver().switchTo().window(winHandle); // switch focus of WebDriver to the next found window handle (that's your newly opened window)
-				Web.waitForPageToLoad(Web.getDriver());
-			}*/
-			//Thread.sleep(5000);
+			/*
+			 * for (String winHandle : Web.getDriver().getWindowHandles()) {
+			 * Web.getDriver().switchTo().window(winHandle); // switch focus of
+			 * WebDriver to the next found window handle (that's your newly
+			 * opened window) Web.waitForPageToLoad(Web.getDriver()); }
+			 */
+			// Thread.sleep(5000);
 			brokerage.verifyBrokerageTableDisplayed();
 
 			brokerage.verifyBrokerageTableDataDisplayed("Provider Name");
 			brokerage.verifyBrokerageTableDataDisplayed("Enroll image");
-			brokerage.verifyBrokerageTableDataDisplayed("Transfer into sda link");
-			brokerage.verifyBrokerageTableDataDisplayed("Transfer from sda link");
+			brokerage
+					.verifyBrokerageTableDataDisplayed("Transfer into sda link");
+			brokerage
+					.verifyBrokerageTableDataDisplayed("Transfer from sda link");
 			brokerage.verifyBrokerageTableDataDisplayed("PDF image");
 			Web.getDriver().switchTo().defaultContent();
-			/*Web.getDriver().close();
-			Web.getDriver().switchTo().window(parentWindow);*/
+			/*
+			 * Web.getDriver().close();
+			 * Web.getDriver().switchTo().window(parentWindow);
+			 */
 			Web.getDriver().switchTo().defaultContent();
-			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+			if (Stock.getConfigParam("TEST_ENV").toUpperCase()
+					.startsWith("PROJ")) {
 				Web.clickOnElement(brokerage, "LOGOUT");
 				Web.waitForElement(brokerage, "LOGIN");
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1498,11 +1663,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1519,8 +1686,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void PlanForms_Validations(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1528,8 +1702,8 @@ public class ProdvalidationTestCases_LeftNav {
 			leftmenu = new LeftNavigationBar(homePage);
 			PlanForms planforms = new PlanForms(leftmenu);
 			planforms.get();
-			//Thread.sleep(7000);
-			
+			// Thread.sleep(7000);
+
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			planforms.clickOnForm(null);
@@ -1548,11 +1722,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1568,8 +1744,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void FundToFundTransfer(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1579,18 +1762,20 @@ public class ProdvalidationTestCases_LeftNav {
 			investment.get();
 			Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
-			investment.choseInvestmentOption("Change Current Balance Investment");
+			investment
+					.choseInvestmentOption("Change Current Balance Investment");
 			Web.clickOnElement(investment, "Continue button1");
 			Thread.sleep(5000);
-						
-			if(Stock.getConfigParam("TEST_ENV").toUpperCase().startsWith("PROJ")){
+
+			if (Stock.getConfigParam("TEST_ENV").toUpperCase()
+					.startsWith("PROJ")) {
 				Common.waitForProgressBar();
 				Web.waitForPageToLoad(Web.getDriver());
 				Web.getDriver().switchTo().frame("legacyFeatureIframe");
-				Web.clickOnElement(investment,"F2F MTG1");
+				Web.clickOnElement(investment, "F2F MTG1");
 				Thread.sleep(2000);
-				Web.clickOnElement(investment,"Submit button Rebalancer");
-				
+				Web.clickOnElement(investment, "Submit button Rebalancer");
+
 				Web.getDriver().switchTo().defaultContent();
 			}
 			Common.waitForProgressBar();
@@ -1609,7 +1794,7 @@ public class ProdvalidationTestCases_LeftNav {
 					"Yes"))
 				investment.cancelTransfer("F2F");
 			Web.getDriver().switchTo().defaultContent();
-			 //Web.clickOnElement(investment, "LOGOUT");
+			// Web.clickOnElement(investment, "LOGOUT");
 			// Web.waitForElement(investment, "Login");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1619,11 +1804,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1639,8 +1826,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void Dollar_Cost_Average_Flow(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1660,8 +1854,8 @@ public class ProdvalidationTestCases_LeftNav {
 					Stock.GetParameterValue("Setup_date"),
 					Stock.GetParameterValue("percent"),
 					Stock.GetParameterValue("amount"));
-			 //Web.clickOnElement(investment, "LOGOUT");
-			 //Thread.sleep(5000);
+			// Web.clickOnElement(investment, "LOGOUT");
+			// Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1670,11 +1864,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1690,8 +1886,15 @@ public class ProdvalidationTestCases_LeftNav {
 	public void Edit_Beneficiary(int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1700,7 +1903,7 @@ public class ProdvalidationTestCases_LeftNav {
 			leftmenu = new LeftNavigationBar(homePage);
 			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
 			beneficiary.get();
-			//Thread.sleep(5000);
+			// Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.",
 					"Beneficiary page is displayed", true);
 			beneficiary.clickOnBeneficiaryFromTable(null, "Primary");
@@ -1835,11 +2038,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -1851,15 +2056,22 @@ public class ProdvalidationTestCases_LeftNav {
 		}
 	}
 
-	
 	@Test(dataProvider = "setData")
 	public void SF01_TC019_Verify_Request_A_Withdrawal_link(int itr,
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			Actions keyBoard = new Actions(Web.getDriver());
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -1870,15 +2082,26 @@ public class ProdvalidationTestCases_LeftNav {
 			requestWithdrawal.get();
 			Thread.sleep(4000);
 			boolean lblDisplayed = false;
-			requestWithdrawal.selectSourceHierarchyForInService(Stock.GetParameterValue("withdrawalType"));
-			/*requestWithdrawal.selectWithdrawalType(Stock.GetParameterValue("withdrawalType"));			
-			requestWithdrawal.enterWithdrawalAmountForInService(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("isRothAvail"), 
-					Stock.GetParameterValue("isPreTaxAvail"));*/
-			requestWithdrawal.citizenShipValidation(Stock.GetParameterValue("SSN"));
-			requestWithdrawal.verifyWithdrawalMethodPage(Stock.GetParameterValue("withdrawalType"),Stock.GetParameterValue("withdrawalMethod"), 
-					Stock.GetParameterValue("emailAddress"));			
-			requestWithdrawal.verifyWithdrawalSummary(Stock.GetParameterValue("deliveryMethod"),true);
-			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,"I AGREE AND SUBMIT", true);
+			requestWithdrawal.selectSourceHierarchyForInService(Stock
+					.GetParameterValue("withdrawalType"));
+			/*
+			 * requestWithdrawal.selectWithdrawalType(Stock.GetParameterValue(
+			 * "withdrawalType"));
+			 * requestWithdrawal.enterWithdrawalAmountForInService
+			 * (Stock.GetParameterValue
+			 * ("withdrawalType"),Stock.GetParameterValue("isRothAvail"),
+			 * Stock.GetParameterValue("isPreTaxAvail"));
+			 */
+			requestWithdrawal.citizenShipValidation(Stock
+					.GetParameterValue("SSN"));
+			requestWithdrawal.verifyWithdrawalMethodPage(
+					Stock.GetParameterValue("withdrawalType"),
+					Stock.GetParameterValue("withdrawalMethod"),
+					Stock.GetParameterValue("emailAddress"));
+			requestWithdrawal.verifyWithdrawalSummary(
+					Stock.GetParameterValue("deliveryMethod"), true);
+			lblDisplayed = Web.isWebElementDisplayed(requestWithdrawal,
+					"I AGREE AND SUBMIT", true);
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.INFO,
 						"Verify I Agree and Submit Button is Displayed",
@@ -1888,22 +2111,27 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify I Agree and Submit Button is Displayed",
 						"I Agree and Submit Button is Not Displayed", false);
 			}
-			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
-				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");				
+			if (Stock.GetParameterValue("submitRequest")
+					.equalsIgnoreCase("YES")) {
+				Web.clickOnElement(requestWithdrawal, "I AGREE AND SUBMIT");
 				Common.waitForProgressBar();
 				Thread.sleep(3000);
-				lblDisplayed = requestWithdrawal.isTextFieldDisplayed("Request submitted!");
+				lblDisplayed = requestWithdrawal
+						.isTextFieldDisplayed("Request submitted!");
 				if (lblDisplayed) {
-					Reporter.logEvent(Status.INFO,
+					Reporter.logEvent(
+							Status.INFO,
 							"Verify Withdrawals Confirmation Page is Displayed",
 							"Withdrawals Confirmation Page is Displayed", true);
 				} else {
-					Reporter.logEvent(Status.FAIL,
+					Reporter.logEvent(
+							Status.FAIL,
 							"Verify Withdrawals Confirmation Page is Displayed",
 							"Withdrawals Confirmation is Not Displayed", true);
 				}
 				lblDisplayed = Web.VerifyPartialText(
-						"Your confirmation number is", requestWithdrawal.getWebElementText("TEXT CONFIRMATION"), true);
+						"Your confirmation number is", requestWithdrawal
+								.getWebElementText("TEXT CONFIRMATION"), true);
 				if (lblDisplayed) {
 					Reporter.logEvent(Status.INFO,
 							"Verify Request Confirmation is Displayed",
@@ -1916,20 +2144,24 @@ public class ProdvalidationTestCases_LeftNav {
 
 				if (Web.isWebElementDisplayed(requestWithdrawal,
 						"TEXT CONFIRMATION NUMBER", true)) {
-					lblDisplayed = Common.verifyStringIsInNumberFormat(requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					lblDisplayed = Common
+							.verifyStringIsInNumberFormat(requestWithdrawal
+									.getWebElementText("TEXT CONFIRMATION NUMBER"));
 					if (lblDisplayed) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
-										+ requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestWithdrawal
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation Number is Not in Number Format"
-										+ requestWithdrawal.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestWithdrawal
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								true);
 					}
 				} else {
@@ -1940,7 +2172,7 @@ public class ProdvalidationTestCases_LeftNav {
 				}
 			}
 			Web.getDriver().switchTo().defaultContent();
-		//	Web.clickOnElement(requestWithdrawal, "LOG OUT");
+			// Web.clickOnElement(requestWithdrawal, "LOG OUT");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -1949,11 +2181,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -1964,6 +2198,7 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
 	public void SF04_TC01_SendActivationCode_ForgotPasswordFlow(int itr,
 			Map<String, String> testdata) {
@@ -1971,9 +2206,15 @@ public class ProdvalidationTestCases_LeftNav {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			String actLoginHelptxt = "Enter the information below to recover your username. You will have the option to change your password.";
 			String expLoginHelptxt;
 			boolean isMatching;
@@ -2032,7 +2273,8 @@ public class ProdvalidationTestCases_LeftNav {
 					lib.Stock.GetParameterValue("STREETADDRESS"));
 
 			// Step 5 - Click on "Already have a code?" link
-			objAuth.selectCodeDeliveryOption(lib.Stock.GetParameterValue("codeDeliveryOption"));
+			objAuth.selectCodeDeliveryOption(lib.Stock
+					.GetParameterValue("codeDeliveryOption"));
 
 			// Step 6 and 7 - Enter verification code into
 			// "PLEASE ENTER VERIFICATION CODE" text box and click on "Continue"
@@ -2077,11 +2319,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2100,9 +2344,15 @@ public class ProdvalidationTestCases_LeftNav {
 		try {
 			Reporter.initializeReportForTC(
 					itr,
-					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-							+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+					core.framework.Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			String verificationCode = "";
 
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
@@ -2142,16 +2392,22 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 
 			// Select code delivery option and click continue
-			twoStepVerification.selectCodeDeliveryOption(lib.Stock.GetParameterValue("deliveryOption"));
+			twoStepVerification.selectCodeDeliveryOption(lib.Stock
+					.GetParameterValue("deliveryOption"));
 
 			// Get verification code
-			if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("ALREADY_HAVE_CODE")) {
-				verificationCode = twoStepVerification.getVerificationCode(true);
+			if (lib.Stock.GetParameterValue("deliveryOption").trim()
+					.equalsIgnoreCase("ALREADY_HAVE_CODE")) {
+				verificationCode = twoStepVerification
+						.getVerificationCode(true);
 			} else {
-				if (lib.Stock.GetParameterValue("deliveryOption").trim().equalsIgnoreCase("EMAIL")) {
-					verificationCode = twoStepVerification.getVerificationCode(false);
+				if (lib.Stock.GetParameterValue("deliveryOption").trim()
+						.equalsIgnoreCase("EMAIL")) {
+					verificationCode = twoStepVerification
+							.getVerificationCode(false);
 				} else {
-					if (twoStepVerification.isActivationCodeGenerated(lib.Stock.GetParameterValue("deliveryOption"))) {
+					if (twoStepVerification.isActivationCodeGenerated(lib.Stock
+							.GetParameterValue("deliveryOption"))) {
 						Reporter.logEvent(Status.PASS,
 								"Verify activation code is generated",
 								"Activation code is successfully generated",
@@ -2174,7 +2430,8 @@ public class ProdvalidationTestCases_LeftNav {
 			// Submit verification code
 			Thread.sleep(5000);
 			twoStepVerification.submitVerificationCode(verificationCode, true,
-					Boolean.parseBoolean(lib.Stock.GetParameterValue("rememberDevice")));
+					Boolean.parseBoolean(lib.Stock
+							.GetParameterValue("rememberDevice")));
 
 			// Dismiss pop ups if displayed
 			LandingPage landingPage = new LandingPage(twoStepVerification);
@@ -2194,9 +2451,9 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 			landingPage.dismissPopUps(true, true);
 			// Logout if opted
-			//Web.clickOnElement(landingPage, "LOGOUT");
+			// Web.clickOnElement(landingPage, "LOGOUT");
 			Common.waitForProgressBar();
-			 Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForPageToLoad(Web.getDriver());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -2216,13 +2473,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
 	public void RIP_TC004_To_verify_Retirement_Income_tab_Plan_Savings(int itr,
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2243,7 +2508,7 @@ public class ProdvalidationTestCases_LeftNav {
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Plan Savings tab",
 						"Plan Savings tab is not displayed", true);
-        Web.clickOnElement(retirement,"Plan Savings");
+			Web.clickOnElement(retirement, "Plan Savings");
 			// verify if Contribution rate slider is present
 			if (retirement.verifyIfSliderPresent("Contribution rate slider"))
 				Reporter.logEvent(Status.PASS,
@@ -2262,14 +2527,16 @@ public class ProdvalidationTestCases_LeftNav {
 						"Retirement age slider not displayed", true);
 
 			// verify if Investment mix slider is present
-			/*if (retirement.verifyIfSliderPresent("Investment mix slider"))
-				Reporter.logEvent(Status.PASS, "Verify Investment mix slider",
-						"Investment mix slider displayed", false);
-			else
-				Reporter.logEvent(Status.FAIL, "Verify Investment mix slider",
-						"Investment mix slider not displayed", true);*/
+			/*
+			 * if (retirement.verifyIfSliderPresent("Investment mix slider"))
+			 * Reporter.logEvent(Status.PASS, "Verify Investment mix slider",
+			 * "Investment mix slider displayed", false); else
+			 * Reporter.logEvent(Status.FAIL, "Verify Investment mix slider",
+			 * "Investment mix slider not displayed", true);
+			 */
 
-			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim()
+					.equalsIgnoreCase("Y")) {
 				Web.clickOnElement(retirement, "Do It Myself");
 				if (retirement.verifyIfSliderPresent("Investment mix slider"))
 					Reporter.logEvent(Status.PASS,
@@ -2290,7 +2557,8 @@ public class ProdvalidationTestCases_LeftNav {
 							"Investment mix slider displayed", true);
 			}
 			// verify if we are able to navigate to Help Me Do It Tab
-			if (lib.Stock.GetParameterValue("Help Me Do It").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Help Me Do It").trim()
+					.equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Help Me Do It"))
 					Reporter.logEvent(Status.PASS, "Verify help Me Do It tab",
 							"Able to navigate to Help Me Do It tab", false);
@@ -2307,7 +2575,8 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 
 			// verify if we are able to navigate to Do It For Me Tab
-			if (lib.Stock.GetParameterValue("Do It For Me").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It For Me").trim()
+					.equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Do It For Me"))
 					Reporter.logEvent(Status.PASS, "Verify Do It For Me tab",
 							"Able to navigate to Do It For Me It tab", false);
@@ -2325,7 +2594,8 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 
 			// verify if we are able to navigate to Do It Myself Tab
-			if (lib.Stock.GetParameterValue("Do It Myself").trim().equalsIgnoreCase("Y")) {
+			if (lib.Stock.GetParameterValue("Do It Myself").trim()
+					.equalsIgnoreCase("Y")) {
 				if (Web.clickOnElement(retirement, "Do It Myself"))
 					Reporter.logEvent(Status.PASS, "Verify Do It Myself tab",
 							"Able to navigate to Do It Myself tab", false);
@@ -2349,11 +2619,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2370,8 +2642,15 @@ public class ProdvalidationTestCases_LeftNav {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2415,11 +2694,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2436,8 +2717,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2481,11 +2769,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2502,8 +2792,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification twoStepVerification = new TwoStepVerification(
 					login);
@@ -2547,11 +2844,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2568,8 +2867,15 @@ public class ProdvalidationTestCases_LeftNav {
 			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2581,8 +2887,10 @@ public class ProdvalidationTestCases_LeftNav {
 					"Retirement Income page is displayed", true);
 
 			// verify Percent of my goal section for monthly retirement income
-			String expectedtxtMonthlyIncome = retirement.verifyPercentOfMyGoalSection("Monthly Income");
-			if (expectedtxtMonthlyIncome.contains("My goal for monthly retirement income"))
+			String expectedtxtMonthlyIncome = retirement
+					.verifyPercentOfMyGoalSection("Monthly Income");
+			if (expectedtxtMonthlyIncome
+					.contains("My goal for monthly retirement income"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Check Percent of my goal section for monthly retirement income",
@@ -2594,8 +2902,10 @@ public class ProdvalidationTestCases_LeftNav {
 						"Percent of my goal section not displayed", true);
 
 			// verify Percent of my goal section for monthly retirement income
-			String expectedtxtYearlyIncome = retirement.verifyPercentOfMyGoalSection("Yearly Income");
-			if (expectedtxtYearlyIncome.contains("My goal for yearly retirement income"))
+			String expectedtxtYearlyIncome = retirement
+					.verifyPercentOfMyGoalSection("Yearly Income");
+			if (expectedtxtYearlyIncome
+					.contains("My goal for yearly retirement income"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Check Percent of my goal section for yearly retirement income",
@@ -2613,11 +2923,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2634,8 +2946,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			float projectedIncome;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -2658,11 +2977,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2679,8 +3000,15 @@ public class ProdvalidationTestCases_LeftNav {
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2695,11 +3023,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2710,14 +3040,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
 	public void LIAT_To_verify_PayCheckView_Displayed(int itr,
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2745,18 +3082,20 @@ public class ProdvalidationTestCases_LeftNav {
 						true);
 
 		} catch (Exception e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
 			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2767,13 +3106,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
 	public void LIAT_To_verify_PayCheckView_Displayed_With_ColorBar(int itr,
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2799,21 +3146,29 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify PayCheck View in Retirement Income Page",
 						"PayCheck View in Retirement Income Page is Not displayed",
 						true);
-			Web.waitForElement(retirement,"VIEW DETAILS");
-			Web.clickOnElement(retirement,"VIEW DETAILS");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My current savings");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("My future savings");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer past contribution");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Employer future contribution");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Social Security");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Other assets");
-			retirement.verifyPayCheckContributionInColorBarForNonZeroValue("Income gap");
+			Web.waitForElement(retirement, "VIEW DETAILS");
+			Web.clickOnElement(retirement, "VIEW DETAILS");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("My current savings");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("My future savings");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("Employer past contribution");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("Employer future contribution");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("Social Security");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("Other assets");
+			retirement
+					.verifyPayCheckContributionInColorBarForNonZeroValue("Income gap");
 			retirement.verifyValueInColorBarForNonZeroValue("My savings");
-			retirement.verifyValueInColorBarForNonZeroValue("Employer contributions");
+			retirement
+					.verifyValueInColorBarForNonZeroValue("Employer contributions");
 			retirement.verifyValueInColorBarForNonZeroValue("Social Security");
 			retirement.verifyValueInColorBarForNonZeroValue("Other assets");
 			retirement.verifyValueInColorBarForNonZeroValue("Income gap");
-					} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
@@ -2821,11 +3176,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2836,13 +3193,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
 	public void LIAT_To_verify_HowDoICompare_Labels_Circles(int itr,
 			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -2853,12 +3218,12 @@ public class ProdvalidationTestCases_LeftNav {
 					"Navigate to How Do I Compare page.",
 					"How Do I Compare page is displayed", true);
 
-			
 			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
 					"Label MyPeers", true);
 			if (lblDisplayed)
 
-				Reporter.logEvent(Status.PASS,
+				Reporter.logEvent(
+						Status.PASS,
 						"Verify 'My Peers' Label in How Do I Compare Page",
 						"'My Peers' Label is Displayed in How Do I Compare Page",
 						true);
@@ -2872,7 +3237,8 @@ public class ProdvalidationTestCases_LeftNav {
 					"Label TopPeers", true);
 			if (lblDisplayed)
 
-				Reporter.logEvent(Status.PASS,
+				Reporter.logEvent(
+						Status.PASS,
 						"Verify 'Top Peers' Label in How Do I Compare Page",
 						"'Top Peers' Label is Displayed in How Do I Compare Page",
 						false);
@@ -2882,8 +3248,8 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify 'Top Peers' Label in How Do I Compare Page",
 						"'Top Peers' Label is Not Displayed in How Do I Compare Page",
 						false);
-			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
-					"Label Me", true);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare, "Label Me",
+					true);
 			if (lblDisplayed)
 
 				Reporter.logEvent(Status.PASS,
@@ -2891,8 +3257,7 @@ public class ProdvalidationTestCases_LeftNav {
 						"'Me' Label is Displayed in How Do I Compare Page",
 						false);
 			else
-				Reporter.logEvent(
-						Status.FAIL,
+				Reporter.logEvent(Status.FAIL,
 						"Verify 'Me' Label in How Do I Compare Page",
 						"'Me' Label is Not Displayed in How Do I Compare Page",
 						false);
@@ -2900,7 +3265,8 @@ public class ProdvalidationTestCases_LeftNav {
 					"Goal MyPeers", true);
 			if (lblDisplayed)
 
-				Reporter.logEvent(Status.PASS,
+				Reporter.logEvent(
+						Status.PASS,
 						"Verify 'My Peers Goal Section' in How Do I Compare Page",
 						"'My Peers Goal Circle' is Displayed in How Do I Compare Page",
 						false);
@@ -2914,7 +3280,8 @@ public class ProdvalidationTestCases_LeftNav {
 					"Goal TopPeers", true);
 			if (lblDisplayed)
 
-				Reporter.logEvent(Status.PASS,
+				Reporter.logEvent(
+						Status.PASS,
 						"Verify 'Top Peers Goal Section' in How Do I Compare Page",
 						"'Goal Circle For Top Peers' is Displayed in How Do I Compare Page",
 						false);
@@ -2924,11 +3291,12 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify 'Top Peers Goal Section' in How Do I Compare Page",
 						"'Top Peers Goal Circle' is Not Displayed in How Do I Compare Page",
 						false);
-			lblDisplayed = Web.isWebElementDisplayed(howdoicompare,
-					"Goal Me", true);
+			lblDisplayed = Web.isWebElementDisplayed(howdoicompare, "Goal Me",
+					true);
 			if (lblDisplayed)
 
-				Reporter.logEvent(Status.PASS,
+				Reporter.logEvent(
+						Status.PASS,
 						"Verify 'Goal Section For Me' in How Do I Compare Page",
 						"'Goal Circle For Me' is Displayed in How Do I Compare Page",
 						false);
@@ -2947,11 +3315,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -2962,120 +3332,136 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
-	public void LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values(int itr,
-			Map<String, String> testdata) {
+	public void LIAT_To_verify_LIS_Score_Gets_Changed_as_we_Change_Dropdown_Values(
+			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			HowDoICompare howdoicompare = new HowDoICompare(homePage);
 			howdoicompare.get();
 			boolean lblDisplayed = false;
-			List<String> DefaultContributionValues=new ArrayList<String>();
-			List<String> DefaultBalanceValues= new ArrayList<String>();
-			List<String> DefaultContributionValues1=new ArrayList<String>();
-			List<String> DefaultBalanceValues1= new ArrayList<String>();
-			List<String> ContributionRateValuesAfetrChange= new ArrayList<String>();
-			List<String> BalanceValuesAfterChange=new ArrayList<String>();
+			List<String> DefaultContributionValues = new ArrayList<String>();
+			List<String> DefaultBalanceValues = new ArrayList<String>();
+			List<String> DefaultContributionValues1 = new ArrayList<String>();
+			List<String> DefaultBalanceValues1 = new ArrayList<String>();
+			List<String> ContributionRateValuesAfetrChange = new ArrayList<String>();
+			List<String> BalanceValuesAfterChange = new ArrayList<String>();
 			Reporter.logEvent(Status.INFO,
 					"Navigate to How Do I Compare page.",
 					"How Do I Compare page is displayed", true);
-			DefaultContributionValues=howdoicompare.GetValuesofContributionRate();
-			DefaultBalanceValues=howdoicompare.GetValuesofBalance();
-			DefaultContributionValues1=DefaultBalanceValues;
-			DefaultBalanceValues1=DefaultBalanceValues;
-            Web.selectDropDownOption(howdoicompare, "DropDown Age", "50-59", true);
-            ContributionRateValuesAfetrChange=howdoicompare.GetValuesofContributionRate();
-            BalanceValuesAfterChange=howdoicompare.GetValuesofBalance();
-			for(int i=0;i< DefaultContributionValues.size()-1;i++){
-				if(!(DefaultContributionValues1.get(i).equalsIgnoreCase(ContributionRateValuesAfetrChange.get(i)))){
-					lblDisplayed=true;
+			DefaultContributionValues = howdoicompare
+					.GetValuesofContributionRate();
+			DefaultBalanceValues = howdoicompare.GetValuesofBalance();
+			DefaultContributionValues1 = DefaultBalanceValues;
+			DefaultBalanceValues1 = DefaultBalanceValues;
+			Web.selectDropDownOption(howdoicompare, "DropDown Age", "50-59",
+					true);
+			ContributionRateValuesAfetrChange = howdoicompare
+					.GetValuesofContributionRate();
+			BalanceValuesAfterChange = howdoicompare.GetValuesofBalance();
+			for (int i = 0; i < DefaultContributionValues.size() - 1; i++) {
+				if (!(DefaultContributionValues1.get(i)
+						.equalsIgnoreCase(ContributionRateValuesAfetrChange
+								.get(i)))) {
+					lblDisplayed = true;
 					break;
 				}
 			}
-				
-				if(lblDisplayed){
-					Reporter.logEvent(Status.PASS,
-							"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
-							"'Contribution Rate' Changed in How Do I Compare Page",
-							true);
+
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
+						"'Contribution Rate' Changed in How Do I Compare Page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
+						"'Contribution Rate' is Not Changed in How Do I Compare Page",
+						true);
+			}
+
+			for (int i = 0; i < DefaultBalanceValues.size() - 1; i++) {
+				if (!DefaultBalanceValues1.get(i).equalsIgnoreCase(
+						BalanceValuesAfterChange.get(i))) {
+					lblDisplayed = true;
+					break;
 				}
-				else{
-					Reporter.logEvent(
-							Status.FAIL,
-							"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Age Option",
-							"'Contribution Rate' is Not Changed in How Do I Compare Page",
-							true);
+			}
+
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
+						"'Balance' Changed in How Do I Compare Page", false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
+						"'Balance' is Not Changed in How Do I Compare Page",
+						false);
+			}
+			Web.selectDropDownOption(howdoicompare, "DropDown Salary",
+					"$75K - Less than $100K", true);
+			ContributionRateValuesAfetrChange = howdoicompare
+					.GetValuesofContributionRate();
+			BalanceValuesAfterChange = howdoicompare.GetValuesofBalance();
+			for (int i = 0; i < DefaultContributionValues.size() - 1; i++) {
+				if (!DefaultContributionValues1.get(i).equalsIgnoreCase(
+						ContributionRateValuesAfetrChange.get(i))) {
+					lblDisplayed = true;
+					break;
 				}
-				
-				for(int i=0;i< DefaultBalanceValues.size()-1;i++){
-					if(!DefaultBalanceValues1.get(i).equalsIgnoreCase(BalanceValuesAfterChange.get(i))){
-						lblDisplayed=true;
-						break;
-					}
+			}
+
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+						"'Contribution Rate' Changed in How Do I Compare Page",
+						true);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+						"'Contribution Rate' is Not Changed in How Do I Compare Page",
+						true);
+			}
+
+			for (int i = 0; i < DefaultBalanceValues.size() - 1; i++) {
+				if (!DefaultBalanceValues1.get(i).equalsIgnoreCase(
+						BalanceValuesAfterChange.get(i))) {
+					lblDisplayed = true;
+					break;
 				}
-					
-					if(lblDisplayed){
-						Reporter.logEvent(Status.PASS,
-								"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
-								"'Balance' Changed in How Do I Compare Page",
-								false);
-					}
-					else{
-						Reporter.logEvent(
-								Status.FAIL,
-								"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Age Option",
-								"'Balance' is Not Changed in How Do I Compare Page",
-								false);
-					}
-					 Web.selectDropDownOption(howdoicompare, "DropDown Salary", "$75K - Less than $100K", true);
-			            ContributionRateValuesAfetrChange=howdoicompare.GetValuesofContributionRate();
-			            BalanceValuesAfterChange=howdoicompare.GetValuesofBalance();
-						for(int i=0;i< DefaultContributionValues.size()-1;i++){
-							if(!DefaultContributionValues1.get(i).equalsIgnoreCase(ContributionRateValuesAfetrChange.get(i))){
-								lblDisplayed=true;
-								break;
-							}
-						}
-							
-							if(lblDisplayed){
-								Reporter.logEvent(Status.PASS,
-										"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
-										"'Contribution Rate' Changed in How Do I Compare Page",
-										true);
-							}
-							else{
-								Reporter.logEvent(
-										Status.FAIL,
-										"Verify Value for 'Contribution Rate' is Changed in How Do I Compare Page After Selecting Different Salary Option",
-										"'Contribution Rate' is Not Changed in How Do I Compare Page",
-										true);
-							}
-							
-							for(int i=0;i< DefaultBalanceValues.size()-1;i++){
-								if(!DefaultBalanceValues1.get(i).equalsIgnoreCase(BalanceValuesAfterChange.get(i))){
-									lblDisplayed=true;
-									break;
-								}
-							}
-								
-								if(lblDisplayed){
-									Reporter.logEvent(Status.PASS,
-											"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
-											"'Balance' Changed in How Do I Compare Page",
-											false);
-								}
-								else{
-									Reporter.logEvent(
-											Status.FAIL,
-											"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
-											"'Balance' is Not Changed in How Do I Compare Page",
-											false);
-								}
+			}
+
+			if (lblDisplayed) {
+				Reporter.logEvent(
+						Status.PASS,
+						"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+						"'Balance' Changed in How Do I Compare Page", false);
+			} else {
+				Reporter.logEvent(
+						Status.FAIL,
+						"Verify Value for 'Balance' is Changed in How Do I Compare Page After Selecting Different Salary Option",
+						"'Balance' is Not Changed in How Do I Compare Page",
+						false);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3084,11 +3470,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3099,15 +3487,21 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
-	
 
 	@Test(dataProvider = "setData")
-	public void LIAT_To_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users(int itr,
-			Map<String, String> testdata) {
+	public void LIAT_To_verify_ContributionRate_Slider_For_Suspended_And_Terminated_Users(
+			int itr, Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
@@ -3119,26 +3513,32 @@ public class ProdvalidationTestCases_LeftNav {
 					"Retirement Income page is displayed", true);
 
 			// verify PayCheck View in retirement income page
-			if(Stock.GetParameterValue("userType").equalsIgnoreCase("Terminated")){
-				lblEnabled = retirement.verifyIfSliderEnabled("Contribution rate slider");
-			if (!lblEnabled)
+			if (Stock.GetParameterValue("userType").equalsIgnoreCase(
+					"Terminated")) {
+				lblEnabled = retirement
+						.verifyIfSliderEnabled("Contribution rate slider");
+				if (!lblEnabled)
 
-				Reporter.logEvent(Status.PASS,
-						"Verify Contribution Rate Slider in Retirement Income Page",
-						"Contribution Rate Slider in Retirement Income Page is Not Enabled",
-						true);
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Contribution Rate Slider in Retirement Income Page",
-						"Contribution Rate Slider in Retirement Income Page is Enabled",
-						true);
+					Reporter.logEvent(
+							Status.PASS,
+							"Verify Contribution Rate Slider in Retirement Income Page",
+							"Contribution Rate Slider in Retirement Income Page is Not Enabled",
+							true);
+				else
+					Reporter.logEvent(
+							Status.FAIL,
+							"Verify Contribution Rate Slider in Retirement Income Page",
+							"Contribution Rate Slider in Retirement Income Page is Enabled",
+							true);
 			}
-			if(Stock.GetParameterValue("userType").equalsIgnoreCase("Suspended")){
-				lblEnabled = retirement.verifyIfSliderEnabled("Contribution rate slider");
+			if (Stock.GetParameterValue("userType").equalsIgnoreCase(
+					"Suspended")) {
+				lblEnabled = retirement
+						.verifyIfSliderEnabled("Contribution rate slider");
 				if (lblEnabled)
 
-					Reporter.logEvent(Status.PASS,
+					Reporter.logEvent(
+							Status.PASS,
 							"Verify Contribution Rate Slider in Retirement Income Page",
 							"Contribution Rate Slider in Retirement Income Page is Enabled",
 							true);
@@ -3149,14 +3549,16 @@ public class ProdvalidationTestCases_LeftNav {
 							"Contribution Rate Slider in Retirement Income Page is Not Enabled",
 							true);
 				retirement.enterContributionRate("15");
-				Reporter.logEvent(Status.INFO,
+				Reporter.logEvent(
+						Status.INFO,
 						"Enter Contribution Rate in Retirement Income Page",
 						"Contribution Rate is changed in Contribution Rate Slider",
 						true);
 				lblEnabled = retirement.verifyIfSliderEnabled("Review Changes");
 				if (!lblEnabled)
 
-					Reporter.logEvent(Status.PASS,
+					Reporter.logEvent(
+							Status.PASS,
 							"Verify 'Review Changes' Button in Retirement Income Page",
 							"'Review Changes' Button in Retirement Income Page is Not Enabled",
 							true);
@@ -3166,8 +3568,8 @@ public class ProdvalidationTestCases_LeftNav {
 							"Verify 'Review Changes' Button in Retirement Income Page",
 							"'Review Changes' Button in Retirement Income Page is Enabled",
 							true);
-				
-				}
+
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3176,11 +3578,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3191,26 +3595,42 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
+
 	@Test(dataProvider = "setData")
-	public void Verify_Health_care_costs_helpful_links(int itr, Map<String, String> testdata){
-		
-		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+	public void Verify_Health_care_costs_helpful_links(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			HealthCareCosts healthCareCost = new HealthCareCosts(homePage);
-			//RetirementIncome retirementIncome = new RetirementIncome();
+			// RetirementIncome retirementIncome = new RetirementIncome();
 			healthCareCost.get();
-			
+
 			Web.clickOnElement(healthCareCost, "Personalize Button");
-			Reporter.logEvent(Status.INFO,"Verify 'Personalize Button' is clicked","Clicked on 'Personalize Button'", true);
+			Reporter.logEvent(Status.INFO,
+					"Verify 'Personalize Button' is clicked",
+					"Clicked on 'Personalize Button'", true);
 			Web.waitForElement(healthCareCost, "Your full report(PDF)");
-			if(Web.isWebElementDisplayed(healthCareCost, "Your full report(PDF)", true)){
-				Reporter.logEvent(Status.PASS,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is displayed", false);
+			if (Web.isWebElementDisplayed(healthCareCost,
+					"Your full report(PDF)", true)) {
+				Reporter.logEvent(Status.PASS,
+						"Verify 'Your full report(PDF)' link is displayed",
+						"'Your full report(PDF)' link is displayed", false);
 				Web.clickOnElement(healthCareCost, "Your full report(PDF)");
-				Reporter.logEvent(Status.INFO,"Verify 'Your full report(PDF)' link is clicked","clicked on 'Your full report(PDF)' link", false);
+				Reporter.logEvent(Status.INFO,
+						"Verify 'Your full report(PDF)' link is clicked",
+						"clicked on 'Your full report(PDF)' link", false);
 				String parentWindow = Web.getDriver().getWindowHandle();
 				Set<String> handles = Web.getDriver().getWindowHandles();
 
@@ -3222,112 +3642,127 @@ public class ProdvalidationTestCases_LeftNav {
 					}
 				}
 				// closing child window
-				Web.getDriver().close(); 
-				//Switching to main window
+				Web.getDriver().close();
+				// Switching to main window
 				Web.getDriver().switchTo().window(parentWindow);
-			}
-			else
-				Reporter.logEvent(Status.FAIL,"Verify 'Your full report(PDF)' link is displayed","'Your full report(PDF)' link is Not displayed", true);
-			
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify 'Your full report(PDF)' link is displayed",
+						"'Your full report(PDF)' link is Not displayed", true);
+
 			healthCareCost.verifyMedicareLink();
-			
-			
-		}
-		catch(Exception e)
-        {
-            e.printStackTrace();
-            Globals.exception = e;
-            Throwable t = e.getCause();
-            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
-        }
-		catch(Error ae)
-        {
-                        ae.printStackTrace();
-                        Globals.error = ae;
-                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage() , true);                    
-                        
-        }
-		finally { 
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
 			try {
 				Web.getDriver().switchTo().defaultContent();
 				Reporter.finalizeTCReport();
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
-	public void Verify_Tour_Link(int itr, Map<String, String> testdata){
-		
-		try{
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+	public void Verify_Tour_Link(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			RetirementIncome retirement = new RetirementIncome(homePage);
 			retirement.get();
-			
-			if(Web.isWebElementDisplayed(retirement, "TOUR Button", true)){
+
+			if (Web.isWebElementDisplayed(retirement, "TOUR Button", true)) {
 				Web.clickOnElement(retirement, "TOUR Button");
-				Reporter.logEvent(Status.INFO,"Verify TOUR button is clicked","clicked on TOUR button", false);
-				retirement.verifyTourModals("Your retirement account experience");
+				Reporter.logEvent(Status.INFO, "Verify TOUR button is clicked",
+						"clicked on TOUR button", false);
+				retirement
+						.verifyTourModals("Your retirement account experience");
 				Web.clickOnElement(retirement, "Next Button");
 				retirement.verifyTourModals("Progress toward your goal");
 				Web.clickOnElement(retirement, "NextButton");
-				retirement.verifyTourModals("Your estimated monthly retirement income");
+				retirement
+						.verifyTourModals("Your estimated monthly retirement income");
 				Web.clickOnElement(retirement, "NextButton");
 				retirement.verifyTourModals("Income sources");
 				Web.clickOnElement(retirement, "NextButton");
 				retirement.verifyTourModals("Compare your options");
 				Web.clickOnElement(retirement, "Finish Button");
-				if (Web.isWebElementDisplayed(retirement, "Cancel Goal setup", true)) {
+				if (Web.isWebElementDisplayed(retirement, "Cancel Goal setup",
+						true)) {
 					Web.clickOnElement(retirement, "Cancel Goal setup");
 				}
-			}
-			else
-				Reporter.logEvent(Status.FAIL,"Verify TOUR button is displayed","Tour button is displayed", false);
-			//Web.clickOnElement(retirement, "LOG OUT");
-			
-			
-		}
-		catch(Exception e)
-        {
-            e.printStackTrace();
-            Globals.exception = e;
-            Throwable t = e.getCause();
-            String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			} else
+				Reporter.logEvent(Status.FAIL,
+						"Verify TOUR button is displayed",
+						"Tour button is displayed", false);
+			// Web.clickOnElement(retirement, "LOG OUT");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
 			if (null != t) {
 				msg = t.getMessage();
 			}
-            Reporter.logEvent(Status.FAIL, "A run time exception occured.",msg, true);
-        }
-		catch(Error ae)
-        {
-                        ae.printStackTrace();
-                        Globals.error = ae;
-                        Reporter.logEvent(Status.FAIL, "Assertion Error Occured",ae.getMessage(), true);                    
-                        
-        }
-		finally { 
-			try { 
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+
+		} finally {
+			try {
 				Web.getDriver().switchTo().defaultContent();
-				Reporter.finalizeTCReport(); }
-			catch (Exception e1) { e1.printStackTrace(); } 
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
+		}
 	}
-	
+
 	@Test(dataProvider = "setData")
-	public void Manage_My_Investment_Flow_New(int itr, Map<String, String> testdata) {
+	public void Manage_My_Investment_Flow_New(int itr,
+			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -3337,32 +3772,33 @@ public class ProdvalidationTestCases_LeftNav {
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 
 			investment.get();
-			//Thread.sleep(5000);
+			// Thread.sleep(5000);
 			investment.clickChangeMyInvestmentButton();
 			investment.choseInvestmentOption("Rebalance Current Balance");
 			Web.clickOnElement(investment, "Continue button1");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			String[] percentage={"50","50"};
-			investment.rebalanceInvestment_New(2,percentage);
-			/*DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			Calendar cal = Calendar.getInstance();
-			System.out.println(dateFormat.format(cal.getTime()));
-			String date = dateFormat.format(cal.getTime()).toUpperCase();
-			investment.verifyRebalanceInvestmentDetails(
-					Stock.GetParameterValue("Frequency_Period"),
-					Stock.GetParameterValue("Setup_date"), date,
-					Stock.GetParameterValue("investment_percent"));
-			if (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
-					"Yes")) {
-				investment.verifyRebalanceInvestmentConfirmationDetails();
-				investment.cancelTransfer("Rebalance Currnet Balance");
-			}*/
+			String[] percentage = { "50", "50" };
+			investment.rebalanceInvestment_New(2, percentage);
+			/*
+			 * DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			 * Calendar cal = Calendar.getInstance();
+			 * System.out.println(dateFormat.format(cal.getTime())); String date
+			 * = dateFormat.format(cal.getTime()).toUpperCase();
+			 * investment.verifyRebalanceInvestmentDetails(
+			 * Stock.GetParameterValue("Frequency_Period"),
+			 * Stock.GetParameterValue("Setup_date"), date,
+			 * Stock.GetParameterValue("investment_percent")); if
+			 * (Stock.GetParameterValue("Submit_Transaction").equalsIgnoreCase(
+			 * "Yes")) {
+			 * investment.verifyRebalanceInvestmentConfirmationDetails();
+			 * investment.cancelTransfer("Rebalance Currnet Balance"); }
+			 */
 			Web.getDriver().switchTo().defaultContent();
-			 Web.clickOnElement(investment, "LOGOUT");
-			 Common.waitForProgressBar();
-			 Web.waitForPageToLoad(Web.getDriver());
-			
+			Web.clickOnElement(investment, "LOGOUT");
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3371,11 +3807,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
@@ -3387,24 +3825,33 @@ public class ProdvalidationTestCases_LeftNav {
 		}
 
 	}
+
 	@Test(dataProvider = "setData")
 	public void Verify_Request_A_Loan_Flow(int itr, Map<String, String> testdata) {
 
 		try {
-			
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId()) + "_"
-					+ Common.getSponser()+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Common.getSponser()
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			LeftNavigationBar lftBar = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLone = new RequestLoanPage(lftBar);
 			requestLone.get();
-			
+
 			boolean lblDisplayed = false;
-//			int confirmationNumber = 0;
-            Thread.sleep(5000);
+			// int confirmationNumber = 0;
+			Thread.sleep(5000);
 			lblDisplayed = Web.isWebElementDisplayed(requestLone,
 					"Request a loan", true);
 			if (lblDisplayed) {
@@ -3416,9 +3863,9 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify Request A Loan Page is Displayed",
 						"Request A Loan Page is NOT Displayed", true);
 			}
-		
+
 			Web.waitForElement(requestLone, "Button Request A New Loan");
-			
+
 			Web.clickOnElement(requestLone, "Button Request A New Loan");
 			Web.waitForElement(requestLone, "LOAN TYPE GENERAL");
 			requestLone.isTextFieldDisplayed("Loan purpose");
@@ -3430,46 +3877,46 @@ public class ProdvalidationTestCases_LeftNav {
 			requestLone.isTextFieldDisplayed("Repayment");
 			requestLone.isTextFieldDisplayed("Fees");
 			requestLone.selectLoneType(Stock.GetParameterValue("loanType"));
-			
+
 			requestLone.EnterLoanAmtAndTerm("$1000", "12");
-			
+
 			Web.waitForElement(requestLone, "BUTTON CONTINUE");
 			requestLone.isTextFieldDisplayed("My loan summary");
 			requestLone.isTextFieldDisplayed("INTEREST RATE");
 			requestLone.isTextFieldDisplayed("FEES*");
 			requestLone.isTextFieldDisplayed("CHECK TOTAL");
 			requestLone.isTextFieldDisplayed("LOAN TOTAL");
-			if(Web.VerifyPartialText("$1,000", requestLone.getWebElementText("LOAN TOTAL"), true)){
-				
-				Reporter.logEvent(
-						Status.PASS,
+			if (Web.VerifyPartialText("$1,000",
+					requestLone.getWebElementText("LOAN TOTAL"), true)) {
+
+				Reporter.logEvent(Status.PASS,
 						"Verify Loan Total Amount is Matching",
-						"Loan Total Amount is Matching in Loan summary Table\nLoan Total:"+requestLone.getWebElementText("LOAN TOTAL"),	
+						"Loan Total Amount is Matching in Loan summary Table\nLoan Total:"
+								+ requestLone.getWebElementText("LOAN TOTAL"),
 						true);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify Loan Total Amount is Matching",
-						"Loan Total Amount is Not Matching in Loan summary Table\nExpected:$1,000.00\nActual:"+requestLone.getWebElementText("LOAN TOTAL"),	
+						"Loan Total Amount is Not Matching in Loan summary Table\nExpected:$1,000.00\nActual:"
+								+ requestLone.getWebElementText("LOAN TOTAL"),
 						true);
 			}
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
-			
-			lblDisplayed = Web.isWebElementDisplayed(requestLone, "ProActive Notification Screen",true);
+
+			lblDisplayed = Web.isWebElementDisplayed(requestLone,
+					"ProActive Notification Screen", true);
 			if (lblDisplayed) {
-				Reporter.logEvent(
-						Status.PASS,
+				Reporter.logEvent(Status.PASS,
 						"Verify ProActive Notification Screen is Displayed",
-						"ProActive Notification Screen is Displayed",	
-						true);
+						"ProActive Notification Screen is Displayed", true);
 			} else {
-				Reporter.logEvent(
-						Status.FAIL,
+				Reporter.logEvent(Status.FAIL,
 						"Verify ProActive Notification Screen is Displayed",
-						"ProActive Notification Screen is Not Displayed",	
-						true);
+						"ProActive Notification Screen is Not Displayed", true);
 			}
-			requestLone.isTextFieldDisplayed("Sign up for updates on your loan process");
+			requestLone
+					.isTextFieldDisplayed("Sign up for updates on your loan process");
 			Web.clickOnElement(requestLone, "BUTTON CONTINUE");
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
@@ -3484,7 +3931,8 @@ public class ProdvalidationTestCases_LeftNav {
 			requestLone.isTextFieldDisplayed("CHECK AMOUNT:");
 			requestLone.isTextFieldDisplayed("LOAN AMOUNT:");
 			requestLone.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLone.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
+			requestLone
+					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
 			requestLone.isTextFieldDisplayed("Payment Information");
 			requestLone.isTextFieldDisplayed("FIRST PAYMENT DUE:");
 			requestLone.isTextFieldDisplayed("LAST PAYMENT DUE:");
@@ -3498,10 +3946,10 @@ public class ProdvalidationTestCases_LeftNav {
 			requestLone.isTextFieldDisplayed("DELIVERY METHOD:");
 			requestLone.isTextFieldDisplayed("MAILING ADDRESS:");
 			requestLone.isTextFieldDisplayed("Loan Provisions");
-			
+
 			Thread.sleep(3000);
-			lblDisplayed = Web.isWebElementDisplayed(requestLone, "I AGREE AND SUBMIT",
-					true);
+			lblDisplayed = Web.isWebElementDisplayed(requestLone,
+					"I AGREE AND SUBMIT", true);
 			if (lblDisplayed) {
 				Reporter.logEvent(Status.PASS,
 						"Verify 'I Agree and Submit' Button is Displayed",
@@ -3511,7 +3959,8 @@ public class ProdvalidationTestCases_LeftNav {
 						"Verify 'I Agree and Submit' Button is Displayed",
 						"'I Agree and Submit' Button is Not Displayed", true);
 			}
-			if (Stock.GetParameterValue("submitRequest").equalsIgnoreCase("YES")) {
+			if (Stock.GetParameterValue("submitRequest")
+					.equalsIgnoreCase("YES")) {
 				Web.clickOnElement(requestLone, "I ACCEPT");
 				Thread.sleep(3000);
 				lblDisplayed = Web.VerifyPartialText(
@@ -3529,20 +3978,24 @@ public class ProdvalidationTestCases_LeftNav {
 				}
 				if (Web.isWebElementDisplayed(requestLone,
 						"TEXT CONFIRMATION NUMBER", true)) {
-					lblDisplayed = Common.verifyStringIsInNumberFormat(requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"));
+					lblDisplayed = Common
+							.verifyStringIsInNumberFormat(requestLone
+									.getWebElementText("TEXT CONFIRMATION NUMBER"));
 					if (lblDisplayed) {
 						Reporter.logEvent(
 								Status.PASS,
 								"Verify Request Confirmation Number is in Number Format",
 								"Request Confirmation is in Number Format and \n Confirmation Number is:"
-										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Verify Request Confirmation Number is Number Format",
 								"Request Confirmation Number is  Not in Number Format"
-										+ requestLone.getWebElementText("TEXT CONFIRMATION NUMBER"),
+										+ requestLone
+												.getWebElementText("TEXT CONFIRMATION NUMBER"),
 								true);
 					}
 				} else {
@@ -3553,13 +4006,15 @@ public class ProdvalidationTestCases_LeftNav {
 				}
 			}
 			Web.getDriver().switchTo().defaultContent();
-			//Web.getDriver().close();
-			//Web.getDriver().switchTo().window(parentWindow);
-			//Web.getDriver().switchTo().defaultContent();
-			/*Web.clickOnElement(requestLone, "LOGOUT");
-			Common.waitForProgressBar();
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.waitForElement(login, "SIGN IN");*/
+			// Web.getDriver().close();
+			// Web.getDriver().switchTo().window(parentWindow);
+			// Web.getDriver().switchTo().defaultContent();
+			/*
+			 * Web.clickOnElement(requestLone, "LOGOUT");
+			 * Common.waitForProgressBar();
+			 * Web.waitForPageToLoad(Web.getDriver()); Web.waitForElement(login,
+			 * "SIGN IN");
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -3568,11 +4023,13 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 
 		} finally {
 			try {
@@ -3583,78 +4040,90 @@ public class ProdvalidationTestCases_LeftNav {
 			}
 		}
 	}
-	
+
 	@Test(dataProvider = "setData")
-	public void DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice(int itr, Map<String, String> testdata) {
+	public void DDTC_30106_FE_Guidance_HMDI_Access_Online_Advice(int itr,
+			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			
-			//Step 1 to 5
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+
+			// Step 1 to 5
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			
-			//Step 6
+
+			// Step 6
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Do It For Me");
-			//Step 7
-			investment.verifyWebElementDisplayed("Access Online Advice");			
-			investment.isTextFieldDisplayed("Online investment advice can help you select investments that align with your retirement objectives.");
-			//Step 8
-			Web.clickOnElement(investment,"Access Online Advice");
+			// Step 7
+			investment.verifyWebElementDisplayed("Access Online Advice");
+			investment
+					.isTextFieldDisplayed("Online investment advice can help you select investments that align with your retirement objectives.");
+			// Step 8
+			Web.clickOnElement(investment, "Access Online Advice");
 			Web.waitForElement(investment, "Continue Button");
-			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
+			investment
+					.isTextFieldDisplayed("You are now accessing Advisory Services");
 			Web.clickOnElement(investment, "Continue Button");
-			   Thread.sleep(10000);
-			//Step 12
-			
+			Thread.sleep(10000);
+			// Step 12
+
 			String parentWindow = Web.getDriver().getWindowHandle();
-			Set<String> handles =  Web.getDriver().getWindowHandles();
-			   for(String windowHandle  : handles)
-			       {
-			       if(!windowHandle.equals(parentWindow)){
-			    	   Web.getDriver().switchTo().window(windowHandle);
-			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   
-			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Next");
-			    	   if(Web.isWebEementEnabled(investment, "Button Next"))
-			    		   Web.clickOnElement(investment, "Button Next");
-			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(5000);
-				    	  if(Web.getDriver().getTitle().toString().trim().contains("Financial Engines"))
-				    	  {
-			    		  Reporter.logEvent(Status.PASS,
-									"Verify 'Financial Engine Page'opened in New Window",
-									"'Financial Engine Page' opened in New Window", true);
-						}
-						else{
-							Reporter.logEvent(Status.FAIL,
-									"Verify 'Financial Engine Page'opened in New Window ",
-									"'Financial Engine Page' is not opened in New Window ", true);
-						}
-			     
-			    }
-			       }
-			   Web.getDriver().close(); //closing child window
-	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
-	           Web.getDriver().switchTo().defaultContent();
-	           
-	           if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
-	        	   Web.clickOnElement(investment, "Button Close And Continue");
-	           else if(Web.isWebEementEnabled(investment, "Button Refresh",true))
-		           Web.clickOnElement(investment, "Button Refresh");
-	           Web.waitForPageToLoad(Web.getDriver());
-	           Common.waitForProgressBar();
-	        
-		 
-		}catch (Exception e) {
+			Set<String> handles = Web.getDriver().getWindowHandles();
+			for (String windowHandle : handles) {
+				if (!windowHandle.equals(parentWindow)) {
+					Web.getDriver().switchTo().window(windowHandle);
+					Web.waitForPageToLoad(Web.getDriver());
+
+					Thread.sleep(10000);
+					Web.waitForElement(investment, "Button Next");
+					if (Web.isWebEementEnabled(investment, "Button Next"))
+						Web.clickOnElement(investment, "Button Next");
+					Web.waitForPageToLoad(Web.getDriver());
+					Thread.sleep(5000);
+					if (Web.getDriver().getTitle().toString().trim()
+							.contains("Financial Engines")) {
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify 'Financial Engine Page'opened in New Window",
+								"'Financial Engine Page' opened in New Window",
+								true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify 'Financial Engine Page'opened in New Window ",
+								"'Financial Engine Page' is not opened in New Window ",
+								true);
+					}
+
+				}
+			}
+			Web.getDriver().close(); // closing child window
+			Web.getDriver().switchTo().window(parentWindow); // cntrl to parent
+																// window
+			Web.getDriver().switchTo().defaultContent();
+
+			if (Web.isWebEementEnabled(investment, "Button Close And Continue"))
+				Web.clickOnElement(investment, "Button Close And Continue");
+			else if (Web.isWebEementEnabled(investment, "Button Refresh", true))
+				Web.clickOnElement(investment, "Button Refresh");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
@@ -3662,15 +4131,17 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
-				
+
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3680,75 +4151,91 @@ public class ProdvalidationTestCases_LeftNav {
 	}
 
 	@Test(dataProvider = "setData")
-	public void DDTC_30107_FE_Guidance_DIM_Access_Online_Guidance(int itr, Map<String, String> testdata) {
+	public void DDTC_30107_FE_Guidance_DIM_Access_Online_Guidance(int itr,
+			Map<String, String> testdata) {
 
 		try {
-			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
-			
-			//Step 1 to 5
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+
+			// Step 1 to 5
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
 			LandingPage homePage = new LandingPage(mfaPage);
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			ManageMyInvestment investment = new ManageMyInvestment(leftmenu);
 			investment.get();
-			
-			//Step 6 
-			
+
+			// Step 6
+
 			investment.verifyWebElementDisplayed("Do It Myself");
 			investment.verifyWebElementDisplayed("Help Me Do It");
 			investment.verifyWebElementDisplayed("Do It For Me");
-			//Step 7
-			investment.verifyWebElementDisplayed("Access Online Guidance");			
-			investment.isTextFieldDisplayed("Online Guidance can help you get pointed in the right direction.");
-			//Step 8
-			Web.clickOnElement(investment,"Access Online Guidance");
-			/*Web.waitForElement(investment, "Continue Button");
-			investment.isTextFieldDisplayed("You are now accessing Advisory Services");
-			Web.clickOnElement(investment, "Continue Button");*/
+			// Step 7
+			investment.verifyWebElementDisplayed("Access Online Guidance");
+			investment
+					.isTextFieldDisplayed("Online Guidance can help you get pointed in the right direction.");
+			// Step 8
+			Web.clickOnElement(investment, "Access Online Guidance");
+			/*
+			 * Web.waitForElement(investment, "Continue Button");
+			 * investment.isTextFieldDisplayed
+			 * ("You are now accessing Advisory Services");
+			 * Web.clickOnElement(investment, "Continue Button");
+			 */
 			Thread.sleep(10000);
-			//Step 12
-			
+			// Step 12
+
 			String parentWindow = Web.getDriver().getWindowHandle();
-			Set<String> handles =  Web.getDriver().getWindowHandles();
-			   for(String windowHandle  : handles)
-			       {
-			       if(!windowHandle.equals(parentWindow)){
-			    	   Web.getDriver().switchTo().window(windowHandle);
-			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Accept");
-			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
-			    		   Web.clickOnElement(investment, "Button Accept");
-			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(5000);
-			    	   if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
-					    	  
-				    		  Reporter.logEvent(Status.PASS,
-										"Verify 'Advisory Services Page'opened in New Window",
-										"'Advisory Services Page' opened in New Window", true);
-							}
-							else{
-								Reporter.logEvent(Status.FAIL,
-										"Verify 'Advisory Services Page'opened in New Window ",
-										"'Advisory Services Page' is not opened in New Window ", true);
-							}
-			     
-			    }
-			       }
-			   Web.getDriver().close(); //closing child window
-	           Web.getDriver().switchTo().window(parentWindow); //cntrl to parent window
-	           Web.getDriver().switchTo().defaultContent();
-	           if(Web.isWebEementEnabled(investment, "Button Refresh",true))
-		           Web.clickOnElement(investment, "Button Refresh");
-		           else if(Web.isWebEementEnabled(investment, "Button Close And Continue"))
-		        	   Web.clickOnElement(investment, "Button Close And Continue");
-	           Web.waitForPageToLoad(Web.getDriver());
-	           Common.waitForProgressBar();
-	        
-		} 
-		catch (Exception e) {
+			Set<String> handles = Web.getDriver().getWindowHandles();
+			for (String windowHandle : handles) {
+				if (!windowHandle.equals(parentWindow)) {
+					Web.getDriver().switchTo().window(windowHandle);
+					Web.waitForPageToLoad(Web.getDriver());
+					Thread.sleep(10000);
+					Web.waitForElement(investment, "Button Accept");
+					if (Web.isWebEementEnabled(investment, "Button Accept"))
+						Web.clickOnElement(investment, "Button Accept");
+					Web.waitForPageToLoad(Web.getDriver());
+					Thread.sleep(5000);
+					if (Web.getDriver().getTitle().toString().trim()
+							.equalsIgnoreCase("Advisory Services - Welcome")) {
+
+						Reporter.logEvent(
+								Status.PASS,
+								"Verify 'Advisory Services Page'opened in New Window",
+								"'Advisory Services Page' opened in New Window",
+								true);
+					} else {
+						Reporter.logEvent(
+								Status.FAIL,
+								"Verify 'Advisory Services Page'opened in New Window ",
+								"'Advisory Services Page' is not opened in New Window ",
+								true);
+					}
+
+				}
+			}
+			Web.getDriver().close(); // closing child window
+			Web.getDriver().switchTo().window(parentWindow); // cntrl to parent
+																// window
+			Web.getDriver().switchTo().defaultContent();
+			if (Web.isWebEementEnabled(investment, "Button Refresh", true))
+				Web.clickOnElement(investment, "Button Refresh");
+			else if (Web.isWebEementEnabled(investment,
+					"Button Close And Continue"))
+				Web.clickOnElement(investment, "Button Close And Continue");
+			Web.waitForPageToLoad(Web.getDriver());
+			Common.waitForProgressBar();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
 			Throwable t = e.getCause();
@@ -3756,15 +4243,17 @@ public class ProdvalidationTestCases_LeftNav {
 			if (null != t) {
 				msg = t.getMessage();
 			}
-			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
 		} catch (Error ae) {
 			ae.printStackTrace();
 			Globals.error = ae;
-			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
 			// throw ae;
 		} finally {
 			try {
-				
+
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -3772,6 +4261,5 @@ public class ProdvalidationTestCases_LeftNav {
 		}
 
 	}
-	
 
 }

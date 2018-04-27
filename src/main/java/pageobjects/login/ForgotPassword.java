@@ -3,8 +3,6 @@ package pageobjects.login;
 import lib.Reporter;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,7 +10,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import appUtils.Common;
-import core.framework.Globals;
+
+import com.aventstack.extentreports.Status;
 
 public class ForgotPassword extends LoadableComponent<ForgotPassword> {
 

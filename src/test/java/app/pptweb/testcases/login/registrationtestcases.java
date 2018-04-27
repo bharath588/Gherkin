@@ -13,20 +13,14 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.Common;
-import appUtils.ExecuteQuery;
-import appUtils.TestDataFromDB;
 import pageobjects.deferrals.Deferrals;
 import pageobjects.enrollment.Enrollment;
 import pageobjects.landingpage.LandingPage;
@@ -35,6 +29,12 @@ import pageobjects.login.TwoStepVerification;
 import pageobjects.userregistration.AccountLookup;
 import pageobjects.userregistration.AccountSetup;
 import pageobjects.userregistration.Registration;
+import appUtils.Common;
+import appUtils.ExecuteQuery;
+import appUtils.TestDataFromDB;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class registrationtestcases {

@@ -1,20 +1,15 @@
 package app.pptweb.testcases.liat;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import appUtils.Common;
-
-import com.aventstack.extentreports.*;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -24,8 +19,11 @@ import pageobjects.liat.HowDoICompare;
 import pageobjects.liat.RetirementIncome;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
-import core.framework.TestListener;
 
 public class liattestcases {
  

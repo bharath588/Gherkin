@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,16 +13,9 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-import com.sun.javafx.collections.SetListenerHelper;
-
-import oracle.sql.ARRAY;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -32,6 +24,9 @@ import org.testng.Assert;
 import pageobjects.general.LeftNavigationBar;
 import pageobjects.landingpage.LandingPage;
 import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {

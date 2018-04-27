@@ -10,6 +10,7 @@ import lib.DB;
 import lib.Log;
 import lib.Stock;
 
+
 public class ExecuteQuery {
 	public static Properties conf = null;
 	static char dbInital;

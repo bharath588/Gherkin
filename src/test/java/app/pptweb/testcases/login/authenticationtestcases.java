@@ -10,18 +10,18 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import appUtils.TestDataFromDB;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.ForgotPassword;
 import pageobjects.login.LoginPage;
 import pageobjects.login.TwoStepVerification;
+import appUtils.TestDataFromDB;
+
+import com.aventstack.extentreports.Status;
+
 import core.framework.Globals;
 
 public class authenticationtestcases {

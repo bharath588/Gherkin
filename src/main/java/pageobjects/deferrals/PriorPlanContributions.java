@@ -10,11 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import appUtils.Common;
 import pageobjects.general.LeftNavigationBar;
+import appUtils.Common;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
+
 import com.aventstack.extentreports.*;
 
 

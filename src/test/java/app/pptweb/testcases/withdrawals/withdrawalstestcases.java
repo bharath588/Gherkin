@@ -1,33 +1,31 @@
 	package app.pptweb.testcases.withdrawals;
 	
 	import java.lang.reflect.Method;
-	import java.sql.ResultSet;
-	import java.util.LinkedHashMap;
-	import java.util.Map;
-	
-	import lib.DB;
-	import lib.Reporter;
-	import lib.Stock;
-	import lib.Web;
-	
-	import org.openqa.selenium.Keys;
-	import org.openqa.selenium.interactions.Actions;
-	import org.testng.annotations.AfterTest;
-	import org.testng.annotations.BeforeClass;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;
-	
-	import pageobjects.general.LeftNavigationBar;
-	import pageobjects.general.MyAccountsPage;
-	import pageobjects.landingpage.LandingPage;
-	import pageobjects.login.LoginPage;
-	import pageobjects.login.TwoStepVerification;
-	import pageobjects.withdrawals.RequestWithdrawal;
-	import appUtils.Common;
-	
-	import com.aventstack.extentreports.Status;
-	
-	import core.framework.Globals;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import lib.DB;
+import lib.Reporter;
+import lib.Stock;
+import lib.Web;
+
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import pageobjects.general.LeftNavigationBar;
+import pageobjects.general.MyAccountsPage;
+import pageobjects.landingpage.LandingPage;
+import pageobjects.login.LoginPage;
+import pageobjects.login.TwoStepVerification;
+import pageobjects.withdrawals.RequestWithdrawal;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 	
 	public class withdrawalstestcases {
 	

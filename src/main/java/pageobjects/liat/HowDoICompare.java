@@ -8,7 +8,6 @@ import java.util.List;
 import lib.Reporter;
 import lib.Stock;
 import lib.Web;
-import com.aventstack.extentreports.*;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,9 +15,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
-import core.framework.Globals;
-import appUtils.Common;
 import pageobjects.landingpage.LandingPage;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
+
+import core.framework.Globals;
 
 
 

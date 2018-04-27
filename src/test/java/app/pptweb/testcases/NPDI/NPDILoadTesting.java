@@ -1,7 +1,6 @@
 package app.pptweb.testcases.NPDI;
 
 import java.lang.reflect.Method;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,14 +10,12 @@ import lib.Reporter;
 import lib.Stock;
 import lib.Web;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import pageobjects.deferrals.Deferrals;
 import pageobjects.enrollment.Enrollment;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.login.LoginPage;

@@ -6,25 +6,18 @@ import java.util.List;
 import lib.Reporter;
 import lib.Web;
 
-import com.aventstack.extentreports.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-
-
-
-
-
-
 import org.testng.Assert;
 
-import appUtils.Common;
-import core.framework.Globals;
 import pageobjects.login.LoginPage;
+import appUtils.Common;
+
+import com.aventstack.extentreports.Status;
 
 public class AccountLookup extends LoadableComponent<AccountLookup> {
 
