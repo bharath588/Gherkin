@@ -3635,11 +3635,11 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Accept");
+			    	  /* Web.waitForElement(investment, "Button Accept");
 			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
 			    		   Web.clickOnElement(investment, "Button Accept");
 			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(5000);
+			    	   Thread.sleep(5000);*/
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,
@@ -3743,11 +3743,11 @@ public class ProdvalidationTestCases_Login_LeftNav_Investments {
 			    	   Web.getDriver().switchTo().window(windowHandle);
 			    	   Web.waitForPageToLoad(Web.getDriver());
 			    	   Thread.sleep(10000);
-			    	   Web.waitForElement(investment, "Button Accept");
+			    	  /* Web.waitForElement(investment, "Button Accept");
 			    	   if(Web.isWebEementEnabled(investment, "Button Accept"))
 			    		   Web.clickOnElement(investment, "Button Accept");
 			    	   Web.waitForPageToLoad(Web.getDriver());
-			    	   Thread.sleep(5000);
+			    	   Thread.sleep(5000);*/
 			    	  if(Web.getDriver().getTitle().toString().trim().equalsIgnoreCase("Advisory Services - Welcome")){
 			    	  
 			    		  Reporter.logEvent(Status.PASS,

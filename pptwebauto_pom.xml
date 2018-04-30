@@ -5,13 +5,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	 <parent>
-		<groupId>com.gwf</groupId>
-		<artifactId>enterprise-parent-pom-java</artifactId>
-		<version>1.2</version>
-	</parent> 
-	<groupId>com.fascore.qa.ParticipantWebAuto</groupId>
-	<artifactId>pptwebAuto</artifactId>
+	<groupId>com.fascore.qa.ParticipantWeb</groupId>
+	<artifactId>pptweb</artifactId>
 	<version>0.0.1-PPTWebSNAPSHOT</version>
 	<packaging>jar</packaging>
 
