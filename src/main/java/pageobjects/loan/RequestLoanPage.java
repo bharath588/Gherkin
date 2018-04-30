@@ -16,6 +16,7 @@ import lib.Web;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -220,6 +221,36 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtTypically2BDays;
 	@FindBy(xpath = "//div[./strong/span[contains(text(),'Check sent by Regular mail')]]/following-sibling::div/span")
 	private WebElement txtDeliveryUpTo5BDays;
+@FindBy(xpath = ".//*[@id='loanReasons']/div[2]/div/p[1]")
+	private WebElement txtLoanReasons;
+	@FindBy(id = "prefilled")
+	private WebElement btnLoanReasonsPreFilledForm;
+	@FindBy(id = "futureDate")
+	private WebElement btnLoanReasonsFutureDate;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[1]/a")
+	private WebElement mortgageInterestRateLoanSummaryPage;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement mortgageFeesLoanSummaryPage;
+	
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipInterestRateText1;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipInterestRateText2;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipInterestRateText3;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipInterestRateText4;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipInterestRateText5;
+	
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipFeeDeliveryText;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipFeeDeliveryValue;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipFeeOriginationText;
+	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	private WebElement toolTipFeeOriginationValue;
 	
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
@@ -232,6 +263,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private static String checkTotal = "";
 	private static String interestRate = "";
 	private static String loanType = "";
+	Actions keyBoardEvent = new Actions(Web.getDriver());
 
 	/**
 	 * Default Constructor
@@ -462,6 +494,48 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 		if (fieldName.trim().equalsIgnoreCase("INPUT EMAIL A FORM")) {
 			return this.inpEmailForm;
+		}
+		if (fieldName.trim().equalsIgnoreCase("loanReasons")) {
+			return this.txtLoanReasons;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE")) {
+			return this.txtIntrestRateLoanSummary;
+		}
+		if (fieldName.trim().equalsIgnoreCase("FEES*")) {
+			return this.txtOriginationFee;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE TEXT 1")) {
+			return this.toolTipInterestRateText1;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE TEXT 2")) {
+			return this.toolTipInterestRateText2;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE TEXT 3")) {
+			return this.toolTipInterestRateText3;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE TEXT 4")) {
+			return this.toolTipInterestRateText4;
+		}
+		if (fieldName.trim().equalsIgnoreCase("INTEREST RATE TEXT 5")) {
+			return this.toolTipInterestRateText5;
+		}
+		if (fieldName.trim().equalsIgnoreCase("DELIVERY FEE TEXT")) {
+			return this.toolTipFeeDeliveryText;
+		}
+		if (fieldName.trim().equalsIgnoreCase("DELIVERY FEE VALUE")) {
+			return this.toolTipFeeDeliveryValue;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ORIGINATION FEE TEXT")) {
+			return this.toolTipFeeOriginationText;
+		}
+		if (fieldName.trim().equalsIgnoreCase("ORIGINATION FEE VALUE")) {
+			return this.toolTipFeeOriginationValue;
+		}
+		if (fieldName.trim().equalsIgnoreCase(getInterestRate())) {
+			return this.mortgageInterestRateLoanSummaryPage;
+		}
+		if (fieldName.trim().equalsIgnoreCase(getOriginationFeeFromLoanSummaryTable())) {
+			return this.mortgageFeesLoanSummaryPage;
 		}
 		Reporter.logEvent(Status.WARNING, "Get WebElement for field '"
 				+ fieldName + "'",
@@ -1251,7 +1325,47 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			}
 		}
 	}
+	
+	/**
+	 * Method to verify Repayment Term options
+	 * in Sorted order
+	 * Principal Residence Loan
+	 * @author bbndsh	
+	 */
+	
+	public void verifyDefaultRepyamentTermPrincipalResidence() {
+		
+		String[] repaymentTerm = { "5years", "10years", "15years",
+				"20years", "25years" };
+		for (int i = 0; i < repaymentTerm.length; i++) {
+			List<WebElement> inpLoanTerm = Web.getDriver().findElements(
+					By.xpath(strRepaymentTerm.replace("rownum",
+							Integer.toString(i+1))));
+			int j = inpLoanTerm.size();
+			String actualLoanTerm = inpLoanTerm.get(0).getText().toString()
+					.trim()
+					+ inpLoanTerm.get(1).getText().toString().trim();
 
+			if (repaymentTerm[i].equalsIgnoreCase(actualLoanTerm)) {
+				lib.Reporter
+						.logEvent(
+								Status.PASS,
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term " + (i+1)+" :" + actualLoanTerm, false);
+
+			} else {
+
+				lib.Reporter
+						.logEvent(
+								Status.FAIL, 
+								"Verify Repayment Term is Displayed in Ascending Order",
+								"Repayment Term is not displayed as expected\nExpected:"
+										+ repaymentTerm[i] + "\nActual:"
+										+ actualLoanTerm, true);
+
+			}
+		}
+	}
 	/**
 	 * <pre>
 	 * Method to Verify Loan Provision Link and Modal Pop Up
@@ -1578,7 +1692,54 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 		}
 	}
+	
+	/**
+	 * 
+	 * Method to verify Expedited mail Delivery option is displayed
+	 * If so select Expedited mail button 
+	 */
 
+	public void clickExpeditedMailDeliveryOption(){
+		boolean isTextDisplayed = false;
+		
+		try {
+
+			isTextDisplayed = Web.isWebElementDisplayed(txtExpeditedMailDeliveryTime,
+					true);
+
+			if (isTextDisplayed)
+				Web.clickOnElement(inpExpressMail);
+
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	/**
+	 * 
+	 * Method to verify 'Electronically transfer funds directly to my bank account (ACH)' option is displayed
+	 * If so select ACH button 
+	 */
+
+	public void clickElectronicallyTransferFundsACHOption(){
+		boolean isTextDisplayed = false;
+		
+		try {
+
+			isTextDisplayed = Web.isWebElementDisplayed(txtACHMailDeliveryTime,
+					true);
+
+			if (isTextDisplayed)
+				Web.clickOnElement(inpACHDelivery);
+
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	/**
 	 * <pre>
 	 * Method to get the interest Rate for General Purpose/Mortgage loan from Request Loan Page
@@ -2005,7 +2166,53 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Method to Verify Interest Rate in My Loan Summary Page
+	 *
+	 * </pre>
+	 * 
+	 *
+	 */
+	public void verifyInterestRateInMyLoanSummaryPage() {
 
+		/*if (getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")).equalsIgnoreCase(
+				getInterestRateFromLoanSummaryTable())) {
+			Reporter.logEvent(Status.PASS,
+					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
+					"Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page:"
+							+ getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")), false);
+
+		} else {
+
+			Reporter.logEvent(Status.FAIL,
+					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
+					"Interest Rate in My Loan Summary page Displayed is not same as Displayed in Request a Loan Page:"
+							+ getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType"))
+							+ "\nActual:" + getInterestRateFromLoanSummaryTable(), true);
+
+		}*/
+		if (getInterestRate().equalsIgnoreCase(
+				getInterestRateFromLoanSummaryTable())) {
+			Reporter.logEvent(Status.PASS,
+					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
+					"Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page:"
+							+ getInterestRate(), false);
+
+		} else {
+
+			Reporter.logEvent(Status.FAIL,
+					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
+					"Interest Rate in My Loan Summary page Displayed is not same as Displayed in Request a Loan Page:"
+							+ getInterestRate()
+							+ "\nActual:" + getInterestRateFromLoanSummaryTable(), true);
+
+		}
+	}
+
+	
+	
 	/**
 	 * <pre>
 	 * Method to Verify  Check Total Amount is Matching in Confirmation Page
@@ -2835,5 +3042,264 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			}
 		}
 	}
+		/**
+	 * <pre>
+	 * Method to Verify Loan Request Received Section in Confirmation Page for Principal Residence Loan
+	 *
+	 * </pre>
+	 * 
+	 * @throws Exception
+	 *
+	 */
+	public String  verifyPrincipalResidenceLoanRequestRecievedSectionForACH() throws Exception {
+		isTextFieldDisplayed("Print, sign, and return the pre-filled form that will be emailed to you at the end of this process.");
+		isTextFieldDisplayed("Request form received");
+		isTextFieldDisplayed("Form review complete");
+		isTextFieldDisplayed("Funds sent by ACH");
+		String confirmationtext = txtConfirmationNumber.getText().toString()
+				.trim();
+		String confirmationNo = confirmationtext.split(":")[1].split("\n")[0].toString().trim();
+		String date = confirmationtext.split(":")[1].split("\n")[1].toString().trim();
+		verifyWebElementIsDisplayed("Loan Confirmation Number And Date");
+		String expectedDate = Common.getCurrentDate("M/d/yyyy");
+		if (date.equalsIgnoreCase(expectedDate)) {
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Loan Submittion Date is Current date",
+					"'Loan Submittion Date is Same\nDate: " + expectedDate,
+					false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify Loan Submittion Date is Current date",
+					"'Loan Submittion Date is not Same\nExpected Date:"
+							+ expectedDate + "\nActual Date:" + date, true);
+		}
+
+		
+		isTextFieldDisplayed("Typically 2 business days");
+		isTextFieldDisplayed("Delivery up to 3 business days");
+		verifyPlanName(Stock.GetParameterValue("gc_id"));
+		verifyLoanTypeInConfirmationPage();
+		verifyLoanTermInConfirmationPage();
+		verifyInterestRateInConfirmationPage();
+		verifyCheckAmountInConfirmationPage();
+		verifyLoanAmountInConfirmationPage();
+		return confirmationNo;
+	}
+
+	public void verifyLoanReasons() {
+		
+		// verifyWebElementIsDisplayed("txtLoanReasons");
+		if(isTextFieldDisplayed(Stock.GetParameterValue("LoanReasons"))){
+			lib.Reporter.logEvent(Status.PASS,
+					"Verify Loan Reasons is Displayed",
+					"Loan Reasons Displayed: " ,	false);
+
+		} else {
+
+			lib.Reporter.logEvent(Status.FAIL,
+					"Verify LoanLoan Reasons is Displayed",
+					"Loan Reasons not Displayed: " ,	false);
+		}
+		
+	}
+
+	public void clickLoanReasonOptionPreFilled() {
+		if(Web.isWebElementDisplayed(btnLoanReasonsPreFilledForm, true)){
+			Web.clickOnElement(btnLoanReasonsPreFilledForm);
+		}
+	}
+	
+	public void clickLoanReasonOptionFutureDate() {
+		if(Web.isWebElementDisplayed(btnLoanReasonsFutureDate, true)){		
+			Web.clickOnElement(btnLoanReasonsFutureDate);
+		}
+	}
+
+	
+	public void validateToolTipForInterestRate()
+			throws InterruptedException {
+		
+		
+		WebElement ele = this.getWebElement("INTEREST RATE");
+
+		
+		keyBoardEvent.moveToElement(ele).build().perform();
+		Thread.sleep(3000);
+		
+		String sExpectedText = toolTipInterestRateText1.getText()+" "+toolTipInterestRateText2.getText()+" "+toolTipInterestRateText3.getText()+" "+toolTipInterestRateText4.getText()+" "+toolTipInterestRateText5.getText();
+		System.out.println(sExpectedText);
+		Reporter.logEvent(Status.PASS, "Verify ToolTip Text for Interest Rate",
+				"Tooltip text is Displayed for Interest rate" + sExpectedText, false);
+			
+	}
+	
+	public void validateToolTipForFee() throws InterruptedException {
+		
+		WebElement ele = getWebElement("FEES*");
+		String expectedValue=ele.getText();
+
+		if(inpRegularMail.isSelected()){
+			
+			keyBoardEvent.moveToElement(ele).build().perform();
+			Thread.sleep(3000);
+			String actualOriginationFee=toolTipFeeOriginationValue.getText();
+			
+			String sExpectedText = toolTipFeeOriginationText.getText()+" "+toolTipFeeOriginationValue.getText();
+			System.out.println(sExpectedText);
+		
+			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
+					"Tooltip text displayed for FEES*" + sExpectedText, false);
+		}
+		
+	if(inpExpressMail.isSelected()){
+			
+		
+			keyBoardEvent.moveToElement(ele).build().perform();
+			Thread.sleep(3000);
+			String actualOriginationFee=toolTipFeeOriginationValue.getText();
+			String actualDeliveryFee=toolTipFeeDeliveryValue.getText();
+			WebElement ele1 = this.getWebElement("DELIVERY FEE TEXT");
+			WebElement ele2 = this.getWebElement("DELIVERY FEE VALUE");
+			WebElement ele3 = this.getWebElement("ORIGINATION FEE TEXT");
+			WebElement ele4 = this.getWebElement("ORIGINATION FEE VALUE");
+	
+			String sExpectedText = ele1.getText()+" "+ele2.getText()+"\n"+ele3.getText()+" "+ele4.getText();
+			System.out.println(sExpectedText);
+		
+			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
+					"Tooltip text displayed for FEES*" + sExpectedText, false);
+		}
+	
+		if(inpACHDelivery.isSelected()){
+		
+			Actions keyBoardEvent = new Actions(Web.getDriver());
+			keyBoardEvent.moveToElement(ele).build().perform();
+			Thread.sleep(3000);
+			WebElement ele1 = this.getWebElement("DELIVERY FEE TEXT");
+			WebElement ele2 = this.getWebElement("DELIVERY FEE VALUE");
+			WebElement ele3 = this.getWebElement("ORIGINATION FEE TEXT");
+			WebElement ele4 = this.getWebElement("ORIGINATION FEE VALUE");
+			
+			String sExpectedText = ele1.getText()+" "+ele2.getText()+"\n"+ele3.getText()+" "+ele4.getText();
+			System.out.println(sExpectedText);
+	
+			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
+				"Tooltip text displayed for FEES*" + sExpectedText, false);
+		}
+	}
+
+	public void verifyLoansLandingPage() {
+		isTextFieldDisplayed("AVAILABLE TO BORROW");
+		String loanAmt = getMaximumLoanAmount();
+		if(!loanAmt.isEmpty())
+			Reporter.logEvent(Status.PASS,
+					"Verify Loan Maximum Amount is displayed",
+					"Loan Maximum Amount is displayed \nLoan Maximum:"+loanAmt, true);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Loan Maximum Amount is displayed",
+					"Loan Maximum Amount is not displayed \nLoan Maximum:"+loanAmt, true);
+		
+	}
+
+	public void verifyActiveLoansForparticipant(String gaId) throws SQLException {
+		
+		String expectedNoofLoans = getMaximumLoansAllowed();
+		String ActualNoofLoans = getMaximumLoansAllowedforPlan(gaId);
+		if(expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
+			Reporter.logEvent(Status.PASS,
+					"Verify Maximum Loans Allowed is Matching",
+					"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"+expectedNoofLoans+"\nActual No.Of Loans:"+ActualNoofLoans, false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Maximum Loans Allowed is Matching",
+					"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"+expectedNoofLoans+"\nActual No.Of Loans:"+ActualNoofLoans, true);
+		
+		
+	}
+
+	public void clickOnRequestANewLoan() {
+				
+		boolean isTextDisplayed = false;
+		try {
+
+			isTextDisplayed = Web.isWebElementDisplayed(btnRequestNewLoan, true);
+
+			if (isTextDisplayed)
+				Web.clickOnElement(btnRequestNewLoan);
+
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
+		Web.waitForElement(inputLonatypeGeneral);
+	}
+
+	public void verifyLoanRequestTypePage() {
+		
+		  isTextFieldDisplayed("Loan purpose");
+		  isTextFieldDisplayed("Maximum loan");
+		  isTextFieldDisplayed("Minimum loan");
+		  isTextFieldDisplayed("Repayment term");
+		  isTextFieldDisplayed("Documentation required");
+		  isTextFieldDisplayed("Interest rate");
+		  isTextFieldDisplayed("Repayment");
+		  isTextFieldDisplayed("Fees");
+		  isTextFieldDisplayed("Waiting period");
+		  verifyLoneTypeisDisplayed("GENERAL PURPOSE");
+		  verifyLoneTypeisDisplayed("MORTAGAGE");
+		
+	}
+
+	public void verifyMyLoanSummarySection() {
+		
+		isTextFieldDisplayed("My loan summary");
+		isTextFieldDisplayed("INTEREST RATE");
+		isTextFieldDisplayed("FEES*");
+		isTextFieldDisplayed("CHECK TOTAL");
+		isTextFieldDisplayed("LOAN TOTAL");
+		verifyLoanTotalAmount();
+		setCheckTotal(getCheckTotalFromSummaryTable());
+		
+	}
+
+	public void verifyLoanSummarypage() {
+		
+		verifyPageHeaderIsDisplayed("Header Loan Review");
+		
+		isTextFieldDisplayed("Loan Details");
+		isTextFieldDisplayed("PLAN:");
+		isTextFieldDisplayed("LOAN TYPE:");
+		isTextFieldDisplayed("TERM:");
+		isTextFieldDisplayed("MATURITY DATE:");
+		isTextFieldDisplayed("INTEREST RATE:");
+		isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
+		isTextFieldDisplayed("CHECK AMOUNT:");
+		isTextFieldDisplayed("LOAN AMOUNT:");
+		isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
+		isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
+		isTextFieldDisplayed("Payment Information");
+		isTextFieldDisplayed("FIRST PAYMENT DUE:");
+		isTextFieldDisplayed("LAST PAYMENT DUE:");
+		isTextFieldDisplayed("NUMBER OF PAYMENTS:");
+		isTextFieldDisplayed("PAYMENT AMOUNT:");
+		isTextFieldDisplayed("PAYMENT METHOD:");
+		isTextFieldDisplayed("PAYMENT FREQUENCY:");
+		isTextFieldDisplayed("Fees and Taxes");
+		isTextFieldDisplayed("ORIGINATION FEE:");
+		isTextFieldDisplayed("Delivery Information");
+		isTextFieldDisplayed("DELIVERY METHOD:");
+		isTextFieldDisplayed("MAILING ADDRESS:");
+		isTextFieldDisplayed("Loan Provisions");
+		
+		Web.isWebElementDisplayed(btnIAgreeAndSubmit, true);
+		Web.isWebElementDisplayed(btnBack, true);
+	}
 
 }
+
+
+

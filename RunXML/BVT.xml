@@ -8,11 +8,59 @@
 	<test name="BVT">
 		<classes>
 			<class
-				name="app.pptweb.testcases.NPDI.POTest">
+				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Login_LeftNav_Investments">
 				<methods>
 
-					<include name="verify_MeAndMyMoneyPage">
-						<parameter name="ManualTCName" value="DDTC_verify_MeAndMyMoneyPage">
+					
+
+					<include name="Dollar_Cost_Average_Flow">
+						<parameter name="ManualTCName" value="Dollar_Cost_Average_Flow">
+						</parameter>
+					</include>
+					
+					<include name="Manage_My_Investment_Flow_New">
+						<parameter name="ManualTCName" value="Manage_My_Investment_Flow">
+						</parameter>
+					</include>
+					<include name="Brokerage_validations">
+						<parameter name="ManualTCName" value="Brokerage_validations">
+						</parameter>
+					</include>
+					
+					<include name="FundToFundTransfer">
+						<parameter name="ManualTCName" value="FundToFundTransfer">
+						</parameter>
+					</include>
+					<include name="Investment_lineup_validations">
+						<parameter name="ManualTCName" value="Investment_lineup_validations">
+						</parameter>
+					</include>
+					
+
+
+					<include name="DDTC_30083_FE_HMDI_Access_Online_Advice">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_30083_FE_HMDI_Access_Online_Advice">
+						</parameter>
+					</include>
+
+					<include name="DDTC_30104_FE_DIM_Access_Online_Guidance">
+                    <parameter  name="ManualTCName" value="SIT_DDTC_30104_FE_DIM_Access_Online_Guidance">
+                    </parameter>
+                    </include>
+
+					
+					<include name="SF01_TC04_Verify_Participant_Profile_Page_Data">
+						<parameter name="ManualTCName" value="User_Profile_Page_Data_Validations">
+						</parameter>
+					</include>
+
+
+					<!-- <include name="SF01_TC19_Verify_Legacy_Home_Page"> <parameter name="ManualTCName" 
+						value="Legacy_Home_Page_From_Magic_URL"> </parameter> </include> -->
+
+					<include name="SF04_TC01_SendActivationCode_ForgotPasswordFlow">
+						<parameter name="ManualTCName" value="SendActivationCode_ForgotPasswordFlow">
 						</parameter>
 					</include>
 
