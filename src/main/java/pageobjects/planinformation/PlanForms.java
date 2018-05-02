@@ -122,8 +122,11 @@ public class PlanForms extends LoadableComponent<PlanForms> {
 			Web.waitForElement(tblPlanForms);
 			int noOfPlanForms=lstPlanformName.size();
 			if(planfrom==null){
-				lstPlanformName.get(1).click();
 				Reporter.logEvent(Status.INFO, "Verify Plan form is clicked", lstPlanformName.get(1).getText()+" Form is clicked",true);
+				Web.clickOnElement(lstPlanformName.get(2));
+				Web.waitForPageToLoad(Web.getDriver());
+				Common.waitForProgressBar();
+				
 			}
 			else{
 				for(int i=1;i<noOfPlanForms;i++){

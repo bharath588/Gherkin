@@ -1771,12 +1771,12 @@ public class ProdvalidationTestCases_LeftNav {
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
 			planforms.clickOnForm(null);
-			if (planforms.verifyPlanFormIsOpened())
+			/*if (planforms.verifyPlanFormIsOpened())
 				Reporter.logEvent(Status.PASS, "Verify Plan Form is opened",
 						"Plan form is opened ", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Plan Form is opened",
-						" Plan form is not opened", true);
+						" Plan form is not opened", true);*/
 
 		} catch (Exception e) {
 			e.printStackTrace();
