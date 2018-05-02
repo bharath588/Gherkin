@@ -10,8 +10,12 @@
 			<class
 				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
 				<methods>
-			<include name="Statement_and_Documents_validations">
-						<parameter name="ManualTCName" value="Statement_and_Documents_validations">
+				<!-- <include name="verify_Statement_On_Demand_Tab">
+						<parameter name="ManualTCName" value="Statement_On_Demand_Tab">
+						</parameter>
+					</include> -->
+						<include name="verify_Statement_and_Documents_Tab">
+						<parameter name="ManualTCName" value="Statement_and_Documents_Tab">
 						</parameter>
 					</include>
 

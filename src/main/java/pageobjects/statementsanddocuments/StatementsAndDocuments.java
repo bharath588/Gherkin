@@ -31,32 +31,43 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	private LoadableComponent<?> parent;
 	
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
-	@FindBy(xpath="//h1[text()='Statements and documents']") private WebElement lblStmtsAndDocs;
+	@FindBy(xpath="//a[contains(text(),'Statements and Documents')]") private WebElement tabStmtsAndDocs;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(id="legacyFeatureIframe") private WebElement iframeLegacyFeature;
 	@FindBy(id="contentFrame") private WebElement iframeContentFrame;
 	@FindBy(xpath="//a[text()[normalize-space()='Statements on Demand']]") private WebElement tabStmtsOnDemand;
-	@FindBy(id="statementsSummaryTable") private WebElement tblStmtsSummary;
-	@FindBy(id="statementsByMoneyTypeTable") private WebElement tblStmtsByMoneyType;
-	@FindBy(id="statementsByFundDetailTable") private WebElement tblStmtsByFundDetail;
-	@FindBy(xpath="//table[@id='statementsSummaryTable']//thead/tr") private WebElement hdrStmtsSummaryTable;
-	@FindBy(xpath="//table[@id='statementsByMoneyTypeTable']//thead/tr") private WebElement hdrStmtsByMoneyTable;
-	@FindBy(xpath="//table[@id='statementsByFundDetailTable']//thead/tr") private WebElement hdrStmtsByFundDetailTable;
-	@FindBy(xpath="//table[@id='statementsSummaryTable']//tbody/tr") private List<WebElement> lstStmtsSummaryTableRows;
-	@FindBy(xpath="//table[@id='statementsByMoneyTypeTable']//tbody[@id='txnSummaryTbody']/tr") private List<WebElement> lstStmtsByMoneyTableRows;
-	@FindBy(xpath="//table[@id='statementsByFundDetailTable']//tbody[@id='actByInvestmentTableBody']/tr") private List<WebElement> lstStmtsByFundDetailTableRows;
-	@FindBy(xpath="//table[@id='statementsByMoneyTypeTable']//*[@id='statementsByMoneyTypeName']/a") private List<WebElement> lstStmtsByMoneyType;
-	@FindBy(xpath="//table[@id='statementsByFundDetailTable']//*[@id='statementsByFundDetailName']/a") private List<WebElement> lstStmtsByFundDetail;
+	@FindBy(xpath="//div[contains(@ng-if,'atAGlance')]") private WebElement tblStmtsSummary;
+	@FindBy(xpath="//div[contains(@class,'statementsDocumentsTable')]") private WebElement tabelStmtsAndDocuments;
+	@FindBy(xpath="//div[contains(@ng-if,'atAGlance')]//div[@class='dtable']//div") private WebElement tblStmtsSummaryData;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByContributionSources ')]") private WebElement tblStmtsByMoneyType;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByInvestmentOptions')]") private WebElement tblStmtsByFundDetail;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByInvestmentOptions')]//div[@class='dtable']//div") private WebElement tblInvestmentOptions;
+	@FindBy(xpath="//div[contains(@ng-if,'atAGlance')]//h2") private WebElement hdrStmtsSummaryTable;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByContributionSources ')]//h2") private WebElement hdrStmtsByMoneyTable;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByContributionSources')]//div[@class='dtable']//div") private WebElement tblContributionSources;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByInvestmentOptions')]//h2") private WebElement hdrStmtsByFundDetailTable;
+	@FindBy(xpath="//div[contains(@ng-if,'atAGlance')]//div[@class='dtable']//div") private List<WebElement> lstStmtsSummaryTableRows;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByContributionSources')]//div[@class='dtable']//div") private List<WebElement> lstStmtsByMoneyTableRows;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByInvestmentOptions')]//div[@class='dtable']//div") private List<WebElement> lstStmtsByFundDetailTableRows;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByContributionSources')]//div[@class='dtable']//div//span//a") private List<WebElement> lstStmtsByMoneyType;
+	@FindBy(xpath="//div[contains(@ng-if,'activityByInvestmentOptions')]//div[@class='dtable']//div[1]//a") private List<WebElement> lstStmtsByFundDetail;
 	
-	@FindBy(id="statementsByTxnDetailTable") private WebElement tblStmtsByTxnDetail;
-	@FindBy(xpath="//table[@id='statementsByTxnDetailTable']//tbody/tr[@id='statementsByTxnDetailColTitle']") private WebElement hdrStmtsByTxnDetailTable;
-	@FindBy(xpath="//table[@id='statementsByTxnDetailTable']//tbody/tr[@id='statementsByTxnDetailData']") private List<WebElement> lstStmtsByTxnDetailTableRows;
+	
+	@FindBy(xpath="//div[contains(@ng-if,'statementsOnDemandTransactionDetails')]") private WebElement tblStmtsByTxnDetail;
+	@FindBy(xpath="//div[@class='modal-header']//h2") private WebElement hdrStmtsByTxnDetailTable;
+	@FindBy(xpath="//div[contains(@ng-if,'statementsOnDemandTransactionDetails')]//div[@class='trow']") private List<WebElement> lstStmtsByTxnDetailTableRows;
+	@FindBy(xpath="//div[contains(@class,'statementsDocumentsTable')]//div[@aria-label='CATEGORY']//span") private List<WebElement> lstCategory;
 	@FindBy(xpath = "//img[@class='site-logo']")
 	private WebElement lblSponser;
+	@FindBy(xpath = "//button[contains(text(),'close')]")
+	private WebElement btnClose;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
-	@FindBy(xpath = "//div[@class='executable customDropdown']//div[@class='ddDiv']")
+	@FindBy(xpath = "//button[contains(text(),' View All')]") private WebElement btnViewAll;
+	@FindBy(xpath = "//a[contains(@ng-click,'pageNumber')]") private List<WebElement> lstPageNo;
+	@FindBy(xpath = "//button[contains(text(),' View Less')]") private WebElement btnViewLess;
+	@FindBy(id = "searchFilterDropdown")
 	private WebElement drpDateFreequency;
-	private String dateFrequency="//div[@class='executable customDropdown']//div[@class='ddDiv']//ul/li[contains(text(),'frequency')]";
+	private String frequency="//a[text()='frequency']";
 	@FindBy(xpath = "//input[@type='submit']")
 	private WebElement btnSubmitQuery;
 	@FindBy(xpath = ".//*[@id='statementsByMoneyTypeNameColTitle']/a")
@@ -114,7 +125,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		}*/
 		if (userFromDatasheet.equalsIgnoreCase(userLogedIn)) {
 			Assert.assertTrue(userFromDatasheet.equalsIgnoreCase(userLogedIn));		
-			Assert.assertTrue(lib.Web.isWebElementDisplayed(lblStmtsAndDocs),"Statements and Documenta page is not loaded");
+			Assert.assertTrue(lib.Web.isWebElementDisplayed(tabStmtsAndDocs),"Statements and Documenta page is not loaded");
 		
 		} else {
 			this.lnkLogout.click();
@@ -131,7 +142,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		((LeftNavigationBar) this.parent).clickNavigationLink("Statements and documents");
 		Common.waitForProgressBar();
 		Web.waitForPageToLoad(Web.getDriver());
-		lib.Web.isWebElementDisplayed(lblStmtsAndDocs,true);
+		lib.Web.isWebElementDisplayed(tabStmtsAndDocs,true);
 	}
 	
 	
@@ -139,14 +150,29 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		if (fieldName.trim().equalsIgnoreCase("Stmts On Demand Tab")) {
 			return this.tabStmtsOnDemand;
 		}
+		if (fieldName.trim().equalsIgnoreCase("Statements And Documents Tab")) {
+			return this.tabStmtsAndDocs;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Statements And Documents")) {
+			return this.tabelStmtsAndDocuments;
+		}
 		if (fieldName.trim().equalsIgnoreCase("Account at a Glance Table")) {
+			return this.tblStmtsSummaryData;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Account at a Glance")) {
 			return this.tblStmtsSummary;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source")) {
 			return this.tblStmtsByMoneyType;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source Table")) {
+			return this.tblContributionSources;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option")) {
 			return this.tblStmtsByFundDetail;
+		}
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option Table")) {
+			return this.tblInvestmentOptions;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Account at a Glance Table Header")) {
 			return this.hdrStmtsSummaryTable;
@@ -179,7 +205,7 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 		if (fieldName.trim().equalsIgnoreCase("Activity by Contribution Source")) {
 			return this.lstStmtsByMoneyType;
 		}
-		if (fieldName.trim().equalsIgnoreCase("Fund Detail Table")) {
+		if (fieldName.trim().equalsIgnoreCase("Activity by Investment Option")) {
 			return this.lstStmtsByFundDetail;
 		}
 		if (fieldName.trim().equalsIgnoreCase("Transaction Details Table")) {
@@ -189,23 +215,16 @@ public class StatementsAndDocuments extends LoadableComponent<StatementsAndDocum
 	}
 	
 public void verifyTableDisplayed(String tableName){
-		if(tableName.equalsIgnoreCase("Transaction Details Table"))
-			Web.getDriver().switchTo().frame(iframeContentFrame);
-		else
-			Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		
 		WebElement table = this.getWebElement(tableName);
 		if(Web.isWebElementDisplayed(table))
-			Reporter.logEvent(Status.PASS, "verify "+tableName+" is displayed", tableName+" is displayed", false);
+			Reporter.logEvent(Status.PASS, "verify "+tableName+" Table is displayed", tableName+" Table is displayed", false);
 		else
-			Reporter.logEvent(Status.FAIL, "verify "+tableName+" is displayed", tableName+" is not displayed",true);
+			Reporter.logEvent(Status.FAIL, "verify "+tableName+" Table is displayed", tableName+" Table is not displayed",true);
 		Web.getDriver().switchTo().defaultContent();
 	}
 	
 	public void verifyTableDataDisplayed(String tableName){
-		if(tableName.equalsIgnoreCase("Transaction Details Table"))
-			Web.getDriver().switchTo().frame(iframeContentFrame);
-		else
-			Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		
 		List<WebElement> table = this.getWebElementList(tableName);
 		int noOfRows=table.size();
@@ -218,10 +237,7 @@ public void verifyTableDisplayed(String tableName){
 	
 	public void verifytableHeaderNotEmpty(String tableName){
 	 	
-		if(tableName.equalsIgnoreCase("Transaction Details Table Header"))
-			Web.getDriver().switchTo().frame(iframeContentFrame);
-		else
-			Web.getDriver().switchTo().frame(iframeLegacyFeature);  
+		
 	 	WebElement tableHeader = this.getWebElement(tableName);
 	 	if(!tableHeader.getText().isEmpty())
 	 		Reporter.logEvent(Status.PASS, "verify "+tableName+" displayed",tableName+" is displayed" , false);
@@ -233,23 +249,17 @@ public void verifyTableDisplayed(String tableName){
 	}	
 	
 	public void clickOnStatementFromTable(String tableName){
-		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		
 		List<WebElement> statements = this.getWebElementList(tableName);
 		if(statements.size()>=1){
 			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+tableName, "Contribution Source is displayed",true);
 			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(0).getText().trim(),true);
-			statements.get(0).click();
-			String parentWindow = Web.getDriver().getWindowHandle();
-			Set<String> handles =  Web.getDriver().getWindowHandles();
-			   for(String windowHandle  : handles)
-			       {
-			       if(!windowHandle.equals(parentWindow)){
-			         Web.getDriver().switchTo().window(windowHandle);
+			statements.get(1).click();
+			 Common.waitForProgressBar();
+	         Web.waitForPageToLoad(Web.getDriver());
+	         if(hdrStmtsByTxnDetailTable.isDisplayed()){
 			         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
-			         Common.waitForProgressBar();
-			         Web.waitForPageToLoad(Web.getDriver());
-			        
-			       }
+			     
 			       }
 		}
 		else
@@ -279,10 +289,18 @@ public void verifyTableDisplayed(String tableName){
 		       }
 		   Web.getDriver().switchTo().window(parentWindow);
 	}
+	/**
+	 * Method to click on close Button
+	 */
+	public void clickOnClose(){
+		if(Web.isWebElementDisplayed(btnClose, true)){
+			Web.clickOnElement(btnClose);
+		}
+	}
 	
 	public void navigateToTab(String tabName){
 		boolean isnavigateSuccessful=false;
-		Web.getDriver().switchTo().frame(iframeLegacyFeature);
+		//Web.getDriver().switchTo().frame(iframeLegacyFeature);
 		
 		if(tabName.equalsIgnoreCase("Stmts On Demand Tab")){
 			Web.waitForElement(tabStmtsOnDemand);
@@ -290,11 +308,18 @@ public void verifyTableDisplayed(String tableName){
 			if(Web.isWebElementDisplayed(tblStmtsSummary,true))
 				isnavigateSuccessful=true;
 		}
+		else if(tabName.equalsIgnoreCase("Statements And Documents Tab")){
+			Web.waitForElement(tabStmtsAndDocs);
+			Web.clickOnElement(tabStmtsAndDocs);
+			if(Web.isWebElementDisplayed(tabelStmtsAndDocuments,true))
+				isnavigateSuccessful=true;
+		}
+			
 		if(isnavigateSuccessful)
 			Reporter.logEvent(Status.PASS, "verify navigate to "+tabName+"  successfull", "Able to navigate to "+tabName+" tab", true);
 		else
 			Reporter.logEvent(Status.FAIL, "verify navigate to "+tabName+" successfull", " Not Able to navigate to "+tabName+" tab",true);
-		Web.getDriver().switchTo().defaultContent();
+		//Web.getDriver().switchTo().defaultContent();
 	}
 	
 	/**
@@ -303,19 +328,79 @@ public void verifyTableDisplayed(String tableName){
 	 * @throws InterruptedException 
 	 */
 	public void selectDateFrequency(String frequency) throws InterruptedException{
-		Actions mouse = new Actions(Web.getDriver());
-		Web.getDriver().switchTo().defaultContent();
-		Web.getDriver().switchTo().frame(iframeLegacyFeature);
-		Web.waitForElement(drpDateFreequency);
-		if(!Web.isWebElementDisplayed(drpDateFreequency)){
 		
-		}
+		Web.waitForElement(drpDateFreequency);
 		Web.clickOnElement(drpDateFreequency);
-		 WebElement DateFrequency= Web.getDriver().findElement(By.xpath(dateFrequency.replaceAll("frequency", frequency)));
-		mouse.moveToElement(DateFrequency).click().build().perform();
 		Thread.sleep(3000);
-		Web.clickOnElement(btnSubmitQuery);
-		Web.waitForElement(colContributionSource);
-		Web.getDriver().switchTo().defaultContent();
+		WebElement ele= Web.getDriver().findElement(By.xpath(this.frequency.replaceAll("frequency", frequency)));
+		ele.click();
+		Common.waitForProgressBar();
+		
+	}
+	
+	/**
+	 * This Method is to verify the filter
+	 * @param dateFrequency
+	 * @throws InterruptedException 
+	 */
+	public void verifyFilter(String filterType) throws InterruptedException{
+		boolean matching=true;
+		String category="";
+		Web.waitForElement(drpDateFreequency);
+		Web.clickOnElement(drpDateFreequency);
+		Thread.sleep(3000);
+		WebElement ele= Web.getDriver().findElement(By.xpath(this.frequency.replaceAll("frequency", filterType)));
+		ele.click();
+		Common.waitForProgressBar();
+		int size=lstCategory.size();
+		for(int i=0;i<size;i++){
+			if(!filterType.contains(lstCategory.get(i).getText().toString().trim())){
+				matching=false;
+				category=lstCategory.get(i).getText().toString().trim();
+			}
+			
+		}
+		if(matching){
+			Reporter.logEvent(Status.PASS, "verify Documents are Filtered by selected Category", "Documents Are Filted Properly\nExpected:"+filterType+"\nActual:"+filterType,true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "verify Documents are Filtered by selected Category", "Documents Are Not Filted Properly\nExpected:"+filterType+"\nActual:"+category,true);
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * This Method is to verify View All Link
+	 * @throws InterruptedException 
+	 */
+	public void verifyViewAllLink() throws InterruptedException{
+		
+		Web.waitForElement(btnViewAll);
+	
+		if(Web.isWebElementsDisplayed(lstPageNo, false)){
+			Reporter.logEvent(Status.PASS, "verify Page Numbering is Displayed", "Page Numbering is Displayed",false);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL, "verify Page Numbering is Displayed", "Page Numbering is Displayed",true);
+		}
+		
+		Web.clickOnElement(btnViewAll);
+		Reporter.logEvent(Status.INFO, "Clicking on ViewAll Link", "Clicked on ViewAll Link",false);
+		if(Web.isWebElementDisplayed(btnViewLess, true)){
+			Reporter.logEvent(Status.PASS, "verify 'ViewLess' Button is Displayed by Clicking on ViewAll Link", "'ViewLess' Button is Displayed'",true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL,  "verify 'ViewLess' Button is Displayed by Clicking on ViewAll Link", "'ViewLess' Button is Displayed'",true);
+		}
+		Web.clickOnElement(btnViewLess);
+		Reporter.logEvent(Status.INFO, "Clicking on ViewLess Link", "Clicked on ViewLess Link",false);
+		if(Web.isWebElementDisplayed(btnViewAll, true)&& Web.isWebElementsDisplayed(lstPageNo, false) ){
+			Reporter.logEvent(Status.PASS, "verify 'ViewAll' Button And 'Page Numbering' is Displayed by Clicking on ViewLess Link", "ViewAll' Button And 'Page Numbering' Button is Displayed'",true);
+		}
+		else{
+			Reporter.logEvent(Status.FAIL,  "verify 'ViewAll' Button And 'Page Numbering' is Displayed by Clicking on ViewLess Link", "ViewAll' Button And 'Page Numbering' Button is Displayed'",true);
+		}
 	}
 }

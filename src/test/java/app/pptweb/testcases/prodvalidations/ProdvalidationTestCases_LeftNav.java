@@ -1237,7 +1237,7 @@ public class ProdvalidationTestCases_LeftNav {
 	}
 
 	@Test(dataProvider = "setData")
-	public void Statement_and_Documents_validations(int itr,
+	public void verify_Statement_On_Demand_Tab(int itr,
 			Map<String, String> testdata) {
 
 		try {
@@ -1282,20 +1282,20 @@ public class ProdvalidationTestCases_LeftNav {
 			statements.navigateToTab("Stmts On Demand Tab");
 			statements.selectDateFrequency("Two Years");
 			Thread.sleep(5000);
-			statements.verifyTableDisplayed("Account at a Glance Table");
+			statements.verifyTableDisplayed("Account at a Glance");
 			statements
 					.verifytableHeaderNotEmpty("Account at a Glance Table Header");
 			statements.verifyTableDataDisplayed("Account at a Glance Table");
 
 			statements
-					.verifyTableDisplayed("Activity by Contribution Source Table");
+					.verifyTableDisplayed("Activity by Contribution Source");
 			statements
 					.verifytableHeaderNotEmpty("Activity by Contribution Source Table Header");
 			statements
 					.verifyTableDataDisplayed("Activity by Contribution Source Table");
 
 			statements
-					.verifyTableDisplayed("Activity by Investment Option Table");
+					.verifyTableDisplayed("Activity by Investment Option");
 			statements
 					.verifytableHeaderNotEmpty("Activity by Investment Option Table Header");
 			statements
@@ -1307,16 +1307,80 @@ public class ProdvalidationTestCases_LeftNav {
 			statements
 					.verifytableHeaderNotEmpty("Transaction Details Table Header");
 			statements.verifyTableDataDisplayed("Transaction Details Table");
-			// closing child window
-			Web.getDriver().close();
-			// cntrl to parent window1
-			// Web.getDriver().switchTo().window(parentWindow1);
-			// close parent window 1
-			// Web.getDriver().close();
-			// cntrl to parent window
-			Web.getDriver().switchTo().window(parentWindow);
+			statements.clickOnClose();
+			
 			Web.getDriver().switchTo().defaultContent();
+			statements
+			.clickOnStatementFromTable("Activity by Investment Option");
+	statements.verifyTableDisplayed("Transaction Details Table");
+	statements
+			.verifytableHeaderNotEmpty("Transaction Details Table Header");
+	statements.verifyTableDataDisplayed("Transaction Details Table");
+	statements.clickOnClose();
+	Web.getDriver().switchTo().defaultContent();
 			// statements.switchToWindow();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	@Test(dataProvider = "setData")
+	public void verify_Statement_and_Documents_Tab(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			LeftNavigationBar leftmenu;
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+
+			leftmenu = new LeftNavigationBar(homePage);
+			StatementsAndDocuments statements = new StatementsAndDocuments(
+					leftmenu);
+
+			statements.get();
+			Thread.sleep(5000);
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+
+			statements.navigateToTab("Statements And Documents Tab");
+			statements.verifyTableDisplayed("Statements And Documents");
+			statements.verifyFilter("Confirms");
+			statements.verifyFilter("Statements");
+			statements.verifyViewAllLink();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
