@@ -1,5 +1,5 @@
 [ {
-       "Browser": "CHROME",
+       "Browser": "FF",
        "Port": "http://10.4.61.11:5555/wd/hub",
        "Platform": "Windows.xp"
 },
@@ -9,7 +9,7 @@
        "Platform": "Windows.xp"
 },
 {
-       "Browser": "CHROME",
+       "Browser": "FF",
        "Port": " http://10.4.61.208:7777/wd/hub",
        "Platform": "Windows.xp"
 }
