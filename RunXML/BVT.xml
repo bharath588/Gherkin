@@ -10,11 +10,10 @@
 			<class
 				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_LeftNav">
 				<methods>
-				<include name="PlanForms_Validations">
-						<parameter name="ManualTCName" value="PlanForms_Validations">
+				<include name="verify_Statement_On_Demand_Tab">
+						<parameter name="ManualTCName" value="Statement_On_Demand_Tab">
 						</parameter>
 					</include>
-
 
 				</methods>
 			</class>

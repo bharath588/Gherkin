@@ -185,6 +185,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	private WebElement txtLoanType;
 	@FindBy(xpath = "//div[./b[contains(text(),'TERM')]]//following-sibling::div")
 	private WebElement txtLoanTerm;
+	@FindBy(xpath = "//div[./b[contains(text(),'MATURITY DATE')]]//following-sibling::div")
+	private WebElement txtMaturityDate;
 	@FindBy(xpath = "//div[./b[contains(text(),'INTEREST RATE')]]//following-sibling::div")
 	private WebElement txtInterestRate;
 	@FindBy(xpath = "//div[./b[contains(text(),'CHECK AMOUNT')]]//following-sibling::div")
@@ -232,26 +234,30 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
 	private WebElement mortgageFeesLoanSummaryPage;
 	
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[1]/*")
 	private WebElement toolTipInterestRateText1;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[2]/div[1]/*")
 	private WebElement toolTipInterestRateText2;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[2]/div[2]/*")
 	private WebElement toolTipInterestRateText3;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[3]/div[1]/*")
 	private WebElement toolTipInterestRateText4;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/*[3]/div[2]/*")
 	private WebElement toolTipInterestRateText5;
 	
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[1]/div[1]/span")
 	private WebElement toolTipFeeDeliveryText;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[1]/div[2]/*")
 	private WebElement toolTipFeeDeliveryValue;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[2]/div[1]/span")
 	private WebElement toolTipFeeOriginationText;
-	@FindBy(xpath = ".//*[@id='quoteTable']/tbody/tr/td[2]/a")
+	@FindBy(xpath = "//div[@class='top small-popover fade tooltip in']/div[2]/*/*/div[2]/div[2]/*")
 	private WebElement toolTipFeeOriginationValue;
-	
+
+	@FindBy(xpath = ".//*[@id='emailContainer']//input[@name='updateThruEmail']")
+	private WebElement chkBoxEmail;
+	@FindBy(xpath = ".//*[@id='phoneNbrContainer']//input[@name='updateThruTextMsg']")
+	private WebElement chkBoxTextMsg;
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
 
@@ -2175,24 +2181,9 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 * 
 	 *
 	 */
-	public void verifyInterestRateInMyLoanSummaryPage() {
+	public void verifyInterestRateInLoanSummaryTable() {
 
-		/*if (getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")).equalsIgnoreCase(
-				getInterestRateFromLoanSummaryTable())) {
-			Reporter.logEvent(Status.PASS,
-					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
-					"Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page:"
-							+ getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")), false);
-
-		} else {
-
-			Reporter.logEvent(Status.FAIL,
-					"Verify Interest Rate in My Loan Summary page Displayed is same as Displayed in Request a Loan Page",
-					"Interest Rate in My Loan Summary page Displayed is not same as Displayed in Request a Loan Page:"
-							+ getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType"))
-							+ "\nActual:" + getInterestRateFromLoanSummaryTable(), true);
-
-		}*/
+		
 		if (getInterestRate().equalsIgnoreCase(
 				getInterestRateFromLoanSummaryTable())) {
 			Reporter.logEvent(Status.PASS,
@@ -2417,26 +2408,26 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		return confirmationNo;
 	}
 
-	public static String getInterestRate() {
+	public  String getInterestRate() {
 		return interestRate;
 	}
 
-	public static void setInterestRate(String interestRate) {
+	public  void setInterestRate(String interestRate) {
 		RequestLoanPage.interestRate = interestRate;
 	}
 
-	public static String getCheckTotal() {
+	public  String getCheckTotal() {
 		return checkTotal;
 	}
 
-	public static void setCheckTotal(String checkTotal) {
+	public  void setCheckTotal(String checkTotal) {
 		RequestLoanPage.checkTotal = checkTotal;
 	}
-	public static String getLoanType() {
+	public  String getLoanType() {
 		return loanType;
 	}
 
-	public static void setLoanType(String loanType) {
+	public  void setLoanType(String loanType) {
 		RequestLoanPage.loanType = loanType;
 	}
 
@@ -3124,72 +3115,108 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		WebElement ele = this.getWebElement("INTEREST RATE");
 
-		
 		keyBoardEvent.moveToElement(ele).build().perform();
 		Thread.sleep(3000);
+
+		String expectedtext = "Interest rate I pay to myself";
+		String actualText = toolTipInterestRateText1.getText().toString()
+				.trim();
+
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+		} else {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "Rate PRIME + 1";
+		actualText = toolTipInterestRateText2.getText().toString().trim() + " "
+				+ toolTipInterestRateText3.getText().toString().trim();
 		
-		String sExpectedText = toolTipInterestRateText1.getText()+" "+toolTipInterestRateText2.getText()+" "+toolTipInterestRateText3.getText()+" "+toolTipInterestRateText4.getText()+" "+toolTipInterestRateText5.getText();
-		System.out.println(sExpectedText);
-		Reporter.logEvent(Status.PASS, "Verify ToolTip Text for Interest Rate",
-				"Tooltip text is Displayed for Interest rate" + sExpectedText, false);
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+		} else {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+
+		expectedtext = "Type FIXED";
+		actualText = toolTipInterestRateText4.getText().toString().trim() + " "
+				+ toolTipInterestRateText5.getText().toString().trim();
+		
+		if (expectedtext.equalsIgnoreCase(actualText)) {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, false);
+		} else {
+			Reporter.logEvent(Status.PASS,
+					"Verify ToolTip Text for INTEREST RATE is displayed",
+					"Tooltip Text is not displayed for INTEREST RATE\nExpected: "
+							+ expectedtext + "\nActual: " + actualText, true);
+		}
+		
 			
 	}
 	
-	public void validateToolTipForFee() throws InterruptedException {
+		public void validateToolTipForFee() throws InterruptedException {
 		
-		WebElement ele = getWebElement("FEES*");
-		String expectedValue=ele.getText();
-
+		WebElement ele = this.getWebElement("FEES*");
+		String sActualText = null;
+		String sExpectedText = ele.getText();
+	
 		if(inpRegularMail.isSelected()){
 			
 			keyBoardEvent.moveToElement(ele).build().perform();
 			Thread.sleep(3000);
-			String actualOriginationFee=toolTipFeeOriginationValue.getText();
+				
+			sActualText = toolTipFeeOriginationValue.getText();					
 			
-			String sExpectedText = toolTipFeeOriginationText.getText()+" "+toolTipFeeOriginationValue.getText();
-			System.out.println(sExpectedText);
-		
-			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
-					"Tooltip text displayed for FEES*" + sExpectedText, false);
+			if(sExpectedText.equalsIgnoreCase(sActualText)){
+				Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES* is displayed",
+					"Tooltip text displayed for FEES* and is equal to Origination Fee as Expected" +
+				"\nFEE*: "+ sExpectedText, false);
+			}else{				
+					Reporter.logEvent(Status.FAIL, "Verify ToolTip Text for FEES* is displayed",
+						"Tooltip text displayed for FEES* is not displayed as Expected" + 
+					"\nExpected Text: " + sExpectedText+
+					"\nActual Text: "+sActualText, true);
+			}
+			
 		}
 		
-	if(inpExpressMail.isSelected()){
+		else{
 			
-		
 			keyBoardEvent.moveToElement(ele).build().perform();
 			Thread.sleep(3000);
-			String actualOriginationFee=toolTipFeeOriginationValue.getText();
-			String actualDeliveryFee=toolTipFeeDeliveryValue.getText();
-			WebElement ele1 = this.getWebElement("DELIVERY FEE TEXT");
-			WebElement ele2 = this.getWebElement("DELIVERY FEE VALUE");
-			WebElement ele3 = this.getWebElement("ORIGINATION FEE TEXT");
-			WebElement ele4 = this.getWebElement("ORIGINATION FEE VALUE");
-	
-			String sExpectedText = ele1.getText()+" "+ele2.getText()+"\n"+ele3.getText()+" "+ele4.getText();
-			System.out.println(sExpectedText);
-		
-			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
-					"Tooltip text displayed for FEES*" + sExpectedText, false);
-		}
-	
-		if(inpACHDelivery.isSelected()){
-		
-			Actions keyBoardEvent = new Actions(Web.getDriver());
-			keyBoardEvent.moveToElement(ele).build().perform();
-			Thread.sleep(3000);
-			WebElement ele1 = this.getWebElement("DELIVERY FEE TEXT");
-			WebElement ele2 = this.getWebElement("DELIVERY FEE VALUE");
-			WebElement ele3 = this.getWebElement("ORIGINATION FEE TEXT");
-			WebElement ele4 = this.getWebElement("ORIGINATION FEE VALUE");
+				
+			double deliveryFee  = Web.getIntegerCurrency(toolTipFeeDeliveryValue.getText()) ;
+			double originationFee = Web.getIntegerCurrency(toolTipFeeOriginationValue.getText());
+			double totalFee = deliveryFee + originationFee;
 			
-			String sExpectedText = ele1.getText()+" "+ele2.getText()+"\n"+ele3.getText()+" "+ele4.getText();
-			System.out.println(sExpectedText);
-	
-			Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES*",
-				"Tooltip text displayed for FEES*" + sExpectedText, false);
+			sActualText = "$" + Double.toString(totalFee); 
+		
+			if(sExpectedText.equalsIgnoreCase(sActualText)){
+				Reporter.logEvent(Status.PASS, "Verify ToolTip Text for FEES* is displayed",
+					"Tooltip text displayed for FEES* and is equal to sum of Origination Fee and Delivery Fee as Expected" + sExpectedText, false);
+			}else{				
+					Reporter.logEvent(Status.FAIL, "Verify ToolTip Text for FEES*",
+						"Tooltip text displayed for FEES* is displayed as Expected" + 
+					"\nExpected Text: " + sExpectedText+
+					"\nActual Text: "+sActualText, true);
+			}
 		}
-	}
-
+		}
 	public void verifyLoansLandingPage() {
 		isTextFieldDisplayed("AVAILABLE TO BORROW");
 		String loanAmt = getMaximumLoanAmount();
@@ -3231,7 +3258,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 
 			if (isTextDisplayed)
 				Web.clickOnElement(btnRequestNewLoan);
-
+			Common.waitForProgressBar();
+				Web.waitForPageToLoad(Web.getDriver());
 		} catch (NoSuchElementException e) {
 			e.printStackTrace();
 		}
@@ -3299,6 +3327,31 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		Web.isWebElementDisplayed(btnBack, true);
 	}
 
+	public void verifyCheckBoxesInAddressPage() {
+		
+		if(chkBoxEmail.isSelected()){
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Update me by email at' check box is selected",
+					"Check box 'Update me by email at' is selected", false);
+		}else{
+			chkBoxEmail.click();
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Update me by email at' check box is selected",
+					"Check box 'Update me by email at' is selected", false);
+		}
+		
+		if(chkBoxTextMsg.isSelected()){
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Update me by text message at' check box is selected",
+					"Check box 'Update me by text message at' is selected", false);
+		}else{
+			chkBoxTextMsg.click();
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Update me by text message at' check box is selected",
+					"Check box 'Update me by text message at' is selected", false);
+		}
+		chkBoxTextMsg.click();
+	}
 }
 
 

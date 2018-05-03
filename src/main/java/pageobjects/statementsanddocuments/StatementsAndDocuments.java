@@ -247,24 +247,49 @@ public void verifyTableDisplayed(String tableName){
 
 
 	}	
-	
-	public void clickOnStatementFromTable(String tableName){
+	/**
+	 * This Method is to Click on Contribution Source from Activity By Contribution Source table
+	 * @param sourceName
+	 */
+	public void clickOnContributionSource(String sourceName){
 		
-		List<WebElement> statements = this.getWebElementList(tableName);
+		List<WebElement> statements = this.getWebElementList(sourceName);
 		if(statements.size()>=1){
-			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+tableName, "Contribution Source is displayed",true);
-			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(0).getText().trim(),true);
+			Reporter.logEvent(Status.PASS, "verify Contribution Source displayed in "+sourceName, "Contribution Source is displayed",true);
+			Reporter.logEvent(Status.INFO, "Clicking on Contribution Source", "Clicking on Contribution Source Type:"+statements.get(1).getText().trim(),true);
 			statements.get(1).click();
 			 Common.waitForProgressBar();
 	         Web.waitForPageToLoad(Web.getDriver());
 	         if(hdrStmtsByTxnDetailTable.isDisplayed()){
-			         Reporter.logEvent(Status.INFO, "verify statement window is opened", "Statement window opened for Transaction Details",true);
+			         Reporter.logEvent(Status.INFO,  "verify Transaction Details PopUp is Displayed", "Statement Opened for Transaction Details",true);
 			     
 			       }
 		}
 		else
-			Reporter.logEvent(Status.FAIL, "verify Contribution Source displayed in "+tableName, "Contribution Source is not displayed in"+tableName,true);
-		Web.getDriver().switchTo().defaultContent();
+			Reporter.logEvent(Status.FAIL, "verify Contribution Source displayed in "+sourceName, "Contribution Source is not displayed in"+sourceName,true);
+		
+	}
+	/**
+	 * This Method is to Click on Investment Option from Activity By Investment Option table
+	 * @param sourceName
+	 */
+	public void clickOnInvestmentoption(String sourceName){
+		
+		List<WebElement> statements = this.getWebElementList(sourceName);
+		if(statements.size()>=1){
+			Reporter.logEvent(Status.PASS, "verify Investment Options are displayed in "+sourceName, "Investment Options are displayed",true);
+			Reporter.logEvent(Status.INFO, "Clicking on Investment Options", "Clicking on Investment Options:"+statements.get(1).getText().trim(),true);
+			statements.get(1).click();
+			 Common.waitForProgressBar();
+	         Web.waitForPageToLoad(Web.getDriver());
+	         if(hdrStmtsByTxnDetailTable.isDisplayed()){
+			         Reporter.logEvent(Status.INFO, "verify Transaction Details PopUp is Displayed", "Statement Opened for Transaction Details",true);
+			     
+			       }
+		}
+		else
+			Reporter.logEvent(Status.FAIL, "verify Investment Options are displayed in "+sourceName, "Investment Options are not displayed in"+sourceName,true);
+		
 	}
 	
 	public void switchToWindow(){
@@ -295,6 +320,7 @@ public void verifyTableDisplayed(String tableName){
 	public void clickOnClose(){
 		if(Web.isWebElementDisplayed(btnClose, true)){
 			Web.clickOnElement(btnClose);
+			Web.getDriver().switchTo().defaultContent();
 		}
 	}
 	

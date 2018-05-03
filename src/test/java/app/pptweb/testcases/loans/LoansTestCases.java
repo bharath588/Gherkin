@@ -227,44 +227,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -304,23 +274,10 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
-			String interestRate = requestLoan
-					.getInterestRateFromRequestLoanPage(Stock
-							.GetParameterValue("loanType"));
+			requestLoan.verifyLoanRequestTypePage();
+			requestLoan.setInterestRate(requestLoan.getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")));
 
 			/**
 			 * Step 10 - Select 'Request a General purpose loan' button PPT is
@@ -460,35 +417,14 @@ public class LoansTestCases {
 			 * LOAN TOTAL
 			 */
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step27 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.
 			 */
-
-			if (Web.VerifyText(interestRate,
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ interestRate, false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ interestRate
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
-
+			requestLoan.verifyInterestRateInLoanSummaryTable();
+			
 			/**
 			 * Step 28 - Hover the mouse on the 'INTEREST RATE' value - not
 			 * feasible
@@ -502,14 +438,14 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 30 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 30 - Hover the mouse on the 'FEES' value 
 			 */
-
+		
 			/**
 			 * Step 31 - Verify for the Maintenance Fee value in 'FEES' tool tip
-			 * - Not Feasible
+			 * 
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 32 - Verify the CHECK TOTAL value - It must have the value
 			 * of the loan amount requested minus the FEES CHECK TOTAL = LOAN
@@ -598,40 +534,10 @@ public class LoansTestCases {
 			requestLoan.get();
 
 			// Step 4
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			// Step 5
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			// Step 6
 			// TODO
 			// Step 7
@@ -640,20 +546,9 @@ public class LoansTestCases {
 			// Step 8
 			requestLoan.verifyLoansDisclaimer();
 			// Step 9
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			// Step 10
 			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
 
@@ -679,24 +574,7 @@ public class LoansTestCases {
 					.isTextFieldDisplayed("How would you like your funds delivered?");
 			requestLoan.isTextFieldDisplayed("My loan summary");
 
-			/*if (Web.VerifyPartialText(Stock.GetParameterValue("LoanTotal"),
-					requestLoan.getWebElementText("LOAN TOTAL"), true)) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Total Amount is Matching",
-						"Loan Total Amount is Matching in Loan summary Table\nLoan Total:"
-								+ requestLoan.getWebElementText("LOAN TOTAL"),
-						true);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Loan Total Amount is Matching",
-						"Loan Total Amount is Not Matching in Loan summary Table\nExpected:"
-								+ Stock.GetParameterValue("LoanTotal")
-								+ "\nActual:"
-								+ requestLoan.getWebElementText("LOAN TOTAL"),
-						true);
-			}*/
+			
 			requestLoan.verifyLoanTotalAmount();
 
 			// Step 14
@@ -713,33 +591,9 @@ public class LoansTestCases {
 			requestLoan.clickContinueButton();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
+			
 			// Step 16 to 21
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			// Step 22 and 23
 			requestLoan.verifyLoanProvisionLink();
 			// Step 24
@@ -793,7 +647,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27501_General_Purpose_Loan_Confirmation_Whats_Next_Page_Verification(
 			int itr, Map<String, String> testdata) {
@@ -827,44 +681,15 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
+			requestLoan.verifyLoansLandingPage();
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
 
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
+
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -904,20 +729,9 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -1102,7 +916,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27555_General_Purpose_Loan_Page_verification_after_submitting_Loan_Request(
 			int itr, Map<String, String> testdata) {
@@ -1136,44 +950,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -1205,20 +989,9 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -1301,40 +1074,19 @@ public class LoansTestCases {
 			 * LOAN TOTAL
 			 */
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step17 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			/**
-			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value - not
-			 * feasible
+			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value 
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 19 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -1343,9 +1095,9 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 20 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 20 - Hover the mouse on the 'FEES' value 
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 21 -Verify the CHECK TOTAL value
 			 * It must have the value of the loan amount requested minus the FEES
@@ -1384,31 +1136,7 @@ public class LoansTestCases {
 			 * Step 25 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 26 - Click 'I agree & submit' after confirming the loan summary page info
 			 * Participant should be displayed with the Loan Confirmation page
@@ -1509,10 +1237,7 @@ public class LoansTestCases {
 			 * PPT is navigated to  'How much would you like to borrow' page
 			 */
 			String maxLoanAmount=Float.toString(Web.getIntegerCurrency(requestLoan.getMaximumLoanAmount())+10);
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
+			requestLoan.clickOnRequestANewLoan();
 			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
 
 			requestLoan
@@ -1638,7 +1363,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27611_General_Purpose_Loan_Request_via_Expedited_mail_delivery_method(
 			int itr, Map<String, String> testdata) {
@@ -1672,44 +1397,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -1741,20 +1436,9 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.clickOnRequestANewLoan();
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -1825,7 +1509,8 @@ public class LoansTestCases {
 			 * Step 15 - Select the Delivery method 'Expedited mail'
 			 * Delivery method selection should be switched to 'Expedited mail'.
 			 */
-			Web.clickOnElement(requestLoan, "EXPEDITED MAIL RADIO BUTTON");
+			requestLoan.clickExpeditedMailDeliveryOption();
+			
 			/**
 			 * Step 16 - Verify the 'Continue' button at the bottom of the page
 			 * It must be present & enabled
@@ -1838,41 +1523,19 @@ public class LoansTestCases {
 			 * details iin the form of a table INTEREST RATE FEES* CHECK TOTAL
 			 * LOAN TOTAL
 			 */
-
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step18 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			/**
-			 * Step 19 - Hover the mouse on the 'INTEREST RATE' value - not
-			 * feasible
+			 * Step 19 - Hover the mouse on the 'INTEREST RATE' value 
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 20 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -1881,9 +1544,9 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 21 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 21 - Hover the mouse on the 'FEES' value
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 22 -Verify the CHECK TOTAL value
 			 * It must have the value of the loan amount requested minus the FEES
@@ -1922,31 +1585,7 @@ public class LoansTestCases {
 			 * Step 26 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 27 - Click 'I agree & submit' after confirming the loan summary page info
 			 * Participant should be displayed with the Loan Confirmation page
@@ -1997,7 +1636,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+
 	@Test(dataProvider = "setData")
 	public void DDTC_27613_General_Purpose_Loan_Request_via_Regular_mail_delivery_method(
 			int itr, Map<String, String> testdata) {
@@ -2031,44 +1670,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -2099,21 +1708,10 @@ public class LoansTestCases {
 			 * back end tables for available loan structures (Primary Residence,
 			 * General purpose) buttons
 			 */
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -2194,40 +1792,19 @@ public class LoansTestCases {
 			 * LOAN TOTAL
 			 */
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step17 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			/**
-			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value - not
-			 * feasible
+			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value 
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 19 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -2236,9 +1813,9 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 20 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 20 - Hover the mouse on the 'FEES' value
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 21 -Verify the CHECK TOTAL value
 			 * It must have the value of the loan amount requested minus the FEES
@@ -2277,31 +1854,7 @@ public class LoansTestCases {
 			 * Step 25 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 26 - Click 'I agree & submit' after confirming the loan summary page info
 			 * Participant should be displayed with the Loan Confirmation page
@@ -2320,6 +1873,7 @@ public class LoansTestCases {
 			 * iv) Loan Details
 			 */
 			requestLoan.verifyLoanRequestRecievedSectionForRegularMail();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Globals.exception = e;
@@ -2352,7 +1906,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27630_General_Purpose_Loan_Request_via_ACH_delivery_method(
 			int itr, Map<String, String> testdata) {
@@ -2386,44 +1940,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -2455,20 +1979,10 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -2540,7 +2054,7 @@ public class LoansTestCases {
 			 * Step 15 - Select the Delivery method 'Expedited mail'
 			 * Delivery method selection should be switched to 'Expedited mail'.
 			 */
-			Web.clickOnElement(requestLoan, "ACH DELIVERY RADIO BUTTON");
+			requestLoan.clickElectronicallyTransferFundsACHOption();
 			/**
 			 * Step 16 - Verify that bank account drop down is displayed 
 			 * As expected
@@ -2573,10 +2087,8 @@ public class LoansTestCases {
 			 * LOAN TOTAL
 			 */
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
+			
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
 			/**
@@ -2584,30 +2096,12 @@ public class LoansTestCases {
 			 * which was displayed in the 'Request a new loan' page.
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			/**
-			 * Step 22 - Hover the mouse on the 'INTEREST RATE' value - not
-			 * feasible
+			 * Step 22 - Hover the mouse on the 'INTEREST RATE' value -
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 23 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -2616,9 +2110,9 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 24 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 24 - Hover the mouse on the 'FEES' value 
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 25 -Verify the CHECK TOTAL value
 			 * It must have the value of the loan amount requested minus the FEES
@@ -2657,31 +2151,7 @@ public class LoansTestCases {
 			 * Step 29 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 30 - Click 'I agree & submit' after confirming the loan summary page info
 			 * Participant should be displayed with the Loan Confirmation page
@@ -2766,9 +2236,7 @@ public class LoansTestCases {
 			requestLoan.get();
 
 			
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-			
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
 			
 			requestLoan.verifyAddressChangeBanner();
 			/**
@@ -2807,16 +2275,8 @@ public class LoansTestCases {
 			 * for available loan structures (Primary Residence, General purpose) buttons 
 			 */
 			
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			String interestRate = requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType"));
@@ -2872,10 +2332,7 @@ public class LoansTestCases {
 			 *  with Delivery method option selected as 'First-class mail'
 			 *  Participant should be navigated to Address page
 			 */
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 			
 			requestLoan.clickContinueButton();
 			requestLoan.verifyWebElementIsDisplayed("ProActive Notification Screen");
@@ -2896,31 +2353,7 @@ public class LoansTestCases {
 			 * Step 13 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 14 - Click 'I agree & submit' 
 			 * Loan Confirmation page should be displayed with a message
@@ -3004,9 +2437,7 @@ public class LoansTestCases {
 			requestLoan.get();
 
 			
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-			
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
 			
 			requestLoan.verifyAddressChangeBanner();
 			/**
@@ -3045,16 +2476,7 @@ public class LoansTestCases {
 			 * for available loan structures (Primary Residence, General purpose) buttons 
 			 */
 			
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			String interestRate = requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType"));
@@ -3110,10 +2532,7 @@ public class LoansTestCases {
 			 *  with Delivery method option selected as 'First-class mail'
 			 *  Participant should be navigated to Address page
 			 */
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 			
 			requestLoan.clickContinueButton();
 			requestLoan.verifyWebElementIsDisplayed("ProActive Notification Screen");
@@ -3134,31 +2553,7 @@ public class LoansTestCases {
 			 * Step 13 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 14 - Click 'I agree & submit' 
 			 * Loan Confirmation page should be displayed with confirmation number & other details.
@@ -3200,7 +2595,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27686_General_Purpose_Loan_Request_via_ACH_Non_Prenoted_Account_delivery_method(
 			int itr, Map<String, String> testdata) {
@@ -3234,44 +2629,14 @@ public class LoansTestCases {
 			 * to borrow. It could be general purpose or primary residence.
 			 * compare this with CSAS and legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -3303,20 +2668,10 @@ public class LoansTestCases {
 			 * General purpose) buttons
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
+			requestLoan.clickOnRequestANewLoan();
 
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -3401,7 +2756,7 @@ public class LoansTestCases {
 			 *  CHECK TOTAL
 			 *  LOAN TOTAL
 			 */
-			Web.clickOnElement(requestLoan, "ACH DELIVERY RADIO BUTTON");
+			requestLoan.clickElectronicallyTransferFundsACHOption();
 			Web.waitForElement(requestLoan,"ACH ACCOUNT DROP DOWN");
 			requestLoan.verifyWebElementIsDisplayed("ACH ACCOUNT DROP DOWN");
 			
@@ -3411,40 +2766,19 @@ public class LoansTestCases {
 			
 			requestLoan.verifyWebElementIsDisplayed("BUTTON CONTINUE");
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step 17 - Verify the INTEREST RATE It should be the same value
 			 * which was displayed in the 'Request a new loan' page.
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			/**
-			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value - not
-			 * feasible
+			 * Step 18 - Hover the mouse on the 'INTEREST RATE' value 
 			 */
-
+			requestLoan.validateToolTipForInterestRate();
 			/**
 			 * Step 19 - Verify the FEES* value - It must be the sum of
 			 * 'Origination Fee', Stamp Tax & etc if any
@@ -3453,9 +2787,9 @@ public class LoansTestCases {
 			requestLoan.verifyOriginationFeeDisplayed();
 
 			/**
-			 * Step 20 - Hover the mouse on the 'FEES' value - Not Feasible
+			 * Step 20 - Hover the mouse on the 'FEES' value 
 			 */
-
+			requestLoan.validateToolTipForFee();
 			/**
 			 * Step 21 -Verify the CHECK TOTAL value
 			 * It must have the value of the loan amount requested minus the FEES
@@ -3494,31 +2828,7 @@ public class LoansTestCases {
 			 * Step 25 - Verify the Loan Summary page 
 			 * It should contain all the details of the loan, payment info, Fees, Delivery info
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 26 - Click 'I agree & submit' after confirming the loan summary page info
 			 * Participant should be displayed with the Loan Confirmation page
@@ -3568,7 +2878,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_29034_Loans_quote_page_validation(
 			int itr, Map<String, String> testdata) {
@@ -3601,10 +2911,7 @@ public class LoansTestCases {
 			 * PPT is navigated to Loans quote page.
 			 */
 		
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
+			requestLoan.clickOnRequestANewLoan();
 		
 			String interestRate = requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
@@ -3656,33 +2963,13 @@ public class LoansTestCases {
 			 * d. Loan total
 			 */
 
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 
 			/**
 			 * Step 7 -Verify interest rate tooltip details.- Partially Automated
 			 */
 
-			if (Web.VerifyText(requestLoan.getInterestRate(),
-					requestLoan.getInterestRateFromLoanSummaryTable())) {
-
-				Reporter.logEvent(Status.PASS,
-						"Verify INTEREST RATE is Matching",
-						"INTEREST RATE is Matching in Loan summary Table\nINTEREST RATE:"
-								+ requestLoan.getInterestRate(), false);
-			} else {
-				Reporter.logEvent(
-						Status.FAIL,
-						"VerifyINTEREST RATE is Matching",
-						"INTEREST RATE is Not Matching in Loan summary Table\nExpected:"
-								+ requestLoan.getInterestRate()
-								+ "\nActual:"
-								+ requestLoan
-										.getInterestRateFromLoanSummaryTable(),
-						true);
-			}
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 
 			
 			requestLoan.verifyOriginationFeeDisplayed();
@@ -3754,29 +3041,14 @@ public class LoansTestCases {
 			 * Loans landing page displays amount available to borrow and summary section. It could be general purpose
 			 *  or primary residence. Similar value is observed with CSAS and Legacy PW
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
+			requestLoan.verifyLoansLandingPage();
 			
 			/**
 			 * Step 3 - Select 'Request a new loan' button on the loans landing page
 			 * Loan type selection page with header 'What type of loan would you like?' was displayed
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
 			/**
 			 * Step 4 -Verify and validate details displayed on Loans landing page and click on 'Request a new loan'
 			 * PPT is navigated to What type of loan would you like? page / 
@@ -3794,16 +3066,7 @@ public class LoansTestCases {
 			 * All the values are pulled correct from back end tables
 			 * for available loan structures (Primary Residence, General purpose) buttons  
 			 */
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			String interestRate = requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType"));
@@ -3824,7 +3087,7 @@ public class LoansTestCases {
 			requestLoan.clickOnBackButton();
 			Common.waitForProgressBar();
 			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			 loanAmt = requestLoan.getMaximumLoanAmount();
+			 String loanAmt = requestLoan.getMaximumLoanAmount();
 			if (!loanAmt.isEmpty())
 				Reporter.logEvent(Status.PASS,
 						"Verify Loans Landing Page is displayed",
@@ -3842,9 +3105,7 @@ public class LoansTestCases {
 			 * page was loaded along with amount field, continue button and 'back' button enabled
 			 */
 			
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
 			
 			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
 			requestLoan
@@ -4039,7 +3300,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27682_General_Purpose_Loan_ProActive_Notification_Opted(
 			int itr, Map<String, String> testdata) {
@@ -4088,20 +3349,10 @@ public class LoansTestCases {
 			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
 			
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
-
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.clickOnRequestANewLoan();
+			
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -4164,11 +3415,8 @@ public class LoansTestCases {
 			
 			requestLoan.verifyRegularMailSelectedAsDefault();
 			
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
-		
+			requestLoan.verifyMyLoanSummarySection();
+			
 			requestLoan.clickContinueButton();
 			requestLoan.verifyWebElementIsDisplayed("ProActive Notification Screen");
 
@@ -4197,31 +3445,7 @@ public class LoansTestCases {
 			 * Step 13 - Verify the Loan Summary page 
 			 * Validate all the information is correct as per the entries in the previous pages
 			 */
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 			/**
 			 * Step 15 - Click 'I agree & submit' 
 			 * Loan Confirmation page should be displayed.
@@ -4324,9 +3548,7 @@ public class LoansTestCases {
 			 * Step 2 and 3 are same
 			 */
 		
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
 
 			requestLoan.isTextFieldDisplayed("What type of loan would you like to request?");
 			/**
@@ -4343,17 +3565,7 @@ public class LoansTestCases {
 			 * #Loans allowed
 			 * Waiting period
 			 */
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.isTextFieldDisplayed("Waiting period");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
 			
 			
 		} catch (Exception e) {
@@ -4388,7 +3600,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_28010_Loans_Screen_6_PR_loan_confirmation_page(
 			int itr, Map<String, String> testdata) {
@@ -4423,44 +3635,14 @@ public class LoansTestCases {
 			 *   It could be general purpose or primary residence. Similar value is observed with CSAS and Legacy PW
 			 *  
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 3 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 4 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -4494,9 +3676,8 @@ public class LoansTestCases {
 			 * Loan type selection page with header 'What type of loan would you like?' was displayed
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
+			
 			requestLoan.isTextFieldDisplayed("What type of loan would you like to request?");
 			/**
 			 * Step 8 Verify all correct values are displayed for the PPT in the loan type 
@@ -4516,16 +3697,8 @@ public class LoansTestCases {
 			 *  a. Request a general purpose loan
 			 *  b. Request a primary resident loan
 			 */
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -4586,11 +3759,7 @@ public class LoansTestCases {
 			Web.waitForElement(requestLoan, "BUTTON CONTINUE");
 			requestLoan
 					.isTextFieldDisplayed("How would you like your funds delivered?");
-			requestLoan.isTextFieldDisplayed("My loan summary");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE");
-			requestLoan.isTextFieldDisplayed("FEES*");
-			requestLoan.isTextFieldDisplayed("CHECK TOTAL");
-			requestLoan.isTextFieldDisplayed("LOAN TOTAL");
+			requestLoan.verifyMyLoanSummarySection();
 			requestLoan.verifyLoanTotalAmount();
 			requestLoan.setCheckTotal(requestLoan
 					.getCheckTotalFromSummaryTable());
@@ -4635,32 +3804,7 @@ public class LoansTestCases {
 			 *  3. Form Review Complete
 			 *  4. Check sent by expedited mail
 			 */
-			
-			requestLoan.isTextFieldDisplayed("Loan Details");
-			requestLoan.isTextFieldDisplayed("PLAN:");
-			requestLoan.isTextFieldDisplayed("LOAN TYPE:");
-			requestLoan.isTextFieldDisplayed("TERM:");
-			requestLoan.isTextFieldDisplayed("MATURITY DATE:");
-			requestLoan.isTextFieldDisplayed("INTEREST RATE:");
-			requestLoan.isTextFieldDisplayed("ANNUAL PERCENTAGE RATE (APR):");
-			requestLoan.isTextFieldDisplayed("CHECK AMOUNT:");
-			requestLoan.isTextFieldDisplayed("LOAN AMOUNT:");
-			requestLoan.isTextFieldDisplayed("TOTAL INTEREST AMOUNT:");
-			requestLoan
-					.isTextFieldDisplayed("TOTAL PRINCIPAL AND INTEREST AMOUNT:");
-			requestLoan.isTextFieldDisplayed("Payment Information");
-			requestLoan.isTextFieldDisplayed("FIRST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("LAST PAYMENT DUE:");
-			requestLoan.isTextFieldDisplayed("NUMBER OF PAYMENTS:");
-			requestLoan.isTextFieldDisplayed("PAYMENT AMOUNT:");
-			requestLoan.isTextFieldDisplayed("PAYMENT METHOD:");
-			requestLoan.isTextFieldDisplayed("PAYMENT FREQUENCY:");
-			requestLoan.isTextFieldDisplayed("Fees and Taxes");
-			requestLoan.isTextFieldDisplayed("ORIGINATION FEE:");
-			requestLoan.isTextFieldDisplayed("Delivery Information");
-			requestLoan.isTextFieldDisplayed("DELIVERY METHOD:");
-			requestLoan.isTextFieldDisplayed("MAILING ADDRESS:");
-			requestLoan.isTextFieldDisplayed("Loan Provisions");
+			requestLoan.verifyLoanSummarypage();
 		
 			if (Web.isWebElementDisplayed(requestLoan, "I AGREE AND SUBMIT",
 					true)) {
@@ -4745,7 +3889,7 @@ public class LoansTestCases {
 	 * @param itr
 	 * @param testdata
 	 */
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification(
 			int itr, Map<String, String> testdata) {
@@ -4780,44 +3924,14 @@ public class LoansTestCases {
 			 *   It could be general purpose or primary residence. Similar value is observed with CSAS and Legacy PW
 			 *  
 			 */
-			requestLoan.isTextFieldDisplayed("AVAILABLE TO BORROW");
-			String loanAmt = requestLoan.getMaximumLoanAmount();
-			if (!loanAmt.isEmpty())
-				Reporter.logEvent(Status.PASS,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is displayed \nLoan Maximum:"
-								+ loanAmt, true);
-
-			else
-				Reporter.logEvent(Status.FAIL,
-						"Verify Loan Maximum Amount is displayed",
-						"Loan Maximum Amount is not displayed \nLoan Maximum:"
-								+ loanAmt, true);
+			requestLoan.verifyLoansLandingPage();
 
 			/**
 			 * Step 5 - Verify the Number of active loans in this plan below
 			 * summary section Validate the number of active loans in the select
 			 * plan/ppt displayed correct.
 			 */
-			String expectedNoofLoans = requestLoan.getMaximumLoansAllowed();
-			String ActualNoofLoans = requestLoan
-					.getMaximumLoansAllowedforPlan(Stock
-							.GetParameterValue("ga_id"));
-			if (expectedNoofLoans.equalsIgnoreCase(ActualNoofLoans))
-				Reporter.logEvent(Status.PASS,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans + "\nActual No.Of Loans:"
-								+ ActualNoofLoans, false);
-
-			else
-				Reporter.logEvent(
-						Status.FAIL,
-						"Verify Maximum Loans Allowed is Matching",
-						"Maximum Loans Allowed is not displayed as per Data base\nExpected No.Of Loans:"
-								+ expectedNoofLoans
-								+ "\nActual No.Of Loans:"
-								+ ActualNoofLoans, true);
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("ga_id"));
 			/**
 			 * Step 6 Verify the Number of active loans in all plans below
 			 * Summary section Validate all the the number of loans available in
@@ -4867,21 +3981,12 @@ public class LoansTestCases {
 			 *  b. Request a primary resident loan
 			 */
 
-			Web.clickOnElement(requestLoan, "Button Request A New Loan");
-
-			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.clickOnRequestANewLoan();
+			
 			requestLoan.isTextFieldDisplayed("What type of loan would you like to request?");
 			
-			requestLoan.isTextFieldDisplayed("Loan purpose");
-			requestLoan.isTextFieldDisplayed("Maximum loan");
-			requestLoan.isTextFieldDisplayed("Minimum loan");
-			requestLoan.isTextFieldDisplayed("Repayment term");
-			requestLoan.isTextFieldDisplayed("Documentation required");
-			requestLoan.isTextFieldDisplayed("Interest rate");
-			requestLoan.isTextFieldDisplayed("Repayment");
-			requestLoan.isTextFieldDisplayed("Fees");
-			requestLoan.verifyLoneTypeisDisplayed("GENERAL PURPOSE");
-			requestLoan.verifyLoneTypeisDisplayed("MORTAGAGE");
+			requestLoan.verifyLoanRequestTypePage();
+			
 			requestLoan.setInterestRate(requestLoan
 					.getInterestRateFromRequestLoanPage(Stock
 							.GetParameterValue("loanType")));
@@ -6147,7 +5252,7 @@ public class LoansTestCases {
 
 	}
 	
-	@SuppressWarnings("static-access")
+	
 	@Test(dataProvider = "setData")
 	public void DDTC_27629_Loans_Principal_Residence_Loan_Request_via_ACH_delivery_method(int itr, Map<String, String> testdata) {
 
@@ -6335,7 +5440,7 @@ public class LoansTestCases {
 			 * It should be same value as on 'Request a loan' page
 			 */
 		
-			requestLoan.verifyInterestRateInMyLoanSummaryPage();
+			requestLoan.verifyInterestRateInLoanSummaryTable();
 			
 			/**
 			 * Step 23 - Hover the mouse on the 'INTEREST RATE' value
