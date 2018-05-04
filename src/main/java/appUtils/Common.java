@@ -150,7 +150,8 @@ public class Common {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		String userName=Stock.GetParameterValue("username");
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 		participantID = DB.executeQuery(sqlQuery[0], sqlQuery[1], ssn);
 
 		if (DB.getRecordSetCount(participantID) > 0) {
@@ -1041,7 +1042,55 @@ public static void updateEmailToNull(String ssn) throws Exception {
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
 	
 }
+/**
+ * Method to update Mail Hold Date in Address Table
+ * @author srsksr
+ * @throws Exception
+ */
+public static void updateMailHoldDateInDB(String date) throws Exception {
+	
+	
+	String ssn=Stock.GetParameterValue("SSN");
+	String id= getParticipantID(ssn);
+	String userName=Stock.GetParameterValue("username");
+	
+	String[] sqlQuery = Stock.getTestQuery("UpdateMailHoldDate");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,id);
+	
+}
 
+/**
+ * Method to update ownership_ind in part_agrmt Table
+ * @author srsksr
+ * @throws Exception
+ */
+public static void updateOwnership_IndInDB(String indicator) throws Exception {
+	
+	
+	String ssn=Stock.GetParameterValue("SSN");
+	String id= getParticipantID(ssn);
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("UpdateOwnerShipInd");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,id);
+	
+}
 
-
+/**
+ * Method to update status_code in part_agrmt Table
+ * @author srsksr
+ * @throws Exception
+ */
+public static void updateStatusCodeInDB(String satusCode) throws Exception {
+	
+	
+	String ssn=Stock.GetParameterValue("SSN");
+	String id= getParticipantID(ssn);
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("UpdateStatusCode");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], satusCode,id);
+	
+}
 }

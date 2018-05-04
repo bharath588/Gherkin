@@ -259,6 +259,13 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = ".//*[@id='phoneNbrContainer']//input[@name='updateThruTextMsg']")
 	private WebElement chkBoxTextMsg;
 	
+	@FindBy(xpath = "//p[@class='addr-holding-error']") private WebElement errAddressHold;
+	@FindBy(xpath = "//span[contains(text(),'BR_479')]/..") private WebElement errBR_479;
+	@FindBy(xpath = "//span[contains(text(),'BR_480')]/..") private WebElement errBR_480;
+	@FindBy(xpath = "//span[contains(text(),'BR_481')]/..") private WebElement errBR_481;
+	
+	
+	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
 
 	private String strmaxloan = "//span[contains(@ng-if,'LoanTypeLoans')]//li";
@@ -3352,6 +3359,165 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		}
 		chkBoxTextMsg.click();
 	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for Mail Hold
+	 */
+	public void verifyPPTRequestLoanPageWithMailHold() {
+		
+		String expectedErrorMsg="Due to a problem with your mailing address, you are unable to request a loan at this time. "
+				+ "Please contact a participant services representative to complete this transaction.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errAddressHold, true)){
+		 actualErrorMsg=errAddressHold.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for Mailing Address is Displayed",
+						"Hard Stop Error Message for Mailing Address is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for Mailing Address is Displayed",
+						"Hard Stop Error Message for Mailing Address is not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for Mailing Address is Displayed",
+					"Error Message for Mailing Address is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_479
+	 */
+	public void verifyPPTRequestLoanPageWithBR_479() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_479, true)){
+		 actualErrorMsg=errBR_479.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_479' is Displayed",
+						"Error Message for 'BR_479' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_479' is Displayed",
+						"Error Message for 'BR_479' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_479' is Displayed",
+					"Error Message for 'BR_479' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_480
+	 */
+	public void verifyPPTRequestLoanPageWithBR_480() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_480, true)){
+		 actualErrorMsg=errBR_480.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_480' is Displayed",
+						"Error Message for 'BR_480' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_480' is Displayed",
+						"Error Message for 'BR_480' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_480' is Displayed",
+					"Error Message for 'BR_480' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_481
+	 */
+	public void verifyPPTRequestLoanPageWithBR_481() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_481, true)){
+		 actualErrorMsg=errBR_481.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_481' is Displayed",
+						"Error Message for 'BR_481' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_481' is Displayed",
+						"Error Message for 'BR_481' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_481' is Displayed",
+					"Error Message for 'BR_481' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Request a General Purpose & principle Residence Loan Buttons Are disabled
+	 */
+	public void verifyRequestLoanButtonsAreDisabled() {
+		
+		
+		
+		if(!inputLonatypeGeneral.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Request a General Purpose Loan' Button is disabled",
+					"'Request a General Purpose Loan' Button is disabled", false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Request a General Purpose Loan' Button is disabled",
+					"'Request a General Purpose Loan' Button is not disabled", true);
+		
+		if(!inputLonatypeMortgage.isEnabled())
+			Reporter.logEvent(Status.PASS,
+					"Verify 'Request a Principal Residence Loan' Button is disabled",
+					"'Request a Principal Residence Loan' Button is disabled", false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify 'Request a Principal Residence Loan' Button is disabled",
+					"'Request a Principal Residence Loan' Button is not disabled", true);
+		
+		
+	}
+
+	
 }
 
 
