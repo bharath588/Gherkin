@@ -5549,7 +5549,7 @@ public class LoansTestCases {
 
 	}
 	
-	@SuppressWarnings("static-access")
+
 	@Test(dataProvider = "setData")
 	public void DDTC_27884_Loans_Principal_Residence_Loan_Summary_page_verification(int itr, Map<String, String> testdata) {
 
@@ -5815,7 +5815,7 @@ public class LoansTestCases {
 
 	}
 	
-	@SuppressWarnings("static-access")
+
 	@Test(dataProvider = "setData")
 	public void DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request(int itr, Map<String, String> testdata) {
 
