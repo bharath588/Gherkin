@@ -5548,4 +5548,452 @@ public class LoansTestCases {
 		}
 
 	}
+	
+	@SuppressWarnings("static-access")
+	@Test(dataProvider = "setData")
+	public void DDTC_27884_Loans_Principal_Residence_Loan_Summary_page_verification(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Verify and validate details displayed on Loans landing page
+			 * Loan landing page must be displayed with the  highest amount available to borrow. 
+			 * It could be general purpose or primary residence. 
+			 * compare this with CSAS and legacy PW
+			 */
+			requestLoan.verifyLoansLandingPage();
+			
+			/**
+			 * Step 5 - Verify the Number of active loans in this plan below summary section
+			 * Number of active loans in the selected plan/ppt must be  displayed correctly.
+			 * Compare to CSAS and ISIS forms
+			 */
+			requestLoan.verifyActiveLoansForparticipant(Stock.GetParameterValue("gaId"));
+			
+			/**
+			 * Step 6 to 7 - Verify the Number of active loans in all plans below Summary section
+			 * Verify Number of loans allowed below Summary section
+			 * Number of loans available in multiple plans for the selected test ppt are displayed correctly.
+			 * Number of loans available for the plan must be displayed correctly with the number of loans allowed for each loan structure.
+			 */
+			requestLoan.verifyMaximumLoansForLoanStructure(Stock.GetParameterValue("gaId"));
+			
+			/**
+			 * Step 8 - Verify the disclaimer displayed at the bottom of the page on loans landing page
+			 * Disclaimer displayed at the bottom of the page must be displayed  per latest design reqs on loans landing page
+			 */
+			//TODO
+			
+			/**
+			 * Step 9 - Click on'Request a new loan' button on the loans landing page
+			 * PPT is navigated to What type of loan would you like? page / loan structure
+			 *  page with all the correct values set for the test ppt
+			 *  Loan purpose
+			 *  Maximum loan
+			 *  Minimum loan
+			 *  Repayment term
+			 *  Documentation required
+			 *  Interest rate
+			 *  Repayment
+			 *  Fees
+			 *  #Loans allowed
+			 *  Waiting period
+			 *  All the values are pulled correct from back end tables
+			 *  for available loan structures (Primary Residence, General purpose) buttons 
+			 */
+			
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.verifyLoanRequestTypePage();
+			requestLoan.setInterestRate(requestLoan.getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")));
+			
+
+			/**
+			 * Step 10 - Select 'Request a Princiapl Residence loan' button PPT is navigated to Primary Residence loan page/
+			 * Ppt must be  navigated to 'Principal Residence Loan Requirements' page.			
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+
+			/**
+			 * Step 11 - Verify the 'Principal Residence Loan Requirements' page.
+			 * Principal residence loan requirements(IN BOLD)
+			 * This type of loan is only for purchasing or building your principal residence; 
+			 * not renovating or refinancing you current home.(IN BOLD)	
+			 * At the end of this process, a pre-filled form will be emailed to you. you must be sign and return to the address provided,
+			 * along with the following documentation, to complete this loan request.
+			 * 'Back' & 'Continue' buttons should be enabled.
+			 */		
+			//TODO
+			
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.verifyPrincipalResidenceLoanDisclaimer();
+			/**
+			 * Step 12 - Click on 'Continue' button. 
+			 * Ppt must be navigated to 'How much would you like to borrow' page.
+			*/
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+			
+			/**
+			 * Step 13 - Enter amount in entry box
+			 * Validate only proper values  (numeric/decimal)are accepted into this field
+			 * Validate 'Continue' button is enabled only when the min and max amt values are met 
+			 * else display the min,max amt error in red text if the criteria is not met.
+			 */
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));	
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.verifyContinueButtonIsEnabled(true);
+			
+			/**
+			 * Step 14 - Hit 'Continue' button 
+			 * Repayment Term options section should be displayed below the 'How much would you like to borrow' section.
+			 */
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			
+			/**
+			 * Step 15 - Opt for a desired REPAYMENT TERM by selecting the radio button
+			 * Once the radio button is selected Delivery options & Loan summary sections must be displayed
+			 */
+			
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			requestLoan.verifyMailDeliveryOptionsWithACH();
+			requestLoan.verifyMyLoanSummarySection();
+			
+			
+			/**
+			 * Step 16 - Click on 'Continue' button 
+			 * Confirm Information page should be displayed
+			 */
+			requestLoan.clickContinueButton();
+			Web.waitForPageToLoad(Web.getDriver());
+
+			/**
+			 * Step 17 - In 'Confirm Information' page, verify the email address, phone number 
+			 * click 'Continue' button
+			 * User should be navigated to 'Loan Summary' page.
+			 * Title of the page should be Loan Review
+			 */
+			
+			requestLoan.verifyCheckBoxesInAddressPage();
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());						
+			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
+			
+			/**
+			 * Step 18 - Verify My loan summary page
+			 * LOAN DETAILS
+			 * PAYMENT INFORMATION
+			 * FEES & TAXES
+			 * DELIVERY INFORMATION
+			 * LOAN PROVISIONS
+			 * LOAN ACKNOWLEDGEMENT
+			 * All the section header names should be in BOLD
+			 */
+			/**
+			 * Step 27 - Verify 'I agree & submit' button
+			 * It must be enabled
+			 */
+			
+			requestLoan.verifyLoanSummarypage();
+			
+			/**
+			 * Step 19 - Verify the LOAN DETAILS section		
+			 * PLAN: verify it from Plan tabel taking gc_id of ppt as reference
+			 * LOAN TYPE: General Purpose/Principal residence
+			 * TERM: Chosen in Repayment Table
+			 * MATURITY DATE: dd-mmm-yyyy<Requested date + term date> in Repayment term page
+			 * INTEREST RATE: value displayed in Request a loan page
+			 * APR: Should be the Annual Percentage Rate
+			 * CHECK AMOUNT: FEES
+			 * LOAN AMOUNT: CHECK AMOUNT + FEES
+			 * TOTAL INTEREST AMOUNT
+			 * TOTAL PRINCIPAL AND INTEREST AMOUNT: Loan AMOUNT + TOTAL INTEREST
+			 */
+			requestLoan.verifyLoanDetailsSectionConfirmationPage();
+			
+			//TODO
+			
+			/**
+			 * Step 20 - Verify 'Payment Information' section
+			 * FIRST PAYMENT DUE:
+			 * LAST PAYMENT DUE:
+			 * NUMBER OF PAYMENTS:
+			 * PAYMENT AMOUNT:
+			 * PAYMENT METHOD: Will be PAYROLL or CHECK as per the plan setup
+			 * PAYMENT FREQUENCY
+			 */
+			//TODO
+			
+			/**
+			 * Step 21 - Verify the 'Fees & Taxes' section
+			 * ORIGINATION FEE:
+			 * STAMP TAX:
+			 * MAINTENANCE FEE: 
+			 */
+					
+			/**
+			 * Step 22 - Verify the 'Delivery Information' section
+			 * DELIVERY METHOD:
+			 * MAILING ADDRESS: 
+			 */
+			//TODO
+			
+			/**
+			 * Step 23 - Verify the 'LOAN PROVISIONS' 
+			 * Loan provisions – The following language should show:
+			 * Please review your plan’s loan provisions before continuing with your request.
+			 * <loan provisions> should be a hyper link to the provisions modal.
+			 */
+			//TODO
+			
+			/**
+			 * Step 24 - Verify the 'LOAN PROVISIONS' link
+			 * It should display the provisions in a scrollable modal window with 'OK' button.
+			 */
+			//TODO
+			
+			/**
+			 * Step 25 - Click on 'Ok' button
+			 * Modal window should get closed & 'Loan Summary' page should be displayed.
+			 */
+			//TODO
+			
+			/**
+			 * Step 26 - Verify the Loan Acknowledgement section
+			 * Loan acknowledgement should be displayed in a scrolling window when clicked on the LOAN ACKNOWLEDGEMENT hyperlink.
+			 */
+			//TODO
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	@SuppressWarnings("static-access")
+	@Test(dataProvider = "setData")
+	public void DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request(int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
+			
+			/**
+			 * Step 1 to 3
+			 * Launch Browser and enter URL: 
+			 * Enter Valid credentials and login
+			 * Navigate to My Accounts -> Loans & Withdrawals -> Loans			
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan= new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			
+			/**
+			 * Step 4 - Click on'Request a new loan' button on the loans landing page
+			 * PPT is navigated to What type of loan would you like? page / loan structure
+			 *  page with all the correct values set for the test ppt
+			 *  Loan purpose
+			 *  Maximum loan
+			 *  Minimum loan
+			 *  Repayment term
+			 *  Documentation required
+			 *  Interest rate
+			 *  Repayment
+			 *  Fees
+			 *  #Loans allowed
+			 *  Waiting period
+			 *  All the values are pulled correct from back end tables
+			 *  for available loan structures (Primary Residence, General purpose) buttons 
+			 */
+			
+			requestLoan.clickOnRequestANewLoan();
+			Web.waitForElement(requestLoan, "LOAN TYPE GENERAL");
+			requestLoan.verifyLoanRequestTypePage();
+			requestLoan.setInterestRate(requestLoan.getInterestRateFromRequestLoanPage(Stock.GetParameterValue("loanType")));
+			
+
+			/**
+			 * Step 5 - Select 'Request a Princiapl Residence loan' button PPT is navigated to Primary Residence loan page/
+			 * Ppt must be  navigated to 'Principal Residence Loan Requirements' page.			
+			 */
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("Principal residence loan requirements");	
+
+			/**
+			 * Step 6 - Click 'Continue' button
+			 * Participant should be navigated to next page where 
+			 * 'How much would you like to borrow' page is displayed			 * 
+			 */		
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.isTextFieldDisplayed("How much would you like to borrow");
+			
+			/**
+			 * Step 7 - Enter amount in entry box
+			 * Click on 'Continue' button 
+			 * Repayment Term options section should be displayed below the 'How much would you like to borrow' section.
+
+			 */
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));	
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			/**
+			 * Step 8 - select the repayment option button
+			 * By clicking on the respective radio button present the Repayment Term row
+			 *  Upon term selection show the loan summary section should be displayed 
+			 */
+			
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			
+			/**
+			 * Step 9 - Verify the header of the 'Delivery Options' section 
+			 * It should be "How would you like your *check* to be delivered?"
+			 */
+			
+			requestLoan.verifyMailDeliveryOptionsWithACH();
+			
+			/**
+			 * Step 10 - Verify the 'My Loan Summary' is as expected 
+			 * click on 'Continue'
+			 * By default 'First-class mail' delivery method should be pre-selected 
+			 * Participant should be navigated to Address page
+			 */
+			
+			requestLoan.verifyRegularMailSelectedAsDefault();
+			requestLoan.verifyMyLoanSummarySection();
+			requestLoan.clickContinueButton();
+
+			/**
+			 * Step 11 - In the Address page, select the check box for both the fields
+			 * i) Update me by email at:
+			 * ii) Update me by text message at:
+			 * As expected check boxes should get selected.
+			 * After the loan request submit, participant should get notification
+			 * regarding the loan request submitted to Email inbox & SMS to mobile number.
+			 * 
+			 * Step 12 - select the check box for any one of the below field
+			 * i) Update me by email at:
+			 * ii) Update me by text message at:
+			 */
+			
+			requestLoan.verifyCheckBoxesInAddressPage();
+			
+			/**
+			 * Step 13 - Click on 'Continue' 
+			 * Participant should be navigated to Loan Summary page
+			 */
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+						
+			requestLoan.verifyPageHeaderIsDisplayed("Header Loan Review");
+			
+			/**
+			 * Step 14 - Verify My loan summary page
+			 * All the information must be correct as per the entries/selections in the previous pages. 
+			 */
+			
+			requestLoan.verifyLoanSummarypage();
+			
+									
+			/**
+			 * Step 15 - Click 'I agree & submit' button
+			 * Participant should be able to submit the loan request successfully 
+			 * Loan Confirmation page should be displayed.
+			 */
+			
+			requestLoan.clickOnIAgreeAndSubmit();
+			Common.waitForProgressBar();
+			requestLoan.verifyPrincipalResidenceLoanRequestRecievedSectionForRegularMail();
+			
+			/**
+			 * Step 16 - After submit verify the EVENT_CONTACT_INFO table
+			 * use query: select * from EVENT_CONTACT_INFO order by EV_ID desc
+			 * Event should be populated in the table with the  preferred/selected notification in step 12/13 details. 
+			 */
+			
+			//TODO
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.", msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured", ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 }

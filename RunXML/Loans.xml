@@ -120,7 +120,38 @@
 						</parameter>
 					</include>
 
-
+					<!-- 
+					Test cases - bbndsh
+					 -->
+					 <!--
+					 <include name="DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
+						<parameter name="ManualTCName" value="SIT_DDTC_27416_Happy_Path_Initiate_Primary_Residence_Loan">
+						</parameter>
+					</include> 
+					<include name="DDTC_27610_Principal_Residence_Loan_Request_through_Regular_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27610_Principal_Residence_Loan_Request_through_Regular_mail_delivery_method">
+						</parameter>
+					</include>	
+					<include name="DDTC_27612_Principal_Residence_Loan_Request_via_Expedited_mail_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27612_Principal_Residence_Loan_Request_via_Expedited_mail_delivery_method">
+						</parameter>
+					</include>	
+					<include name="DDTC_27626_Loans_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27626_Loans_Pre_Filled_form_Delivery_for_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
+						</parameter>
+					</include>	
+					<include name="DDTC_27625_Loans_Future_Dated_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
+						<parameter name="ManualTCName" value="SIT_DDTC_27625_Loans_Future_Dated_Principal_Residence_Loan_Request_by_participant_with_recent_address_change">
+						</parameter>
+					</include>
+					<include name="DDTC_27629_Loans_Principal_Residence_Loan_Request_via_ACH_delivery_method">
+						<parameter name="ManualTCName" value="SIT_DDTC_27629_Loans_Principal_Residence_Loan_Request_via_ACH_delivery_method">
+						</parameter>
+					</include>-->
+					<include name="DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request">
+						<parameter name="ManualTCName" value="SIT_DDTC_27661_Loans_ProActive_Notification_Opted_Principal_Residence_Loan_Request">
+						</parameter>
+					</include>
 
 
 				</methods>
