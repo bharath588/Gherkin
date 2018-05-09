@@ -37,7 +37,7 @@
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="reg_status" value="Registered" />
-				<parameter name="ppt_id" value="202752" />
+				<parameter name="ParticipantID" value="11513181" />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="cswa" />
@@ -70,7 +70,7 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="6021452" />
+				<parameter name="ppt_id" value="11513181" />
 				<parameter name="managed_acc_status" value="Plan Not Offered" />
 				<parameter name="expected_msg" value="not offered in the plan" />
 			</Iteration>
@@ -79,7 +79,7 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="ppt_id" value="11551139" />
+				<parameter name="ParticipantID" value="11513181" />
 				<parameter name="pdi_status" value="No" />
 			</Iteration>
 		</TestCase>
@@ -695,7 +695,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1720804" />
+				<parameter name="PPT_ID" value="12053669" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -1123,6 +1123,25 @@ ORDER BY wb.ga_id,
 				<parameter name="ExceptionMessage" value="Avail Amount is less than Plan Min AS_208" />
 			</Iteration>
 		</TestCase>	
+		<TestCase name="CSAS_ConfirmContactInformation_PDI_No">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="12053669" />
+				<parameter name="newAddress" value="Baker street" />
+				<parameter name="confirmAddress" value="Dsseo&#032;4249 FUUHIEDT&#032;JANESVILLE,WI,US&#032;53546-1738" />
+				<parameter name="HomePhoneNumber" value="8797947961" />
+				<parameter name="MobilePhoneNumber" value="8797947961" />
+				<parameter name="PersonalEmail" value="discard@gwl.com" />
+			</Iteration>
+		</TestCase>
+		<TestCase name="CSAS_ConfirmContactInformation_PDI_No">
+			<Iteration Execution="Yes" id="1">
+				<parameter name="username" value="cswa" />
+				<parameter name="password" value="baseball" />
+				<parameter name="PPT_ID" value="12494242" />
+			</Iteration>
+		</TestCase>
 	</Module>
 	<Module name="onlineenrollment">
 		<TestCase name="ValidateGrpId">
@@ -1503,7 +1522,6 @@ ORDER BY wb.ga_id,
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
-
 			</Iteration>
 
 		</TestCase>
@@ -1530,9 +1548,6 @@ ORDER BY wb.ga_id,
 				<parameter name="ZIP CODE" value="80111" />
 				<parameter name="PERSONAL EMAIL" value="discard@gwl.com" />
 				<parameter name="MOBILE PHONE" value="9591588128" />
-
-				
-
 
 			</Iteration>
 		</TestCase>
@@ -1816,8 +1831,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 			<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball"/>
-			<parameter name="ParticipantID" value="select * from part_service 
-" />
+			<parameter name="ParticipantID" value="select * from part_service" />
 			<parameter name="Page" value="Advisory Services" />
 		</Iteration>	
 		</TestCase>

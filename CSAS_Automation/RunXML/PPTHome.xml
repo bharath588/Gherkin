@@ -8,7 +8,7 @@
 	<test name="Regression Suite">
 
 	<classes> 
-	<class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
+	<!-- <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
 					<include name="Verify_DIH_PaymentHistory">
 						<parameter name="ManualTCName"
@@ -153,10 +153,11 @@
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
 					</include>  
 					</methods> 
-			</class>
+			</class> -->
 	
 	 <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
+				
 	 		
 			<include name="Validate_Managed_Account_Status_On_PPT_Home_Page_AsNotOfferedByPlan">
 						<parameter name="ManualTCName"
@@ -165,7 +166,7 @@
 					 <include name="Validate_PDI_Status_On_PPT_Home">
 						<parameter name="ManualTCName" value="CSAS_PPT_Info_Ppt_Home_Page_PDI_Status"></parameter>
 					</include> 
-				  <include name="Validate_Employment_Status_As_Active">
+			 <include name="Validate_Employment_Status_As_Active">
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Employment_Status_ACTIVE"></parameter>
 					</include>
@@ -193,6 +194,10 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Balance_Details"></parameter> 
 							</include> 
+							<include name="Validate_Registration_Status_On_PPT_Home_Page">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status"></parameter>
+					</include>  
 					
 		 	<include name="Validate_PPT_Home_Order_Mail_PIN_and_Temp_PIN_ForNotRegistered">
 						<parameter name="ManualTCName"
@@ -202,18 +207,16 @@
 						<parameter name="ManualTCName"
 							value="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_Registered"></parameter>
 					</include> 
+					
 				
-						<include name="Validate_Registration_Status_On_PPT_Home_Page">
-						<parameter name="ManualTCName"
-							value="CSAS_PPT_Info_Ppt_Home_Page_Web_Reg_Status"></parameter>
-					</include> 
+						
 					
 							
 								</methods>
 			</class> 
 			
 			 
-	 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+	<!--  <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
 				<methods>
 					 <include name="Validate_LoanStatus_TotalOutstandingBal">
 						<parameter name="ManualTCName"
@@ -340,7 +343,7 @@
 		
 		
 
-					
+					 -->
 			
 		</classes>
 		

@@ -207,14 +207,16 @@ public class validate_participanthomepage {
 						participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 								                                              sqlQueryRes.get("ID"),
 								                                              sqlQueryRes.get("GA_ID"));
+						// Step3: Verify Mail existing PIN and Order Temp PIN message
+						participantHomeObj.verifyPIN_ExistingOrTemp();
 						}
 						else{
 							participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 									Stock.GetParameterValue("ppt_id"),Stock.GetParameterValue("planID"));
+							participantHomeObj.verifyMailExistingPin();
 						}
 					}
-					// Step3: Verify Mail existing PIN and Order Temp PIN message
-					participantHomeObj.verifyPIN_ExistingOrTemp();
+					
 	}
 	
 /**
@@ -310,10 +312,13 @@ public class validate_participanthomepage {
 		// Go to participant home page.
 		String regStatus= Stock.GetParameterValue("reg_status");
 		if(regStatus.equalsIgnoreCase("Registered")){
+			// Step2:Search with PPT ID..
 			// Step2:Search with PPT ID..	
-			sqlQueryRes = participantHomeObj.getSSN_or_pptID(regStatus,"ID","GA_ID");
+			participantHomeObj.gotoSearchPage();
+			participantHomeObj.gotoParticipantPageAndSearchParticipant();
+			/*sqlQueryRes = participantHomeObj.getSSN_or_pptID(regStatus,"ID","GA_ID");
 			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",sqlQueryRes.get("ID"),sqlQueryRes.get("GA_ID"));
-
+*/
 		}
 		else{
 			// Step2:Search with PPT ID..	
@@ -369,6 +374,7 @@ public class validate_participanthomepage {
 					participantHomeObj.verify_Managed_Account_Status(Stock
 							.GetParameterValue("managed_acc_status"),pptID_ManagaedAccSts_List_DB.get(1));
 					}
+					participantHomeObj.gotoSearchPage();
 	}
 
 	/**
@@ -540,7 +546,7 @@ public class validate_participanthomepage {
 			pptID = participantHomeObj.getPPTIDForPDIStatus(Stock
 					.GetParameterValue("pdi_status"));
 			ga_id = participantHomeObj.getSSN_or_pptID_EmpSts(pptID) ;
-			participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",pptID,ga_id);
+			participantHomeObj.gotoParticipantPageAndSearchParticipant();
 
 			// Step3: Verify PDI status
 			participantHomeObj.verify_PDI_Status(Stock

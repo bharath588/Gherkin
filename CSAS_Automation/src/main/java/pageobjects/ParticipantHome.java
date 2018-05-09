@@ -612,7 +612,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (resultset != null) {
 			while (resultset.next()) {
 				plan_Num = resultset.getString("gc_id");
-			}
+				}
 		}
 		return plan_Num;
 	}
@@ -1067,7 +1067,7 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					+ Stock.GetParameterValue("btnName")
 					+ "not displayed in the page");
 		}
-
+		
 		getMessage = (Map<String, String>) getVarByName(Stock
 				.GetParameterValue("btnName"));
 
@@ -1127,6 +1127,55 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (Web.isLastIteration()) {
 			Web.getDriver().close();
 			Web.getDriver().switchTo().window(parentWindow);
+		}
+	}
+	
+	public void verifyMailExistingPin(){
+		String parentWindow = Globals.GC_EMPTY;
+		String msgHolder = Globals.GC_EMPTY;
+		Map<String, String> getMessage = new LinkedHashMap<String, String>();
+		int iEleIndex = 0;
+		boolean msgValidate = false;
+
+		initTempandOrderPINMsg();
+		if (Web.getDriver().getWindowHandles().size() == 1) {
+			Web.waitForElement(lnkOrderPIN);
+			Web.clickOnElement(lnkOrderPIN);
+			parentWindow = Web.getDriver().getWindowHandle();
+			for (String childWindow : Web.getDriver().getWindowHandles()) {
+				Web.getDriver().switchTo().window(childWindow);
+			}
+			Web.getDriver().navigate().back();
+			if (Web.isLastIteration()) {
+				Web.getDriver().close();
+				Web.getDriver().switchTo().window(parentWindow);
+			}
+		}
+
+		if (Web.isWebElementDisplayed(getWebElement(Stock
+				.GetParameterValue("btnName")))) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Validate if Mail Existing PIN / Order Temp PIN child window pops up",
+					"Mail Existing PIN / Order Temp PIN window pops up as expected",
+					true);
+			getWebElement(Stock.GetParameterValue("btnName")).click();
+		} else {
+			throw new AssertionError("Web Element "
+					+ Stock.GetParameterValue("btnName")
+					+ "not displayed in the page");
+		}
+		if(Web.isWebElementDisplayed(btnMailExistingPIN)){
+			Reporter.logEvent(
+					Status.PASS,
+					"Validate if Mail 14-day Temp EIVR PIN/ Order Temp PIN child window pops up",
+					"Mail 14-day Temp EIVR PIN / Order Temp PIN window pops up as expected",
+					true);
+			getWebElement(Stock.GetParameterValue("btnName")).click();
+		} else {
+			throw new AssertionError("Web Element "
+					+ Stock.GetParameterValue("btnName")
+					+ "not displayed in the page");
 		}
 	}
 
@@ -1913,6 +1962,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 		if (Web.isWebElementDisplayed(SelectedPlan)) {
 			Reporter.logEvent(Status.INFO,"Select specific plan","Specific plan selected",true);
 		} 
+	}
+	
+	public void gotoSearchPage(){
+		Web.waitForElement(menuSearch);
+		Web.clickOnElement(menuSearch);
 	}
 	
 	public void verifyEnrolledParticipantDetails(String ParticipantID,String ssn){
