@@ -20,7 +20,7 @@ import com.aventstack.extentreports.Status;
 public class LoginPage extends LoadableComponent<LoginPage> {
 
 	// Object Declarations
-	@FindBy(xpath = ".//button[text()[normalize-space()='Dismiss']]")
+	@FindBy(xpath = "//button[text()[normalize-space()='Dismiss'] and contains(@ng-click,'bulletinDismiss')]")
 	private WebElement btnDismiss;
 	@FindBy(id = "usernameInput")
 	private WebElement txtUserName;

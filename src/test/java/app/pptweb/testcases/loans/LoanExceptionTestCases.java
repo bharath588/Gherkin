@@ -117,6 +117,7 @@ public class LoanExceptionTestCases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
 			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
 			
 			/**
 			 * Step 5 
@@ -204,6 +205,7 @@ public class LoanExceptionTestCases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
 			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
 			
 			/**
 			 * Step 5 
@@ -290,6 +292,7 @@ public class LoanExceptionTestCases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
 			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
 			
 			/**
 			 * Step 5 
@@ -376,7 +379,7 @@ public class LoanExceptionTestCases {
 			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
 			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
 			requestLoan.get();
-			
+			requestLoan.clickOnRequestANewLoan();
 			/**
 			 * Step 5 
 			 *Participant should be displayed with a hard stop message
@@ -417,5 +420,351 @@ public class LoanExceptionTestCases {
 		}
 
 	}
+	/**
+	 * This Test Case to verify Request A Loan Page When participant's death date updated in DB
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27926_Loan_exceptions_BR_484_participant_deceased(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition -Login with a ppt who is eligible for requesting a loan and whose 
+			 * death_date <> NULL in INDIVIDUAL table.
+			 * If death_date or death_notification_date is NOT NULL in INDIVIDUAL table, 
+			 * then it reflects participant is Deceased.
+			 */
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			Calendar calendar = Calendar.getInstance();         
+			calendar.add(Calendar.DATE, -190);
+			String date=dateFormat.format(calendar.getTime());
+			System.out.println("DATE"+date);
+			Common.updateDeathDateInDB(date);
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Based on your plan provisions, you are not eligible to take a loan." 
+			 *at the top of the page and should not be allowed proceed with loan request.
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_484();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateDeathDateInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 	
+	/**
+	 * This Test Case to verify Request A Loan Page When participant is having restriction code in art_argmt Table
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27969_Loan_exceptions_BR_486_Participant_has_PartAgrmt_restriction(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition - Login with a ppt who is having restriction code in PART_AGRMT table.
+			 * 
+			 */
+			
+			
+			Common.updateRestrictionCodeInDB(Stock.GetParameterValue("Restc_Code"));
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Based on your plan provisions, you are not eligible to take a loan." 
+			 *at the top of the page and should not be allowed proceed with loan request.
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_486();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateRestrictionCodeInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	
+	/**
+	 * This Test Case to verify Request A Loan Page When participant group has disbursement hold
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27988_Loan_exceptions_BR_467_Participant_group_has_disbursement_hold(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition - Login with a ppt who is eligible for requesting a loan 
+			 * and whose participant's group has disbursement hold.
+			 * 
+			 */
+			
+			
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Based on your plan provisions, you are not eligible to take a loan." 
+			 *at the top of the page and should not be allowed proceed with loan request.
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_467();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateRestrictionCodeInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	/**
+	 * This Test Case to verify Request A Loan Page When participant's plan does not allow loan
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27989_Loan_exceptions_BR_468_Participant_plan_doesnot_allow_Loan(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition - Login with a ppt who is eligible for requesting a loan 
+			 * and whose participant's plan does not allow loan
+			 * setup plan. LOAN_ADMIN_IND = N
+			 * 
+			 */
+			
+			
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Based on your plan provisions, you are not eligible to take a loan." 
+			 *at the top of the page and should not be allowed proceed with loan request.
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_468();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateRestrictionCodeInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
 }

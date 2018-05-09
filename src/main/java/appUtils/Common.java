@@ -1049,11 +1049,8 @@ public static void updateEmailToNull(String ssn) throws Exception {
  */
 public static void updateMailHoldDateInDB(String date) throws Exception {
 	
-	
-	String ssn=Stock.GetParameterValue("SSN");
-	String id= getParticipantID(ssn);
 	String userName=Stock.GetParameterValue("username");
-	
+	String id= getParticipantID(userName.substring(0, 9));
 	String[] sqlQuery = Stock.getTestQuery("UpdateMailHoldDate");
 	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,id);
@@ -1068,9 +1065,8 @@ public static void updateMailHoldDateInDB(String date) throws Exception {
 public static void updateOwnership_IndInDB(String indicator) throws Exception {
 	
 	
-	String ssn=Stock.GetParameterValue("SSN");
-	String id= getParticipantID(ssn);
 	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
 	String[] sqlQuery = Stock.getTestQuery("UpdateOwnerShipInd");
 	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,id);
@@ -1085,12 +1081,42 @@ public static void updateOwnership_IndInDB(String indicator) throws Exception {
 public static void updateStatusCodeInDB(String satusCode) throws Exception {
 	
 	
-	String ssn=Stock.GetParameterValue("SSN");
-	String id= getParticipantID(ssn);
 	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
 	String[] sqlQuery = Stock.getTestQuery("UpdateStatusCode");
 	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], satusCode,id);
+	
+}
+
+/**
+ * Method to update death_date in individual Table
+ * @author srsksr
+ * @throws Exception
+ */
+public static void updateDeathDateInDB(String date) throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
+	String[] sqlQuery = Stock.getTestQuery("UpdateDeathDate");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,id);
+	
+}
+/**
+* Method to update restrc_code in part_argmt Table
+* @author srsksr
+* @throws Exception
+*/
+public static void updateRestrictionCodeInDB(String RestrcCode) throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
+	String[] sqlQuery = Stock.getTestQuery("UpdateRestrictionCode");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], RestrcCode,id);
 	
 }
 }

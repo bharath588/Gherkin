@@ -263,7 +263,10 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = "//span[contains(text(),'BR_479')]/..") private WebElement errBR_479;
 	@FindBy(xpath = "//span[contains(text(),'BR_480')]/..") private WebElement errBR_480;
 	@FindBy(xpath = "//span[contains(text(),'BR_481')]/..") private WebElement errBR_481;
-	
+	@FindBy(xpath = "//span[contains(text(),'BR_484')]/..") private WebElement errBR_484;
+	@FindBy(xpath = "//span[contains(text(),'BR_486')]/..") private WebElement errBR_486;
+	@FindBy(xpath = "//span[contains(text(),'BR_467')]/..") private WebElement errBR_467;
+	@FindBy(xpath = "//span[contains(text(),'BR_468')]/..") private WebElement errBR_468;
 	
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
@@ -3480,6 +3483,132 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 			Reporter.logEvent(Status.FAIL,
 					"Verify Error Message for 'BR_481' is Displayed",
 					"Error Message for 'BR_481' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_484
+	 */
+	public void verifyPPTRequestLoanPageWithBR_484() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_484, true)){
+		 actualErrorMsg=errBR_484.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_484' is Displayed",
+						"Error Message for 'BR_484' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_484' is Displayed",
+						"Error Message for 'BR_484' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_484' is Displayed",
+					"Error Message for 'BR_484' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_486
+	 */
+	public void verifyPPTRequestLoanPageWithBR_486() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_486, true)){
+		 actualErrorMsg=errBR_486.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_486' is Displayed",
+						"Error Message for 'BR_486' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_486' is Displayed",
+						"Error Message for 'BR_486' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_486' is Displayed",
+					"Error Message for 'BR_486' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_467
+	 */
+	public void verifyPPTRequestLoanPageWithBR_467() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_467, true)){
+		 actualErrorMsg=errBR_467.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_467' is Displayed",
+						"Error Message for 'BR_467' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_467' is Displayed",
+						"Error Message for 'BR_467' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_467' is Displayed",
+					"Error Message for 'BR_467' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_468
+	 */
+	public void verifyPPTRequestLoanPageWithBR_468() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_468, true)){
+		 actualErrorMsg=errBR_468.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_468' is Displayed",
+						"Error Message for 'BR_468' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_468' is Displayed",
+						"Error Message for 'BR_468' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_468' is Displayed",
+					"Error Message for 'BR_468' is Not Displayed", true);
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
