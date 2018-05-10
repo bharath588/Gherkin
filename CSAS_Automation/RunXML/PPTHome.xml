@@ -8,7 +8,7 @@
 	<test name="Regression Suite">
 
 	<classes> 
-	<!-- <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
+	 <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
 					<include name="Verify_DIH_PaymentHistory">
 						<parameter name="ManualTCName"
@@ -153,9 +153,9 @@
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
 					</include>  
 					</methods> 
-			</class> -->
+			</class>
 	
-	 <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
+	<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
 				
 	 		
@@ -215,8 +215,7 @@
 								</methods>
 			</class> 
 			
-			 
-	<!--  <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
+		 <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
 				<methods>
 					 <include name="Validate_LoanStatus_TotalOutstandingBal">
 						<parameter name="ManualTCName"
@@ -343,7 +342,6 @@
 		
 		
 
-					 -->
 			
 		</classes>
 		
