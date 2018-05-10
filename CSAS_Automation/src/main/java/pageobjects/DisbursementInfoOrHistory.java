@@ -17,6 +17,8 @@ import lib.Web;
 
 import com.aventstack.extentreports.*;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -79,6 +81,9 @@ public class DisbursementInfoOrHistory extends
 
 	@FindBy(xpath = "//th[contains(text(),'Disbursement')]//..//..//..//following-sibling::tbody/tr/td[3]")
 	private List<WebElement> DSDisbursementSts;
+	
+	@FindBy(xpath = ".//*[@id='449887279']/td[3]")
+	private WebElement eventStatus;
 
 	// Disbursement tabs..
 	@FindBy(xpath = "//div[@id = 'tabMenuDiv']//span[contains(text(),'Vesting')]")
@@ -137,6 +142,12 @@ public class DisbursementInfoOrHistory extends
 
 	@FindBy(xpath = "//th[contains(text(), 'Vesting')]//..//..//following-sibling::tbody//td[7]")
 	private WebElement VVestingOverrideIND;
+	
+	@FindBy(xpath = "//a[contains(text(),'/csasWebApp/part/disbursement/PartDisbHist.do?eventId='")
+	private WebElement eventId;
+	
+	public static String eventNum;
+	
 
 	LoadableComponent<?> parent;
 
@@ -410,10 +421,17 @@ public class DisbursementInfoOrHistory extends
 				} else {
 					for (int i = 0; i < DSEventID.size(); i++) {
 						if (eventNo
-								.equalsIgnoreCase(DSEventID.get(i).getText())
-								&& DSDisbursementSts.get(i).getText().trim()
-										.equalsIgnoreCase("COMPLETE")) {
-							Web.clickOnElement(DSEventID.get(i));
+								.equalsIgnoreCase(DSEventID.get(i).getText())){
+							if(eventStatus.getText().trim().equalsIgnoreCase("COMPLETE")) {
+								System.out.println(eventStatus.getText());
+								
+								System.out.println("click on event id");
+							//String xpath= ".//*[@id=\'"+eventNo+"\']/td[2]/a";
+							JavascriptExecutor jse = (JavascriptExecutor)Web.getDriver();
+							//jse.executeScript("window.scrollBy(0,250)", "");
+							jse.executeScript("document.getElementById(\'"+eventNo+"\').scrollIntoView(true);");
+							Web.getDriver().findElement(By.xpath(".//*[@id=\'"+eventNo+"\']/td[2]/a")).click();
+							
 							Reporter.logEvent(
 									Status.PASS,
 									"Check if Disbursement Summary displayed with events or not.",
@@ -423,7 +441,8 @@ public class DisbursementInfoOrHistory extends
 						}
 					}
 				}
-			} else {
+			}} else {
+				
 				Reporter.logEvent(
 						Status.FAIL,
 						"Check if Disbursement Summary displayed",
