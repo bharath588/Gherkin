@@ -3496,7 +3496,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	 */
 	public void verifyPPTRequestLoanPageWithBR_484() {
 		
-		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String expectedErrorMsg="You are not eligible to take a loan.";
 		String actualErrorMsg="";
 		if(Web.isWebElementDisplayed(errBR_484, true)){
 		 actualErrorMsg=errBR_484.getText().toString().trim();

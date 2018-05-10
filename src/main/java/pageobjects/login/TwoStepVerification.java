@@ -64,7 +64,7 @@ public class TwoStepVerification extends LoadableComponent<TwoStepVerification> 
 	@FindBy(xpath=".//*[@id='emailId']") private WebElement inpPersonalEmail;
 	@FindBy(xpath=".//select[contains(@id,'ContactCountryName')]") private WebElement drpCountry;
 	@FindBy(xpath=".//*[@id='phoneNumberIdD']") private WebElement inpPhoneNo;
-	@FindBy(xpath="//span[@class='input-group-addon']") private WebElement txtCountryCode;
+	@FindBy(xpath="//span[contains(@class,'input-group-addon')]") private WebElement txtCountryCode;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'CONTINUE')]]") private WebElement btnContinue1;
 	@FindBy(xpath=".//button[@id='submit'][./span[contains(text(),'Save')]]") private WebElement btnSave;
 	@FindBy(xpath="//input[contains(@id,'pptConsentForElectronic')]") private List<WebElement> inpPlanNamecheckBox;

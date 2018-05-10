@@ -1,62 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" verbose="1">
+<suite name="testsuite" parallel="classes">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
 	<test name="BVT">
 		<classes>
-			<class name="app.pptweb.testcases.loans.LoanExceptionTestCases">
+			<class
+				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Login_LeftNav_Investments">
 				<methods>
-					
-					<!-- <include name="DDTC_27660_Loan_exceptions_Participant_with_MailHold">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27660_Loan_exceptions_Participant_with_MailHold">
-						</parameter>
-					</include> 
-					 <include
-						name="DDTC_27908_Loan_exceptions_BR_479_spousal_takeover">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27908_Loan_exceptions_BR_479_spousal_takeover">
+
+					<include name="SF01_TC01_Verify_Custom_site_prelogin_data">
+						<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
 						</parameter>
 					</include>
-					<include
-						name="DDTC_27909_Loan_exceptions_BR_480_QDRO">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27909_Loan_exceptions_BR_480_QDRO">
-						</parameter>
-					</include>
-						<include
-						name="DDTC_27919_Loan_exceptions_BR_481_participant_currently_non_active">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27919_Loan_exceptions_BR_481_participant_currently_non_active">
-						</parameter>
-					</include>-->
-					<include
-						name="DDTC_27926_Loan_exceptions_BR_484_participant_deceased">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27926_Loan_exceptions_BR_484_participant_deceased">
-						</parameter>
-					</include>
-					<!--<include
-						name="DDTC_27969_Loan_exceptions_BR_486_Participant_has_PartAgrmt_restriction">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27969_Loan_exceptions_BR_486_Participant_has_PartAgrmt_restriction">
-						</parameter>
-					</include>
-					<include
-						name="DDTC_27988_Loan_exceptions_BR_467_Participant_group_has_disbursement_hold">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27988_Loan_exceptions_BR_467_Participant_group_has_disbursement_hold">
-						</parameter>
-					</include>
-					<include
-						name="DDTC_27989_Loan_exceptions_BR_468_Participant_plan_doesnot_allow_Loan">
-						<parameter name="ManualTCName"
-							value="SIT_DDTC_27989_Loan_exceptions_BR_468_Participant_plan_doesnot_allow_Loan">
-						</parameter>
-					</include> -->
+
 
 				</methods>
 			</class>
