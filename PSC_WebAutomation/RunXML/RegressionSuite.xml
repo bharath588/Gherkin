@@ -727,7 +727,7 @@
 					</include>
 				</methods>
 			</class>-->
-			<class name="app.psc.testcases.filesharing.filesharingtestcases">
+			<!-- <class name="app.psc.testcases.filesharing.filesharingtestcases">
 				<methods>
 					<include
 						name="TC001_SIT_PSC_FileSharing_04_TC028_Screen_element_refresh">
@@ -835,7 +835,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class> 
+			</class>  -->
 			<class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include
