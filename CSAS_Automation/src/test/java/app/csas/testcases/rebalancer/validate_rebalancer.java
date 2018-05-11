@@ -57,6 +57,7 @@ public class validate_rebalancer {
 		
 		// Step3: Launching Rebalancer
 		rebalancer = new Rebalancer().get();
+		rebalancer.checkexistingTranfersAndCancel();
 
 		// Step4: Setting value for Rebalancer
 		String invtOpt = rebalancer.setRebalancingVal(Stock.GetParameterValue("isChckBx"));

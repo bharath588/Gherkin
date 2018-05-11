@@ -92,7 +92,18 @@ public class Rebalancer extends LoadableComponent<Rebalancer> {
 
 	@FindBy(xpath = "//td[contains(text(),'Cancel Complete')]")
 	private WebElement CancelComplete;
-
+	
+	@FindBy(xpath = ".//input[@value='Cancel Existing Transfer']")
+	private WebElement existingTranfers;
+	
+	@FindBy(xpath = ".//input[@name='action']")
+	private WebElement confirmCancelTranfers;
+	@FindBy(xpath = ".//input[@name='action'][1]")
+	private WebElement submit;
+	
+	
+	@FindBy(xpath=".//input[@name='checkBox']")
+	private WebElement confirmationcheckBox;;
 	private String invstmntOptVal = Globals.GC_EMPTY;
 
 	private String invstmntOpt = Globals.GC_EMPTY;
@@ -101,6 +112,22 @@ public class Rebalancer extends LoadableComponent<Rebalancer> {
 
 	public Rebalancer() {
 		PageFactory.initElements(Web.getDriver(), this);
+	}
+	public void checkexistingTranfersAndCancel(){
+		if(Web.isWebElementDisplayed(existingTranfers)){
+			Web.clickOnElement(existingTranfers);
+			Web.clickOnElement(confirmationcheckBox);
+			Web.clickOnElement(confirmCancelTranfers);
+			Web.clickOnElement(submit);
+			Web.mouseHover(menuPPTChanges);
+			Web.mouseHover(menuRenewalUpdateLink);
+			if (Web.isWebElementDisplayed(menuRebalancer, true)) {
+				Web.clickOnElement(menuRebalancer);
+			}
+		}else{
+			System.out.println("No existing tranfers");
+			
+		}
 	}
 
 	@Override
