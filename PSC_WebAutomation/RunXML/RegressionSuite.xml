@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
-	<test name="Yellow period execution-2">
+	<test name="Yellow period execution-1">
 	<classes>
 	<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
@@ -145,7 +145,7 @@
 					 <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
-					</include> 
+					</include>  
 					<include name="TC017_01_Internal_Employee_External_Client_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1063_SIT_PSC_Login_01_TC017_Internal and External User">
@@ -169,8 +169,7 @@
 					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
 						<parameter name="ManualTCName" value="DDTC-1007_SIT_PSC_Login_01_TC004_Terminate User" />
 					</include>
-					<include
-						name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
+					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
 							value="DDTC-1346_User_Account_Locking_For_max_Invalid_Attempts" />
 					</include> 
@@ -178,8 +177,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-13037_Display correct date and time of my last login" />
 					</include>
-					<include
-						name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
@@ -197,13 +195,11 @@
 						<parameter name="ManualTCName"
 							value="Verify_PLUser_Login_With_No_Plna_Access" />
 					</include> 
-					<include
-						name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
+					<include name="TC001_09_Verify_Jump_Page_Not_Displayed_When_AcessToPlanInSingleSite">
 						<parameter name="ManualTCName"
 							value="Verify_Jump_Page_Not_Displayed_When_User_Have_Access_To_Plan_In_Singlesite" />
 					</include>
-					<include
-						name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
+					<include name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
 						<parameter name="ManualTCName"
 							value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites" />
 					</include>
@@ -598,7 +594,7 @@
 					</include>
 				</methods>
 			</class>   
-			<class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
+			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">
 				<methods>
 					<include name="TC017_Verify_the_dropdown_options_And_Screen_elements">
 						<parameter name="ManualTCName"
@@ -655,7 +651,7 @@
 						</parameter>
 					</include>
 				</methods>
-			</class>
+			</class> -->
 		 	
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
@@ -730,7 +726,7 @@
 						<parameter name="ManualTCName" value="DDTC-22542_Gpp_regression_process_confirm"/>
 					</include>
 				</methods>
-			</class>
+			</class>-->
 			<class name="app.psc.testcases.filesharing.filesharingtestcases">
 				<methods>
 					<include
@@ -839,7 +835,7 @@
 							value="DDTC:89_TC021_SIT_PSC_FileSharing_04_TC026_Screen_element_Expiration_date"/>
 					</include> 
 				</methods>
-			</class> -->
+			</class> 
 			<class name="app.psc.testcases.reports.ReportsTestCases">
 				<methods>
 					<include

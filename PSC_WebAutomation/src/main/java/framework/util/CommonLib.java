@@ -1440,5 +1440,29 @@ public class CommonLib {
 		}
 		return number.intValue();
 	}
+	
+	/**
+	    * Searches an array of words for a given value using a recursive binary 
+	    * search.  Returns the index that contains the value or -1 if the value 
+	    * is not found.
+	    * @param words
+	    * @param value
+	    * @return
+	    */    
+	   public static int binarySearch(String[] words, String value, int min, int max) {
+	       if (min > max) {
+	           return -1;
+	       }
+	       
+	       int mid = (max + min) / 2;
+	       
+	       if (words[mid].equals(value)) {
+	           return mid;
+	       } else if(words[mid].compareTo(value) > 0) {
+	           return binarySearch(words, value, min, mid - 1);
+	       } else {
+	           return binarySearch(words, value, mid + 1, max);
+	       }
+	   }
 
 }

@@ -186,9 +186,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		Reporter.logEvent(Status.PASS, "Submit login credentials", "Login credentials submitted successfully", false);
 		Web.getDriver().switchTo().defaultContent();
 		try {
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.ispageloaded("");
+			/*Web.waitForPageToLoad(Web.getDriver());
+			Web.ispageloaded("");*/
 			Thread.sleep(5000);
+			this.waitForSuccessfulLogin();
 		} catch (InterruptedException e) {
 			ThrowException.Report(TYPE.INTERRUPTED, "Exception occurred for thread sleep");
 		}

@@ -8,7 +8,7 @@
 		<classes>
 			<class name="app.psc.testcases.employeesearch.employeesearchtestcases">
 				<methods>
-					<include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
+					<!-- <include name="TC43_SIT_PSC_User_Remember_Search_Employee_Selection">
 						<parameter name="ManualTCName"
 							value="DDTC-1246_SIT_PSC_User_Remember_Search_Employee_Selection" />
 					</include>
@@ -53,20 +53,17 @@
 							value="DDTC-21985_Employee_Search_Regression_invalid_ppt">
 						</parameter>
 					</include>
-					<include
-						name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
+					<include name="TC010_Verify_the_Search_results_for_SSN_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-22057_Employee_Search_Regression_noduplicatessn">
 						</parameter>
 					</include>
-					<include
-						name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
+					<include name="TC011_Verify_the_Search_results_for_Name_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-22058_Employee_Search_Regression_noduplicatename">
 						</parameter>
 					</include> 
-					<include
-						name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
+					<include name="TC012_Verify_the_Search_results_for_EmployeeID_doesnot_Contain_duplicate_Values">
 						<parameter name="ManualTCName"
 							value="DDTC-21990_Employee_Search_Regression_noduplicateempid">
 						</parameter>
@@ -97,17 +94,17 @@
 						<parameter name="ManualTCName"
 							value="DDTC-21980_Employee_Search_Sanity_Suite_invalidempid">
 						</parameter>
-					</include>
-					<include name="TC017_Employment_Info_Verification">
+					</include> -->
+					 <!-- <include name="TC017_Employment_Info_Verification">
 						<parameter name="ManualTCName" value="DDTC-2249_Employment_Info_Verification" />
-					</include>
-					<include name="TC018_Employee_Contact_Info_Verification">
+					</include> -->
+					<!-- <include name="TC018_Employee_Contact_Info_Verification">
 						<parameter name="ManualTCName"
 							value="DDTC-1323_Employee_Contact_Info_Verification" />
 					</include>
 					<include name="TC019_Verify_Beneficiary_Info">
 						<parameter name="ManualTCName" value="DDTC-2153_Verify_Beneficiary_Info" />
-					</include>
+					</include> 
 					<include name="TC020_Recently_Viewed_Employee">
 						<parameter name="ManualTCName" value="DDTC-2167_Recently_Viewed_Employee" />
 					</include>
@@ -119,30 +116,30 @@
 					</include> 
 					<include name="TC023_EnrolmmentAndEligibility">
 						<parameter name="ManualTCName" value="DDTC-1395_EnrolmmentAndEligibility" />
-					</include>
-					 <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
+					</include>-->
+					 <!-- <include name="TC025_Verify_Employee_Overview_PlanList_Balance_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1549_Verify_Employee_Overview_PlanList_Balance_Section" />
-					</include>
-					<include name="TC026_Verify_Employee_Basic_Info">
+					</include> -->
+					<!-- <include name="TC026_Verify_Employee_Basic_Info">
 						<parameter name="ManualTCName" value="DDTC-2091_Verify_Employee_Basic_Info" />
-					</include>
+					</include> -->
 					<include name="TC027_Verify_Subset_History_Section">
 						<parameter name="ManualTCName"
 							value="DDTC-1022_Verify_Subset_History_Section" />
 					</include>
-					<include name="TC028_Recently_Viewed_Switch_Participant_Reg">
+					<!-- <include name="TC028_Recently_Viewed_Switch_Participant_Reg">
 						<parameter name="ManualTCName"
 							value="DDTC-1440_Recently_Viewed_Switch_Participant_Reg" />
-					</include>
+					</include> -->
 					<include name="TC029_Edit_Enrollment_And_Eligibility">
 						<parameter name="ManualTCName"
 							value="DDTC-2194_Edit_Enrollment_And_Eligibility" />
 					</include>
-					<include name="TC30_Account_balance_Tab">
+					<!-- <include name="TC30_Account_balance_Tab">
 						<parameter name="ManualTCName" value="DDTC-317_Validate_Account_balance_Tab" />
-					</include>
-					<include name="TC31_Disable_PAE_then_renable_PAE">
+					</include> -->
+					<!--<include name="TC31_Disable_PAE_then_renable_PAE">
 						<parameter name="ManualTCName" value="DDTC-1062_Disable_PAE_then_renable_PAE" />
 					</include>
 					<include name="TC32_Supress_Menu_Items_for_TRS_Flex">
@@ -285,7 +282,7 @@
 					</include>
 					<include name="TC_64_OngoingDeferralUIValidation">
 						<parameter name="ManualTCName" value="DDTC-298_OngoingDeferral_UI_Validation" />
-					</include>
+					</include> -->
 				</methods>
 			</class>
 			<!-- <class name="app.psc.testcases.employeesearch.employeesearchtestcases_db">

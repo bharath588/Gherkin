@@ -195,7 +195,7 @@ public class employeesearchtestcases {
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch
-			.searchEmployeeByName(Stock.GetParameterValue("Name"));
+					.searchEmployeeByName(Stock.GetParameterValue("Name"));
 			Thread.sleep(3000);
 			if (employeesearch.isSearchResultsDisplayed()) {
 				Reporter.logEvent(Status.PASS,
@@ -247,7 +247,7 @@ public class employeesearchtestcases {
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch
-			.searchEmployeeByName(Stock.GetParameterValue("Name"));
+					.searchEmployeeByName(Stock.GetParameterValue("Name"));
 			Thread.sleep(3000);
 			if (!employeesearch.isSearchResultsDisplayed()) {
 
@@ -667,7 +667,7 @@ public class employeesearchtestcases {
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
 			employeesearch
-			.searchEmployeeByName(Stock.GetParameterValue("Name"));
+					.searchEmployeeByName(Stock.GetParameterValue("Name"));
 			Thread.sleep(3000);
 			if (employeesearch.checkIfduplicateExists()) {
 				Reporter.logEvent(Status.PASS,
@@ -1081,7 +1081,8 @@ public class employeesearchtestcases {
 			employeesearch.getBeneficiaryEmployeeSSN();
 			employeesearch.searchEmployeeBySSN(EmployeeSearch.str1[0]);
 			employeesearch.navigateToEmployeeOverViewPage();
-			employeesearch.navigateBeneficiaryPage();//no beneficiary added for this user
+			employeesearch.navigateBeneficiaryPage();// no beneficiary added for
+														// this user
 			employeesearch.validateBeneficiaryWithDB();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1272,7 +1273,7 @@ public class employeesearchtestcases {
 			employeesearch = new EmployeeSearch().get();
 			employeesearch.SSNOfEmployeeWithTermDate();
 			employeesearch
-			.searchEmployeeBySSNAllPlans(employeesearch.terminatedEmp[0]);
+					.searchEmployeeBySSNAllPlans(employeesearch.terminatedEmp[0]);
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			employeesearch.beforeRehiring();
@@ -1425,7 +1426,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"This test case verifies employee basic information on "
 							+ "overview page and update few fields and verifies the changes",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -1433,19 +1434,19 @@ public class employeesearchtestcases {
 			employeesearch.getQNTTypeIndividuals();
 			Thread.sleep(3000);
 			employeesearch
-			.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
-					.get(0));
+					.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
+							.get(0));
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			employeesearch.verifyBasicInformationOnOverviewPage();
 			employeesearch
-			.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
-					.get(1));
+					.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
+							.get(1));
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.verifyBasicInformationOnOverviewPage();
 			employeesearch
-			.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
-					.get(2));
+					.searchEmployeeBySSNAllPlans(employeesearch.qntTypeIndividuals
+							.get(2));
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.verifyBasicInformationOnOverviewPage();
 			employeesearch.verifyBasicInfoModalWindow();
@@ -1493,12 +1494,11 @@ public class employeesearchtestcases {
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
 			employeesearch = new EmployeeSearch().get();
-			resultset = employeesearch.getEmployeeForUser(
+			resultset = employeesearch.getEmployeesForUser(
 					Stock.getTestQuery("getEmployeeWithSubSetSection"),
 					Stock.GetParameterValue("username"));
-			String ssn = "";
-			ssn = employeesearch.getEmployeeSSNFromResultSet(resultset);
-			employeesearch.searchEmployeeBySSNAllPlans(ssn);
+			employeesearch.searchEmployeeBySSNAllPlans(employeesearch
+					.getEmployeeSSNFromResultSet(resultset));
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			if (employeesearch.isSubSetSectionDisplayed()) {
@@ -1515,11 +1515,12 @@ public class employeesearchtestcases {
 						"Check Employee subset information section is displayed.",
 						"Employee subset information is not displayed.", true);
 			}
+			resultset.deleteRow();
 			resultset = employeesearch.getEmployeeForUser(
 					Stock.getTestQuery("getEmployeeWithoutSubSetSection"),
 					Stock.GetParameterValue("username"));
-			ssn = employeesearch.getEmployeeSSNFromResultSet(resultset);
-			employeesearch.searchEmployeeBySSNAllPlans(ssn);
+			employeesearch.searchEmployeeBySSNAllPlans(employeesearch
+					.getEmployeeSSNFromResultSet(resultset));
 			employeesearch.navigateToEmployeeOverViewPage();
 			employeesearch.navigateToEmpDetailPage();
 			if (employeesearch.isSubSetSectionDisplayed())
@@ -1623,7 +1624,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to edit Enrollment and eligibility section and update and save and edit"
 							+ "Enrollment and eligibility section,update and cancel to make sure save/cancel works as expected.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -1748,7 +1749,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to validate<br>1.Data set error must be displayed if access to participant Web is disable via PSC."
 							+ "<br>2.Employee Web button is displayed based on respective transaction code 'PSCPAE'.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -1786,15 +1787,15 @@ public class employeesearchtestcases {
 						Status.FAIL,
 						"Execute the query '"
 								+ Stock.getTestQuery("deletePSCPAETxnCode")[1]
-										+ "'.", "Employee web button is"
-												+ " displayed.", true);
+								+ "'.", "Employee web button is"
+								+ " displayed.", true);
 			} else {
 				Reporter.logEvent(
 						Status.PASS,
 						"Execute the query '"
 								+ Stock.getTestQuery("deletePSCPAETxnCode")[1]
-										+ "'.", "Employee web button is"
-												+ " not displayed.", false);
+								+ "'.", "Employee web button is"
+								+ " not displayed.", false);
 			}
 			employeesearch.insertPSCPAETxnCode();
 
@@ -1837,7 +1838,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to validate menu items"
 							+ " 'Process Center and Compliance' must be Supressed for TRSFlex.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -1851,15 +1852,15 @@ public class employeesearchtestcases {
 						Status.FAIL,
 						"Search for TRS-Flex plan and navigate to plan page.Observe the"
 								+ " Process center and compliance menu tabs are supressed.",
-								"Process center and compliance menu tabs are"
-										+ " not supressed.", true);
+						"Process center and compliance menu tabs are"
+								+ " not supressed.", true);
 			else
 				Reporter.logEvent(
 						Status.PASS,
 						"Search for TRS-Flex plan and navigate to plan page.Observe the"
 								+ " Process center and compliance menu tabs are supressed.",
-								"Process center and compliance menu tabs are"
-										+ " supressed.", false);
+						"Process center and compliance menu tabs are"
+								+ " supressed.", false);
 			employeesearch.validationsForTRSFlexPlan();
 			resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("getNonTRXFlexPlan"),
@@ -1870,15 +1871,15 @@ public class employeesearchtestcases {
 						Status.PASS,
 						"Search for Non TRS-Flex plan and navigate to plan page.Observe the"
 								+ " Process center and compliance menu tabs are displayed.",
-								"Process center and compliance menu tabs are"
-										+ " displayed.", false);
+						"Process center and compliance menu tabs are"
+								+ " displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Search for Non TRS-Flex plan and navigate to plan page.Observe the"
 								+ " Process center and compliance menu tabs are displayed.",
-								"Process center and compliance menu tabs are"
-										+ " not displayed.", true);
+						"Process center and compliance menu tabs are"
+								+ " not displayed.", true);
 			employeesearch.validationsForNonTRSFlexPlan();
 			resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("getTRXFlexPlan"),
@@ -2008,7 +2009,7 @@ public class employeesearchtestcases {
 							+ "2.This test case validates order of investment information and max number of investment records on overview page(if max number records exist)."
 							+ "3.This test case validates the adding new allocation."
 							+ "4.This test case validates the 'Add/Change Allocations button' enabled/disabled based on transaction codes assigned to user.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2132,7 +2133,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objectives of this test case is to validate"
 							+ " Enrollment & Eligibility section is not displayed for NQ plans.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2149,14 +2150,14 @@ public class employeesearchtestcases {
 				Reporter.logEvent(Status.PASS,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for NQ plans.",
-								"Enrollment and Eligibility section is not displayed.",
-								false);
+						"Enrollment and Eligibility section is not displayed.",
+						false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for NQ plans.",
-								"Enrollment and Eligibility section is not displayed.",
-								true);
+						"Enrollment and Eligibility section is not displayed.",
+						true);
 			resultset = employeesearch.selectPlanForUser(
 					Stock.getTestQuery("GetDBPlans"),
 					Stock.GetParameterValue("username"));
@@ -2169,14 +2170,14 @@ public class employeesearchtestcases {
 				Reporter.logEvent(Status.PASS,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for DB plans.",
-								"Enrollment and Eligibility section is not displayed.",
-								false);
+						"Enrollment and Eligibility section is not displayed.",
+						false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate Enrollment and Eligibility section"
 								+ " is not displayed for DB plans.",
-								"Enrollment and Eligibility section is not displayed.",
-								true);
+						"Enrollment and Eligibility section is not displayed.",
+						true);
 			employeesearch.logoutFromApplication();
 
 		} catch (Exception e) {
@@ -2253,7 +2254,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objectives of this test case is to validate"
 							+ " Tool-tip elements in recently viewed employee section.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2301,7 +2302,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objectives of this test case is to validate"
 							+ "Fees section elements on employee overview page.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2374,7 +2375,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to validate"
 							+ " Vesting section with vesting info under account detail tab.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2430,7 +2431,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"The objective of this test case is to validate"
 							+ " Loan section info under account detail tab.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2487,7 +2488,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to validate Employee "
 							+ "Paycheck contributions screen elements and valiate contribution type record on history window.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2548,7 +2549,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate page navigation of Paycheck contribution history window.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2599,7 +2600,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate page navigation of Paycheck contribution history window.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2609,7 +2610,7 @@ public class employeesearchtestcases {
 			employeesearch.validateRememberOfEmpSearchOption();
 			if (Stock.getConfigParam("DataType").equals("NonApple"))
 				employeesearch
-				.validateRememberOfEmpSearchOptionWhenPlanSwitch();
+						.validateRememberOfEmpSearchOptionWhenPlanSwitch();
 			employeesearch.logoutFromApplication();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2652,7 +2653,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is"
 							+ " to validate fields with DB for enrollment and eligibility section.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2728,7 +2729,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate Add employee functionality for Autosite plan.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2750,7 +2751,7 @@ public class employeesearchtestcases {
 								employeesearch.addSubSetInfo();
 							}
 							employeesearch
-							.addManageAccountDetailsWithManageAccntEnroll();
+									.addManageAccountDetailsWithManageAccntEnroll();
 						}
 					}
 				}
@@ -2798,7 +2799,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate Add employee functionality for Autosite plan.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2820,7 +2821,7 @@ public class employeesearchtestcases {
 								employeesearch.addSubSetInfo();
 							}
 							employeesearch
-							.addManageAccountDetailsWithOutManageAccntEnroll();
+									.addManageAccountDetailsWithOutManageAccntEnroll();
 						}
 					}
 				}
@@ -2868,7 +2869,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate Add employee functionality for Autosite plan.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -2918,7 +2919,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate employee info input fields in the process of adding new employee",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3035,7 +3036,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate message when there is no record in work_recently_viewed_part table.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3089,7 +3090,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate asset allocation screen and total field.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3158,7 +3159,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to "
 							+ "validate employee ability to add/change allocation based on txn codes assigned/removed.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3179,7 +3180,7 @@ public class employeesearchtestcases {
 						"Check if user is assigned with ESCPAL txn code.",
 						"User is not assigned with ESCPAL"
 								+ " txn code.please insert ESCPAL txn code to process with this test case.",
-								false);
+						false);
 				ispresent = false;
 				CommonLib.insertTxnCode(Stock.GetParameterValue("TXN_CODE"),
 						Stock.GetParameterValue("uscsId"));
@@ -3211,12 +3212,12 @@ public class employeesearchtestcases {
 					Reporter.logEvent(Status.PASS,
 							"Verify investment tab is displayed if user is"
 									+ " assigned with ESCPAL code.",
-									"Investment tab is displayed.", false);
+							"Investment tab is displayed.", false);
 				else
 					Reporter.logEvent(Status.FAIL,
 							"Verify investment tab is displayed if user is"
 									+ " assigned with ESCPAL code.",
-									"Investment tab is not displayed.", true);
+							"Investment tab is not displayed.", true);
 			}
 			employeesearch.deleteESCPALAndESCCSDTxnCodes();
 			homePage = new HomePage();
@@ -3279,7 +3280,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"The objective of this test case is to "
 							+ "validateemployee Transaction History page.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3295,17 +3296,17 @@ public class employeesearchtestcases {
 			String actMsg = Web
 					.returnElement(employeesearch,
 							"TXN_HISTORY_PAST_THREE_MONTH_MSG").getText()
-							.trim();
+					.trim();
 			if (Web.VerifyText(expMsg, actMsg, true))
 				Reporter.logEvent(Status.PASS,
 						"Validate below message is displayed under transation history"
 								+ " section\n" + expMsg,
-								"Below message is displayed:\n" + actMsg, false);
+						"Below message is displayed:\n" + actMsg, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate below message is displayed under transation history"
 								+ " section\n" + expMsg,
-								"Below message is displayed:\n" + actMsg, true);
+						"Below message is displayed:\n" + actMsg, true);
 			employeesearch.validateTxnHistPageScreenElements();
 			employeesearch.dateRangeValidationTxnHist();
 			employeesearch.validateConfirmationNbrWindow();
@@ -3318,24 +3319,24 @@ public class employeesearchtestcases {
 			String actNoDataMsg = Web
 					.returnElement(employeesearch,
 							"NO_DATA_TXN_HIST_Click_HERE_LINK")
-							.findElement(By.xpath("./..")).getText().trim();
+					.findElement(By.xpath("./..")).getText().trim();
 			System.out.println("Actual No Data message:" + actNoDataMsg);
 			if (actNoDataMsg.contains(expNoDataMsg))
 				Reporter.logEvent(Status.PASS,
 						"Validate below message for employee having no"
 								+ " past three month transactions.\n"
 								+ actNoDataMsg,
-								"Below message is displayed for ppt not having"
-										+ " past three month transaction.\n"
-										+ actNoDataMsg, false);
+						"Below message is displayed for ppt not having"
+								+ " past three month transaction.\n"
+								+ actNoDataMsg, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate below message for employee having no"
 								+ " past three month transactions.\n"
 								+ actNoDataMsg,
-								"Below message is displayed for ppt not having"
-										+ " past three month transaction.\n"
-										+ actNoDataMsg, true);
+						"Below message is displayed for ppt not having"
+								+ " past three month transaction.\n"
+								+ actNoDataMsg, true);
 			employeesearch.clickHereOpensModalWindow();
 
 		} catch (Exception e) {
@@ -3377,7 +3378,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"The objective of this test case is to "
 							+ "validateemployee Transaction History page.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3409,15 +3410,15 @@ public class employeesearchtestcases {
 						"Search for ppt with no loan payout data and check"
 								+ " on overview page loan data block is suppressed and below message is dislayed:\n"
 								+ text,
-								""
-										+ "Loan data block is suppressed and below message is displayed.\n"
-										+ text, false);
+						""
+								+ "Loan data block is suppressed and below message is displayed.\n"
+								+ text, false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Search for ppt with no loan payout data and check"
 								+ " on overview page loan data block is suppressed.",
-								"Loan data block is not suppressed.", true);
+						"Loan data block is not suppressed.", true);
 			employeesearch.searchEmployeeBySSNAllPlans(Stock
 					.GetParameterValue("SSN"));
 			employeesearch.navigateToEmployeeOverViewPage();
@@ -3469,7 +3470,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to validate"
 							+ " employment angular page and hire date and term date validations.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3538,7 +3539,7 @@ public class employeesearchtestcases {
 					employeesearch.validateEmploymentHistoryLabels();
 					employeesearch.updateReHireDateValidation(termDate);
 					employeesearch
-					.fillRehireDetailFormAndCheckForCnfMsg(termDate);
+							.fillRehireDetailFormAndCheckForCnfMsg(termDate);
 				}
 
 				if (dbTermDate.after(CommonLib.getSysDateWithTimeZone("MST"))) {
@@ -3591,7 +3592,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The objective of this test case is to fill employment"
 							+ " details,save and validate for event id generated.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3652,16 +3653,16 @@ public class employeesearchtestcases {
 					if (employeesearch
 							.employmentInfoSectionAndEditLinkValidation()) {
 						employeesearch
-						.employmentInfoForTermedEmp(termDateModified);
+								.employmentInfoForTermedEmp(termDateModified);
 						employeesearch.validateRehireFeature();
 						employeesearch
-						.validateBreadCrumb("Employment information");
+								.validateBreadCrumb("Employment information");
 						employeesearch.validateBasicEmploymentElements(
 								planNumber, ssn);
 						employeesearch.validateEmploymentHistoryLabels();
 						employeesearch.updateReHireDateValidation(termDate);
 						employeesearch
-						.fillRehireDetailFormAndCheckForCnfMsg(termDate);
+								.fillRehireDetailFormAndCheckForCnfMsg(termDate);
 					}
 				}
 				if (itr == 2) {
@@ -3672,7 +3673,7 @@ public class employeesearchtestcases {
 					if (employeesearch
 							.employmentInfoSectionAndEditLinkValidation()) {
 						employeesearch
-						.employmentInfoForTermedEmp(termDateModified);
+								.employmentInfoForTermedEmp(termDateModified);
 						employeesearch.navigateToEmpRehirePage();
 						employeesearch.fillEmploymentDetails();
 					}
@@ -3722,7 +3723,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"This test case validates employment positive flow"
 							+ " with some hire and term date validations.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -3877,13 +3878,13 @@ public class employeesearchtestcases {
 								Status.PASS,
 								"validate below message is displayed for termed employee:\n"
 										+ "'This employee is currently in a terminated employment status. Please choose an option below to continue.'",
-										"Below message is displayed:\n" + msg, false);
+								"Below message is displayed:\n" + msg, false);
 					else
 						Reporter.logEvent(
 								Status.FAIL,
 								"validate below message is displayed for termed employee:\n"
 										+ "'This employee is currently in a terminated employment status. Please choose an option below to continue.'",
-										"Below message is displayed:\n" + msg, true);
+								"Below message is displayed:\n" + msg, true);
 				}
 			}
 		} catch (Exception e) {
@@ -3927,7 +3928,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"This test case validates Edit termination button is"
 							+ " not displayed if plan is set for zero deferral with 0 days set for zero deferral rule.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4016,7 +4017,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"This test case validates Edit termination button is"
 							+ " not displayed when termDate+zero_after_x_days<currentdate",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4101,7 +4102,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"This test case validates Edit termination button is"
 							+ " not displayed when termDate+zero_after_x_days=currentdate",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4224,7 +4225,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"This test case validates Edit termination button is"
 							+ " not displayed when termDate+zero_after_x_days>currentdate",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4338,7 +4339,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The purpose of this test case"
 							+ "is to verify Employee Search functionality based on User category.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4369,17 +4370,19 @@ public class employeesearchtestcases {
 				employeesearch.searchPlan(planNumber);
 				employeesearch.searchEmployeeBySSN(ssn);
 			}
-			if (Web.returnElements(employeesearch, "EmpLastNameLink").get(0)
-					.isDisplayed())
-				Reporter.logEvent(Status.PASS,
-						"Login as PSC user with only 1 plan and search for an"
-								+ " employee within that plan.",
-								"Employee is found.", false);
-			else
+			if (Web.returnElements(employeesearch, "EmpLastNameLink").size() > 0) {
+				if (Web.isWebElementsDisplayed(Web.returnElements(
+						employeesearch, "EmpLastNameLink"))) {
+					Reporter.logEvent(Status.PASS,
+							"Login as PSC user with only 1 plan and search for an"
+									+ " employee within that plan.",
+							"Employee is found.", false);
+				}
+			} else
 				Reporter.logEvent(Status.FAIL,
 						"Login as PSC user with only 1 plan and search for an"
 								+ " employee within that plan.",
-								"Employee is not found.", true);
+						"Employee is not found.", true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -4421,7 +4424,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The purpose of this test case"
 							+ "is to validate Stop All deferrals page elements and functionality.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4461,14 +4464,14 @@ public class employeesearchtestcases {
 							"Validate deferral amount or percentage is $0 and 0% after stop deferral.",
 							""
 									+ "Deferral amount is found to be $0 and deferral percent to be 0%.",
-									false);
+							false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Validate deferral amount or percentage is $0 and 0% after stop deferral.",
 							""
 									+ "Deferral amount is found to be $0 and deferral percent to be 0%.",
-									true);
+							true);
 
 				if (employeesearch.returnToEmployeeOverview(Web.returnElement(
 						employeesearch, "RETURN OVERVIEW PAGE")))
@@ -4476,19 +4479,19 @@ public class employeesearchtestcases {
 							Status.PASS,
 							"Click on Return to employee overview page"
 									+ " and validate Overview page is displayed.",
-									""
-											+ "Overview page is displayed once user clicks on "
-											+ "Return to employee overview button",
-											false);
+							""
+									+ "Overview page is displayed once user clicks on "
+									+ "Return to employee overview button",
+							false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Click on Return to employee overview page"
 									+ " and validate Overview page is displayed.",
-									""
-											+ "Overview page does not displayed once user clicks on "
-											+ "Return to employee overview button",
-											true);
+							""
+									+ "Overview page does not displayed once user clicks on "
+									+ "Return to employee overview button",
+							true);
 
 				DB.executeQuery(
 						Stock.getTestQuery("DeleteEvIdFromElectiveDef")[0],
@@ -4538,7 +4541,7 @@ public class employeesearchtestcases {
 			Reporter.logEvent(Status.INFO, "Testcase Description",
 					"The purpose of this test case"
 							+ "is to validate Age catch up functionality.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4576,20 +4579,20 @@ public class employeesearchtestcases {
 					if (employeesearch.validateAgecatchUpRule(expDeferralType
 							.get(0))
 							&& employeesearch
-							.validateAgecatchUpRule(expDeferralType
-									.get(1)))
+									.validateAgecatchUpRule(expDeferralType
+											.get(1)))
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate AGEBEF and ROTH must "
 										+ "not be displayed for PPT age<50.",
-										"AGEBEF and ROTH deferrals are" + " displayed.",
-										true);
+								"AGEBEF and ROTH deferrals are" + " displayed.",
+								true);
 					else
 						Reporter.logEvent(Status.PASS,
 								"Validate AGEBEF and ROTH must "
 										+ "not be displayed for PPT age<50.",
-										"AGEBEF and ROTH deferrals are not"
-												+ " displayed.", false);
+								"AGEBEF and ROTH deferrals are not"
+										+ " displayed.", false);
 				}
 				if (Stock.GetParameterValue("IsAgeGtrThnFifty")
 						.equalsIgnoreCase("Yes")) {
@@ -4598,35 +4601,35 @@ public class employeesearchtestcases {
 					if (employeesearch.validateAgecatchUpRule(expDeferralType
 							.get(0))
 							&& employeesearch
-							.validateAgecatchUpRule(expDeferralType
-									.get(1)))
+									.validateAgecatchUpRule(expDeferralType
+											.get(1)))
 						Reporter.logEvent(
 								Status.PASS,
 								"Validate AGEBEF and ROTH must "
 										+ "be displayed for PPT age>=50.",
-										"AGEBEF and ROTH deferrals are" + " displayed.",
-										false);
+								"AGEBEF and ROTH deferrals are" + " displayed.",
+								false);
 					else
 						Reporter.logEvent(Status.FAIL,
 								"Validate AGEBEF and ROTH must "
 										+ "be displayed for PPT age>=50.",
-										"AGEBEF and ROTH deferrals are not"
-												+ " displayed.", true);
+								"AGEBEF and ROTH deferrals are not"
+										+ " displayed.", true);
 					if (employeesearch.maxAmountPercentValidation(
 							expDeferralType.get(0), "Dollar", maxValues.get(0)))
 						Reporter.logEvent(Status.PASS,
 								"Enter more than max limit for "
 										+ expDeferralType.get(0) + " deferral"
 										+ " and validate error message.",
-										"Proper validation message is displayed.",
-										false);
+								"Proper validation message is displayed.",
+								false);
 					else
 						Reporter.logEvent(Status.FAIL,
 								"Enter more than max limit for "
 										+ expDeferralType.get(0) + " deferral"
 										+ " and validate error message.",
-										"Proper validation message is not displayed.",
-										true);
+								"Proper validation message is not displayed.",
+								true);
 
 					if (employeesearch.maxAmountPercentValidation(
 							expDeferralType.get(1), "Dollar", maxValues.get(1)))
@@ -4634,15 +4637,15 @@ public class employeesearchtestcases {
 								"Enter more than max limit for "
 										+ expDeferralType.get(1) + " deferral"
 										+ " and validate error message.",
-										"Proper validation message is displayed.",
-										false);
+								"Proper validation message is displayed.",
+								false);
 					else
 						Reporter.logEvent(Status.FAIL,
 								"Enter more than max limit for "
 										+ expDeferralType.get(1) + " deferral"
 										+ " and validate error message.",
-										"Proper validation message is not displayed.",
-										true);
+								"Proper validation message is not displayed.",
+								true);
 					String confirmationNumber = employeesearch
 							.validateAgeCatchUpCombinedLimit();
 					DB.executeQuery(
@@ -4695,7 +4698,7 @@ public class employeesearchtestcases {
 					"Testcase Description",
 					"The purpose of this test case"
 							+ "is to validate ongoing deferral changes - UI elements.",
-							false);
+					false);
 			Reporter.logEvent(Status.INFO,
 					"Test Data used for iteration" + itr,
 					CommonLib.getIterationDataAsString(testdata), false);
@@ -4749,7 +4752,7 @@ public class employeesearchtestcases {
 							Stock.getTestQuery("getDeferralInfoForAPlan")[1],
 							planNumber);
 					employeesearch
-					.validate_Ongoing_Screen_Elements_And_PageNavigation(resultset);
+							.validate_Ongoing_Screen_Elements_And_PageNavigation(resultset);
 					employeesearch.validate_OngoingDeferral_Pages_Positive();
 				} else {
 					Reporter.logEvent(Status.FAIL,
@@ -4769,14 +4772,14 @@ public class employeesearchtestcases {
 							"Validate message when employee doesn't have any deferrals.",
 							"" + " Proper message is displayed.\nExpected:"
 									+ expMessage + "\nActual:" + actMessage,
-									false);
+							false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Validate message when employee doesn't have any deferrals.",
 							"" + " Proper message is not displayed.\nExpected:"
 									+ expMessage + "\nActual:" + actMessage,
-									true);
+							true);
 			}
 
 		} catch (Exception e) {

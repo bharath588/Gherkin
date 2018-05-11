@@ -280,7 +280,7 @@
 			name="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="6IUEF" />
-				<parameter name="password" value="testing1" />
+				<parameter name="password" value="Testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
@@ -293,7 +293,7 @@
 		<TestCase name="UI_Validations_On_JumpPage">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="6IUEF" />
-				<parameter name="password" value="testing1" />
+				<parameter name="password" value="Testing1" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
@@ -1873,7 +1873,7 @@
 		<TestCase name="DDTC-1332_Info_Message_New_User">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="57XU3" />
-				<parameter name="password" value="testing1" />
+				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
@@ -1903,7 +1903,7 @@
 		<TestCase name="DDTC-1241_Participant_Investments_Tab">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="57XU3" />
-				<parameter name="password" value="testing1" />
+				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="jsamyak55@gmail.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
@@ -2114,7 +2114,7 @@
 		<TestCase name="DDTC-2014_SIT_PSC_Search_Employee_based_on_User_access">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="5MLPR" />
-				<parameter name="password" value="testing1" />
+				<parameter name="password" value="Testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="dreamCar" value="testr" />

@@ -90,7 +90,7 @@ public class logintestcases {
 					Stock.GetParameterValue("username"),
 					Stock.GetParameterValue("password") });
 			// Thread.sleep(10000);
-			Web.waitForPageToLoad(Web.getDriver());
+			//Web.waitForPageToLoad(Web.getDriver());
 			// Step-2 : Check if the user is on the login page
 			if ((!Web.isWebElementDisplayed(login, "LOGIN FRAME"))) {
 				Reporter.logEvent(Status.PASS,

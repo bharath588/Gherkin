@@ -260,7 +260,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement workAreaCode;
 	@FindBy(id = "workPhoneNumber")
 	private WebElement workPhoneNumber;
-	@FindBy(xpath = "//button[text()='Save']")
+	@FindBy(xpath = "//input[@name='ESC_BASIC_UPDATE_SAVE']")
 	private WebElement save;
 	@FindBy(xpath = "//input[@value='Cancel']")
 	private WebElement cancel;
@@ -1043,7 +1043,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private String basicInfoSection = ".//*[@id='basicInfo']";
 	private String contactInfoSection = ".//*[@id='contactInfo']";
 	private String employmentInfoSection = ".//*[@id='employmentInfo']";
-	private String enrollAndEligSection = ".//*[@id='enrollmentAndEligibilityInfo']";
+	private String enrollAndEligSection = ".//*[@id='enrollmentAndEligibilityInfo_content']/table";
 	private String payCheckContriSection = ".//*[@id='paycheckContributionInfo']";
 	private String feesDataForThreeMonth = ".//*[@id='feeDashboard']//thead/following-sibling::tbody";
 	private String empIdOnLoanDetail = ".//span[.='Employee ID']";
@@ -1111,7 +1111,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 	public EmployeeSearch() {
 		Web.getDriver().manage().timeouts()
-				.setScriptTimeout(30, TimeUnit.SECONDS);
+		.setScriptTimeout(30, TimeUnit.SECONDS);
 		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver());
 		NextGenPageFactory.initWebElements(Web.getDriver(), this);
 		PageFactory.initElements(Web.getDriver(), this);
@@ -1131,8 +1131,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			HomePage homepage = (HomePage) this.parent;
 			// LoginPage login = new LoginPage();
 			new HomePage(new LoginPage(), false, new String[] {
-					Stock.GetParameterValue("username"),
-					Stock.GetParameterValue("password") }).get();
+				Stock.GetParameterValue("username"),
+				Stock.GetParameterValue("password") }).get();
 			Reporter.logEvent(Status.PASS,
 					"Check if the user has landed on homepage",
 					"The user has landed on homepage", true);
@@ -1316,6 +1316,46 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				true);
 		Web.getDriver().switchTo().defaultContent();
 		// dismissErrorBox();
+	}
+
+	/**
+	 * This method used to search the employee by SSN-All Plans
+	 * 
+	 * @param SSN
+	 * @throws InterruptedException
+	 */
+	public void searchEmployeeBySSNAllPlans(String[] SSN)
+			throws InterruptedException {
+		if (SSN.length > 1) {
+			for (int i = 0; i<SSN.length;) {
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(employeeSearchFrame);
+				Web.isWebElementDisplayed(drpdwnSearchEmployee, true);
+				select = new Select(drpdwnSearchEmployee);
+				if (Stock.getConfigParam("DataType").equals("NonApple"))
+					select.selectByVisibleText("SSN - all plans");
+				else
+					select.selectByVisibleText("SSN");
+				Web.waitForElement(txtSearchbox);
+				Web.setTextToTextBox(txtSearchbox, SSN[i]);
+				if (Web.isWebElementDisplayed(btnGoEmployeeSearch, true))
+					Web.clickOnElement(btnGoEmployeeSearch);
+				Web.waitForElements(fNLNMILink);
+				if (!Web.isWebElementsDisplayed(
+						this.getWebElementasList("EmpLastNameLink"), true)&&i++<SSN.length) {
+					searchEmployeeBySSNAllPlans(SSN[i+1]);
+					i++;
+				}
+				else{
+					Web.getDriver().switchTo().defaultContent();
+					break;
+				}
+
+				// dismissErrorBox();
+			}
+		} else {
+			this.searchEmployeeBySSNAllPlans(SSN[0]);
+		}
 	}
 
 	/**
@@ -1531,7 +1571,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 */
 
 	public String searchPlan(String planNumber) throws SQLException,
-			InterruptedException {
+	InterruptedException {
 		if (Web.isWebElementDisplayed(planDropdown)) {
 			planNumber = selectFromDropdown(planNumber);
 			Thread.sleep(3000);
@@ -1967,15 +2007,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Verify the sorting on search results for "
 							+ sortOption.toUpperCase(),
-					"The search results are sorted correctly for "
-							+ sortOption.toUpperCase() + " column", true);
+							"The search results are sorted correctly for "
+									+ sortOption.toUpperCase() + " column", true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify the sorting on search results for "
 							+ sortOption.toUpperCase(),
-					"The search results are not sorted correctly for "
-							+ sortOption.toUpperCase() + " column", true);
+							"The search results are not sorted correctly for "
+									+ sortOption.toUpperCase() + " column", true);
 		}
 		Web.getDriver().switchTo().defaultContent();
 		return true;
@@ -2026,19 +2066,19 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					searchText)
 					|| StringUtils.containsIgnoreCase(
 							searchResultsFirstName.getText(), searchText)
-					|| StringUtils.containsIgnoreCase(
-							searchResultsMI.getText(), searchText)
-					|| StringUtils.containsIgnoreCase(linkSSN.getText(),
-							searchText)
-					|| StringUtils.containsIgnoreCase(
-							this.getWebElement("Link_EXT").getText(),
-							searchText)
-					|| StringUtils.containsIgnoreCase(linkEMP_ID.getText(),
-							searchText)
-					|| StringUtils.containsIgnoreCase(linkPART_ID.getText(),
-							searchText)
-					|| StringUtils.containsIgnoreCase(linkDivision.getText(),
-							searchText)) {
+							|| StringUtils.containsIgnoreCase(
+									searchResultsMI.getText(), searchText)
+									|| StringUtils.containsIgnoreCase(linkSSN.getText(),
+											searchText)
+											|| StringUtils.containsIgnoreCase(
+													this.getWebElement("Link_EXT").getText(),
+													searchText)
+													|| StringUtils.containsIgnoreCase(linkEMP_ID.getText(),
+															searchText)
+															|| StringUtils.containsIgnoreCase(linkPART_ID.getText(),
+																	searchText)
+																	|| StringUtils.containsIgnoreCase(linkDivision.getText(),
+																			searchText)) {
 				Reporter.logEvent(Status.PASS,
 						"Check for the filter criteria on the search results",
 						"The results are displayed according to the filter text : "
@@ -2426,9 +2466,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				.findElement(By.xpath("//font[contains(text(),'" + ssn + "')]"))
 				.getText().contains(ssn)
 				&& Web.getDriver()
-						.findElement(
-								By.xpath("//font[contains(text(),'" + empName
-										+ "')]")).getText().contains(empName)) {
+				.findElement(
+						By.xpath("//font[contains(text(),'" + empName
+								+ "')]")).getText().contains(empName)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Match employee name and ssn on employment information modal window with Employee overview page.",
@@ -2469,7 +2509,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			if (expEmployeeID.getText().equals(updatedEmpID)
 					&& expHireDate.getText().equals(
 							dateFormat.format(calendar.getTime()))
-					&& expOfficer.getText().equals(updatedOfficer)) {
+							&& expOfficer.getText().equals(updatedOfficer)) {
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify Hire date,emp id and officer fields are updated.",
@@ -2552,7 +2592,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"error message displayed:" + processingError.getText(),
 					""
 							+ "It may be due to bad data issue.Please check manually with other data.",
-					true);
+							true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeEditEmpntInfoWindow);
@@ -2613,13 +2653,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if (expLabels2.equals(actLabels)) {
 			Reporter.logEvent(Status.PASS,
 					"Verify labels on contact info section:'" + expLabels2
-							+ "'", "actual labels displayed as:'" + actLabels
-							+ "'.", false);
+					+ "'", "actual labels displayed as:'" + actLabels
+					+ "'.", false);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify labels on contact info section:'" + expLabels2
-							+ "'", "actual labels displayed as:'" + actLabels
-							+ "'.", true);
+					+ "'", "actual labels displayed as:'" + actLabels
+					+ "'.", true);
 		}
 		Web.getDriver().switchTo().defaultContent();
 	}
@@ -2750,7 +2790,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"error message displayed:" + processingError.getText(),
 					""
 							+ "It may be due to bad data issue.Please check manually with other data.",
-					true);
+							true);
 			Web.clickOnElement(closeEmpContactModalWindow);
 			CommonLib.waitForProgressBar();
 		}
@@ -2831,11 +2871,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Navigate to Employee overview page of employee:'"
 							+ empNameHeader.getText() + "'",
-					"Employee overview page is displayed.", false);
+							"Employee overview page is displayed.", false);
 		} else {
 			Reporter.logEvent(Status.FAIL,
-					"Navigate to Employee overview page of employee:'"
-							+ empNameHeader.getText() + "'",
+					"Navigate to Employee overview page of employee",
 					"Employee overview page is not displayed.", true);
 		}
 		Web.getDriver().switchTo().defaultContent();
@@ -2991,15 +3030,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Verify if recently viewed employee is same as of employee overview page.",
 						"Recently viewed employee:'" + recentEmp
-								+ "' and overview employee:" + overviewEmp,
+						+ "' and overview employee:" + overviewEmp,
 						false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify if recently viewed employee is same as of employee overview page.",
 						"Recently viewed employee:'" + recentEmp
-								+ "' and overview employee:'" + overviewEmp
-								+ "'", true);
+						+ "' and overview employee:'" + overviewEmp
+						+ "'", true);
 			}
 			Web.getDriver().switchTo().defaultContent();
 		} else {
@@ -3074,16 +3113,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(
 						Status.PASS,
 						"Verify salary section title is:'" + expSalarySecTitle
-								+ "' and edit link is displayed next to title.",
+						+ "' and edit link is displayed next to title.",
 						"Salary section title is:'" + actSalarySectionTitle
-								+ "' and edit link is displayed.", false);
+						+ "' and edit link is displayed.", false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify salary section title is:'" + expSalarySecTitle
-								+ "' and edit link is displayed next to title.",
+						+ "' and edit link is displayed next to title.",
 						"Salary section title is:'" + actSalarySectionTitle
-								+ "' and edit link is not displayed.", true);
+						+ "' and edit link is not displayed.", true);
 			}
 			for (String expHeader : expSalaryHeaders) {
 				if (salaryHeadesrUI.contains(expHeader)) {
@@ -3121,7 +3160,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.FAIL,
 					"Check if unexpected error message is displayed.if yes,it may be due to data issue"
 							+ "or may be issue.kindly check manually once.",
-					"Unexpected error is displayed.", true);
+							"Unexpected error is displayed.", true);
 			HomePage homePage = new HomePage();
 			Web.getDriver().switchTo().defaultContent();
 			homePage.logoutPSC();
@@ -3152,6 +3191,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.waitForPageToLoad(Web.getDriver());
 			CommonLib.waitForProgressBar();
 			Web.getDriver().switchTo().defaultContent();
+			Thread.sleep(3000);
 			queryResultSet = DB.executeQuery(
 					Stock.getTestQuery("getSalary")[0],
 					Stock.getTestQuery("getSalary")[1], individual[1]);
@@ -3290,48 +3330,49 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		System.out.println(employmentDetailsAfterRehiring);
 		Reporter.logEvent(
 				Status.INFO,
-				"Employee details after rehire:","EMP_TERMDATE:"+
-				employmentDetailsAfterRehiring.get("EMP_TERMDATE")
+				"Employee details after rehire:",
+				"EMP_TERMDATE:"
+						+ employmentDetailsAfterRehiring.get("EMP_TERMDATE")
 						+ "\nELIGIBILITY_IND:"
 						+ employmentDetailsAfterRehiring.get("ELIGIBILITY_IND")
 						+ "\nHIRE_DATE:"
 						+ employmentDetailsAfterRehiring.get("HIRE_DATE")
 						+ "\nPARTICIPATION_DATE_SOURCE:"
 						+ employmentDetailsAfterRehiring
-								.get("PARTICIPATION_DATE_SOURCE")
+						.get("PARTICIPATION_DATE_SOURCE")
 						+ "\nELIGIBILITY_DATE:"
 						+ employmentDetailsAfterRehiring
-								.get("ELIGIBILITY_DATE"), false);
+						.get("ELIGIBILITY_DATE"), false);
 
 		if (employmentDetailsAfterRehiring.get("EMP_TERMDATE") == null
 				&& !employmentDetailsBeforeRehiring.get("HIRE_DATE").equals(
 						employmentDetailsAfterRehiring.get("HIRE_DATE"))
-				&& !employmentDetailsBeforeRehiring.get("ELIGIBILITY_IND")
+						&& !employmentDetailsBeforeRehiring.get("ELIGIBILITY_IND")
 						.equals(employmentDetailsAfterRehiring
 								.get("ELIGIBILITY_IND"))
-				&& employmentDetailsBeforeRehiring
-						.get("PARTICIPATION_DATE")
-						.equals(employmentDetailsAfterRehiring.get("HIRE_DATE"))
-				&& !employmentDetailsBeforeRehiring.get(
-						"PARTICIPATION_DATA_SOURCE").equals(
-						employmentDetailsAfterRehiring
-								.get("PARTICIPATION_DATE_SOURCE"))
-				&& employmentDetailsBeforeRehiring.get("ELIGIBILITY_DATE")
-						.equals(employmentDetailsAfterRehiring
-								.get("ELIGIBILITY_DATE"))) {
+								&& employmentDetailsBeforeRehiring
+								.get("PARTICIPATION_DATE")
+								.equals(employmentDetailsAfterRehiring.get("HIRE_DATE"))
+								&& !employmentDetailsBeforeRehiring.get(
+										"PARTICIPATION_DATA_SOURCE").equals(
+												employmentDetailsAfterRehiring
+												.get("PARTICIPATION_DATE_SOURCE"))
+												&& employmentDetailsBeforeRehiring.get("ELIGIBILITY_DATE")
+												.equals(employmentDetailsAfterRehiring
+														.get("ELIGIBILITY_DATE"))) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Compare the changes after rehiring employee as below:<br>Term Date=null"
 							+ "<br>Hire Date=new Hire date<br>Eligibility code remains same<br>Participation date changes to Rehire date"
 							+ "<br>Participation datesource changes<br>Eligibility date does not changed.",
-					"All the said changes are observed", false);
+							"All the said changes are observed", false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Compare the changes after rehiring employee as below:<br>Term Date=null"
 							+ "<br>Hire Date=new Hire date<br>Eligibility code remains same<br>Participation date changes to Rehire date"
 							+ "<br>Participation datesource changes<br>Eligibility date does not changed.",
-					"All the said changes are not observed", true);
+							"All the said changes are not observed", true);
 		}
 
 	}
@@ -3354,7 +3395,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(upDateEmploymentHeader);
 		if (upDateEmploymentHeader.isDisplayed()) {
-			 Web.clickOnElement(rehireempBtn);
+			Web.clickOnElement(rehireempBtn);
 			String termDate_1 = employmentDetailsBeforeRehiring
 					.get("EMP_TERMDATE");
 			DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
@@ -3394,7 +3435,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"error message displayed:" + processingError.getText(),
 						""
 								+ "It may be due to bad data issue.Please check manually with other data.",
-						true);
+								true);
 				Web.getDriver().switchTo().defaultContent();
 				Web.getDriver().switchTo().frame(employeeSearchFrame);
 				Web.clickOnElement(closeEditEmpntInfoWindow);
@@ -3578,12 +3619,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Verify after clicking on print link,a "
 								+ "print preview page is displayed.",
-						"Print preview page is displayed.", false);
+								"Print preview page is displayed.", false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verify after clicking on print link,a "
 								+ "print preview page is displayed.",
-						"Print preview page is not displayed.", true);
+								"Print preview page is not displayed.", true);
 			}
 			Web.getDriver().close();
 			Web.getDriver().switchTo().window(parentWindow);
@@ -3724,15 +3765,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Verify basic info categories as below on employee detail page:<br>"
 							+ "Account status,SSN,Participant ID,Birth date,Death date,Gender,Marital status,Language,PIN effective date,Account type",
-					"All mentioned categories are displayed for employee details.",
-					false);
+							"All mentioned categories are displayed for employee details.",
+							false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify basic info categories as below on employee detail page:<br>"
 							+ "Account status,SSN,Participant ID,Birth date,Death date,Gender,Marital status,Language,PIN effective date,Account type",
-					"All mentioned categories are not displayed for employee details.",
-					true);
+							"All mentioned categories are not displayed for employee details.",
+							true);
 		}
 
 		String accounttype = basicInfoMapBeforeChanges.get("Account type");
@@ -3745,7 +3786,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							+ "<br>for QDRO participant,Account type is 'QUALIFIED DOMESTIC RELATIONS AGREEMENT'"
 							+ "<br>for Normal participant,'NORMAL PARTICIPANT AGREEMENT'"
 							+ "<br>for Takeover/Transfer employee,'TAKEOVER/TRANSFER'.",
-					"Account type is:" + accounttype, false);
+							"Account type is:" + accounttype, false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
@@ -3753,7 +3794,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							+ "<br>for QDRO participant,Account type is 'QUALIFIED DOMESTIC RELATIONS AGREEMENT'"
 							+ "<br>for Normal participant,'NORMAL PARTICIPANT AGREEMENT'"
 							+ "<br>for Takeover/Transfer employee,'TAKEOVER/TRANSFER'.",
-					"Account type is not displayed accordingly.", true);
+							"Account type is not displayed accordingly.", true);
 		}
 		// basicInfoMapBeforeChanges.clear();
 		Web.getDriver().switchTo().defaultContent();
@@ -3768,6 +3809,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	}
 
 	public void verifyColumnsOfPlanListsection() {
+		int displayedPlanCount = 0;
+		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.waitForElement(overviewLabel);
 		boolean isDisplayed = false;
@@ -3785,14 +3828,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Either of the columns are not displayed.", true);
 		}
 		for (WebElement planNumber : planNumbersUI) {
-			if (planNumberList.contains(planNumber.getText().trim())) {
-				isDisplayed = true;
-			} else {
-				isDisplayed = false;
-				break;
+			if (planNumber.getText().trim().length() > 0
+					&& planNumberList.contains(planNumber.getText().trim())) {
+				displayedPlanCount++;
 			}
+
 		}
-		if (isDisplayed)
+		System.out.println("displayedPlanCount " + displayedPlanCount);
+		if (displayedPlanCount <= planNumberList.size())
 			Reporter.logEvent(
 					Status.PASS,
 					"Chekc all the plans are displayed for the employeee on overview page.",
@@ -3853,7 +3896,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.INFO,
 					"Verify total balance for selected employee '"
 							+ empName.getText() + "'.", "Total balacne is :'"
-							+ totalBalance.get(1).getText() + "'.", false);
+									+ totalBalance.get(1).getText() + "'.", false);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"Verify Total Balance section is displayed.",
@@ -3884,13 +3927,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Verify balance displayed on overview page under<br>"
 									+ "Balance column and balance displayed when clicking on View button, both should match.",
-							"" + "Both balance matches.", false);
+									"" + "Both balance matches.", false);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
 							"Verify balance displayed on overview page under<br>"
 									+ "Balance column and balance displayed when clicking on View button, both should match.",
-							"" + "Both balance do not match.", true);
+									"" + "Both balance do not match.", true);
 				}
 				if (moneySource.isDisplayed() && investment.isDisplayed()) {
 					String isInvestmentcollapsed = investment.findElement(
@@ -3926,28 +3969,28 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							&& moneySourceHeaders.contains("Vested Percent:")
 							&& moneySourceHeaders.contains("Vested Balance:")
 							&& moneySource.getText().trim()
-									.equals("Money Sources")
+							.equals("Money Sources")
 							&& expandCollapseMoneySource.isDisplayed()) {
 						Reporter.logEvent(
 								Status.PASS,
 								"1.Verify header with label Money sources."
 										+ "<br>2.Expand and collapse icon is displayed."
 										+ "<br>3.Labels Description,Balance,Vested Percent and Vested Balance are displayed.",
-								""
-										+ "1.header with label money source is displayed."
-										+ "<br>2.Expand and collapse icon is displayed."
-										+ "<br>3.Labels Description,Balance,Vested Percent,Vested Balance are displayed.",
-								false);
+										""
+												+ "1.header with label money source is displayed."
+												+ "<br>2.Expand and collapse icon is displayed."
+												+ "<br>3.Labels Description,Balance,Vested Percent,Vested Balance are displayed.",
+												false);
 					} else {
 						Reporter.logEvent(
 								Status.PASS,
 								"1.Verify header with label Money sources."
 										+ "<br>2.Expand and collapse icon is displayed."
 										+ "<br>3.Labels Description,Balance,Vested Percent and Vested Balance are displayed.",
-								"Either label Money source is not displayed"
-										+ "<br>or expand/collapse icon is not displayed"
-										+ "<br>or labels Description,Balance,Vested Balance,Vested Percent are not displayed.",
-								true);
+										"Either label Money source is not displayed"
+												+ "<br>or expand/collapse icon is not displayed"
+												+ "<br>or labels Description,Balance,Vested Balance,Vested Percent are not displayed.",
+												true);
 					}
 					if (totalForMoneySources.get(2).getText().equals("Total")) {
 						Reporter.logEvent(
@@ -3960,13 +4003,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Check for Balance.",
 								"Balance is:"
 										+ totalForMoneySources.get(3).getText(),
-								false);
+										false);
 						Reporter.logEvent(
 								Status.INFO,
 								"Check for Vested Balance.",
 								"Vested Balance is:"
 										+ totalForMoneySources.get(4).getText(),
-								false);
+										false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
@@ -4003,7 +4046,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			System.out.println("Investment headers:" + investmentHeadersAct);
 			if (investmentHeadersAct.contains("Investment option")
 					&& investmentHeadersAct
-							.contains("Unit/Shares effective date")
+					.contains("Unit/Shares effective date")
 					&& investmentHeadersAct.contains("Unit/Share price")
 					&& investmentHeadersAct.contains("Unit/Shares owned")
 					&& investmentHeadersAct.contains("Balance")
@@ -4014,22 +4057,22 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"1.Verify header with label 'Investments'."
 								+ "<br>2.Expand and collapse icon is displayed."
 								+ "<br>3.Labels Investment option,Unit/Shares effective date,Unit/Share price,Unit/Shares owned,Balance are displayed.",
-						""
-								+ "1.header with label Investments is displayed."
-								+ "<br>2.Expand and collapse icon is displayed."
-								+ "<br>3.Mentioned labels are displayed.",
-						false);
+								""
+										+ "1.header with label Investments is displayed."
+										+ "<br>2.Expand and collapse icon is displayed."
+										+ "<br>3.Mentioned labels are displayed.",
+										false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"1.Verify header with label 'Investments'."
 								+ "<br>2.Expand and collapse icon is displayed."
 								+ "<br>3.Labels Investment option,Unit/Shares effective date,Unit/Share price,Unit/Shares owned,Balance are displayed.",
-						"either"
-								+ "label Investment is not displayed"
-								+ "<br>or expand/collapse icon is not displayed."
-								+ "<br>or mentioned labels are not displayed.",
-						true);
+								"either"
+										+ "label Investment is not displayed"
+										+ "<br>or expand/collapse icon is not displayed."
+										+ "<br>or mentioned labels are not displayed.",
+										true);
 			}
 			if (totalForInvetsment.get(0).getText().equals("Total")) {
 				Reporter.logEvent(Status.PASS,
@@ -4151,7 +4194,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Verify SSN and Employee Name on modal window.",
 						"Employee name:'" + name + "' and SSN:'" + ssn
-								+ "' are displayed correctly.", false);
+						+ "' are displayed correctly.", false);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verify SSN and Employee Name on modal window.",
@@ -4183,7 +4226,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Verify fields on Basic info modal window.",
 						"All Expected Fields '" + actModalInfoLabels
-								+ "' are displayed on modal window.", false);
+						+ "' are displayed on modal window.", false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
@@ -4197,7 +4240,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"error message displayed:" + processingError.getText(),
 					""
 							+ "It may be due to bad data issue.Please check manually with other data.",
-					true);
+							true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeIconBasicInfoEditWindow);
@@ -4238,14 +4281,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			selMaritalStatus.selectByVisibleText("MARRIED");
 		else
 			selMaritalStatus.selectByVisibleText("MARRIED");
-		String selectedMstatus = checkMaritalStatus.getText();
+		// String selectedMstatus = checkMaritalStatus.getText();
 		// update Gender
 		Select selectGender = new Select(gender);
 		if (checkGender.getText().equals("FEMALE"))
 			selectGender.selectByVisibleText("MALE");
 		else
 			selectGender.selectByVisibleText("FEMALE");
-		String selectedGender = checkGender.getText();
+		// String selectedGender = checkGender.getText();
 		// update Language
 		Select selLanguage = new Select(language);
 		int value = Integer.parseInt(checkLanguage.getAttribute("value"));
@@ -4254,7 +4297,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		} else {
 			selLanguage.selectByVisibleText("ENGLISH");
 		}
-		String selectedLanguage = checkLanguage.getText();
+		// String selectedLanguage = checkLanguage.getText();
 		Web.clickOnElement(outsideAssets);
 		try {
 			Web.clickOnElement(save);
@@ -4262,23 +4305,42 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			CommonLib.waitForProgressBar();
-			if (selectedBirthDate.equals(updatedBirthDate.getText().trim())
-					&& selectedGender.equals(updatedGender.getText().trim())
-					&& selectedLanguage
-							.equals(updatedLanguage.getText().trim())
-					&& selectedMstatus.equals(updatedMaritalStatus.getText()
-							.trim())) {
+
+			Web.clickOnElement(basicInfoEdit);
+			Thread.sleep(3000);
+			Web.waitForElement(basicInfoEditFrame);
+			Web.getDriver().switchTo().frame(basicInfoEditFrame);
+			String selectedMstatus = checkMaritalStatus.getText();
+			String selectedGender = checkGender.getText();
+			String selectedLanguage = checkLanguage.getText();
+			Web.clickOnElement(outsideAssets);
+			Web.clickOnElement(save);
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(employeeSearchFrame);
+			CommonLib.waitForProgressBar();
+			System.out.println(updatedBirthDate.getText().trim());
+			System.out.println(updatedGender.getText().trim());
+			System.out.println(updatedLanguage.getText().trim());
+			System.out.println(updatedMaritalStatus.getText().trim());
+			if (selectedBirthDate.equalsIgnoreCase(updatedBirthDate.getText()
+					.trim())
+					&& selectedGender.equalsIgnoreCase(updatedGender.getText()
+							.trim())
+							&& selectedLanguage.equalsIgnoreCase(updatedLanguage
+									.getText().trim())
+									&& selectedMstatus.equalsIgnoreCase(updatedMaritalStatus
+											.getText().trim())) {
 				Reporter.logEvent(
 						Status.PASS,
 						"Update Gender,Marital Status,Birth date,Language and check radio button"
 								+ "'Dont know if employee has outside assets' and save.Verify the updated changes.",
-						"Changes are reflected properly.", false);
+								"Changes are reflected properly.", false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Update Gender,Marital Status,Birth date,Language and check radio button"
 								+ "'Dont know if employee has outside assets' and save.Verify the updated changes.",
-						"Changes are not reflected properly.", true);
+								"Changes are not reflected properly.", true);
 			}
 
 			Thread.sleep(3000);
@@ -4294,9 +4356,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 
 			// update Language
 			selLanguage.selectByVisibleText(language_.toUpperCase());
-
-			Web.clickOnElement(outsideAssets);
-			Web.clickOnElement(save);
+			if (Web.isWebElementDisplayed(outsideAssets, false))
+				Web.clickOnElement(outsideAssets);
+			Web.actionsClickOnElement(save);
 			Web.getDriver().switchTo().defaultContent();
 			this.switchToFrame();
 			CommonLib.waitForProgressBar();
@@ -4307,7 +4369,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"error message displayed:" + processingError.getText(),
 					""
 							+ "It may be due to bad data issue.Please check manually with other data.",
-					true);
+							true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeIconBasicInfoEditWindow);
@@ -4325,6 +4387,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				+ username);
 		return queryResultSet;
 	}
+
+	public ResultSet getEmployeesForUser(String[] queryName, String username){
+		queryResultSet = DB.executeQuery(queryName[0], queryName[1], "K_"
+				+ username,"K_"
+						+ username);
+		return queryResultSet;
+	}
+
 
 	/*
 	 * This method checks if Subset section is displayed on employee overview
@@ -4361,25 +4431,30 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"verify all the headers of employee subset section.<br>"
 							+ expectedHeaders, "All headers are displayed.<br>"
-							+ "" + actualHeaders, false);
+									+ "" + actualHeaders, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"verify all the headers of employee subset section.<br>"
 							+ expectedHeaders,
-					"All headers are not displayed.<br>" + "" + actualHeaders,
-					true);
+							"All headers are not displayed.<br>" + "" + actualHeaders,
+							true);
 	}
 
 	/*
 	 * This method returns SSN from resultset
 	 */
-	public String getEmployeeSSNFromResultSet(ResultSet resultset)
+	public String[] getEmployeeSSNFromResultSet(ResultSet resultset)
 			throws SQLException, InterruptedException {
-		String ssn = "";
+		List<String> Ssn = new ArrayList<String>();
+		Ssn.clear();
+		String pattern = "\\d{9}";		
 		while (resultset.next()) {
-			ssn = resultset.getString("SSN");
-			break;
+			if(resultset.getString("SSN").matches(pattern))
+				Ssn.add(resultset.getString("SSN"));
+			//break;
 		}
+		String[] ssn = new String[Ssn.size()];
+		ssn = Ssn.toArray(ssn);
 		return ssn;
 	}
 
@@ -4387,35 +4462,36 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	 * This method verifies subset History section headers
 	 */
 	public void verifySubsetHistorySection() throws Exception {
-		boolean isHistHeaderDisplayed = false;
+		int numberOfHeaders = 0;
 		List<String> expectedHeaders = Arrays.asList(Stock.GetParameterValue(
 				"expectedHeadersHistory").split(","));
 		List<String> actualHeaders = new ArrayList<String>();
-
+		String[] actualHead = new String[actualHeaders.size()];
+		
 		if (subSetHistoryLink.isDisplayed()) {
 			Web.clickOnElement(subSetHistoryLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(empSubSetHistFrame);
 			Web.getDriver().switchTo().frame(empSubSetHistFrame);
+			Thread.sleep(2000);
 			for (WebElement historyHeader : subSetHistoryHeaders) {
 				actualHeaders.add(historyHeader.getText());
 			}
+			actualHead = actualHeaders.toArray(actualHead);
+			Arrays.sort(actualHead);
 			for (String header : expectedHeaders) {
-				if (actualHeaders.contains(header)) {
-					isHistHeaderDisplayed = true;
-				} else {
-					isHistHeaderDisplayed = false;
-					break;
-				}
+				if (CommonLib.binarySearch(actualHead, header, 0, actualHead.length)>0) {
+					numberOfHeaders++;
+				} 
 			}
-			if (isHistHeaderDisplayed)
+			if (numberOfHeaders == expectedHeaders.size())
 				Reporter.logEvent(Status.PASS, "Verify subset history headers."
 						+ expectedHeaders, "headers are displayed."
-						+ actualHeaders, false);
+								+ actualHeaders, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify subset history headers."
 						+ expectedHeaders, "headers are displayed."
-						+ actualHeaders, true);
+								+ actualHeaders, true);
 		}
 	}
 
@@ -4494,22 +4570,22 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		if (recentlyViewedEmployee.get(0).getText()
 				.equals(recentlyViewedAfterSwitch)
 				&& recentlyViewedEmployee.get(1).getText()
-						.equals(recentlyViewedBeforeSwitch)) {
+				.equals(recentlyViewedBeforeSwitch)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Verify recently viewed employee list after adding employees from"
 							+ "different plan to Recently viewed list by searching employee and navigating to employee overview page.",
-					""
-							+ "employee from different plan is listed on top and previoulsy visited employee form other plan"
-							+ " listed second.", false);
+							""
+									+ "employee from different plan is listed on top and previoulsy visited employee form other plan"
+									+ " listed second.", false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify recently viewed employee list after adding employees from"
 							+ "different plan to Recently viewed list by searching employee and navigating to employee overview page.",
-					""
-							+ "Recently viewed list is not ordered based on recently viewed employees order.",
-					true);
+							""
+									+ "Recently viewed list is not ordered based on recently viewed employees order.",
+									true);
 		}
 		Web.clickOnElement(recentlyViewedEmployee.get(1));
 		CommonLib.waitForProgressBar();
@@ -4519,25 +4595,25 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		if (empNameHeader.getText().equals(recentlyViewedBeforeSwitch)
 				&& selectedPlanHeader.getText().replace(" - ", "").trim()
-						.contains(planBeforeSwitch)
+				.contains(planBeforeSwitch)
 				&& empSSN.getText().substring(7).equals(ssnbeforeSwitch)
 				&& contactName.getText().toUpperCase()
-						.equals(recentlyViewedBeforeSwitch)
+				.equals(recentlyViewedBeforeSwitch)
 				&& ssnInBasicInfoSection.getText().contains(ssnbeforeSwitch)) {
 			Reporter.logEvent(
 					Status.PASS,
 					"Switch to another plan employee from recently viewed list"
 							+ "and validate employee is switched and respective data is displayed.",
-					"Employee is switched and respective data is displayed.",
-					false);
+							"Employee is switched and respective data is displayed.",
+							false);
 			Web.getDriver().switchTo().defaultContent();
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Switch to another plan employee from recently viewed list"
 							+ "and validate employee is switched and respective data is displayed.",
-					"Employee is not switched or respective data is not displayed.",
-					true);
+							"Employee is not switched or respective data is not displayed.",
+							true);
 		}
 
 	}
@@ -4600,7 +4676,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Search for a participant with no past 3 months fees data."
 								+ " and validate following message is displayed:"
 								+ expText, "Message displayed:" + actText,
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -4655,7 +4731,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				if (eligibilityCodeOverview.getText().trim()
 						.equals(updatedEliCode)
 						&& inEligibilityCodeOverview.getText().trim()
-								.equals(updatedInEliCode)) {
+						.equals(updatedInEliCode)) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Edit Enrollment and Eligibility section and update eligibility code and reason code accordingly and save.",
@@ -4694,19 +4770,19 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						.trim())
 						&& !updatedInEliCode.equals(inEligibilityCodeOverview
 								.getText().trim())
-						&& !partDateInString.equals(partDateOverview.getText()
-								.trim())) {
+								&& !partDateInString.equals(partDateOverview.getText()
+										.trim())) {
 					Reporter.logEvent(
 							Status.PASS,
 							"Again click on Edit link and change eligibility code,Ineligibility code and participation date"
 									+ " and click on cancel.",
-							"Changes are not saved.", false);
+									"Changes are not saved.", false);
 				} else {
 					Reporter.logEvent(
 							Status.FAIL,
 							"Again click on Edit link and change eligibility code,Ineligibility code and participation date"
 									+ " and click on cancel.",
-							"Changes are saved.", true);
+									"Changes are saved.", true);
 				}
 			} catch (Exception e) {
 				Reporter.logEvent(
@@ -4714,7 +4790,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Some error occurred.either Processing error or blank screen.",
 						""
 								+ "this may be due to bad data.kindly check manually once.",
-						true);
+								true);
 				CommonLib.switchToFrame(employeeSearchFrame);
 				Web.clickOnElement(enrollEligCloseWindow);
 			}
@@ -4794,15 +4870,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								Status.PASS,
 								"User should be able to view balance by money source"
 										+ " and balance by Investments.",
-								"Money source and Investment sections are displayed.",
-								false);
+										"Money source and Investment sections are displayed.",
+										false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"User should be able to view balance by money source"
 										+ " and balance by Investments.",
-								"Money source and Investment sections are displayed.",
-								true);
+										"Money source and Investment sections are displayed.",
+										true);
 					}
 
 					if (bal.equals(balanceOnViewAccountPage.getText())) {
@@ -4810,17 +4886,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								Status.PASS,
 								"Validate the balance displayed on overview page is same as displayed "
 										+ "on Account details page.",
-								"Total Balance value from Account Balance page matches Total "
-										+ "balance as of {current date} on Overview page.",
-								true);
+										"Total Balance value from Account Balance page matches Total "
+												+ "balance as of {current date} on Overview page.",
+												true);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate the balance displayed on overview page is same as displayed "
 										+ "on Account details page.",
-								"Total Balance value from Account Balance page does not matche total "
-										+ "balance as of {current date} on Overview page.",
-								true);
+										"Total Balance value from Account Balance page does not matche total "
+												+ "balance as of {current date} on Overview page.",
+												true);
 					}
 					if (!expandCollapseMoneySource.getAttribute("class")
 							.contains("down")) {
@@ -4836,16 +4912,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								Status.PASS,
 								"Validate the note text down on Acount balance page."
 										+ "It should be '* All dates and times are in Mountain Time unless otherwise noted.'",
-								"" + "Actual text displayed is:"
-										+ disclaimerText.getText().trim(),
-								false);
+										"" + "Actual text displayed is:"
+												+ disclaimerText.getText().trim(),
+												false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate the note text down on Acount balance page."
 										+ "It should be '* All dates and times are in Mountain Time unless otherwise noted.'",
-								"" + "Actual text displayed is:"
-										+ disclaimerText.getText().trim(), true);
+										"" + "Actual text displayed is:"
+												+ disclaimerText.getText().trim(), true);
 					}
 					if (moneyTypeLinks.size() > 0) {
 						for (WebElement moneyTypeLink : moneyTypeLinks) {
@@ -4881,7 +4957,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Validate money type and investment type(if applicable) are hyperlinks.",
 								""
 										+ "Money type and investment type are found to be as hyperlinks.",
-								false);
+										false);
 
 					else {
 						Reporter.logEvent(
@@ -4889,7 +4965,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Validate money type and investment type(if applicable) are hyperlinks.",
 								""
 										+ "Money type and investment type are not found to be as hyperlinks.",
-								true);
+										true);
 					}
 					isBalance = true;
 					break;
@@ -4915,15 +4991,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Click on one of the investment type and check if investment options for selected "
 								+ "money type is displayed.",
-						"Investment options for selected money type is displayed.",
-						false);
+								"Investment options for selected money type is displayed.",
+								false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on one of the investment type and check if investment options for selected "
 								+ "money type is displayed.",
-						"Investment options for selected money type is not displayed.",
-						true);
+								"Investment options for selected money type is not displayed.",
+								true);
 			}
 			Web.clickOnElement(closeMoneyType);
 			Web.waitForElement(moneySource);
@@ -4939,15 +5015,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Click on one of the investment type and check if money sources for selected "
 								+ "investment type is displayed.",
-						"money sources for selected investment type is displayed.",
-						false);
+								"money sources for selected investment type is displayed.",
+								false);
 			} else {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on one of the investment type and check if money sources for selected "
 								+ "investment type is displayed.",
-						"money sources for selected investment type is not displayed.",
-						true);
+								"money sources for selected investment type is not displayed.",
+								true);
 			}
 			Web.clickOnElement(closeInvestType);
 			Web.waitForElement(moneySource);
@@ -5001,14 +5077,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Change the date to one year back and observe the total balance and vested balance.",
 					""
 							+ "balance and vested balance is updated as date is changed.",
-					false);
+							false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Change the date to one year back and observe the total balance and vested balance.",
 					""
 							+ "balance and vested balance is not updated as date is changed.",
-					true);
+							true);
 		}
 
 	}
@@ -5034,7 +5110,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Check in DB if portal_type_code is set to PAE_URL for empower type accu_code.",
 					""
 							+ "No record is found in DB for 'PAE_URL' portal_type_code",
-					false);
+							false);
 		}
 		return isRecordExist;
 	}
@@ -5078,14 +5154,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Execute the query:"
 								+ Stock.getTestQuery("DisablePAE")[1]
-								+ " and click on" + "Employe web button.",
-						"Data set up error message is displayed.", false);
+										+ " and click on" + "Employe web button.",
+										"Data set up error message is displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Execute the query:"
 								+ Stock.getTestQuery("DisablePAE")[1]
-								+ " and click on" + "Employe web button.",
-						"Data set up error message is not displayed.", true);
+										+ " and click on" + "Employe web button.",
+										"Data set up error message is not displayed.", true);
 		}
 
 	}
@@ -5173,16 +5249,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Execute query to insert back PSCPAE txn_code:'"
 							+ Stock.getTestQuery("insertPSCPAETxnCode_1")[1]
-							+ "'.", "" + "Record is inserted.", false);
+									+ "'.", "" + "Record is inserted.", false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Execute query to insert back PSCPAE txn_code:'"
 							+ Stock.getTestQuery("insertPSCPAETxnCode_1")[1]
-							+ "'.",
-					""
-							+ "Record is not inserted.please Check once manually in DB.",
-					false);
+									+ "'.",
+									""
+											+ "Record is not inserted.please Check once manually in DB.",
+											false);
 		}
 
 	}
@@ -5219,21 +5295,21 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		try {
 			Actions act = new Actions(Web.getDriver());
 			act.click(Web.returnElement(new HomePage(), "Plan Menu")).build()
-					.perform();
+			.perform();
 			act.click(Web.returnElement(new HomePage(), "Plan Administration"))
-					.build().perform();
+			.build().perform();
 			if (transferRestrictions.isDisplayed())
 				Reporter.logEvent(Status.FAIL,
 						"Navigate to Plan/Administration menu and check Transfer restriction"
 								+ " is supressed for TRS-Flex plan.",
-						"Transfer restriction is displayed for TRS-Flex plan.",
-						true);
+								"Transfer restriction is displayed for TRS-Flex plan.",
+								true);
 			else
 				Reporter.logEvent(Status.PASS,
 						"Navigate to Plan/Administration menu and check Transfer restriction"
 								+ " is supressed for TRS-Flex plan.",
-						"Transfer restriction is supressed for TRS-Flex plan.",
-						false);
+								"Transfer restriction is supressed for TRS-Flex plan.",
+								false);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -5253,25 +5329,25 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		try {
 			Actions act = new Actions(Web.getDriver());
 			act.click(Web.returnElement(new HomePage(), "Plan Menu")).build()
-					.perform();
+			.perform();
 			Web.waitForElement(Web.returnElement(new HomePage(),
 					"Plan Administration"));
 			act.click(Web.returnElement(new HomePage(), "Plan Administration"))
-					.build().perform();
+			.build().perform();
 			if (transferRestrictions.isDisplayed())
 				Reporter.logEvent(
 						Status.PASS,
 						"Navigate to Plan/Administration menu and check Transfer restriction"
 								+ " is displayed for non TRS-Flex plan.",
-						"Transfer restriction is displayed for non TRS-Flex plan.",
-						false);
+								"Transfer restriction is displayed for non TRS-Flex plan.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Navigate to Plan/Administration menu and check Transfer restriction"
 								+ " is displayed for non TRS-Flex plan.",
-						"Transfer restriction is supressed for non TRS-Flex plan.",
-						true);
+								"Transfer restriction is supressed for non TRS-Flex plan.",
+								true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -5297,15 +5373,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Navigate to employee overview page of an employee who is in"
 								+ " non TRS-Flex plan and observe Process center and compliance tabs are displayed.",
-						"Process center and "
-								+ " compliance tabs are displayed.", false);
+								"Process center and "
+										+ " compliance tabs are displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Navigate to employee overview page of an employee who is in"
 								+ " non TRS-Flex plan and observe Process center and compliance tabs are displayed.",
-						"Process center and "
-								+ " compliance tabs are not displayed.", true);
+								"Process center and "
+										+ " compliance tabs are not displayed.", true);
 
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			planName = selectedPlanHeader.getText().trim();
@@ -5313,10 +5389,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.waitForElement(recentlyViewedEmpTable);
 			empName = empNameHeader.getText().trim();
 			Web.clickOnElement(recentlyViewedEmployee.get(1));// switch to
-																// TRS-Flex
-																// employee from
-																// recently
-																// viewed link
+			// TRS-Flex
+			// employee from
+			// recently
+			// viewed link
 			CommonLib.waitForProgressBar();
 			Thread.sleep(3000);
 			if (this.validateComplianceAndProCenterTabForTRSFlex())
@@ -5324,15 +5400,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.FAIL,
 						"Switch to employee overview page of an employee who is in"
 								+ " TRS-Flex plan and observe Process center and compliance tabs are suppressed.",
-						"Process center and "
-								+ " compliance tabs are displayed.", true);
+								"Process center and "
+										+ " compliance tabs are displayed.", true);
 			else
 				Reporter.logEvent(
 						Status.PASS,
 						"Switch to employee overview page of an employee who is in"
 								+ " TRS-Flex plan and observe Process center and compliance tabs are suppressed.",
-						"Process center and "
-								+ " compliance tabs are suppressed.", false);
+								"Process center and "
+										+ " compliance tabs are suppressed.", false);
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			if (!planName.equals(selectedPlanHeader.getText().trim())
 					&& !empName.equals(empNameHeader.getText().trim()))
@@ -5340,14 +5416,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"After switching to non TRS-Flex plan's employee to TRS-Flex plan "
 								+ " employee,verify plan name and employee name is also updated.",
-						"Plan name and employee name is updated.", false);
+								"Plan name and employee name is updated.", false);
 
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"After switching to non TRS-Flex plan's employee to TRS-Flex plan "
 								+ " employee,verify plan name and employee name is also updated.",
-						"Plan name and employee name is not updated.", true);
+								"Plan name and employee name is not updated.", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -5371,16 +5447,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Navigate to employee overview page of an employee who is in TRSFlex plan"
 							+ " and check only Transaction hitory and Interactions sections are displayed under Account detail.",
-					"" + "Transaction history and Interactions are displayed.",
-					false);
+							"" + "Transaction history and Interactions are displayed.",
+							false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Navigate to employee overview page of an employee who is in TRSFlex plan"
 							+ " and check only Transaction hitory and Interactions sections are displayed under Account detail.",
-					""
-							+ "Transaction history and Interactions are not displayed.",
-					true);
+							""
+									+ "Transaction history and Interactions are not displayed.",
+									true);
 		if (!CommonLib.isElementExistByXpath(investments)
 				&& !CommonLib.isElementExistByXpath(fees)
 				&& !CommonLib.isElementExistByXpath(loans)
@@ -5390,14 +5466,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Investments,Fees,Loans,Vesting,Beneficiary sections should not"
 							+ " be displayed for TRSFlex plan as Account detail elements.",
-					"Mentioned sections are not displayed.", false);
+							"Mentioned sections are not displayed.", false);
 
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Investments,Fees,Loans,Vesting,Beneficiary sections should not"
 							+ " be displayed for TRSFlex plan as Account detail elements.",
-					"Mentioned sections or any of them , are displayed.", true);
+							"Mentioned sections or any of them , are displayed.", true);
 		Web.getDriver().switchTo().defaultContent();
 	}
 
@@ -5421,33 +5497,33 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Navigate to employee overview page of an employee who is in TRSFlex plan"
 							+ " and check following sections are exist in Employee details tab:Compensation,Paycheck contribution"
 							+ ",Basic Information,Contact Information,Employment Information",
-					""
-							+ "All the mentioned sections are exist as Employee detail elements.",
-					false);
+							""
+									+ "All the mentioned sections are exist as Employee detail elements.",
+									false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Navigate to employee overview page of an employee who is in TRSFlex plan"
 							+ " and check following sections are exist in Employee details tab:Compensation,Paycheck contribution"
 							+ ",Basic Information,Contact Information,Employment Information",
-					""
-							+ "All the mentioned sections or few of the sections do not exist as Employee detail elements.",
-					true);
+							""
+									+ "All the mentioned sections or few of the sections do not exist as Employee detail elements.",
+									true);
 		if (!CommonLib.isElementExistByXpath(empLeaveInfoSection)
 				&& !CommonLib.isElementExistByXpath(enrollAndEligSection))
 			Reporter.logEvent(
 					Status.PASS,
 					"'Employee Leave Information' and 'Enrollment and Eligibility' sections should"
 							+ " be suppressed for TRSFlex plan as employee detail elements.",
-					"Mentioned sections are found to be suppressed.", false);
+							"Mentioned sections are found to be suppressed.", false);
 
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Investments,Fees,Loans,Vesting,Beneficiary sections should"
 							+ " be suppressed for TRSFlex plan as employee detail elements.",
-					"Mentioned sections or any of them , are not suppressed.",
-					true);
+							"Mentioned sections or any of them , are not suppressed.",
+							true);
 
 		Web.getDriver().switchTo().defaultContent();
 	}
@@ -5474,18 +5550,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Navigate to employee overview page of an employee who is in NonTRSFlex plan"
 							+ " and check following sections are exist in Account detail tab:Transaction history,Interactions"
 							+ ",Loans,Vesting,Beneficiary,fees,Investment",
-					""
-							+ "All the mentioned sections are displayed as Account detail elements.",
-					false);
+							""
+									+ "All the mentioned sections are displayed as Account detail elements.",
+									false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Navigate to employee overview page of an employee who is in NonTRSFlex plan"
 							+ " and check following sections are exist in Account detail tab:Transaction history,Interactions"
 							+ ",Loans,Vesting,Beneficiary,fees,Investment",
-					""
-							+ "All or few of the sections are not displayed as Account detail elements.",
-					true);
+							""
+									+ "All or few of the sections are not displayed as Account detail elements.",
+									true);
 		Web.getDriver().switchTo().defaultContent();
 	}
 
@@ -5511,18 +5587,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Navigate to employee overview page of an employee who is in NonTRSFlex plan"
 							+ " and check following sections are exist in employee detail tab:Compensation,Paycheck contribution"
 							+ ",Employee leave information,Basic information,contact information,employement information,Enrollment and eligibility.",
-					""
-							+ "All the mentioned sections are displayed as employee detail elements.",
-					false);
+							""
+									+ "All the mentioned sections are displayed as employee detail elements.",
+									false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Navigate to employee overview page of an employee who is in NonTRSFlex plan"
 							+ " and check following sections are exist in employee detail tab:Compensation,Paycheck contribution"
 							+ ",Employee leave information,Basic information,contact information,employement information,Enrollment and eligibility.",
-					""
-							+ "All or few of the mentioned sections are not displayed as employee detail elements.",
-					true);
+							""
+									+ "All or few of the mentioned sections are not displayed as employee detail elements.",
+									true);
 		Web.getDriver().switchTo().defaultContent();
 	}
 
@@ -5539,7 +5615,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Status.INFO,
 				"switch to participant who is in TRSFlex plan through recently viewed and again verify "
 						+ "all the employee detail and account detail sections that TRSFlex plan access to are displayed.",
-				"", false);
+						"", false);
 		Web.getDriver().switchTo().frame(employeeSearchFrame);
 		Web.clickOnElement(this.recentlyViewedLink);
 		Web.waitForElement(recentlyViewedEmpTable);
@@ -5591,16 +5667,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Verify following Investment details displayed in Investment tab."
 									+ "1.Investment option 2.Fund short name 3.Deposit period 4.Default indicator 5.Percent and 'More' button.",
-							"" + "All the mentioned details are displayed.",
-							false);
+									"" + "All the mentioned details are displayed.",
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Verify following Investment details displayed in Investment tab."
 									+ "1.Investment option 2.Fund short name 3.Deposit period 4.Default indicator 5.Percent and 'More' button.",
-							""
-									+ "All the mentioned details or few of the details are not displayed.",
-							true);
+									""
+											+ "All the mentioned details or few of the details are not displayed.",
+											true);
 
 			} else {
 				proceed = false;
@@ -5643,14 +5719,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate records are sorted by percent in descending order.",
 						"Reocrds are sorted by percent in"
 								+ " descending order." + investmentPercents,
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate records are sorted by percent in descending order.",
 						"Reocrds are not sorted by percent in"
 								+ " descending order." + investmentPercents,
-						true);
+								true);
 			// To validate max allocation row under investment section under
 			// account detail
 			if (maxAllocationsRow.size() <= 5)
@@ -5681,7 +5757,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		String expectedMsg = Stock.GetParameterValue("ExpectedMessage");
 		try {
 			this.searchEmployeeBySSNAllPlans("345654695");// employee without
-															// allocation
+			// allocation
 			this.navigateToEmployeeOverViewPage();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(Web.getDriver().findElement(
@@ -5764,7 +5840,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Validate Add/Change Allocations button is displayed.",
 							""
 									+ "Add/Change Allocations button is not displayed.",
-							true);
+									true);
 					isChangeBtnDisplayed = false;
 				}
 			} else {
@@ -5800,17 +5876,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"In the allocations modal window click on 'Add/Change Allocations' button"
 								+ " and validate if 'Enter New allocations for future contributions page is displayed.'",
-						""
-								+ "'Enter New allocations for future contributions page is displayed page' is displayed.",
-						false);
+								""
+										+ "'Enter New allocations for future contributions page is displayed page' is displayed.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.PASS,
 						"In the allocations modal window click on 'Add/Change Allocations' button"
 								+ " and validate if 'Enter New allocations for future contributions page is displayed.'",
-						""
-								+ "'Enter New allocations for future contributions page is displayed page' is not displayed.",
-						true);
+								""
+										+ "'Enter New allocations for future contributions page is displayed page' is not displayed.",
+										true);
 			if (Web.isWebElementsDisplayed(listOfInPercentageField, true)
 					&& save.isDisplayed() && cancel.isDisplayed()
 					&& totalPercent.isDisplayed())
@@ -5824,7 +5900,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate save,cancel and input fields to enter allocation% is displayed.",
 						""
 								+ "All mentioned or few of the elelemts are not displayed.",
-						true);
+								true);
 			List<WebElement> columns = allocationsRows.get(0).findElements(
 					By.tagName("font"));
 			System.out.println(columns.size());
@@ -5862,15 +5938,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						+ percentageAfterSave);
 				if (invsetOptionAfterSave.contains(investOptionBeforeSave)
 						&& percentageAfterSave
-								.equals(percentBeforeSave + ".00"))
+						.equals(percentBeforeSave + ".00"))
 					Reporter.logEvent(
 							Status.PASS,
 							"Add an investment '"
 									+ investOptionBeforeSave
 									+ "' with 100% allocation and save it.close the modal window and validate"
 									+ " allocation is updated on account detail page.",
-							"Allocation % is updated with investment option"
-									+ invsetOptionAfterSave, false);
+									"Allocation % is updated with investment option"
+											+ invsetOptionAfterSave, false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
@@ -5878,8 +5954,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 									+ investOptionBeforeSave
 									+ "' with 100% allocation and save it.close the modal window and validate"
 									+ " allocation is updated on account detail page.",
-							"Allocation % is not updated with investment option"
-									+ invsetOptionAfterSave, true);
+									"Allocation % is not updated with investment option"
+											+ invsetOptionAfterSave, true);
 				Web.getDriver().switchTo().defaultContent();
 			} catch (Exception e) {
 				Reporter.logEvent(
@@ -5887,7 +5963,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"error message displayed:" + processingError.getText(),
 						""
 								+ "It may be due to bad data issue.Please check manually with other data.",
-						true);
+								true);
 				Web.getDriver().switchTo().defaultContent();
 				Web.getDriver().switchTo().frame(employeeSearchFrame);
 				Web.clickOnElement(allocationModalClose);
@@ -5925,7 +6001,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			}
 		} else {
 			System.out
-					.println("User is not assigned with ESCCPA txn_code so no need to delete from DB.");
+			.println("User is not assigned with ESCCPA txn_code so no need to delete from DB.");
 		}
 	}
 
@@ -5957,7 +6033,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.FAIL,
 					"Validate Add/Change Allocations button is displayed.", ""
 							+ "Add/Change Allocations button is displayed.",
-					true);
+							true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(allocationModalClose);
@@ -6002,16 +6078,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Execute query to insert back ESCCPA txn_code:'"
 							+ Stock.getTestQuery("insertESCCPAtxnCode")[1]
-							+ "'.", "" + "Record is inserted.", false);
+									+ "'.", "" + "Record is inserted.", false);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Execute query to insert back ESCCPA txn_code:'"
 							+ Stock.getTestQuery("insertESCCPAtxnCode")[1]
-							+ "'.",
-					""
-							+ "Record is not inserted.please Check once manually in DB.",
-					false);
+									+ "'.",
+									""
+											+ "Record is not inserted.please Check once manually in DB.",
+											false);
 		}
 
 	}
@@ -6079,12 +6155,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate Columns under Statement tab as following:"
 								+ expHeader,
-						"" + "Expected Columns are found.", false);
+								"" + "Expected Columns are found.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate Columns under Statement tab as following:"
 								+ expHeader, ""
-								+ "Expected Columns are not found.", true);
+										+ "Expected Columns are not found.", true);
 			currentWindow = Web.getDriver().getWindowHandle();
 			Web.clickOnElement(statementContent.findElements(By.tagName("a"))
 					.get(0));
@@ -6173,14 +6249,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 											"Validate the Statement description 'Your Statement ending '(mm/dd/yyyy)' is ready' for Statement type category.",
 											""
 													+ "Expected Description for Statement type category is displayed.",
-											false);
+													false);
 								else
 									Reporter.logEvent(
 											Status.FAIL,
 											"Validate the Statement description 'Your Statement ending '(mm/dd/yyyy)' is ready' for Statement type category.",
 											""
 													+ "Expected Description for Statement type category is not displayed.",
-											true);
+													true);
 							}
 						}
 					}
@@ -6192,7 +6268,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 										+ "' category from dropdown and check all records"
 										+ " must be filtered with '" + option
 										+ "' category.",
-								"All records are filtered with '" + option
+										"All records are filtered with '" + option
 										+ "' category.", false);
 					else
 						Reporter.logEvent(
@@ -6202,7 +6278,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 										+ "' category from dropdown and check all records"
 										+ " must be filtered with '" + option
 										+ "' category.",
-								"All records are not filtered with '" + option
+										"All records are not filtered with '" + option
 										+ "' category.", true);
 				}
 			} else {
@@ -6253,14 +6329,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate statements are sorted in chronological descending order by date.",
 						""
 								+ "Statements are sorted by Date in chronological descending order.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate statements are sorted in chronological descending order by date.",
 						""
 								+ "Statements are not found to be sorted by Date in chronological descending order.",
-						true);
+								true);
 			Calendar present = Calendar.getInstance();
 			present.setTime(dateList.get(0));
 			Calendar past = Calendar.getInstance();
@@ -6341,14 +6417,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate all the following labels are displayed:"
 								+ expLabels, ""
-								+ "All the expected labels are displayed.",
-						false);
+										+ "All the expected labels are displayed.",
+										false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate all the following labels are displayed:"
 								+ expLabels, ""
-								+ "All the expected labels are not displayed.",
-						true);
+										+ "All the expected labels are not displayed.",
+										true);
 			System.out.println(actLabels);
 			actLabels.clear();
 			System.out.println("after clear" + actLabels);
@@ -6377,17 +6453,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate all the following labels are displayed on Update "
 								+ "employment information modal window:"
 								+ expEditWinLabels, ""
-								+ "All the expected labels are not displayed.",
-						false);
+										+ "All the expected labels are not displayed.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate all the following labels are displayed displayed on Update "
 								+ "employment information modal window:"
 								+ expEditWinLabels,
-						""
-								+ "All/few of the expected labels are not displayed.",
-						true);
+								""
+										+ "All/few of the expected labels are not displayed.",
+										true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeEditEmpntInfoWindow);
@@ -6430,17 +6506,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Mouse hover on employee link present under recenlty viewed."
 								+ " SSN,Employee ID,Participant ID must be displayed in tool tip.",
-						"" + "Tool tip is displayed:" + isDisplayed
+								"" + "Tool tip is displayed:" + isDisplayed
 								+ " details inside tool tip:" + toolTipText,
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Mouse hover on employee link present under recenlty viewed."
 								+ " SSN,Employee ID,Participant ID must be displayed in tool tip.",
-						"" + "Tool tip is displayed:" + isDisplayed
+								"" + "Tool tip is displayed:" + isDisplayed
 								+ " details inside tool tip:" + toolTipText,
-						true);
+								true);
 		} catch (Exception e) {
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
 					e.getMessage(), true);
@@ -6489,16 +6565,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Validate following information is displayed"
 										+ " in fees section if past 3 months data exists:"
 										+ expFeeHeaders,
-								"Mentioned fees details are displayed.", false);
+										"Mentioned fees details are displayed.", false);
 					else
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate following information is displayed"
 										+ " in fees section if past 3 months data exists:"
 										+ expFeeHeaders,
-								"Mentioned fees information or"
-										+ " few of the information are not displayed.",
-								true);
+										"Mentioned fees information or"
+												+ " few of the information are not displayed.",
+												true);
 					isDataDisplayed = true;
 				} else {
 					Reporter.logEvent(
@@ -6506,7 +6582,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Validate past 3 months data displayed under Fees section.",
 							"there is"
 									+ " no fees data found within past three months.",
-							true);
+									true);
 					isDataDisplayed = false;
 				}
 			} else {
@@ -6548,14 +6624,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Validate only up to 5 fees over the past 3 month is displayed.",
 							""
 									+ "Section shows up to 5 fees over the past 3 months.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Validate only up to 5 fees over the past 3 month is displayed.",
 							""
 									+ "Section doesn't show up to 5 fees over the past 3 months.",
-							true);
+									true);
 			} else {
 				if (feesRecords.size() == 5)
 					Reporter.logEvent(
@@ -6563,14 +6639,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Validate only up to 5 fees over the past 3 month is displayed.",
 							""
 									+ "Section shows up to 5 fees over the past 3 months.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Validate only up to 5 fees over the past 3 month is displayed.",
 							""
 									+ "Section doesn't show up to 5 fees over the past 3 months.",
-							true);
+									true);
 			}
 
 		} catch (Exception e) {
@@ -6618,18 +6694,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Validate more button is displayed."
 										+ " and if dislayed click on it and validate following column header"
 										+ expFeesModalWinHeaders,
-								""
-										+ "More button is displayed and expected column headers are displayed.",
-								false);
+										""
+												+ "More button is displayed and expected column headers are displayed.",
+												false);
 					else
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validate more button is displayed."
 										+ " and if dislayed click on it and validate following column header"
 										+ expFeesModalWinHeaders,
-								""
-										+ "More button is displayed and expected column headers are not displayed.",
-								true);
+										""
+												+ "More button is displayed and expected column headers are not displayed.",
+												true);
 					if (Web.isWebElementsDisplayed(to_date, false)
 							&& Web.isWebElementsDisplayed(from_date, false)
 							&& submit.isDisplayed())
@@ -6638,14 +6714,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Validtae From and to date drop down and submit button is displayed.",
 								""
 										+ "From and to date drop down and submit button is displayed.",
-								false);
+										false);
 					else
 						Reporter.logEvent(
 								Status.FAIL,
 								"Validtae From and to date drop down and submit button is displayed.",
 								""
 										+ "Either From and to date drop down or submit button is not displayed.",
-								true);
+										true);
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"Validate more button is displayed.",
@@ -6712,15 +6788,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Change the date to one year back and see all records are within selected "
 								+ "date range.",
-						"Records are filtered within selected Date range.",
-						false);
+								"Records are filtered within selected Date range.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Change the date to one year range back and see all records are within selected "
 								+ "date range.",
-						"Records are not filtered within selected Date range.",
-						false);
+								"Records are not filtered within selected Date range.",
+								false);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(closeFeeModalWindow);
@@ -6750,18 +6826,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			if (vestingBoxWithData.isDisplayed()
 					&& vestingBoxWithData.findElement(By.xpath(".//h1/a"))
-							.getText().equals("Vesting"))
+					.getText().equals("Vesting"))
 				Reporter.logEvent(Status.PASS,
 						"Navigate to Account detail page and check Vesting box is displayed"
 								+ " with title 'Vesting'.",
-						"Vesting box is displayed with title 'vesting'.", false);
+								"Vesting box is displayed with title 'vesting'.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Navigate to Account detail page and check Vesting box is displayed"
 								+ " with title 'Vesting'.",
-						"Vesting box is not displayed or title 'vesting' is not displayed.",
-						true);
+								"Vesting box is not displayed or title 'vesting' is not displayed.",
+								true);
 			WebElement vestingLink = vestingBoxWithData.findElement(By
 					.xpath(".//h1/a"));
 			String tagName = vestingLink.getTagName();
@@ -6772,17 +6848,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Validate Title 'Vesting' is link when data is found for vesting and "
 								+ "once the link is clicked,Vesting detail information page(Modal window) is displayed.",
-						"title 'Vesting' "
-								+ "is a link and when clicked,Vesting information detail page is displayed.",
-						false);
+								"title 'Vesting' "
+										+ "is a link and when clicked,Vesting information detail page is displayed.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate Title 'Vesting' is link when data is found for vesting and "
 								+ "once the link is clicked,Vesting detail information page(Modal window) is displayed.",
-						"title 'Vesting' "
-								+ "is not a link or when clicked,Vesting information detail page is not displayed.",
-						true);
+								"title 'Vesting' "
+										+ "is not a link or when clicked,Vesting information detail page is not displayed.",
+										true);
 			Web.clickOnElement(vestingModalCloseLink);
 			CommonLib.waitForProgressBar();
 		} catch (Exception e) {
@@ -6814,16 +6890,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Check if following information is displayed under vesting section:"
 								+ "Computation period,Vested balance,Vesting by money source.",
-						"Specified information is displayed:"
-								+ "Computation period:" + computationPeriod
-								+ "," + "Vested balance:" + vestedBalance_,
-						false);
+								"Specified information is displayed:"
+										+ "Computation period:" + computationPeriod
+										+ "," + "Vested balance:" + vestedBalance_,
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Check if following information is displayed under vesting section:"
 								+ "Computation period,Vested balance,Vesting by money source.",
-						"Specified information is not displayed.", true);
+								"Specified information is not displayed.", true);
 
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -6864,15 +6940,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate header columns on vesting modal info window  as following:"
 								+ expHeaders, ""
-								+ "All column headers are displayed.", false);
+										+ "All column headers are displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate header columns on vesting modal info window  as following:"
 								+ expHeaders,
-						""
-								+ "All column headers or few headers are not displayed.",
-						true);
+								""
+										+ "All column headers or few headers are not displayed.",
+										true);
 			if (clickHereLink.isDisplayed())
 				Reporter.logEvent(Status.PASS,
 						"Check click here link is displayed.",
@@ -6937,14 +7013,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Click on 'Click here' link and check 'Account Balance by Money Sources' page is displayed.",
 						""
 								+ "Account Balance by Money Sources page is displayed.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on 'Click here' link and check 'Account Balance by Money Sources' page is displayed.",
 						""
 								+ "Account Balance by Money Sources page is not displayed.",
-						true);
+								true);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(employeeSearchFrame);
 			Web.clickOnElement(accntBalCloseLink);
@@ -6992,13 +7068,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Click on 'Change prior period vesting' and "
 									+ "validate modal window is displayed to change vesting period.",
-							"As expected.", false);
+									"As expected.", false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Click on 'Change prior period vesting' and "
 									+ "validate modal window is displayed to change vesting period.",
-							"Modal window is not displayed.", true);
+									"Modal window is not displayed.", true);
 				// CommonLib.switchToFrame(empUpdateVestingPriorInfoframe);
 				CommonLib.switchToFrame(employeeSearchFrame);
 				Web.clickOnElement(closeIconVestingWindow);
@@ -7080,14 +7156,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate following columns are displayed under loans section:"
 								+ "" + expElements,
-						"All expected columns are displayed.", false);
+								"All expected columns are displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate following columns are displayed under loans section:"
 								+ "" + expElements,
-						"All expected columns or few columns are not displayed.",
-						true);
+								"All expected columns or few columns are not displayed.",
+								true);
 		} catch (Exception e) {
 			e.getStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7184,22 +7260,22 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					loanDataFromGUI.get("Effective Date"))
 					&& loanDataFromDB.get("Loan Amount").containsAll(
 							loanDataFromGUI.get("Loan Amount"))
-					&& loanDataFromDB.get("Status").containsAll(
-							loanDataFromGUI.get("Status"))
-					&& loanDataFromDB.get("Repay Amount").containsAll(
-							loanDataFromGUI.get("Repay Amount")))
+							&& loanDataFromDB.get("Status").containsAll(
+									loanDataFromGUI.get("Status"))
+									&& loanDataFromDB.get("Repay Amount").containsAll(
+											loanDataFromGUI.get("Repay Amount")))
 				Reporter.logEvent(
 						Status.PASS,
 						"Validate Loan data for selected participant from DB in terms of "
 								+ "Effective date,Loan amount,Status,Repay Amount.",
-						"Data is validated and found to be proper.", false);
+								"Data is validated and found to be proper.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate Loan data for selected participant from DB in terms of "
 								+ "Effective date,Loan amount,Status,Repay Amount.",
-						"Data is validated and it is not matching with GUI."
-								+ "Please check manually once.", true);
+								"Data is validated and it is not matching with GUI."
+										+ "Please check manually once.", true);
 		} catch (Exception e) {
 			e.getStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7337,24 +7413,24 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					loanDetailsFromGUI.get("Loan Number"))
 					&& loanDetailsFromDB.get("Status").containsAll(
 							loanDetailsFromGUI.get("Status"))
-					&& loanDetailsFromDB.get("Repay Amount").containsAll(
-							loanDetailsFromGUI.get("Repay Amount"))
-					&& loanDetailsFromDB.get("Effective Date").containsAll(
-							loanDetailsFromGUI.get("Effective Date"))
-					&& loanDetailsFromDB.get("Loan Amount").containsAll(
-							loanDetailsFromGUI.get("Loan Amount")))
+							&& loanDetailsFromDB.get("Repay Amount").containsAll(
+									loanDetailsFromGUI.get("Repay Amount"))
+									&& loanDetailsFromDB.get("Effective Date").containsAll(
+											loanDetailsFromGUI.get("Effective Date"))
+											&& loanDetailsFromDB.get("Loan Amount").containsAll(
+													loanDetailsFromGUI.get("Loan Amount")))
 				Reporter.logEvent(
 						Status.PASS,
 						"Validate Loan data on details page for selected participant from DB in terms of "
 								+ "Effective date,Loan amount,Status,Repay Amount,Loan Number.",
-						"Data is validated and found to be proper.", false);
+								"Data is validated and found to be proper.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate Loan data on details page for selected participant from DB in terms of "
 								+ "Effective date,Loan amount,Status,Repay Amount,Laon Number.",
-						"Data is validated and it is not matching with GUI."
-								+ "Please check manually once.", true);
+								"Data is validated and it is not matching with GUI."
+										+ "Please check manually once.", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7404,13 +7480,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Validate all expected labels under Loan account information section is displayed."
 								+ expColumn, ""
-								+ "All expected labels are displayed", false);
+										+ "All expected labels are displayed", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate all expected labels under Loan account information section is displayed."
 								+ expColumn, ""
-								+ "All expected labels are not displayed", true);
+										+ "All expected labels are not displayed", true);
 			queryResultSet = DB
 					.executeQuery(Stock.getTestQuery("getEmpAcctDetails")[0],
 							Stock.getTestQuery("getEmpAcctDetails")[1], ssn,
@@ -7441,7 +7517,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					loanIntRate.getText().split(":")[1].trim());
 			actDetailsGUI.put("Loan Term",
 					loanTerm.getText().trim().split(":")[1].trim()
-							.split("\\s+")[0].trim());
+					.split("\\s+")[0].trim());
 			System.out.println("Map obtained from GUI:" + actDetailsGUI);
 
 			if (actDetailsDB.equals(actDetailsGUI)
@@ -7521,14 +7597,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate Days late field as 'Current date-first unpaid/partial due date'",
 						""
 								+ "Days late field is having value as per calculation.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate Days late field as 'Current date-first unpaid/partial due date'",
 						""
 								+ "Days late field is not having value as per calculation.",
-						true);
+								true);
 
 			if (payRemainingUI == payRemainingDB)
 				Reporter.logEvent(
@@ -7536,14 +7612,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate payments remaining field as number of unpaid/partial payments record.",
 						""
 								+ "payments remaining field is having value as per calculation.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate payments remaining field as number of unpaid/partial payments record.",
 						""
 								+ "payments remaining field is not having value as per calculation.",
-						true);
+								true);
 			Web.clickOnElement(returnToEmpPageLink);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
@@ -7557,7 +7633,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.FAIL,
 						"Click on Retrun to overview link.", ""
 								+ "Employee overview page is not displayed.",
-						true);
+								true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7583,15 +7659,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Validate if Paycheck Contribution title is displayed and "
 								+ "it is a link.",
-						"Title is displayed as Link if Paycheck contribution data is displayed.",
-						false);
+								"Title is displayed as Link if Paycheck contribution data is displayed.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate if Paycheck Contribution title is displayed and "
 								+ "it is a link.",
-						"Title is not displayed as Link if Paycheck contribution data is displayed.",
-						true);
+								"Title is not displayed as Link if Paycheck contribution data is displayed.",
+								true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7708,7 +7784,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						ytdDataUI.put(
 								ytdTypeUI.get(i).getText(),
 								ytdContributionsUI.get(i).getText()
-										.replace("$", "").trim());
+								.replace("$", "").trim());
 					}
 				}
 				System.out.println("YTD map UI" + ytdDataUI);
@@ -7717,7 +7793,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					&& ytdContributions.contains(ytdDataDB.get("Amount")))
 				Reporter.logEvent(Status.PASS,
 						"Validate ytd data with DB." + ytdDataDB.get("Type")
-								+ " = " + ytdDataDB.get("Amount"),
+						+ " = " + ytdDataDB.get("Amount"),
 						"Data is found to be proper.", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Validate ytd data with DB.",
@@ -7800,24 +7876,24 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			totalYtd = Float.parseFloat(totalYtdCon.getText().replace("$", "")
 					.replace(",", "").trim());
 			System.out
-					.println("Sum of Contributions on YTD contribution column:"
-							+ totalYtd);
+			.println("Sum of Contributions on YTD contribution column:"
+					+ totalYtd);
 			if (totalYtd == sum)
 				Reporter.logEvent(
 						Status.PASS,
 						"Click on more button and filter with contribution for YTD range and "
 								+ " observe that all contribution amount sum up to what is displayed on YTD Contribution.",
-						""
-								+ "All contribution amount sum up to what is displayed as YTD Contribution.",
-						false);
+								""
+										+ "All contribution amount sum up to what is displayed as YTD Contribution.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.INFO,
 						"Click on more button and filter with contribution for YTD range and "
 								+ " observe that all contribution amount sum up to what is displayed on YTD Contribution.",
-						""
-								+ "All contribution amount do not sum up to what is displayed as YTD Contribution due to some change."
-								+ "Please refer SWEB-13170.", true);
+								""
+										+ "All contribution amount do not sum up to what is displayed as YTD Contribution due to some change."
+										+ "Please refer SWEB-13170.", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7847,12 +7923,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate following column is displayed:"
 								+ expClmHeaders,
-						"Specified columns are displayed.", false);
+								"Specified columns are displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate following column is displayed:"
 								+ expClmHeaders,
-						"Specified columns are not displayed.", true);
+								"Specified columns are not displayed.", true);
 			System.out.println("if Contribution radio btn is selected:"
 					+ contriRadBtn.isSelected());
 			if (contriRadBtn.isSelected())
@@ -7861,14 +7937,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate that Contribution Transactions radio button is selected by default.",
 						""
 								+ "Contribution Transactions radio button is selected by default.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate that Contribution Transactions radio button is selected by default.",
 						""
 								+ "Contribution Transactions radio button is not selected by default.",
-						true);
+								true);
 
 			System.out.println("Displayed contribution list size is:"
 					+ txnTypeList.size());
@@ -7929,12 +8005,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"If no data is present for contribution then following message "
 								+ "will be displayed" + expMsg,
-						"Actual message displayed is:" + actMsg, false);
+								"Actual message displayed is:" + actMsg, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"If no data is present for contribution then following message "
 								+ "will be displayed" + expMsg,
-						"Actual message displayed is:" + actMsg, true);
+								"Actual message displayed is:" + actMsg, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -7964,14 +8040,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Click on paycheck contribution history link.",
 							""
 									+ "Paycheck contribution history window is displayed.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Click on paycheck contribution history link.",
 							""
 									+ "Paycheck contribution history window is displayed.",
-							true);
+									true);
 				Web.clickOnElement(histModalWindowTitle.findElement(By
 						.xpath(".//following-sibling::a")));
 				Web.waitForElement(txtOverview);
@@ -7981,14 +8057,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Click on close link on top right corner of the history window.",
 							""
 									+ "Modal window is closed and user is redirected back to PPT overview page.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Click on close link on top right corner of the history window.",
 							""
 									+ "Modal window is closed and user is not redirected back to PPT overview page.",
-							true);
+									true);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -8083,15 +8159,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Set search drop down to 'SSN' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
 									+ "and validate drop down is set to 'SSN'.",
-							"SSN is found to be selected for employee search drop down.",
-							false);
+									"SSN is found to be selected for employee search drop down.",
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Set search drop down to 'SSN' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
 									+ "and validate drop down is set to 'SSN'.",
-							"SSN is not found to be selected for employee search drop down.",
-							true);
+									"SSN is not found to be selected for employee search drop down.",
+									true);
 			} else {
 				if (setOption.getAllSelectedOptions().get(0).getText().trim()
 						.equals("Employee ID"))
@@ -8099,15 +8175,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
 									+ "and validate drop down is set to 'Employee ID'.",
-							"Employee ID is found to be selected for employee search drop down.",
-							false);
+									"Employee ID is found to be selected for employee search drop down.",
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Set search drop down to 'Employee ID' and Logout from PSC Next-Gen and login again, navigate to Employee search page."
 									+ "and validate drop down is set to 'Employee ID'.",
-							"Employee ID is not found to be selected for employee search drop down.",
-							true);
+									"Employee ID is not found to be selected for employee search drop down.",
+									true);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -8154,14 +8230,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Select Division option and observe that Divisions are displayed.",
 						"Divisions are "
 								+ "displayed just below the search drop down.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Select Division option and observe that Divisions are displayed.",
 						"Divisions are not "
 								+ "displayed just below the search drop down.",
-						true);
+								true);
 			this.switchToDefaultContent();
 			this.selectPlanFromResultset(this.selectPlanForUser(
 					Stock.getTestQuery("getPlanswithNoDivisions"),
@@ -8173,15 +8249,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Switch to different plan(with no division) and validate employee search drop down is"
 								+ " set to 'Name'.",
-						"'Name' is found to be selected for employee search drop down.",
-						false);
+								"'Name' is found to be selected for employee search drop down.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Switch to different plan(with no division) and validate employee search drop down is "
 								+ "set to 'Name'.",
-						"'Name' is not found to be selected for employee search drop down.",
-						true);
+								"'Name' is not found to be selected for employee search drop down.",
+								true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -8220,10 +8296,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					.getString("INELIGIBILITY_REASON_CODE").trim());
 			enrollAndEligDataDB.put("Enrollment Notification Date",
 					queryResultSet.getString("ENROLL_NOTIFICATION_DATE_TIME")
-							.trim());
+					.trim());
 			enrollAndEligDataDB
-					.put("Suppress Auto Enrollment Indicator", queryResultSet
-							.getString("SUPPRESS_AUTO_ENROLL_IND").trim());
+			.put("Suppress Auto Enrollment Indicator", queryResultSet
+					.getString("SUPPRESS_AUTO_ENROLL_IND").trim());
 			break;
 		}
 		System.out.println("Enrollment and eligibility data fetched from DB:"
@@ -8268,8 +8344,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						suppressAutoIndicator.getText().trim());
 			}
 			System.out
-					.println("Enrollment and eligibility data fetched from UI:"
-							+ enrollAndEligDataUI);
+			.println("Enrollment and eligibility data fetched from UI:"
+					+ enrollAndEligDataUI);
 			return enrollAndEligDataUI;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -8345,7 +8421,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Thread.sleep(2000);
 			if (ssnError.getText().trim().contains("SSN is not a valid SSN")
 					&& ssnReError.getText().trim()
-							.contains("SSN is not a valid SSN"))
+					.contains("SSN is not a valid SSN"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Enter invalid SSN(xx-xx-xx-xxx) and observe the error message.",
@@ -8364,7 +8440,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Web.setTextToTextBox(lastName, Stock.GetParameterValue("LastName"));
 			if (ssnError.getText().trim().contains("SSN is not a valid SSN")
 					&& ssnReError.getText().trim()
-							.contains("SSN is not a valid SSN"))
+					.contains("SSN is not a valid SSN"))
 				Reporter.logEvent(
 						Status.PASS,
 						"Enter invalid SSN(like smith) and observe the error message.",
@@ -8416,27 +8492,27 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						.trim()
 						.equalsIgnoreCase(
 								"Some fields contain errors. Please correct errors and continue.")
-						|| errorMsg
+								|| errorMsg
 								.getText()
 								.trim()
 								.equalsIgnoreCase(
 										"First Name is a required field.")
-						|| errorMsg
-								.getText()
-								.trim()
-								.equalsIgnoreCase(
-										"Address Line 1 is a required field.")
-						|| errorMsg.getText().trim()
-								.equalsIgnoreCase("City is a required field.")
-						|| errorMsg.getText().trim()
-								.equalsIgnoreCase("State is a required field.")
-						|| errorMsg.getText().trim()
-								.equalsIgnoreCase("Zip is a required field.")
-						|| errorMsg
-								.getText()
-								.trim()
-								.equalsIgnoreCase(
-										"Radio button below was not selected. Please select.")) {
+										|| errorMsg
+										.getText()
+										.trim()
+										.equalsIgnoreCase(
+												"Address Line 1 is a required field.")
+												|| errorMsg.getText().trim()
+												.equalsIgnoreCase("City is a required field.")
+												|| errorMsg.getText().trim()
+												.equalsIgnoreCase("State is a required field.")
+												|| errorMsg.getText().trim()
+												.equalsIgnoreCase("Zip is a required field.")
+												|| errorMsg
+												.getText()
+												.trim()
+												.equalsIgnoreCase(
+														"Radio button below was not selected. Please select.")) {
 					isPageDisplayed = true;
 				} else {
 					isPageDisplayed = false;
@@ -8449,14 +8525,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Click on continue button without entering mandatory fields.",
 						"Error messages are displayed"
 								+ " for respective mandatory fields which were left blank.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on continue button without entering mandatory fields.",
 						"Error messages are not displayed"
 								+ " for respective mandatory fields which were left blank.",
-						true);
+								true);
 			isPageDisplayed = false;
 
 			Web.setTextToTextBox(first_Name,
@@ -8484,9 +8560,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Enter invalid first name and observe the error message."
 									+ fNValidation.getText(),
-							""
-									+ "First name field validation message is displayed as expected.",
-							false);
+									""
+											+ "First name field validation message is displayed as expected.",
+											false);
 				}
 			} catch (Exception e) {
 				e.getStackTrace();
@@ -8494,9 +8570,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.FAIL,
 						"Enter invalid first name and observe the error message."
 								+ fNValidation.getText(),
-						""
-								+ "First name field validation message is not displayed.",
-						true);
+								""
+										+ "First name field validation message is not displayed.",
+										true);
 			}
 
 			try {
@@ -8505,9 +8581,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Enter invalid address and observe the error message."
 									+ addressValidation.getText(),
-							""
-									+ "Address field validation message is displayed as expected.",
-							false);
+									""
+											+ "Address field validation message is displayed as expected.",
+											false);
 				}
 			} catch (Exception e) {
 				e.getStackTrace();
@@ -8515,9 +8591,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.FAIL,
 						"Enter invalid address and observe the error message."
 								+ addressValidation.getText(),
-						""
-								+ "address field validation message is not displayed.",
-						true);
+								""
+										+ "address field validation message is not displayed.",
+										true);
 			}
 
 			try {
@@ -8526,9 +8602,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Enter invalid zip code and observe the error message."
 									+ zipCodeValidation.getText(),
-							""
-									+ "zip code field validation message is displayed as expected.",
-							false);
+									""
+											+ "zip code field validation message is displayed as expected.",
+											false);
 				}
 			} catch (Exception e) {
 				e.getStackTrace();
@@ -8536,9 +8612,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.FAIL,
 						"Enter invalid zip code and observe the error message."
 								+ zipCodeValidation.getText(),
-						""
-								+ "zip code field validation message is not displayed.",
-						true);
+								""
+										+ "zip code field validation message is not displayed.",
+										true);
 			}
 
 		} catch (Exception e) {
@@ -8620,12 +8696,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Click on Continue without filling any fields.Error message"
 								+ " should be displayed as:" + expErrorMsg,
-						"Expected error message is displayed.", false);
+								"Expected error message is displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Click on Continue without filling any fields.Error message"
 								+ " should be displayed as:" + expErrorMsg,
-						"Expected error message is not displayed.", true);
+								"Expected error message is not displayed.", true);
 
 			Select elgCode = new Select(eligiCode);
 			elgCode.selectByVisibleText("Yes");
@@ -8638,26 +8714,26 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Select eligibility code as Yes and click on continue.",
 						"Error message "
 								+ "'Participation Date is required.' is displayed.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Select eligibility code as Yes and click on continue.",
 						"Error message "
 								+ "'Participation Date is required.' is not displayed.",
-						true);
+								true);
 			elgCode.selectByVisibleText("No");
 			Web.clickOnElement(continueAddEmp);
 			Web.waitForPageToLoad(Web.getDriver());
 			if (mandatoryFieldValidationMsgs.get(2).getText().trim()
 					.equalsIgnoreCase("Participation Date is required.")
 					&& mandatoryFieldValidationMsgs
-							.get(3)
-							.getText()
-							.trim()
-							.equalsIgnoreCase(
-									"Ineligibility Reason code is"
-											+ " required because Eligibility code is No."))
+					.get(3)
+					.getText()
+					.trim()
+					.equalsIgnoreCase(
+							"Ineligibility Reason code is"
+									+ " required because Eligibility code is No."))
 				Reporter.logEvent(
 						Status.PASS,
 						"Select eligibility code as No and click on continue.",
@@ -8688,7 +8764,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Select eligibility code as No,Enter participation date and click on continue.",
 						"Error message "
 								+ "'Ineligibility Reason code is required because Eligibility code is No.' is displayed.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -8726,13 +8802,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate Ineligibility reason code drop down values."
 								+ "Values should be as follows:"
 								+ inelgResnCode, "Reason codes displayed are:"
-								+ resnCode.getOptions(), false);
+										+ resnCode.getOptions(), false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate Ineligibility reason code drop down values."
 								+ "Values should be as follows:"
 								+ inelgResnCode, "Reason codes displayed are:"
-								+ resnCode.getOptions(), true);
+										+ resnCode.getOptions(), true);
 			Select elgCode = new Select(eligiCode);
 			elgCode.selectByVisibleText("Yes");
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -8800,7 +8876,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Enter invalid salary 'TestSalary' and click on continue."
 								+ "error message '" + expIncomeErrorMsg
 								+ "' should be displayed.",
-						"Error message displayed is:" + actIncomeErrorMsg, true);
+								"Error message displayed is:" + actIncomeErrorMsg, true);
 			isPageDisplayed = false;
 			Select freq = new Select(frequency);
 			if (CommonLib.isAllHeadersDisplayed(freq.getOptions(),
@@ -8809,15 +8885,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Validate frequency drop down values as following."
 								+ expFreqOptions,
-						"" + "Frequency drop down options are:"
-								+ freq.getOptions(), false);
+								"" + "Frequency drop down options are:"
+										+ freq.getOptions(), false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate frequency drop down values as following."
 								+ expFreqOptions,
-						"" + "Frequency drop down options are:"
-								+ freq.getOptions(), true);
+								"" + "Frequency drop down options are:"
+										+ freq.getOptions(), true);
 			Web.setTextToTextBox(salaryInput, "1200000");
 			freq.selectByValue("1");
 			Web.clickOnElement(continueAddEmp);
@@ -8835,7 +8911,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Enter valid salary,select frequency and click continue.",
 						""
 								+ "Add new employment information page is not displayed",
-						true);
+								true);
 				isPageDisplayed = false;
 			}
 			return isPageDisplayed;
@@ -8875,14 +8951,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Leave hire date as blank and click continue.Error message"
 								+ "displayed is:" + expHireDateErrorMsg,
-						"Error message displayed is:" + actHireDataErrorMsg,
-						false);
+								"Error message displayed is:" + actHireDataErrorMsg,
+								false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Leave hire date as blank and click continue.Error message"
 								+ "displayed is:" + expHireDateErrorMsg,
-						"Error message displayed is:" + actHireDataErrorMsg,
-						true);
+								"Error message displayed is:" + actHireDataErrorMsg,
+								true);
 			isPageDisplayed = false;
 			TimeZone zone = TimeZone.getTimeZone("MST");
 			Calendar c = Calendar.getInstance(zone);
@@ -8924,14 +9000,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Enter subset details and click on continue.",
 						"Managed Account"
 								+ " Participant Enrollment page is displayed.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Enter subset details and click on continue.",
 						"Managed Account"
 								+ " Participant Enrollment page is not displayed.",
-						true);
+								true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -8960,13 +9036,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"If managed account page is displayed,validate following"
 									+ " fields are displayed:"
 									+ expManagedAccntLabels,
-							"Expected fields are displayed.", false);
+									"Expected fields are displayed.", false);
 				else
 					Reporter.logEvent(Status.FAIL,
 							"If managed account page is displayed,validate following"
 									+ " fields are displayed:"
 									+ expManagedAccntLabels,
-							"All Expected fields are not displayed.", true);
+									"All Expected fields are not displayed.", true);
 				Select gender_ = new Select(gender);
 				gender_.selectByVisibleText("MALE");
 				Web.clickOnElement(conPptWithMangedAccntBtn);
@@ -8977,14 +9053,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Clcik 'Continue participant Enrollment into plan with Managed Accounts' button.",
 							""
 									+ "Participant is enrolled into Managed account.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Clcik 'Continue participant Enrollment into plan with Managed Accounts' button.",
 							""
 									+ "Participant is not enrolled into Managed account.",
-							true);
+									true);
 
 				if (useDefltAllocBtn.isDisplayed()
 						&& conWithoutAllocBtn.isDisplayed())
@@ -8992,35 +9068,35 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"Observe two buttons 'Use Default Allocation' and 'Continue Without Allocation' button"
 									+ " are displayed.",
-							"Expected buttons are displayed.", false);
+									"Expected buttons are displayed.", false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Observe two buttons 'Use Default Allocation' and 'Continue Without Allocation' button"
 									+ " are displayed.",
-							"Expected buttons are displayed.", true);
+									"Expected buttons are displayed.", true);
 				Web.clickOnElement(useDefltAllocBtn);
 				Web.waitForPageToLoad(Web.getDriver());
 				Web.waitForElement(framecA);
 				Web.getDriver().switchTo().frame(framecA);
 				if (autoSuiteAngularDeferralPage.isDisplayed()
 						&& autoSuiteAngularDeferralPage.getAttribute("class")
-								.contains("ng-scope"))
+						.contains("ng-scope"))
 					Reporter.logEvent(
 							Status.PASS,
 							"Click on Use Default Allocations and observe that user"
 									+ "is navigated to angular page to enter deferral information.",
-							"User is navigated to "
-									+ "angular page to enter deferral information.",
-							false);
+									"User is navigated to "
+											+ "angular page to enter deferral information.",
+											false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Click on Use Default Allocations and observe that user"
 									+ "is navigated to angular page to enter deferral information.",
-							"User is not navigated to "
-									+ "angular page to enter deferral information.",
-							true);
+									"User is not navigated to "
+											+ "angular page to enter deferral information.",
+											true);
 				Web.clickOnElement(conWithoutDeffNgBtn);
 				Web.waitForPageToLoad(Web.getDriver());
 				Web.waitForElement(addEmpTitle);
@@ -9060,13 +9136,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"If managed account page is displayed,validate following"
 									+ " fields are displayed:"
 									+ expManagedAccntLabels,
-							"Expected fields are displayed.", false);
+									"Expected fields are displayed.", false);
 				else
 					Reporter.logEvent(Status.FAIL,
 							"If managed account page is displayed,validate following"
 									+ " fields are displayed:"
 									+ expManagedAccntLabels,
-							"All Expected fields are not displayed.", true);
+									"All Expected fields are not displayed.", true);
 				Select gender_ = new Select(gender);
 				gender_.selectByVisibleText("MALE");
 				Web.clickOnElement(conPptWithoutMangedAccntBtn);
@@ -9079,14 +9155,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Clcik 'Continue participant Enrollment into plan without Managed Accounts' button.",
 							""
 									+ "following buttons are displayed.1.Continue 2.Continue Using Default Allocation 3.Continue Without Allocations.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Clcik 'Continue participant Enrollment into plan without Managed Accounts' button.",
 							""
 									+ "following buttons are not displayed.1.Continue 2.Continue Using Default Allocation 3.Continue Without Allocations.",
-							true);
+									true);
 				if (newAllocRadioButton.isDisplayed()) {
 					Web.clickOnElement(newAllocRadioButton);
 				}
@@ -9105,15 +9181,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Enter allocation not adding up to 100% and click continue."
 									+ "Error message '" + expAllocSumMsg
 									+ "' is displayed.",
-							"Error message displayed is:" + actAllocSumMsg,
-							false);
+									"Error message displayed is:" + actAllocSumMsg,
+									false);
 				else
 					Reporter.logEvent(Status.FAIL,
 							"Enter allocation not adding up to 100% and click continue."
 									+ "Error message '" + expAllocSumMsg
 									+ "' is displayed.",
-							"Error message displayed is:" + actAllocSumMsg,
-							true);
+									"Error message displayed is:" + actAllocSumMsg,
+									true);
 				Web.setTextToTextBox(
 						allocationsRows.get(0).findElement(
 								By.xpath(".//td[4]//input")), "100");
@@ -9123,20 +9199,20 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Web.getDriver().switchTo().frame(framecA);
 				if (autoSuiteAngularDeferralPage.isDisplayed()
 						&& autoSuiteAngularDeferralPage.getAttribute("class")
-								.contains("ng-scope"))
+						.contains("ng-scope"))
 					Reporter.logEvent(
 							Status.PASS,
 							"Enter 100% allocations and click continue.",
 							"User is navigated to "
 									+ "angular page to enter deferral information.",
-							false);
+									false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"Enter 100% allocations and click continue.",
 							"User is not navigated to "
 									+ "angular page to enter deferral information.",
-							true);
+									true);
 				Web.clickOnElement(conWithoutDeffNgBtn);
 				Web.waitForPageToLoad(Web.getDriver());
 				Web.waitForElement(addEmpTitle);
@@ -9170,14 +9246,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Search SSN that is associated with locked plan and observe the"
 								+ " error message:" + expectedMsg,
-						"Below Error message is displayed when SSN is searched for Loacked plan."
-								+ "\n" + error, false);
+								"Below Error message is displayed when SSN is searched for Loacked plan."
+										+ "\n" + error, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Search SSN that is associated with locked plan and observe the"
 								+ " error message:" + expectedMsg,
-						"below Error message is displayed when SSN is searched for Loacked plan."
-								+ "\n" + error, true);
+								"below Error message is displayed when SSN is searched for Loacked plan."
+										+ "\n" + error, true);
 			Web.clickOnElement(Web.returnElement(uvp, "DISMISS"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -9218,10 +9294,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "participant data:Last Name,First Name,Middle Name,Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"
 								+ "Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
 								+ "Work,Phone,Extension,Fax,Email",
-						"Below fields are displayed.\nLast Name,First Name,Middle Name,"
-								+ "Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"
-								+ "Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
-								+ "Work,Phone,Extension,Fax,Email", false);
+								"Below fields are displayed.\nLast Name,First Name,Middle Name,"
+										+ "Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"
+										+ "Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
+										+ "Work,Phone,Extension,Fax,Email", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -9229,8 +9305,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "participant data:Last Name,First Name,Middle Name,Suffix,Birth Date (mm/dd/yyyy),Marital,Status\n"
 								+ "Gender,Language,Preference,Mailing Name1,Mailing Name2,Address City,State,Zip,Country,Home,Phone,"
 								+ "Work,Phone,Extension,Fax,Email",
-						"All or few of the mentioned fields are not displayed.",
-						true);
+								"All or few of the mentioned fields are not displayed.",
+								true);
 			if (incomingRollAssitance.isDisplayed())
 				Reporter.logEvent(Status.PASS,
 						"Validate Incoming Rollover Assistance is displayed.",
@@ -9254,11 +9330,11 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "Call this employee at phone# with an areacode and phone # with input box\n"
 								+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
 								+ "Don't know if employee has outside assets\n",
-						"below radio buttons are displayed:\n"
-								+ "Call this employee at phone# with an areacode and phone # with input box\n"
-								+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
-								+ "Don't know if employee has outside assets\n",
-						false);
+								"below radio buttons are displayed:\n"
+										+ "Call this employee at phone# with an areacode and phone # with input box\n"
+										+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
+										+ "Don't know if employee has outside assets\n",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -9266,7 +9342,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "Call this employee at phone# with an areacode and phone # with input box\n"
 								+ "Call work phone number above\nEmployee doesn't have outside assets or isn't interested\n"
 								+ "Don't know if employee has outside assets\n",
-						"All or few radio buttons are not displayed.", true);
+								"All or few radio buttons are not displayed.", true);
 			if (continueAddEmp.isDisplayed()
 					&& (exitWithoutAddEmpBtn.isDisplayed() && exitWithAddEmp
 							.equalsIgnoreCase("Exit without adding employee")))
@@ -9274,17 +9350,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Validate below two buttons are diaplayed\n1)Continue"
 								+ "\n2)Exit without adding employee",
-						"Two buttons "
-								+ "are displayed.\n1)Continue\n2)Exit without adding employee.",
-						false);
+								"Two buttons "
+										+ "are displayed.\n1)Continue\n2)Exit without adding employee.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate below two buttons are diaplayed\n1)Continue"
 								+ "\n2)Exit without adding employee",
-						"Two buttons "
-								+ "are not displayed.\n1)Continue\n2)Exit without adding employee.",
-						true);
+								"Two buttons "
+										+ "are not displayed.\n1)Continue\n2)Exit without adding employee.",
+										true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -9325,31 +9401,31 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								Status.PASS,
 								"Click on view button for any of the plan and"
 										+ " observe that records are displayed for the selected plan only.",
-								"After clicking "
-										+ "on view button for a plan, only records for selected plan is displayed.",
-								false);
+										"After clicking "
+												+ "on view button for a plan, only records for selected plan is displayed.",
+												false);
 					else
 						Reporter.logEvent(
 								Status.FAIL,
 								"Click on view button for any of the plan and"
 										+ " observe that records are displayed for the selected plan only.",
-								"After clicking "
-										+ "on view button for a plan, only records for selected plan is not displayed.",
-								true);
+										"After clicking "
+												+ "on view button for a plan, only records for selected plan is not displayed.",
+												true);
 					if (moneySource.isDisplayed() && investment.isDisplayed()) {
 						Reporter.logEvent(
 								Status.PASS,
 								"User should be able to view balance by money source"
 										+ " and balance by Investments.",
-								"Money source and Investment sections are displayed.",
-								false);
+										"Money source and Investment sections are displayed.",
+										false);
 					} else {
 						Reporter.logEvent(
 								Status.FAIL,
 								"User should be able to view balance by money source"
 										+ " and balance by Investments.",
-								"Money source and Investment sections are not displayed.",
-								true);
+										"Money source and Investment sections are not displayed.",
+										true);
 					}
 					Web.clickOnElement(returnToEmployeeOverview);
 					Web.waitForPageToLoad(Web.getDriver());
@@ -9397,15 +9473,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								"Click on employee web button for plan '"
 										+ planId + "' and"
 										+ " verify user is taken to PPT Web.",
-								"User is navigated " + "to below URL:\n"
-										+ Web.getDriver().getCurrentUrl(),
-								false);
+										"User is navigated " + "to below URL:\n"
+												+ Web.getDriver().getCurrentUrl(),
+												false);
 					else
 						Reporter.logEvent(Status.FAIL,
 								"Click on employee web button for plan '"
 										+ planId + "' and"
 										+ " verify user is taken to PPT Web.",
-								"User is not navigated to PPT Web page.", true);
+										"User is not navigated to PPT Web page.", true);
 				} finally {
 					Web.getDriver().close();
 					Web.getDriver().switchTo().window(parentWindowId);
@@ -9441,16 +9517,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Click on Recently viewed link on "
 								+ "search page and validate message as below:\n"
 								+ expMessage, ""
-								+ "Message is displayed as below:\n"
-								+ actMessage, false);
+										+ "Message is displayed as below:\n"
+										+ actMessage, false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on Recently viewed link on "
 								+ "search page and validate message as below:\n"
 								+ expMessage, ""
-								+ "Message is displayed as below:\n"
-								+ actMessage, true);
+										+ "Message is displayed as below:\n"
+										+ actMessage, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred:",
@@ -9544,16 +9620,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "'\n4)Headers Investment Options,"
 								+ "Fund Short Name,Enter Percentage are displayed\n5)"
 								+ "Save adnd cancel button is displayed.",
-						"Below titles are displayed on allocation page"
-								+ "\n'"
-								+ actTitle
-								+ "'\n'"
-								+ actTitle2
-								+ "'\n'"
-								+ actNewAllocTitle
-								+ "'\n"
-								+ "All expected headers are displayed.\nSave and cancel buttons are displayed.\nTotal "
-								+ "field is displayed.", false);
+								"Below titles are displayed on allocation page"
+										+ "\n'"
+										+ actTitle
+										+ "'\n'"
+										+ actTitle2
+										+ "'\n'"
+										+ actNewAllocTitle
+										+ "'\n"
+										+ "All expected headers are displayed.\nSave and cancel buttons are displayed.\nTotal "
+										+ "field is displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -9569,8 +9645,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								+ "'\n4)Headers Investment Options,"
 								+ "Fund Short Name,Enter Percentage are displayed\n5)"
 								+ "Save adnd cancel button is displayed.",
-						"all or few of the expected elements are not found.",
-						true);
+								"all or few of the expected elements are not found.",
+								true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -9753,14 +9829,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.FAIL,
 						"Delete 'ESCCPA' and 'ESCCSD' txn codes and"
 								+ " verify Add/Change allocation button is not displayed.",
-						"" + "Add/change allocation button is displayed.", true);
+								"" + "Add/change allocation button is displayed.", true);
 			else
 				Reporter.logEvent(
 						Status.PASS,
 						"Delete 'ESCCPA' and 'ESCCSD' txn codes and"
 								+ " verify Add/Change allocation button is not displayed.",
-						"" + "Add/change allocation button is not displayed.",
-						false);
+								"" + "Add/change allocation button is not displayed.",
+								false);
 			CommonLib.switchToFrame(employeeSearchFrame);
 			Web.clickOnElement(allocationModalClose);
 			Web.waitForElement(allocMoreButton);
@@ -9794,17 +9870,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Make sure user is assigend with ESCCSD txn code and able to"
 								+ " see Add/Change Allocation buttons.",
-						"Add/Change allocation buttons are displayed hence"
-								+ " user can add/change allocation for self directed allocations.",
-						false);
+								"Add/Change allocation buttons are displayed hence"
+										+ " user can add/change allocation for self directed allocations.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Make sure user is assigend with ESCCSD txn code and able to"
 								+ " see Add/Change Allocation buttons.",
-						"Add/Change allocation buttons are not displayed hence"
-								+ " user can not add/change allocation for self directed allocations.",
-						true);
+								"Add/Change allocation buttons are not displayed hence"
+										+ " user can not add/change allocation for self directed allocations.",
+										true);
 			CommonLib.switchToFrame(employeeSearchFrame);
 			Web.clickOnElement(allocationModalClose);
 			Web.waitForElement(allocMoreButton);
@@ -9873,14 +9949,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate more button is displayed if number of loans>5 else"
 								+ " more button is not displayed.",
-						"More button displayed:" + ismoreDisplayed + "\n"
-								+ "Number of loan is:" + count, false);
+								"More button displayed:" + ismoreDisplayed + "\n"
+										+ "Number of loan is:" + count, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate more button is displayed if number of loans>5 else"
 								+ " more button is not displayed.",
-						"More button displayed:" + ismoreDisplayed + "\n"
-								+ " Number of loan is:" + count, true);
+								"More button displayed:" + ismoreDisplayed + "\n"
+										+ " Number of loan is:" + count, true);
 
 			boolean isHeaderDisplayed = CommonLib.isAllHeadersDisplayed(
 					extLoanHeaders, expExtLoanHeader);
@@ -9888,12 +9964,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate below columns are displayed for external loans:\n"
 								+ expExtLoanHeader,
-						"Expected columns are displayed.", false);
+								"Expected columns are displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate below columns are displayed for external loans:\n"
 								+ expExtLoanHeader,
-						"Expected columns are not displayed.", true);
+								"Expected columns are not displayed.", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -9923,14 +9999,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate participant name is displayed on loan detail page."
 								+ "\nPPT name:" + pptName,
-						"Header is displayed containing ppt name as below:\n"
-								+ loanDetailHeader.getText().trim(), false);
+								"Header is displayed containing ppt name as below:\n"
+										+ loanDetailHeader.getText().trim(), false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate participant name is displayed on loan detail page."
 								+ "\nPPT name:" + pptName,
-						"Header is not displayed containing ppt name.\n"
-								+ loanDetailHeader.getText().trim(), true);
+								"Header is not displayed containing ppt name.\n"
+										+ loanDetailHeader.getText().trim(), true);
 			boolean isEmpId = CommonLib
 					.isElementExistByXpath(empIdOnLoanDetail);
 			WebElement ssn = ssnLabelOnLoanDetailPage.findElement(By
@@ -9985,7 +10061,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate emp id is displayed on loan detail page.",
 						"Emp id is not displayed"
 								+ " on loan detail page as ppt is not assigned with emp id.",
-						true);
+								true);
 			}
 
 		} catch (Exception e) {
@@ -10022,16 +10098,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Verify below title and fields:\n"
 								+ "1.Loans Taken\n2.Loan payments\n3.from and to date fields.\n4.Effective date,"
 								+ "Payroll date,Loan amount.",
-						"All the expected fields and titles are displayed.",
-						false);
+								"All the expected fields and titles are displayed.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Verify below title and fields:\n"
 								+ "1.Loans Taken\n2.Loan payments\n3.from and to date fields.\n4.Effective date,"
 								+ "Payroll date,Loan amount.",
-						"All the expected fields and titles are not displayed.",
-						true);
+								"All the expected fields and titles are not displayed.",
+								true);
 
 			for (WebElement loan : listOfExtLoanAmount) {
 				loanAmounts.add(Double.parseDouble(loan.getText()
@@ -10056,12 +10132,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate loan details with DB(Total of loan amount taken)\n"
 								+ " Total loan amount from DB:" + sumDB,
-						"Total Loan amount on detail Page:" + sum, false);
+								"Total Loan amount on detail Page:" + sum, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate loan details with DB(Total of loan amount taken)\n"
 								+ " Total loan amount from DB:" + sumDB,
-						"Total Loan amount on detail Page:" + sum, true);
+								"Total Loan amount on detail Page:" + sum, true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -10084,12 +10160,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate message for PPT who does not have loan detail:\nmessage should be:"
 								+ expMsg, "Message displayed is as below:\n"
-								+ actMsg, false);
+										+ actMsg, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate message for PPT who does not have loan detail:\nmessage should be:"
 								+ expMsg, "Message displayed is as below:\n"
-								+ actMsg, true);
+										+ actMsg, true);
 			Web.clickOnElement(loanMoreBtn);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(loanDetailFrame);
@@ -10100,14 +10176,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Click on m ore button and verify below message:\n"
 								+ expMsgOnDetailPage,
-						"Actual message displayed is:\n" + actMsgOnLoanPage,
-						false);
+								"Actual message displayed is:\n" + actMsgOnLoanPage,
+								false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Click on m ore button and verify below message:\n"
 								+ expMsgOnDetailPage,
-						"Actual message displayed is:\n" + actMsgOnLoanPage,
-						true);
+								"Actual message displayed is:\n" + actMsgOnLoanPage,
+								true);
 			if (loansPaymentReceTitle.isDisplayed())
 				Reporter.logEvent(Status.PASS,
 						"Validate Loans Repayments title is displayed.",
@@ -10180,13 +10256,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"On loan detail page select to date before from date.below"
 								+ " validation message is displayed.\n"
 								+ expError,
-						"below error message is displayed\n" + actError, false);
+								"below error message is displayed\n" + actError, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"On loan detail page select to date before from date.below"
 								+ " validation message is displayed.\n"
 								+ expError,
-						"below error message is displayed\n" + actError, true);
+								"below error message is displayed\n" + actError, true);
 			Web.setTextToTextBox(fromDateOnExtLoanPage, "12/2017");
 			Web.waitForElement(datRangeError);
 			actInvldDateError = datRangeError.getText().trim();
@@ -10194,14 +10270,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Select invalid date like '12/2017' and validate below"
 								+ " error message:\n" + expInvalidError,
-						"below error message is displayed\n"
-								+ actInvldDateError, false);
+								"below error message is displayed\n"
+										+ actInvldDateError, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Select invalid date like '12/2017' and validate below"
 								+ " error message:\n" + expInvalidError,
-						"below error message is displayed\n"
-								+ actInvldDateError, true);
+								"below error message is displayed\n"
+										+ actInvldDateError, true);
 			Web.setTextToTextBox(fromDateOnExtLoanPage, fromDateString);
 			Web.setTextToTextBox(toDateOnExtLoanPage, todateString);
 			Web.clickOnElement(submitBtn);
@@ -10213,14 +10289,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Enter date range within where no data exists.below message"
 								+ " is displayed.\n" + noDataWithinDateRange,
-						"Below validation message is " + "displayed:\n"
-								+ actDataWithinDateRange, false);
+								"Below validation message is " + "displayed:\n"
+										+ actDataWithinDateRange, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Enter date range within where no data exists.below message"
 								+ " is displayed.\n" + noDataWithinDateRange,
-						"Below validation message is " + "displayed:\n"
-								+ actDataWithinDateRange, true);
+								"Below validation message is " + "displayed:\n"
+										+ actDataWithinDateRange, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -10248,15 +10324,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate below message is displayed if"
 								+ " no loan repayment data is available:\n"
 								+ expNoLoanRepayMsg,
-						"Below message is displayed:" + "\n"
-								+ actNoLoanRepayMsg, false);
+								"Below message is displayed:" + "\n"
+										+ actNoLoanRepayMsg, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate below message is displayed if"
 								+ " no loan repayment data is available:\n"
 								+ expNoLoanRepayMsg,
-						"Below message is displayed:" + "\n"
-								+ actNoLoanRepayMsg, true);
+								"Below message is displayed:" + "\n"
+										+ actNoLoanRepayMsg, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -10325,16 +10401,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Click on more button andValidate "
 								+ "below column headers are displayed on modal window:\n"
 								+ expheadersOnModalWindow, ""
-								+ "Specified column headers are displayed.",
-						false);
+										+ "Specified column headers are displayed.",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on more button andValidate "
 								+ "below column headers are displayed on modal window:\n"
 								+ expheadersOnModalWindow,
-						"" + "Specified column headers are not displayed.",
-						true);
+								"" + "Specified column headers are not displayed.",
+								true);
 
 			if (isSummryDisplayed && isallTxnBtnDisplayed
 					&& isContTxnBtnDisplayed && isTxfrTxnBtnDisplayed
@@ -10344,16 +10420,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate if below radio buttons are displayed:\n"
 								+ "1.Summary\n2.All Transaction\n3.Contribution Transactions\n4.Transfer Transaction\n5."
 								+ "Withdrawal Transaction",
-						"All the mentioned readio buttons are displayed.",
-						false);
+								"All the mentioned readio buttons are displayed.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate if below radio buttons are displayed:\n"
 								+ "1.Summary\n2.All Transaction\n3.Contribution Transactions\n4.Transfer Transaction\n5."
 								+ "Withdrawal Transaction",
-						"All the mentioned readio buttons are not displayed.",
-						true);
+								"All the mentioned readio buttons are not displayed.",
+								true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -10419,15 +10495,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Select a date range as below:\n"
 								+ df.format(cal.getTime()) + " to "
 								+ df.format(endDate),
-						"Records are filtered within that date range.", false);
+								"Records are filtered within that date range.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Select a date range as below:\n"
 								+ df.format(cal.getTime()) + " to "
 								+ df.format(endDate),
-						"Records are not filtered within that date range.",
-						true);
+								"Records are not filtered within that date range.",
+								true);
 
 			for (WebElement confNumber : txnHistryConfmtionNumbr) {
 				String tagname = confNumber.getTagName();
@@ -10473,8 +10549,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.PASS,
 					"Click on confirmation link and validate that"
 							+ " transaction detail page opens in a seperate window.",
-					"Transaction detail page opens in" + " a seperate window.",
-					false);
+							"Transaction detail page opens in" + " a seperate window.",
+							false);
 			CommonLib.switchToFrame(employeeSearchFrame);
 			Web.clickOnElement(txnHistClose);
 			Web.waitForElement(txnHistoryMoreBtn);
@@ -10483,8 +10559,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.FAIL,
 					"Click on confirmation link and validate that"
 							+ " transaction detail page opens in a seperate window.",
-					"Transaction detail page does not open in"
-							+ " a seperate window.", true);
+							"Transaction detail page does not open in"
+									+ " a seperate window.", true);
 		}
 	}
 
@@ -10510,15 +10586,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Click on 'click here' link and verify a new modal window is "
 								+ "opened.",
-						"A modal window is opened once user clicks on 'Click here' link.'",
-						false);
+								"A modal window is opened once user clicks on 'Click here' link.'",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on 'click here' link and verify a new modal window is "
 								+ "opened.",
-						"A modal window is not opened once user clicks on 'Click here' link.'",
-						true);
+								"A modal window is not opened once user clicks on 'Click here' link.'",
+								true);
 			CommonLib.switchToFrame(employeeSearchFrame);
 			Web.clickOnElement(txnHistClose);
 			Web.waitForElement(txnHistoryMoreBtn);
@@ -10630,17 +10706,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"If emp termdate+18 monnths is greater than current date"
 									+ " then edit termination button should be displayed.",
-							"Edit termination button is displayed as "
-									+ "emp termdate+18months is:"
-									+ termDateModified, false);
+									"Edit termination button is displayed as "
+											+ "emp termdate+18months is:"
+											+ termDateModified, false);
 				else
 					Reporter.logEvent(
 							Status.FAIL,
 							"If emp termdate+18 monnths is greater than current date"
 									+ " then edit termination button should be displayed.",
-							"Edit termination button is not displayed.\n"
-									+ "emp termdate+18months is:"
-									+ termDateModified, true);
+									"Edit termination button is not displayed.\n"
+											+ "emp termdate+18months is:"
+											+ termDateModified, true);
 				String actMsg = termedMsg1.getText() + " "
 						+ termedMsg2.getText();
 				if (termedMsg1.isDisplayed() && termedMsg2.isDisplayed())
@@ -10660,26 +10736,26 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 								Status.FAIL,
 								"If emp termdate+18 months is less than current date"
 										+ " then edit termination button should not be displayed.",
-								"Edit termination button is displayed.\n"
-										+ "emp termdate+18months is:"
-										+ termDateModified, true);
+										"Edit termination button is displayed.\n"
+												+ "emp termdate+18months is:"
+												+ termDateModified, true);
 					} else {
 						Reporter.logEvent(
 								Status.PASS,
 								"If emp termdate_18 months is less than current date"
 										+ " then edit termination button should not be displayed.",
-								"Edit termination button is not displayed.\n"
-										+ "emp termdate+18months is:"
-										+ termDateModified, false);
+										"Edit termination button is not displayed.\n"
+												+ "emp termdate+18months is:"
+												+ termDateModified, false);
 					}
 				} catch (Exception e) {
 					Reporter.logEvent(
 							Status.PASS,
 							"If emp termdate_18 months is less than current date"
 									+ " then edit termination button should not be displayed.",
-							"Edit termination button is not displayed.\n"
-									+ "emp termdate+18months is:"
-									+ termDateModified, false);
+									"Edit termination button is not displayed.\n"
+											+ "emp termdate+18months is:"
+											+ termDateModified, false);
 				}
 				/*
 				 * Web.getDriver().switchTo().defaultContent();
@@ -10689,8 +10765,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				 */
 				String actMsg = msgFortermDateLessthn18months.getText();
 				System.out
-						.println("Actual message when termdate+18month<currentdate:"
-								+ actMsg);
+				.println("Actual message when termdate+18month<currentdate:"
+						+ actMsg);
 				// String actLinkText =
 				// msgFortermDateLessthn18months.findElement(By.tagName("a")).getText();
 				if (actMsg.equals(expMsgForLessThan18Month))
@@ -10698,13 +10774,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							"Validate message under 'update employment information' section."
 									+ "below message is displayed:\n"
 									+ expMsgForLessThan18Month,
-							"Below message is displayed.\n" + actMsg, false);
+									"Below message is displayed.\n" + actMsg, false);
 				else
 					Reporter.logEvent(Status.FAIL,
 							"Validate message under 'update employment information' section."
 									+ "below message is displayed:\n"
 									+ expMsgForLessThan18Month,
-							"Below message is displayed.\n" + actMsg, true);
+									"Below message is displayed.\n" + actMsg, true);
 				/*
 				 * if(actLinkText.equals("website support"))
 				 * Reporter.logEvent(Status
@@ -10721,18 +10797,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate if 'Retrun to employee page' and 'Rehire employee' "
 								+ "buttons are displayed.",
-						"'Return to employee page' and 'Rehire employee' buttons are"
-								+ " displayed.", false);
+								"'Return to employee page' and 'Rehire employee' buttons are"
+										+ " displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate if 'Retrun to employee page' and 'Rehire employee' "
 								+ "buttons are displayed.",
-						"'Return to employee page' and 'Rehire employee' buttons are not"
-								+ " displayed.\n"
-								+ returnToEmployeePageButtonsingleBtn
+								"'Return to employee page' and 'Rehire employee' buttons are not"
+										+ " displayed.\n"
+										+ returnToEmployeePageButtonsingleBtn
 										.isDisplayed() + "\n"
-								+ rehireempBtn.isDisplayed(), true);
+										+ rehireempBtn.isDisplayed(), true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -10761,15 +10837,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"click on Edit Termination Date and validate emp hire date and "
 								+ "term date fields are displayed.",
-						"Emp Hire date and term date fields are displayed.",
-						false);
+								"Emp Hire date and term date fields are displayed.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"click on Edit Termination Date and validate emp hire date and "
 								+ "term date fields are displayed.",
-						"Emp Hire date and term date fields are not displayed.",
-						true);
+								"Emp Hire date and term date fields are not displayed.",
+								true);
 
 			if (disabledAttribute.equals("true"))
 				Reporter.logEvent(Status.PASS,
@@ -10799,15 +10875,15 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate that termDate must be after hire date or equal to hire"
 								+ " date.",
-						"Term date is after hire date or equal to hire date.",
-						false);
+								"Term date is after hire date or equal to hire date.",
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate that termDate must be after hire date or equal to hire"
 								+ " date.",
-						"Term date is not found to be after hire date or equal to hire date.",
-						true);
+								"Term date is not found to be after hire date or equal to hire date.",
+								true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -10835,14 +10911,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Click on Rehire button and validate employee rehire options "
 								+ "are displayed.",
-						"Below rehire fields are displayed.\n"
-								+ expRehireFields, false);
+								"Below rehire fields are displayed.\n"
+										+ expRehireFields, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Click on Rehire button and validate employee rehire options "
 								+ "are displayed.",
-						"Below rehire fields are not displayed.\n"
-								+ expRehireFields, true);
+								"Below rehire fields are not displayed.\n"
+										+ expRehireFields, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -10875,12 +10951,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			if (brdcrmbstring.contains(expBreadCrumbEndString))
 				Reporter.logEvent(Status.PASS, "Validate bread crumb for "
 						+ expBreadCrumbEndString + " page.", ""
-						+ "Below bread crumb is displayed on top.\n"
-						+ brdcrmbstring, false);
+								+ "Below bread crumb is displayed on top.\n"
+								+ brdcrmbstring, false);
 			else
 				Reporter.logEvent(Status.FAIL, "Validate bread crumb for "
 						+ expBreadCrumbEndString + " page.", ""
-						+ "Below bread crumb is not displayed", true);
+								+ "Below bread crumb is not displayed", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -10960,30 +11036,30 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Validate below top headers are displayed under employment"
 							+ " History section.\n" + expEmpHistTopHeaders, ""
-							+ "Below top headers are dislayed.\n"
-							+ expEmpHistTopHeaders, false);
+									+ "Below top headers are dislayed.\n"
+									+ expEmpHistTopHeaders, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Validate below top headers are displayed under employment"
 							+ " History section.\n" + expEmpHistTopHeaders, ""
-							+ "Below top headers are dislayed.\n"
-							+ expEmpHistTopHeaders, true);
+									+ "Below top headers are dislayed.\n"
+									+ expEmpHistTopHeaders, true);
 		if (isAllLabelsDisplayed)
 			Reporter.logEvent(
 					Status.PASS,
 					"Validate below labels are displayed under employment"
 							+ " History section once user clicks on Details link.\n"
 							+ expEmpHistTopHeaders, ""
-							+ "Below labels are dislayed.\n"
-							+ expEmpHistDetailsLabels, false);
+									+ "Below labels are dislayed.\n"
+									+ expEmpHistDetailsLabels, false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate below top headers are displayed under employment"
 							+ " History section once user clicks on Details link.\n"
 							+ expEmpHistTopHeaders, ""
-							+ "Below labels are dislayed.\n"
-							+ expEmpHistDetailsLabels, true);
+									+ "Below labels are dislayed.\n"
+									+ expEmpHistDetailsLabels, true);
 
 	}
 
@@ -11015,18 +11091,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Enter rehire date equals to term date and validate below"
 							+ " message on save.\n" + expRehireMsg,
-					"Below message is displayed when rehire date equals to term date.\n"
-							+ actRehireMsg, false);
+							"Below message is displayed when rehire date equals to term date.\n"
+									+ actRehireMsg, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Enter rehire date equals to term date and validate below"
 							+ " message on save.\n" + expRehireMsg,
-					"Below message is displayed when rehire date equals to term date.\n"
-							+ actRehireMsg, true);
+							"Below message is displayed when rehire date equals to term date.\n"
+									+ actRehireMsg, true);
 
 		// future Rehire date
 		System.out
-				.println("Future date:" + CommonLib.getDate("MM/dd/yyyy", 60));
+		.println("Future date:" + CommonLib.getDate("MM/dd/yyyy", 60));
 		Web.setTextToTextBox(empHiredate, CommonLib.getDate("MM/dd/yyyy", 60));
 		Web.clickOnElement(saveOnEmpPage);
 		do {
@@ -11038,14 +11114,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Enter rehire date in future and validate below"
 							+ " message on save.\n" + expFutureDateMsg,
-					"Below message is displayed when rehire date in future.\n"
-							+ actRehireMsg, false);
+							"Below message is displayed when rehire date in future.\n"
+									+ actRehireMsg, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Enter rehire date in future and validate below"
 							+ " message on save.\n" + expFutureDateMsg,
-					"Below message is displayed when rehire date in future.\n"
-							+ actRehireMsg, false);
+							"Below message is displayed when rehire date in future.\n"
+									+ actRehireMsg, false);
 
 		Web.clickOnElement(cancelButton);
 		Web.waitForPageToLoad(Web.getDriver());
@@ -11095,17 +11171,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"select term date before hire date and observe below message.\n"
 								+ termCantBeEarlier,
-						""
-								+ "Below message is displayed once term date<hire date\n"
-								+ termCantBeEarlier, false);
+								""
+										+ "Below message is displayed once term date<hire date\n"
+										+ termCantBeEarlier, false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"select term date before hire date and observe below message.\n"
 								+ termCantBeEarlier,
-						""
-								+ "Below message is displayed once term date<hire date\n"
-								+ termCantBeEarlier, true);
+								""
+										+ "Below message is displayed once term date<hire date\n"
+										+ termCantBeEarlier, true);
 
 			/*
 			 * String disabled =
@@ -11133,14 +11209,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"clear term date and select term reason and observe below message.\n"
 								+ expReasonValidation, ""
-								+ "Below message is displayed:\n"
-								+ actReasonValidation, false);
+										+ "Below message is displayed:\n"
+										+ actReasonValidation, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"clear term date and select term reason and observe below message.\n"
 								+ expReasonValidation, ""
-								+ "Below message is displayed:\n"
-								+ actReasonValidation, true);
+										+ "Below message is displayed:\n"
+										+ actReasonValidation, true);
 			cal.add(Calendar.DATE, 2);
 			String termDateAfterHireDate = CommonLib.getDateStringInDateFormat(
 					"MM/dd/yyyy", cal.getTime());
@@ -11153,9 +11229,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.PASS,
 							"select hire date between last term date and current date,fill term date in future,"
 									+ "fill term reason and save",
-							"details are saved"
-									+ " and confirmation message is displayed and corresponding record is found in DB in event table.\n"
-									+ confirmationText.getText(), false);
+									"details are saved"
+											+ " and confirmation message is displayed and corresponding record is found in DB in event table.\n"
+											+ confirmationText.getText(), false);
 					this.clickOnReturnToEmployeeBtn();
 					CommonLib.waitForProgressBar();
 				} else {
@@ -11163,9 +11239,9 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							Status.FAIL,
 							"select hire date between last term date and current date,fill term date in future,"
 									+ "fill term reason and save",
-							"Rehire date is not updated"
-									+ " as no record is found in event table for confiramtion number:"
-									+ confNumber, true);
+									"Rehire date is not updated"
+											+ " as no record is found in event table for confiramtion number:"
+											+ confNumber, true);
 				}
 			} else {
 				Reporter.logEvent(
@@ -11173,7 +11249,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Update a rehire date to any date between last term date and current date.",
 						"Rehire date is not updated"
 								+ " as no confirmation message is displayed.",
-						true);
+								true);
 				Web.clickOnElement(cancelButton);
 				Web.waitForPageToLoad(Web.getDriver());
 				this.clickOnReturnToEmployeeBtn();
@@ -11184,7 +11260,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Status.FAIL,
 					"select hire date between last term date and current date,fill term date in future,"
 							+ "fill term reason and save.", "Error occurred."
-							+ e1.getMessage(), true);
+									+ e1.getMessage(), true);
 		}
 
 	}
@@ -11231,20 +11307,20 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Select Overseas employee radion button as No and select"
 							+ " overseas date.Below validation message should displayed.\n"
 							+ expOverseasMsg,
-					""
-							+ "User selects overseas empployee as No and select overseas date and"
-							+ " below message is displayed.\n"
-							+ actOverseasValidation, false);
+							""
+									+ "User selects overseas empployee as No and select overseas date and"
+									+ " below message is displayed.\n"
+									+ actOverseasValidation, false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Select Overseas employee radion button as No and select"
 							+ " overseas date.Below validation message should displayed.\n"
 							+ expOverseasMsg,
-					""
-							+ "User selects overseas empployee as No and select overseas date and"
-							+ " below message is displayed.\n"
-							+ actOverseasValidation, true);
+							""
+									+ "User selects overseas empployee as No and select overseas date and"
+									+ " below message is displayed.\n"
+									+ actOverseasValidation, true);
 
 		angOverseasDate.clear();
 		Web.clickOnElement(saveOnEmpPage);
@@ -11258,10 +11334,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Fill all the employee details and validate confirmation messgae and query event table"
 								+ ",search for event id(Confirmation no.):"
 								+ confNumber,
-						""
-								+ "Confirmation message is displayed with confirmation message\n"
-								+ confirmationText.getText() + "\n and"
-								+ "Record is found in event table.", true);
+								""
+										+ "Confirmation message is displayed with confirmation message\n"
+										+ confirmationText.getText() + "\n and"
+										+ "Record is found in event table.", true);
 				this.clickOnReturnToEmployeeBtn();
 				CommonLib.waitForProgressBar();
 			} else {
@@ -11383,14 +11459,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Validate user can select term date=hire date,>hiredate from calendar.",
 					""
 							+ "User can select term date=hire date,>hireDate from calendar.",
-					false);
+							false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate user can select term date=hire date,termDate>hiredate from calendar.",
 					""
 							+ "User cannot select termdate when termdate=hiredate or termdate>hireDate from calendar.",
-					true);
+							true);
 		if (termdateValidation2.equals("true"))
 			Reporter.logEvent(
 					Status.PASS,
@@ -11428,7 +11504,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					queryResultSet.getString("PERCENT_OWNERSHIP"));
 			dataFromDB.put("HireDate", queryResultSet.getString("HIRE_DATE"));
 			dataFromDB
-					.put("TermDate", queryResultSet.getString("EMP_TERMDATE"));
+			.put("TermDate", queryResultSet.getString("EMP_TERMDATE"));
 			dataFromDB.put("EmployeeID",
 					queryResultSet.getString("ER_ASSIGNED_ID"));
 			break;
@@ -11438,14 +11514,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"After saving employment detail as below,compare data in DB.\n"
 							+ employmentDataUI, ""
-							+ "Data is updated correctly in DB as below:\n"
-							+ dataFromDB, false);
+									+ "Data is updated correctly in DB as below:\n"
+									+ dataFromDB, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"After saving employment detail as below,compare data in DB.\n"
 							+ employmentDataUI, ""
-							+ "Data is not updated correctly in DB as below:\n"
-							+ dataFromDB, false);
+									+ "Data is not updated correctly in DB as below:\n"
+									+ dataFromDB, false);
 
 	}
 
@@ -11505,17 +11581,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Validate all Term reason drop down values matches with the results"
 							+ " fetched by query:"
 							+ Stock.getTestQuery("getTerminationReasonValues")[1],
-					""
-							+ "All the reason codes are matching with the query results.\n"
-							+ termResnListUI, false);
+							""
+									+ "All the reason codes are matching with the query results.\n"
+									+ termResnListUI, false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate all Term reason drop down values matches with the results"
 							+ " fetched by query:"
 							+ Stock.getTestQuery("getTerminationReasonValues")[1],
-					"" + "Below reason code is not found in UI.\n"
-							+ reasonValue, true);
+							"" + "Below reason code is not found in UI.\n"
+									+ reasonValue, true);
 
 	}
 
@@ -11606,7 +11682,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(
 						Status.PASS,
 						"Terminate employee with date '" + terminationDate
-								+ "',save and verify in event table.",
+						+ "',save and verify in event table.",
 						""
 								+ "Employee has been terminated successfully with current date.\below is event id:"
 								+ eventId, false);
@@ -11614,7 +11690,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Terminate employee with date '" + terminationDate
-								+ "',save and verify in event table.",
+						+ "',save and verify in event table.",
 						""
 								+ "Employee has not been terminated successfully with current date.\below is event id:"
 								+ eventId, true);
@@ -11655,7 +11731,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.FAIL,
 					"Validate Employment history title is displayed.", ""
 							+ "Employment history title is not displayed.",
-					true);
+							true);
 
 		if (updateEmpInfoTitle.isDisplayed())
 			Reporter.logEvent(
@@ -11669,7 +11745,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Validate Update employment information title is displayed.",
 					""
 							+ "Update employment information title is not displayed.",
-					true);
+							true);
 
 		if (detailLink.isDisplayed())
 			Reporter.logEvent(Status.PASS,
@@ -11706,7 +11782,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Reporter.logEvent(
 							Status.PASS,
 							"Rehire employee with date '" + dateString
-									+ "',save and verify in event table.",
+							+ "',save and verify in event table.",
 							""
 									+ "Employee has been rehired successfully with date '"
 									+ dateString + "'.\below is event id:"
@@ -11715,7 +11791,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					Reporter.logEvent(
 							Status.PASS,
 							"Rehire employee with date '" + dateString
-									+ "',save and verify in event table.",
+							+ "',save and verify in event table.",
 							""
 									+ "Employee has not been rehired successfully with date '"
 									+ dateString + "'", true);
@@ -11767,14 +11843,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 							+ "validate fisrt name :'" + expFirstName
 							+ "' and last name:'" + expLastName + " "
 							+ "is displayed properly.'",
-					"Fisrt name and last name is displayed properly.", false);
+							"Fisrt name and last name is displayed properly.", false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Edit contact information section and "
 							+ "validate fisrt name :'" + expFirstName
 							+ "' and last name:'" + expLastName + " "
 							+ "is displayed properly.'",
-					"Fisrt name and last name is not displayed properly.", true);
+							"Fisrt name and last name is not displayed properly.", true);
 		CommonLib.switchToFrame(employeeSearchFrame);
 		Web.clickOnElement(closeEmpContactModalWindow);
 		CommonLib.waitForProgressBar();
@@ -11835,12 +11911,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			if (Web.isWebElementDisplayed(dynamichead, true)) {
 				Reporter.logEvent(Status.PASS, "Navigate to '"
 						+ typeOfChangeToMake + "' page.", ""
-						+ "Deferral page is displayed.", false);
+								+ "Deferral page is displayed.", false);
 				isPageDisplayed = true;
 			} else {
 				Reporter.logEvent(Status.FAIL, "Navigate to '"
 						+ typeOfChangeToMake + "' page.", ""
-						+ "Deferral page is not displayed.", true);
+								+ "Deferral page is not displayed.", true);
 				isPageDisplayed = false;
 			}
 		} catch (Exception e) {
@@ -11903,12 +11979,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Check for below columns on deferral" + " page.\n"
 								+ expDeferralHeaders,
-						"Columns are displayed as expected.", false);
+								"Columns are displayed as expected.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Check for below columns on deferral" + " page.\n"
 								+ expDeferralHeaders,
-						"Columns are not displayed as expected.", true);
+								"Columns are not displayed as expected.", true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -11944,18 +12020,18 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						+ deferral_amount, false);
 		if (deferral_percent.isEmpty())
 			queryResultSet = DB
-					.executeQuery(
-							Stock.getTestQuery("getPPTDeferralDetailsWhenPercentEmpty")[0],
-							Stock.getTestQuery("getPPTDeferralDetailsWhenPercentEmpty")[1],
-							ssn, deferral_amount, deferral_type, status,
-							effective_date);
+			.executeQuery(
+					Stock.getTestQuery("getPPTDeferralDetailsWhenPercentEmpty")[0],
+					Stock.getTestQuery("getPPTDeferralDetailsWhenPercentEmpty")[1],
+					ssn, deferral_amount, deferral_type, status,
+					effective_date);
 		else
 			queryResultSet = DB
-					.executeQuery(
-							Stock.getTestQuery("getPPTDeferralDetailsWhenAmountEmpty")[0],
-							Stock.getTestQuery("getPPTDeferralDetailsWhenAmountEmpty")[1],
-							ssn, deferral_percent, deferral_type, status,
-							effective_date);
+			.executeQuery(
+					Stock.getTestQuery("getPPTDeferralDetailsWhenAmountEmpty")[0],
+					Stock.getTestQuery("getPPTDeferralDetailsWhenAmountEmpty")[1],
+					ssn, deferral_percent, deferral_type, status,
+					effective_date);
 
 		if (DB.getRecordSetCount(queryResultSet) > 0)
 			isRecordFound = true;
@@ -11984,17 +12060,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Click on edit button to stop all deferrals and check if "
 								+ "Review your deferral changes section is displayed.",
-						"'Review your "
-								+ "deferral' changes section is displayed",
-						false);
+								"'Review your "
+										+ "deferral' changes section is displayed",
+										false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on edit button to stop all deferrals and check if "
 								+ "Review your deferral changes section is displayed.",
-						"'Review your "
-								+ "deferral' changes section is not displayed",
-						true);
+								"'Review your "
+										+ "deferral' changes section is not displayed",
+										true);
 			Web.clickOnElement(continue_Button);
 			Web.isWebElementDisplayed(confirmation_deferral_h4, true);
 			List<WebElement> bTagLabels = Web.getDriver().findElements(
@@ -12006,17 +12082,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate below information is displayed on "
 								+ "confirmation page with confirmation number:"
 								+ "\n" + expLabelsOnConfirmationPage,
-						"Information is displayed on "
-								+ "confirmation page with confirmation number="
-								+ conf_number, false);
+								"Information is displayed on "
+										+ "confirmation page with confirmation number="
+										+ conf_number, false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate below information is displayed on"
 								+ " confirmation page with confirmation number:"
 								+ "\n" + expLabelsOnConfirmationPage,
-						"Information is not properly displayed on "
-								+ "confirmation page.", false);
+								"Information is not properly displayed on "
+										+ "confirmation page.", false);
 			if (CommonLib.validateEventID(conf_number))
 				Reporter.logEvent(Status.PASS,
 						"Validate confirmation number in event table.", ""
@@ -12082,7 +12158,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Click on Edit button for ongoing deferral.", ""
 							+ "Deferral page to edit deferrals is displayed.",
-					false);
+							false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Click on Edit button for ongoing deferral.",
@@ -12162,14 +12238,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Validate limit validation text displaying below "
 							+ " input field for Before tax.",
-					"Limit validation text is found to be as per combined limit "
-							+ "rule set.\n" + actCombLimitValidationText, false);
+							"Limit validation text is found to be as per combined limit "
+									+ "rule set.\n" + actCombLimitValidationText, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Validate limit validation text displaying below "
 							+ " input field for Before tax.",
-					"Limit validation text is not found to be as per combined limit "
-							+ "rule set.\n" + actCombLimitValidationText, true);
+							"Limit validation text is not found to be as per combined limit "
+									+ "rule set.\n" + actCombLimitValidationText, true);
 		Web.clickOnElement(ongoingContBtn);
 		if (Web.isWebElementDisplayed(review_Deferral_changes_h4, true))
 			Reporter.logEvent(
@@ -12177,14 +12253,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Validate Before tax max amount when combined with AGEBEF.",
 					""
 							+ "below combined limit rule is working properly.\nbefore max(When combined) = before tax max+AGEBEF max",
-					false);
+							false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate Before max amount when combined with AGEBEF.",
 					""
 							+ "below combined limit rule is not working properly.\nbefore max(When combined) = before tax max+AGEBEF max",
-					true);
+							true);
 		this.clickOnButtonWhenButtonsSame(backBtn);
 		Web.isWebElementDisplayed(ongoingHeader, true);
 		WebElement btn = deferralHeaderSection("Before Tax")
@@ -12202,14 +12278,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Validate limit validation text displaying below "
 							+ " input field for Roth.",
-					"Limit validation text is found to be as per combined limit "
-							+ "rule set.\n" + actCombLimitValidationText, false);
+							"Limit validation text is found to be as per combined limit "
+									+ "rule set.\n" + actCombLimitValidationText, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Validate limit validation text displaying below "
 							+ " input field for Roth.",
-					"Limit validation text is not found to be as per combined limit "
-							+ "rule set.\n" + actCombLimitValidationText, true);
+							"Limit validation text is not found to be as per combined limit "
+									+ "rule set.\n" + actCombLimitValidationText, true);
 		Web.clickOnElement(ongoingContBtn);
 		Web.isWebElementDisplayed(review_Deferral_changes_h4, true);
 		this.clickOnButtonWhenButtonsSame(continue_Button_List);
@@ -12219,14 +12295,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 					"Validate Roth max amount when combined with AGEBEF.",
 					""
 							+ "below combined limit rule is working properly.\nRoth max = Roth max+AGEBEF max",
-					false);
+							false);
 		else
 			Reporter.logEvent(
 					Status.FAIL,
 					"Validate roth max amount when combined with AGEBEF.",
 					""
 							+ "below combined limit rule is not working properly.\nRoth max = roth max+AGEBEF max",
-					true);
+							true);
 		String confirmationNum = confirmationNumber_DeferralPage.getText()
 				.trim();
 		return confirmationNum;
@@ -12252,7 +12328,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		String actLimitValidationText = deferralHeaderSection(deferralType)
 				.findElement(
 						By.xpath("./ancestor::header//following-sibling::div//label"))
-				.getText();
+						.getText();
 		System.out.println("Limit validation text for " + deferralType + " - "
 				+ actLimitValidationText);
 		WebElement inputBox = deferralHeaderSection(deferralType).findElement(
@@ -12322,12 +12398,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 			Reporter.logEvent(Status.PASS,
 					"Validate below message on update Rehire information page.\n"
 							+ expMsg, "" + "Below message is displayed\n"
-							+ actMsg, false);
+									+ actMsg, false);
 		else
 			Reporter.logEvent(Status.FAIL,
 					"Validate below message on update Rehire information page.\n"
 							+ expMsg, "" + "Below message is displayed\n"
-							+ actMsg, true);
+									+ actMsg, true);
 	}
 
 	/**
@@ -12394,16 +12470,16 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate Percent/Dollar buttons on ongoing deferral page"
 								+ " is displayed as per plan set up.",
-						"Percent/Dollar buttons are displayed as per plan set up for"
-								+ " deferral types.", false);
+								"Percent/Dollar buttons are displayed as per plan set up for"
+										+ " deferral types.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate Percent/Dollar buttons on ongoing deferral page"
 								+ " is displayed as per plan set up.",
-						"Percent/Dollar buttons are not displayed as per plan set up for"
-								+ " deferral types.please check CSAS for plan setup.",
-						true);
+								"Percent/Dollar buttons are not displayed as per plan set up for"
+										+ " deferral types.please check CSAS for plan setup.",
+										true);
 			actErrorMsg = dynamicMinMaxValidationTxt.getText().replace(",", "")
 					.trim();
 			if (Pattern.matches(regExp, actErrorMsg))
@@ -12427,7 +12503,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						""
 								+ " Appropriate placeholder is displayed.\nExpected:"
 								+ expPlaceHolder + "\nActual:" + actPlaceHolder,
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
@@ -12435,7 +12511,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						""
 								+ " Appropriate placeholder is not displayed.\nExpected:"
 								+ expPlaceHolder + "\nActual:" + actPlaceHolder,
-						true);
+								true);
 
 		} catch (Exception e) {
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -12484,14 +12560,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate all deferral types are displayed "
 								+ "based on plan setup.",
-						"All deferral types are displayed.\n"
-								+ allowedDeferrals, false);
+								"All deferral types are displayed.\n"
+										+ allowedDeferrals, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate all deferral types are displayed "
 								+ "based on plan setup.",
-						"All deferral types are not displayed.\n"
-								+ allowedDeferrals, true);
+								"All deferral types are not displayed.\n"
+										+ allowedDeferrals, true);
 
 			String classAttribute = ongoingContBtn.getAttribute("class");
 			System.out.println("Class attribute : " + classAttribute);
@@ -12499,25 +12575,25 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Validate Continue button remains disabled untill"
 								+ " user enters deferrals.",
-						"Continue button is found to be disabled.", false);
+								"Continue button is found to be disabled.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate Continue button remains disabled untill"
 								+ " user enters deferrals.",
-						"Continue button is not found to be disabled.", true);
+								"Continue button is not found to be disabled.", true);
 			Web.clickOnElement(backBtn.get(0));
 			if (Web.isWebElementDisplayed(deferral_main_Page, true))
 				Reporter.logEvent(Status.PASS,
 						"Click on Back button and check current and pending"
 								+ " deferrals page is displayed.",
-						"Current and Pending deferrals page is displayed.",
-						false);
+								"Current and Pending deferrals page is displayed.",
+								false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Click on Back button and check current and pending"
 								+ " deferrals page is displayed.",
-						"Current and Pending deferrals page is not displayed.",
-						true);
+								"Current and Pending deferrals page is not displayed.",
+								true);
 			Web.clickOnElement(returnToEmpOvw_Btn);
 			CommonLib.switchToFrame(employeeSearchFrame);
 			CommonLib.waitForProgressBar();
@@ -12529,7 +12605,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.FAIL,
 						"Click on Return to overview button.", ""
 								+ "Employee detail page is not displayed.",
-						true);
+								true);
 
 		} catch (Exception e) {
 			Reporter.logEvent(Status.FAIL, "Exception occurred.",
@@ -12578,27 +12654,27 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate below information is displayed on "
 								+ "confirmation page with confirmation number:"
 								+ "\n" + expLabelsOnConfirmationPage,
-						"Information is displayed on "
-								+ "confirmation page with confirmation number="
-								+ conf_number, false);
+								"Information is displayed on "
+										+ "confirmation page with confirmation number="
+										+ conf_number, false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Validate below information is displayed on"
 								+ " confirmation page with confirmation number:"
 								+ "\n" + expLabelsOnConfirmationPage,
-						"Information is not properly displayed on "
-								+ "confirmation page.", false);
+								"Information is not properly displayed on "
+										+ "confirmation page.", false);
 			if (planNumber.equals(plan_number))
 				Reporter.logEvent(Status.PASS,
 						"Validate plan number on confirmation page.\nPlan="
 								+ planNumber, "" + "Plan number displayed is "
-								+ plan_number, false);
+										+ plan_number, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate plan number on confirmation page.\nPlan="
 								+ planNumber, "" + "Plan number displayed is "
-								+ plan_number, true);
+										+ plan_number, true);
 			contributionRateString = confirmationDeflPage_contributionRateValue
 					.getText().replace(",", "").trim();
 			if (contributionRateString.contains(deferralType)
@@ -12607,17 +12683,17 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Validate contrinution rate on deferral page.\n"
 								+ "deferral type=" + deferralType
 								+ "\ndeferral value=" + deferralValue,
-						"Contribution rate is found as below:\n"
-								+ "Contribution rate: "
-								+ contributionRateString, false);
+								"Contribution rate is found as below:\n"
+										+ "Contribution rate: "
+										+ contributionRateString, false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Validate contrinution rate on deferral page.\n"
 								+ "deferral type=" + deferralType
 								+ "\ndeferral value=" + deferralValue,
-						"Contribution rate is found as below:\n"
-								+ "Contribution rate: "
-								+ contributionRateString, true);
+								"Contribution rate is found as below:\n"
+										+ "Contribution rate: "
+										+ contributionRateString, true);
 			if (CommonLib.validateEventID(conf_number))
 				Reporter.logEvent(Status.PASS,
 						"Validate confirmation number in event table.", ""
@@ -12636,12 +12712,12 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 				Reporter.logEvent(Status.PASS,
 						"Check below buttons on confirmation page.\n"
 								+ "1.Return to employee overview\n2.Done",
-						"Expected buttons are displayed.", false);
+								"Expected buttons are displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Check below buttons on confirmation page.\n"
 								+ "1.Return to employee overview\n2.Done",
-						"Expected buttons are not displayed.", true);
+								"Expected buttons are not displayed.", true);
 			Web.clickOnElement(done_Button_byText);
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.isWebElementDisplayed(deferrals_Header, true);
@@ -12673,13 +12749,13 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Enter deferrals and click on continue button and check"
 								+ " Review your deferral changes page is displayed.",
-						"Review your deferral page is displayed.", false);
+								"Review your deferral page is displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Enter deferrals and click on continue button and check"
 								+ " Review your deferral changes page is displayed.",
-						"Review your deferral page is not displayed.", true);
+								"Review your deferral page is not displayed.", true);
 			String reviewDeferralType = null;
 			String reviewDeferralValue = null;
 			for (WebElement ele : reviewDefChangesRow) {
@@ -12701,14 +12777,14 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						"Newly added deferrals is displayed under 'Review your deferral changes' section.",
 						""
 								+ "newly added deferrals are displayed under Review section.",
-						false);
+								false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Newly added deferrals is displayed under 'Review your deferral changes' section.",
 						""
 								+ "newly added deferrals are not displayed under Review section.",
-						true);
+								true);
 			boolean isRetOvwBtnDisplayed = Web.isWebElementDisplayed(
 					returnToEmployeeOvwButton.get(1), false);
 			boolean backBtnDisplayed = Web.isWebElementDisplayed(
@@ -12721,25 +12797,25 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 						Status.PASS,
 						"Check if below buttons are displayed on Review deferral page."
 								+ "\n1.Retrun to employee overview\n2.Back\n3.Continue",
-						"Expected button are displayed.", false);
+								"Expected button are displayed.", false);
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Check if below buttons are displayed on Review deferral page."
 								+ "\n1.Retrun to employee overview\n2.Back\n3.Continue",
-						"Expected button are not displayed.", true);
+								"Expected button are not displayed.", true);
 			Web.clickOnElement(continue_Button_List.get(1));
 			Web.nextGenDriver.waitForAngular();
 			if (Web.isWebElementDisplayed(confirmation_deferral_h4, false))
 				Reporter.logEvent(Status.PASS,
 						"Click on continue button and check if confirmation"
 								+ " page is displayed.",
-						"Confirmation page is displayed.", false);
+								"Confirmation page is displayed.", false);
 			else
 				Reporter.logEvent(Status.FAIL,
 						"Click on continue button and check if confirmation"
 								+ " page is displayed.",
-						"Confirmation page is not displayed.", true);
+								"Confirmation page is not displayed.", true);
 			String confNumber = validate_deferral_Confirmation_screen(
 					deferralType, deferralValue, planNumber);
 			DB.executeQuery(Stock.getTestQuery("DeleteEvIdFromElectiveDef")[0],
