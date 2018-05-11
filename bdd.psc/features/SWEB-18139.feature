@@ -21,16 +21,16 @@ Feature: PSC - Employee overview page
   Narrative Description : As PSC product owner: correct Production issue so that in Employee overview page while toggling between plans, page will display details from the current plan
 
   Scenario Outline: Verify data under <labels> reflects data for the plan displayed in header on employee overview page
-    Given user is on Employee Search page of <accuCode> when login with correct <username> and <password>
-    When user selects search employee by SSN- all plans
-    And enters <ssn>
+    Given user is on Employee Search page of "<accuCode>" when login with correct "<username>" and "<password>"
+    When user selects search employee by "SSN - all plans"
+    And enters "<ssn>"
     And hits Go to search
     And clicks on last name link
-    And clicks on View button for a <plannumber>
+    And clicks on View button for a "<plannumber>"
     And selects Return to employee overview
-    Then data under <labels> reflects data for the plan displayed in header on employee overview page
+    Then data under "<labels>" reflects data for the plan displayed in header on employee overview page
 
     Examples: 
-      | accucode    | username | password | plannumber | ssn       | labels                                      |
+      | accuCode    | username | password | plannumber | ssn       | labels                                      |
       | PlanEmpower | 1isis    | testing1 | 931372-01  | 211111122 | Account detail, Employee detail, Statements |
       | PlanEmpower | 1isis    | testing1 | 1114009-01 | 211111122 | Account detail, Employee detail, Statements |

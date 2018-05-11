@@ -6,7 +6,7 @@
 	</listeners>
 <test name="BDD Tests">
 <packages>
-<package name="testRunner"/>
+<package name="org.bdd.psc.testRunner"/>
 </packages>
 </test>
 </suite>

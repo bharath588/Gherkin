@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="2" passed="2">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="testsuite" duration-ms="443004" started-at="2018-04-23T07:11:18Z" finished-at="2018-04-23T07:18:41Z">
+  <suite name="testsuite" duration-ms="116950" started-at="2018-05-02T14:34:06Z" finished-at="2018-05-02T14:36:03Z">
     <groups>
       <group name="cucumber">
-        <method signature="AbstractTestNGCucumberTests.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:testRunner.TestRunner@66480dd7]" name="feature" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
+        <method signature="AbstractTestNGCucumberTests.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:org.bdd.psc.testRunner.TestRunner@52a86356]" name="feature" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test name="BDD Tests" duration-ms="443004" started-at="2018-04-23T07:11:18Z" finished-at="2018-04-23T07:18:41Z">
-      <class name="testRunner.TestRunner">
-        <test-method status="PASS" signature="setUpClass()[pri:0, instance:testRunner.TestRunner@66480dd7]" name="setUpClass" is-config="true" duration-ms="10800" started-at="2018-04-23T12:41:18Z" finished-at="2018-04-23T12:41:28Z">
+    <test name="BDD Tests" duration-ms="116950" started-at="2018-05-02T14:34:06Z" finished-at="2018-05-02T14:36:03Z">
+      <class name="org.bdd.psc.testRunner.TestRunner">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@52a86356]" name="setUpClass" is-config="true" duration-ms="9799" started-at="2018-05-02T20:04:06Z" finished-at="2018-05-02T20:04:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:testRunner.TestRunner@66480dd7]" name="feature" duration-ms="204673" started-at="2018-04-23T12:43:22Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-04-23T12:46:46Z">
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:org.bdd.psc.testRunner.TestRunner@52a86356]" name="feature" duration-ms="103929" started-at="2018-05-02T20:04:17Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-05-02T20:06:01Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[Prospectus links on pre-login footer section]]>
+                <![CDATA[PSC - Employee overview page]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- feature -->
-        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:testRunner.TestRunner@66480dd7]" name="feature" duration-ms="113936" started-at="2018-04-23T12:46:46Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-04-23T12:48:40Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Footer copyright date]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="PASS" signature="teardown()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@52a86356]" name="teardown" is-config="true" duration-ms="650" started-at="2018-05-02T20:06:02Z" finished-at="2018-05-02T20:06:03Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- feature -->
-        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:testRunner.TestRunner@66480dd7]" name="tearDownClass" is-config="true" duration-ms="217" started-at="2018-04-23T12:48:40Z" finished-at="2018-04-23T12:48:41Z">
+        </test-method> <!-- teardown -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:org.bdd.psc.testRunner.TestRunner@52a86356]" name="tearDownClass" is-config="true" duration-ms="155" started-at="2018-05-02T20:06:03Z" finished-at="2018-05-02T20:06:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
-      </class> <!-- testRunner.TestRunner -->
+      </class> <!-- org.bdd.psc.testRunner.TestRunner -->
     </test> <!-- BDD Tests -->
   </suite> <!-- testsuite -->
 </testng-results>

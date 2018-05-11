@@ -8,12 +8,12 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
   *
   */
 @CucumberOptions(
-		//features="feature",
-		format = { "json", "json:target/cucumber.json" },features = { "target/generated-test-sources/cucumber" }, strict = true,
-		glue={"org.bdd.psc.stepDefinitions"}
-				/*plugin = {"pretty","html:target/cucumber-html-report"} ,
+		features="feature",
+		/*format = { "json", "json:target/cucumber.json" },features = { "target/generated-test-sources/cucumber" }, strict = true,*/
+		glue={"org.bdd.psc.stepDefinitions"},
+				plugin = {"pretty","html:target/cucumber-html-report"} ,
 		monochrome = true
-		,tags = {"@ORPHAN"}*/)
+		,tags = {"@SWEB-18139"})
 public class TestRunner extends AbstractTestNGCucumberTests {
 
 }
