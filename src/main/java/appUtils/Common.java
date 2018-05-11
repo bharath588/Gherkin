@@ -1038,7 +1038,7 @@ public static String getDBNameForUnregisteredUser(String ssn) throws SQLExceptio
 public static void updateEmailToNull(String ssn) throws Exception {
 
 	String[] sqlQuery = Stock.getTestQuery("updateemailandMobilNotonull");
-	sqlQuery[0] = Common.getDBNameForUnregisteredUser(ssn) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	//sqlQuery[0] = Common.getDBNameForUnregisteredUser(ssn) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1],ssn);
 	
 }

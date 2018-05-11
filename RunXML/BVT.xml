@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
-<suite name="testsuite" parallel="classes">
+<suite name="testsuite">
 	<listeners>
 		<listener class-name="core.framework.TestListener" />
 	</listeners>
 	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
 	<test name="BVT">
 		<classes>
-			<class
-				name="app.pptweb.testcases.prodvalidations.ProdvalidationTestCases_Login_LeftNav_Investments">
+			<class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
 				<methods>
 
-					<include name="SF01_TC01_Verify_Custom_site_prelogin_data">
-						<parameter name="ManualTCName" value="Verify_Login_Page_Images_Banners">
-						</parameter>
-					</include>
-
-
+					 <include name="Beneficiary_TC020_Participants_with_auth_code_I">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC020_Participants with auth code I"></parameter>
+                    </include> 
 				</methods>
 			</class>
 		</classes>

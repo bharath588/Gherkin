@@ -1092,16 +1092,16 @@ public class beneficiariestestcases {
 			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))*/
 			Web.waitForElement(beneficiary, "Generic Error Msg");
 			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg",true))
-				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", false);
+				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify if Error page is displayed", "Error page not displayed", true);
 			
 			String error_msg="";
 			error_msg=beneficiary.readErrorMessage("Generic Error Msg");
 			if(lib.Web.VerifyText(Stock.GetParameterValue("Error_msg"), error_msg, true))
-				Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching", false);
+				Reporter.logEvent(Status.PASS, "Verify if Error message is matching", "Error message is matching\n Error Message: "+error_msg, false);
 			else
-				Reporter.logEvent(Status.FAIL, "Verify if Error message is matching", "Error message not matching", true);
+				Reporter.logEvent(Status.FAIL, "Verify if Error message is matching", "Error message not matching\n Expected Error Message: "+Stock.GetParameterValue("Error_msg")+"\nActual Error Message: "+error_msg, true);
 			
 		}
 		catch(Exception e)
@@ -1340,7 +1340,8 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			//prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			TestDataFromDB.getParticipantDataFromDB(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
@@ -1352,6 +1353,7 @@ public class beneficiariestestcases {
 			enrollmentpage.get();
 			enrollmentpage.selectQuickEnroll();
 			Web.clickOnElement(enrollmentpage, "Button I Agree Enroll Now");
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(enrollmentpage, "Button View My Account");
 			Web.clickOnElement(enrollmentpage, "Button View My Account");
 			if(Web.isWebElementDisplayed(homePage, "HOME", true)){
