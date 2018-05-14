@@ -157,6 +157,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	@FindBy(id = "availablePlan")
 	private WebElement availablePlan;
 	private String autoCompletePlanLink = ".//ul[contains(@class,'ui-autocomplete')]//a";
+	@FindBy(xpath = ".//ul[contains(@class,'ui-autocomplete')]//a")
+	private WebElement autoCompletePlanlnk;
 	@FindBy(id = "createuserbutton")
 	private WebElement createUserBtn;
 	@FindBy(xpath = ".//div[@class='yellowbox']//span")
@@ -270,6 +272,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	@FindBy(xpath = ".//a[text()='Overview']//following-sibling::ul//a[text()='Plan provisions' or "
 			+ "text()='Vesting schedules' or text()='Participant web and VRU options']")
 	private List<WebElement> planoverviewOptions;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/ul/li[1]/a")
+	private WebElement planOverviewSubmenu;
 	@FindBy(xpath = ".//*[@id='exportable']//th//span | .//*[@id='exportable']//th//a")
 	private List<WebElement> invOptColumnsList;
 	@FindBy(xpath = ".//h4[contains(text(),'Maximum number of loans allowed')]")
@@ -368,6 +372,22 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private List<WebElement> documentTable_Category;
 	@FindBy(xpath = ".//div[@id='documents']//th[a|span]")
 	List<WebElement> documentHeaders_th;
+	@FindBy(xpath = ".//*[@id='newMenu']//li/a[text()='Plan']")
+	private WebElement planTab;
+	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[3]/a")
+	private WebElement administrationSubmenu;
+	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[3]/ul//li/a")
+	private List<WebElement> administrationSubmenus;
+	@FindBy(xpath = ".//*[@id='newMenu']/li[1]/ul/li[2]/a")
+	private WebElement investmentAndPerformance;
+	@FindBy(xpath=".//*[@id='ajaxSearchStatus']")
+	private WebElement ajaxSearchStatus;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/ul/li[4]/a")
+	private WebElement fiduciaryMenu;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/ul/li[4]/ul/li//a")
+	private List<WebElement> fiduciarySubmenu;
+	@FindBy(xpath=".//*[@id='collapse-init']/b")
+	private WebElement planDocLinkExpand;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -398,16 +418,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 
 	@Override
 	protected void isLoaded() throws Error {
-		Web.getDriver().switchTo().defaultContent();
-		Web.waitForElement(weGreeting);
-		if (!Web.isWebElementDisplayed(weGreeting, false)) {
-			// CommonLib.waitForProgressBar();
-			throw new AssertionError(
-					"Plan service center landing page not loaded.");
-		} else {
-			// Reporter.logEvent(Status.PASS,
-			// "Check if Home page is loaded","Home page has loaded successfully",false);
-		}
+		Assert.assertTrue(Web.isWebElementDisplayed(weGreeting, false));
 	}
 
 	@Override
@@ -425,6 +436,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			} else {
 				// Performing Login
 				Object login = this.parent.getClass().newInstance();
+				Web.getDriver().switchTo().defaultContent();
 				Web.getDriver().switchTo()
 						.frame(Web.returnElement(login, "LOGIN FRAME"));
 				Web.waitForElement(login, "USERNAME");
@@ -458,24 +470,17 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 									String[].class);
 					invokeMethodforUserVerification.invoke(userVeriPg,
 							new Object[] { userVeriData });
-				} else {
-					// navigate to Home
 				}
 			}
 			// urlJumpPage.click();
-			try {
-				if (urlJumpPage.isDisplayed())
-					Web.waitForElement(urlJumpPage);
+			if (Stock.getConfigParam("DataType").equals("NonApple")) {
+				Web.isWebElementDisplayed(urlJumpPage, true);
 				Web.clickOnElement(urlJumpPage);
-				Web.waitForPageToLoad(Web.getDriver());
-				Web.waitForElement(frameb);
-				Thread.sleep(2000);
-				Reporter.logEvent(Status.INFO, "Check if Login is successfull",
-						"Login for PSC is successfull", false);
-			} catch (Exception e) {
-				Web.waitForElement(frameb);
-				Thread.sleep(2000);
 			}
+			Web.getDriver().switchTo().defaultContent();
+			Web.isWebElementDisplayed(weGreeting, true);
+			Reporter.logEvent(Status.INFO, "Check if Login is successfull",
+					"Login for PSC is successfull", false);
 		} catch (Exception e) {
 			try {
 				throw new Exception(
@@ -527,9 +532,15 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	 * @return void
 	 */
 	public void navigateToPlanMessagingPage() throws Exception {
-		homePage = new HomePage();
-		homePage.navigateToProvidedPage("Plan", "Administration",
-				"Plan messaging");
+		/*
+		 * homePage = new HomePage(); homePage.navigateToProvidedPage("Plan",
+		 * "Administration", "Plan messaging");
+		 */
+		if (Web.isWebElementDisplayed(planTab, false))
+			Web.actionsClickOnElement(planTab);
+		if (Web.isWebElementDisplayed(administrationSubmenu, true))
+			Web.actionsClickOnElement(administrationSubmenu);
+		this.openSubmenuUnderAdministration("Plan messaging");
 		Web.getDriver().switchTo().defaultContent();
 		if (Web.getDriver().findElement(By.tagName("i")).getText()
 				.contains("Plan messaging"))
@@ -655,11 +666,11 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(frameb);
 			CommonLib.waitForLoader(planDocLoader);
-			Web.isWebElementDisplayed(asstAllocModels, true);
+			Web.isWebElementDisplayed(investmentOptions, true);
 			if (investmentOptions.isDisplayed() && documents.isDisplayed()
-					&& charts.isDisplayed() && asstAllocModels.isDisplayed()
-					&& fxdInvstmntRates.isDisplayed()
+					&& charts.isDisplayed() && fxdInvstmntRates.isDisplayed()
 					&& unitShareValues.isDisplayed())
+
 				Reporter.logEvent(
 						Status.PASS,
 						"Validate following columns are displayed on plan-->Investments & Performance"
@@ -777,8 +788,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		try {
 			Web.clickOnElement(unitShareValues);
 			Web.waitForElement(unitShareFromDate);
-			if (unitShareFromDate.isDisplayed()
-					&& unitShareFromDate.isDisplayed())
+			if (Web.isWebElementDisplayed(unitShareFromDate, true))
 				Reporter.logEvent(Status.PASS,
 						"Click on Unit/share values button and check"
 								+ " From and to date fields are displayed.",
@@ -808,7 +818,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		try {
 			Web.getDriver().switchTo().defaultContent();
 			if (CommonLib.getBrowserName().equalsIgnoreCase("chrome")) {
-				if (printLink.isDisplayed())
+				if (Web.isWebElementDisplayed(printLink, true))
 					Reporter.logEvent(Status.PASS,
 							"Validate print link is displayed.",
 							"Print link is displayed.", false);
@@ -867,7 +877,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 
 	/**
 	 * <pre>
-	 * This method takes user to Plna-->Investment & Performance page
+	 * This method takes user to Plan-->Investment & Performance page
 	 * </pre>
 	 * 
 	 * @author smykjn
@@ -877,9 +887,15 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	public void navigateToInvestmentAndPerformance() {
 		WebElement breadCrumb;
 		try {
-			HomePage homePage = new HomePage();
-			homePage.navigateToProvidedPage("Plan",
-					"Investments & Performance", "");
+			/*
+			 * HomePage homePage = new HomePage();
+			 * homePage.navigateToProvidedPage("Plan",
+			 * "Investments & Performance", "");
+			 */
+			if (Web.isWebElementDisplayed(planTab, true))
+				Web.actionsClickOnElement(planTab);
+			if (Web.isWebElementDisplayed(investmentAndPerformance, true))
+				Web.actionsClickOnElement(investmentAndPerformance);
 			Web.getDriver().switchTo().defaultContent();
 			breadCrumb = Web.getDriver().findElement(By.tagName("i"));
 			Web.waitForElement(breadCrumb);
@@ -994,13 +1010,14 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 					fn + System.currentTimeMillis());
 			Web.setTextToTextBox(lastNameInput, ln);
 			Web.setTextToTextBox(emailInput, email_);
-			Web.clickOnElement(firstNameInput);
+			Thread.sleep(1000);
+			Web.actionsClickOnElement(firstNameInput);
 			// Web.waitForElement(spinner);
 			do {
 				Thread.sleep(1000);
 				System.out.println("Spinning..........");
 			} while (spinner.isDisplayed());
-			Web.clickOnElement(continueBtn);
+			Web.actionsClickOnElement(continueBtn);
 			Web.waitForElement(userAccessTable);
 
 			// User Access
@@ -1011,13 +1028,14 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			if (availablePlan.getTagName().equals("input")) {
 				Web.setTextToTextBox(availablePlan,
 						Stock.GetParameterValue("PlanNumber") + " ");
+				Web.getDriver().switchTo().defaultContent();
+				Web.getDriver().switchTo().frame(frameb);
 				do {
 					Thread.sleep(1000);
 					System.out
 							.println("Waiting for plan link to be displayed.");
-				} while (!CommonLib.isElementExistByXpath(autoCompletePlanLink));
-				Web.clickOnElement(Web.getDriver().findElement(
-						By.xpath(autoCompletePlanLink)));
+				} while (!Web.isWebElementDisplayed(autoCompletePlanlnk));
+				Web.clickOnElement(autoCompletePlanlnk);
 				do {
 					Thread.sleep(1000);
 					System.out.println("Spinning..........");
@@ -1096,23 +1114,27 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.getDriver().switchTo().defaultContent();
 			homePage = new HomePage();
-			homePage.navigateToProvidedPage("Plan", "Administration",
-					"Username security management");
+			/*
+			 * homePage.navigateToProvidedPage("Plan", "Administration",
+			 * "Username security management");
+			 */
+			this.openAnySubmenuUnderAdministrationMenu("Username security management");
 			Web.getDriver().switchTo().frame(frameb);
-			try {
-				if (showAdvSearchedLink.isDisplayed())
-					Web.clickOnElement(showAdvSearchedLink);
-				Web.waitForPageToLoad(Web.getDriver());
-			} catch (Exception e) {
+			if (Web.isWebElementDisplayed(showAdvSearchedLink, true))
+				Web.actionsClickOnElement(showAdvSearchedLink);
+			// Web.waitForPageToLoad(Web.getDriver());
 
-			}
 			Thread.sleep(2000);
 			Web.setTextToTextBox(searchUserId, newUserAssignedID);
-			Web.clickOnElement(goBtn);
+			Thread.sleep(2000);
+			Web.actionsClickOnElement(goBtn);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(frameb);
 			// Web.waitForElements(searchedResultsColumns);
-			Thread.sleep(4000);
+			do{
+				Thread.sleep(1000);
+				System.out.println("Searching....");
+			}while(Web.isWebElementDisplayed(ajaxSearchStatus));
 			if (searchedResultsColumns.get(2).getText()
 					.equals(newUserAssignedID))
 				Reporter.logEvent(Status.PASS, "Search the new user:"
@@ -1429,6 +1451,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		boolean isEditable = false;
 		Web.getDriver().switchTo().defaultContent();
 		Web.getDriver().switchTo().frame(frameb);
+		Web.waitForElement(firstNameDisabled);
 		if (firstNameDisabled.getAttribute("disabled").equals("true")
 				&& lastNameDisabled.getAttribute("disabled").equals("true")
 				&& emailDisabled.getAttribute("disabled").equals("true"))
@@ -1629,6 +1652,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		List<String> docDesc = new ArrayList<String>();
 		try {
 			CommonLib.switchToFrame(frameb);
+			if(Web.isWebElementDisplayed(planDocLinkExpand, true))
+				Web.clickOnElement(planDocLinkExpand);
 			if (Web.isWebElementsDisplayed(planSpecificDocLinks, true))
 				Reporter.logEvent(Status.PASS,
 						"Validate Plan document links are displayed.",
@@ -1676,7 +1701,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Reporter.logEvent(Status.FAIL,
 						"Search for a plan with no plan documents available.",
 						"Plan is not found.", true);
-			if (homePage.navigateToProvidedPage("Plan", "Fiduciary records",
+			/*if (homePage.navigateToProvidedPage("Plan", "Fiduciary records",
 					"Plan documents"))
 				Reporter.logEvent(
 						Status.PASS,
@@ -1686,7 +1711,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				Reporter.logEvent(
 						Status.FAIL,
 						"Navigate to Plan-->Fiduciary records-->Plan documents page.",
-						"Plan documents page is " + "not displayed.", true);
+						"Plan documents page is " + "not displayed.", true);*/
+			this.openAnySubmenuUnderFiduciary("Plan documents");
 			Web.getDriver().switchTo().frame(frameb);
 			Web.waitForElement(noPlanDocText);
 			actMsg = noPlanDocText.getText().trim();
@@ -1720,6 +1746,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 				"Notice Documents").split(","));
 		try {
 			CommonLib.switchToFrame(frameb);
+			Web.waitForElements(actDocumentList);
 			if (CommonLib.isAllHeadersDisplayed(actDocumentList, documents))
 				Reporter.logEvent(Status.PASS,
 						"Validate following document links are displayed"
@@ -2106,6 +2133,10 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		try {
 			Thread.sleep(2000);
 			CommonLib.navigateToProvidedPage("Plan", "Overview", "");
+			if(Web.isWebElementDisplayed(planTab, true))
+				Web.actionsClickOnElement(planTab);
+			if(Web.isWebElementDisplayed(planOverviewSubmenu, true))
+				Web.actionsClickOnElement(planOverviewSubmenu);
 			if (Web.isWebElementsDisplayed(planoverviewOptions, true))
 				Reporter.logEvent(
 						Status.PASS,
@@ -2145,8 +2176,11 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		List<String> actQuickLinks = new ArrayList<String>();
 		String investmentName = "";
 		try {
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(frameb);
+			Web.waitForElement(fstInvName);
 			investmentName = fstInvName.getText().trim();
-			Web.clickOnElement(fstInvName);
+			Web.actionsClickOnElement(fstInvName);
 			Web.waitForElements(qukLinks);
 			if (CommonLib.isAllHeadersDisplayed(qukLinks, expQucikLinks))
 				Reporter.logEvent(Status.PASS, "Verify below quick links.\n"
@@ -2230,14 +2264,24 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			actDisclaimer6 = disclaimers.get(3).getText().trim();
 			actDisclaimer7 = disclaimerLast.get(0).getText().trim();
 			actDisclaimer8 = disclaimerLast.get(1).getText().trim();
-			if (expDisclaimer1.equalsIgnoreCase(actDisclaimer1)
-					&& expDisclaimer2.equalsIgnoreCase(actDisclaimer2)
-					&& expDisclaimer3.equalsIgnoreCase(actDisclaimer3)
-					&& expDisclaimer4.equalsIgnoreCase(actDisclaimer4)
-					&& expDisclaimer5.equalsIgnoreCase(actDisclaimer5)
-					&& expDisclaimer6.equalsIgnoreCase(actDisclaimer6)
-					&& expDisclaimer7.equalsIgnoreCase(actDisclaimer7)
-					&& expDisclaimer8.equalsIgnoreCase(actDisclaimer8))
+			if(actDisclaimer1.contains(expDisclaimer1)&&
+					actDisclaimer2.contains(expDisclaimer2)&&
+					actDisclaimer3.contains(expDisclaimer3)&&
+					actDisclaimer4.contains(expDisclaimer4)&&
+					actDisclaimer5.contains(expDisclaimer5)&&
+					actDisclaimer6.contains(expDisclaimer6)
+					&&actDisclaimer7.contains(expDisclaimer7)
+					&&actDisclaimer8.contains(expDisclaimer8))
+				/*
+				 * if (expDisclaimer1.equalsIgnoreCase(actDisclaimer1) &&
+				 * expDisclaimer2.equalsIgnoreCase(actDisclaimer2) &&
+				 * expDisclaimer3.equalsIgnoreCase(actDisclaimer3) &&
+				 * expDisclaimer4.equalsIgnoreCase(actDisclaimer4) &&
+				 * expDisclaimer5.equalsIgnoreCase(actDisclaimer5) &&
+				 * expDisclaimer6.equalsIgnoreCase(actDisclaimer6) &&
+				 * expDisclaimer7.equalsIgnoreCase(actDisclaimer7) &&
+				 * expDisclaimer8.equalsIgnoreCase(actDisclaimer8))
+				 */
 				Reporter.logEvent(Status.PASS,
 						"Varify investment options bottom disclaimer.",
 						"Disclaimer is displayed as below:" + "\n"
@@ -2469,15 +2513,20 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 		String actConfirmationMsg = "";
 		try {
 			Web.clickOnElement(updateLinks.get(0));
-			Web.waitForPageToLoad(Web.getDriver());
-			Web.isWebElementsDisplayed(bankSectionTitles, true);
+			//Web.waitForPageToLoad(Web.getDriver());
+			Web.getDriver().switchTo().defaultContent();
+			Web.getDriver().switchTo().frame(frameb);
+			Web.waitForElement(newRoutingNoInput);
+			//Web.isWebElementsDisplayed(bankSectionTitles, true);
 			Web.setTextToTextBox(newRoutingNoInput, routingNo);
 			Web.setTextToTextBox(newAccNoInput, accNumber);
 			Web.clickOnElement(accTypeSavings);
 			Web.clickOnElement(continueButtonInput);
-			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(3000);
 			Web.clickOnElement(continueButtonInput);
-			Web.waitForPageToLoad(Web.getDriver());
+			//Web.waitForPageToLoad(Web.getDriver());
+			Web.waitForElement(bankInformationsSection);
+			Thread.sleep(3000);
 			System.out
 					.println("Form text:" + bankInformationsSection.getText());
 			actConfirmationMsg = bankInformationsSection.getText().trim();
@@ -3236,6 +3285,59 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Reporter.logEvent(Status.FAIL, "Exception occured.",
 					e.getMessage(), true);
 		}
+	}
+
+	private void openSubmenuUnderAdministration(String submenuName) {
+		if (administrationSubmenus.size() > 0) {
+			for (WebElement submenu : administrationSubmenus) {
+				if (submenu.getText().equalsIgnoreCase(submenuName))
+					Web.clickOnElement(submenu);
+			}
+		}
+	}
+
+	public void openAnySubmenuUnderAdministrationMenu(String Submenu) {
+		if (Web.isWebElementDisplayed(planTab, false))
+			Web.actionsClickOnElement(planTab);
+		if (Web.isWebElementDisplayed(administrationSubmenu, true))
+			Web.actionsClickOnElement(administrationSubmenu);
+		this.openSubmenuUnderAdministration(Submenu);
+		if (Web.getDriver().findElement(By.tagName("i")).getText()
+				.contains(Submenu))
+			Reporter.logEvent(Status.PASS,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", true);
+	}
+	
+	private void openSubmenuUnderFiduciary(String submenuName){
+		if(fiduciarySubmenu.size()>0){
+			for(WebElement submenu : fiduciarySubmenu){
+				if (submenu.getText().equalsIgnoreCase(submenuName))
+					Web.clickOnElement(submenu);
+			}
+		}
+	}
+	
+	public void openAnySubmenuUnderFiduciary(String Submenu){
+		if (Web.isWebElementDisplayed(planTab, false))
+			Web.actionsClickOnElement(planTab);
+		if (Web.isWebElementDisplayed(fiduciaryMenu, true))
+			Web.actionsClickOnElement(fiduciaryMenu);
+		this.openSubmenuUnderFiduciary(Submenu);
+		if (Web.getDriver().findElement(By.tagName("i")).getText()
+				.contains(Submenu))
+			Reporter.logEvent(Status.PASS,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", true);
+		
 	}
 
 }

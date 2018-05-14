@@ -469,17 +469,21 @@ public class CommonLib {
 	 */
 	public static boolean isAllHeadersDisplayed(List<WebElement> actHeaders,
 			List<String> expHeaders) throws Exception {
+		String[] headers = expHeaders.toArray(new String[expHeaders.size()]);
 		boolean isdisplayed = false;
+		int headerCount = 0;
+		Arrays.sort(headers);
 		for (WebElement header : actHeaders) {
-			System.out.println("Actual Header is" + header.getText().trim());
-			if (expHeaders
-					.contains(header.getText().replaceAll(":", "").trim())) {
-				isdisplayed = true;
-			} else {
-				isdisplayed = false;
-				break;
-			}
+			System.out.println("Actual Header is" + header.getText().trim());	
+			int index = binarySearch(headers, header.getText().replaceAll(":", "").trim(), 0, headers.length-1);
+			System.out.println(header.getText().trim()+" found at "+index);
+			if(index>=0)
+				headerCount++;
+			
 		}
+		System.out.println("headerCount: "+headerCount);
+		if(headerCount==headers.length)
+			return true;
 		return isdisplayed;
 	}
 
@@ -1459,6 +1463,30 @@ public class CommonLib {
 	       if (words[mid].equals(value)) {
 	           return mid;
 	       } else if(words[mid].compareTo(value) > 0) {
+	           return binarySearch(words, value, min, mid - 1);
+	       } else {
+	           return binarySearch(words, value, mid + 1, max);
+	       }
+	   }
+	   
+		/**
+	    * Searches an array of words for a given value using a recursive binary 
+	    * search.  Returns the index that contains the value or -1 if the value 
+	    * is not found.
+	    * @param words
+	    * @param value
+	    * @return
+	    */    
+	   public static int binarySearch(List<String> words, String value, int min, int max) {
+	       if (min > max) {
+	           return -1;
+	       }
+	       
+	       int mid = (max + min) / 2;
+	       
+	       if (words.get(mid).equals(value)) {
+	           return mid;
+	       } else if(words.get(mid).compareTo(value) > 0) {
 	           return binarySearch(words, value, min, mid - 1);
 	       } else {
 	           return binarySearch(words, value, mid + 1, max);

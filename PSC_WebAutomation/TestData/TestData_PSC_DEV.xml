@@ -2984,8 +2984,8 @@ WHERE  GA.GC_ID =  GC.ID AND GC  .ID = GS  .GC_ID AND GS.BASIS IS NOT NULL AND G
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="planNumber" value="1114009-01" />
-				<parameter name="ExpectedFixedInvstColumn" value="Investment option,Legal name,Term,Rate" />
+				<parameter name="planNumber" value="932777-01" />
+				<parameter name="ExpectedFixedInvstColumn" value="Investment option,Legal name,Interest Rate,Rate Effective date,Maturity date" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page">
@@ -3009,7 +3009,7 @@ WHERE  GA.GC_ID =  GC.ID AND GC  .ID = GS  .GC_ID AND GS.BASIS IS NOT NULL AND G
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="planNumber" value="331044-01" />
+				<parameter name="planNumber" value="331044-N1" />
 				<parameter name="lastName" value="Boss" />
 				<parameter name="firstName" value="Ken" />
 			</Iteration>
@@ -3072,7 +3072,7 @@ WHERE  GA.GC_ID =  GC.ID AND GC  .ID = GS  .GC_ID AND GS.BASIS IS NOT NULL AND G
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
-				<parameter name="planNumberWithPartGrp" value="385092-01" />
+				<parameter name="planNumberWithPartGrp" value="934512-01" />
 				<parameter name="Notice Documents"
 					value="Fee Disclosure Documents,Qualified Default Investment Alternative,Safe Harbor Notice" />
 				<parameter name="ExpectedDocMsg"
@@ -3110,7 +3110,7 @@ WHERE  GA.GC_ID =  GC.ID AND GC  .ID = GS  .GC_ID AND GS.BASIS IS NOT NULL AND G
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
 				<parameter name="ExpectedFixedInvstColumn"
-					value="Investment option,Legal name,Term,Current rate,Future rate,Future rate effective date" />
+					value="Investment option,Legal name,Interest Rate,Rate Effective date,Maturity date" />
 				<parameter name="planNumber" value="384037-01" />
 			</Iteration>
 		</TestCase>
