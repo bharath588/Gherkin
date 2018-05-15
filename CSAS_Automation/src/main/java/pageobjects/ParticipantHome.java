@@ -1177,6 +1177,11 @@ public class ParticipantHome extends LoadableComponent<ParticipantHome> {
 					+ Stock.GetParameterValue("btnName")
 					+ "not displayed in the page");
 		}
+		Web.getDriver().navigate().back();
+		if (Web.isLastIteration()) {
+			Web.getDriver().close();
+			Web.getDriver().switchTo().window(parentWindow);
+		}
 	}
 
 	private Object getVarByName(String fieldName) throws Throwable {

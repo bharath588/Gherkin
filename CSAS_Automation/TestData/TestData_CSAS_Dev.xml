@@ -692,7 +692,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="6134481" />
+				<parameter name="PPT_ID" value="3604743" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -702,7 +702,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="6134481" />
+				<parameter name="PPT_ID" value="3604743" />
 				<parameter name="InvestmentPercentage" value="100" />
 				<parameter name="isChckBx" value="No" />
 			</Iteration>
@@ -984,21 +984,21 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="5322457" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="CSAS_Loan_Request_VerifyLoanStructureNoOfLoans">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="5322457" />
 			</Iteration>
 		</TestCase>
 		<TestCase name="CSAS_Loan_Request_VerifyLoanStructureFees">
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="5322457" />
 			</Iteration>
 		</TestCase>
 		<!-- Test cases Saraswathi -->
@@ -1006,7 +1006,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1731515" />
+				<parameter name="PPT_ID" value="3818031" />
 				<parameter name="ExceptionMessage" value="Participant has Pending Loan WR_487" />
 			</Iteration>
 		</TestCase>
@@ -1076,7 +1076,7 @@ ORDER BY wb.ga_id,
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
 				<parameter name="PPT_ID" value="13585062" />
-				<parameter name="ExceptionMessage" value="Unable to locate an account balance for 2017-12-07 453361-01 13585062" />
+				<parameter name="ExceptionMessage" value="Unable to locate an account balance for 2018-05-15 453361-01 13585062" />
 				
 			</Iteration>
 		</TestCase>
@@ -1146,7 +1146,7 @@ ORDER BY wb.ga_id,
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="12494242" />
+				<parameter name="PPT_ID" value="12053669" />
 			</Iteration>
 		</TestCase>
 	</Module>

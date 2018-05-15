@@ -8,6 +8,7 @@
 	<test name="Regression Suite">
 
 	<classes> 
+		<!--
 	 <class	name="app.csas.testcases.disbursementhistory.validate_disbursementhistory">
 				<methods>
 					<include name="Verify_DIH_PaymentHistory">
@@ -25,7 +26,7 @@
 				</methods>
 			</class>  
 	
-	<class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
+ <class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
 				<methods>
 					 <include name="verifyFinancialEngines_ProspectUser">
 						<parameter name="ManualTCName"
@@ -153,7 +154,7 @@
 						<parameter name="ManualTCName" value="CSAS_OnlineEnrollment_ddtc_28155_checkSsn" />
 					</include>  
 					</methods> 
-			</class>
+			</class>  -->
 	
 	<class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
 				<methods> 
@@ -340,9 +341,6 @@
 				
 			</class>   
 		
-		
-
-			
 		</classes>
 		
 	</test>
