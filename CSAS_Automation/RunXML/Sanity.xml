@@ -93,7 +93,7 @@
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test> 
     <test name="CSAS_PPT_Info_Ppt_Home_Page_Order_PIN_Mail_Existing_Registered">
         <classes>
             <class name="app.csas.testcases.participanthomepage.validate_participanthomepage">
@@ -102,12 +102,18 @@
                 </methods>
             </class>
         </classes>
-    </test>
-   <!--  <test name="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance">
+    </test> -->
+    
+					
+					
+   <test name="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance">
         <classes>
             <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
                 <methods>
-                    <include name="Validate_LoanStatus_Details"/>
+                    <include name="Validate_LoanStatus_TotalOutstandingBal">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Total_Outstanding_Balance"></parameter>
+				</include> 
                 </methods>
             </class>
         </classes>
@@ -116,7 +122,10 @@
         <classes>
             <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
                 <methods>
-                    <include name="Validate_LoanStatus_Details"/>
+                   <include name="Validate_LoanStatus_PaymentFrequency">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Payment_Frequency"></parameter>
+					</include>
                 </methods>
             </class>
         </classes>
@@ -125,7 +134,10 @@
         <classes>
             <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
                 <methods>
-                    <include name="Validate_LoanStatus_Details"/>
+                   <include name="Validate_LoanStatus_PaymentFrequencyMethod">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Payment_Frequency_Method"></parameter>
+					</include>
                 </methods>
             </class>
         </classes>
@@ -134,7 +146,10 @@
         <classes>
             <class name="app.csas.testcases.loaninfopage.validate_loaninfopage">
                 <methods>
-                    <include name="Validate_LoanStatus_Details"/>
+                  <include name="Validate_LoanStatus_DefaultIndicator">
+						<parameter name="ManualTCName"
+							value="CSAS_PPT_Info_Loan_Info_Default_Indicator"></parameter>
+					</include>
                 </methods>
             </class>
         </classes>
@@ -144,6 +159,8 @@
             <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
                 <methods>
                     <include name="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote"/>
+                    <parameter name="ManualTCName"
+							value="Validate_Message_for_Selected_Loan_and_Request_Loan_Quote"></parameter>
                 </methods>
             </class>
         </classes>
@@ -153,8 +170,9 @@
             <class name="app.csas.testcases.loanquotepage.validate_loanquotepage">
                 <methods>
                     <include name="Validate_Selected_Loan_Type_Details"/>
+                    <parameter name="ManualTCName" value="Validate_Selected_Loan_Type_Details"></parameter>
                 </methods>
             </class>
         </classes>
-    </test> -->
+    </test> 
 </suite>
