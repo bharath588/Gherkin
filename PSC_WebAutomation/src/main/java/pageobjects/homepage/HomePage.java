@@ -607,10 +607,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 			String[] splitTabs = expectedTabs.split(",");
 			List<String> expectedMenuTabs = Arrays.asList(splitTabs);
 			List<String> actualMenuTabs = new ArrayList<String>();
+			String actTabs = "";
 			for (WebElement ele : menuItems()) {
 				actualMenuTabs.add(ele.findElement(By.tagName("a")).getText());
+				actTabs = actTabs+" "+ele.findElement(By.tagName("a")).getText();
 			}
 			System.out.println("Tabs fetched from GUI are:" + actualMenuTabs);
+			Reporter.logEvent(Status.INFO, "Tabs displayed on UI are:", actTabs, true);
 			System.out.println("Tabs fetched from xml are:" + expectedMenuTabs);
 			if (actualMenuTabs.containsAll(expectedMenuTabs)) {
 				Reporter.logEvent(Status.PASS,

@@ -3163,13 +3163,14 @@ WHERE  GA.GC_ID =  GC.ID AND GC  .ID = GS  .GC_ID AND GS.BASIS IS NOT NULL AND G
 		</TestCase>
 		<TestCase name="DDTC-2150_Plan_Provisions_page">
 			<Iteration Execution="Yes" id="1">
-				<parameter name="username" value="1ISIS" />
+				<parameter name="username" value="3VFO3" />
 				<parameter name="password" value="testing1" />
 				<parameter name="userVerificationEmail" value="discard@gwl.com" />
 				<parameter name="userVerificationAns" value="test" />
 				<parameter name="dreamCar" value="testr" />
 				<parameter name="favDrink" value="testk" />
 				<parameter name="spouseMidName" value="teste" />
+				<parameter name="planNumber" value="150551-01"/>
 			</Iteration>
 		</TestCase>
 		<TestCase name="DDTC-24356_Add_PPT_And_SearchForPPT">

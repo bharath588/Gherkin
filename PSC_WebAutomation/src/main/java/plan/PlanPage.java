@@ -388,6 +388,8 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	private List<WebElement> fiduciarySubmenu;
 	@FindBy(xpath=".//*[@id='collapse-init']/b")
 	private WebElement planDocLinkExpand;
+	@FindBy(xpath=".//*[@id='newMenu']/li[1]/ul/li[1]/ul/li//a")
+	private List<WebElement> overviewSubmenus;
 	private String menuQDIA = "//a[contains(text(),'Participant QDIA notice listing order')]";
 	private String docHistoryLinkPath = "./ancestor::div[1]/following-sibling::div//a[contains(@class,'accordion-toggle-doclink')]";
 	private String newUserAssignedID = "";
@@ -2721,6 +2723,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 	public boolean searchUser(String[] values, WebElement... filters) {
 		boolean isUserRetrieved = false;
 		try {
+			Thread.sleep(3000);
 			CommonLib.switchToFrame(frameb);
 			if (filters.length == values.length) {
 				for (int i = 0; i < filters.length; i++) {
@@ -2887,7 +2890,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 					.getString("MAX_LOANS_ALLOWED");
 		}
 		Web.clickOnElement(lonainformationLink);
-		Web.waitForPageToLoad(Web.getDriver());
+		//Web.waitForPageToLoad(Web.getDriver());
 		Web.waitForElement(maxLoanAllowed);
 		String maxNumberOfLoansAllowedUI = maxLoanAllowed.getText().split(":")[1]
 				.trim();
@@ -3338,6 +3341,32 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 					"Navigate to Plan-->Administration-->" + Submenu, Submenu
 							+ " page is displayed.", true);
 		
+	}
+	
+	private void openSubmenuUnderPlanOverview(String submenuName){
+		if(overviewSubmenus.size()>0){
+			for(WebElement submenu : overviewSubmenus){
+				if (submenu.getText().equalsIgnoreCase(submenuName))
+					Web.clickOnElement(submenu);
+			}
+		}
+	}
+	
+	public void openAnySubmenuUnderPlanOverview(String Submenu){
+		if (Web.isWebElementDisplayed(planTab, false))
+			Web.actionsClickOnElement(planTab);
+		if (Web.isWebElementDisplayed(planOverviewSubmenu, true))
+			Web.actionsClickOnElement(planOverviewSubmenu);
+		this.openSubmenuUnderPlanOverview(Submenu);
+		if (Web.getDriver().findElement(By.tagName("i")).getText()
+				.contains(Submenu))
+			Reporter.logEvent(Status.PASS,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", false);
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Navigate to Plan-->Administration-->" + Submenu, Submenu
+							+ " page is displayed.", true);
 	}
 
 }

@@ -365,7 +365,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	{
 		try{
 			int rows_update=DB.executeUpdate(updateInvalidLogonAttemptQuery[0], updateInvalidLogonAttemptQuery[1], "K_" + userName);
-			if(rows_update==1)
+			if(rows_update>1)
 			{
 				Reporter.logEvent(Status.PASS, "Execute query to update Invalid_logon_count in ISIS_Password table", 
 						"Query is executed successfully", false);
@@ -373,7 +373,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			else
 			{
 				Reporter.logEvent(Status.FAIL, "Execute query to update Invalid_logon_count in ISIS_Password table", 
-						"Query did not execut successfully", false);
+						"Query did not execute successfully", false);
 			}
 		}
 		catch(Exception e)

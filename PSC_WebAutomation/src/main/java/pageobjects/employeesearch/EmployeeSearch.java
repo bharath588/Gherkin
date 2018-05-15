@@ -747,6 +747,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	private WebElement pptDob;
 	@FindBy(id = "last_name")
 	private WebElement lastName;
+	@FindBy(id="lastName")
+	private WebElement lastNameAddEmployee;
 	@FindBy(id = "ssnerrorNode")
 	private WebElement ssnError;
 	@FindBy(id = "ssnReerrorNode")
@@ -1618,7 +1620,8 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public String enterFromtextBox(String planNumber) throws SQLException {
 
 		Web.setTextToTextBox(txtPlanNumberField, planNumber);
-		btnGoPlanNumberforSearchBox.click();
+		Web.actionsClickOnElement(btnGoPlanNumberforSearchBox);
+		//btnGoPlanNumberforSearchBox.click();
 		return planNumber;
 	}
 
@@ -8636,8 +8639,10 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 	public boolean fillNewEmpBasicInfoValid() {
 		boolean isPageDisplayed = false;
 		try {
+			Web.setTextToTextBox(lastNameAddEmployee, Stock.GetParameterValue("LastName"));
 			Web.setTextToTextBox(first_Name,
 					Stock.GetParameterValue("FirstName"));
+			Web.setTextToTextBox(birthDate, "05/05/1991");
 			Select maritlSts = new Select(maritalSts);
 			maritlSts.selectByVisibleText("SINGLE");
 			Select gndr = new Select(gender);
@@ -8856,7 +8861,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		try {
 			Web.setTextToTextBox(salaryInput, "TestSalary");
 			Web.clickOnElement(continueAddEmp);
-			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(2000);
 			for (WebElement errorMsg : mandatoryFieldValidationMsgs) {
 				actIncomeErrorMsg = errorMsg.getText().trim();
 				if (actIncomeErrorMsg.equals(expIncomeErrorMsg)) {
@@ -8939,7 +8944,7 @@ public class EmployeeSearch extends LoadableComponent<EmployeeSearch> {
 		String actHireDataErrorMsg = "";
 		try {
 			Web.clickOnElement(continueAddEmp);
-			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(2000);
 			for (WebElement msg : mandatoryFieldValidationMsgs) {
 				actHireDataErrorMsg = msg.getText();
 				if (expHireDateErrorMsg.equals(actHireDataErrorMsg)) {
