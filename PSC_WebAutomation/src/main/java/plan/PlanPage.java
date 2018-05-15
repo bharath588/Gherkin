@@ -1434,7 +1434,7 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 								+ "Specified fields are not editable on confirmation screen.",
 						false);
 			Web.clickOnElement(confirmMsgBox.findElement(By.tagName("button")));
-			Web.waitForPageToLoad(Web.getDriver());
+			//Web.waitForPageToLoad(Web.getDriver());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Reporter.logEvent(Status.FAIL, "Exception occured.",

@@ -8,7 +8,7 @@
 	<classes>
 			<class name="app.psc.testcases.plan.plansearchtestcases">
 				<methods>
-					<!--  <include name="TC01_search_plan_for_valid_plan">
+					 <include name="TC01_search_plan_for_valid_plan">
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page" />
 					</include>
@@ -41,15 +41,15 @@
 					 <include name="TC07_SIT_PSC_Investment_Asset_Allocations_page">
 						<parameter name="ManualTCName"
 							value="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page" />
-					</include> -->
-					<include name="TC08_Disable_certain_user_edit_fields_for_SAW">
+					</include>
+					<!-- <include name="TC08_Disable_certain_user_edit_fields_for_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-23517_Disable_certain_user_edit_fields_for_SAW" />
-					</include>
+					</include> -->
 					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
 						<parameter name="ManualTCName" value="DDTC-99_Order_Participant_QDIA_Notice_Listing" />
 					</include> 
-					<!-- <include
+					 <include
 						name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
 						<parameter name="ManualTCName"
 							value="DDTC-2168_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping" />
@@ -72,10 +72,10 @@
 					<include name="TC13_PLN_ADM_View_Change_Banking_Information_Regr">
 						<parameter name="ManualTCName"
 							value="DDTC-1555_PLN_ADM_View_Change_Banking_Information_Regr" />
-					</include> -->
+					</include> 
 				</methods>
 			</class>
-			<!--  <class name="app.psc.testcases.plan.plantestcases">
+			<class name="app.psc.testcases.plan.plantestcases">
 				 <methods>
 					<include name="TC16_Plan_Provisions_page">
 						<parameter name="ManualTCName"
@@ -110,7 +110,7 @@
 							value="DDTC-1301_Terminate_User_ID" />
 					</include>
 				</methods>
-			</class> -->
+			</class>
 		</classes>
 	</test>
 </suite>
