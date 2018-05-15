@@ -1090,10 +1090,10 @@ ORDER BY wb.ga_id,
 			</Iteration>
 		</TestCase>	
 			<TestCase name="DDTC_26926_Paperless_Loan_Exceptions">
-			<Iteration Execution="Yes" id="1">5322457
+			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="cswa" />
 				<parameter name="password" value="baseball" />
-				<parameter name="PPT_ID" value="1737090" />
+				<parameter name="PPT_ID" value="1731515" />
 				<parameter name="IntrestRate" value="4.250% fixed" />
 				<parameter name="LoanType" value="Account Reduction" />
 				<parameter name="LoanCategories" value="GENERAL, MORTGAGE" />

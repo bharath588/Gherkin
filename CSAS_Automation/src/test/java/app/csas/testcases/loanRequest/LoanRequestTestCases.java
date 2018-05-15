@@ -1599,5 +1599,86 @@ public class LoanRequestTestCases {
 			}
 		}
 	}
+	
+	/**
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre>
+	 * TESTCASE:  DDTC-27971 Paperless Loan_CORE_5368
+	 * DESCRIPTION: TestCase verifies promissory note set to PPT ID-LoanRequest     
+	 * RETURNS:   VOID   
+	 * REVISION HISTORY: 
+	 * --------------------------------------------------------------------
+	 * Author: Bindu   Date : 17-05-17    
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br>
+	 *            CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoanRequestPage = new LoanRequest();
+			LoanRequestPage.get();
+			LoanRequestPage.confirmContactAddressandEditAddress();
+			
+
+		} catch (Exception e) {
+			handleFailure(e);
+		} catch (Error ae) {
+			handleError(ae);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * -------------------------------------------------------------------
+	 * 
+	 * <pre>
+	 * TESTCASE:  DDTC-27971 Paperless Loan_CORE_5368
+	 * DESCRIPTION: TestCase verifies promissory note set to PPT ID-LoanRequest     
+	 * RETURNS:   VOID   
+	 * REVISION HISTORY: 
+	 * --------------------------------------------------------------------
+	 * Author: Bindu   Date : 17-05-17    
+	 * --------------------------------------------------------------------
+	 * </pre>
+	 * 
+	 * @param <br>
+	 *            CSAS Credential</br>
+	 */
+	@Test(dataProvider = "setData")
+	public void PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_Yes_CORE_22810(int itr,
+			Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_NAME);
+			LoanRequestPage = new LoanRequest();
+			LoanRequestPage.get();
+			LoanRequestPage.confirmContactAddressandEditAddress();
+			
+
+		} catch (Exception e) {
+			handleFailure(e);
+		} catch (Error ae) {
+			handleError(ae);
+		} finally {
+			try {
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+
 
 }
