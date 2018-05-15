@@ -55,14 +55,16 @@ public class Registration extends LoadableComponent<Registration> {
 	@FindBy(xpath="//label[@for='dateOfBirth']") private WebElement lblDateOfBirth;
 	@FindBy(xpath="//header[./h2[contains(text(),'Provide mailing address')]]//following-sibling::div[@class='row']") private WebElement panelProvideMailAddr;
 	@FindBy(xpath="//label[contains(text(),'Current Annual Income')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_inpAnnualIncome;
-	@FindBy(xpath="//label[contains(text(),'Date Of Hire')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpDateOfHire;
+	@FindBy(xpath="//label[contains(text(),'Date Of Hire')]//following-sibling::ng-messages/ng-message[1]") private WebElement Err_inpDateOfHire;
+	@FindBy(xpath="//label[contains(text(),'Date Of Hire')]//following-sibling::ng-messages/ng-message[2]") private WebElement Err_inpDateOfHire1;
 	@FindBy(xpath="//label[contains(text(),'Address Line 1')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpAddress1;
 	@FindBy(xpath="//label[contains(text(),'Address Line 2')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpAddress2;
 	@FindBy(xpath="//label[contains(text(),'City')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpCity;
 	@FindBy(xpath="//label[contains(text(),'First')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpFirstName;
 	@FindBy(xpath="//label[contains(text(),'Middle')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpMiddleName;
 	@FindBy(xpath="//label[contains(text(),'Last')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpLastName;
-	@FindBy(xpath="//label[contains(text(),'Date Of Birth')]//following-sibling::ng-messages/ng-message") private WebElement Err_inpDateOfBirth;
+	@FindBy(xpath="//label[contains(text(),'Date Of Birth')]//following-sibling::ng-messages/ng-message[1]") private WebElement Err_inpDateOfBirth;
+	@FindBy(xpath="//label[contains(text(),'Date Of Birth')]//following-sibling::ng-messages/ng-message[2]") private WebElement Err_inpDateOfBirth1;
 	@FindBy(xpath="//label[contains(text(),'Gender')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_drpGender;
 	@FindBy(xpath="//label[contains(text(),'Marital Status')]//following-sibling::ng-messages/ng-message/span") private WebElement Err_drpMaritalStatus;
 	@FindBy(xpath="//label[contains(text(),'Social Security Number')]//following-sibling::ng-include/ng-messages/ng-message") private WebElement Err_inpSSN;
@@ -332,7 +334,9 @@ public class Registration extends LoadableComponent<Registration> {
 	Web.clickOnElement(inpDateOfHire);
 	Web.clickOnElement(inpAnnualIncome);
 	String actualErrMsg=Err_inpDateOfHire.getText().trim();
-	String expectedErrMsg="Date of hire is required in the following format MM/DD/YYYY. ";
+	String expectedErrMsg="Date of hire is required.";
+	String actualErrMsg1=Err_inpDateOfHire1.getText().trim();
+	String expectedErrMsg1="Date of hire must follow MM/DD/YYYY format.";
 	
 	if (actualErrMsg.length() == 0) {
 		Reporter.logEvent(Status.FAIL,
@@ -346,28 +350,53 @@ public class Registration extends LoadableComponent<Registration> {
 					"Verify error message is displayed for Date Of Hire",
 					"Expected error message is displayed.\nExpected: "
 							+ expectedErrMsg
-							+ "\nActual:" + actualErrMsg, true);
+							+ "\n Actual:" + actualErrMsg, true);
 		} else {
 			Reporter.logEvent(
 					Status.FAIL,
 					"Verify error message is displayed for Date Of Hire",
 					"Expected error message is not displayed.\nExpected: "
 							+expectedErrMsg
-							+ "\n" + actualErrMsg, true);
+							+ "\nActual:" + actualErrMsg, true);
+		}
+		if (Web.VerifyText(expectedErrMsg1,
+				actualErrMsg1, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed for Date Of Hire",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg1
+							+ "\nActual:" + actualErrMsg1, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed for Date Of Hire",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg1
+							+ "\n" + actualErrMsg1, true);
 		}
 	}
 			Web.setTextToTextBox(inpDateOfHire, "13/12/1999");
-			if(Web.VerifyText("12/12/1999", inpDateOfHire.getAttribute("value"))){
+			Web.clickOnElement(inpAddressLine1);
+			Web.waitForElement(Err_inpDateOfHire);
+			 actualErrMsg=Err_inpDateOfHire.getText().trim();
+			expectedErrMsg="Date of hire must follow MM/DD/YYYY format.";
+			if(Web.VerifyText(expectedErrMsg,actualErrMsg)){
+		
 		
 			Reporter.logEvent(Status.PASS, "Verify 'Date Of Hire' Field Accepts Only MM/DD/YYYY Format" , 
-					"'Date Of Hire' Field Accepts Only MM/DD/YYYY Format",
+					"'Date Of Hire' Field Accepts Only MM/DD/YYYY Format\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg,
 					true);
 
 			}
 			else
 			{
 			Reporter.logEvent(Status.FAIL,"Verify 'Date Of Hire' Field Accepts Only MM/DD/YYYY Format" , 
-					"'Date Of Hire' Field Accepts other Date Formats also"+inpDateOfHire.getAttribute("value"),
+					"'Date Of Hire' Field Accepts other Date Formats also\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg,
 					true);
 			
 			}
@@ -399,10 +428,10 @@ public class Registration extends LoadableComponent<Registration> {
 	}
 	
 	Web.setTextToTextBox(inpAddressLine1, "@");
-	Web.clickOnElement(inpAddressLine1);
+	Web.clickOnElement(inpAddressLine2);
 	//Web.clickOnElement(inpCity);
 	keyBord.sendKeys(Keys.TAB).build().perform();
-	Thread.sleep(1000);
+	Thread.sleep(2000);
 	String actualErrMsg=Err_inpAddress1.getText().trim();
 	String expectedErrMsg="Invalid Street Address.";
 	
@@ -897,7 +926,9 @@ public class Registration extends LoadableComponent<Registration> {
 	Web.clickOnElement(txtDob);
 	Web.clickOnElement(txtLastname);
 	String actualErrMsg=Err_inpDateOfBirth.getText().trim();
-	String expectedErrMsg="Date of Birth is required in the following format MM/DD/YYYY.";
+	String actualErrMsg1=Err_inpDateOfBirth1.getText().trim();
+	String expectedErrMsg=" Date of birth is required.";
+	String expectedErrMsg1="Date of birth must follow MM/DD/YYYY format.";
 	
 	if (actualErrMsg.length() == 0) {
 		Reporter.logEvent(Status.FAIL,
@@ -920,19 +951,42 @@ public class Registration extends LoadableComponent<Registration> {
 							+expectedErrMsg
 							+ "\n" + actualErrMsg, true);
 		}
+		if (Web.VerifyText(expectedErrMsg1,
+				actualErrMsg1, true)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Verify error message is displayed for Date Of Birth",
+					"Expected error message is displayed.\nExpected: "
+							+ expectedErrMsg1
+							+ "\nActual:" + actualErrMsg1, true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Verify error message is displayed for Date Of Birth",
+					"Expected error message is not displayed.\nExpected: "
+							+expectedErrMsg1
+							+ "\n" + actualErrMsg1, true);
+		}
 	}
 			Web.setTextToTextBox(txtDob, "13/12/1999");
-			if(Web.VerifyText("12/12/1999", txtDob.getAttribute("value"))){
+			Web.clickOnElement(txtLastname);
+			 actualErrMsg=Err_inpDateOfBirth.getText().trim();
+			expectedErrMsg="Date of birth must follow MM/DD/YYYY format.";
+			if(Web.VerifyText(expectedErrMsg,actualErrMsg)){
 		
 			Reporter.logEvent(Status.PASS, "Verify 'Date Of Birth' Field Accepts Only MM/DD/YYYY Format" , 
-					"'Date Of Birth' Field Accepts Only MM/DD/YYYY Format",
+					"'Date Of Birth' Field Accepts Only MM/DD/YYYY Format\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg,
 					true);
 
 			}
 			else
 			{
 			Reporter.logEvent(Status.FAIL,"Verify 'Date Of Birth' Field Accepts Only MM/DD/YYYY Format" , 
-					"'Date Of Birth' Field Accepts other Date Formats also"+txtDob.getAttribute("value"),
+					"'Date Of Birth' Field Accepts other Date Formats also\nExpected: "
+							+expectedErrMsg
+							+ "\n" + actualErrMsg,
 					true);
 			
 			}

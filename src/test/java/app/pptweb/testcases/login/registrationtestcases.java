@@ -3307,7 +3307,7 @@ public class registrationtestcases {
 			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 			((JavascriptExecutor) Web.getDriver()).executeScript("window.scrollBy(0,-250)", "");
 			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
-			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideEmploymentInformation("12000", "12/12/2015","Default");
 			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
 			//Step 9
 			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
@@ -3479,7 +3479,7 @@ public class registrationtestcases {
 			//Step 5 & 6
 			
 			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
-			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideEmploymentInformation("12000", "12/12/2015","Default");
 			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
 			
 			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
@@ -3605,7 +3605,7 @@ public class registrationtestcases {
 			//Step 5
 			
 			registration.providePersonalInformation("ABC", "XYZ", "ABC", "12/12/1998", "Male",SSN, "Married");
-			registration.provideEmploymentInformation("12000", "12/12/2015");
+			registration.provideEmploymentInformation("12000", "12/12/2015","Default");
 			registration.provideMailingAddress("123ABC", "QASD", "Aptos", "California", "95001", "United States");
 			
 			Web.waitForElement(accSetup, "HEADER PROFILE SETTINGS");
@@ -4950,7 +4950,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			registration.providePersonalInformation("ABC", "XYZ", "ABC",
 					"12/12/1998", "Male", SSN, "Married");
 			if(itr==2)
-				registration.provideEmploymentInformation("12000", "12/12/2015");
+				registration.provideEmploymentInformation("12000", "12/12/2015","Default");
 			else
 				registration.provideEmploymentInformation("12000", "12/12/2015",Stock.GetParameterValue("divisionName"));
 			
