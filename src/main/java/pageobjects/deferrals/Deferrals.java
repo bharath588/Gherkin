@@ -1380,7 +1380,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.INFO, "Verify Add button is clicked", "Add chaining button is clicked", true);
 				if(Web.isWebElementDisplayed(hdrCarryoverContribution, true)){
 					Reporter.logEvent(Status.PASS, "Verify Chaining Election page is displayed", "Chaining election page displayed", true);
-					
+					//--
 					if(Web.isWebElementDisplayed(radPreTaxToAftTaxToNQ))
 						Reporter.logEvent(Status.PASS, "Verify 'ELECT TO AFT TO NQ' radio button is displayed", "'ELECT TO AFT TO NQ' radio button is displayed", false);
 					else

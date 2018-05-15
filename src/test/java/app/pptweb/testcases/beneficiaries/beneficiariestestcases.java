@@ -1090,6 +1090,8 @@ public class beneficiariestestcases {
 			Web.clickOnElement(beneficiary, "View Beneficiary Button");
 			Web.waitForElement(beneficiary, "ContinueAndConfirm");
 			if(Web.clickOnElement(beneficiary, "ContinueAndConfirm"))*/
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(beneficiary, "Generic Error Msg");
 			if(lib.Web.isWebElementDisplayed(beneficiary, "Generic Error Msg",true))
 				Reporter.logEvent(Status.PASS, "Verify if Error page is displayed", "Error page is displayed", true);
