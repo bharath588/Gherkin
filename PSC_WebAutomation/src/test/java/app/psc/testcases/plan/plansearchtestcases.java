@@ -621,6 +621,7 @@ public class plansearchtestcases {
 					 */
 					new PlanPage()
 							.openAnySubmenuUnderFiduciary("Participant QDIA notice listing order");
+					Thread.sleep(3500);
 					planPage.fill_QDIA_Notice_Mailing_Form();
 					if (Stock.GetParameterValue("ignoreDivision").equals("yes")) {
 						queryResultSet = DB.executeQuery(

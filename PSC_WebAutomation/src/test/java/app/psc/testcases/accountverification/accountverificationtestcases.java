@@ -602,11 +602,11 @@ public class accountverificationtestcases {
 		}
 	}
 
-	@AfterClass
+	/*@AfterClass
 	public void DriverQuite() {
 		lib.Web.removeWebDriverInstance();
 		lib.Web.getDriver().close();
 		lib.Web.getDriver().quit();
-	}
+	}*/
 
 }

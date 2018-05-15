@@ -489,6 +489,9 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="4GJWU" />
 				<parameter name="password" value="testing1" />
+				<parameter name="CurrentPassword" value="testing1"/>
+				<parameter name="newPassword" value="Testing1"/>
+				<parameter name="confirmPassword" value="Testing1"></parameter>
 				<parameter name="firstDrpdwnAns" value="test" />
 				<parameter name="secondDrpdwnAns" value="test" />
 				<parameter name="thirdDrpdwnAns" value="test" />
@@ -501,20 +504,22 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="4GJWU" />
 				<parameter name="password" value="testing1" />
-				<parameter name="firstDrpdwnAns" value="test" />
-				<parameter name="secondDrpdwnAns" value="test" />
-				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="firstDrpdwnAns" value="teste" />
+				<parameter name="secondDrpdwnAns" value="testk" />
+				<parameter name="thirdDrpdwnAns" value="testr" />
 				<parameter name="username" value="" />
+				<parameter name="regUsername" value=""/>
 				<parameter name="expectedErrorMessage"
 					value="Registered Username is Required&#xA;&#xA;The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
 			</Iteration>
 			<Iteration Execution="Yes" id="2">
 				<parameter name="username" value="4GJWU" />
 				<parameter name="password" value="testing1" />
-				<parameter name="firstDrpdwnAns" value="test" />
-				<parameter name="secondDrpdwnAns" value="test" />
-				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="firstDrpdwnAns" value="teste" />
+				<parameter name="secondDrpdwnAns" value="testk" />
+				<parameter name="thirdDrpdwnAns" value="testr" />
 				<parameter name="username" value="!nV@lid" />
+				<parameter name="regUsername" value="!nV@lid"/>
 				<parameter name="expectedErrorMessage"
 					value="The Registered Username format is invalid. A Registered Username can contain both numbers and letters, as well as the special characters @ . - _. The Registered Username must be at least 7 characters in length, up to a maximum of 64." />
 			</Iteration>
@@ -524,9 +529,9 @@
 			<Iteration Execution="Yes" id="1">
 				<parameter name="username" value="4GJWU" />
 				<parameter name="password" value="testing1" />
-				<parameter name="firstDrpdwnAns" value="test" />
-				<parameter name="secondDrpdwnAns" value="test" />
-				<parameter name="thirdDrpdwnAns" value="test" />
+				<parameter name="firstDrpdwnAns" value="teste" />
+				<parameter name="secondDrpdwnAns" value="testk" />
+				<parameter name="thirdDrpdwnAns" value="testr" />
 			</Iteration>
 		</TestCase>
 		<TestCase
