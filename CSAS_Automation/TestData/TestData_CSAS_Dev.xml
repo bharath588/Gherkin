@@ -405,7 +405,7 @@ FROM
   WHERE db.ev_id       = aa.ev_id
   AND aa.tracking_nbr IS NOT NULL
   ) tempTab2
-WHERE tempTab1.ssn = tempTab2.ssn and rownum &lt;=1" />
+WHERE tempTab1.ssn = tempTab2.ssn" />
 		<parameter QueryName="getProcessingDetails" DB="INSTDB_DEV"
 			Query="SELECT db.ind_id,
   db.disb_psc_ind,

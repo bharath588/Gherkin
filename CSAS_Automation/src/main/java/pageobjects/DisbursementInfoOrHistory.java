@@ -260,6 +260,8 @@ public class DisbursementInfoOrHistory extends
 				Stock.getTestQuery("getPaymentHistoryDtls")[1]);
 		if (resultset != null) {
 			while (resultset.next()) {
+				String ssn=resultset.getString("SSN");
+				if(ssn.equalsIgnoreCase("015689811")){
 				disbursementHistoryDtls.add(resultset.getString("SSN"));
 				disbursementHistoryDtls.add(resultset.getString("EV_ID"));
 				disbursementHistoryDtls.add(resultset.getString("EFFDATE"));
@@ -272,6 +274,8 @@ public class DisbursementInfoOrHistory extends
 				disbursementHistoryDtls
 						.add(resultset.getString("tracking_nbr"));
 				disbursementHistoryDtls.add(resultset.getString("ship_date"));
+				break;
+				}
 			}
 		}
 		return disbursementHistoryDtls;
@@ -422,15 +426,16 @@ public class DisbursementInfoOrHistory extends
 					for (int i = 0; i < DSEventID.size(); i++) {
 						if (eventNo
 								.equalsIgnoreCase(DSEventID.get(i).getText())){
-							if(eventStatus.getText().trim().equalsIgnoreCase("COMPLETE")) {
-								System.out.println(eventStatus.getText());
+							String eventStatus= Web.getDriver().findElement(By.xpath(".//*[@id=\'"+eventNo+"\']/td[3]")).getText();
+							if(eventStatus.equalsIgnoreCase("COMPLETE")) {
+								System.out.println(eventStatus);
 								
 								System.out.println("click on event id");
 							//String xpath= ".//*[@id=\'"+eventNo+"\']/td[2]/a";
 							JavascriptExecutor jse = (JavascriptExecutor)Web.getDriver();
 							//jse.executeScript("window.scrollBy(0,250)", "");
 							jse.executeScript("document.getElementById(\'"+eventNo+"\').scrollIntoView(true);");
-							Web.getDriver().findElement(By.xpath(".//*[@id=\'"+eventNo+"\']/td[2]/a")).click();
+							Web.getDriver().findElement(By.xpath(".//*[@id=\'557015575']/td[2]/a")).click();
 							
 							Reporter.logEvent(
 									Status.PASS,
