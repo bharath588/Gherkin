@@ -12,7 +12,7 @@
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 			<methods>
 			
-		<!--  <include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
+		 <include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
 						<parameter name="ManualTCName" value="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod" />
 					</include>
 			
@@ -59,7 +59,7 @@
 				
 				<include name="DDTC_26926_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26926_Paperless_Loan_Exceptions" />
-					</include>  -->
+					</include> 
 					<include name="DDTC_25963_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_25963_Paperless_Loan_Exceptions" />
 					</include>
