@@ -11,7 +11,8 @@
 		
 			<class name="app.csas.testcases.loanRequest.LoanRequestTestCases">
 			<methods>
-			<include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
+			
+		<!--  <include name="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod"> 
 						<parameter name="ManualTCName" value="DDTC_26960_DDTC_26945_Paperless_LoanPaymentFrequenct_PaymentMethod" />
 					</include>
 			
@@ -58,7 +59,7 @@
 				
 				<include name="DDTC_26926_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_26926_Paperless_Loan_Exceptions" />
-					</include> 
+					</include>  -->
 					<include name="DDTC_25963_Paperless_Loan_Exceptions"> 
 						<parameter name="ManualTCName" value="DDTC_25963_Paperless_Loan_Exceptions" />
 					</include>
@@ -159,7 +160,9 @@
 				<include name="CSAS_Paperless_Loan_LoanRequest_TC28_DDTC_26080">
 						<parameter name="ManualTCName" value="CSAS_Loan_Request_VerifyLoanRefinancing_NO_AddtnlAmount"/>						
 					</include>	
-				
+			<include name="PaperlessLoan_LoanRequest_ConfirmContactInformation_PDI_No_CORE_22807"> 
+						<parameter name="ManualTCName" value="CSAS_ConfirmContactInformation_PDI_No" />
+					</include>
 			
 			  </methods>
 			 </class>

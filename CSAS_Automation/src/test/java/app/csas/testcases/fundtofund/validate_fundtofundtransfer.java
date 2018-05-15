@@ -194,7 +194,9 @@ public class validate_fundtofundtransfer {
 			Map<String, String> testdata) throws Exception{
 		// Step1: Launch and logged into CSAS application.
 					participantHomeObj = new ParticipantHome().get();
-
+					participantHomeObj.gotoParticipantPageAndSearchParticipant();
+					
+/*
 					// Step2: Searching for a PPT using PPT ID
 					participantHomeObj.search_PPT_Plan_With_PPT_ID_OR_SSN("PPT_ID",
 							participantHomeObj.getGAID_or_pptID_RestrictionType()
@@ -202,7 +204,7 @@ public class validate_fundtofundtransfer {
 									.getGAID_or_pptID_RestrictionType().get(1));
 					
 					participantHomeObj.selectSpecificPlaINPPTHome(participantHomeObj
-							.getGAID_or_pptID_RestrictionType().get(1)) ;
+							.getGAID_or_pptID_RestrictionType().get(1)) ;*/
 					
 					participantHomeObj.cancelExistingFundTransfers();
 
@@ -290,7 +292,7 @@ public class validate_fundtofundtransfer {
 			try {
 				Reporter.finalizeTCReport();
 			} catch (Exception e1) {
-				e1.printStackTrace();
+			e1.printStackTrace();
 			}
 		}
 	}
