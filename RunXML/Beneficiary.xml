@@ -72,8 +72,6 @@
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC017_Ability to remove a beneficiary"></parameter>
                     </include>
                
-                   
-                
                     <include name="Beneficiary_TC006_Married_no_allocations_for_beneficiaries_error_message">
                     <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC006_Married no allocations for beneficiaries error message"></parameter>
                     </include>

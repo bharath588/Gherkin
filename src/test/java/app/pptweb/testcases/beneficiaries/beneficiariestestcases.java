@@ -601,7 +601,7 @@ public class beneficiariestestcases {
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
 					Reporter.logEvent(Status.PASS, "verify No Spouse Alert Message", "No Spouse Alert Message is matching. Alert messgae : "+alert_msg, false);
 				else
-					Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not matching. Alert message : "+alert_msg, true);
+					Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not matching.\nExpected Alert message : "+Stock.GetParameterValue("Alert_message")+"\nActual Alert message :"+alert_msg, true);
 			}
 			else
 				Reporter.logEvent(Status.FAIL, "verify No Spouse Alert Message", "No Spouse Alert Message is not displayed", true);
@@ -860,6 +860,7 @@ public class beneficiariestestcases {
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(5000);
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg",true )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))
@@ -1009,7 +1010,8 @@ public class beneficiariestestcases {
 			Web.getDriver().navigate().refresh();
 			Common.waitForProgressBar();
 			Web.waitForPageToLoad(Web.getDriver());
-			
+			Thread.sleep(3000);
+			Web.waitForElement(beneficiary,"Alert Warning Msg");
 			if(lib.Web.isWebElementDisplayed(beneficiary,"Alert Warning Msg" )){
 				String alert_msg= beneficiary.readErrorMessage("Alert Warning Msg");
 				if(lib.Web.VerifyText(Stock.GetParameterValue("Alert_message"),alert_msg,true))

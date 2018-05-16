@@ -3392,6 +3392,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 		
 	}
@@ -3424,7 +3426,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -3455,7 +3458,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -3486,7 +3490,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	
@@ -3518,7 +3523,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	
@@ -3550,7 +3556,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
@@ -3582,7 +3589,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		verifyRequestLoanButtonsAreDisabled();
 		
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 	}
 	/**
 	 * @author srsksr
@@ -3612,7 +3620,8 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 		
 		verifyRequestLoanButtonsAreDisabled();
-		
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 	/**
