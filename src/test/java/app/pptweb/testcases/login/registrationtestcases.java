@@ -3691,8 +3691,33 @@ public class registrationtestcases {
 					verificationCode = objAuth.getVerificationCode(false);
 				} 
 			//Step 13
-			objAuth.submitVerificationCode(verificationCode, false, false);
-Web.clickOnElement(objAuth, "SIGN IN");
+			objAuth.submitVerificationCode(verificationCode, false, false);	
+			Web.clickOnElement(objAuth, "SIGN IN");
+			if(Web.isWebElementDisplayed(objAuth, "BUTTON CONTINUE TO NEXTGEN", true)){
+		         
+		           Web.clickOnElement(objAuth, "BUTTON CONTINUE TO NEXTGEN");
+		           }
+		           Common.waitForProgressBar();
+		           //Step 9
+					// Dismiss pop ups if displayed
+					LandingPage landingPage = new LandingPage();
+					Common.waitForProgressBar();
+					 landingPage.dismissPopUps(true, true);
+
+					// Verify if landing page is displayed - Landing page is loaded if
+					// Logout link is displayed.
+				
+					
+					Web.waitForElement(landingPage, "Log out");
+					if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+						Reporter.logEvent(Status.PASS,
+								"Verify landing page is displayed",
+								"Landing page is displayed", true);
+					} else {
+						Reporter.logEvent(Status.FAIL,
+								"Verify landing page is displayed",
+								"Landing page is not displayed", true);
+					}
 
 		}
 		
@@ -3884,7 +3909,7 @@ Web.clickOnElement(objAuth, "SIGN IN");
 
 			registration.providePersonalInformation("ABC", "XYZ", "ABC",
 					"12/12/1998", "Male", SSN, "Married");
-			registration.provideEmploymentInformation("12000", "12/12/2015","Corporate");
+			registration.provideEmploymentInformation("12000", "12/12/2015","Default");
 			//registration.provideEmploymentInformation("12000", "12/12/2015");
 			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
 					"California", "95001", "United States");
@@ -3978,7 +4003,31 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			//Web.clickOnElement(objAuth, "ALREADY HAVE A CODE?");
 			//objAuth.submitVerificationCode("74196385", false, false);
 			Web.clickOnElement(objAuth, "SIGN IN");
+			if(Web.isWebElementDisplayed(objAuth, "BUTTON CONTINUE TO NEXTGEN", true)){
+		         
+		           Web.clickOnElement(objAuth, "BUTTON CONTINUE TO NEXTGEN");
+		           }
+		           Common.waitForProgressBar();
+		           //Step 9
+					// Dismiss pop ups if displayed
+					LandingPage landingPage = new LandingPage();
+					Common.waitForProgressBar();
+					 landingPage.dismissPopUps(true, true);
 
+					// Verify if landing page is displayed - Landing page is loaded if
+					// Logout link is displayed.
+				
+					
+					Web.waitForElement(landingPage, "Log out");
+					if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+						Reporter.logEvent(Status.PASS,
+								"Verify landing page is displayed",
+								"Landing page is displayed", true);
+					} else {
+						Reporter.logEvent(Status.FAIL,
+								"Verify landing page is displayed",
+								"Landing page is not displayed", true);
+					}
 			String[] sqlQuery = Stock.getTestQuery(Stock
 					.GetParameterValue("queryName"));
 
@@ -4209,9 +4258,36 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			// Step 13
 			objAuth.submitVerificationCode(verificationCode, false, false);
 			Web.clickOnElement(objAuth, "SIGN IN");
+			 /*if(Web.isWebElementDisplayed(objAuth, "BUTTON CONTINUE TO NEXTGEN", true)){
+		         
+		           Web.clickOnElement(objAuth, "BUTTON CONTINUE TO NEXTGEN");
+		           }*/
+					if(Web.isWebElementDisplayed(objAuth, "CONTINUE TO MY ACCOUNT", true)){
+		         
+		           Web.clickOnElement(objAuth, "CONTINUE TO MY ACCOUNT");
+		           }
 			
-			
-			
+		           Common.waitForProgressBar();
+		           //Step 9
+					// Dismiss pop ups if displayed
+					LandingPage landingPage = new LandingPage();
+					Common.waitForProgressBar();
+					// landingPage.dismissPopUps(true, true);
+
+					// Verify if landing page is displayed - Landing page is loaded if
+					// Logout link is displayed.
+				
+					
+					Web.waitForElement(landingPage, "Log out");
+					if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+						Reporter.logEvent(Status.PASS,
+								"Verify landing page is displayed",
+								"Landing page is displayed", true);
+					} else {
+						Reporter.logEvent(Status.FAIL,
+								"Verify landing page is displayed",
+								"Landing page is not displayed", true);
+					}
 			if(itr==2)
 			{
 				
@@ -4813,7 +4889,31 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				// Step 13
 				objAuth.submitVerificationCode(verificationCode, false, false);
 				Web.clickOnElement(objAuth, "SIGN IN");
-				
+				if(Web.isWebElementDisplayed(objAuth, "BUTTON CONTINUE TO NEXTGEN", true)){
+			         
+			           Web.clickOnElement(objAuth, "BUTTON CONTINUE TO NEXTGEN");
+			           }
+			           Common.waitForProgressBar();
+			           //Step 9
+						// Dismiss pop ups if displayed
+						LandingPage landingPage = new LandingPage();
+						Common.waitForProgressBar();
+						 landingPage.dismissPopUps(true, true);
+
+						// Verify if landing page is displayed - Landing page is loaded if
+						// Logout link is displayed.
+					
+						
+						Web.waitForElement(landingPage, "Log out");
+						if (Web.isWebElementDisplayed(landingPage, "Log out")) {
+							Reporter.logEvent(Status.PASS,
+									"Verify landing page is displayed",
+									"Landing page is displayed", true);
+						} else {
+							Reporter.logEvent(Status.FAIL,
+									"Verify landing page is displayed",
+									"Landing page is not displayed", true);
+						}
 			} 
 			// Step 8
 			
@@ -4950,9 +5050,9 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			registration.providePersonalInformation("ABC", "XYZ", "ABC",
 					"12/12/1998", "Male", SSN, "Married");
 			if(itr==2)
-				registration.provideEmploymentInformation("12000", "12/12/2015","Default");
+				registration.provideEmploymentInformation("12000", "02/02/2018");
 			else
-				registration.provideEmploymentInformation("12000", "12/12/2015",Stock.GetParameterValue("divisionName"));
+				registration.provideEmploymentInformation("12000", "02/02/2018",Stock.GetParameterValue("divisionName"));
 			
 			registration.provideMailingAddress("123ABC", "QASD", "Aptos",
 					"California", "95001", "United States");
@@ -5050,8 +5150,10 @@ Web.clickOnElement(objAuth, "SIGN IN");
 			}
 			// Step 13
 			objAuth.submitVerificationCode(verificationCode, false, false);
-			Web.clickOnElement(objAuth, "SIGN IN");
-			
+		
+		           Common.waitForProgressBar();
+		        
+				
 			if(itr==2)
 			{
 				
@@ -5084,8 +5186,9 @@ Web.clickOnElement(objAuth, "SIGN IN");
 				}
 				
 			
-				
+			
 				enroll.selectCustomizeEnroll();
+				Common.waitForProgressBar();
 				//Thread.sleep(5000);
 				enroll.verifyPriorPlanContributionsPage();
 				

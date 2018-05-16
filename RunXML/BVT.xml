@@ -9,7 +9,7 @@
 		<classes>
 		<class name="app.pptweb.testcases.login.registrationtestcases">
                 <methods>
-             <!--   <include name="SF01_TC01_User_has_PIN">
+            	   <!-- <include name="SF01_TC01_User_has_PIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_01_TC001_UI_Validation_User_has_PIN"></parameter>
                     </include>
                
@@ -39,13 +39,13 @@
                
                     <include name="AccountLookup_PositiveFlow_WithPIN">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_04_TC002_Functionality_With_PIN__Positive_flow"></parameter>
-                    </include>
+                    </include> -->
                
                     <include name="AccountSetup_WithPin_Validate_ContactInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC001_UI_Validation_WithPin_Contact_information"></parameter>
                     </include>
                 
-                    <include name="AccountSetup_WithPin_Validate_UserNameInfo">
+                   <!--  <include name="AccountSetup_WithPin_Validate_UserNameInfo">
                     <parameter name="ManualTCName" value="SIT_xPPTWEB_Login_04_03_TC003_UI_Validation_WithPin_Username_Password"></parameter>
                     </include>
                
@@ -72,7 +72,7 @@
 					<include name="Registration_MFA_OFF_2Point_registration">
 					<parameter name="ManualTCName" value="SSIT_PPT_Reg_MFA_OFF_TC01_5Point_registration_Ihavepin"></parameter>
                     </include> 
-                    <include name="NPDI_001_validation_for_Ihaveaplanenrollment_code_page">
+                     <include name="NPDI_001_validation_for_Ihaveaplanenrollment_code_page">
 					<parameter name="ManualTCName" value="SIT_NPDI_001_validation_for_Ihaveaplanenrollment_code_page"></parameter>
                     </include>
                     
@@ -88,7 +88,7 @@
                     </include>
                     <include name="NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page">
 					<parameter name="ManualTCName" value="SIT_NPDI_005_Validation_For_Registration_Page_Profile_Settings_Page"></parameter>
-                    </include>-->
+                    </include>
                      <include name="NPDI_006_Validation_For_Enhanced_Security_Pages">
 					<parameter name="ManualTCName" value="SIT_NPDI_006_Validation_For_Enhanced_Security_Pages"></parameter>
                     </include>
@@ -100,7 +100,7 @@
 					<parameter name="ManualTCName" value="NPDI_008_Register_a_ppt_exists_in_Easy_DB_Choose_a_SSN_from_194037-01_plan_and_do_NPDI_reg_flow_with_194391-01_plan"></parameter>
                     </include>
                     
-                    <include name="NPDI_009_Register_a_ppt_exists_in_Easy_DB">
+                   <include name="NPDI_009_Register_a_ppt_exists_in_Easy_DB">
 					<parameter name="ManualTCName" value="NPDI_009_Register_a_ppt_exists_in_Easy_DB,_Choose_a_SSN_from_194391_01_plan_and_do_NPDI_reg_flow_with_194391_01_plan"></parameter>
                     </include>
                     
@@ -108,13 +108,13 @@
 					<parameter name="ManualTCName" value="NPDI_010_Register_a_ppt_exists_in_Easy_DB,_Choose_a_SSN_from_194391_01_plan_and_do_NPDI_reg_flow_with_194391_02_plan"></parameter>
                     </include>
                     
-                    <include name="NPDI_011_Register_participant_doesnot_exists_inEASY_system">
+                   <include name="NPDI_011_Register_participant_doesnot_exists_inEASY_system">
 					<parameter name="ManualTCName" value="NPDI_011_Register_a_participant__does_not_exists_in_EASY_system_and_set_existing_Username_from_user_register_table"></parameter>
                     </include>
 				
                     <include name="NPDI_013_Register_a_participant_End_to_End_flow">
 					<parameter name="ManualTCName" value="NPDI_013 Register a participant  End to End flow"></parameter>
-                    </include>
+                    </include>   -->
 				</methods>
 			</class> 
 		</classes>
