@@ -77,6 +77,16 @@ public class beneficiariestestcases {
 		}
 		return testDataForCurrentThread;
 	}
+    public void prepareLoginTestData(String quesryNmae,String... queryParam) {
+		try {
+			TestDataFromDB
+					.getParticipantDataFromDB( quesryNmae, queryParam);
+			//TestDataFromDB.addUserDetailsToGlobalMap(testDataFromDB);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
     
     
    private String printTestData() throws Exception {
@@ -748,11 +758,19 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
 			participant_SSN = Stock.GetParameterValue("SSN");
 		    first_Name=Stock.GetParameterValue("FIRST_NAME");
+		    MyBeneficiaries beneficiary = new MyBeneficiaries();
+			try {
+				beneficiary.deleteBeneficiariesFromDB(participant_SSN, first_Name+"%");
+				
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
 			LeftNavigationBar leftmenu;
 			LoginPage login = new LoginPage();
 			TwoStepVerification mfaPage = new TwoStepVerification(login);
@@ -765,7 +783,7 @@ public class beneficiariestestcases {
 //			leftmenu = new LeftNavigationBar(accountPage);
 //		}
 			leftmenu = new LeftNavigationBar(homePage);
-			MyBeneficiaries beneficiary = new MyBeneficiaries(leftmenu);
+			 beneficiary = new MyBeneficiaries(leftmenu);
 			
 			beneficiary.get();
 			Reporter.logEvent(Status.INFO, "Navigate to Beneficiary page.", "Beneficiary page is displayed", true);
@@ -1049,7 +1067,7 @@ public class beneficiariestestcases {
 		
 		try{
 			Reporter.initializeReportForTC(itr, Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread.currentThread().getId())+"_"+Stock.getConfigParam("BROWSER"));
-			prepareBeneficiaryTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
+			prepareLoginTestData(Stock.GetParameterValue("queryName"), Stock.GetParameterValue("ga_PlanId"));
 			lib.Reporter.logEvent(Status.INFO,"Test Data used for this Test Case:",printTestData(),false);
 
 			participant_SSN = Stock.GetParameterValue("SSN");
