@@ -7,14 +7,77 @@
 	 <!-- <test name="Regression Suite" parallel="classes" thread-count="2"> --> 
 	<test name="BVT">
 		<classes>
-		  <class name="app.pptweb.testcases.beneficiaries.beneficiariestestcases">
+		  <class name="app.pptweb.testcases.deferrals.deferralstestcases">
                 <methods>
                 
                  <!-- PRIOR PLAN CONTRIBUTIONS 5 -->
   
-                   <include name="Beneficiary_TC018_Add_beneficiary_after_enrollment">
-                    <parameter name="ManualTCName" value="SIT_PPTWEB_Beneficiary_TC018_Add beneficiary after enrollment"></parameter>
+                     <include name="SIT_PPTWEB_Deferral__AfterTax">
+                   <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_001_After-tax_Select another contribution rate_Sanity">
+                    </parameter>
                     </include>
+                
+                      <include name="Deferral_016_Regular_SPLIT_Select_Another_contributiont_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_016_Regular_SPLIT- Select Another contributiont rate_Sanity">
+                    </parameter>
+                    </include>
+                  <include name="Catchup_SelectAnotherContribution_Split">
+                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Split">
+                    </parameter>
+                    </include>
+                
+                     <include name="Catchup_SelectAnotherContribution_Roth">
+                    <parameter name="ManualTCName" value="Catchup_SelectAnotherContribution_Roth">
+                    </parameter>
+                    </include>
+                     <include name="Deferral_009_Other_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_009_Other_Select another contribution rate">
+                    </parameter>
+                    </include>
+               
+                     <include name="Other_SelectAnotherContribution_Catchup_Roth">
+                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_Catchup_Roth">
+                    </parameter>
+                    </include>
+               
+                     <include name="Other_SelectAnotherContribution_split">
+                    <parameter name="ManualTCName" value="Other_SelectAnotherContribution_split">
+                    </parameter>
+                    </include>
+                      <include name="Deferral_012_Regular_BEFORE_Select_Another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_012_Regular_BEFORE-Select Another contribution rate_Sanity">
+                    </parameter>
+                    </include>
+                     <include name="Deferral_004_Catch_up_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_004_Catch up_Select another contribution rate">
+                    </parameter>
+                    </include> 
+                       <include name="Participant_not_elegible_for_Bonus_type_contribution">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_003_Bonus_Participant not eligible for Bonus type contribution">
+                    </parameter>
+                    </include>    
+                  
+                                    
+      
+             
+   				 <!--  BONUS 3 -->
+    
+  
+                      <include name="Deferral_002_Bonus_Select_another_contribution_rate">
+                    <parameter name="ManualTCName" value="SIT_PPTWEB_Deferral_002_Bonus_Select another contribution rate">
+                    </parameter>
+                    </include>
+                
+                     <include name="Bonus_SelectAnotherContribution_after">
+                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_after">
+                    </parameter>
+                    </include> 
+                
+                     <include name="Bonus_SelectAnotherContribution_split">
+                    <parameter name="ManualTCName" value="Bonus_SelectAnotherContribution_split">
+                    </parameter>
+                    </include>     
+                 
                 
                     </methods>
 			</class>
