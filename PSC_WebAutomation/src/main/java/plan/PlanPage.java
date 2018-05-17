@@ -1590,22 +1590,24 @@ public class PlanPage extends LoadableComponent<PlanPage> {
 			Web.clickOnElement(pdiFileLayout);
 			String parentWindow = CommonLib.switchToWindow();
 			String pdfURL = Web.getDriver().getCurrentUrl();
-			if (pdfURL.contains(".pdf"))
+			if (pdfURL.contains(".pdf")){
 				Reporter.logEvent(
 						Status.PASS,
 						"Click on PDI File Layout link and check if new window is "
 								+ "opened with url containing .pdf as extension.",
 						"PDF is displayed in a seperate window.", false);
+				Web.getDriver().close();
+				Web.getDriver().switchTo().window(parentWindow);
+				Thread.sleep(2000);
+				Web.getDriver().switchTo().defaultContent();
+			}
 			else
 				Reporter.logEvent(
 						Status.FAIL,
 						"Click on PDI File Layout link and check if new window is "
 								+ "opened with url containing .pdf as extension.",
 						"PDF is not displayed in a seperate window.", true);
-			Web.getDriver().close();
-			Web.getDriver().switchTo().window(parentWindow);
-			Thread.sleep(2000);
-			Web.getDriver().switchTo().defaultContent();
+			
 			if (CommonLib.getBrowserName().equalsIgnoreCase("chrome")) {
 				if (printLink.isDisplayed())
 					Reporter.logEvent(Status.PASS,
