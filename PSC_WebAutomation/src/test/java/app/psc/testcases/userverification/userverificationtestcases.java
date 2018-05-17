@@ -309,7 +309,9 @@ public class userverificationtestcases {
 	
 	@AfterSuite
 	public void DriverQuite() {
+		Web.getDriver().close();
 		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
 	}
 
 }

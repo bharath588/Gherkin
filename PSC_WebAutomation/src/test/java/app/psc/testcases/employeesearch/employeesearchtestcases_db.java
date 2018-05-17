@@ -854,7 +854,7 @@ public class employeesearchtestcases_db {
 		}
 	}
 
-	@AfterClass
+	@AfterSuite
 	public void cleanUpSession() {
 		lib.Web.removeWebDriverInstance();
 		Web.getDriver().close();

@@ -40,6 +40,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 	private static final String rootSelector = "[ng-app]";
 	private static String randomEmailId;
 	Actions actions;
+	private static int wrongPasswordCounter=0;
 
 	@FindBy(xpath=".//*[@id='myProfileModule']//h3[text()='My Profile']")
 	private WebElement myPrfilePageIdentity;
@@ -356,6 +357,8 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		if(fieldName.trim().equalsIgnoreCase("Duplicate Question Error")){
 			return this.duplicateQuestnError();
 		}
+		if(fieldName.trim().equalsIgnoreCase("Update Current Email Btn"))
+			return this.updateCurrentEmailBtn();
 		return null;
 	}
 
@@ -539,7 +542,10 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		try{
 			if(values.length>1){
 				for(String value : values){
-					Web.clickOnElement(updateEmailBtn());
+					if(Web.isWebElementDisplayed(updateCurrentEmailBtn(), false))
+						Web.clickOnElement(updateCurrentEmailBtn());
+					if(Web.isWebElementDisplayed(updateEmailBtn(), false))
+						Web.clickOnElement(updateEmailBtn());
 					Web.gwgWebDriver.waitForAngularRequestsToFinish();
 					Web.setTextToAngularTextBox(confirmModalBox(), value);
 					Web.clickOnElement(confirmPwdButton);
@@ -555,6 +561,36 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage>{
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public void enterWrongPasswordToLogout(String[] values){
+		if(wrongPasswordCounter>values.length)
+			return;
+		if(Web.isWebElementDisplayed(updateCurrentEmailBtn(), false))
+			Web.clickOnElement(updateCurrentEmailBtn());
+		if(Web.isWebElementDisplayed(updateEmailBtn(), false))
+			Web.clickOnElement(updateEmailBtn());
+		Web.gwgWebDriver.waitForAngularRequestsToFinish();
+		
+		if(Web.isWebElementDisplayed(newEmailBox(), true))
+			Web.setTextToAngularTextBox(newEmailBox(), Stock.GetParameterValue("newEmailID"));
+		if(Web.isWebElementDisplayed(confirmEmailBox(), true))
+			Web.setTextToAngularTextBox(confirmEmailBox(), Stock.GetParameterValue("newEmailID"));
+		if(Web.isWebElementDisplayed(updateEmailBtn(), false))
+			Web.clickOnElement(updateEmailBtn());
+		Web.gwgWebDriver.waitForAngularRequestsToFinish();
+		Web.setTextToAngularTextBox(confirmModalBox(), values[wrongPasswordCounter]);
+		Web.clickOnElement(confirmPwdButton);
+		Web.gwgWebDriver.waitForAngularRequestsToFinish();
+		if(Web.isWebElementDisplayed(incorrectPwdError(), true))
+		{
+			Reporter.logEvent(Status.INFO, "Incorrect password error message", 
+					incorrectPwdError().getText(), true);
+			wrongPasswordCounter++;
+			enterWrongPasswordToLogout(values);
+		}
+		else
+			return;
 	}
 
 	public void enterWrongPasswordAndUpdate(String[] values,WebElement button){

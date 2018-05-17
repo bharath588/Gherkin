@@ -9,7 +9,9 @@ import java.util.Map;
 
 import lib.Reporter;
 import lib.Stock;
+import lib.Web;
 
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -151,6 +153,13 @@ public class ReportsTestCases {
 			}
 		}
 		
+	}
+	
+	@AfterSuite
+	public void DriverQuite() {
+		Web.getDriver().close();
+		Web.getDriver().quit();
+		Web.removeWebDriverInstance();
 	}
 	
 
