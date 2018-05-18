@@ -229,8 +229,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String lableViewOnlyABONUS="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//span[contains(text(),'View Only')]";
 			String inpViewOnly="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//input";
 			private String textField="//*[contains(text(),'webElementText')]";
-			private String lnkAddAuto =".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td[3]/.//div";
-
+			private String lnkAddAuto ="//div[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td[3]/.//a";
+			
 			Actions mouse=new Actions(Web.getDriver());
 		/**
 		 * Default Constructor
@@ -238,7 +238,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public Deferrals() {
 		
 			this.parent = new LeftNavigationBar();
-			PageFactory.initElements(lib.Web.getDriver(), this);
+			PageFactory.initElements(Web.getDriver(), this);
 		}
 		
 		/** Argument Constructor with parent as input
@@ -247,7 +247,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public Deferrals(LoadableComponent<?> parent) {
 			this.parent = parent;			
-			PageFactory.initElements(lib.Web.getDriver(), this);
+			PageFactory.initElements(Web.getDriver(), this);
 		}
 		
 		@Override
@@ -280,7 +280,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String userLogedIn = this.lblUserName.getText();
 			if (userFromDatasheet.equalsIgnoreCase(userLogedIn))*/if(Common.verifyLoggedInUserIsSame()) {
 				   Assert.assertTrue(true,"Mycontribution page is not loaded\n");
-				if (!lib.Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
+				if (!Web.isWebElementDisplayed(lblMyContributions,Deferrals.waitforLoad)) {
 					Deferrals.waitforLoad = true;
 					throw new Error("'My contributions' page is not loaded");
 				}else{
@@ -527,12 +527,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		{
 			boolean isDisplayed = false;
             WebElement deferral = this.getWebElement(deferralsType);
-            if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions,true))
+            if(Web.isWebElementDisplayed(this.lnkMoreOptions,true))
             	this.lnkMoreOptions.click();
-        			lib.Web.waitForElement(deferral);
-		            lib.Web.clickOnElement(deferral);
+        			Web.waitForElement(deferral);
+		            Web.clickOnElement(deferral);
             Web.waitForElement(btnContinue);
-			if(lib.Web.isWebElementDisplayed(btnContinue, true))				
+			if(Web.isWebElementDisplayed(btnContinue, true))				
              isDisplayed = true;			
             return isDisplayed;           
 
@@ -547,24 +547,24 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void click_Select_Your_Contribution_Rate() throws InterruptedException
 		{	
 			Actions keyBoard = new Actions(Web.getDriver());
-			lib.Web.waitForElement(radioSelectAnotherContributionRate);
-			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Web.waitForElement(radioSelectAnotherContributionRate);
+			Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
 			
-			lib.Web.waitForElement(lnkContributionRate);
+			Web.waitForElement(lnkContributionRate);
 			
 			if(Web.isWebElementDisplayed(lnkPercent))
 				this.lnkPercent.click();			
 			this.lnkContributionRate.click();
 			
-			lib.Web.waitForElement(txtcontributionRateSlider);
+			Web.waitForElement(txtcontributionRateSlider);
 			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
 				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
 			}
 			else
 				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
 			
-			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
+			Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
 			//keyBoard.sendKeys(Keys.TAB).perform();
 			Web.clickOnElement(btnDone);
 			if(btnDone.isDisplayed())
@@ -574,7 +574,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate+"%", true);
-			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
+			/*boolean sliderValue=Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
 			else
@@ -597,25 +597,25 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String date=dateFormat.format(calendar.getTime());
 			WebElement autoIncreaseDeferralType=this.getWebElement(deferralType);
 			
-			lib.Web.waitForElement(tblhdrlblContribution);
+			Web.waitForElement(tblhdrlblContribution);
 			
 
-			if(lib.Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
+			if(Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
 			{
-				if(lib.Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
+				if(Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
 				{
 				Reporter.logEvent(Status.PASS, "Verify if Add Auto Increase link is displayed", "Add Auto Increase link is displayed", true);
 //				this.lnkBeforeTaxAutoIncrease.click();
 				autoIncreaseDeferralType.click();
 				try {
-					lib.Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+					Web.waitForElement(txtAutoIncreaseMyContributionPercent);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
-				lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+				Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
+				Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
 				Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
-				//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+				//Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 				Thread.sleep(3000);
 				Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
 				Web.clickOnElement(btnSaveAddAutoIncreaseModal);
@@ -654,14 +654,14 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void click_Maximize_IRS_Limit()
 		{
 //			if(deferralType.equalsIgnoreCase("Catch Up")){
-//				lib.Web.clickOnElement(radioMaximizeToIRSLimit);
+//				Web.clickOnElement(radioMaximizeToIRSLimit);
 //				Reporter.logEvent(Status.PASS, "Verify if maximize to IRS limit is selected", "Clicked Maximize to irs limit", false);
 //			}
 //				
 //			else if(deferralType.equalsIgnoreCase("Standard"))
 //			{
 				Web.waitForElement(radioMaximizeToIRSLimit);
-				lib.Web.clickOnElement(radioMaximizeToIRSLimit);
+				Web.clickOnElement(radioMaximizeToIRSLimit);
 			
 			String irs=	txtIRSMyContribution.getText().split("%")[0];
 			irs_limit=(float) Float.parseFloat(irs);
@@ -689,12 +689,12 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void select_ContributionType(String contributionType)
 		{		
 			
-			lib.Web.waitForElement(btnContinue);
-			lib.Web.clickOnElement(this.btnContinue);
-			lib.Web.waitForElement(radioSplitContribution);
+			Web.waitForElement(btnContinue);
+			Web.clickOnElement(this.btnContinue);
+			Web.waitForElement(radioSplitContribution);
 			
 			if(contributionType.equalsIgnoreCase("Split") ){
-				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
+				if(Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
 				{				
 					this.radioSplitContribution.click();
 					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", true);
@@ -703,23 +703,23 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
 //					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
 //						befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
-//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
-//						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+//						Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
+//						Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
 						before_tax =Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*irs_limit;
 						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
-						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
-						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+						Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
 					}
 					else{
-//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+//						Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
 //                        int i=Integer.parseInt(contrbution_rate);
 //                        int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));
-//                        lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
+//                        Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
 						
 						before_tax = Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*Float.parseFloat(contrbution_rate);
 						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*Float.parseFloat(contrbution_rate);
-						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
-						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+						Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
 					}
 					
 					
@@ -755,7 +755,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 //		 * 
 //		 */
 //		public void catchup_maximize_to_irs() {
-//			lib.Web.clickOnElement(this.btnContinue);
+//			Web.clickOnElement(this.btnContinue);
 //			if(this.txtCatchup.getText().contains("Effective "))
 //				Reporter.logEvent(Status.PASS, "Verify Roth Tax Contribution Rate radio button is clicked ", "Roth Tax radio option is clicked", false);
 //			else
@@ -774,7 +774,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			Web.waitForElement(radioMaximizeToCompanyMatch);
 			mouse.moveToElement(radioMaximizeToCompanyMatch).click(radioMaximizeToCompanyMatch).build().perform();
-			//lib.Web.clickOnElement(radioMaximizeToCompanyMatch);
+			//Web.clickOnElement(radioMaximizeToCompanyMatch);
 			if(this.txtCompanyMatchMyContribution.isDisplayed())
 				Reporter.logEvent(Status.PASS, "Verify My Contributions percentage ", "My Contributions percentage is  displayed", false);
 			else
@@ -795,7 +795,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public boolean check_if_participant_eligible_for_deferral_type(String deferralType){
 			boolean issuccess=false;
 			WebElement deferral=this.getWebElement(deferralType);
-			if(lib.Web.isWebElementDisplayed(this.lnkMoreOptions))
+			if(Web.isWebElementDisplayed(this.lnkMoreOptions))
             	this.lnkMoreOptions.click();
 			if(Web.isWebElementDisplayed(deferral))
 				issuccess=true;
@@ -814,30 +814,30 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					this.lblMaximizeYes.click();
 				
 				select_ContributionType("Split");
-				lib.Web.clickOnElement(btnContinue);
+				Web.clickOnElement(btnContinue);
 				Web.waitForElement(txtMaximizeMeAlwaysBefore);
-				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
+				if(Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysBefore.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is displayed for Standard before contribution", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard before contribution", "Maximize Me Always is Not displayed for Standard before contribution", true);
-				if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
+				if(Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysRoth.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Standard Roth contribution", "Maximize Me Always is displayed for Standard Roth contribution", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Standard Roth contribution", "Maximize Me Always is Not displayed for Standard Roth contribution", true);
 				
-//				if(lib.Web.VerifyText(Float.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
+//				if(Web.VerifyText(Float.toString(irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth"))))+"%", txtBeforeTaxContributionAmt.getText(), true))
 //					Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
 //				else
 //					Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);
 				before_tax =Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*irs_limit;
 				roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
-				if(lib.Web.VerifyText( new DecimalFormat("##.##").format(before_tax)+"%", txtBeforeTaxContributionAmt.getText(), true))
+				if(Web.VerifyText( new DecimalFormat("##.##").format(before_tax)+"%", txtBeforeTaxContributionAmt.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify before tax contribution percent", "Before tax contribution percent is matching", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify before tax contribution percent", "Before tax contribution percent is not matching", true);
 				
 				
-				if(lib.Web.VerifyText(new DecimalFormat("##.##").format(roth)+"%", txtRothContributionAmt.getText(), true))
+				if(Web.VerifyText(new DecimalFormat("##.##").format(roth)+"%", txtRothContributionAmt.getText(), true))
 					Reporter.logEvent(Status.PASS, "Verify roth contribution percent", "Roth contribution percent is matching", false);
 				else
 					Reporter.logEvent(Status.FAIL, "Verify roth contribution percent", "Roth contribution percent is not matching", true);
@@ -859,7 +859,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public boolean verifyMyContributions(String percent, String contrType, String deferralsType){
 			boolean issuccess = false;
 			
-			lib.Web.waitForElement(lblMyContributions);
+			Web.waitForElement(lblMyContributions);
 			if(deferralsType.equalsIgnoreCase("Standard")){
 				if(tblMyContributions.getText().toUpperCase().contains(percent+"% "+contrType.toUpperCase()))
 					return true;
@@ -928,7 +928,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public boolean checkAftertaxOptionNotdisplayed()
 		{
 			boolean isDisplayed = false;
-			lib.Web.clickOnElement(linkMoreOptions);
+			Web.clickOnElement(linkMoreOptions);
 			
 			for(WebElement webelement : headersContrPage)
 			{
@@ -952,25 +952,25 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 //			String rothCatchupRate="";
 //			int rothCatchupRateNum;
 			try {
-				lib.Web.waitForElement(btnEditCatchUp);
+				Web.waitForElement(btnEditCatchUp);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			lib.Web.clickOnElement(btnEditCatchUp);
+			Web.clickOnElement(btnEditCatchUp);
 			click_Select_Your_Contribution_Rate();
-			lib.Web.clickOnElement(btnContinue);
-			/*if(lib.Web.isWebElementDisplayed(txtViewOnly))
+			Web.clickOnElement(btnContinue);
+			/*if(Web.isWebElementDisplayed(txtViewOnly))
 				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
 			else
 				Reporter.logEvent(Status.FAIL, "Check if view only is displayed for age roth rate", "View only is not displayed for roth catch up rate", true);
 			
 //			rothCatchupRate = rothCatchUprate.getText();
 //			rothCatchupRateNum = Integer.parseInt(rothCatchupRate);
-			//lib.Web.setTextToTextBox(txtCatchupRate, String.valueOf((Integer.valueOf(myContRate)) - rothCatchupRateNum));
-			lib.Web.setTextToTextBox(txtCatchupRate,String.valueOf(((Integer.valueOf(myContRate))-Integer.parseInt(Stock.GetParameterValue("Age_roth_Catchup_contr")))));
-			lib.Web.clickOnElement(btnContinue);
-			lib.Web.clickOnElement(btnConfirmAndContinue);
+			//Web.setTextToTextBox(txtCatchupRate, String.valueOf((Integer.valueOf(myContRate)) - rothCatchupRateNum));
+			Web.setTextToTextBox(txtCatchupRate,String.valueOf(((Integer.valueOf(myContRate))-Integer.parseInt(Stock.GetParameterValue("Age_roth_Catchup_contr")))));
+			Web.clickOnElement(btnContinue);
+			Web.clickOnElement(btnConfirmAndContinue);
 			myContributions_Confirmation_Page();*/
 		}
 		
@@ -982,20 +982,20 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void View_only_Standard_with_changes(String myContRate) throws InterruptedException
 		{
 			try {
-				lib.Web.waitForElement(btnAddOrEditStandard);
+				Web.waitForElement(btnAddOrEditStandard);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			lib.Web.clickOnElement(btnAddOrEditStandard);
+			Web.clickOnElement(btnAddOrEditStandard);
 			click_Select_Your_Contribution_Rate();
-			lib.Web.clickOnElement(btnContinue);
+			Web.clickOnElement(btnContinue);
 			
-			/*lib.Web.clickOnElement(btnEditStandard);
+			/*Web.clickOnElement(btnEditStandard);
 			click_Select_Your_Contribution_Rate();
-			lib.Web.clickOnElement(btnContinue);
+			Web.clickOnElement(btnContinue);
 			Web.waitForElement(txtViewOnly);
-			if(lib.Web.isWebElementDisplayed(txtViewOnly))
+			if(Web.isWebElementDisplayed(txtViewOnly))
 			{
 				Reporter.logEvent(Status.PASS, "Check if view only is displayed for age roth rate", "View only is displayed for roth catch up rate", false);
 			}else
@@ -1005,9 +1005,9 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 //			rothCatchupRate = bfrtaxRate.getText();
 //			rothCatchupRateNum = Integer.parseInt(rothCatchupRate);
 			rothCatchupRateNum = Integer.parseInt(Stock.GetParameterValue("Age_roth_standard_contr"));
-			lib.Web.setTextToTextBox(txtRothtaxRate, String.valueOf((Integer.valueOf(myContRate)) -rothCatchupRateNum));
-			lib.Web.clickOnElement(btnContinue);
-			lib.Web.clickOnElement(btnConfirmAndContinue);
+			Web.setTextToTextBox(txtRothtaxRate, String.valueOf((Integer.valueOf(myContRate)) -rothCatchupRateNum));
+			Web.clickOnElement(btnContinue);
+			Web.clickOnElement(btnConfirmAndContinue);
 			myContributions_Confirmation_Page();*/
 		}
 		
@@ -1024,7 +1024,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			clickAddEditButton("Standard Add");
 			click_Maximize_IRS_Limit();
 			regular_maximize_me_always("Yes");
-			if(lib.Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysCatchupBefore.getText(), true))
+			if(Web.VerifyText("Maximize Me Always", txtMaximizeMeAlwaysCatchupBefore.getText(), true))
 				Reporter.logEvent(Status.PASS, "Verify Maximize Me Always for Catch-up before contribution", "Maximize Me Always is displayed for Catch-up before contribution", true);
 			else
 				Reporter.logEvent(Status.FAIL, "Verify Maximize Me Always for Catch-up before contribution", "Maximize Me Always is not displayed for Catch-up before contribution", true);
@@ -1093,7 +1093,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				Reporter.logEvent(Status.FAIL, "Verify Add auto increase link displayed for CatchUp Contribution", "Verify Add auto increase link not displayed for CatchUp Contribution", true);
 			
 			String catchup_before_percent=txtCatchupBeforeAmt.getText().trim();
-			lib.Web.clickOnElement(btnEditCatchUp);
+			Web.clickOnElement(btnEditCatchUp);
 			
 			Web.waitForElement(txtMyCatchupContr);
 //			if(Web.VerifyText(catchup_before_percent, txtMyCatchupContr.getText().trim(), true))
@@ -1257,21 +1257,21 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 */
 		public void split_bonus_contribution(){
 			try {
-				lib.Web.waitForElement(btnContinue);
+				Web.waitForElement(btnContinue);
 			} catch (Exception e1) {
 				
 				e1.printStackTrace();
 			}
-			lib.Web.clickOnElement(this.btnContinue);
-			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
+			Web.clickOnElement(this.btnContinue);
+			if(Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
 				this.radioSplitContribution.click();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
 //				if(Web.isWebElementDisplayed(txtSplitBeforeTax))
-//					lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+//					Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
 //				if(Web.isWebElementDisplayed(txtSplitAfterTaxBonus))
-//					lib.Web.setTextToTextBox(txtSplitAfterTaxBonus, Stock.GetParameterValue("Split_Tax_after"));
+//					Web.setTextToTextBox(txtSplitAfterTaxBonus, Stock.GetParameterValue("Split_Tax_after"));
 //				if(Web.isWebElementDisplayed(txtSplitRothBonus))
-//					lib.Web.setTextToTextBox(txtSplitRothBonus, Stock.GetParameterValue("Split_Tax_roth"));
+//					Web.setTextToTextBox(txtSplitRothBonus, Stock.GetParameterValue("Split_Tax_roth"));
 			
 			
 				before_tax = Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*Float.parseFloat(contrbution_rate);
@@ -1279,11 +1279,11 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 				float after_tax = Float.parseFloat(Stock.GetParameterValue("after_tax_ratio"))*Float.parseFloat(contrbution_rate);
 				
 				if(Web.isWebElementDisplayed(txtSplitBeforeBonus))
-					lib.Web.setTextToTextBox(txtSplitBeforeBonus, new DecimalFormat("##.##").format(before_tax));
+					Web.setTextToTextBox(txtSplitBeforeBonus, new DecimalFormat("##.##").format(before_tax));
 				if(Web.isWebElementDisplayed(txtSplitAfterTaxBonus))
-					lib.Web.setTextToTextBox(txtSplitAfterTaxBonus,new DecimalFormat("##.##").format(after_tax));
+					Web.setTextToTextBox(txtSplitAfterTaxBonus,new DecimalFormat("##.##").format(after_tax));
 				if(Web.isWebElementDisplayed(txtSplitRothBonus))
-					lib.Web.setTextToTextBox(txtSplitRothBonus, new DecimalFormat("##.##").format(roth));
+					Web.setTextToTextBox(txtSplitRothBonus, new DecimalFormat("##.##").format(roth));
 			
 				
 			
@@ -1301,19 +1301,19 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 * 
 		 */
 		public void split_catchup_contribution(){
-			lib.Web.waitForElement(btnContinue);
-			lib.Web.clickOnElement(this.btnContinue);
-			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
+			Web.waitForElement(btnContinue);
+			Web.clickOnElement(this.btnContinue);
+			if(Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
 				this.radioSplitContribution.click();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
-//				lib.Web.setTextToTextBox(txtSplitBeforeCatchup, Stock.GetParameterValue("Split_Tax_before"));
-//				lib.Web.setTextToTextBox(txtSplitRothCatchup, Stock.GetParameterValue("Split_Tax_roth"));
+//				Web.setTextToTextBox(txtSplitBeforeCatchup, Stock.GetParameterValue("Split_Tax_before"));
+//				Web.setTextToTextBox(txtSplitRothCatchup, Stock.GetParameterValue("Split_Tax_roth"));
 				
 				if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
 					before_tax =Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*irs_limit;
 					roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
-					lib.Web.setTextToTextBox(txtSplitBeforeCatchup, new DecimalFormat("##.##").format(before_tax));
-					lib.Web.setTextToTextBox(txtSplitRothCatchup, new DecimalFormat("##.##").format(roth));
+					Web.setTextToTextBox(txtSplitBeforeCatchup, new DecimalFormat("##.##").format(before_tax));
+					Web.setTextToTextBox(txtSplitRothCatchup, new DecimalFormat("##.##").format(roth));
 				}
 				else{
 					
@@ -1321,8 +1321,8 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 					roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*Float.parseFloat(contrbution_rate);
 					System.out.println("before tax : "+before_tax);
 					System.out.println("roth : "+roth);
-					lib.Web.setTextToTextBox(txtSplitBeforeCatchup, new DecimalFormat("##.##").format(before_tax));
-					lib.Web.setTextToTextBox(txtSplitRothCatchup, new DecimalFormat("##.##").format(roth));
+					Web.setTextToTextBox(txtSplitBeforeCatchup, new DecimalFormat("##.##").format(before_tax));
+					Web.setTextToTextBox(txtSplitRothCatchup, new DecimalFormat("##.##").format(roth));
 				}
 			}
 			else
@@ -1335,27 +1335,27 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		 * 
 		 */
 		public void split_Other_contribution(){
-			lib.Web.waitForElement(btnContinue);
-			lib.Web.clickOnElement(this.btnContinue);
-			if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
+			Web.waitForElement(btnContinue);
+			Web.clickOnElement(this.btnContinue);
+			if(Web.isWebElementDisplayed(this.radioSplitContribution, true)){  
 				this.radioSplitContribution.click();
 				Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", false);
 //				if(Web.isWebElementDisplayed(txtSplitAgeRothVariable))
-//					lib.Web.setTextToTextBox(txtSplitAgeRothVariable, Stock.GetParameterValue("Split_Tax-AgeRoth"));
+//					Web.setTextToTextBox(txtSplitAgeRothVariable, Stock.GetParameterValue("Split_Tax-AgeRoth"));
 //				if(Web.isWebElementDisplayed(txtSplitRothVariable))
-//					lib.Web.setTextToTextBox(txtSplitRothVariable, Stock.GetParameterValue("Split_Tax_roth"));
+//					Web.setTextToTextBox(txtSplitRothVariable, Stock.GetParameterValue("Split_Tax_roth"));
 //				if(Web.isWebElementDisplayed(txtSplitBeforeVariable))
-//					lib.Web.setTextToTextBox(txtSplitBeforeVariable, Stock.GetParameterValue("Split_Tax_before"));
+//					Web.setTextToTextBox(txtSplitBeforeVariable, Stock.GetParameterValue("Split_Tax_before"));
 			
 			
 				before_tax = Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*Float.parseFloat(contrbution_rate);
 				roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*Float.parseFloat(contrbution_rate);	
 				
 				if(Web.isWebElementDisplayed(txtSplitBeforeVariable))
-					lib.Web.setTextToTextBox(txtSplitBeforeVariable, new DecimalFormat("##.##").format(before_tax));
+					Web.setTextToTextBox(txtSplitBeforeVariable, new DecimalFormat("##.##").format(before_tax));
 				
 				if(Web.isWebElementDisplayed(txtSplitRothVariable))
-					lib.Web.setTextToTextBox(txtSplitRothVariable, new DecimalFormat("##.##").format(roth));
+					Web.setTextToTextBox(txtSplitRothVariable, new DecimalFormat("##.##").format(roth));
 			
 			
 			}
@@ -1508,7 +1508,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 
 		}
 		public void refresh(){
-			lib.Web.getDriver().navigate().refresh();
+			Web.getDriver().navigate().refresh();
 		}
 		
 		
@@ -1523,24 +1523,24 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String companyMacthBefore="";
 			String companyMacthAfter="";
 			boolean isMatching=true;
-			lib.Web.waitForElement(radioSelectAnotherContributionRate);
-			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Web.waitForElement(radioSelectAnotherContributionRate);
+			Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
 			
-			lib.Web.waitForElement(lnkContributionRate);
+			Web.waitForElement(lnkContributionRate);
 			
 			if(Web.isWebElementDisplayed(lnkPercent))
 				this.lnkPercent.click();			
 			this.lnkContributionRate.click();
 			
-			lib.Web.waitForElement(txtcontributionRateSlider);
-			lib.Web.setTextToTextBox(txtcontributionRateSlider, "0");
+			Web.waitForElement(txtcontributionRateSlider);
+			Web.setTextToTextBox(txtcontributionRateSlider, "0");
 			Web.clickOnElement(btnDone);
 			Thread.sleep(3000);
 			companyMacthBefore=txtCompanyMatch.getText().toString().trim();
             this.lnkContributionRate.click();
-			lib.Web.waitForElement(txtcontributionRateSlider);
-			lib.Web.setTextToTextBox(txtcontributionRateSlider, "6");
+			Web.waitForElement(txtcontributionRateSlider);
+			Web.setTextToTextBox(txtcontributionRateSlider, "6");
 			Web.clickOnElement(btnDone);
 			Thread.sleep(3000);
 			companyMacthAfter=txtCompanyMatch.getText().toString().trim();
@@ -1602,7 +1602,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		{
 			boolean isDisplayed=false;
 				Web.waitForElement(radioMaximizeToIRSLimit);
-				lib.Web.clickOnElement(radioMaximizeToIRSLimit);
+				Web.clickOnElement(radioMaximizeToIRSLimit);
 				isDisplayed=txtIRSAnnualCompensationAmount.getText().contains("$");
 			if(isDisplayed)
 				Reporter.logEvent(Status.PASS, "Verify Annual Compensation is Displayed", "Annual Compensation is  displayed \nAnnual Compensation:"+txtIRSAnnualCompensationAmount.getText().trim(), false);
@@ -1622,24 +1622,24 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void select_Another_Contribution_Rate_Dollar() throws InterruptedException
 		{	
 			Actions keyBoard = new Actions(Web.getDriver());
-			lib.Web.waitForElement(radioSelectAnotherContributionRate);
-			lib.Web.clickOnElement(this.radioSelectAnotherContributionRate);
+			Web.waitForElement(radioSelectAnotherContributionRate);
+			Web.clickOnElement(this.radioSelectAnotherContributionRate);
 			Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Select another Contribution radio button is clicked", false);
 			
-			lib.Web.waitForElement(lnkContributionRate);
+			Web.waitForElement(lnkContributionRate);
 			
 			if(Web.isWebElementDisplayed(lnkDollar))
 				this.lnkDollar.click();			
 			this.lnkContributionRate.click();
 			
-			lib.Web.waitForElement(txtcontributionRateSlider);
+			Web.waitForElement(txtcontributionRateSlider);
 			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate_Dollar"))){
 				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate_Dollar"))+1);
 			}
 			else
 				contrbution_rate = Stock.GetParameterValue("Contribution Rate_Dollar");
 			
-			lib.Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
+			Web.setTextToTextBox(txtcontributionRateSlider, contrbution_rate);
 			//keyBoard.sendKeys(Keys.TAB).perform();
 			Web.clickOnElement(btnDone);
 			if(btnDone.isDisplayed())
@@ -1649,7 +1649,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO, "Select Another Contribution rate", "Contribution rate is  selected to "+contrbution_rate+"$", true);
-			/*boolean sliderValue=lib.Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
+			/*boolean sliderValue=Web.VerifyText(Stock.GetParameterValue("Contribution Rate"), lnksliderValue.getText().trim());			
 			if(sliderValue)
 				Reporter.logEvent(Status.PASS, "Select Another Contribution rate", "Contribution rate is selected to "+contrbution_rate, true);
 			else
@@ -2323,7 +2323,7 @@ return expectedCompanyMatch;
 			
 			Web.waitForElement(radioSplitContribution);
 			
-				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution)  )  
+				if(Web.isWebElementDisplayed(this.radioSplitContribution)  )  
 						
 					
 					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is Displayed", "Split Contibution is Displayed", true);
@@ -2355,7 +2355,7 @@ return expectedCompanyMatch;
 			Web.waitForElement(radioSplitContribution);
 			
 			if(contributionType.equalsIgnoreCase("Split") ){
-				if(lib.Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
+				if(Web.isWebElementDisplayed(this.radioSplitContribution, true)  )  
 				{				
 					this.radioSplitContribution.click();
 					Reporter.logEvent(Status.PASS, "Verify Split Contribution Rate radio button is clicked", "Split Contibution is clicked", true);
@@ -2364,23 +2364,23 @@ return expectedCompanyMatch;
 					if(Stock.GetParameterValue("Contributing_type").equalsIgnoreCase("Maximize to irs limit")){
 //					int befor_tax=irs_limit-(Integer.parseInt(Stock.GetParameterValue("Split_Tax_roth")));
 //						befor_tax=irs_limit-(Float.parseFloat(Stock.GetParameterValue("Split_Tax_roth")));
-//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
-//						lib.Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
+//						Web.setTextToTextBox(txtSplitBeforeTax, Float.toString(befor_tax));
+//						Web.setTextToTextBox(txtSplitRothTax, Stock.GetParameterValue("Split_Tax_roth"));
 						before_tax =Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*irs_limit;
 						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*irs_limit;
-						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
-						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+						Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
 					}
 					else{
-//						lib.Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
+//						Web.setTextToTextBox(txtSplitBeforeTax, Stock.GetParameterValue("Split_Tax_before"));
 //                        int i=Integer.parseInt(contrbution_rate);
 //                        int j=Integer.parseInt(Stock.GetParameterValue("Split_Tax_before"));
-//                        lib.Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
+//                        Web.setTextToTextBox(txtSplitRothTax,Integer.toString(i-j));
 						
 						before_tax = Float.parseFloat(Stock.GetParameterValue("before_tax_ratio"))*Float.parseFloat(contrbution_rate);
 						roth = Float.parseFloat(Stock.GetParameterValue("roth_ratio"))*Float.parseFloat(contrbution_rate);
-						lib.Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
-						lib.Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
+						Web.setTextToTextBox(txtSplitBeforeTax, new DecimalFormat("##.##").format(before_tax));
+						Web.setTextToTextBox(txtSplitRothTax, new DecimalFormat("##.##").format(roth));
 					}
 							
 				}
@@ -2481,25 +2481,25 @@ return expectedCompanyMatch;
 				By.xpath(lnkAddAuto.replace("DeferralType", deferralType)));
 		
 		
-		lib.Web.waitForElement(tblhdrlblContribution);
+		Web.waitForElement(tblhdrlblContribution);
 		
 
-		if(lib.Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
+		if(Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
 		{
-			if(lib.Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
+			if(Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
 			{
 			Reporter.logEvent(Status.PASS, "Verify if Add Auto Increase link is displayed", "Add Auto Increase link is displayed", true);
 //			this.lnkBeforeTaxAutoIncrease.click();
 			autoIncreaseDeferralType.click();
 			try {
-				lib.Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+				Web.waitForElement(txtAutoIncreaseMyContributionPercent);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
-			lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
+			Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
 			Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
-			//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+			//Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
 			Thread.sleep(3000);
 			Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
 			Web.clickOnElement(btnSaveAddAutoIncreaseModal);
