@@ -229,6 +229,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			String lableViewOnlyABONUS="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//span[contains(text(),'View Only')]";
 			String inpViewOnly="//div[./label[contains(text(),'DeferralType')]]//..//div[contains(@class,'percentage-input-container')]//input";
 			private String textField="//*[contains(text(),'webElementText')]";
+			private String lnkAddAuto =".//*[@id='account-details-container']/.//td[contains(text(),'DeferralType')]/../td[3]/.//div";
 
 			Actions mouse=new Actions(Web.getDriver());
 		/**
@@ -729,11 +730,18 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			}
 			else{
 				for(int i=0;i<lstradioSelectContibution.size();i++){
-					if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(i).getText(), contributionType))
-					{
-						lstradioSelectContibution.get(i).click();
-						Reporter.logEvent(Status.PASS, "Verify "+contributionType+" Contribution is selected", contributionType+" Contribution is selected", false);
-						break;
+					try {
+						if(Common.getParticipantDBName(Stock.GetParameterValue("username")).contains("IN02")&& contributionType.equalsIgnoreCase("Before"))
+							contributionType="Base Pay";
+						if(StringUtils.containsIgnoreCase(lstradioSelectContibution.get(i).getText(), contributionType))
+						{
+							lstradioSelectContibution.get(i).click();
+							Reporter.logEvent(Status.PASS, "Verify "+contributionType+" Contribution is selected", contributionType+" Contribution is selected", false);
+							break;
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}
@@ -2455,6 +2463,54 @@ return expectedCompanyMatch;
 
 	}
 	
+	/**<pre> Method to add auto increase.
+	 *.</pre>
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void add_AutoIncrease(String deferralType) throws InterruptedException
+	{
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
+		Calendar calendar = Calendar.getInstance();         
+		calendar.add(Calendar.MONTH, 1);
+		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		//System.out.println(dateFormat.format(calendar.getTime()));
+		String date=dateFormat.format(calendar.getTime());
+		
+		WebElement autoIncreaseDeferralType = Web.getDriver().findElement(
+				By.xpath(lnkAddAuto.replace("DeferralType", deferralType)));
+		
+		
+		lib.Web.waitForElement(tblhdrlblContribution);
+		
+
+		if(lib.Web.isWebElementDisplayed(this.tblhdrlblContribution, true))
+		{
+			if(lib.Web.isWebElementDisplayed(autoIncreaseDeferralType, false))
+			{
+			Reporter.logEvent(Status.PASS, "Verify if Add Auto Increase link is displayed", "Add Auto Increase link is displayed", true);
+//			this.lnkBeforeTaxAutoIncrease.click();
+			autoIncreaseDeferralType.click();
+			try {
+				lib.Web.waitForElement(txtAutoIncreaseMyContributionPercent);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			lib.Web.setTextToTextBox(txtAutoIncreaseMyContributionPercent, Stock.GetParameterValue("Auto Increase Contribution Percent"));			
+			lib.Web.setTextToTextBox(txtAutoIncreaseUntilItReachesPercent, Stock.GetParameterValue("Auto Increases Until Reaches Percent"));
+			Web.setTextToTextBox(drpDownAutoIncreasePeriod, date);
+			//lib.Web.selectDropnDownOptionAsIndex(this.drpDownAutoIncreasePeriod, (Stock.GetParameterValue("Auto Increase Period")));
+			Thread.sleep(3000);
+			Web.clickOnElement(txtAutoIncreaseUntilItReachesPercent);
+			Web.clickOnElement(btnSaveAddAutoIncreaseModal);
+			Thread.sleep(5000);
+			}
+			else
+			Reporter.logEvent(Status.FAIL, "Verify if Add Auto Increase link is displayed for : "+"'"+deferralType+"'", "Add Auto Increase link is not displayed", true);
+		}
+		
+		
+	}
 	
 
 }
