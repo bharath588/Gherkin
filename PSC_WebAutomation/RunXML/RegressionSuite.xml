@@ -8,16 +8,16 @@
 	<classes>
 	<class name="app.psc.testcases.userverification.userverificationtestcases">
 				<methods>
-					 <include
+					 <!-- <include
 						name="TC007_02_Verify_Login_Flow_Existing_User_New_Browser_Invalid_input">
 						<parameter name="ManualTCName"
 							value="DDTC-21981_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Invalid" />
-					</include>
-					<include
+					</include>-->
+					<!-- <include 
 						name="TC007_01_Verify_Login_Flow_Existing_User_NewBrowser_Valid_Input">
 						<parameter name="ManualTCName"
 							value="DDTC-21960_SIT_PSC_Login_01_TC007_Login flow- Existing user_New Browser_Valid" />
-					</include> 
+					</include> --> 
 					<include
 						name="TC007_03_Verify_Login_Flow_Existing_User_withing_same_browser_session">
 						<parameter name="ManualTCName"
@@ -33,7 +33,7 @@
 			<class
 				name="app.psc.testcases.accountverification.accountverificationtestcases">
 				<methods>
-					<include
+					<!-- <include
 						name="TC008_02_Verify_Login_Flow_Security_Answer_Select_Security_Questions_Same">
 						<parameter name="ManualTCName"
 							value="DDTC-22063_SIT_PSC_Login_01_TC008_Login flow- New PSC User_security">
@@ -44,7 +44,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22062_SIT_PSC_Login_01_TC008_Login flow- New PSC User_invalid">
 						</parameter>
-					</include>
+					</include> -->
 					<include
 						name="TC008_03_Verify_New_User_loginFlow_register_username_invalid_input">
 						<parameter name="ManualTCName"
@@ -59,10 +59,6 @@
 						<parameter name="ManualTCName"
 							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
 					</include> 
-					<include name="TC008_00_Verify_new_user_flow_positive">
-						<parameter name="ManualTCName"
-							value="DDTC-22066_SIT_PSC_Login_01_TC008_Login flow- New PSC User_Positive" />
-					</include>
 				</methods>
 			</class>
 			<class
@@ -142,7 +138,7 @@
 			</class>
 			<class name="app.psc.testcases.login.logintestcases">
 				<methods>
-					 <include name="TC006_01_Verify_Force_Login">
+					 <!-- <include name="TC006_01_Verify_Force_Login">
 						<parameter name="ManualTCName"
 							value="DDTC-1144_SIT_PSC_Login_01_TC006_Gwrs- Forcelogin" />
 					</include>  
@@ -155,7 +151,7 @@
 						<parameter name="ManualTCName"
 							value="DDTC-316_SIT_PSC_Login_01_TC008_Login flow- New PSC User">
 						</parameter>
-					</include>
+					</include> -->
 					<!-- <include name="TC004_01_Verify_Header_and_Footer_Links_PreLogin">
 						<parameter name="ManualTCName"
 							value="DDTC-1379_SIT_PSC_Login_01_TC014_Footer links_Prelogin">
@@ -166,9 +162,9 @@
 							value="DDTC-22067_SIT_PSC_Login_01_TC014_Footer links_Postlogin">
 						</parameter>
 					</include> -->
-					<include name="TC006_01_Verify_Error_Message_For_Terminated_User">
+					<!-- <include name="TC006_01_Verify_Error_Message_For_Terminated_User">
 						<parameter name="ManualTCName" value="DDTC-1007_SIT_PSC_Login_01_TC004_Terminate User" />
-					</include>
+					</include> -->
 					<include name="TC005_01_Verify_User_Account_Locking_For_Max_Invalid_Attempt">
 						<parameter name="ManualTCName"
 							value="DDTC-1346_User_Account_Locking_For_max_Invalid_Attempts" />
@@ -177,21 +173,21 @@
 						<parameter name="ManualTCName"
 							value="DDTC-13037_Display correct date and time of my last login" />
 					</include>
-					<include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
+					<!-- <include name="TC03_Validate_Error_Message_When_Invalid_Plan_Number_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Validate_Error_Message_When_Invalid_Plan_Number_Entered" />
 					</include>
 					<include name="TC04_Validate_Plan_Page_When_PlanName_Entered">
 						<parameter name="ManualTCName"
 							value="Plan_Verify_User_Redirected_To_Respective_Plan_Page_When_Plan_Name_Entered" />
-					</include>
+					</include> -->
 					<include name="TC001_01_SIT_PSC_Sitenavigation_Menutabs">
 						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_Menutabs" />
 					</include>
 					<include name="TC001_02_SIT_PSC_Sitenavigation_SubMenutabs">
 						<parameter name="ManualTCName" value="DDTC-310_SIT_PSC_Sitenavigation_SubMenutabs" />
 					</include>
-					<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
+				<!-- 	<include name="TC004_Verify_PLUser_Login_With_No_Plna_Access">
 						<parameter name="ManualTCName"
 							value="Verify_PLUser_Login_With_No_Plna_Access" />
 					</include> 
@@ -202,7 +198,7 @@
 					<include name="TC002_Verify_Jump_Page_Displayed_When_AcessToPlansInAllSites">
 						<parameter name="ManualTCName"
 							value="Verify_Jump_Page_Displayed_When_User_Has_Access_To_Plan_In_Allsites" />
-					</include>
+					</include> -->
 					<include name="TC003_UI_Validations_On_JumpPage">
 						<parameter name="ManualTCName" value="UI_Validations_On_JumpPage" />
 					</include>
@@ -499,7 +495,7 @@
 						<parameter name="ManualTCName"
 							value="Plan_Search_Redirection_Plan_Summary_Page" />
 					</include>
-					<include
+					<!-- <include
 						name="TC02_Validate_error_message_when_plan_field_is_left_blank">
 						<parameter name="ManualTCName"
 							value="DDTC-333_Plan_Validate_error_message_when_plan_filed_blank" />
@@ -528,14 +524,14 @@
 					<include name="TC07_SIT_PSC_Investment_Asset_Allocations_page">
 						<parameter name="ManualTCName"
 							value="DDTC-22130_SIT_PSC_Investment_Asset_Allocations_page" />
-					</include>
+					</include>--> 
 					<include name="TC08_Disable_certain_user_edit_fields_for_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-23517_Disable_certain_user_edit_fields_for_SAW" />
 					</include>
-					<include name="TC09_Order_Participant_QDIA_Notice_Listing">
+					<!-- <include name="TC09_Order_Participant_QDIA_Notice_Listing">
 						<parameter name="ManualTCName" value="DDTC-99_Order_Participant_QDIA_Notice_Listing" />
-					</include> 
+					</include>  -->
 					<include
 						name="TC10_SIT_PSC_Fiduciary_Records_Plan_Documents_No_Part_grouping">
 						<parameter name="ManualTCName"
@@ -546,13 +542,13 @@
 						<parameter name="ManualTCName"
 							value="DDTC-2256_SIT_PSC_HomePage_Fiduciary_Records_Required_Notices_Part_grouping" />
 					</include>
-					<include name="TC12_3rd_Level_Links">
+					<!-- <include name="TC12_3rd_Level_Links">
 						<parameter name="ManualTCName" value="DDTC-1064_3rd_Level_Links" />
-					</include>
-					<include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
+					</include> -->
+					<!-- <include name="TC15_SIT_PSC_Investment_Fixed_Investment_FutureRates">
 						<parameter name="ManualTCName"
 							value="DDTC-22077_SIT_PSC_Investment_Fixed_Investment_FutureRates" />
-					</include>
+					</include> -->
 					<include name="TC14_SIT_PSC_Investment_Options">
 						<parameter name="ManualTCName" value="DDTC-1232_SIT_PSC_Investment_Options" />
 					</include>
@@ -572,22 +568,22 @@
 						<parameter name="ManualTCName"
 							value="DDTC-24356_Add_PPT_And_SearchForPPT" />
 					</include>
-					<include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
+					<!-- <include name="TC18_SIT_PSC_Investment_UnitShare_values_page">
 						<parameter name="ManualTCName"
 							value="DDTC-22128_SIT_PSC_Investment_UnitShare_values_page" />
-					</include>
+					</include> -->
 					 <include name="TC20_Complex_User">
 						<parameter name="ManualTCName"
 							value="DDTC-2073_Complex_User" />
 					</include> 
-					<include name="TC23_Find_Users_by_Name">
+					<!-- <include name="TC23_Find_Users_by_Name">
 						<parameter name="ManualTCName"
 							value="DDTC-4_Find_Users_by_Name" />
 					</include>
 					<include name="TC22_Added_to_USERS_table_via_SAW">
 						<parameter name="ManualTCName"
 							value="DDTC-1432_Added_to_USERS_table_via_SAW" />
-					</include>
+					</include> -->
 					<include name="TC24_Investment_Charts_Page">
 						<parameter name="ManualTCName"
 							value="DDTC-22127_Investment_Charts_Page" />
@@ -655,7 +651,7 @@
 		 	
 			<class name="app.psc.testcases.myprofile.MyProfileTestCases">
 				<methods>
-					<include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
+					<!-- <include name="TC001_01_SIT_PSC_Update_My_profile_Default_Plan">
 						<parameter name="ManualTCName" value="DDTC-10189_SIT_PSC_Update_My_profile_Default_Plan" />
 					</include>
 					<include name="TC001_02_SIT_PSC_Update_My_profile_Default_Plan">
@@ -673,7 +669,7 @@
 					<include name="TC002_03_SIT_PSC_Update_Email_Address_Invalid_Password">
 						<parameter name="ManualTCName"
 							value="DDTC-10188_SIT_PSC_Update_Email_Address_Invalid_Password" />
-					</include>
+					</include> -->
 					<include name="TC003_01_SIT_PSC_Update_User_Name">
 						<parameter name="ManualTCName" value="DDTC-1534_SIT_PSC_Update_User_Name" />
 					</include>
@@ -681,12 +677,12 @@
 						<parameter name="ManualTCName"
 							value="DDTC-1024_SIT_PSC_Update_My_profile_Security_Questions" />
 					</include>
-					<include name="TC005_01_SIT_PSC_Update_My_profile_Password">
+					<!-- <include name="TC005_01_SIT_PSC_Update_My_profile_Password">
 						<parameter name="ManualTCName" value="DDTC-10186_SIT_PSC_Update_My_profile_Password" />
 					</include>
 					<include name="TC006_01_FAQ_DDTC_245">
 						<parameter name="ManualTCName" value="DDTC-245_FAQ_DDTC" />
-					</include>
+					</include> -->
 				</methods>
 			</class>
 			<!-- <class name="app.psc.testcases.guidedpayroll.guidedpayrolltestcases">
