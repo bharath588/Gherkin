@@ -28,13 +28,13 @@
 	
  <class name="app.csas.testcases.aagaccountaccess.AAGAccountAccessTestCases">
 				<methods>
-					 <include name="verifyFinancialEngines_ProspectUser">
+					 <!-- <include name="verifyFinancialEngines_ProspectUser">
 						<parameter name="ManualTCName"
 							value="verifyFinancialEngines_ProspectUser"></parameter>
-				</include> 
-				 <include name="verifyverifyAdvisoryServicesTitle_GuidenceUser">
+				</include>  -->
+				 <include name="verifyAdvisoryServicesTitle_GuidenceUser">
 						<parameter name="ManualTCName"
-							value="verifyverifyAdvisoryServicesTitle_GuidenceUser"></parameter>
+							value="verifyAdvisoryServicesTitle_GuidenceUser"></parameter>
 				</include>
 				
 				</methods>
