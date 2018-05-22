@@ -865,7 +865,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Editing address using the edit address link",
 					"Address is edited using the edit address link"
-							+ Stock.GetParameterValue("address"), false);
+							+ Stock.GetParameterValue("address"), true);
 			// ok_button.click();
 			Web.clickOnElement(ok_button);
 			Thread.sleep(5000);
@@ -879,22 +879,23 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 					Status.INFO,
 					"Editing mobile number",
 					"Mobile number is edited"
-							+ Stock.GetParameterValue("Mobile Phone"), false);
+							+ Stock.GetParameterValue("Mobile Phone"), true);
+			Thread.sleep(5000);
 			Web.clickOnElement(continue_button);
 			Thread.sleep(5000);
 			Reporter.logEvent(Status.INFO,
 					"Clicking the continue button to move to the next page",
-					"Continue button clicked and moved to next page", false);
+					"Continue button clicked and moved to next page", true);
 
 			Web.waitForElement(refinance_loan_label);
 			if (Web.isWebElementDisplayed(refinance_loan_label, true)) {
 				Reporter.logEvent(Status.PASS,
 						"Verify if participant has loan refinancing",
-						"Participant has loan refinancing", false);
+						"Participant has loan refinancing", true);
 			} else {
 				Reporter.logEvent(Status.FAIL,
 						"Verify if participant has loan refinancing",
-						"Participant does not have loan refinancing", false);
+						"Participant does not have loan refinancing", true);
 			}
 
 			Web.isWebElementDisplayed(outstanding_loan);
@@ -2668,6 +2669,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// Selct Payment Frequency as "bi-weekly".
 		String paymentFrequencyValue = Stock.GetParameterValue("PaymentFrequency");
 		Web.selectDropDownOption(paymentFrequency,paymentFrequencyValue, true);
+		Thread.sleep(1000);
 		
 		// enter loan term and add.
 		Web.waitForElement(loan_term);
@@ -2694,6 +2696,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		}else{
 			Reporter.logEvent(Status.FAIL, "Change to the payment frequency requires a form to be sent to and returned by the participant messgae not displayed", actualPaymentFrequecyChangedMsg, true);
 		}
+		Thread.sleep(3000);
 			
 		//Web.waitForElement(selected_loan_quote);
 		Web.setTextToTextBox(mobile_Phone_txtBox, Stock.GetParameterValue("MobilePhoneNumber"));
