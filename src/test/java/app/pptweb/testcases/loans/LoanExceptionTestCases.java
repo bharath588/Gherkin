@@ -765,6 +765,218 @@ public class LoanExceptionTestCases {
 				e1.printStackTrace();
 			}
 		}
+		
+		
 
+	}
+	
+	/**
+	 * This Test Case to verify Request A Loan Page When  participant having pending distribution
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27991_Loan_exceptions_BR_478_participant_having_pending_distribution(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition - Login with a ppt who is eligible for requesting a loan and participant 
+			 * having Pending Distribution or if existing distribution has an effective date = current system date
+			 * 
+			 */
+			
+		
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+			requestLoan.get();
+
+			
+
+			requestLoan.clickOnRequestANewLoan();
+
+			
+			requestLoan.selectLoneType(Stock.GetParameterValue("loanType"));
+			
+			requestLoan.EnterLoanAmount(Stock.GetParameterValue("loanAmount"));
+		
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForElement(requestLoan, "Repayment Term Table");
+			
+			requestLoan.selectLoanTerm(Stock.GetParameterValue("loanTerm"));
+			
+			requestLoan.clickContinueButton();
+			
+			requestLoan.clickContinueButton();
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+			
+			requestLoan.clickOnIAgreeAndSubmit();
+			Common.waitForProgressBar();
+			requestLoan.verifyPageHeaderIsDisplayed("Loan Confirmation");
+			
+			if(requestLoan.getPendingLoans(Stock.GetParameterValue("username")))
+				Reporter.logEvent(Status.PASS,
+					"Pre requisite : Verify Participant is Having Pending Loan",
+					"Participant is Having Pending Loan Request", false);
+		
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Pre requisite : Verify Participant is Having Pending Loan",
+					"Participant is Not Having Pending Loan Request", false);
+		
+			
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+			
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Due to a pending transaction, you are unable to request a loan."
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_478();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateRestrictionCodeInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		
+	}
+	/**
+	 * This Test Case to verify Request A Loan Page When  participant having pending distribution
+	 * 
+	 * @param itr
+	 * @param testdata
+	 */
+	@Test(dataProvider = "setData")
+	public void DDTC_27992_Loan_exceptions_BR_487_participant_having_pending_distribution(
+			int itr, Map<String, String> testdata) {
+
+		try {
+			Reporter.initializeReportForTC(
+					itr,
+					Globals.GC_MANUAL_TC_REPORTER_MAP.get(Thread
+							.currentThread().getId())
+							+ "_"
+							+ Stock.getConfigParam("BROWSER"));
+			lib.Reporter.logEvent(Status.INFO,
+					"Test Data used for this Test Case:", printTestData(),
+					false);
+			/**
+			 * Pre Condition - Login with a ppt who is eligible for requesting a loan and participant 
+			 * having Pending Distribution or if existing distribution has an effective date = current system date
+			 * 
+			 */
+			
+		
+			/**
+			 *  Step 1 to 4
+			 *  Launch Browser and enter URL: Login page should be displayed for NextGEn
+			 *  Enter Valid credentials and login - Participant should be redirected to home page
+			 *  Navigate to 'My Accounts' page - Ppt should be redirected to 'My Accounts' page
+			 *  Click on 'Request a Loan' button - Participant should be navigated to 'Loan Reasons' page
+			 *  
+			 *  
+			 */
+
+			LoginPage login = new LoginPage();
+			TwoStepVerification mfaPage = new TwoStepVerification(login);
+			LandingPage homePage = new LandingPage(mfaPage);
+			LeftNavigationBar leftmenu = new LeftNavigationBar(homePage);
+			RequestLoanPage requestLoan = new RequestLoanPage(leftmenu);
+		
+			requestLoan.get();
+			requestLoan.clickOnRequestANewLoan();
+			
+			/**
+			 * Step 5 
+			 *Participant should be displayed with a hard stop message
+			 *"Due to a pending transaction, you are unable to request a loan."
+			 *Also below buttons should be disabled:
+			 *Request a General Purpose Loan
+			 *Request a Principal Residence Loan
+			 */
+			requestLoan.verifyPPTRequestLoanPageWithBR_478();
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Globals.exception = e;
+			Throwable t = e.getCause();
+			String msg = "Unable to retrive cause from exception. Click below link to see stack track.";
+			if (null != t) {
+				msg = t.getMessage();
+			}
+			Reporter.logEvent(Status.FAIL, "A run time exception occured.",
+					msg, true);
+		} catch (Error ae) {
+			ae.printStackTrace();
+			Globals.error = ae;
+			Reporter.logEvent(Status.FAIL, "Assertion Error Occured",
+					ae.getMessage(), true);
+			// throw ae;
+		} finally {
+			try {
+				Web.getDriver().switchTo().defaultContent();
+				Common.updateRestrictionCodeInDB(null);
+				Reporter.finalizeTCReport();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		
 	}
 }

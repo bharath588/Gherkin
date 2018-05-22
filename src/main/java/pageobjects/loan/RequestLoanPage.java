@@ -267,6 +267,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = "//span[contains(text(),'BR_486')]/..") private WebElement errBR_486;
 	@FindBy(xpath = "//span[contains(text(),'BR_467')]/..") private WebElement errBR_467;
 	@FindBy(xpath = "//span[contains(text(),'BR_468')]/..") private WebElement errBR_468;
+	@FindBy(xpath = "//span[contains(text(),'BR_478')]/..") private WebElement errBR_478;
 	
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
@@ -3655,7 +3656,73 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		
 	}
 
+	/**
+	 * Method to get Pending loans for PPT
+	 * 
+	 * @param username
+	 * @return noofLoans
+	 * @throws SQLException
+	 */
+	public boolean getPendingLoans(String userName) throws SQLException {
+
+		String[] sqlQuery = null;
+		ResultSet Plan = null;
+		boolean pendingLoan=false;
+		try {
+			sqlQuery = Stock.getTestQuery("GetPPTPendingLoanRequestData");
+		
+		sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+		Plan = DB.executeQuery(sqlQuery[0], sqlQuery[1], Common.getParticipantID(userName.substring(0, userName.length() - 3)));
 	
+			if(DB.getRecordSetCount(Plan) > 0)
+
+			pendingLoan=true;
+		}	
+		 catch (SQLException e) {
+			e.printStackTrace();
+			Reporter.logEvent(
+					Status.WARNING,
+					"Query getGetPPTPendingLoanRequestData :" + sqlQuery[0],
+					"The Query did not return any results. Please check participant test data as the appropriate data base.",
+					false);
+		}
+
+		return pendingLoan;
+	
+}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_478
+	 */
+	public void verifyPPTRequestLoanPageWithBR_478() {
+		
+		String expectedErrorMsg="Due to a pending transaction, you are unable to request a loan.";
+		String actualErrorMsg="";
+		if(Web.isWebElementDisplayed(errBR_478, true)){
+		 actualErrorMsg=errBR_478.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_478' is Displayed",
+						"Error Message for 'BR_478' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_478' is Displayed",
+						"Error Message for 'BR_478' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_478' is Displayed",
+					"Error Message for 'BR_478' is Not Displayed", true);
+		
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
 }
 
 
