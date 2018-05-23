@@ -559,7 +559,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 			
 			Web.waitForElement(txtcontributionRateSlider);
 			if(lnksliderValue.getText().equals(Stock.GetParameterValue("Contribution Rate"))){
-				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+1);
+				contrbution_rate= Integer.toString(Integer.parseInt(Stock.GetParameterValue("Contribution Rate"))+2);
 			}
 			else
 				contrbution_rate = Stock.GetParameterValue("Contribution Rate");
@@ -1141,6 +1141,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
 		public void Catch_up_Salary_changes_on_IRS_panel(){
 			
 			Web.waitForElement(btnAddOrEditStandard);
+			//TODO
 			String catchup_contr1=txtCatchupBeforeAmt.getText().trim();
 			Web.clickOnElement(btnAddOrEditStandard);
 			Web.waitForElement(radioMaximizeToIRSLimit);
@@ -1377,6 +1378,7 @@ public class Deferrals extends LoadableComponent<Deferrals> {
          }
 		
 		public void chainingForStandardContribution(String chainingOption){
+			//TODO
 			WebElement option=this.getWebElement(chainingOption);
 			//Web.waitForElement(lblChainingText);
 			/*if(StringUtils.containsIgnoreCase(lblChainingText.getText(), "Carryover my contribution if I reach the plan or IRS limit?"))
