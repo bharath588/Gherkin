@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Balance">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.BalanceTestcases">
+				<methods>
+					<include
+						name="AOD_Balance_DDTC_27442_TC_01_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_balance_more_than_Zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27442 TC_01 Verify New Balance card on Account overview page for single plan ppt with balance more than zero">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_27443_TC_02_Verify_New_Balance_card_on_Account_overview_page_for_multiple_plan_ppt_has_Balance_more_than_zero">
+						<parameter name="ManualTCName"
+							value="DDTC-27443 TC_02 Verify New Balance card on Account overview page for multiple plan ppt and both plan has Balance more than zero">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_28693_TC_03_Verify_New_Balance_card_on_Account_overview_page_for_single_plan_ppt_with_Zero_or_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28693 TC_03 Verify New Balance card on Account overview page for single plan ppt with zero or no Balance">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_28694_TC_04_Verify_New_Balance_card_on_Account_overview_page_for_multiple_plan_ppt_when_one_of_plan_has_no_Balance">
+						<parameter name="ManualTCName"
+							value="DDTC-28694 TC_04 Verify New Balance card on Account overview page for multiple plan ppt when one of plan has no Balance">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29378_TC_05_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_401A_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29378 TC_05 Verify New Balance card on Account overview page for participant from 401A plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29379_TC_06_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_403b_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29379TC_06 Verify New Balance card on Account overview page for participant from 403b plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29380TC_07_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_457_special_catchup_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29380 TC_07 Verify New Balance card on Account overview page for participant from 457 special catchup plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_2938_TC_08_Verify_New_Balance_card_on_Account_overview_page_for_participant_from_NQ_plan">
+						<parameter name="ManualTCName"
+							value="DDTC-29381 TC_08 Verify New Balance card on Account overview page for participant from NQ plan">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29383_TC_09_Verify_New_Balance_card_not_display_on_Account_overview_page_for_participant_when_DB_plan_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29383 TC_09 Verify New Balance card not display on Account overview page for participant when DB plan selected">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29384_TC_10_Verify_New_Balance_card_not_display_on_Account_overview_page_when_TRS_FLEX_Annuity_plan_is_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29384 TC_10 Verify New Balance card not display on Account overview page for participant when TRS FLEX Annuity plan is selected">
+						</parameter>
+					</include>
+					<include
+						name="AOD_Balance_DDTC_29385_TC_11_Verify_New_Balance_card_not_display_on_Account_overview_when_TRS_cash_balance_plan_selected">
+						<parameter name="ManualTCName"
+							value="DDTC-29385 TC_11 Verify New Balance card not display on Account overview page for participant when TRS cash balance plan selected">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>

@@ -6,6 +6,7 @@ package pageobjects.beneficiaries;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import lib.DB;
 import lib.Reporter;
@@ -15,7 +16,6 @@ import lib.Web;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -101,6 +101,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
 	@FindBy(xpath="//div[contains(@ng-if,'Contingent')]/table") private List<WebElement> lstTablecontingentBeneficiary;
 	private String lblerrorMessage="//*[contains(text(),'webElementText')]";
+	public static String SSN = null;
 	/** Empty args constructor
 	 * 
 	 */
@@ -312,7 +313,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 	 * @param useMyAddress - whether to use current address
 	 * @param beneficiaryType - Beneficiary type can be primary or contingent
 	 */
-	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent){
+	public void addBeneficiary(String maritalStatus, String beneficiaryRelation, String useMyAddress, String beneficiaryType,String allocation_percent,boolean... aodEnable){
 		WebElement maritalstatus = this.getWebElement(maritalStatus);
 		
 		//lib.Web.waitForElement(btnContinue);
@@ -337,7 +338,11 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
 		
 		
-		if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
+		if(aodEnable!=null)
+		{
+			this.enterAODBeneficiaryDetails();
+		}
+		else if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
 			this.enterEntityDetails();
 		else{
 			this.enterBeneficiaryDetails();
@@ -610,20 +615,37 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		lib.Web.setTextToTextBox(txtMiddleName,Stock.GetParameterValue("MiddleName"));
 		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
 		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
-		/*
-			if(txtDateOfBirthMasked.isDisplayed()){
-		
-				txtDateOfBirthMasked.click();
-			}
-		
-		*/
 		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
 		lib.Web.setTextToTextBox(txtSSN, Stock.GetParameterValue("BenificiarySSN"));
 		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
 		Reporter.logEvent(Status.INFO, "Verify beneficiary details entered", "Entered beneficiary details", true);
 	}
 	
-
+	/**<pre> Method to enter the AOD beneficiary details.
+	 *.</pre>
+	 */
+	public void enterAODBeneficiaryDetails(){
+		lib.Web.setTextToTextBox(txtFirstName,Stock.GetParameterValue("FirstName"));
+		lib.Web.setTextToTextBox(txtMiddleName,Stock.GetParameterValue("MiddleName"));
+		lib.Web.setTextToTextBox(txtLastName,Stock.GetParameterValue("LastName"));
+		lib.Web.setTextToTextBox(txtSuffix,Stock.GetParameterValue("Prefix"));
+		
+		lib.Web.setTextToTextBox(txtDateOfBirth,Stock.GetParameterValue("DOB"));
+		SSN = generateRandomSSN(9);
+		lib.Web.setTextToTextBox(txtSSN, SSN);
+		lib.Web.setTextToTextBox(txtPhoneNumber,Stock.GetParameterValue("PhoneNumber"));
+		Reporter.logEvent(Status.INFO, "Verify beneficiary details entered", "Entered beneficiary details", true);
+	}
+	
+	public String  generateRandomSSN(int length) {
+		Random random = new Random();
+	    char[] digits = new char[length];
+	    digits[0] = (char) (random.nextInt(9) + '1');
+	    for (int i = 1; i < length; i++) {
+	        digits[i] = (char) (random.nextInt(10) + '0');
+	    }
+	    return new String(digits);
+	}
 	/**<pre> Method to enter the address details of a beneficiary.
 	 *.</pre>
 	 */

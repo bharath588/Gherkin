@@ -245,6 +245,8 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			"//div[contains(@class,'selected-row-body')][.//label[text()[normalize-space()='Withdrawal Type']]]//input[@type='text']";
 		
 	private String lblTotalWithdrawalAmount="//tr[.//td/span[contains(text(),'Money Source Type')]]//td[2]//span";
+	//private String lblTotalWithdrawalAmount="//tr[.//td/strong[contains(text(),'Money Source Type')]]/td[2]/strong";
+	private String lblTotalPayeeWithdrawalAmount="//tr[.//td/strong[contains(text(),'Money Source Type')]]/td[2]/strong";
 	private String inpAmtPWMoneyType="//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//input[@type='text']";
 	private String chkBoxMaxAmtPWMoneyType="//tr[./td[contains(text(),'Money Source Type')]]//input[contains(@ng-click,'maxAmountCheck')]";
 	private String maxAmtPWMoneyType="//div[contains(@ng-repeat,'withdrawalMoneySources')][.//div[text()[normalize-space()='Money Source Type']]]//div[contains(@ng-if,'isGenericDisbRuleForSepService')]";
@@ -552,7 +554,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		/*try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		return isSelected;
+		
 	}
 	
 	
@@ -1479,7 +1488,7 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			Web.selectDropDownOption(drpWithdrawalType,withdrawalMethodType,true);		
 		if(Web.isWebElementDisplayed(btnAfterTaxYes))
 			Web.clickOnElement(btnAfterTaxYes);
-		System.out.println("@@@"+Stock.GetParameterValue("AccuCode"));
+		//System.out.println("@@@"+Stock.GetParameterValue("AccuCode"));
 		//System.out.println(Stock.GetParameterValue("AccuCode").equalsIgnoreCase("AmFunds"));
 		if(Stock.GetParameterValue("AccuCode")==null)
 			selectRollOverCompany(withdrawalMethodType,emailAddress);
@@ -1531,10 +1540,14 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 							enteredTotalWithdrawalAmt = 0;
 							enteredTotalWithdrawalAmt = enteredNonRothWithdrawalAmt+ enteredRothWithdrawalAmt;									
 						}
+						//Mosin - Changed from Total withdrawal amount to Total Available to All Payees (all payments)
+						/*WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(
+										By.xpath(lblTotalWithdrawalAmount.replace("Money Source Type","Total Available to All Payees (all payments)")));*/
 						WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(
-										By.xpath(lblTotalWithdrawalAmount.replace("Money Source Type","Total withdrawal amount")));
+								By.xpath(lblTotalWithdrawalAmount.replace("Money Source Type","Total withdrawal amount")));
 						finalWithdrawalAmount = (int) Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
-						if (enteredTotalWithdrawalAmt == finalWithdrawalAmount) 
+						//if (enteredTotalWithdrawalAmt == finalWithdrawalAmount)
+						if (enteredTotalWithdrawalAmt == finalWithdrawalAmount || enteredTotalWithdrawalAmt == (finalWithdrawalAmount+1))
 							Reporter.logEvent(
 									Status.PASS,"Verify Withdrawal Amount is Displayed for  Withdrawal",
 									"Withdrawal Amount is Displayed and Matching \nExpected:$"+ enteredTotalWithdrawalAmt+ "\nActual:$"+ finalWithdrawalAmount, false);
@@ -1605,6 +1618,18 @@ public class RequestWithdrawal extends LoadableComponent<RequestWithdrawal> {
 			}
 			Reporter.logEvent(Status.FAIL, "Element is not displayed in the Application",
 					msg, true); }
+		//Mosin - Adding one more waitforprogressbar
+		
+		try{
+			Common.waitForProgressBar();
+			Web.waitForPageToLoad(Web.getDriver());
+		}
+		catch(Exception e)		
+		{ 
+			Reporter.logEvent(Status.INFO, "Wait for progress bar",
+					"Progress bar not displayed", true); 
+			
+		}
 	}
 	
 	/**
@@ -2351,10 +2376,15 @@ public void verifyFWD_PartialPayment_MailDeliveryTypeAndWithDrawalSummary(String
 		Web.waitForPageToLoad(Web.getDriver());
 		if(isTextFieldDisplayed("Withdrawal summary"))
 		{
+			//Mosin - Changing so that it will match the total payee than the only withdrawal amount
 			//verify the total withdrawal amount for partial payments
-			WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
+			/*WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
 					.xpath(lblTotalWithdrawalAmount.replace("Money Source Type",
-							"Total withdrawal amount")));
+							"Total withdrawal amount")));*/
+			WebElement lblFinalWithdrawalAmount = Web.getDriver().findElement(By
+					.xpath(lblTotalPayeeWithdrawalAmount.replace("Money Source Type",
+							"Total Available to All Payees (all payments)")));
+			
 			finalWithdrawalAmount=(int)Math.round(Web.getIntegerCurrency(lblFinalWithdrawalAmount.getText()));
 			if (enteredTotalWithdrawalAmt == finalWithdrawalAmount) 
 				Reporter.logEvent(Status.PASS,
@@ -2818,7 +2848,8 @@ public void verifyDisbursementRequest() throws SQLException
 	{
 		if(withdrawalType.equalsIgnoreCase("pwd") || withdrawalType.equalsIgnoreCase("fwd"))
 		{
-			if(inpCurrentEmployerNo.getAttribute("class").contains("active"))
+			//if(inpCurrentEmployerNo.getAttribute("class").contains("active"))
+			if(!inpCurrentEmployerNo.isSelected())
 				Reporter.logEvent(Status.PASS, "For Sep Service,verify on clicking back button in Plan Withdrawal Page, system displays Employer Question Page",
 						"On clicking back button in Plan Withdrawal Page, system displays Employer Question Page with option NO selected", true);
 			else
@@ -2827,7 +2858,8 @@ public void verifyDisbursementRequest() throws SQLException
 		}
 		else
 		{
-			if(inpCurrentEmployerYes.getAttribute("class").contains("active"))
+			//if(inpCurrentEmployerYes.getAttribute("class").contains("active"))
+			if(!inpCurrentEmployerYes.isSelected())
 				Reporter.logEvent(Status.PASS, "For In Service verify on clicking back button in Plan Withdrawal Page, system displays Employer Question Page",
 						"On clicking back button in Plan Withdrawal Page, system displays Employer Question Page with option YES selected", true);
 			else

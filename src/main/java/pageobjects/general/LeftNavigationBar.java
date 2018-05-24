@@ -46,7 +46,10 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 	@FindBy(xpath = "//span[@class='plan']//a")
 	private List<WebElement> lstlnkPlanName;
 	private String lnkStatementDocument = "//a[text()[normalize-space()='Statements and documents']]";
-
+	//Mosin - For Verify Login same user
+	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]")
+	private WebElement btnLogin;
+	private String lnkLoanSummary = "//a[text()[normalize-space()='Loans summary']]";
 	/**
 	 * Empty args constructor
 	 * 
@@ -74,9 +77,20 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Assert.assertTrue(Web.isWebElementDisplayed(lblUserName),
+				"User Name is Not Displayed\n");
 
-		Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),
-				"Left Navigation Bar is Not Loaded");
+		if (Common.verifyLoggedInUserIsSame()) {
+
+			Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection,true));
+		} else {
+			this.lnkLogout.click();
+			System.out.println("Clicked on Log Out My Accoounts Page");
+			Web.waitForElement(btnLogin);
+			Assert.assertTrue(false, "Login page is displayed");
+		}
+		/*Assert.assertTrue(Web.isWebElementDisplayed(weLeftNavSection, true),
+				"Left Navigation Bar is Not Loaded");*/
 
 	}
 
@@ -203,8 +217,9 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "My distributions";
 
 		} else if (linkName.trim().equalsIgnoreCase("UPLOAD DOCUMENTS")) {
-			strLinkText = lnkUploadDocuments;
-
+			strLinkText = " Upload documents";
+		} else if (linkName.trim().equalsIgnoreCase("Loan Summary")) {
+				strLinkText = lnkLoanSummary;
 		} else {
 			strLinkText = linkName.trim();
 		}

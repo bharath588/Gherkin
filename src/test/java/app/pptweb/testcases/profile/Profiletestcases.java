@@ -13,12 +13,15 @@ import lib.Stock;
 import lib.Web;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.SendKeysAction;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageobjects.beneficiaries.MyBeneficiaries;
 import pageobjects.landingpage.LandingPage;
 import pageobjects.liat.ProfilePage;
 import pageobjects.login.ForgotPassword;
@@ -102,7 +105,10 @@ public class Profiletestcases {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			/*if(Web.isWebElementDisplayed(profilePage, "CHANGE PASSWORD BUTTON"))
+			{
+				Web.clickOnElement(profilePage, "CHANGE PASSWORD BUTTON");
+			}*/
 			// Step 8
 			try {
 				Web.waitForElement(profilePage, "CHANGE PASSWORD TEXT");
@@ -222,6 +228,7 @@ public class Profiletestcases {
 			jse.executeScript("window.scrollBy(0,-150)", "");
 			jse = (JavascriptExecutor)Web.getDriver();
 			jse.executeScript("window.scrollBy(0,150)", "");
+			Thread.sleep(2000);
 			Web.clickOnElement(profilePage, "CHANGE PASSWORD BUTTON");
 
 			Web.setTextToTextBox("NEW PASSWORD", profilePage,
@@ -239,6 +246,7 @@ public class Profiletestcases {
 			Web.clickOnElement(profilePage, "CANCEL");
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(profilePage, "CHANGE PASSWORD BUTTON");
+			Thread.sleep(2000);
 			Web.clickOnElement(profilePage, "CHANGE PASSWORD BUTTON");
 
 			profilePage.validatePasswordBox("NEW PASSWORD");
@@ -573,12 +581,14 @@ public class Profiletestcases {
 			Web.waitForPageToLoad(Web.getDriver());
 			Web.waitForElement(profilePage, "CHANGE CONTACT INFORMATION BUTTON");
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(2000);
 			Web.clickOnElement(profilePage, "CHANGE CONTACT INFORMATION BUTTON");
 			Web.setTextToTextBox("PERSONAL EMAIL ADDRESS TEXTBOX", profilePage,
 					"");
-			
-			profilePage.isTextFieldDisplayed("Email is required");
+			Thread.sleep(2000);
 			Web.clickOnElement(profilePage, "PERSONAL PHONE NUMBER");
+			profilePage.isTextFieldDisplayed("Email is required");
+			Thread.sleep(2000);
 			Web.setTextToTextBox("PERSONAL EMAIL ADDRESS TEXTBOX", profilePage,
 					"a.aa@gw..com");
 			
@@ -610,6 +620,7 @@ public class Profiletestcases {
 			
 			Web.waitForElement(profilePage, "CHANGE CONTACT INFORMATION BUTTON");
 			Web.waitForPageToLoad(Web.getDriver());
+			Thread.sleep(2000);
 			Web.clickOnElement(profilePage, "CHANGE CONTACT INFORMATION BUTTON");
 			Web.setTextToTextBox("PERSONAL EMAIL ADDRESS TEXTBOX", profilePage,
 					"");
@@ -983,7 +994,7 @@ public class Profiletestcases {
 					{
 						sFirst.append(c[i]);
 					}
-					else if(Character.isWhitespace(c[i]))
+					else if(Character.isSpace(c[i]))
 					{
 						break;
 					}

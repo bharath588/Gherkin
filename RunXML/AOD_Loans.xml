@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite PUBLIC "SYSTEM" "http://testng.org/testng-1.0.dtd">
+<suite name="testsuite" verbose="1">
+	<listeners>
+		<listener class-name="core.framework.TestListener" />
+	</listeners>
+
+	<test name="Loan Balance">
+
+		<classes>
+			<class name="app.pptweb.testcases.aod.LoansBalanceTestcases">
+				<methods>
+					<include name="AOD_Loans_DDTC_28724_SIT_PPTWEB_Account_overview_Loan_Balance_card_multiple_loans">
+						<parameter name="ManualTCName"
+							value="DDTC-28724 SIT_PPTWEB_Account overview_Loan Balance card multiple loans">
+						</parameter>
+					</include>
+					<include name="AOD_Loans_DDTC_28723_SIT_PPTWEB_Account_overview_Loan_Balance_card_single_loan">
+						<parameter name="ManualTCName"
+							value="DDTC-28723 SIT_PPTWEB_Account overview_Loan Balance card single loan">
+						</parameter>
+					</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
