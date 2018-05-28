@@ -202,6 +202,7 @@ public class ReportStepDefinitions {
 	    // Write code here that turns the phrase above into concrete actions
 		reportsPage = new ReportsPage();
 		reportsPage.clickOnSave();
+		
 	}
 
 	@Then("^The selected report should appear in the selected subfolder$")
@@ -211,7 +212,9 @@ public class ReportStepDefinitions {
 		homePage = new HomePage();
 		homePage.switchPlan(ReportsPage.planNumberValue);
 	    fileSharingPage = new FileSharingPage();
-	    Web.clickOnElement(fileSharingPage, "File Sharing Tab");
+	    //Web.clickOnElement(fileSharingPage, "File Sharing Tab");
+	    Web.actionsClickOnElement(Web.returnElement(fileSharingPage, "File Sharing Tab"));
+	    
 	    Web.waitForElement(Web.returnElement(fileSharingPage, "File Sharing Frame"));
 	    Web.FrameSwitchONandOFF(true, Web.returnElement(fileSharingPage, "File Sharing Frame"));
 	    Web.nextGenDriver.waitForAngular();

@@ -8,6 +8,7 @@ import lib.CommonLib;
 import lib.Web;
 
 import org.bdd.psc.pageobjects.EmployeePage;
+import org.bdd.psc.pageobjects.EmployeePages;
 import org.bdd.psc.pageobjects.HomePage;
 import org.bdd.psc.pageobjects.JumpPage;
 import org.bdd.psc.pageobjects.LoginPage;
@@ -41,6 +42,7 @@ public class EmployeeStepDefinitions {
 	EmployeePage empPage;
 	CommonLib commonLib;
 	//WebDriver webDriver;
+	EmployeePages empPages;
 
 
 	@Before()
@@ -50,6 +52,8 @@ public class EmployeeStepDefinitions {
 			scenarioName=scenario.getName();
 			System.out.println(scenario.getId());
 			Reporter.initializeModule(featureName);
+			empPages=new EmployeePages();
+			
 		}
 	@After
 	public void after() throws Exception{
@@ -195,7 +199,75 @@ public class EmployeeStepDefinitions {
 	    // Write code here that turns the phrase above into concrete actions
 	    
 	}
+	
+	@When("^user switched to \"([^\"]*)\" and navigate to deferral page$")
+	    public void user_switched_to_planNo_and_navigate_to_deferral_page(String planno) throws Throwable {
+		  new HomePage().switchPlan(planno);  
+		  empPages.get();
+		  empPages.openDeferralDetailsPage();
+		  
+	    }
+	@When("^user enters a \"([^\"]*)\" contribution for a \"([^\"]*)\"$")
+    public void user_enters_a_futuredate_contribution_for_a_deferraltype(String futuredate, String deferraltype) throws Throwable {
+		empPages.clickOngoingEdit();
+		empPages.enterFutureDateContributionAndSave(deferraltype, futuredate);
+    }
+	@When("^user enters a contribution for a \"([^\"]*)\"$")
+    public void user_enters_a_contribution_for_a_deferraltype(String deferraltype) throws Throwable {
+		empPages.clickOngoingEdit();
+		empPages.enterFutureDateContributionAndSave(deferraltype);
+    }
+	@When("^user enters a contribution for a \"([^\"]*)\" of the given plan$")
+	    public void user_enters_a_contribution_for_a_deferraltype_of_the_given_plan(String deferraltype) throws Throwable {
+		empPages.clickOngoingEdit();
+		empPages.enterContributionAndSave(deferraltype);
+	    }
+	 @When("^user clicks continue on the deferral contribution screen$")
+	    public void user_clicks_continue_on_the_deferral_contribution_screen() throws Throwable {
+	        
+	    }
 
+	@Then("^the effective date listed on the deferral review page for a \"([^\"]*)\" is the \"([^\"]*)\" the user entered$")
+	public void the_effective_date_listed_on_the_deferral_review_page_for_a_deferral_is_the_futuredate_the_user_entered(
+			String deferraltype, String futuredate) throws Throwable {
+		if (empPages.isEffectiveDateSameAsFutureDate(deferraltype, futuredate)) {
+			Reporter.logEvent(Status.PASS,
+					"the effective date "+futuredate+" should be listed on the deferral review page",
+					"the effective date "+futuredate+" is listed on the deferral review page",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the effective date "+futuredate+" should be listed on the deferral review page",
+					"the effective date "+futuredate+" isn't listed on the deferral review page",
+					true);
+		}
+	}
+	
+	@Then("^the effective date listed on the deferral review page is the current date for \"([^\"]*)\"$")
+	public void the_effective_date_listed_on_the_deferral_review_page_is_the_current_date_for_deferraltype(
+			String deferraltype) throws Throwable {
+		if (empPages.isEffectiveDateSameAsFutureDate(deferraltype)) {
+			Reporter.logEvent(
+					Status.PASS,
+					"the effective date should be listed on the deferral review page is the current date",
+					"the effective date is listed on the deferral review page is the current date",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"the effective date should be listed on the deferral review page is the current date",
+					"the effective date listed on the deferral review page isn't the current date",
+					true);
+		}
+	}
+	
+	@Then("^the effective date listed on the deferral review page for a \"([^\"]*)\" is the first date of the following month$")
+    public void the_effective_date_listed_on_the_deferral_review_page_for_a_something_is_the_first_date_of_the_following_month(String deferraltype, String strArg1) throws Throwable {
+		if (empPages.isEffectiveDateWeekend(deferraltype)) {
+			System.out.println("PASS");
+		}
+    }
 
 
 

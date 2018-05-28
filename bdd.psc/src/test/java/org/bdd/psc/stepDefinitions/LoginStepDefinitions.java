@@ -11,12 +11,15 @@ import lib.Web;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+
 import org.bdd.psc.pageobjects.ForgotPasswordPage;
 import org.bdd.psc.pageobjects.FundProspectus;
 import org.bdd.psc.pageobjects.HomePage;
 import org.bdd.psc.pageobjects.JumpPage;
 import org.bdd.psc.pageobjects.LoginPage;
+import org.bdd.psc.pageobjects.PlanDMBACustomSitePage;
 import org.bdd.psc.pageobjects.UserVerificationPage;
+
 import reporter.Reporter;
 import cucumber.api.DataTable;
 import cucumber.api.Delimiter;
@@ -72,6 +75,26 @@ public class LoginStepDefinitions {
 			// testWeb.getDriver().manage().deleteAllCookies();
 			login = new LoginPage();
 			login.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Given("^Open browser and launch PSC application for the given accuCode$")
+	public void openBrowserAndLaunchPSCAppForTheAccuCode(DataTable accAndCreds) {
+		try {
+			Reporter.initializeReportForTC(1, Globals.scenarioName);
+			if (!accAndCreds.equals(Globals.creds)) {
+				Globals.creds = accAndCreds;
+				LoginPage.setURL(Web.rawValues(Globals.creds).get(0)
+						.get("accuCode"));
+				login = new LoginPage();
+				login.get();
+				
+			} 
+			else {
+				login = new LoginPage();
+				login.get();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -599,6 +622,41 @@ public class LoginStepDefinitions {
 		}
 
 	}
+	
+	@Given("^User opens \"([^\"]*)\"$")
+	public void user_opens_source_url(String sourceUrl) throws Throwable {
+		Reporter.initializeReportForTC(1, Globals.scenarioName);
+		//login.get();
+		Web.getDriver().get(sourceUrl);
+		Reporter.logEvent(Status.INFO,"user opens the source URL",sourceUrl, true);
+	}
+
+	@Then("^\"([^\"]*)\" page should be displayed$")
+	public void nextGen_url_page_should_be_displayed(String nextGenUrl) throws Throwable {
+		if (login.isNextGenUrlPage(nextGenUrl)) {
+			Reporter.logEvent(Status.PASS," user should navigate to: "+nextGenUrl,"user is navigated to : "+nextGenUrl, true);
+		} 
+		else {
+			Reporter.logEvent(Status.FAIL," user should navigate to: "+nextGenUrl,"user isn't navigated to : "+nextGenUrl, true);
+			
+			}	    
+	}
+
+	@Then("^the \"([^\"]*)\" section should be displayed in pre login$")
+	public void the_contact_us_section_should_be_displayed_in_pre_login(
+			String contactus) throws Throwable {
+		if (login.isContactUsSectionDisplayCorrectTextInPreLogin(contactus)) {
+			Reporter.logEvent(Status.PASS,
+					" The contactUs section should displays : " + contactus,
+					"The contactUs section is displayed : " + contactus, true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" The contactUs section should displays: " + contactus,
+					"The contactUs section isn't displayed : " + contactus,
+					true);
+		}
+	}
+
 	
 	
 	

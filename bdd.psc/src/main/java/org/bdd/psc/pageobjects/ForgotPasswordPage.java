@@ -5,8 +5,10 @@ package org.bdd.psc.pageobjects;
 
 import java.util.List;
 
+import lib.Stock;
 import lib.Web;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,6 +37,14 @@ public class ForgotPasswordPage extends LoadableComponent<ForgotPasswordPage> {
 	private WebElement closeFooterDialog;
 	@FindBy(xpath=".//*[@id='main']/div")
 	private WebElement sysReqDiv;
+	
+	@FindBy(id="footRight")
+	private WebElement contactUs;
+	//@FindBy(xpath="//*[@id='footRight']//p")
+	//private WebElement contactUsInstJpmInstFtb;
+	@FindBy(xpath="//*[@id='footRight']//*[contains(text(),'Contact') or @class='contactNumber']")
+	private List<WebElement> contactUsInstAF;
+	
 
 	public static WebDriver webDriver;
 	LoadableComponent<?> parent;
@@ -144,6 +154,44 @@ public class ForgotPasswordPage extends LoadableComponent<ForgotPasswordPage> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean isContactUsSectionDisplayedCorrectMessage(
+			String contactUsText) {
+		try {
+			WebElement element = null;
+			String appText = "";
+			String[] replacements = { "Need help?", "TPA Resource Center",
+					"Facebook", "Twitter", "LinkedIn", "Instagram", "YouTube",
+					"You Tube" };
+
+			if (LoginPage.accucode.equals("InstAF")) {
+				List<WebElement> elementContactUs = contactUsInstAF;
+				System.out.println(elementContactUs.size());
+				appText = elementContactUs.get(0).getText() + " "
+						+ elementContactUs.get(1).getText();
+				appText = appText.replace("\n", " ").replace("\r", "").trim();
+			} else {
+				element = contactUs;
+				appText = element.getText().replace("\n", " ")
+						.replace("\r", "").trim();
+			}
+			for (String replacement : replacements) {
+				appText = appText.replace(replacement, "").trim();
+			}
+			System.out.println(appText.replace("  ", " "));
+			System.out.println(contactUsText.replace("'", "").trim());
+			if (appText.replace("  ", " ").equalsIgnoreCase(
+					contactUsText.replace("'", "").trim()))
+				return true;
+
+		} catch (NoSuchElementException ele) {
+			ele.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 	
 

@@ -3,20 +3,31 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import lib.CommonLib;
 import lib.Web;
 
 import com.aventstack.extentreports.Status;
 
-
+import cucumber.api.Delimiter;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
 import org.bdd.psc.pageobjects.HomePage;
+import org.bdd.psc.pageobjects.InvestmentsPerformancePage;
 import org.bdd.psc.pageobjects.LoginPage;
 import org.bdd.psc.pageobjects.PlanPage;
+import org.bdd.psc.pageobjects.PlanProvisionsPage;
 import org.bdd.psc.pageobjects.UserVerificationPage;
+
 import reporter.Reporter;
 import gherkin.formatter.model.Scenario;
 
@@ -34,13 +45,16 @@ public class PlanStepDefinitions {
 	UserVerificationPage userVerPage;
 	HomePage homePage;
 	PlanPage planPage;
-	
+	PlanProvisionsPage provisionsPage;
+	InvestmentsPerformancePage investmentPage;
+	private static HashMap<Integer,String> buttonPageName=new HashMap<Integer,String>();
 	@Before
 	public void before(cucumber.api.Scenario scenario) {
 	    featureName=scenario.getId().split(";")[0];
 	    scenarioName=scenario.getName();
 	    System.out.println(scenario.getId());
-		
+	    provisionsPage=new PlanProvisionsPage();
+	    investmentPage=new InvestmentsPerformancePage();
 	    Reporter.initializeModule(featureName);
 	}
 	
@@ -123,5 +137,81 @@ public class PlanStepDefinitions {
 		}
 	    
 	}
+	
+	@When("^user click to \"([^\"]*)\"$")
+	public void user_click_to_button(@Delimiter(",") List<String> buttonName)
+			throws Throwable {
+		int keyVal=0;
+		if (!(buttonPageName.isEmpty()))
+			buttonPageName.clear();
+		for (String name : buttonName) {
+			try {
+				String pageNameHeaderText = provisionsPage.gettingButtonPageName(name);
+				if(pageNameHeaderText!=null){
+					buttonPageName.put(++keyVal, pageNameHeaderText.trim().toLowerCase());
+				}
+				
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	@Then("^the \"([^\"]*)\" page should be displayed$")
+	public void the_something_page_should_be_displayed(
+			@Delimiter(",") List<String> buttonPageFromFeatureFile) throws Throwable {
+		try {
+			for(String page:buttonPageFromFeatureFile){
+				if(buttonPageName.containsValue(page.trim().toLowerCase())){
+					Reporter.logEvent(Status.PASS, "The "+page+" page should be displayed", "The"+page+"page is displayed", true);
+				}else{
+					
+					Reporter.logEvent(Status.FAIL, "The "+page+" page should be displayed", "The"+page+"page isn't displayed", true);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Given("^user is on the Plan Provisions page of \"([^\"]*)\"$")
+    public void user_is_on_the_plan_provisions_page_of_planNo(String planno) throws Throwable {
+       new HomePage().switchPlan(planno);
+       Web.nextGenDriver.waitForAngular();
+       provisionsPage.get();
+    }
+	@When("^user is on \"([^\"]*)\" page$")
+    public void user_is_on_investments_page(String investments) throws Throwable {
+       investmentPage.get();
+       Web.nextGenDriver.waitForAngular();
+    }
+	@Then("^the \"([^\"]*)\" tab should be displayed$")
+    public void the_fixedrate_tab_should_be_displayed(String fixedrate) throws Throwable {
+		if(investmentPage.isCorrectTabName(fixedrate)){
+			Reporter.logEvent(Status.PASS, "The "+fixedrate+" tab should be displayed", "The"+fixedrate+"tab is displayed", true);
+		}else{
+			
+			Reporter.logEvent(Status.FAIL, "The "+fixedrate+" tab should be displayed", "The"+fixedrate+"tab isn't displayed", true);
+		}
+        
+    }
+	@When("^user is on \"([^\"]*)\" tab$")
+    public void user_is_on_something_tab(String fixedrate, String strArg1) throws Throwable {
+		
+    }
+	@Then("^the \"([^\"]*)\" label should be displayed$")
+    public void the_interestRate_label_should_be_displayed(String interestRate) throws Throwable {
+		if(investmentPage.isCorrectIntrestRateLableName(interestRate)){
+			Reporter.logEvent(Status.PASS, "The "+interestRate+" label should be displayed", "The"+interestRate+"tab is displayed", true);
+		}else{
+			
+			Reporter.logEvent(Status.FAIL, "The "+interestRate+" label should be displayed", "The"+interestRate+"tab isn't displayed", true);
+		}
+    }
+	
+	
 
 }

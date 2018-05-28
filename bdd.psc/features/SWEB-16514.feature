@@ -20,9 +20,7 @@
 Feature: Asset allocation model label change for InstAF site
 
   Scenario Outline: Verify the label for the Asset Allocation Model tab on the Investment page is correct for the "<accucode>"
-    Given User successfully navigated to "<accucode>"
-    When user enters "<username>" and "<password>" and clicks on sign in button
-    Then user is on Home page on the site "<accucode>"
+    Given user is on the Home page of "<accucode>" when user login with correct "<username>" and "<password>"
     When user switches to "<plan_no>"
     And user selects the "<Investments>" option under the Plan Menu
     Then the tab label Asset Allocation Model should be "<Label>"
@@ -31,3 +29,7 @@ Feature: Asset allocation model label change for InstAF site
       | plan_no   | accucode    | Investments               | Label                   | username | password |
       | 341587-01 | InstAF      | Investments & Results     | Model portfolios        | 1AF      | testing1 |
       | 194017-01 | PlanEmpower | Investments & Performance | Asset allocation models | 1inst    | testing1 |
+    
+    #Given User successfully navigated to "<accucode>"
+    #When user enters "<username>" and "<password>" and clicks on sign in button
+    #Then user is on Home page on the site "<accucode>"

@@ -146,7 +146,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 			Web.waitForElement(reportsFrame);
 			Web.getDriver().switchTo().defaultContent();
 			Web.getDriver().switchTo().frame(reportsFrame);
-			Web.nextGenDriver.waitForAngular();
+			//Web.nextGenDriver.waitForAngular();
 
 		}
 
@@ -391,6 +391,7 @@ public class ReportsPage extends LoadableComponent<ReportsPage> {
 		try{
 			System.out.println(downloadPath);
 			xl=new XL_ReadWrite(downloadPath);
+			
 			if(xl.isSheetExist(sheetNameInReportCatalogFile)){
 				Reporter.logEvent(Status.PASS, "Download the Reports Catalog excel file", 
 						"Download the Reports Catalog excel file", false);	

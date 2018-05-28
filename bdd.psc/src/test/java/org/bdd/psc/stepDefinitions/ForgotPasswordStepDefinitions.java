@@ -8,8 +8,10 @@ import java.util.List;
 import com.aventstack.extentreports.Status;
 
 import core.framework.Globals;
+
 import org.bdd.psc.pageobjects.ForgotPasswordPage;
 import org.bdd.psc.pageobjects.LoginPage;
+
 import reporter.Reporter;
 import cucumber.api.Delimiter;
 import cucumber.api.java.After;
@@ -128,6 +130,22 @@ public class ForgotPasswordStepDefinitions {
 					"clicking close on pop up does not return to forgot password page", true);
 			HomeStepDefinitions.forgotPwdPageVisits = 0;
 		}
+	}
+	
+	@Then("^the \"([^\"]*)\" section should be displayed$")
+	public void the_contact_us_section_should_be_displayed(String contactus)
+			throws Throwable {
+		if (forgotPwdPage.isContactUsSectionDisplayedCorrectMessage(contactus)) {
+			Reporter.logEvent(Status.PASS,
+					" The contactUs section should displays : " + contactus,
+					"The contactUs section is displayed : " + contactus, true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" The contactUs section should displays: " + contactus,
+					"The contactUs section isn't displayed : " + contactus,
+					true);
+		}
+
 	}
 
 }

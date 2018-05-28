@@ -42,8 +42,14 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement homePageLogo;
 	@FindBy(xpath = ".//input[@id='planSearchAc_input']")
 	private WebElement planSearchBox;
+	@FindBy(id = "planDropDown")
+	private WebElement planDropDownMenu;
+	
 	@FindBy(xpath = ".//button[@id='planSearchAutocompleteButton']")
 	private WebElement btnPlanSearchTxtGO;
+	@FindBy(xpath = ".//button[@id='planSearchDropdownButton']")
+	private WebElement btnPlanSearchDropDownGO;
+	
 	@FindBy(id = "termsconditions")
 	private WebElement termsAndConditions;
 	@FindBy(xpath = "//ul[@id='footBottomLinks']/li")
@@ -62,6 +68,8 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement standardReportsSubMenu;
 	@FindBy(xpath = "//*[@id='main']/div/h1")
 	private WebElement iframeFooterHeader;
+	@FindBy(xpath=".//span[text()='Site Bulletin']/following-sibling::a/span")
+	private WebElement CancelNewsBulletin;
 
 	private LoadableComponent<?> parent;
 	public static WebDriver webDriver;
@@ -116,23 +124,22 @@ public class HomePage extends LoadableComponent<HomePage> {
 				invokeMethod.invoke(this.parent.getClass().newInstance(),
 						new Object[] { userData });
 				loginObj.waitForSuccessfulLogin();
-				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,
-						"EMAIL ADDRESS"))) {
-					userVeriData = new String[] {
-							"discard@gwl.com",
-							userVeriPg.getSecurityAnswer((Web.returnElement(
-									userVeriPg, "SECURITYQUESTION")).getText()
-									.trim()) };
+				if (Web.isWebElementDisplayed(Web.returnElement(userVeriPg,"EMAIL ADDRESS"))) {
+					userVeriData = new String[] {"discard@gwl.com",userVeriPg.getSecurityAnswer((Web.returnElement(userVeriPg, "SECURITYQUESTION")).getText().trim()) };
 					// userVeriData[0] =
 					// Stock.GetParameterValue("userVerificationEmail");
 					// userVeriData[1] =
 					// getSecurityAnswer((Web.returnElement(userVeriPg,
 					// "SECURITYQUESTION")).getText().trim());
 					userVeriPg.performVerification(userVeriData);
+					
 
 				}
 			}
-		} catch (Exception e) {
+			if(Web.isWebElementDisplayed(CancelNewsBulletin)) 
+				Web.clickOnElement(CancelNewsBulletin);			
+		} 
+		catch (Exception e) {
 			try {
 				throw new Exception(
 						"Login to PSC failed , Error description : "
@@ -190,13 +197,24 @@ public class HomePage extends LoadableComponent<HomePage> {
 			act = new Actions(Web.getDriver());
 			if (Web.isWebElementDisplayed(planSearchBox)) {
 				act.moveToElement(planSearchBox).click(planSearchBox).build()
-				.perform();
+						.perform();
 				Web.setTextToTextBox(planSearchBox, planNumber);
 				Web.clickOnElement(btnPlanSearchTxtGO);
 				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
 						true);
 				Thread.sleep(5000);
-			} else {
+			}
+			else if(Web.isWebElementDisplayed(planDropDownMenu,true)){
+				Web.actionsClickOnElement(planDropDownMenu);
+				Web.actionsClickOnElement(planDropDownMenu);
+				Web.selectDropDownOption(planDropDownMenu, planNumber, true);
+				Web.clickOnElement(btnPlanSearchDropDownGO);
+				
+				Reporter.logEvent(Status.INFO, "Switched to plan:", planNumber,
+						true);
+				Thread.sleep(5000);
+			}
+			else {
 				Reporter.logEvent(
 						Status.INFO,
 						"No plan search box. User is associated with single plan",
@@ -348,6 +366,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean isHomePage(){
+		if(Web.isWebElementDisplayed(homePageLogo, true))
+			return true;
+		else
+			return false;				
 	}
 
 }

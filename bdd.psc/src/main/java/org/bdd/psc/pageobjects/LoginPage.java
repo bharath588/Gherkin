@@ -90,6 +90,10 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	private WebElement preloginBreadcrumbs;
 	@FindBy(xpath = ".//*[@id='main']/div[1]/div/ol/li[1]")
 	private WebElement homeLinkInBreadcrumb;
+	
+	@FindBy(xpath = ".//*[strong[contains(text(),'help')]]/following-sibling::p[1]")
+	private WebElement contactUsPreLogin;
+	
 
 	LoadableComponent<?> parent;
 	public static String URL;
@@ -115,15 +119,26 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	protected void load() {
 		// TODO Auto-generated method stub
 		// webDriver.get(Stock.getConfigParam("AppURLPSC"));
+		try{
+			if (Web.isWebElementDisplayed(Web.returnWebElement(new LoginPage(),"Logout")))
+				 Web.clickOnElement(Web.returnWebElement(new LoginPage(),"Logout"));
+			}
+		catch(Exception e){
+			
+		}		
 		if (!(URL == null)) {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		} else {
 			URL = Stock.getConfigParam("AppURLPSC");
-			URL = URL.replace("accucode", Stock.getConfigParam("accucode"));
+			LoginPage.accucode=Stock.getConfigParam("accucode");//this line added by smylnk
+			URL = URL.replace("accucode", LoginPage.accucode);
+			//URL = URL.replace("accucode", Stock.getConfigParam("accucode"));				
+			Web.getDriver().get(URL);
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		}
+		Reporter.logEvent(Status.INFO, "opens the URL for the accuCode: "+LoginPage.accucode,"opens the URL for the accuCode: "+LoginPage.accucode, true);
 	}
 
 	@Override
@@ -292,12 +307,15 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 		return URL;
 	}
 
-	public boolean isErrorDisplayed() {
+	public boolean isErrorDisplayed() throws InterruptedException {
+		Web.getDriver().switchTo().frame(frmLogin);
 		if (errorMessage.isDisplayed()) {
 			Reporter.logEvent(Status.INFO, "Error displays", "Error displays:"
 					+ errorMessage.getText(), true);
+			Web.getDriver().switchTo().defaultContent();
 			return true;
 		}
+		Web.getDriver().switchTo().defaultContent();
 		return false;
 	}
 
@@ -558,6 +576,36 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			
 		}
 
+	}
+	
+	public boolean isNextGenUrlPage(String nextGenUrl)throws InterruptedException {
+		int i = 0;
+		Web.getDriver().switchTo().defaultContent();
+		while (i < 15){
+			try {
+				Web.getDriver().switchTo().frame(frmLogin);
+				if (Web.isWebElementDisplayed(txtUserName, true))
+					break;
+			} catch (Exception e) {
+				i++;
+				Thread.sleep(1000);
+				Web.getDriver().switchTo().defaultContent();
+			}
+		}
+		if (Web.getDriver().getCurrentUrl().trim().equals(nextGenUrl.trim()))
+			return true;
+		return false;
+	}
+	
+	public boolean isContactUsSectionDisplayCorrectTextInPreLogin(String contactUsText){
+		String text=contactUsPreLogin.getText().trim().replace("\n", "").replace("\r", "");
+		System.out.println("----------");
+		System.out.println(text);
+		System.out.println(contactUsText.replace("'", "").trim());
+		if(text.equalsIgnoreCase(contactUsText.replace("'", "").trim()))
+			return true;
+		return false;
+		
 	}
 
 }

@@ -3,7 +3,9 @@
  */
 package org.bdd.psc.stepDefinitions;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import lib.Web;
 
@@ -50,6 +52,7 @@ public class FileSharingStepDefinitions {
 	private static String rootFolderName;
 	String subFolderName;
 	private String openedPopupName;
+	private String destinationFolderName;
 	
 
 	@Before
@@ -246,10 +249,12 @@ public class FileSharingStepDefinitions {
     }
     @When("^User cancels actions on the \"([^\"]*)\"$")
     public void user_cancels_actions_on_the_something(String modalbox) throws Throwable {
+    	Thread.sleep(3000);
        fileSharePage.cancelModalBoxPopup(modalbox);
     }
     @When("^User closes the \"([^\"]*)\"$")
     public void user_closes_the_something(String modalbox) throws Throwable {
+    	Thread.sleep(3000);
     	fileSharePage.closeModalBoxPopup(modalbox);
     }
     @Then("^User returns to the previously selected folder$")
@@ -284,13 +289,13 @@ public class FileSharingStepDefinitions {
     public void user_at_rootlevel_folder(DataTable rootFolder) throws Throwable {
 		List<String> rfolder = rootFolder.asList(String.class);
 		rootFolderName=rfolder.get(1);
+		Thread.sleep(5000);
 		fileSharePage.openFolder(rootFolderName);
     }
 	@Given("^User at sub-level folder$")
 	public void user_at_sublevel_folder(DataTable rootFolder) throws Throwable {
 		 List<String> sfolder = rootFolder.asList(String.class);
-			String fname=sfolder.get(1);
-			
+			String fname=sfolder.get(1);			
 			fileSharePage.openSubFolder(fname);
     }
 	
@@ -328,6 +333,7 @@ public class FileSharingStepDefinitions {
 					true);
 		}
 		fileSharePage.closeModalBoxPopup(openedPopupName);
+		Thread.sleep(4000);
 		
     }
 	
@@ -453,13 +459,21 @@ public class FileSharingStepDefinitions {
 			 catch(Exception e){
 				 Reporter.logEvent(Status.INFO, "No opened popup available", "No opened popup available", true);
 			 } 
-	    	List<String> sfolder = fileToSelect.asList(String.class);
-	    	String fileName=sfolder.get(1);
-			String folderName=sfolder.get(2);
-			if(fileName.trim().equalsIgnoreCase("parent"))
+	    	//List<String> sfolder = fileToSelect.asList(String.class);
+	    	List<Map<String, String>> data = fileToSelect.asMaps(String.class,String.class);
+	    	
+	    	String fileName=data.get(0).get("parentOrSubFolder");//sfolder.get(1);
+			String folderName=data.get(0).get("root folder");//sfolder.get(2);
+			if(fileName.trim().equalsIgnoreCase("parent")){
+				rootFolderName=folderName;
 				 fileSharePage.openFolder(folderName);
-			 if(fileName.trim().equalsIgnoreCase("sub"))
+			}
+				
+			 if(fileName.trim().equalsIgnoreCase("sub")){
+				 subFolderName=folderName;
 				 fileSharePage.openSubFolder(folderName);
+			 }
+				 
 	        
 	    }
 	    
@@ -511,7 +525,74 @@ public class FileSharingStepDefinitions {
 		}
     }
 
-
+	@When("^user select the destination folder in dropdown which is not same as selected folder$")
+	public void user_select_the_destination_folder_in_dropdown_which_is_not_same_as_selected_folder(DataTable fileToSelect) throws Throwable {
+		//List<String> sfolder = fileToSelect.asList(String.class);
+		List<Map<String, String>> data = fileToSelect.asMaps(String.class,String.class);
+    	String fileName=data.get(0).get("parentOrSubFolder");
+		String folderName=data.get(0).get("root folder");
+		if(fileName.trim().equalsIgnoreCase("parent")){
+			destinationFolderName=folderName;
+		    fileSharePage.selectDropDownValue(fileName, folderName);
+		}			
+		if(fileName.trim().equalsIgnoreCase("sub")){
+			destinationFolderName=folderName;
+			fileSharePage.selectDropDownValue(fileName, folderName);
+		 }
+	}
+	
+	@Then("^User is navigated to the newly selected folder$")
+	public void user_is_navigated_to_the_newly_selected_folder()throws Throwable {
+		Web.nextGenDriver.waitForAngular();
+		Thread.sleep(5000);
+		fileSharePage.openFolder(destinationFolderName);
+		Web.nextGenDriver.waitForAngular();
+	}
+	@Then("^Previously selected files should appear in newly selected folder$")
+	public void previously_selected_files_should_appear_newly_selected_folder()throws Throwable {
+		fileSharePage.openFolder(destinationFolderName);
+		Web.nextGenDriver.waitForAngular();
+		if (fileSharePage.isFileExistAfterMoving()) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Previously selected files should appear in newly selected folder",
+					"Previously selected files present in newly selected folder",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Previously selected files should appear in newly selected folder",
+					"Previously selected files not present in newly selected folder",
+					true);
+		}
+		
+	}
+	@Then("^Previously selected files should no longer appear in former folder$")
+	public void previously_selected_files_should_no_longer_appear_in_former_folder()throws Throwable {
+		fileSharePage.openFolder(rootFolderName);
+		Web.nextGenDriver.waitForAngular();
+		if (!fileSharePage.isFileExistInOldFolderAfterMoving()) {
+			Reporter.logEvent(
+					Status.PASS,
+					"Previously selected files should no longer appear in former folder",
+					"Previously selected files no longer appear in former folder",
+					true);
+		} else {
+			Reporter.logEvent(
+					Status.FAIL,
+					"Previously selected files should no longer appear in former folder",
+					"Previously selected files present in former folder",
+					true);
+		}
+		
+	}
+	@Given("^User has selected one or more file checkboxes on a page$")
+    public void user_has_selected_one_or_more_file_checkboxes_on_a_page() throws Throwable {
+		fileSharePage.navigateToPreviousPage();
+		fileSharePage.deselectOneOrMoreNonHeaderRowCheckBox();
+		fileSharePage.selectOneOrMoreNonHeaderRowCheckBox(1);
+		
+    }
 
 
 

@@ -22,6 +22,7 @@ import gwgwebdriver.pagefactory.NextGenPageFactory;
 
 
 
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -110,10 +111,12 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	private WebElement subFolderDropdownOfMoveModalBox;
 	@FindBy(how=How.MODEL,using="fileMoveModal.confirmationCheck")
 	private WebElement requiredCheckboxInMoveModalBox;
+	@FindBy(how=How.XPATH,using="//*[*[@class='rowselector']]/following-sibling::td/div[1]/a")
+	private List<WebElement> allFileNameInsideFolder;
 	
 	
 	private static final String folderRepeater = "folder in fileShareRepo.folders";
-	
+	public List<String> fileNamesOfSelectedCheckbox=new ArrayList<String>();
 
 
 
@@ -231,11 +234,11 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 		try{
 			if(selectOrDeselect.equalsIgnoreCase("select")||selectOrDeselect.equalsIgnoreCase("selected")){
 				if(!(headerCheckbox.isSelected()))
-					headerCheckbox.click();
+					Web.clickOnElement(headerCheckbox);
 			}
 			else{
 				if(headerCheckbox.isSelected())
-					headerCheckbox.click();
+					Web.clickOnElement(headerCheckbox);
 			}
 		}
 		catch(Exception e){
@@ -244,8 +247,14 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	}
 	
 	public void clickOnMoveFiles(){
-		if(Web.isWebElementDisplayed(moveButtonOfMovefileModalBox, true))
-			moveButtonOfMovefileModalBox.click();
+		if(Web.isWebElementDisplayed(requiredCheckboxInMoveModalBox, true)){
+			if(!requiredCheckboxInMoveModalBox.isSelected()){
+				Web.clickOnElement(requiredCheckboxInMoveModalBox);
+				Web.clickOnElement(moveButtonOfMovefileModalBox);
+			}
+				
+		}
+			
 	}
 	
 	public int countOfAllCheckBox(){
@@ -265,8 +274,18 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	public boolean isFileCountSameAsManyFileSelected() throws ParseException{
 		WebElement pElement=requiredCheckboxInMoveModalBox.findElement(By.xpath("parent::*"));
-		String text=pElement.getText();
-		int COUNT=((Number)NumberFormat.getInstance().parse(text)).intValue();
+		String text="";
+		if(Web.isWebElementDisplayed(pElement, true))
+			text=pElement.getText();
+		int COUNT=0;		
+		try{
+			COUNT=((Number)NumberFormat.getInstance().parse(text)).intValue();
+			System.out.println(COUNT);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		if(allCheckBoxes.size()-countOfNonSelectedCheckbox()==COUNT)
 			return true;
 		return false;
@@ -274,7 +293,9 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	
 	public void selectOneOrMoreNonHeaderRowCheckBox(int... n){
-		int i = 0;
+		if(!fileNamesOfSelectedCheckbox.isEmpty())
+			fileNamesOfSelectedCheckbox.clear();
+		int i = 0;int selectCount=0;
 		int numberOfCheckboxToSelect = 0;
 		if (Web.isWebElementsDisplayed(allCheckBoxes, true)) {
 			if (n.length == 0)
@@ -285,12 +306,18 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 			}
 
 			for (WebElement element : allCheckBoxes) {
-				if (!(element.isSelected()))
-					element.click();
+				if (!(element.isSelected())){
+					Web.clickOnElement(element);
+					}					
 				++i;
 				if (i == numberOfCheckboxToSelect)
 					break;
 			}
+			while(!(selectCount==numberOfCheckboxToSelect)){
+				fileNamesOfSelectedCheckbox.add(allFileNameInsideFolder.get(selectCount).getText().trim());
+				selectCount++;
+			}
+			
 		}
 
 	}
@@ -307,7 +334,7 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 				
 				for(WebElement element:allCheckBoxes){
 					if(element.isSelected())
-						element.click();
+						Web.clickOnElement(element);
 					++i;
 					if (i == numberOfCheckboxToDeSelect)
 						break;
@@ -366,12 +393,10 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	public void clickOnButton(String buttonName){
 		if(buttonName.trim().equalsIgnoreCase("Delete") || buttonName.trim().equalsIgnoreCase("Delete File(s)")){
-			if(Web.isWebElementDisplayed(deleteButton, true))
-				deleteButton.click();
+				Web.clickOnElement(deleteButton);
 		}
 		else if(buttonName.trim().equalsIgnoreCase("Move") || buttonName.trim().equalsIgnoreCase("Move File(s)")){
-			if(Web.isWebElementDisplayed(moveButton, true))
-				moveButton.click();
+				Web.clickOnElement(moveButton);
 		}
 		else{
 			//click on download button
@@ -395,12 +420,10 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	public void cancelModalBoxPopup(String popupName){
 		if(popupName.trim().equalsIgnoreCase("Delete File(s)")){
-			if(Web.isWebElementDisplayed(cancelButtonOfDeletefileModalBox, true))
-				cancelButtonOfDeletefileModalBox.click();
+				Web.clickOnElement(cancelButtonOfDeletefileModalBox);
 		}
 		else if(popupName.trim().equalsIgnoreCase("Move File(s)")){
-			if(Web.isWebElementDisplayed(cancelButtonOfMovefileModalBox, true))
-				cancelButtonOfMovefileModalBox.click();
+				Web.clickOnElement(cancelButtonOfMovefileModalBox);
 		}
 		else{
 			//cancel for download popup
@@ -409,12 +432,10 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	public void closeModalBoxPopup(String popupName){
 		if(popupName.trim().equalsIgnoreCase("Delete File(s)") || popupName.trim().equalsIgnoreCase("Delete")){
-			if(Web.isWebElementDisplayed(closeButtonOfDeletefileModalBox, true))
-				closeButtonOfDeletefileModalBox.click();
+				Web.clickOnElement(closeButtonOfDeletefileModalBox);
 		}
 		else if(popupName.trim().equalsIgnoreCase("Move File(s)") ||popupName.trim().equalsIgnoreCase("Move")){
-			if(Web.isWebElementDisplayed(closeButtonOfMovefileModalBox, true))
-				closeButtonOfMovefileModalBox.click();
+				Web.clickOnElement(closeButtonOfMovefileModalBox);
 		}
 		else{
 			//close for download popup
@@ -423,10 +444,9 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 
 	public void navigateToNextPage() {
 		try {
-			if (Web.isWebElementDisplayed(nextPage, true)) {
-				nextPage.click();
+			
+				Web.clickOnElement(nextPage);
 				Web.nextGenDriver.waitForAngular();
-			}
 
 		} catch (Exception e) {
 			//throw new Error("Error getting when trying click on next page : "+ e.getMessage());
@@ -434,10 +454,10 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	}
 	public void navigateToPreviousPage() {
 		try {
-			if (Web.isWebElementDisplayed(previousPage, true)) {
-				previousPage.click();
-				Web.nextGenDriver.waitForAngular();
-			}
+			
+			Web.clickOnElement(previousPage);
+			Web.nextGenDriver.waitForAngular();
+			
 
 		} catch (Exception e) {
 			//throw new Error("Error getting when trying click on next page : "+ e.getMessage());
@@ -504,12 +524,12 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 	
 	public void checkTheCheckboxInMoveFileModalBox(){
 		if(!(requiredCheckboxInMoveModalBox.isSelected()))
-			requiredCheckboxInMoveModalBox.click();
+			Web.clickOnElement(requiredCheckboxInMoveModalBox);
 		
 	}
 	public void deSelectTheCheckboxInMoveFileModalBox(){
 		if(requiredCheckboxInMoveModalBox.isSelected())
-			requiredCheckboxInMoveModalBox.click();
+			Web.clickOnElement(requiredCheckboxInMoveModalBox);
 		
 	}
 	public boolean isMoveFileButtonEnableOrDisabled(String enableOrDisabled){
@@ -563,6 +583,41 @@ public class FileSharingPage extends LoadableComponent<FileSharingPage> {
 			}
 		}
 		return subFolderNames;
+	}
+	
+	public boolean isFileExistAfterMoving() {
+		Boolean flag=false;
+		for (String input : fileNamesOfSelectedCheckbox) {
+			flag = false;
+			for (int i = 0; i < allFileNameInsideFolder.size(); i++) {
+				if (input.trim().equals(
+						allFileNameInsideFolder.get(i).getText().trim())) {
+					flag = true;
+					break;
+				} else
+					flag = false;
+
+			}
+		}
+		return flag;
+
+	}
+	public boolean isFileExistInOldFolderAfterMoving() {
+		Boolean flag=false;
+		for (String input : fileNamesOfSelectedCheckbox) {
+			flag = false;
+			for (int i = 0; i < fileNamesOfSelectedCheckbox.size(); i++) {
+				if (input.trim().equals(
+						allFileNameInsideFolder.get(i).getText().trim())) {
+					flag = true;
+					break;
+				} else
+					flag = false;
+
+			}
+		}
+		return flag;
+
 	}
 	
 	

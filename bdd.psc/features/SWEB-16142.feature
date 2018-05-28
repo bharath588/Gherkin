@@ -19,27 +19,34 @@
 Feature: Plan MN NEE custom site
 
   Scenario: User login to MN site with valid credentials and user has transaction PSCSF2 assigned to their access
-    Given Open browser and launch PSC application
+    Given Open browser and launch PSC application for the given accuCode
+      | accuCode |
+      | PlanMN   |
     When I enter valid username and password
       | username | password |
-      | 1minn    | testing1 |
+      | 2B9DE    | testing1 |
     And click on Sign On button
-    Then GWC connect page is displayed
+    Then GWC connect page should displayed
 
   Scenario: username is displayed on the top right hand corner of GWC connect page
     Given I am on GWC connect page
     Then username is displayed on the top right hand corner of the site
 
   Scenario: User login to MN site with valid credentials and with NO transaction code PSCSF2
-    Given Open browser and launch PSC application
+     Given Open browser and launch PSC application for the given accuCode
+      | accuCode |
+      | PlanMN   |
     When I enter valid username and password
       | username | password |
-      | 1MN      | testing1 |
+      | 1MN      | Testing1 |
     And click on Sign On button
-    Then I should be navigated to home Page
+    Then the Home page should be displayed
 
+  #Then I should be navigated to home Page
   Scenario: User login to MN site with invalid password
-    Given Open browser and launch PSC application
+    Given Open browser and launch PSC application for the given accuCode
+      | accuCode |
+      | PlanMN   |
     When I enter valid username and invalid password
       | username | password |
       | 1mn      | testing  |
@@ -47,7 +54,9 @@ Feature: Plan MN NEE custom site
     Then Error message is displayed
 
   Scenario: User login to MN site with invalid username
-    Given Open browser and launch PSC application
+     Given Open browser and launch PSC application for the given accuCode
+      | accuCode |
+      | PlanMN   |
     When I enter invalid username and invalid password
       | username | password |
       | zminn    | zzzzzzzz |

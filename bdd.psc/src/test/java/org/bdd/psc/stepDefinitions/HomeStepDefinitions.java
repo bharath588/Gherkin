@@ -21,6 +21,7 @@ import org.bdd.psc.pageobjects.ForgotPasswordPage;
 import org.bdd.psc.pageobjects.HomePage;
 import org.bdd.psc.pageobjects.JumpPage;
 import org.bdd.psc.pageobjects.LoginPage;
+import org.bdd.psc.pageobjects.PlanDMBACustomSitePage;
 import org.bdd.psc.pageobjects.UserVerificationPage;
 
 import reporter.Reporter;
@@ -40,13 +41,14 @@ import cucumber.api.java.en.When;
 public class HomeStepDefinitions {
 	public static String featureName = null;
 	public static Scenario scenario = null;
-	public static String planNumber;
+	
 	private static List<String> newTabUrl=new ArrayList<String>();
 
 	LoginPage login;
 	UserVerificationPage userVerPage;
 	JumpPage jumpPage;
 	HomePage homePage;
+	PlanDMBACustomSitePage planDmbaPage;
 	static int pertinentPopups = 0;
 	static int homePageVisits = 0;
 	public static int forgotPwdPageVisits = 0;
@@ -80,6 +82,7 @@ public class HomeStepDefinitions {
 				Globals.scenarioName);
 		homePage = new HomePage();
 		homePage.get();
+		
 		if (Web.getDriver().getCurrentUrl().contains(accuCode)) {
 			Reporter.logEvent(Status.PASS, "User is on home page of "
 					+ accuCode, "User is on home page of " + accuCode, false);
@@ -93,7 +96,7 @@ public class HomeStepDefinitions {
 	@When("^user switches to \"([^\"]*)\"$")
 	public void user_switches_to(String planNumber) throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		HomeStepDefinitions.planNumber = planNumber;
+		Globals.planNumber = planNumber;
 		homePage = new HomePage();
 		homePage.switchPlan(planNumber);
 	}
@@ -107,6 +110,37 @@ public class HomeStepDefinitions {
 			Reporter.logEvent(Status.PASS,
 					"User has landed on GWC connect page",
 					"User has landed on GWC connect page", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"User has landed on GWC connect page",
+					"User has not landed on GWC connect page", true);
+		}
+
+	}
+	@Then("^GWC connect page should displayed$")
+	public void gwc_connect_page_should_displayed() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		if (homePage.isSalesForcePage()) {
+			Reporter.logEvent(Status.PASS,
+					"User has landed on GWC connect page",
+					"User has landed on GWC connect page", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					"User has landed on GWC connect page",
+					"User has not landed on GWC connect page", true);
+		}
+
+	}
+	
+	@Then("^GWC DMBA connect page is displayed$")
+	public void gwc_dmba_connect_page_is_displayed() throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		planDmbaPage = new PlanDMBACustomSitePage();
+		planDmbaPage.get();
+		if (planDmbaPage.isPlanDMBACustomSitePage()) {
+			Reporter.logEvent(Status.PASS,
+					"User has landed on GWC DMBA connect page",
+					"User has landed on GWC DMBA connect page", true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					"User has landed on GWC connect page",
@@ -269,8 +303,8 @@ public class HomeStepDefinitions {
 					.get("accuCode"));
 			if (Web.isWebElementDisplayed(Web.returnWebElement(new LoginPage(),
 					"Logout")))
-				Web.clickOnElement(Web.returnWebElement(new LoginPage(),
-						"Logout"));
+				//Web.clickOnElement(Web.returnWebElement(new LoginPage(),"Logout"));
+				Web.actionsClickOnElement(Web.returnWebElement(new LoginPage(),"Logout"));
 			new HomePage(new LoginPage(), false, new String[] {
 					Web.rawValues(Globals.creds).get(0).get("username"),
 					Web.rawValues(Globals.creds).get(0).get("password") })
@@ -283,6 +317,31 @@ public class HomeStepDefinitions {
 		}
 
 	}
+	
+	@Given("^user is on the Home page of DMBA when user login with correct username and password$")
+    public void user_is_on_the_home_page_of_dmba_when_user_login_with_correct_username_and_password(DataTable accAndCreds) throws Throwable {
+		Reporter.initializeReportForTC(Globals.currentIteration,
+				Globals.scenarioName);
+		if (!accAndCreds.equals(Globals.creds)) {
+			Globals.creds = accAndCreds;
+			LoginPage.setURL(Web.rawValues(Globals.creds).get(0)
+					.get("accuCode"));
+			if (Web.isWebElementDisplayed(Web.returnWebElement(new LoginPage(),
+					"Logout")))
+				Web.clickOnElement(Web.returnWebElement(new LoginPage(),
+						"Logout"));
+			new PlanDMBACustomSitePage(new LoginPage(), false, new String[] {
+					Web.rawValues(Globals.creds).get(0).get("username"),
+					Web.rawValues(Globals.creds).get(0).get("password") })
+					.get();
+		} else {
+			new PlanDMBACustomSitePage(new LoginPage(), false, new String[] {
+					Web.rawValues(Globals.creds).get(0).get("username"),
+					Web.rawValues(Globals.creds).get(0).get("password") })
+					.get();
+		}
+    }
+
 	
 	@When("^user clicks on filesharing tab$")
 	public void user_clicks_on_filesharing_tab() throws Throwable {
@@ -429,7 +488,7 @@ public class HomeStepDefinitions {
 				} else {
 					Reporter.logEvent(Status.FAIL,
 							"A new tab should opens with " + featureUrl,
-							"A new tab does not opens with " + featureUrl, true);
+							"A new tab isn't opens with " + featureUrl, true);
 				}
 			}
 
@@ -485,5 +544,16 @@ public class HomeStepDefinitions {
 		new LoginPage().checkCorrectOrderOfSocialIconObjects(listObject);
 
 	}
+	
+	@Then("^PSC Home screen is displayed$")
+    public void psc_home_screen_is_displayed() throws Throwable {
+		if (homePage.isHomePage()) {
+			Reporter.logEvent(Status.PASS, "PSC Home screen should displayes",
+					"PSC Home screen is displayed", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "PSC Home screen should displayes",
+					"PSC Home screen doesn't displayed", true);
+		}
+    }
 
 }
