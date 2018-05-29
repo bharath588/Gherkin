@@ -1119,4 +1119,62 @@ public static void updateRestrictionCodeInDB(String RestrcCode) throws Exception
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], RestrcCode,id);
 	
 }
+/**
+* Method to update foreign Address for Individual in Address Table
+* @author srsksr
+* @throws Exception
+*/
+public static void updateForeignAddressInDB() throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
+	String[] sqlQuery = Stock.getTestQuery("updateforignAddress");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], id);
+	
+}
+/**
+* Method to update Termination Date in Employee Table
+* @author srsksr
+* @throws Exception
+*/
+public static void updateTerminationDateInDB(String date,String gc_id) throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	String id= getParticipantID(userName.substring(0, 9));
+	String[] sqlQuery = Stock.getTestQuery("updateTermDate");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], date,id,gc_id);
+	
+}
+
+/**
+* Method to update Terminated Employee Loan Indicator
+* @author srsksr
+* @throws Exception
+*/
+public static void updateTerminatedEmployeeLoanIndicator(String indicator,String ga_id) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_terminated_employee_loan_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,ga_id);
+	
+}
+
+/**
+* Method to update Contribution History Days
+* @author srsksr
+* @throws Exception
+*/
+public static void updateContributionHistoryDays(String noOfDays,String ga_id) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_ contribution_history_days");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], noOfDays,ga_id);
+	
+}
 }

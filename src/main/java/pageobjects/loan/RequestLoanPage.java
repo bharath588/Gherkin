@@ -268,7 +268,11 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = "//span[contains(text(),'BR_467')]/..") private WebElement errBR_467;
 	@FindBy(xpath = "//span[contains(text(),'BR_468')]/..") private WebElement errBR_468;
 	@FindBy(xpath = "//span[contains(text(),'BR_478')]/..") private WebElement errBR_478;
-	
+	@FindBy(xpath = "//span[contains(text(),'BR_510')]/..") private WebElement errBR_510;
+	@FindBy(xpath = "//div[@class='modal-content'][./div[@id='rulesViolationsModal']]") private WebElement modalBR_510;
+	@FindBy(xpath = "//span[contains(text(),'BR_473')]/..") private WebElement errBR_473;
+	@FindBy(xpath = "//span[contains(text(),'BR_488')]/..") private WebElement errBR_488;
+	@FindBy(xpath = "//span[contains(text(),'BR_485')]/..") private WebElement errBR_485;
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
 
@@ -3721,6 +3725,140 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		verifyRequestLoanButtonsAreDisabled();
 		Web.clickOnElement(lnkLogout);
 		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_510
+	 */
+	public void verifyPPTRequestLoanPageWithBR_510() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_510, true)){
+		 actualErrorMsg=errBR_510.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+						"Error Message for 'BR_510' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+						"Error Message for 'BR_510' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_510' is Displayed in Modal Dialog",
+					"Error Message for 'BR_510' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_473
+	 */
+	public void verifyPPTRequestLoanPageWithBR_473() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are eligible to take a loan on the basis of hardship only. "
+				+ "You are required to complete a loan application and submit with supporting documentation for processing. "
+				+ "The form is located in the Plan Information section of your account.";
+		String actualErrorMsg="";
+		
+		if(Web.isWebElementDisplayed(errBR_473, true)){
+		 actualErrorMsg=errBR_473.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_473' is Displayed",
+						"Error Message for 'BR_473' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_473' is Displayed",
+						"Error Message for 'BR_473' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_473' is Displayed",
+					"Error Message for 'BR_473' is Not Displayed", true);
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_488
+	 */
+	public void verifyPPTRequestLoanPageWithBR_488() {
+		
+		String expectedErrorMsg="Based on your plan provisions, you are not eligible to take a loan. "
+				+ "Please call a participant services representative for additional information.";
+		String actualErrorMsg="";
+		
+		if(Web.isWebElementDisplayed(errBR_488, true)){
+		 actualErrorMsg=errBR_488.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_488' is Displayed",
+						"Error Message for 'BR_488' is Displayed\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_488' is Displayed",
+						"Error Message for 'BR_488' is Not Matching\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_488' is Displayed",
+					"Error Message for 'BR_488' is Not Displayed", true);
+		
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
+		
+	}
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_485
+	 */
+	public void verifyPPTRequestLoanPageWithBR_485() {
+		
+		String expectedErrorMsg="You are not currently eligible to request a loan.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_485, true)){
+		 actualErrorMsg=errBR_485.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+						"Error Message for 'BR_485' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+						"Error Message for 'BR_485' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_485' is Displayed in Modal Dialog",
+					"Error Message for 'BR_485' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		
 		
 	}
 }
