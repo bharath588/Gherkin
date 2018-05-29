@@ -338,10 +338,12 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 		Web.selectDropDownOption(this.selMyBeneficiary, beneficiaryRelation);
 		
 		
-		if(aodEnable!=null)
+		if(aodEnable.length>0 )
 		{
 			this.enterAODBeneficiaryDetails();
+			
 		}
+		
 		else if(Stock.GetParameterValue("Beneficiary Relation").equalsIgnoreCase("A Trust"))
 			this.enterEntityDetails();
 		else{
@@ -457,7 +459,7 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						
 						if(attribute.equalsIgnoreCase("SSN")){
 //							return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
-							//return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
+							//return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3], true);
 							return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablecontingentBeneficiary.get(i).getText().split("\n")[3].substring(12), true);
 						}
 						if(attribute.equalsIgnoreCase("DOB")){
@@ -541,8 +543,8 @@ public class MyBeneficiaries extends LoadableComponent<MyBeneficiaries> {
 						return Web.VerifyText("RELATIONSHIP: "+Stock.GetParameterValue("Beneficiary Relation"), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[2], true);
 					
 					if(attribute.equalsIgnoreCase("SSN")){
-						//System.out.println("From UI"+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(8,11));
-//						return Web.VerifyText("SSN (LAST FOUR): "+Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
+						System.out.println("From UI"+lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(8,11));
+						//return Web.VerifyText(/*"SSN (LAST FOUR): "+*/Stock.GetParameterValue("ssn").split("-")[2], lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3], true);
 						return Web.VerifyText(Stock.GetParameterValue("BenificiarySSN").substring(Stock.GetParameterValue("BenificiarySSN").length()-4), lstTablePrimaryBeneficiary.get(i).getText().split("\n")[3].substring(12), true);
 					}
 					if(attribute.equalsIgnoreCase("DOB")){

@@ -1172,9 +1172,22 @@ public static void updateTerminatedEmployeeLoanIndicator(String indicator,String
 public static void updateContributionHistoryDays(String noOfDays,String ga_id) throws Exception {
 		
 	String userName=Stock.GetParameterValue("username");
-	String[] sqlQuery = Stock.getTestQuery("update_ contribution_history_days");
+	String[] sqlQuery = Stock.getTestQuery("update_contribution_history_days");
 	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
 	DB.executeUpdate(sqlQuery[0], sqlQuery[1], noOfDays,ga_id);
+	
+}
+/**
+* Method to update Loan Hardship Indicator
+* @author srsksr
+* @throws Exception
+*/
+public static void updateLoanHardshipIndicators(String hardshipIndicator,String ga_id) throws Exception {
+		
+	String userName=Stock.GetParameterValue("username");
+	String[] sqlQuery = Stock.getTestQuery("update_loan_hardship_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], hardshipIndicator,ga_id);
 	
 }
 }
