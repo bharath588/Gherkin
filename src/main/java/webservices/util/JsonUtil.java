@@ -5,8 +5,10 @@ import java.io.IOException;
 
 
 
+
 import lib.Stock;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -28,6 +30,7 @@ public class JsonUtil {
 
 	public static JSONParser jsonparser;
 	public static JSONObject jsonObject;
+	public static JSONArray jsonArray;
 	public static ObjectMapper mapper = null;
 	public static Object obj;
 	private final static String remove = "REMOVE";
@@ -48,6 +51,25 @@ public class JsonUtil {
 			e.printStackTrace();
 		}
 		return jsonObject.toJSONString();
+	}
+	
+	/**<pre>
+	 * This method reads an external json file into json array and returns the json string
+	 * </pre>
+	 * @param filepath path of external json file
+	 * @return Json string
+	 */
+	public static String readInputDataFromJsonFile(String filepath) {
+		jsonparser = new JSONParser();
+		try {
+			Object object = jsonparser.parse(new FileReader(filepath));
+			jsonArray = (JSONArray) object;
+			String jsonString = jsonArray.toJSONString();
+			System.out.println("json file data  "+jsonString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArray.toJSONString();
 	}
 
 	/**<pre>
@@ -137,7 +159,7 @@ public class JsonUtil {
 					{
 						if(requestURL.endsWith("/")){
 							requestURL = requestURL+param;}
-						else if(requestURL.endsWith("&")){
+						else if(requestURL.endsWith("&")||requestURL.endsWith("?")){
 							requestURL=requestURL+param;
 						}
 						else{
@@ -146,8 +168,13 @@ public class JsonUtil {
 					}
 					if(param.contains(blank))
 					{
+						if(requestURL.endsWith("&")||requestURL.endsWith("?")){
+							param = param.replace(blank, "");
+							requestURL = requestURL+param;
+						}else{
 						param = param.replace(blank, "");
 						requestURL = requestURL+"/"+param;
+						}
 					}
 					if(param.contains("?"))
 					{
