@@ -166,6 +166,7 @@ public class JsonUtil {
 		{
 			e.printStackTrace();
 		}
+		System.out.println(requestURL);
 		return requestURL;
 	}
 }
