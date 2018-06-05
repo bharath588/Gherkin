@@ -1,12 +1,15 @@
 package webservices.util;
 
+
+
 import java.io.FileReader;
 import java.io.IOException;
 
 
 
-import lib.Stock;
 
+import lib.Stock;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -30,6 +33,7 @@ public class JsonUtil {
 	public static JSONObject jsonObject;
 	public static ObjectMapper mapper = null;
 	public static Object obj;
+	public static JSONArray jsonArray;
 	private final static String remove = "REMOVE";
 	private final static String blank = "BLANK";
 
@@ -48,6 +52,25 @@ public class JsonUtil {
 			e.printStackTrace();
 		}
 		return jsonObject.toJSONString();
+	}
+	
+	/**<pre>
+	 * This method reads an external json file into json array and returns the json string
+	 * </pre>
+	 * @param filepath path of external json file
+	 * @return Json string
+	 */
+	public static String readJsonArrayFromResponse(String filepath) {
+		jsonparser = new JSONParser();
+		try {
+			Object object = jsonparser.parse(new FileReader(filepath));
+			jsonArray = (JSONArray) object;
+			String jsonString = jsonArray.toJSONString();
+			System.out.println("json file data  "+jsonString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArray.toJSONString();
 	}
 
 	/**<pre>
