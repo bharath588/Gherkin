@@ -49,9 +49,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 
 
+
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import org.apache.http.client.methods.HttpPut;
 
 
 /**<pre>
@@ -67,6 +69,7 @@ public class WebserviceUtil {
 	public HttpPost postRequest;
 	public HttpGet getRequest;
 	public HttpResponse response;
+	public HttpPut putRequest;
 	
 	public String proj1AuthURL="http://fss-dapps1:8516/security/authenticate/participant";
 	public String proj2AuthURL="http://fss-dapps1:8517/security/authenticate/participant";
@@ -423,6 +426,32 @@ public class WebserviceUtil {
 				httpClient = HttpClientBuilder.create().build();
 	     response = httpClient.execute(getReq);
 	     return response;
+	}
+	
+	/**<pre>
+	 * This method executes the HttpPut Request and returns the response as
+	 * HttpResponse object
+	 * </pre>
+	 * @param url
+	 * @param jsonRequestString
+	 * @param headers
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public HttpResponse getResponseasJsonforPutRequest(String url, String jsonRequestString,String...headers)
+			throws ClientProtocolException, IOException {
+		httpClient = HttpClientBuilder.create().build();
+		putRequest = new HttpPut(url);
+		putRequest.addHeader("Authorization", headers[0]);
+		StringEntity input = new StringEntity(jsonRequestString);
+		input.setContentType("application/json");
+		putRequest.setEntity(input);
+		System.out.println("string  "+input);
+		System.out.println(StringEscapeUtils.unescapeJson(jsonRequestString));
+		System.out.println(jsonRequestString);
+		HttpResponse response = httpClient.execute(putRequest);
+		return response;
 	}
 
 
