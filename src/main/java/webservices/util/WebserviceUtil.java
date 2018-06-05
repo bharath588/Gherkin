@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.MimeHeaders;
@@ -18,22 +21,29 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
+import lib.DB;
+import lib.Stock;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.protocol.RequestAcceptEncoding;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
-
-
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-
 
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.Gson;
@@ -54,6 +64,69 @@ public class WebserviceUtil {
 	public HttpPut putRequest;
 	public HttpGet getRequest;
 	public HttpResponse response;
+	
+	public String proj1AuthURL="http://fss-dapps1:8516/security/authenticate/participant";
+	public String proj2AuthURL="http://fss-dapps1:8517/security/authenticate/participant";
+	public String proj6AuthURL="http://fss-dapps1:8611/security/authenticate/participant";
+	public String proj9AuthURL="http://fss-dapps1:8614/security/authenticate/participant";
+	public String proj10AuthURL="http://fss-dapps1:8615/security/authenticate/participant";
+	public String qabAuthURL="http://fss-dapps1:8617/security/authenticate/participant";
+	
+	public String proj1URL="http://fss-dapps1:8516/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj2URL="http://fss-dapps1:8517/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj6URL="http://fss-dapps1:8611/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj9URL="http://fss-dapps1:8614/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String proj10URL="http://fss-dapps1:8615/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+	public String qabURL="http://fss-dapps1:8617/advisoryServicesComponents/rest/advisoryServices/enrollIntoMA";
+
+	public String getAuthURL()
+	{
+		switch(Stock.getConfigParam("TEST_ENV"))
+		{
+		case "PROJ_1": return proj1AuthURL;
+		case "PROJ_2": return proj2AuthURL;
+		case "PROJ_6": return proj6AuthURL;
+		case "PROJ_9": return proj9AuthURL;
+		case "PROJ_10": return proj10AuthURL;
+		case "QAB": return qabAuthURL;
+		}
+		return "";
+	}
+	
+	public String getEnrlURL()
+	{
+		switch(Stock.getConfigParam("TEST_ENV"))
+		{
+		case "PROJ_1": return proj1URL;
+		case "PROJ_2": return proj2URL;
+		case "PROJ_6": return proj6URL;
+		case "PROJ_9": return proj9URL;
+		case "PROJ_10": return proj10URL;
+		case "QAB": return qabURL;
+		}
+		return "";
+	}
+
+	public List<String> getSalDetails(String ind_Id, String ga_Id, String dbName) throws Exception
+	{
+		List<String> salDetail = new ArrayList<String>();
+		ResultSet queryResultSet=DB.executeQuery(dbName, Stock.getTestQuery("getSalDetails")[1], ga_Id.split("-")[0].toString(), ind_Id, ga_Id);
+		if(queryResultSet.next())
+		{
+			salDetail.add(queryResultSet.getString("sal_amt"));
+			salDetail.add(queryResultSet.getString("encrypted_sal_amt"));
+			salDetail.add(queryResultSet.getString("dft_mngd_accts_income_amt"));
+		}
+		System.out.println("Salary details : "+salDetail.get(0)+", "+salDetail.get(1)+", "+salDetail.get(2));
+		return salDetail;
+	}
+
+	public void doSalSetup(String ind_Id, String ga_Id, String salAmt, String encryptSal, String defaultSalAmt, String dbName) throws Exception
+	{
+		DB.executeUpdate(dbName, Stock.getTestQuery("updateSalAmt")[1], salAmt, ga_Id.split("-")[0].toString(), ind_Id);
+		DB.executeUpdate(dbName, Stock.getTestQuery("updateEncryptSalAmt")[1], encryptSal, ga_Id.split("-")[0].toString(), ind_Id);
+		DB.executeUpdate(dbName, Stock.getTestQuery("doSalAmtSetup")[1], defaultSalAmt, ga_Id);
+	}
 	
 	/**<pre>
 	 * Method used to print the SOAP Response
@@ -137,7 +210,7 @@ public class WebserviceUtil {
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
-	 */
+	 *//*
 	public HttpResponse getResponseasJsonforPutRequest(String url, String jsonRequestString,String...headers)
 			throws ClientProtocolException, IOException {
 		httpClient = HttpClientBuilder.create().build();
@@ -151,7 +224,7 @@ public class WebserviceUtil {
 		System.out.println(jsonRequestString);
 		HttpResponse response = httpClient.execute(putRequest);
 		return response;
-	}
+	}*/
 	
 	/**<pre>
 	 * This method executes the HttpGetrequest and returns the http response in
@@ -196,6 +269,58 @@ public class WebserviceUtil {
 		input.setContentType("application/json");
 		postRequest.setEntity(input);
 		return postRequest;
+	}
+
+	/**<pre>
+	 * This method takes request url and Credentials as input
+	 * and returns the post request.
+	 * </pre>
+	 * @param url
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	public HttpResponse getPostRequestWithCredentials(String url, String uName, String passwd) throws ClientProtocolException, IOException
+	{
+		HttpHost targetHost = new HttpHost("api.feitest.com",-1,"https");
+		CredentialsProvider credsProvider = new BasicCredentialsProvider();
+		credsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(uName, passwd));
+
+		AuthCache authCache = new BasicAuthCache();
+		authCache.put(targetHost, new BasicScheme());
+
+		// Add AuthCache to the execution context
+		final HttpClientContext context = HttpClientContext.create();
+		context.setCredentialsProvider(credsProvider);
+		context.setAuthCache(authCache);
+		context.setAttribute("preemptive-auth", authCache);
+		
+		HttpClient client = HttpClientBuilder.create().build();
+		response = client.execute(new HttpPost(url), context);
+		
+		return response;
+	}
+	
+	public HttpResponse getPostRequestWithOAuth(String url, String oAuthAccessCode, String jsonRequestString) throws ClientProtocolException, IOException
+	{
+		HttpHost targetHost = new HttpHost("api.feitest.com",-1,"https");
+
+		AuthCache authCache = new BasicAuthCache();
+		authCache.put(targetHost, new BasicScheme());
+
+		final HttpClientContext context = HttpClientContext.create();
+		context.setAuthCache(authCache);
+		
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost httpReq=new HttpPost(url);
+		StringEntity input = new StringEntity(jsonRequestString);
+		input.setContentType("application/json");
+		httpReq.setEntity(input);
+		httpReq.addHeader("Authorization", "Bearer "+oAuthAccessCode);
+		response = client.execute(httpReq, context);
+		return response;
 	}
 
 	/**<pre>
@@ -322,21 +447,39 @@ public class WebserviceUtil {
 	     response = httpClient.execute(getReq);
 	     return response;
 	}
-	/**<pre>
-	 * This method executes the HttpGetrequest and returns the http response in
-	 * json format
-	 * </pre>
-	 * @param getReq
-	 * @return
-	 * @throws ClientProtocolException
-	 * @throws IOException
-	 */
+	
+
 	public HttpResponse getResponseasJsonforPost(HttpPost postReq) throws ClientProtocolException, IOException {
 		// TODO Auto-generated method stub
 		//httpClient = new DefaultHttpClient();
 				httpClient = HttpClientBuilder.create().build();
 	     response = httpClient.execute(postReq);
 	     return response;
+	}
+	/**<pre>
+	 * This method executes the HttpPut Request and returns the response as
+	 * HttpResponse object
+	 * </pre>
+	 * @param url
+	 * @param jsonRequestString
+	 * @param headers
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public HttpResponse getResponseasJsonforPutRequest(String url, String jsonRequestString,String...headers)
+			throws ClientProtocolException, IOException {
+		httpClient = HttpClientBuilder.create().build();
+		putRequest = new HttpPut(url);
+		putRequest.addHeader("Authorization", headers[0]);
+		StringEntity input = new StringEntity(jsonRequestString);
+		input.setContentType("application/json");
+		putRequest.setEntity(input);
+		System.out.println("string  "+input);
+		System.out.println(StringEscapeUtils.unescapeJson(jsonRequestString));
+		System.out.println(jsonRequestString);
+		HttpResponse response = httpClient.execute(putRequest);
+		return response;
 	}
 
 

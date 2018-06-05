@@ -18,9 +18,8 @@ import core.framework.Globals;
 public class QueryFilter{
 	List<String> filterParamList = new ArrayList<>();
 	FilteredRowSet frs = null;
-    String userName = Stock.getConfigParam("DBUSERID");
-    String passWord = Stock.getConfigParam("PASSWORD");
-	static String table = null;
+	 String userName = Stock.getConfigParam(Globals.GC_COLNAME_USERID);
+	  String passWord = Stock.getConfigParam(Globals.GC_COLNAME_DBPASSWORD);	static String table = null;
 	static String columnName = null;
 	public static String[] filteredValue;
 	

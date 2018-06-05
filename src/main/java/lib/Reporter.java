@@ -437,6 +437,14 @@ public class Reporter{
 	}
 
 	
+	/*
+	 Added to set the final test status for End To End flow
+	 */
+	public static synchronized void setFinalTestStatus(boolean statusToSet) {
+		checkTestStatusMap.put(Thread.currentThread().getId(),statusToSet);
+	}
+	
+	
 	
    
 

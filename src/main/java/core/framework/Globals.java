@@ -34,6 +34,11 @@ public class Globals {
 	}
 	// FOR CI 
 	public static final String GC_COLNAME_TEST_ENV="TEST_ENV";
+	//Added by Vignesh to pass system username and Password for CI
+	public static final String GC_COLNAME_USERID="USERID";
+	public static final String GC_COLNAME_SYSPASSWORD="SYSPASSWORD";
+	public static final String GC_COLNAME_DBPASSWORD="DBPASSWORD";
+	
 	public static final String GC_EXECUTION_ENVIRONMENT = System.getProperties().containsKey("env")?
 			System.getProperty("env").toUpperCase()  :
 				Stock.getConfigParam(GC_COLNAME_TEST_ENV); 
@@ -41,7 +46,18 @@ public class Globals {
 			public static final String GC_EXECUTION_BROWSER = System.getProperties().containsKey("BROWSER")?
 					System.getProperty("BROWSER").toUpperCase()  :
 						Stock.getConfigParam(GC_COLNAME_BROWSER); 
-
+					public static final String GC_USERID = System.getProperties().containsKey("USERID")?
+							System.getProperty("USERID")  :
+								Stock.getConfigParam(GC_COLNAME_USERID);
+							
+			public static final String GC_SYSTEM_PASSWORD = System.getProperties().containsKey("SYS_PASSWORD")?
+									System.getProperty("SYS_PASSWORD")  :
+										Stock.getConfigParam(GC_COLNAME_SYSPASSWORD);
+									
+			public static final String GC_DB_PASSWORD = System.getProperties().containsKey("DB_PASSWORD")?
+											System.getProperty("DB_PASSWORD") :
+												Stock.getConfigParam(GC_COLNAME_DBPASSWORD);
+		
 
 
 					//SpreadSheet
@@ -187,6 +203,9 @@ public class Globals {
 					public static String GC_REMOTE_OUTPUT_PATH="";
 					public static String GC_REMOTE_INPUT_PATH="";    	  
 					public static String GC_REMOTE_ARCHIVE_PATH="";
+					public static final String GC_DEFAULT_PROSPECT_FILE_LOG_PATTERN="";
+				   public static final String	GC_OPTOUT_PROSPECT_FILE_NAMEPATTERN="";
+				   public static final String GC_OPTOUT_PROSPECT_FILE_LOG_PATTERN="";
 					/*Before Using these Remote Output, Input and Archive variables, 
 					 * call initializeRemoteDirectoryPath() method from SFTP Utils Call to initialize values
 					 */
@@ -202,9 +221,13 @@ public class Globals {
 					public static final String GC_TRANSACTION_CONFIRMATION_FILE_NAMEPATTERN="ma_empower_txnec_";
 					public static final String dbNameAlias = "MemberParticipantDB";
 					public static Map<String,String> testNGPropertiesMap = new LinkedHashMap<>();
-
-					public static Map<String, String> databaseConnectionStrings;
+					public static String GC_DEFAULT_PROSPECT_LOG_FILE_PATTERN=null;
+        			public static String GC_OPTOUT_LOG_FILE_PATTERN=null;
+					public static  Map<String, String> databaseConnectionStrings;
 					public static final String option_UserDefault = "AS_USER_DEFINED";
+					 public static final String  GC_DEFAULT_PROSPECT_FILE_NAMEPATTERN="";
+					 public static final String GC_OFFERLETTER_LOG_FILE_PATTERN="offrltr";
+				  	 public static final String GC_OFFER_LETTER_FILE_NAME_PATTERN="";
 					//	public static final String GC_COMMON_TESTDATALOC = "H://common//Automation-Selenium//TestData";
 
 					public static void initializeDbConnectionStrings(String dbType){
@@ -213,6 +236,12 @@ public class Globals {
 						if(StringUtils.containsIgnoreCase(dbType, "postgres")){
 							//postgresql
 							databaseConnectionStrings.put("D_AMA", "jdbc:postgresql://143.199.166.219:5432/DAMA_DB?currentSchema=max_content");
+							//Dev database
+							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://easypg.cjh5m767ofzr.us-east-1.rds.amazonaws.com:5432/D_ASDB?currentSchema=dev_asdb_content");
+							//QA database
+							databaseConnectionStrings.put("Q_ASDB", "jdbc:postgresql://easypg.cjh5m767ofzr.us-east-1.rds.amazonaws.com:5432/D_ASDB?currentSchema=sit_asdb_content");
+
+						
 						}
 						else{
 

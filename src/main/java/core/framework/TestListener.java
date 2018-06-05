@@ -93,6 +93,19 @@ IAnnotationTransformer {
 				Stock.setConfigParam(Globals.GC_COLNAME_BROWSER,
 						Globals.GC_EXECUTION_BROWSER, true);
 			}
+			//Added by Vignesh to support User name and password for System 
+			if (!Globals.GC_USERID.isEmpty() && !(Globals.GC_USERID==null) ) {
+				Stock.setConfigParam(Globals.GC_COLNAME_USERID,
+						Globals.GC_USERID, true);
+			}
+			if (!Globals.GC_SYSTEM_PASSWORD.isEmpty() && !(Globals.GC_SYSTEM_PASSWORD==null) ) {
+				Stock.setConfigParam(Globals.GC_COLNAME_SYSPASSWORD,
+						Globals.GC_SYSTEM_PASSWORD, true);
+			}
+			if (!Globals.GC_DB_PASSWORD.isEmpty() && !(Globals.GC_DB_PASSWORD==null) ) {
+				Stock.setConfigParam(Globals.GC_COLNAME_DBPASSWORD,
+						Globals.GC_DB_PASSWORD, true);
+			}
 			if(new File(Globals.GC_TEST_REPORT_DIR).exists()) {
 
 				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
