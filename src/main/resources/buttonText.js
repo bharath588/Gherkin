@@ -6,7 +6,7 @@
  *
  * @return {Array.Element} The matching elements.
  */
-var findByButtonText = function(searchText, using) {
+var findByButtonText = function(using, searchText) {
     using = using || document;
     var elements = using.querySelectorAll('button, input[type="button"], input[type="submit"]');
     var matches = [];
@@ -26,4 +26,4 @@ var findByButtonText = function(searchText, using) {
 };
 var using = arguments[0] || document;
 var searchText = arguments[1];
-return findByButtonText(searchText, using);
+return findByButtonText(using,searchText);

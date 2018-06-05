@@ -1,15 +1,14 @@
 package lib;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,23 +17,20 @@ import java.util.Locale;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.FilteredRowSet;
-import javax.sql.rowset.Predicate;
 
-import com.sun.rowset.FilteredRowSetImpl;
-
-import core.framework.Globals;
 import oracle.jdbc.pool.OracleDataSource;
+//import com.sun.rowset.FilteredRowSetImpl;
+import core.framework.Globals;
 /**
  *  DB - This class contains methods to connect to data base and execute querys
  * @author srsksr
  *
  */
-@SuppressWarnings("restriction")
 public class DB {
 
 	public static List<ResultSet> masterRecordSet = new ArrayList<ResultSet>();
 	public static HashMap<String, Connection> dbConnections = new HashMap<String, Connection>();
-	private static FilteredRowSetImpl filterObj;
+	//private static FilteredRowSetImpl filterObj;
 	static int count = 0;
 	
 	
@@ -144,7 +140,7 @@ public class DB {
 	 */
 	private static Connection getDBConnection(String DBName) {
 		
-		OracleDataSource dataSource;
+		//OracleDataSource dataSource;
 		Connection conn;
 		
 		
@@ -159,7 +155,7 @@ public class DB {
 	
 			
 			try {
-				dataSource = new OracleDataSource();
+				//dataSource = new OracleDataSource();
 				//jdbcUrl = Stock.getConfigParam(DBName);
 				jdbcUrl = Globals.databaseConnectionStrings.get(DBName);
 				dbuserid = Stock.getConfigParam("DBUSERID");
@@ -169,9 +165,9 @@ public class DB {
 					throw new Error ("No connection string found for the DB: " + DBName);
 				}
 				
-				dataSource.setURL(jdbcUrl);
+				//dataSource.setURL(jdbcUrl);
 				
-				conn = dataSource.getConnection(dbuserid,dbpassword);
+				conn = DriverManager.getConnection(jdbcUrl, dbuserid, dbpassword);
 				
 			} catch (SQLException e) {
 				throw new Error ("Establishing connection to DB " + DBName + " Failed \n " + e.getMessage());
@@ -290,7 +286,7 @@ public class DB {
 	 * @return filteredObj and null if there is no values matching the filter criteria
 	 * @throws SQLException
 	 */
-	public static FilteredRowSet filterRecordSet(ResultSet unfilteredRecordSet,Predicate...predicates) throws SQLException
+/*	public static FilteredRowSet filterRecordSet(ResultSet unfilteredRecordSet,Predicate...predicates) throws SQLException
 	{
 		filterObj = new FilteredRowSetImpl();
 		
@@ -309,7 +305,7 @@ public class DB {
 		        	}
 	        }
 		return filterObj;
-	}
+	}*/
 	/**
 	 * Method to get Filtered RowSet Count 
 	 * @param frs

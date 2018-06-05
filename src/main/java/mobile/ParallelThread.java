@@ -2,7 +2,6 @@ package mobile;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -20,7 +19,7 @@ public class ParallelThread {
 	 Map<String, String> devices = new HashMap<String, String>();
 	 Map<String, String> iOSdevices = new HashMap<String, String>();
 	 private IOSDeviceConfiguration iosDevice = new IOSDeviceConfiguration();
-	 private MyTestExecutor myTestExecutor = new MyTestExecutor();
+	// private MyTestExecutor myTestExecutor = new MyTestExecutor();
 	   
 	 
 	
@@ -31,17 +30,17 @@ public class ParallelThread {
          
          if (!f.exists()) {
              System.out.println("creating directory: " + "Logs");
-             boolean result = false;
+            // boolean result = false;
              try {
                  f.mkdir();
-                 result = true;
+              //   result = true;
              } catch (SecurityException se) {
                  se.printStackTrace();
              }
          }
 
          if (operSys.contains("mac")) {
-             if (iosDevice.getIOSUDID() != null) {
+             if (IOSDeviceConfiguration.getIOSUDID() != null) {
                  iosDevice.checkExecutePermissionForIOSDebugProxyLauncher();
                  iOSdevices = iosDevice.getIOSUDIDHash();
                  deviceCount += iOSdevices.size();

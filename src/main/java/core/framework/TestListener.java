@@ -59,8 +59,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import core.framework.ThrowException.TYPE;
 
 public class TestListener implements ITestListener, IConfigurationListener2,
-		ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
-		IAnnotationTransformer {
+ISuiteListener, IInvokedMethodListener, IRetryAnalyzer,
+IAnnotationTransformer {
 
 	int currentTCInvocationCount = 0;
 	static int suiteInvCount = 0;
@@ -70,9 +70,9 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	public Map<Integer, Map<String, String>> failedXmlMap = new LinkedHashMap<>();
 	static int i = 0;
 	static Map<String, Map<String, String>> gridPropertiesMap;
-	
-	
-	
+	Map<String, Integer> tcIterationCount = new HashMap<String, Integer>();
+
+
 
 	private boolean isFinalTestStatus() {
 		return finalTestStatusMap.get(Thread.currentThread().getId());
@@ -85,7 +85,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		try {
 			Stock.readConfigProperty(Globals.GC_TESTCONFIGLOC
 					+ Globals.GC_CONFIGFILEANDSHEETNAME + ".properties");
-			/*if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
+			if (!Globals.GC_EXECUTION_ENVIRONMENT.isEmpty()) {
 				Stock.setConfigParam(Globals.GC_COLNAME_TEST_ENV,
 						Globals.GC_EXECUTION_ENVIRONMENT, true);
 			}
@@ -93,7 +93,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 				Stock.setConfigParam(Globals.GC_COLNAME_BROWSER,
 						Globals.GC_EXECUTION_BROWSER, true);
 			}
-			 if(new File(Globals.GC_TEST_REPORT_DIR).exists()) {
+			if(new File(Globals.GC_TEST_REPORT_DIR).exists()) {
 
 				FileUtils.deleteDirectory(new File(Globals.GC_TEST_REPORT_DIR));
 
@@ -105,21 +105,22 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 				Log.Report(Level.INFO,
 
-				"Test Report folder removed on exist on suite level");
+						"Test Report folder removed on exist on suite level");
 
-			}*/
+			}
+			Globals.initializeDbConnectionStrings(Stock.getConfigParam("DBTYPE"));
 			Globals.GC_MANUAL_TC_NAME_MAP = new HashMap<Long, String>();
 			readGridConfigFile("grid.json");
-			 if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
-				 Mobile.mobilePlatform = true; 
-			 }
-			 
+			if(Stock.getConfigParam("PLATFORM").equalsIgnoreCase("Mobile")){
+				Mobile.mobilePlatform = true; 
+			}
+
 			List<ITestNGMethod> methodsList = new LinkedList<>();
 			methodsList = suite.getAllMethods();
-			
+
 			generateTestcaseReferenceMap(suite);
 			int counter = 0;
-			
+
 			for (ITestNGMethod ite : methodsList) {
 				Globals.testNGPropertiesMap.put(ite.getInstance().getClass()
 						.getName()
@@ -155,7 +156,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			}
 			Globals.manualtoAutoTCMap.put(refTest.getName(), methodsAndParamsMap);
 		}
-		*/
+		 */
 		List<ITestNGMethod> methods = suite.getAllMethods();
 		for(ITestNGMethod method : methods)
 		{
@@ -165,7 +166,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 
 	public void onStart(ITestContext test) {
 		Globals.GC_MANUAL_TC_NAME_MAP.put(Thread.currentThread().getId(), test.getName());
-}
+	}
 
 	public synchronized String[] getBrowser() {
 		String browserName = null;
@@ -179,7 +180,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 		i = i + 1;
 		return new String[] { browserName, port };
 	}
-	
+
 	public int getNumberOfMachines()
 	{
 		return gridPropertiesMap.size();
@@ -204,8 +205,8 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	public void onFinish(ITestContext context) {
-		
-		Iterator<ITestResult> failedTestCases = context.getFailedTests()
+
+		/*Iterator<ITestResult> failedTestCases = context.getFailedTests()
 				.getAllResults().iterator();
 		while (failedTestCases.hasNext()) {
 			ITestResult failedTestCase = failedTestCases.next();
@@ -217,6 +218,19 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 				if (context.getPassedTests().getResults(method).size() > 0) {
 					failedTestCases.remove();
 				}
+			}
+		}*/
+
+		Iterator<ITestResult> failedTestCases = context.getFailedTests()
+				.getAllResults().iterator();
+		while (failedTestCases.hasNext()) {
+			ITestResult failedTestCase = failedTestCases.next();
+
+			ITestNGMethod method = failedTestCase.getMethod();
+			if (context.getFailedTests().getResults(method).size() > (tcIterationCount
+					.get(method.getMethodName()) - context.getPassedTests().getResults(method)
+					.size())) {
+				failedTestCases.remove();
 			}
 		}
 	}
@@ -232,29 +246,29 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	}
 
 	public void beforeConfiguration(ITestResult result) {
-		
+
 	}
 
 	public void onFinish(ISuite suite) {
 		try {		
-		
-		Reporter.objReport.flush();
-	
-		if(Stock.getConfigParam("needRetry").equalsIgnoreCase("true"))
-		{
-		BuildFailedTestNG(failedXmlMap);
-		}
-		    if(Mobile.mobilePlatform){
-		    	Mobile.cleanupSessions();
-		    }		
-		    else if (Web.getDriver().getWindowHandles().size() >= 0)
+
+			Reporter.objReport.flush();
+
+			if(Stock.getConfigParam("needRetry").equalsIgnoreCase("true"))
+			{
+				BuildFailedTestNG(failedXmlMap);
+			}
+			if(Mobile.mobilePlatform){
+				Mobile.cleanupSessions();
+			}		
+			else if (Web.getDriver().getWindowHandles().size() >= 0)
 				Web.getDriver().quit();
 		}
 		catch (Exception e) {
 			ThrowException.Report(TYPE.EXCEPTION, "Failed to quit Web Driver :"
 					+ e.getMessage());
 
-	}}
+		}}
 
 	// This belongs to IInvokedMethodListener and will execute before every
 	// method including @Before @After @Test
@@ -265,13 +279,13 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 			if (!Web.getDriver().getWindowHandle().isEmpty()) {
 				Log.Report(Level.INFO,
 						"Web Driver instance found to be active for the Test Case :"
-								);
+						);
 			}
 		} catch (Exception t) {
 			try {
 				Log.Report(Level.INFO,
 						"Web Driver instance found to be inactive for the Test Case :"
-								 + " ,hence re-initiating");
+								+ " ,hence re-initiating");
 
 				if (Stock.getConfigParam("type").equalsIgnoreCase("grid")) {
 					if (!browserMap.containsKey(Thread.currentThread().getId())
@@ -287,17 +301,22 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 				}
 				Log.Report(Level.INFO,
 						"Web Driver instance re-initiated successfully the Test Case :"
-								);
+						);
 			} catch (Exception e) {
 				ThrowException
-						.Report(TYPE.EXCEPTION,
-								"Failed to re-initialize Web Driver :"
-										+ e.getMessage());
+				.Report(TYPE.EXCEPTION,
+						"Failed to re-initialize Web Driver :"
+								+ e.getMessage());
 			}
 		}
 		if (method.getTestMethod().isTest()) {
 			HashMap<String, String> globalTestData = (HashMap<String, String>) testResult
 					.getParameters()[1];
+			if(tcIterationCount.size() == 0 || !tcIterationCount.containsKey(method.getTestMethod().getMethodName()))
+			{
+				tcIterationCount.put(method.getTestMethod().getMethodName(), method
+						.getTestMethod().getParameterInvocationCount());
+			}
 			Stock.globalTestdata.put(Thread.currentThread().getId(),
 					globalTestData);
 			currentTCInvocationCount = testResult.getMethod()
@@ -412,7 +431,7 @@ public class TestListener implements ITestListener, IConfigurationListener2,
 	 * testcaseName
 	 */
 
-	 void BuildFailedTestNG(Map<Integer, Map<String, String>> failedXmlMap)
+	void BuildFailedTestNG(Map<Integer, Map<String, String>> failedXmlMap)
 			throws ParserConfigurationException, TransformerException {
 
 		DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();

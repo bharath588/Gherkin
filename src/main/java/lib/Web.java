@@ -61,6 +61,7 @@ public class Web {
 
 	private static ThreadLocal<WebDriver> multiDriver = new ThreadLocal<WebDriver>();
 	private static ThreadLocal<RemoteWebDriver> multiRemoteDriver = new ThreadLocal<RemoteWebDriver>();
+	private static ThreadLocal<NextGenWebDriver> multiNextGenDriver = new ThreadLocal<NextGenWebDriver>();
 
 	public static boolean isLastIteration() {
 		return isLastIteration;
@@ -1309,9 +1310,15 @@ public class Web {
 			return loaded;
 		}
 
-		public static void setTextToAngularTextBox(WebElement newEmailBox,
-				String randomEmailId) {
+		public static void setTextToAngularTextBox(WebElement textBox,
+				String textToBeEntered) {
 			// TODO Auto-generated method stub
+			textBox.clear();
+			for(int i = 0; i<textToBeEntered.length();i++){
+				char c = textToBeEntered.charAt(i);
+				String text = new StringBuilder().append(c).toString();
+				textBox.sendKeys(text);
+			}
 			
 		}
 

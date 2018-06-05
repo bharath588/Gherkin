@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class CommandPrompt {
 
@@ -21,7 +20,7 @@ public class CommandPrompt {
     ProcessBuilder builder;
     public static void main(String s[]) throws InterruptedException, IOException{
     	String[] cmd = {"sh ","ps -ax","grep -i '8100'" };	
-    	   String process = "ps -ax|grep -i \"8100\"|grep -v grep";
+    	//   String process = "ps -ax|grep -i \"8100\"|grep -v grep";
    	System.out.println(new CommandPrompt().runCommand(cmd));
  
     }
@@ -38,14 +37,12 @@ public class CommandPrompt {
     	cmd = Arrays.asList(command);     
         BufferedReader r = getBufferedReaderTest(cmd);
         String line = "";
-        String allLine = "";
-        int i = 1;
+        String allLine = "";    
         while ((line = r.readLine()) != null) {
             allLine = allLine + "" + line + "\n";
             if (line.contains("Console LogLevel: debug") && line.contains("Complete")) {
                 break;
-            }
-            i++;
+            }          
         }
         System.out.println(allLine);
         return allLine;
@@ -66,13 +63,13 @@ public class CommandPrompt {
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = "";
         String allLine = "";
-        int i = 1;
+      
         while ((line = r.readLine()) != null) {
             allLine = allLine + "" + line + "\n";
             if (line.contains("Console LogLevel: debug") && line.contains("Complete")) {
                 break;
             }
-            i++;
+         
         }
         return allLine;
 
@@ -85,14 +82,13 @@ public class CommandPrompt {
      */
     
     public BufferedReader getBufferedReaderTest(List<String> cmd2) throws IOException {
-        List commands = new ArrayList<>();
+        List<String> commands = new ArrayList<>();
         commands.add("/usr/local/bin/"+cmd2.get(0));
      //   commands.add("-c");
         for(int i =1; i < cmd2.size();i++){
         commands.add(cmd2.get(i));
         }
-        ProcessBuilder builder = new ProcessBuilder(commands);
-        Map<String, String> environ = builder.environment();
+        ProcessBuilder builder = new ProcessBuilder(commands);    
 
         final Process process = builder.start();
         InputStream is = process.getInputStream();
@@ -142,8 +138,7 @@ public class CommandPrompt {
         commands.add("-c");
         commands.add(command);
         ProcessBuilder builder = new ProcessBuilder(commands);
-        Map<String, String> environ = builder.environment();
-
+     
         final Process process = builder.start();
         InputStream is = process.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);

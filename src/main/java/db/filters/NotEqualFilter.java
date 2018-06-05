@@ -9,9 +9,9 @@ import javax.sql.RowSet;
 import javax.sql.rowset.FilteredRowSet;
 import javax.sql.rowset.Predicate;
 
-import com.sun.rowset.FilteredRowSetImpl;
+//import com.sun.rowset.FilteredRowSetImpl;
 
-@SuppressWarnings("restriction")
+
 public class NotEqualFilter implements Predicate,Cloneable{
 	private Object filterOnValue;
 	public NotEqualFilter(Object value, int colNumber) {
@@ -39,7 +39,7 @@ public class NotEqualFilter implements Predicate,Cloneable{
 	@Override
 	public boolean evaluate(RowSet rs) {
 
-		FilteredRowSet frs = (FilteredRowSetImpl)rs;
+		FilteredRowSet frs = (FilteredRowSet) rs;
 		boolean evaluation = false;
 
 		try {
