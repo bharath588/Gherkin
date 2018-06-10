@@ -1120,6 +1120,38 @@ public static void updateRestrictionCodeInDB(String RestrcCode) throws Exception
 	
 }
 /**
+* Method to update disbursment Indicator in group_account Table
+* @author srsksr
+* @throws Exception
+*/
+public static void updateDisbHoldIndicatorInDB(String indicator,String ga_id) throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	
+	String[] sqlQuery = Stock.getTestQuery("update_disb_hold_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,ga_id);
+	
+}
+
+/**
+* Method to update Loan Admin Indicator in Plan Table
+* @author srsksr
+* @throws Exception
+*/
+public static void updateLoanAdminIndicatorInDB(String indicator,String gc_id) throws Exception {
+	
+	
+	String userName=Stock.GetParameterValue("username");
+	
+	String[] sqlQuery = Stock.getTestQuery("update_Loan_Admin_ind");
+	sqlQuery[0] = Common.getParticipantDBName(userName) + "DB_"+Common.checkEnv(Stock.getConfigParam("TEST_ENV"));
+	DB.executeUpdate(sqlQuery[0], sqlQuery[1], indicator,gc_id);
+	
+}
+
+/**
 * Method to update foreign Address for Individual in Address Table
 * @author srsksr
 * @throws Exception

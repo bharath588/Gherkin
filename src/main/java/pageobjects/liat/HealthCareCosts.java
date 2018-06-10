@@ -42,19 +42,21 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(xpath=".//*[text()[normalize-space()='Prescription Drugs']]/../td[3]") private WebElement lblPrescriptionDrugCost;
 	@FindBy(xpath=".//*[text()[normalize-space()='Dental']]/../td[3]") private WebElement lblDentalCost;
 	@FindBy(xpath=".//*[text()[normalize-space()='Doctors & Tests']]/../td[3]") private WebElement lblDoctorAndTestsCost;
-	//@FindBy(id="projected-health-care-costs-income-label") private WebElement lblProjectedHlthCareCost;
-	@FindBy(xpath=".//*[@id='healthcare']//strong[contains(@class,'currency')]") private WebElement lblProjectedHlthCareCost;
+	@FindBy(id="projected-health-care-costs-income-label") private WebElement lblProjectedHlthCareCost;
+	//@FindBy(xpath=".//*[@id='healthcare']//strong[contains(@class,'currency')]") private WebElement lblProjectedHlthCareCost;
 	@FindBy(id="projected-health-care-costs-chart") private WebElement lblPieChart;
 	@FindBy(xpath=".//*[@id='utility-nav']/.//a[@id='topHeaderUserProfileName']") private WebElement lblUserName;
 	@FindBy(linkText="Log out") private WebElement lnkLogout;
 	@FindBy(xpath="//table[@class='simple']//tr/td[3]") private List<WebElement> lstHealthcareCosts;
 	@FindBy(linkText = "Your full report(PDF)") private WebElement lnkFullReport;
 	@FindBy(linkText = "www.medicare.gov") private WebElement lnkMedicare;
-	@FindBy(id = "myModalLabel") private WebElement txtEmpowerModal;
-	@FindBy(xpath="//button[contains(@ng-click,'proceed()')]") private WebElement btnContinue;
+	@FindBy(id = "medicareModal") private WebElement txtEmpowerModal;
+	@FindBy(xpath="//div[@class='buttonContainer']//button[contains(@ng-click,'proceed()')]") private WebElement btnContinue;
 	@FindBy(xpath="//button[text()[normalize-space()='Tour']]") private WebElement btnTour;
 	@FindBy(id = "nextBtn") private WebElement btnNext;
 	@FindBy(xpath = ".//*[text()[normalize-space()='Sign In']]") private WebElement btnLogin;
+	@FindBy(xpath="//button[contains(@ng-click,'closeModal')]") private WebElement btnCancel;
+	@FindBy(xpath="//button[contains(@class,'health-care-details') and ./span[contains(text(),'View details')]]") private WebElement btnViewDetails;
 	private String modalHeader="//span[text()[normalize-space()='webElementText']]";
 	
 	/** Default constructor
@@ -152,15 +154,15 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	
 
 	public void verifyHealthCostFromUI(float estMonthlyIncome){
-		
-		 float medicareSupplementalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(0).getText());
-		 float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(1).getText());
-		 float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(2).getText());
-		 float dentalInsuranceCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(3).getText());
-		 float prescriptionDrugsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(4).getText());
-		 float hearingAndVisionCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(5).getText());
-		 float dentalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(6).getText());
-		 float doctorsAndTestsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(7).getText());
+			Web.clickOnElement(btnViewDetails);
+		 float medicareSupplementalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(1).getText());
+		 float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(2).getText());
+		 float prescriptionDrugsPartDCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(3).getText());
+		 float dentalInsuranceCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(4).getText());
+		 float prescriptionDrugsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(5).getText());
+		 float hearingAndVisionCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(6).getText());
+		 float dentalCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(7).getText());
+		 float doctorsAndTestsCost = Web.getIntegerCurrency(this.lstHealthcareCosts.get(8).getText());
 		 
 		 
 //        float doctorAndTestsPartABCost = Web.getIntegerCurrency(this.lblDoctorAndTestsPartAandBCost.getText());
@@ -234,6 +236,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
 			Reporter.logEvent(Status.PASS, "Click Personalize button ", "Personalize button is clicked and verified", true);
 			mouse.release(btnPersonalize).build().perform();
+			Web.clickOnElement(btnCancel);
 		}else {
 			/*Web.clickOnElement(btnPersonalize);	
 			if (!Web.isWebElementDisplayed(btnUpdate)) {
@@ -283,7 +286,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			
 			boolean windowFound = false;
 			String parentWindow = Web.getDriver().getWindowHandle();
-			btnContinue.click();
+			Web.clickOnElement(btnContinue);
 			
 			Set<String> handles = Web.getDriver().getWindowHandles();
 			for (String windowHandle : handles) {
@@ -303,6 +306,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 				lib.Reporter.logEvent(Status.FAIL,"Verifying Medicare site is Opened in New Window","Medicare site is Not Opened in New Window",true);
 			Web.getDriver().close();
 			Web.getDriver().switchTo().window(parentWindow);
+			Web.clickOnElement(btnCancel);
 		}
 		else
 			Reporter.logEvent(Status.FAIL,"Verify 'Medicare' link is displayed","'Medicare' link is not displayed", true);

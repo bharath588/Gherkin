@@ -10,7 +10,7 @@
 			<class name="app.pptweb.testcases.loans.LoansTestCases">
 				<methods>
 
-					<include
+				<!-- 	<include
 						name="DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
 						<parameter name="ManualTCName"
 							value="SIT_DDTC_27488_General_Purpose_Loan_Repayment_Term_Page_Verification">
@@ -119,7 +119,7 @@
 							value="SIT_DDTC_27502_Principal_Residence_Loan_Repayment_Term_Page_Verification">
 						</parameter>
 					</include>
-					
+					 -->
 					<!-- 
 					Test cases - bbndsh
 					 -->
@@ -206,7 +206,73 @@
 							value="SIT_DDTC_27989_Loan_exceptions_BR_468_Participant_plan_doesnot_allow_Loan">
 						</parameter>
 					</include>
-
+					
+					
+					<!--  Sprint 10 -->
+					
+				<!-- 	<include
+						name="DDTC_27991_Loan_exceptions_BR_478_participant_having_pending_distribution">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_27991_Loan_exceptions_BR_478_participant_having_pending_distribution">
+						</parameter>
+					</include>
+					
+					<include
+						name="DDTC_27992_Loan_exceptions_BR_487_participant_having_pending_distribution">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_27992_Loan_exceptions_BR_487_participant_having_pending_distribution">
+						</parameter>
+						</include>
+					
+					<include
+						name="DDTC_28011_Loan_exceptions_BR_476_participant_having_periodic_payments">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28011_Loan_exceptions_BR_476_participant_having_periodic_payments">
+						</parameter>
+						</include>
+						
+											
+						<include
+						name="DDTC_28037_Loan_exceptions_BR_510_Loans_are_not_allowed_for_Group">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28037_Loan_exceptions_BR_510_Loans_are_not_allowed_for_Group">
+						</parameter>
+						</include>
+						
+						<include
+						name="DDTC_28067_Loan_exceptions_BR_473_Loans_allowed_only_for_Hardship_Reason">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28067_Loan_exceptions_BR_473_Loans_allowed_only_for_Hardship_Reason">
+						</parameter>
+						</include>
+						
+						<include
+						name="DDTC_28065_Loan_exceptions_BR_488_participant_having_foreign_address">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28065_Loan_exceptions_BR_488_participant_having_foreign_address">
+						</parameter>
+						</include>
+						
+						<include
+						name="DDTC_28041_Loan_exceptions_BR_485_employment_terminated">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28041_Loan_exceptions_BR_485_employment_terminated">
+						</parameter>
+						</include>
+						
+						<include
+						name="DDTC_28040_Loan_exceptions_BR_474_Participant_does_not_meet_contribution_History_Criteria">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28040_Loan_exceptions_BR_474_Participant_does_not_meet_contribution_History_Criteria">
+						</parameter>
+						</include>
+						
+						<include
+						name="DDTC_28038_Loan_exceptions_BR_470_Requesting_Loan_when_Participant_has_reached_the_max_number_of_loans_allowed_for_the_plan">
+						<parameter name="ManualTCName"
+							value="SIT_DDTC_28038_Loan_exceptions_BR_470_Requesting_Loan_when_Participant_has_reached_the_max_number_of_loans_allowed_for_the_plan">
+						</parameter>
+						</include> -->
 				</methods>
 			</class>
 		</classes>

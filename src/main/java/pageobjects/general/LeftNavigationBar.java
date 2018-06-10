@@ -217,7 +217,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			strLinkText = "My distributions";
 
 		} else if (linkName.trim().equalsIgnoreCase("UPLOAD DOCUMENTS")) {
-			strLinkText = " Upload documents";
+			strLinkText = "Upload documents";
 		} else if (linkName.trim().equalsIgnoreCase("Loan Summary")) {
 				strLinkText = lnkLoanSummary;
 		} else {
@@ -252,7 +252,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 				e.printStackTrace();
 			}
 			// mouse.release().build().perform();
-		} else if (linkName.equalsIgnoreCase("UPLOAD DOCUMENTS")) {
+		/*} else if (linkName.equalsIgnoreCase("UPLOAD DOCUMENTS")) {
 			lnkLeftNavItem = By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection
 					.findElement(lnkLeftNavItem);
@@ -264,7 +264,7 @@ public class LeftNavigationBar extends LoadableComponent<LeftNavigationBar> {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		} else if (linkName.equalsIgnoreCase("Statements and documents")) {
 			lnkLeftNavItem = By.xpath(strLinkText);
 			WebElement leftNavLink = weLeftNavSection
