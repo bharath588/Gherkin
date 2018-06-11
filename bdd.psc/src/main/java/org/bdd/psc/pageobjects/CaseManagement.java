@@ -117,6 +117,7 @@ public class CaseManagement extends LoadableComponent<CaseManagement> {
 
 	public String[] getCaseHistoryColNames(){
 		try{
+			Thread.sleep(2000);
 			String fileName = "Case_history_"+Globals.planNumber+".xls";
 			xlUtil = new XL_ReadWrite("H:\\Downloads\\"+fileName);
 			return xlUtil.getColNames("Case_history");

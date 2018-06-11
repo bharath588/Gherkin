@@ -22,7 +22,7 @@ Feature: Plan MN NEE custom site
     Given Open browser and launch PSC application
     When I enter valid username and password
       | username | password |
-      | 1minn    | testing1 |
+      | 2B9DE    | testing1 |
     And click on Sign On button
     Then GWC connect page is displayed
 

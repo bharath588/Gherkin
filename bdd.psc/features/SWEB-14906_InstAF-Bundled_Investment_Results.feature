@@ -16,7 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
+@SWEB-14906
 Feature: InstAF - Rename Investment and Performance to Investment Results
   In the Plan Menu and breadcrumb, rename them to Investment Results for InstAF only.
 

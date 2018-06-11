@@ -268,4 +268,63 @@ public class PartnerlinkHomeStepDefs {
 				"user is not presented Implementation Checklist page", true);
 	}
 
+	@When("^selects option (\\d+) Complete Plan Data$")
+	public void selects_option_Complete_Plan_Data(int optionNumber)
+			throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		pePage.clickOnCompletePlanData();
+		Reporter.logEvent(Status.INFO, "Clicks on 2 Complete Plan Data",
+				"Clicks on 2 Complete Plan Data", false);
+	}
+
+	@When("^selects a \"([^\"]*)\" to complete from list provided$")
+	public void selects_a_to_complete_from_list_provided(String ga_ID)
+			throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		Globals.planNumber=ga_ID;
+		pePage.clickOnPlanLink(ga_ID);
+		Reporter.logEvent(Status.INFO,
+				"Clicks on Plan link from list provided",
+				"Clicks on Plan link from list provided", false);
+	}
+
+	@When("^on page (\\d+): Enrollment Kits, answers Should a beneficiary form be included in the enrollment books\\?: as \"([^\"]*)\"$")
+	public void on_page_Enrollment_Kits_answers_Should_a_beneficiary_form_be_included_in_the_enrollment_books_as(
+			int arg1, String arg2) throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		pePage.clickOn3600EnrollmentKits();
+		Reporter.logEvent(Status.INFO, "Clicks on 3600: Enrollment Kits",
+				"Clicks on 3600: Enrollment Kits", true);
+		pePage.selectYBeneficiaryForm();
+		Reporter.logEvent(
+				Status.INFO,
+				"Answer Y is selected for question \"Should an beneficiary form be included in the enrollment books?\"",
+				"Answer Y is selected for question \"Should an beneficiary form be included in the enrollment books?\"",
+				false);
+
+	}
+
+	@When("^selects Create forms and update recordkeeping system from Implementation Checklist for that plan$")
+	public void selects_Create_forms_and_update_recordkeeping_system_from_Implementation_Checklist_for_that_plan()
+			throws Throwable {
+		// Write code here that turns the phrase above into concrete actions
+		pePage.clickOnCreateFormsAndUpdate();
+		Reporter.logEvent(
+				Status.INFO,
+				"selects Create forms and update recordkeeping system from Implementation Checklist for that plan",
+				"selects Create forms and update recordkeeping system from Implementation Checklist for that plan",
+				false);
+		if(pePage.isSuccessMessage())
+			Reporter.logEvent(Status.PASS, "New plan data is created", "New plan data is created", false);
+		else
+			Reporter.logEvent(Status.FAIL, "New plan data is created", "New plan data is not created", true);
+	}
+	
+	@Then("^created plan data can be verified with sql below$")
+	public void created_plan_data_can_be_verified_with_sql_below(String query) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    pePage.verifyDBValues(query, Globals.planNumber);
+	}
+	
+
 }

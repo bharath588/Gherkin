@@ -96,6 +96,8 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 			Web.getDriver().get(URL);
 			Web.getDriver().manage().window().maximize();
 		} else {
+			if(LoginPage.accucode == null)
+				LoginPage.accucode = Stock.getConfigParam("accucode");
 			URL = Stock.getConfigParam("AppURLPSC");
 			URL = URL.replace("accucode", Stock.getConfigParam("accucode"));
 			Web.getDriver().get(URL);
