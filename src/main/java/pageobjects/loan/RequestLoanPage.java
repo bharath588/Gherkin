@@ -275,6 +275,7 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 	@FindBy(xpath = "//span[contains(text(),'BR_485')]/..") private WebElement errBR_485;
 	@FindBy(xpath = "//span[contains(text(),'BR_474')]/..") private WebElement errBR_474;
 	@FindBy(xpath = "//span[contains(text(),'BR_470')]/..") private WebElement errBR_470;
+	@FindBy(xpath = "//span[contains(text(),'BR_487')]/..") private WebElement errBR_487;
 	
 	private String loanQuote = "//*[contains(text(),'webElementText')]";
 
@@ -3937,6 +3938,41 @@ public class RequestLoanPage extends LoadableComponent<RequestLoanPage> {
 		Web.clickOnElement(lnkLogout);
 		Web.waitForElement(btnLogin);
 		
+		
+	}
+	
+	/**
+	 * @author srsksr
+	 * Method to verify Hard Stop Message for BR_487
+	 */
+	public void verifyPPTRequestLoanPageWithBR_487() {
+		
+		String expectedErrorMsg="You are not eligible to request a loan because you have reached the maximum number of loans allowed.";
+		String actualErrorMsg="";
+		Web.clickOnElement(inputLonatypeGeneral);
+		Web.waitForElement(modalBR_510);
+		if(Web.isWebElementDisplayed(errBR_487, true)){
+		 actualErrorMsg=errBR_487.getText().toString().trim();
+		 if(expectedErrorMsg.equalsIgnoreCase(actualErrorMsg)){
+			 Reporter.logEvent(Status.PASS,
+					 "Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+						"Error Message for 'BR_487' is Displayed in Modal Dialog\nError Message:"+actualErrorMsg,true);
+		 }
+		 else{
+			 Reporter.logEvent(Status.FAIL,
+					 "Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+						"Error Message for 'BR_487' is Not Matching in Modal Dialog\nExpected Error Message: "+expectedErrorMsg+"\nActual Error Message: "+actualErrorMsg,true);
+		 }
+		}
+		else
+			Reporter.logEvent(Status.FAIL,
+					"Verify Error Message for 'BR_487' is Displayed in Modal Dialog",
+					"Error Message for 'BR_487' is Not Displayed in Modal Dialog", true);
+		
+		Web.clickOnElement(btnOK);
+		verifyRequestLoanButtonsAreDisabled();
+		Web.clickOnElement(lnkLogout);
+		Web.waitForElement(btnLogin);
 		
 	}
 }

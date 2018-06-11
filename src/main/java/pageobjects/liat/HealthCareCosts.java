@@ -51,6 +51,7 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 	@FindBy(linkText = "Your full report(PDF)") private WebElement lnkFullReport;
 	@FindBy(linkText = "www.medicare.gov") private WebElement lnkMedicare;
 	@FindBy(id = "medicareModal") private WebElement txtEmpowerModal;
+	@FindBy(xpath= ".//*[@id='medicareModal']//h4[@id='myModalLabel']") private WebElement lblEmpowerModal;
 	@FindBy(xpath="//div[@class='buttonContainer']//button[contains(@ng-click,'proceed()')]") private WebElement btnContinue;
 	@FindBy(xpath="//button[text()[normalize-space()='Tour']]") private WebElement btnTour;
 	@FindBy(id = "nextBtn") private WebElement btnNext;
@@ -279,10 +280,10 @@ public class HealthCareCosts extends LoadableComponent<HealthCareCosts>  {
 			Reporter.logEvent(Status.INFO,"Verify 'Medicare' link is clicked","'Medicare' link is clicked", true);
 			Web.waitForElement(txtEmpowerModal);
 			Thread.sleep(2000);
-			if(Web.VerifyText("You are now leaving Empower Retirement", txtEmpowerModal.getText().trim(), true))
-				Reporter.logEvent(Status.PASS,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), false);
+			if(Web.VerifyText("You are now leaving Empower Retirement", lblEmpowerModal.getText().toString().trim(), true))
+				Reporter.logEvent(Status.PASS,"Verify Modal Header","Expected : You are now leaving Empower Retirement \nACTUAL : "+lblEmpowerModal.getText(), false);
 			else
-				Reporter.logEvent(Status.FAIL,"Verify Modal Header","Expected : You are now leaving Empower Retirement \n ACTUAL : "+txtEmpowerModal.getText(), true);
+				Reporter.logEvent(Status.FAIL,"Verify Modal Header","Expected : You are now leaving Empower Retirement \nACTUAL : "+lblEmpowerModal.getText(), true);
 			
 			boolean windowFound = false;
 			String parentWindow = Web.getDriver().getWindowHandle();
