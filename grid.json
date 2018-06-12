@@ -10,7 +10,7 @@
 },
 {
        "Browser": "FF",
-       "Port": " http://10.4.61.208:7777/wd/hub",
+       "Port": " http://10.4.61.54:7777/wd/hub",
        "Platform": "Windows.xp"
 }
 
