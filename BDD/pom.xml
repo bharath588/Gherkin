@@ -9,84 +9,6 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	<pluginRepositories>
-		<pluginRepository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>hindsighttesting.release</id>
-			<name>Hindsight Software Release Repository</name>
-			<url>http://hindsightsoftware.bintray.com/public-maven</url>
-		</pluginRepository>
-	</pluginRepositories>
-	<build>
-
-		<plugins>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
-				<version>2.14.1</version> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-				<artifactId>maven-dependency-plugin</artifactId> <executions> <execution> 
-				<id>copy-dependencies</id> <phase>prepare-package</phase> <goals> <goal>copy-dependencies</goal> 
-				</goals> <configuration> <outputDirectory> target/libs </outputDirectory> 
-				</configuration> </execution> </executions> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-				<artifactId>maven-jar-plugin</artifactId> <configuration> <archive> <manifest> 
-				<addClasspath>true</addClasspath> <classpathPrefix>target/libs/</classpathPrefix> 
-				<mainClass> core.framework/TestListenerAdapterMain </mainClass> </manifest> 
-				</archive> </configuration> </plugin> -->
-			<plugin>
-				<groupId>com.hindsighttesting.behave</groupId>
-				<artifactId>behave-maven-plugin</artifactId>
-				<version>1.0.5</version>
-				<configuration>
-					<httpsProxyURL>https://143.199.237.62:8080/</httpsProxyURL>
-					<httpsProxyUsername>srsksr</httpsProxyUsername>
-					<httpsProxyPassword>Feb@2018</httpsProxyPassword>
-					<server>https://dev-jira.retirementpartner.com</server>
-					<projectKey>11301</projectKey>
-					<username>srsksr</username>
-					<password>Feb@2018</password>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>features</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.21.0</version>
-				<executions>
-					<execution>
-						<id>integration-test</id>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-failsafe-plugin</artifactId> 
-				<version>2.21.0</version> <executions> <execution> <id>integration-test</id> 
-				<goals> <goal>integration-test</goal> <goal>verify</goal> </goals> </execution> 
-				</executions> </plugin> -->
-			<!-- <plugin> <groupId>com.bazaarvoice.maven.plugins</groupId> <artifactId>process-exec-maven-plugin</artifactId> 
-				<version>0.4</version> <executions> <execution> <id>BDD</id> <phase>pre-integration-test</phase> 
-				<goals> <goal>start</goal> </goals> <configuration> <name>BDD</name> <arguments> 
-				<argument>java</argument> <argument>-jar</argument> <argument>BDD-1.0.0-SNAPSHOT.jar</argument> 
-				</arguments> </configuration> </execution> </executions> </plugin> -->
-		</plugins>
-		<!-- <testResources> <testResource> <directory>target/generated-test-sources/</directory> 
-			<targetPath>com/hindsighttesting/cucumber/example</targetPath> </testResource> 
-			<testResource> <directory>src/test/java</directory> </testResource> </testResources> -->
-
-	</build>
 	<dependencies>
 
 		<dependency>
@@ -115,7 +37,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.0.1</version>
+			<version>3.4.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.beanshell/bsh -->
 		<dependency>
@@ -168,7 +90,12 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vimalselvam</groupId>
+			<artifactId>cucumber-extentsreport</artifactId>
+			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
