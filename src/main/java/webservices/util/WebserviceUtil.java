@@ -36,18 +36,14 @@ import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
-
-
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-
-
 
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.Gson;
@@ -65,6 +61,7 @@ public class WebserviceUtil {
 
 	public HttpClient httpClient;
 	public HttpPost postRequest;
+	public HttpPut putRequest;
 	public HttpGet getRequest;
 	public HttpResponse response;
 	
@@ -204,12 +201,38 @@ public class WebserviceUtil {
 		StringEntity input = new StringEntity(jsonRequestString);
 		input.setContentType("application/json");
 		postRequest.setEntity(input);
-
+		System.out.println("string  "+input);
 		System.out.println(StringEscapeUtils.unescapeJson(jsonRequestString));
 		System.out.println(jsonRequestString);
 		HttpResponse response = httpClient.execute(postRequest);
 		return response;
 	}
+	
+	/**<pre>
+	 * This method executes the HttpGetrequest and returns the response as
+	 * HttpResponse object
+	 * </pre>
+	 * @param url
+	 * @param jsonRequestString
+	 * @param headers
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 *//*
+	public HttpResponse getResponseasJsonforPutRequest(String url, String jsonRequestString,String...headers)
+			throws ClientProtocolException, IOException {
+		httpClient = HttpClientBuilder.create().build();
+		putRequest = new HttpPut(url);
+		putRequest.addHeader("Authorization", headers[0]);
+		StringEntity input = new StringEntity(jsonRequestString);
+		input.setContentType("application/json");
+		putRequest.setEntity(input);
+		System.out.println("string  "+input);
+		System.out.println(StringEscapeUtils.unescapeJson(jsonRequestString));
+		System.out.println(jsonRequestString);
+		HttpResponse response = httpClient.execute(putRequest);
+		return response;
+	}*/
 	
 	/**<pre>
 	 * This method executes the HttpGetrequest and returns the http response in
@@ -431,6 +454,40 @@ public class WebserviceUtil {
 				httpClient = HttpClientBuilder.create().build();
 	     response = httpClient.execute(getReq);
 	     return response;
+	}
+	
+
+	public HttpResponse getResponseasJsonforPost(HttpPost postReq) throws ClientProtocolException, IOException {
+		// TODO Auto-generated method stub
+		//httpClient = new DefaultHttpClient();
+				httpClient = HttpClientBuilder.create().build();
+	     response = httpClient.execute(postReq);
+	     return response;
+	}
+	/**<pre>
+	 * This method executes the HttpPut Request and returns the response as
+	 * HttpResponse object
+	 * </pre>
+	 * @param url
+	 * @param jsonRequestString
+	 * @param headers
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public HttpResponse getResponseasJsonforPutRequest(String url, String jsonRequestString,String...headers)
+			throws ClientProtocolException, IOException {
+		httpClient = HttpClientBuilder.create().build();
+		putRequest = new HttpPut(url);
+		putRequest.addHeader("Authorization", headers[0]);
+		StringEntity input = new StringEntity(jsonRequestString);
+		input.setContentType("application/json");
+		putRequest.setEntity(input);
+		System.out.println("string  "+input);
+		System.out.println(StringEscapeUtils.unescapeJson(jsonRequestString));
+		System.out.println(jsonRequestString);
+		HttpResponse response = httpClient.execute(putRequest);
+		return response;
 	}
 
 
