@@ -2626,11 +2626,15 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 		// Get actual and expected exception messages.
 		String actualExceptionMsg = Web.getWebElementText(accountBalErrorMsg);
 		String expectedExceptionMsg = Stock.GetParameterValue("ExceptionMessage");
-
+		
 		// Verify Unable to locate an account balance.
-		CommonLib
-				.verifyExpectedAndActualEual(expectedExceptionMsg, actualExceptionMsg,
-						"Unable to locate an account balance exception message should display on UI.");
+		if(actualExceptionMsg.contains(expectedExceptionMsg)){
+		Reporter.logEvent(Status.PASS, "Unable to locate an account balance exception message should display on UI.", "Unable to locate an account balance exception message is displayed in a page.", true);
+		}else{
+			Reporter.logEvent(Status.FAIL, "Unable to locate an account balance exception message should display on UI.", "Unable to locate an account balance exception message is should not displayed in a page.", true);
+			
+		}
+		
 		Web.clickOnElement(menuSearch);
 	}
 	
@@ -2781,6 +2785,7 @@ public class LoanRequest extends LoadableComponent<LoanRequest> {
 			Reporter.logEvent(Status.FAIL, "Loan History page is not dispalyed", actualURl, true);
 		}
 		Web.getDriver().switchTo().window(getParentWindow);
+		Web.getDriver().switchTo().defaultContent();
 		Web.clickOnElement(menuSearch);	
 	}
 	 
