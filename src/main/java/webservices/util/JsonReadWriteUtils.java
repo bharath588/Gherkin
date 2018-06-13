@@ -75,7 +75,7 @@ public class JsonReadWriteUtils {
 				.read(JsonPath.compile(jpath));
 		for(int i=0;i<list.size();i++)
 		{
-			sum+=Integer.parseInt(list.get(i).toString());
+			sum+=Double.parseDouble(list.get(i).toString());
 		}
 		if(sum==100)
 		{

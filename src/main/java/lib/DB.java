@@ -233,8 +233,7 @@ public class DB {
 		}
 		recordSetsIterator.remove();
 		
-//		String[] connectionNames = new String[10];
-//		int count=0;
+		
 		while (connectionsIterator.hasNext()) {
 			String connectionName = (String) connectionsIterator.next();
 			
@@ -248,11 +247,8 @@ public class DB {
 				System.out.println("reporter.report - clean connections for DB"); 
 			} 
 			
-			dbConnections.remove(connectionName);	
-//			connectionNames[count++]=connectionName;
+			dbConnections.remove(connectionName);
 		}
-//		for(int i=0;i<count;i++)	
-//			dbConnections.remove(connectionNames[i]);
 	}
 
 	/**

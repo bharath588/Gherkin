@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
+
 
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.Gson;
@@ -273,7 +275,7 @@ public class WebserviceUtil {
 		//httpClient = new DefaultHttpClient();
 				httpClient = HttpClientBuilder.create().build();
 		postRequest = new HttpPost(url);
-		StringEntity input = new StringEntity(jsonRequestString);
+		StringEntity input = new StringEntity(jsonRequestString, StandardCharsets.UTF_8);
 		input.setContentType("application/json");
 		postRequest.setEntity(input);
 		return postRequest;
@@ -360,7 +362,7 @@ public class WebserviceUtil {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(
-					(response.getEntity().getContent())));
+					(response.getEntity().getContent()), "UTF-8"));
 		} catch (IllegalStateException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
