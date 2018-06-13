@@ -269,8 +269,8 @@ public class Globals {
 							
 							//Postgres Databases
 							//Dev database
-							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://db-asdb.east.development.aws.gwl.com:5432/d_asdb?user=qama&password=qama1");
-//							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://db-asdb.east.development.aws.gwl.com:5432/d_asdb");
+//							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://db-asdb.east.development.aws.gwl.com:5432/d_asdb?user=qama&password=qama1");
+							databaseConnectionStrings.put("D_ASDB", "jdbc:postgresql://db-asdb.east.development.aws.gwl.com:5432/d_asdb");
 							//QA database
 							databaseConnectionStrings.put("Q_ASDB", "jdbc:postgresql://db-asdb.east.development.aws.gwl.com:5432/D_ASDB?currentSchema=sit_asdb_content");
 						}
