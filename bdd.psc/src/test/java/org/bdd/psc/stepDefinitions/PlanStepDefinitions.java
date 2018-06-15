@@ -165,10 +165,10 @@ public class PlanStepDefinitions {
 		try {
 			for(String page:buttonPageFromFeatureFile){
 				if(buttonPageName.containsValue(page.trim().toLowerCase())){
-					Reporter.logEvent(Status.PASS, "The "+page+" page should be displayed", "The"+page+"page is displayed", true);
+					Reporter.logEvent(Status.PASS, page+" page should displays",page+" is displays", true);
 				}else{
 					
-					Reporter.logEvent(Status.FAIL, "The "+page+" page should be displayed", "The"+page+"page isn't displayed", true);
+					Reporter.logEvent(Status.FAIL,page+" page should displays", page+" isn't displays", true);
 				}
 			}
 		}
@@ -191,24 +191,24 @@ public class PlanStepDefinitions {
 	@Then("^the \"([^\"]*)\" tab should be displayed$")
     public void the_fixedrate_tab_should_be_displayed(String fixedrate) throws Throwable {
 		if(investmentPage.isCorrectTabName(fixedrate)){
-			Reporter.logEvent(Status.PASS, "The "+fixedrate+" tab should be displayed", "The"+fixedrate+"tab is displayed", true);
+			Reporter.logEvent(Status.PASS, "The "+fixedrate+" tab should displays", "The "+fixedrate+" tab is displays", true);
 		}else{
 			
-			Reporter.logEvent(Status.FAIL, "The "+fixedrate+" tab should be displayed", "The"+fixedrate+"tab isn't displayed", true);
+			Reporter.logEvent(Status.FAIL, "The "+fixedrate+" tab should displays", "The "+fixedrate+" tab isn't displays", true);
 		}
         
     }
 	@When("^user is on \"([^\"]*)\" tab$")
-    public void user_is_on_something_tab(String fixedrate, String strArg1) throws Throwable {
+    public void user_is_on_something_tab(String fixedrate) throws Throwable {
 		
     }
 	@Then("^the \"([^\"]*)\" label should be displayed$")
     public void the_interestRate_label_should_be_displayed(String interestRate) throws Throwable {
 		if(investmentPage.isCorrectIntrestRateLableName(interestRate)){
-			Reporter.logEvent(Status.PASS, "The "+interestRate+" label should be displayed", "The"+interestRate+"tab is displayed", true);
+			Reporter.logEvent(Status.PASS, "The "+interestRate+" label should displays", "The "+interestRate+" tab is displays", true);
 		}else{
 			
-			Reporter.logEvent(Status.FAIL, "The "+interestRate+" label should be displayed", "The"+interestRate+"tab isn't displayed", true);
+			Reporter.logEvent(Status.FAIL, "The "+interestRate+" label should displays", "The "+interestRate+" tab isn't displays", true);
 		}
     }
 	

@@ -102,7 +102,16 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 		Assert.assertTrue(text.trim().equals("Plan provisions"));
 	}
 	
+	public WebElement getWebElement(String fieldName) {
+		if (fieldName.trim().equalsIgnoreCase("Breadcrumb")) {
+			return this.planProvisionsBreadcrumb;
+		}
+		return null;
+	}
+
+	
 	public String gettingButtonPageName(String buttonName){
+		
 		
 		Web.getDriver().switchTo().frame(planFrame);
 		WebElement element=null;
@@ -121,14 +130,13 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 		{
 			Reporter.logEvent(Status.INFO,
 					"Check if the user has provided correct button name",
-					"The user hasn't provided correct button name", true);
+					"The user hasn't provide correct button name", true);
 			return null;
 		}
 		try{
-			System.out.println(element.isDisplayed());
-			if(Web.isWebElementDisplayed(element, true)){
+			Web.nextGenDriver.waitForAngular();
+			if(Web.isWebElementDisplayed(element)){
 				Web.clickOnElement(element);
-				//Web.actionsClickOnElement(element);
 				Web.nextGenDriver.waitForAngular();
 				if(Web.isWebElementDisplayed(buttonPageText, true))
 					pageNameText=buttonPageText.getText().trim();
@@ -138,7 +146,7 @@ public class PlanProvisionsPage extends LoadableComponent<PlanProvisionsPage> {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			Reporter.logEvent(Status.FAIL, "the "+buttonName+" should be displayes in plan provision page", "the "+buttonName+" isn't displayed in plan provision page",false);
+			Reporter.logEvent(Status.FAIL, buttonName+" button displayes in plan provision page", buttonName+" button isn't displays in plan provision page",false);
 		}		
 		Web.getDriver().switchTo().defaultContent();
 		return pageNameText;

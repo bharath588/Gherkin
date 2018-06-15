@@ -138,11 +138,11 @@ public class ForgotPasswordStepDefinitions {
 		if (forgotPwdPage.isContactUsSectionDisplayedCorrectMessage(contactus)) {
 			Reporter.logEvent(Status.PASS,
 					" The contactUs section should displays : " + contactus,
-					"The contactUs section is displayed : " + contactus, true);
+					"The contactUs section is displays : " + contactus, true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					" The contactUs section should displays: " + contactus,
-					"The contactUs section isn't displayed : " + contactus,
+					"The contactUs section isn't displays : " + contactus,
 					true);
 		}
 

@@ -58,7 +58,7 @@ Feature: Plan Empower - Security Guarantee and Tips and System Requirements incl
       | PlanEmpower | Security Guarantee,Security Tips,System Requirements | 1ISIS    | testing1 |
       | PlanJPM     | Security Guarantee,Security Tips,System Requirements | 1IN02    | testing1 |
       | PlanApple   | Security Guarantee,Security Tips,System Requirements | 29JZ4    | testing1 |
-      | PlanMN      | Security Guarantee,Security Tips,System Requirements | 1MN      | testing1 |
+      | PlanMN      | Security Guarantee,Security Tips,System Requirements | 2MN      | testing1 |
       | PlanMiss    | Security Guarantee,Security Tips,System Requirements | 2Miss    | testing1 |
       | PlanDMBA    | Security Guarantee,Security Tips,System Requirements | 1PDMBA   | testing1 |
 
@@ -106,6 +106,6 @@ Feature: Plan Empower - Security Guarantee and Tips and System Requirements incl
       | PlanEmpower | Security Guarantee,Security Tips,System Requirements | 1ISIS    | testing1 |
       | PlanJPM     | Security Guarantee,Security Tips,System Requirements | 1IN02    | testing1 |
       | PlanApple   | Security Guarantee,Security Tips,System Requirements | 29JZ4    | testing1 |
-      | PlanMN      | Security Guarantee,Security Tips,System Requirements | 1MN      | testing1 |
+      | PlanMN      | Security Guarantee,Security Tips,System Requirements | 2MN      | testing1 |
       | PlanMiss    | Security Guarantee,Security Tips,System Requirements | 2Miss    | testing1 |
       | PlanDMBA    | Security Guarantee,Security Tips,System Requirements | 1PDMBA   | testing1 |

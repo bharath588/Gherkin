@@ -51,6 +51,8 @@ public class LoginStepDefinitions {
 	public void before(cucumber.api.Scenario scenario) {
 		try {
 			login = new LoginPage();
+			homePage = new HomePage();
+			forgotPwdPage = new ForgotPasswordPage();
 			featureName = scenario.getId().split(";")[0];
 			Globals.scenarioName = scenario.getName();
 			Reporter.initializeModule(featureName);
@@ -586,9 +588,7 @@ public class LoginStepDefinitions {
 	public void the_following_below_text_should_be_displayed_in_something(
 			String accuCode, String expectedText) throws Throwable {
 		// Write code here that turns the phrase above into concrete actions
-		login = new LoginPage();
-		homePage = new HomePage();
-		forgotPwdPage = new ForgotPasswordPage();
+		
 		if (Globals.scenarioName.endsWith("Post-Login page")
 				|| Globals.scenarioName.endsWith("Forgot password page")) {
 			if (accuCode.equalsIgnoreCase("InstMetLife")) {
@@ -648,14 +648,51 @@ public class LoginStepDefinitions {
 		if (login.isContactUsSectionDisplayCorrectTextInPreLogin(contactus)) {
 			Reporter.logEvent(Status.PASS,
 					" The contactUs section should displays : " + contactus,
-					"The contactUs section is displayed : " + contactus, true);
+					"The contactUs section is displays : " + contactus, true);
 		} else {
 			Reporter.logEvent(Status.FAIL,
 					" The contactUs section should displays: " + contactus,
-					"The contactUs section isn't displayed : " + contactus,
+					"The contactUs section isn't displays : " + contactus,
 					true);
 		}
 	}
+
+	@When("^clicks on the FAQ link on login page$")
+	public void clicks_on_the_faq_link_on_login_page() throws Throwable {
+		login.clickOnFAQLink();
+	}
+
+	@Then("^the FAQ content should be displayed$")
+	public void the_faq_content_should_be_displayed() throws Throwable {
+		if(login.isFAQpageDisplayes()){
+			Reporter.logEvent(Status.PASS,
+					" the FAQ content should displays",
+					"the FAQ content displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" the FAQ content should displays",
+					"the FAQ content isn't displays",
+					true);
+		}
+			
+
+	}
+
+	@Then("^the following text should be displayed in FAQ content$")
+	public void the_following_text_should_be_displayed_in_faq_content(
+			String text) throws Throwable {
+		if(login.isSameTextDisplaysInFAQ(text)){
+			Reporter.logEvent(Status.PASS,
+					" the following text should displays: "+text,
+					"the text is displays: "+text, true);
+		} else {
+			Reporter.logEvent(Status.FAIL,
+					" the following text should displays: "+text,
+					"the text isn't displays: "+text,
+					true);
+		}
+	}
+
 
 	
 	

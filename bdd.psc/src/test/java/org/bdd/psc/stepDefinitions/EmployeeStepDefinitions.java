@@ -43,6 +43,7 @@ public class EmployeeStepDefinitions {
 	CommonLib commonLib;
 	//WebDriver webDriver;
 	EmployeePages empPages;
+	String planNumber=null;
 
 
 	@Before()
@@ -201,12 +202,24 @@ public class EmployeeStepDefinitions {
 	}
 	
 	@When("^user switched to \"([^\"]*)\" and navigate to deferral page$")
-	    public void user_switched_to_planNo_and_navigate_to_deferral_page(String planno) throws Throwable {
-		  new HomePage().switchPlan(planno);  
-		  empPages.get();
-		  empPages.openDeferralDetailsPage();
-		  
-	    }
+	public void user_switched_to_planNo_and_navigate_to_deferral_page(String planno) throws Throwable {
+		if (planno == null ||planno.equals(""))
+			planno = planNumber;
+		new HomePage().switchPlan(planno);
+		empPages.get();
+		empPages.openDeferralDetailsPage();
+
+	}
+	@When("^user switched to \"([^\"]*)\" and navigate to Deferral Contribution screen for Future Dated Ongoing Deferrals$")
+    public void user_switched_to_planno_and_navigate_to_deferral_contribution_screen_for_future_dated_ongoing_deferrals(String planno) throws Throwable {
+		if (planno == null ||planno.equals(""))
+			planno = planNumber;
+		new HomePage().switchPlan(planno);
+		empPages.get();
+		empPages.openDeferralDetailsPage();
+    }
+	
+	
 	@When("^user enters a \"([^\"]*)\" contribution for a \"([^\"]*)\"$")
     public void user_enters_a_futuredate_contribution_for_a_deferraltype(String futuredate, String deferraltype) throws Throwable {
 		empPages.clickOngoingEdit();
@@ -262,10 +275,55 @@ public class EmployeeStepDefinitions {
 		}
 	}
 	
-	@Then("^the effective date listed on the deferral review page for a \"([^\"]*)\" is the first date of the following month$")
-    public void the_effective_date_listed_on_the_deferral_review_page_for_a_something_is_the_first_date_of_the_following_month(String deferraltype, String strArg1) throws Throwable {
-		if (empPages.isEffectiveDateWeekend(deferraltype)) {
+	@Given("^plan is set up with \"([^\"]*)\"$")
+    public void plan_is_set_up_with_something(String sdsvsubcode, String query) throws Throwable {
+		planNumber=empPages.getPlanNumber(query, sdsvsubcode);
+        
+    }
+	@Given("^plan is set up with \"([^\"]*)\" in GA_Service table$")
+    public void plan_is_set_up_with_sdsvsubcode_in_gaService_table(String sdsvsubcode, String query) throws Throwable {
+		planNumber=empPages.getPlanNumber(query, sdsvsubcode);
+        
+    }
+
+	@When("^participant has an ongoing deferral for the \"([^\"]*)\"$")
+	public void participant_has_an_ongoing_deferral(String deferraltype) throws Throwable {
+		empPages.checkAndAddOngoingDeferral(deferraltype);
+			
+
+	}
+	@When("^user adds a scheduled automatic increase$")
+	    public void user_adds_a_scheduled_automatic_increase() throws Throwable {
+	        empPages.clickScheduleAutomaticIncreaseEdit();
+	    }
+	
+	@Then("^the dropdown list should populate with list of dates including weekend dates for \"([^\"]*)\"$")
+    public void the_dropdown_list_should_populate_with_list_of_dates_including_weekend_dates_for_something(String deferraltype) throws Throwable {
+        empPages.isAllDateAvialableInSelectTargetPayRoll();
+    }
+	
+	@Then("^user should be able to add a schedule for the \"([^\"]*)\"$")
+    public void user_should_be_able_to_add_a_schedule_for_the_deferraltype(String deferraltype) throws Throwable {
+        
+    }
+
+	
+	@Then("^the effective date listed on the deferral review page for a \"([^\"]*)\" is the next month date$")
+    public void the_effective_date_listed_on_the_deferral_review_page_for_a_something_is_the_first_date_of_the_following_month(String deferraltype) throws Throwable {
+		if (empPages.isTheDateWithinNextMonth(deferraltype)) {
 			System.out.println("PASS");
+		}
+    }
+	@Then("^user should see a \"([^\"]*)\" datepicker for \"([^\"]*)\"$")
+    public void user_should_see_a_something_datepicker_for_something(String deferraltype, String calendarType) throws Throwable {
+		if (empPages.isCalendarType(deferraltype, calendarType)) {
+			Reporter.logEvent(Status.PASS, calendarType
+					+ " datepicker displays for the user", calendarType
+					+ " datepicker displays for the user", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, calendarType
+					+ " datepicker displays for the user", calendarType
+					+ " datepicker isn't displays for the user", true);
 		}
     }
 

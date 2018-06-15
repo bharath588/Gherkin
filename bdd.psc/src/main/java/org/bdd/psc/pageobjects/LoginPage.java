@@ -30,6 +30,16 @@ import core.framework.ThrowException.TYPE;
 public class LoginPage extends LoadableComponent<LoginPage> {
 
 	public static WebDriver webDriver;
+	
+	@FindBy(linkText = "FAQ")
+	private WebElement faqLink;
+	@FindBy(xpath = "//h1[contains(text(),'FAQs')]")
+	private WebElement faqHeaderPageTitle;
+	@FindBy(xpath = "//h3[contains(text(),'must my password contain')]")
+	private WebElement howManyCharPasswordContain;
+	@FindBy(xpath = "//p[contains(text(),'Passwords must be between')]")
+	private WebElement howManyCharPasswordContainAnswer;
+	
 	@FindBy(id = "username")
 	private WebElement txtUserName;
 	@FindBy(id = "password")
@@ -93,6 +103,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	
 	@FindBy(xpath = ".//*[strong[contains(text(),'help')]]/following-sibling::p[1]")
 	private WebElement contactUsPreLogin;
+	
 	
 
 	LoadableComponent<?> parent;
@@ -559,12 +570,12 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 					String expIcon=icon.get(i++);
 					if (element.getText().trim().replaceAll(" ","").equalsIgnoreCase(expIcon))
 					{
-						Reporter.logEvent(Status.PASS, " Social media icon "+expIcon+" should displays in correct order in Pre/post-Login page", 
-		        				" Social media icon "+expIcon+" displayed in correct order in Pre/post-Login page", true);
+						Reporter.logEvent(Status.PASS, " Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", true);
 					}
 					else
-						Reporter.logEvent(Status.FAIL, " Social media icon "+expIcon+" should displays in correct order in Pre/post-Login page", 
-		        				" Social media icon "+expIcon+" does not displayed in correct order in Pre/post-Login page", true);
+						Reporter.logEvent(Status.FAIL, " Social media icon "+expIcon+" displays in correct order in Pre/post-Login page", 
+		        				" Social media icon "+expIcon+" does not displays in correct order in Pre/post-Login page", true);
 				}
 			} 
 			else
@@ -599,10 +610,30 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 	
 	public boolean isContactUsSectionDisplayCorrectTextInPreLogin(String contactUsText){
 		String text=contactUsPreLogin.getText().trim().replace("\n", "").replace("\r", "");
+		if(Web.getDriver().getCurrentUrl().contains("InstMetLife"))
+			text=text.replace("Contact us", "").trim();
 		System.out.println("----------");
 		System.out.println(text);
 		System.out.println(contactUsText.replace("'", "").trim());
 		if(text.equalsIgnoreCase(contactUsText.replace("'", "").trim()))
+			return true;
+		return false;
+		
+	}
+	public void clickOnFAQLink(){
+		if(Web.isWebElementDisplayed(faqLink, true))
+			Web.clickOnElement(faqLink);
+	}
+	public boolean isFAQpageDisplayes(){
+		if(Web.isWebElementDisplayed(faqHeaderPageTitle, true))
+			return true;
+		return false;
+	}
+	public boolean isSameTextDisplaysInFAQ(String textContent){
+		String actual=howManyCharPasswordContain.getText()+howManyCharPasswordContainAnswer.getText();
+		String input=textContent.trim().replace("\n", "");
+		
+		if(input.trim().equalsIgnoreCase(actual.trim()))
 			return true;
 		return false;
 		

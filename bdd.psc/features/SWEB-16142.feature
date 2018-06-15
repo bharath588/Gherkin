@@ -40,7 +40,8 @@ Feature: Plan MN NEE custom site
       | username | password |
       | 1MN      | Testing1 |
     And click on Sign On button
-    Then the Home page should be displayed
+    #Then the Home page should be displayed
+    Then PSC Home screen is displayed
 
   #Then I should be navigated to home Page
   Scenario: User login to MN site with invalid password

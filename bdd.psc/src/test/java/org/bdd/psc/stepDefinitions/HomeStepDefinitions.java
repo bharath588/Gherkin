@@ -458,12 +458,12 @@ public class HomeStepDefinitions {
 	}
 	@When("^User clicks on the \"([^\"]*)\"$")
     public void clicks_something(@Delimiter(",") List<String> links) throws Throwable {
-		if(!(newTabUrl.isEmpty()))
-			newTabUrl.clear();
+		/*if(!(newTabUrl.isEmpty()))
+			newTabUrl.clear();*/
 		for(String link:links){
 			try{
 				String linkUrl=new LoginPage().openAndCloseNewTab(link);
-				newTabUrl.add(linkUrl);
+				newTabUrl.add(linkUrl);//should remove newtaburl object
 			}
 			catch(Exception e){
 				
@@ -483,11 +483,11 @@ public class HomeStepDefinitions {
 			for (String featureUrl : url) {
 				if (CommonLib.binarySearch(arr, featureUrl, 0, arr.length) >= 0) {
 					Reporter.logEvent(Status.PASS,
-							"A new tab should open with " + featureUrl,
+							"A new tab  open with " + featureUrl,
 							"A new tab opens with " + featureUrl, true);
 				} else {
 					Reporter.logEvent(Status.FAIL,
-							"A new tab should opens with " + featureUrl,
+							"A new tab opens with " + featureUrl,
 							"A new tab isn't opens with " + featureUrl, true);
 				}
 			}
@@ -522,12 +522,12 @@ public class HomeStepDefinitions {
 		for (String icon : icons) {
 			if (Web.isWebElementDisplayed(new LoginPage(), icon, true)) {
 				Reporter.logEvent(Status.PASS, "the Social Media " + icon
-						+ " should displays in Pre-Login page",
+						+ "  displays in Pre-Login page",
 						"the Social Media " + icon
 								+ " displays in Pre-Login page", true);
 			} else {
 				Reporter.logEvent(Status.FAIL, "the Social Media " + icon
-						+ " should displays in Pre-Login page",
+						+ " displays in Pre-Login page",
 						"the Social Media " + icon
 								+ " does not displays in Pre-Login page", true);
 			}
@@ -537,11 +537,11 @@ public class HomeStepDefinitions {
 	@Then("^the Social Media \"([^\"]*)\" are displayed in correct order$")
 	public void the_social_media_something_are_displayed_in_correct_order(
 			@Delimiter(",") List<String> icons) throws Throwable {
-		List<String> listObject = new ArrayList<String>();
+		/*List<String> listObject = new ArrayList<String>();
 		for (String icon : icons) {
 			listObject.add(icon);
-		}
-		new LoginPage().checkCorrectOrderOfSocialIconObjects(listObject);
+		}*/
+		new LoginPage().checkCorrectOrderOfSocialIconObjects(icons);
 
 	}
 	
@@ -549,11 +549,29 @@ public class HomeStepDefinitions {
     public void psc_home_screen_is_displayed() throws Throwable {
 		if (homePage.isHomePage()) {
 			Reporter.logEvent(Status.PASS, "PSC Home screen should displayes",
-					"PSC Home screen is displayed", true);
+					"PSC Home screen is displays", true);
 		} else {
 			Reporter.logEvent(Status.FAIL, "PSC Home screen should displayes",
-					"PSC Home screen doesn't displayed", true);
+					"PSC Home screen doesn't displays", true);
 		}
     }
+	@When("^user selects to My Profile$")
+    public void user_selects_to_my_profile() throws Throwable {
+        homePage.clickOnMyProfile();
+        Web.nextGenDriver.waitForAngular();
+        
+    }
+	@Then("^the My Profile page should be displayed$")
+    public void the_my_profile_page_should_be_displayed() throws Throwable {
+		if (homePage.isMyProfilePage()) {
+			Reporter.logEvent(Status.PASS, "My Profile page should displayes",
+					"My Profile page is displays", true);
+		} else {
+			Reporter.logEvent(Status.FAIL, "My Profile page should displayes",
+					"My Profile page isn't displays", true);
+		}
+    }
+
+
 
 }

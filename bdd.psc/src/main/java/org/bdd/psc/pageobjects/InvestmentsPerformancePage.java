@@ -27,7 +27,8 @@ public class InvestmentsPerformancePage extends LoadableComponent<InvestmentsPer
 	private WebElement investmentsBreadcrumb;
 	@FindBy(how=How.XPATH,using="//*[@id='tabForm:navPlan']//div[@class='breadcrumb']/i")
 	private WebElement investmentsBreadcrumb2;
-	@FindBy(how=How.XPATH,using="//a[contains(text(),'Investments & Performance') or contains(text(),'Investments & Results')]")
+	//@FindBy(how=How.XPATH,using="//a[contains(text(),'Investments & Performance') or contains(text(),'Investments & Results')]")
+	@FindBy(how=How.XPATH,using="//a[contains(text(),'Investments')]")
 	private WebElement investmentsLinkUnderPlanTab;
 	
 	@FindBy(how=How.ID,using="frameb")
@@ -35,7 +36,7 @@ public class InvestmentsPerformancePage extends LoadableComponent<InvestmentsPer
 	
 	@FindBy(how=How.ID,using="fixedInvestmentRateTab")
 	private WebElement fixedInvestmentRatesTab;
-	@FindBy(how=How.XPATH,using="//span[text()='Interest Rate *%']")
+	@FindBy(how=How.XPATH,using="//span[contains(text(),'Interest Rate *%') or contains(text(),'Interest Rate')]")
 	private WebElement intrestRateLable;
 
 
@@ -62,11 +63,13 @@ public class InvestmentsPerformancePage extends LoadableComponent<InvestmentsPer
 
 	@Override
 	protected void isLoaded() throws Error {
+		Web.waitForElement(investmentsBreadcrumb);
 		Web.actionsClickOnElement(investmentsBreadcrumb);
 		String text = investmentsBreadcrumb.getText();
 		if (text.equals(""))
 			text = investmentsBreadcrumb2.getText();		
-		Assert.assertTrue(text.trim().equals("Investments & Performance") ||text.trim().equals("Investments & Results") );
+		Assert.assertTrue(text.trim().equalsIgnoreCase("Investments & Performance") ||text.trim().equalsIgnoreCase("Investments & Results") );
+
 		
 	}
 	public InvestmentsPerformancePage(){
@@ -74,29 +77,48 @@ public class InvestmentsPerformancePage extends LoadableComponent<InvestmentsPer
 		Web.nextGenDriver = new NextGenWebDriver(Web.getDriver());
 		NextGenPageFactory.initWebElements(Web.getDriver(),this);
 	}
-	public boolean isCorrectTabName(String tabName){
-		Web.FrameSwitchONandOFF(false);
-		Web.FrameSwitchONandOFF(true,breadcrumbFrame);
-		if(Web.isWebElementDisplayed(fixedInvestmentRatesTab, true))
-			if(fixedInvestmentRatesTab.getText().trim().equals(tabName.trim()))
-				return true;
-		return false;
-		
-	}
 
-	public boolean isCorrectIntrestRateLableName(String intrestRate) {
-		Web.FrameSwitchONandOFF(false);
-		Web.FrameSwitchONandOFF(true, breadcrumbFrame);
-		if (Web.isWebElementDisplayed(fixedInvestmentRatesTab, true)) {
-			Web.clickOnElement(fixedInvestmentRatesTab);
-			Web.nextGenDriver.waitForAngular();
-			if (Web.isWebElementDisplayed(intrestRateLable, true)) {
-				if (intrestRateLable.getText().trim()
-						.equals(intrestRate.trim()))
+	public boolean isCorrectTabName(String tabName) {
+		try {
+			Web.FrameSwitchONandOFF(false);
+			Web.FrameSwitchONandOFF(true, breadcrumbFrame);
+			if (Web.isWebElementDisplayed(fixedInvestmentRatesTab, true))
+				if (fixedInvestmentRatesTab.getText().trim()
+						.equals(tabName.trim()))
 					return true;
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	public boolean isCorrectIntrestRateLableName(String intrestRate) {
+		try {
+			Web.FrameSwitchONandOFF(false);
+			Web.FrameSwitchONandOFF(true, breadcrumbFrame);
+			if (Web.isWebElementDisplayed(fixedInvestmentRatesTab, true)) {
+				Web.clickOnElement(fixedInvestmentRatesTab);
+				Web.nextGenDriver.waitForAngular();
+
+				if (Web.isWebElementDisplayed(intrestRateLable, true)) {
+					if (LoginPage.accucode.contains("InstMetLife")
+							&& intrestRateLable.getText().trim()
+									.equals(intrestRate.trim()))
+						return true;
+					if (intrestRateLable.getText().trim()
+							.equals(intrestRate.trim()))
+						return true;
 				}
 			}
-		return false;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		return false;
+	}
+	
+	
 
 }

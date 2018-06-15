@@ -28,7 +28,7 @@ Then A new tab opens with "<url>"
 
 Examples: 
       | accuCode    | icons                                       |url                                                                                                                                                             |
-      | PlanEmpower | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/@empowertoday,https://www.linkedin.com/company/empower-retirement/,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
+      | PlanEmpower | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/@empowertoday,https://www.linkedin.com/company/empower-retirement,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
  
 Scenario Outline: Verify the Social Media icons are displayed on PSC home page with correct order and includes the correct link     
  Given user is on the Login page of "<accuCode>"
@@ -40,7 +40,7 @@ Scenario Outline: Verify the Social Media icons are displayed on PSC home page w
 
  Examples: 
       | accuCode   |username | password | icons                                       | url                                                                                                                                         |
-      | PlanEmpower| 1isis   | testing1 | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/empowertoday,https://www.linkedin.com/company/empower-retirement/,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
+      | PlanEmpower| 1isis   | testing1 | Facebook,Twitter,Linkedin,Instagram,YouTube |https://www.facebook.com/empowerretirement,https://twitter.com/empowertoday,https://www.linkedin.com/company/empower-retirement,https://www.instagram.com/empowerretirement/,https://www.youtube.com/channel/UCFPLlGp16vPjBb-G7SnUWhQ|
       
 
 

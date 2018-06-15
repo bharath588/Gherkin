@@ -20,9 +20,8 @@
 Feature: Update Calendar Logic
   
   Narrative: As a sponsor, I want my deferral requested dates to include holidays and weekends.
-  
-  
-  
+
+
 
   Scenario Outline: Verify that the requested date listed on the deferral review page is the same date the user entered when future dating.
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
@@ -30,40 +29,67 @@ Feature: Update Calendar Logic
     And user enters a "<future_date>" contribution for a "<deferral_type>"
     And user clicks continue on the deferral contribution screen
     Then the effective date listed on the deferral review page for a "<deferral_type>" is the "<future_date>" the user entered
+
     Examples: 
       | accuCode    | username | password | plan_no   | deferral_type | future_date     |
       | PlanEmpower | 1INST    | testing1 | 194193-01 | Before Tax    | current_date+21 |
       | PlanEmpower | 1INST    | testing1 | 194193-01 | Roth          | current_date+2  |
 
   Scenario Outline: Verify that the requested date listed on the deferral review page is the same date the user entered when not future dating.
-    Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"     
+    Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
     When user switched to "<plan_no>" and navigate to deferral page
     And user enters a contribution for a "<deferral_type>"
     And user clicks continue on the deferral contribution screen
     Then the effective date listed on the deferral review page is the current date for "<deferral_type>"
-    Examples:
-      | accuCode    | username | password | plan_no    | deferral_type |
-      | PlanEmpower | 1INST    | testing1 |  194193-01 | Before Tax    |
-      | PlanEmpower | 1INST    | testing1 |  194193-01 | Roth          |
 
-  Scenario: Verify user can select a <weekend date> when scheduling a deferral contribution.
-    Given plan is set up with sdsv subcode GENERIC.
-      | accuCode    | username | password | deferral_type |
-      | PlanEmpower | 1INST    | testing1 | Before Tax    |
-    And participant has an ongoing deferral.
-    When user adds a scheduled automatic increase.
-    Then the dropdown list should populate with weekend dates.
-    And user should be able to add a schedule.
-    
-    Scenario Outline: Verify that the requested date listed on the deferral review page is the first date of the following month when user creates a 457 contribution.
+    Examples: 
+      | accuCode    | username | password | plan_no   | deferral_type |
+      | PlanEmpower | 1INST    | testing1 | 194193-01 | Before Tax    |
+      | PlanEmpower | 1INST    | testing1 | 194193-01 | Roth          |
+
+  Scenario Outline: Verify user can select a "<weekend date>" when scheduling a deferral contribution.
+    Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
+    And plan is set up with "<sdsv subcode>"
+      """
+      select ga_id from ga_service where SDSV_SUBCODE=?
+      """
+    When user switched to "<plan_no>" and navigate to deferral page
+    And participant has an ongoing deferral for the "<deferral_type>"
+    And user adds a scheduled automatic increase
+    Then the dropdown list should populate with list of dates including weekend dates for "<deferral_type>"
+    And user should be able to add a schedule for the "<deferral_type>"
+
+    Examples: 
+      | accuCode    | username | password | plan_no   | deferral_type | sdsv subcode | weekend date |
+      | PlanEmpower | 1INST    | testing1 | 194193-01 | Before Tax    | GENERIC      | 06/09/2018   |
+      | PlanEmpower | 1INST    | testing1 |           | Before Tax    | ADJRUNDATE   |              |
+      | PlanEmpower | 1INST    | testing1 |           | Before Tax    | (null)       |              |
+  
+
+  Scenario Outline: Verify user can select a "<date>" when scheduling a deferral contribution.
+    Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
+    And plan is set up with "<sdsv subcode>"
+      """
+      select ga_id from ga_service where SDSV_SUBCODE=?
+      """
+    When user switched to "<plan_no>" and navigate to deferral page
+    And participant has an ongoing deferral for the "<deferral_type>"
+    And user adds a scheduled automatic increase
+    Then the dropdown list should populate with list of dates based on Payroll calendar setup for "<deferral_type>"
+    And user should be able to add a schedule for the "<deferral_type>"
+
+    Examples: 
+      | accuCode    | username | password | deferral_type | plan_no | sdsv subcode       | date |
+      | PlanEmpower | 1INST    | testing1 | Before Tax    |         | ADJRUN_PAYROLLDATE |      |
+
+  Scenario Outline: Verify that the requested date listed on the deferral review page is the first date of the following month when user creates a 457 contribution.
     Given user is on the Home page of "<accuCode>" when user login with correct "<username>" and "<password>"
     When user switched to "<plan_no>" and navigate to deferral page
     And user enters a contribution for a "<deferral_type>" of the given plan
-    And user clicks continue on the deferral contribution screen      
-    Then the effective date listed on the deferral review page for a "<deferral_type>" is the first date of the following month
-    Examples:
+    And user clicks continue on the deferral contribution screen
+    Then the effective date listed on the deferral review page for a "<deferral_type>" is the next month date
+
+    Examples: 
       | accuCode    | username | password | plan_no  | deferral_type |
       | PlanEmpower | 2PNP     | testing1 | 98984-01 | Before Tax    |
       | PlanEmpower | 2PNP     | testing1 | 98984-01 | Roth          |
-
-  

@@ -3,6 +3,8 @@
  */
 package org.bdd.psc.pageobjects;
 
+import gwgwebdriver.How;
+
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.List;
@@ -44,6 +46,11 @@ public class HomePage extends LoadableComponent<HomePage> {
 	private WebElement planSearchBox;
 	@FindBy(id = "planDropDown")
 	private WebElement planDropDownMenu;
+	
+	@FindBy(id = "angularProfileLink")
+	private WebElement myProfileLink;
+	@FindBy(xpath="//*[@class='breadcrumb']/i")
+	private WebElement breadCrumb;
 	
 	@FindBy(xpath = ".//button[@id='planSearchAutocompleteButton']")
 	private WebElement btnPlanSearchTxtGO;
@@ -188,8 +195,13 @@ public class HomePage extends LoadableComponent<HomePage> {
 		if (fieldName.trim().equalsIgnoreCase("Standard Reports")) {
 			return this.standardReportsSubMenu;
 		}
+		
 		return null;
 
+	}
+	public void clickOnMyProfile(){
+		if(Web.isWebElementDisplayed(myProfileLink, true))
+			Web.clickOnElement(myProfileLink);
 	}
 
 	public void switchPlan(String planNumber) {
@@ -373,6 +385,14 @@ public class HomePage extends LoadableComponent<HomePage> {
 			return true;
 		else
 			return false;				
+	}
+	
+	public boolean isMyProfilePage(){
+		if(Web.isWebElementDisplayed(breadCrumb, true))
+			if(breadCrumb.getText().trim().equalsIgnoreCase("My Profile"))
+				return true;
+		return false;
+		
 	}
 
 }

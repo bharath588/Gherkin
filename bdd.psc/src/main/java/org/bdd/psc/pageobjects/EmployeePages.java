@@ -3,25 +3,34 @@
  */
 package org.bdd.psc.pageobjects;
 
+import java.sql.ResultSet;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import gwgwebdriver.How;
 import gwgwebdriver.NextGenWebDriver;
 import gwgwebdriver.pagefactory.NextGenPageFactory;
+import lib.DB;
 import lib.Web;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import reporter.Reporter;
@@ -70,8 +79,13 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	
 	@FindBy(how=How.XPATH,using= ".//*[text()='Current and Pending Deferrals']")
 	private WebElement deferralText;
+	@FindBy(how=How.XPATH,using= "//*[text()='Employee does not have any current deferrals.']")
+	private WebElement employeeDoesNotHaveAnyCurrentDeferrals;
 	@FindBy(how=How.XPATH,using= ".//*[*[span[text()='Ongoing']]]//a")
 	private WebElement ongoingEditLink;
+	@FindBy(how=How.XPATH,using= "//*[*[span[text()='Schedule automatic increase']]]//a")
+	private WebElement scheduleAutomaticIncreaseEditLink;
+	
 	@FindBy(how=How.ID,using="aedrvalue1")
 	private WebElement enterDefElectionInDeflInformForBeforeTax;
 	@FindBy(how=How.NAME,using="customDate1")
@@ -101,8 +115,21 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 	@FindBy(how=How.XPATH,using="//td[text()='Roth']/preceding-sibling::td[2]")
 	private List<WebElement> effectiveDateRoth;
 	
+	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//select[@id='customDt']")
+	private WebElement selectTargetPayrollBeforeTax;
+	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//*[@id='two']")
+	private WebElement dollarButtonBeforeTax;
+	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//input[@ng-model='aedr.increaseValue']")
+	private WebElement incrementTextBoxBeforeTax;
+	@FindBy(how=How.XPATH,using="//*[*[label[contains(text(),'Deferral information for Before Tax')]]]//input[@ng-model='aedr.stopAtValue']")
+	private WebElement maximumAmountTextBoxBeforeTax;
+	@FindBy(how=How.ID,using="scheduleContinueButton")
+	private WebElement scheduleContinueButton;
+
 	
-	
+	SimpleDateFormat sdf;
+	Calendar c;
+	LocalDate date;
 	
 	
 	public EmployeePages(){
@@ -113,7 +140,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 
 	@Override
 	protected void load() {
-		// TODO Auto-generated method stub
+		//TODO Auto-generated method stub
 		HomePage homepage = (HomePage) this.parent;
 		// LoginPage login = new LoginPage();
 		new HomePage(new LoginPage(), false, new String[] {
@@ -128,6 +155,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 		Web.waitForElement(employeesTab);
 		Web.actionsClickOnElement(employeesTab);
+		Web.actionsClickOnElement(searchEmployee);
 		Web.waitForElement(employeeFrame);
 		Web.FrameSwitchONandOFF(true, employeeFrame);
 		if(Web.isWebElementDisplayed(employeeSearchButton, true)){
@@ -227,6 +255,28 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		Web.nextGenDriver.waitForAngular();
 		
 	}
+	public void clickScheduleAutomaticIncreaseEdit(){
+		Web.clickOnElement(scheduleAutomaticIncreaseEditLink);
+		Web.nextGenDriver.waitForAngular();
+		
+	}
+
+	public void checkAndAddOngoingDeferral(String deferraltype) {
+		try {
+			if (Web.isWebElementDisplayed(
+					employeeDoesNotHaveAnyCurrentDeferrals, true))
+				if (Web.isWebElementDisplayed(ongoingEditLink, true)) {
+					this.clickOngoingEdit();
+					this.enterContributionAndSave(deferraltype);
+					Reporter.logEvent(Status.INFO,
+							"added ongoing deferral for the participant",
+							"added ongoing deferral for the participant", true);
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	public void enterFutureDateContributionAndSave(String type,String...deferralDate){
 		if(type.trim().equalsIgnoreCase("Before Tax")){
 			Web.setTextToTextBox(enterDefElectionInDeflInformForBeforeTax, "50");
@@ -283,9 +333,9 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 				System.out.print(dateCount);
 			}
 			int COUNT = Integer.parseInt(dateCount);
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			Calendar c = Calendar.getInstance();
-			c.add(Calendar.DATE, COUNT); // Adding 5 days
+			sdf = new SimpleDateFormat("MM/dd/yyyy");
+			c = Calendar.getInstance();
+			c.add(Calendar.DATE, COUNT);
 			String output = sdf.format(c.getTime());
 			System.out.println(output);
 			return output;
@@ -294,28 +344,38 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 		return null;
 	}
-	public boolean isEffectiveDateSameAsFutureDate(String deferralType,String...futureDate){
+	
+	
+	public boolean isEffectiveDateSameAsFutureDate(String deferralType,String...futureDate) throws ParseException{
+		
 		Boolean flag=false;
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		String enteredDate=sdf.format(Calendar.getInstance().getTime());
-		
-		if(futureDate.length>0)
-			enteredDate=this.getDateFormat(futureDate[0]);
-		
-		if(deferralType.trim().equalsIgnoreCase("Before Tax")){
-			for(WebElement dateElement:effectiveDateForBeforeTax){
-				if(enteredDate.equals(dateElement.getText().trim()))
-					return true;			
+		try{
+			sdf = new SimpleDateFormat("MM/dd/yyyy");
+			String enteredDate=sdf.format(Calendar.getInstance().getTime());
+			
+			if(futureDate.length>0)
+				enteredDate=this.getDateFormat(futureDate[0]);
+			
+			if(deferralType.trim().equalsIgnoreCase("Before Tax")){
+				for(WebElement dateElement:effectiveDateForBeforeTax){
+					if(enteredDate.equals(sdf.format(sdf.parse(dateElement.getText().trim()))))
+						return true;			
+				}
+			}
+			if(deferralType.trim().equalsIgnoreCase("Roth")){
+				for(WebElement dateElement:effectiveDateRoth){
+					if(enteredDate.equals(sdf.format(sdf.parse(dateElement.getText().trim()))))
+						return true;			
+				}
 			}
 		}
-		if(deferralType.trim().equalsIgnoreCase("Roth")){
-			for(WebElement dateElement:effectiveDateRoth){
-				if(enteredDate.equals(dateElement.getText().trim()))
-					return true;			
-			}
+		catch(Exception e){
+			e.printStackTrace();
 		}
+		
 		return flag;
 	}
+	
 	
 	public boolean isEffectiveDateWeekend(String deferralType){
 		
@@ -333,6 +393,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		}
 		return false;
 	}
+	
 	public boolean isWeekend(String dateText){
 		int i=0;
 		int[] dateArr=new int[3];
@@ -342,7 +403,7 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 			dateArr[i]= Integer.parseInt(matcher.group());
 			i++;
 		}
-		LocalDate date = LocalDate.of(dateArr[2], dateArr[0],dateArr[1]);//MM/dd/yyyy-->YYYY,MM,DD
+		 date = LocalDate.of(dateArr[2], dateArr[0],dateArr[1]);//MM/dd/yyyy-->YYYY,MM,DD
 		for (int j = 0; j < date.lengthOfMonth(); j++) {
 			System.out.println(date.getDayOfWeek().toString());
 			if ("Saturday".equalsIgnoreCase(date.getDayOfWeek()
@@ -357,6 +418,158 @@ public class EmployeePages extends LoadableComponent<EmployeePages> {
 		return false;
 	}
 	
+	public String getPlanNumber(String query, String sdsv_subcode) {
+		String planNo = "";
+		try {
+			ResultSet resultSet = DB
+					.executeQuery("D_INST", query, sdsv_subcode);
+			while (resultSet.next()) {
+				planNo = resultSet.getString(1);
+				break;
+			}
+			if (planNo.length() > 0)
+				planNo = resultSet.getString(1);
+			else
+				Reporter.logEvent(Status.INFO,
+						"No record founds in the given query",
+						"No record founds in the given query", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return planNo;
+
+	}
+	
+	public boolean isAllDateAvialableInSelectTargetPayRoll() {
+		try {
+			LocalDate start = LocalDate.now();
+			LocalDate end = LocalDate.now().plusMonths(18)
+					.with(TemporalAdjusters.lastDayOfMonth());
+			List<String> dates = Stream
+					.iterate(start, date -> date.plusDays(1))
+					.limit(ChronoUnit.DAYS.between(start, end))
+					.map(element -> (String) element.format(DateTimeFormatter
+							.ofPattern("yyyy/MM/dd")))
+					.collect(Collectors.toList());
+
+			dates.remove(0);
+			System.out.println(dates);
+			Web.FrameSwitchONandOFF(false);
+			Web.isWebElementDisplayed(editDeferralFrame, true);
+			Web.FrameSwitchONandOFF(true, editDeferralFrame);
+
+			List<String> dropDownDate = new ArrayList<String>();
+			sdf = new SimpleDateFormat("yyyy/MM/dd");
+			if (Web.isWebElementDisplayed(selectTargetPayrollBeforeTax, true)) {
+				List<WebElement> element = new Select(
+						selectTargetPayrollBeforeTax).getOptions();
+				element.remove(0);
+				element.remove(element.size() - 1);
+				element.forEach(ele -> dropDownDate.add(this.doFormat(ele
+						.getText())));
+			}
+
+			if (dates.containsAll(dropDownDate))
+				return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public String doFormat(String input) {
+		 sdf = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			String output = sdf.format(new SimpleDateFormat("MM/dd/yyyy")
+					.parse(input.trim()));
+			return output;
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	public boolean isGivenDateAvailableInSelectTargetPayRoll(String dateString){
+		
+		return false;
+		
+	}
+	public void addSchedule(String deferralType,String weekendDate){
+		if(deferralType.trim().equalsIgnoreCase("Before Tax")){
+			Web.selectDropDownOption(selectTargetPayrollBeforeTax, weekendDate, true);
+			Web.setTextToTextBox(incrementTextBoxBeforeTax, "20");
+			Web.setTextToTextBox(maximumAmountTextBoxBeforeTax, "50");
+			Web.clickOnElement(dollarButtonBeforeTax);
+			Web.clickOnElement(scheduleContinueButton);	
+			Web.nextGenDriver.waitForAngular();
+		}
+		
+		
+	}
+	
+	public boolean isTheDateWithinNextMonth(String deferralType) {
+		try {
+			sdf = new SimpleDateFormat("MM/dd/yyyy");
+			Date startDate, endDate;
+			Date dateToCheck=null;
+	
+			c = Calendar.getInstance();
+			c.add(Calendar.MONTH, 1);
+			c.set(Calendar.DATE, c.getActualMinimum(Calendar.DAY_OF_MONTH));
+			startDate = sdf.parse(sdf.format(c.getTime()));
+			System.out.println(startDate);
+			c.set(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+			endDate = sdf.parse(sdf.format(c.getTime()));
+			System.out.println(endDate);
+			
+			if(deferralType.trim().equalsIgnoreCase("Before Tax")){
+				for(WebElement dateElement:effectiveDateForBeforeTax){
+					dateToCheck = sdf.parse(dateElement.getText().trim());
+					if (dateToCheck.equals(startDate)
+							|| dateToCheck.equals(endDate)
+							|| (dateToCheck.after(startDate) && dateToCheck
+									.before(endDate)))
+						return true;
+				}
+			}
+			if(deferralType.trim().equalsIgnoreCase("Roth")){
+				for(WebElement dateElement:effectiveDateRoth){
+					dateToCheck = sdf.parse(dateElement.getText().trim());
+					if (dateToCheck.equals(startDate)
+							|| dateToCheck.equals(endDate)
+							|| (dateToCheck.after(startDate) && dateToCheck
+									.before(endDate)))
+						return true;
+				}
+			}
+			
+		} catch (Exception e) {
+
+		}
+		return false;
+
+	}
+	
+	public boolean isCalendarType(String deferralType, String calendarType){
+		if(calendarType.trim().equalsIgnoreCase("Calendar")){
+			if(deferralType.trim().equalsIgnoreCase("Before Tax")){
+				if(Web.isWebElementDisplayed(enterDateInDeflInformForBeforeTax, true))
+					return true;
+			}
+			if(deferralType.trim().equalsIgnoreCase("Roth")){
+				if(Web.isWebElementDisplayed(enterDateInDeflInformForRoth, true))
+					return true;
+			}
+		}	
+		return false;
+		
+	}
 	
 
 }
